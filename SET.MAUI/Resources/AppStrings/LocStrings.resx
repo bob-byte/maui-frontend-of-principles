@@ -1,0 +1,507 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="CreateNewAccount" xml:space="preserve">
+    <value>Create a new account</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="EmailMustHaveCorrectValue" xml:space="preserve">
+    <value>Email must have correct value</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="MainSlogan" xml:space="preserve">
+    <value>Main slogan</value>
+  </data>
+  <data name="Man" xml:space="preserve">
+    <value>Man</value>
+  </data>
+  <data name="Mentor" xml:space="preserve">
+    <value>Mentor</value>
+  </data>
+  <data name="MyHabits" xml:space="preserve">
+    <value>My Habits</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="OtherSex" xml:space="preserve">
+    <value>Other Sex</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Habits" xml:space="preserve">
+    <value>Habits</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="Progress" xml:space="preserve">
+    <value>Progress</value>
+  </data>
+  <data name="ProgressOfHabits" xml:space="preserve">
+    <value>Progress of habits</value>
+  </data>
+  <data name="RequiredErrorText" xml:space="preserve">
+    <value>*Required</value>
+  </data>
+  <data name="RequiredHelpText" xml:space="preserve">
+    <value>*Required</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="SignUp" xml:space="preserve">
+    <value>Sign up</value>
+  </data>
+  <data name="SigningUp" xml:space="preserve">
+    <value>Signing up</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="MissionExplanation" xml:space="preserve">
+    <value>It will be used to create more appropriate recommended habits for you. A mission is a life goal that keeps you motivated and helps you make the best choices in a variety of situations. For example, a mission might be to become the best and most moral entrepreneur in the world.</value>
+  </data>
+  <data name="MainSloganExplanation" xml:space="preserve">
+    <value>The main slogan will be used to form better recommended habits. It helps you determine how to act when you don't want to do something or when you are faced with a challenge or temptation. For example, only Jesus.</value>
+  </data>
+  <data name="Vision" xml:space="preserve">
+    <value>Vision</value>
+  </data>
+  <data name="Visualization" xml:space="preserve">
+    <value>Visualization</value>
+  </data>
+  <data name="Visual" xml:space="preserve">
+    <value>Visual</value>
+  </data>
+  <data name="Woman" xml:space="preserve">
+    <value>Woman</value>
+  </data>
+  <data name="YourNameSuccessfullySaved" xml:space="preserve">
+    <value>Your name successfully saved</value>
+  </data>
+  <data name="YourMainSloganSuccessfullySaved" xml:space="preserve">
+    <value>Your main slogan successfully saved</value>
+  </data>
+  <data name="YourMissionSuccessfullySaved" xml:space="preserve">
+    <value>Your mission successfully saved</value>
+  </data>
+  <data name="MondayShort" xml:space="preserve">
+    <value>Mon</value>
+  </data>
+  <data name="TuesdayShort" xml:space="preserve">
+    <value>Tue</value>
+  </data>
+  <data name="WednesdayShort" xml:space="preserve">
+    <value>Wed</value>
+  </data>
+  <data name="ThursdayShort" xml:space="preserve">
+    <value>Thu</value>
+  </data>
+  <data name="FridayShort" xml:space="preserve">
+    <value>Fri</value>
+  </data>
+  <data name="SaturdayShort" xml:space="preserve">
+    <value>Sat</value>
+  </data>
+  <data name="SundayShort" xml:space="preserve">
+    <value>Sun</value>
+  </data>
+  <data name="Habit" xml:space="preserve">
+    <value>Habit</value>
+  </data>
+  <data name="AreasOfHabit" xml:space="preserve">
+    <value>Areas of habit</value>
+  </data>
+  <data name="HowToKeep" xml:space="preserve">
+    <value>How to keep</value>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="NotesOrHowToKeepHabit" xml:space="preserve">
+    <value>Notes / How to keep habit</value>
+  </data>
+  <data name="UseSubhabits" xml:space="preserve">
+    <value>Use subhabits</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="ReasonToFollow" xml:space="preserve">
+    <value>Reason to follow</value>
+  </data>
+  <data name="StrongReasonToFollow" xml:space="preserve">
+    <value>Strong reason to follow</value>
+  </data>
+  <data name="OptionalPlaceholder" xml:space="preserve">
+    <value>(Optional)</value>
+  </data>
+  <data name="Question" xml:space="preserve">
+    <value>Question</value>
+  </data>
+  <data name="QuestionExplanation" xml:space="preserve">
+    <value>The question helps you to understand whether you have followed the habit on a particular day. For example, "Did I do my best to exercise today, at least 15 minutes?"</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="WithoutExceptions" xml:space="preserve">
+    <value>Without exceptions</value>
+  </data>
+  <data name="IntegrallyWise" xml:space="preserve">
+    <value>Integrally wise</value>
+  </data>
+  <data name="Frequency" xml:space="preserve">
+    <value>Frequency</value>
+  </data>
+  <data name="Reminder" xml:space="preserve">
+    <value>Reminder</value>
+  </data>
+  <data name="ComplexityWithRange" xml:space="preserve">
+    <value>Complexity (1 - 10)</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
+    <value>Priority</value>
+  </data>
+  <data name="EveryDay" xml:space="preserve">
+    <value>Every day</value>
+  </data>
+  <data name="Every" xml:space="preserve">
+    <value>Every</value>
+  </data>
+  <data name="days" xml:space="preserve">
+    <value>days</value>
+  </data>
+  <data name="timesPer" xml:space="preserve">
+    <value>times per</value>
+  </data>
+  <data name="Week" xml:space="preserve">
+    <value>Week</value>
+  </data>
+  <data name="Month" xml:space="preserve">
+    <value>Month</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>Year</value>
+  </data>
+  <data name="EveryWeek" xml:space="preserve">
+    <value>Every week</value>
+  </data>
+  <data name="EveryMonth" xml:space="preserve">
+    <value>Every month</value>
+  </data>
+  <data name="EveryYear" xml:space="preserve">
+    <value>Every year</value>
+  </data>
+  <data name="CannotParse" xml:space="preserve">
+    <value>It is impossible to parse</value>
+  </data>
+  <data name="ToInteger" xml:space="preserve">
+    <value>To integer</value>
+  </data>
+  <data name="IsMaxValue" xml:space="preserve">
+    <value>is max value</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="WithoutExceptionsHabitTypeShortDescription" xml:space="preserve">
+    <value>This is a habit type that a person adheres to strictly and never makes exceptions, even in emergency situations. For example, refusal to drink alcohol or tobacco, regardless of the circumstances.</value>
+  </data>
+  <data name="IntegrallyWiseHabitTypeShortDescription" xml:space="preserve">
+    <value>This is a habit type that a person follows most of the time, but may make exceptions in special situations. For example, it may be the habit of telling the truth but being able to keep silent or deceive when it could cause serious harm to others.</value>
+  </data>
+  <data name="ReasonToFollowExplanation" xml:space="preserve">
+    <value>Understanding why it is important to follow your habits helps you better determine how to act and improves your motivation to do something. It makes our actions consistent and reflects our character.</value>
+  </data>
+  <data name="MessageInDeleteHabitConfirm" xml:space="preserve">
+    <value>The habit will be permanently deleted. This action cannot be undone.</value>
+  </data>
+  <data name="DeleteHabitQuestion" xml:space="preserve">
+    <value>Delete habit?</value>
+  </data>
+  <data name="MessageInDeleteAccountConfirm" xml:space="preserve">
+    <value>The account will be permanently deleted. This action cannot be undone.</value>
+  </data>
+  <data name="DeleteAccountQuestion" xml:space="preserve">
+    <value>Delete account?</value>
+  </data>
+  <data name="MessageInLogoutConfirm" xml:space="preserve">
+    <value>Do you really want to log out of your account?</value>
+  </data>
+  <data name="LogoutQuestion" xml:space="preserve">
+    <value>Logout?</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="AtomicHabits" xml:space="preserve">
+    <value>Atomic Habits</value>
+  </data>
+  <data name="Principles" xml:space="preserve">
+    <value>Principles</value>
+  </data>
+  <data name="DeleteAccount" xml:space="preserve">
+    <value>Delete account</value>
+  </data>
+  <data name="Field" xml:space="preserve">
+    <value>Field</value>
+  </data>
+  <data name="isRequired" xml:space="preserve">
+    <value>is required</value>
+  </data>
+  <data name="FixErrorsFirst" xml:space="preserve">
+    <value>Fix the errors first</value>
+  </data>
+  <data name="Helper" xml:space="preserve">
+    <value>Helper</value>
+  </data>
+  <data name="HelperName" xml:space="preserve">
+    <value>Helper SET</value>
+  </data>
+  <data name="HowCanIHelpYou" xml:space="preserve">
+    <value>How can I help you?</value>
+  </data>
+  <data name="EnterText" xml:space="preserve">
+    <value>Enter text...</value>
+  </data>
+  <data name="SomethingWentWrong" xml:space="preserve">
+    <value>Something went wrong</value>
+  </data>
+  <data name="RecommendedHabitsByAi" xml:space="preserve">
+    <value>Recommended habits by AI</value>
+  </data>
+  <data name="ConfirmMessageOnRecommededHabitsView" xml:space="preserve">
+    <value>Are you sure you want to load recommended habits based on your chosen areas, mission and main slogan?</value>
+  </data>
+  <data name="ConfirmTitleOnRecommendedHabitsView" xml:space="preserve">
+    <value>Based on selected areas, mission and slogan</value>
+  </data>
+  <data name="DescriptionOfAiLampTap" xml:space="preserve">
+    <value>Tap the AI-lamp to watch recommended habits based on the selected areas</value>
+  </data>
+  <data name="IfYouDontWantToWaitYouCanChangeOtherFields" xml:space="preserve">
+    <value>If you don't want to wait, you can change the other fields for now</value>
+  </data>
+  <data name="CannotReloadHabits" xml:space="preserve">
+    <value>It is impossible to reload habits</value>
+  </data>
+  <data name="RecommendedHabitsSuccessfullyLoaded" xml:space="preserve">
+    <value>Recommended habits are loaded</value>
+  </data>
+  <data name="Inspect" xml:space="preserve">
+    <value>Inspect</value>
+  </data>
+  <data name="SelfDevelopmentAssistantShortDescription" xml:space="preserve">
+    <value>I am a self-development assistant. You can ask me different questions. For example, "What is an atomic habit?"</value>
+  </data>
+  <data name="ChatWithHelper" xml:space="preserve">
+    <value>Chat With Helper</value>
+  </data>
+  <data name="Mission" xml:space="preserve">
+    <value>Mission</value>
+  </data>
+  <data name="YourMission" xml:space="preserve">
+    <value>Your Mission</value>
+  </data>
+  <data name="YourMainSlogan" xml:space="preserve">
+    <value>Your Main Slogan</value>
+  </data>
+  <data name="YourName" xml:space="preserve">
+    <value>Your Name</value>
+  </data>
+  <data name="Correct" xml:space="preserve">
+    <value>Correct</value>
+  </data>
+  <data name="Spirituality" xml:space="preserve">
+    <value>Spirituality</value>
+  </data>
+  <data name="Character" xml:space="preserve">
+    <value>Character</value>
+  </data>
+  <data name="Health" xml:space="preserve">
+    <value>Health</value>
+  </data>
+  <data name="Career" xml:space="preserve">
+    <value>Career</value>
+  </data>
+  <data name="Family" xml:space="preserve">
+    <value>Family</value>
+  </data>
+  <data name="Relationships" xml:space="preserve">
+    <value>Relationships</value>
+  </data>
+  <data name="Sociality" xml:space="preserve">
+    <value>Sociality</value>
+  </data>
+  <data name="Mentality" xml:space="preserve">
+    <value>Mentality</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="LoadingContent" xml:space="preserve">
+    <value>Loading content...</value>
+  </data>
+  <data name="HabitCollectionIsEmptyDescription" xml:space="preserve">
+    <value>You don't have any atomic habits yet</value>
+  </data>
+  <data name="Appearance" xml:space="preserve">
+    <value>Appearance</value>
+  </data>
+  <data name="DescriptionOfCannotAddNewHabit" xml:space="preserve">
+    <value>Create this habit after you automate the others or create one that is less complex and less frequent (assuming you don't have too many processing habits). This will help you not to burn out and stick to your current habits.</value>
+  </data>
+  <data name="TitleOfCannotAddNewHabit" xml:space="preserve">
+    <value>Adding this habit will hurt you</value>
+  </data>
+  <data name="AddItAnyway" xml:space="preserve">
+    <value>Add it anyway</value>
+  </data>
+  <data name="SetPriorityByDragAndDrop" xml:space="preserve">
+    <value>Set the priorities with drag and drop</value>
+  </data>
+  <data name="ComplexityHelpText" xml:space="preserve">
+    <value>Complexity can't be changed after creation of a habit</value>
+  </data>
+  <data name="TooManyMessagesError" xml:space="preserve">
+    <value>You have sent the maximum number of messages in one chat</value>
+  </data>
+</root>

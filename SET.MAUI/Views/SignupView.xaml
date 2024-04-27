@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<v:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                   x:Class="SET.MAUI.Views.SignupView"
+                   xmlns:loc="clr-namespace:SET.MAUI.Resources.AppStrings"
+                   xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+                   xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+                   xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+                   xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+                   xmlns:vm="clr-namespace:SET.MAUI.ViewModels"
+                   xmlns:v="clr-namespace:SET.MAUI.Views"
+                   x:DataType="vm:SignupViewModel"
+                   Shell.FlyoutBehavior="Disabled"
+                   Shell.NavBarIsVisible="True"
+                   Shell.TabBarIsVisible="False">
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="Auto, *, Auto"
+              x:Name="G_Title">
+            <Label Text="{x:Static loc:LocStrings.Login}"
+                   Grid.Column="0"
+                   FontAttributes="Bold"
+                   VerticalOptions="Center"
+                   TextColor="{StaticResource TitleTextColor}"
+                   FontSize="17">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1"
+                                          Command="{Binding BackCommand}"/>
+                </Label.GestureRecognizers>
+            </Label>
+            <Grid x:Name="G_SaveHabit"
+                         HorizontalOptions="End"
+                         VerticalOptions="CenterAndExpand"
+                         Grid.Column="1">
+                <dxco:SimpleButton Text="{Binding LocSigningUp, Converter={StaticResource ToUpperCase}}"
+                               Style="{StaticResource TitlePrimaryButton}"
+                               Command="{Binding SignupCommand}"
+                               Margin="0, 2, 0, 2"
+                               FontSize="14"
+                               BorderThickness="2"/>
+            </Grid>
+        </Grid>
+    </Shell.TitleView>
+    <ScrollView>
+        <Grid>
+            <VerticalStackLayout Padding="15, 15, 15, 15"
+                                 VerticalOptions="StartAndExpand"
+                                 Spacing="10">
+                <skia:SKLottieView IsAnimationEnabled="True"
+                                   RepeatCount="-1"
+                                   WidthRequest="500"
+                                   HeightRequest="200"
+                                   Source="one_check.json" />
+
+                <dxe:TextEdit LabelText="{x:Static loc:LocStrings.UserName}"
+                              Text="{Binding Name.Value}"
+                              StartIcon="user"
+                              HasError="{Binding Name.IsValid,
+                                                 Converter={StaticResource IsFalse}}"
+                              ErrorText="{Binding Name.Errors,
+                                                  Converter={StaticResource FirstValidationError}}"
+                              TextChangedCommand="{Binding ValidateNameCommand}"
+                              AutofillContentType="Username"
+                              ClearIconVisibility="Never" />
+                <dxe:TextEdit LabelText="{x:Static loc:LocStrings.Email}"
+                              StartIcon="email"
+                              AutofillContentType="EmailAddress"
+                              Text="{Binding Email.Value}"
+                              Keyboard="Email"
+                              HasError="{Binding Email.IsValid,
+                                                 Converter={StaticResource IsFalse}}"
+                              ErrorText="{Binding Email.Errors,
+                                                  Converter={StaticResource FirstValidationError}}"
+                              TextChangedCommand="{Binding ValidateEmailCommand}"
+                              ClearIconVisibility="Never"
+                              x:Name="EmailTextEdit" />
+                <dxe:PasswordEdit LabelText="{x:Static loc:LocStrings.Password}"
+                                  Text="{Binding Password.Value}"
+                                  StartIcon="password"
+                                  AutofillContentType="Password"
+                                  HasError="{Binding Password.IsValid,
+                                                     Converter={StaticResource IsFalse}}"
+                                  ErrorText="{Binding Password.Errors,
+                                                      Converter={StaticResource FirstValidationError}}"
+                                  TextChangedCommand="{Binding ValidatePasswordCommand}"
+                                  ClearIconVisibility="Never"
+                                  x:Name="PasswordTextEdit" />
+
+                <dxe:ChoiceChipGroup IsMultiline="False"
+                                     x:Name="CCG_Genders"
+                                     SelectionChanged="CCG_Genders_SelectionChanged"
+                                     HorizontalOptions="Center">
+                    <dxe:Chip Text="{x:Static loc:LocStrings.Man}" />
+                    <dxe:Chip Text="{x:Static loc:LocStrings.Woman}" />
+                    <dxe:Chip Text="{x:Static loc:LocStrings.OtherSex}" />
+                </dxe:ChoiceChipGroup>
+                
+                <dxe:MultilineEdit Text="{Binding Mission}"
+                                   x:Name="ME_Mission"
+                                   LabelText="{x:Static loc:LocStrings.Mission}"
+                                   PlaceholderText="{x:Static loc:LocStrings.OptionalPlaceholder}"
+                                   ClearIconVisibility="Never"
+                                   ReturnType="Done"
+                                   StartIcon="mission"
+                                   EndIcon="info"
+                                   EndIconCommand="{Binding ShowSnackbarForMissionCommand}"
+                                   EndIconCommandParameter="{x:Reference ME_Mission}" />
+
+                <dxe:MultilineEdit Text="{Binding MainSlogan}"
+                                   x:Name="ME_MainSlogan"
+                                   LabelText="{x:Static loc:LocStrings.MainSlogan}"
+                                   PlaceholderText="{x:Static loc:LocStrings.OptionalPlaceholder}"
+                                   ReturnType="Done"
+                                   ClearIconVisibility="Never"
+                                   StartIcon="slogan"
+                                   EndIcon="info"
+                                   EndIconCommand="{Binding ShowSnackbarForMainSloganCommand}"
+                                   EndIconCommandParameter="{x:Reference ME_MainSlogan}" />
+            </VerticalStackLayout>
+
+            <ActivityIndicator Color="{StaticResource Primary}"
+                               IsRunning="{Binding IsBusy}"
+                               IsVisible="{Binding IsBusy}"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"
+                               WidthRequest="100" />
+        </Grid>
+    </ScrollView>
+</v:ContentPageBase>

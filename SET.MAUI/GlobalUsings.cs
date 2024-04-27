@@ -1,0 +1,33 @@
+﻿global using Microsoft.Maui;
+global using CommunityToolkit.Maui;
+global using CommunityToolkit.Maui.Core;
+global using CommunityToolkit.Maui.Alerts;
+global using CommunityToolkit.Mvvm.ComponentModel;
+global using CommunityToolkit.Mvvm.Input;
+global using CommunityToolkit.Maui.Markup;
+global using SET.Core.Models;
+global using SET.MAUI.Models;
+global using SET.MAUI.ViewModels;
+global using SET.MAUI.Views;
+global using SET.MAUI.Views.Templates;
+global using SET.MAUI.Validations;
+global using SET.Core.Services;
+global using SET.Core;
+global using SET.MAUI.Services;
+global using SET.MAUI.Constants;
+global using SET.Core.Constants;
+global using SET.MAUI.Converters;
+global using SET.Core.Extensions;
+global using SET.MAUI.Helpers;
+global using SET.MAUI.Messages;
+global using SET.MAUI.Resources.AppStrings;
+global using System.ComponentModel;
+global using System.Diagnostics;
+global using System.Globalization;
+global using System.Runtime.CompilerServices;
+global using System.Threading.Tasks;
+global using DevExpress.Maui;
+global using CommunityToolkit.Mvvm.Messaging;
+#if IOS
+global using UIKit;
+#endif

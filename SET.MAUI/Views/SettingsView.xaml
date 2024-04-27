@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<v:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                   x:Class="SET.MAUI.Views.SettingsView"
+                   xmlns:loc="clr-namespace:SET.MAUI.Resources.AppStrings"
+                   xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+             xmlns:dxg="clr-namespace:DevExpress.Maui.DataGrid;assembly=DevExpress.Maui.DataGrid"
+                   xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+                   xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
+                   xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+                   xmlns:templates="clr-namespace:SET.MAUI.Views.Templates"
+                   xmlns:v="clr-namespace:SET.MAUI.Views"
+                   xmlns:vm="clr-namespace:SET.MAUI.ViewModels"
+                   xmlns:m="clr-namespace:SET.Core.Models;assembly=SET.Core"
+                   x:DataType="vm:SettingsViewModel"
+                   Title="{Binding Title}">
+    <Grid>
+        <VerticalStackLayout Padding="15, 0, 15, 0"
+                             Spacing="20"
+                             VerticalOptions="Center">
+            <Image Source="logolargesize"
+                          WidthRequest="200"
+                          HeightRequest="200"/>
+            <Label Text="{Binding AppName, Converter={StaticResource ToUpperCase}}"
+                   TextColor="OrangeRed"
+                   HorizontalOptions="Center"
+                   FontSize="Title"
+                   FontFamily="Roboto"
+                   FontAttributes="Bold"/>
+            <dxco:SimpleButton Command="{Binding LogoutCommand}"
+                           Text="{x:Static loc:LocStrings.Logout}"
+                           Style="{StaticResource PrimaryButton}" />
+            <dxco:SimpleButton Command="{Binding DeleteAccountCommand}"
+                           Text="{x:Static loc:LocStrings.DeleteAccount}"
+                           BackgroundColor="{AppThemeBinding Light={StaticResource DarkPrimary}, Dark={StaticResource Primary}}"
+                           TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"/>
+        </VerticalStackLayout>
+
+        <templates:DefaultActivityIndicator />
+    </Grid>
+</v:ContentPageBase>

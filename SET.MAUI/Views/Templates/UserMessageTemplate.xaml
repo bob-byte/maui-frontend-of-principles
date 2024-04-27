@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<Grid xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+      xmlns:msgs="clr-namespace:SET.MAUI.Messages"
+      xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
+      xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+      x:Class="SET.MAUI.Views.Templates.UserMessageTemplate"
+      x:DataType="msgs:DisplayMessage"
+      x:Name="G_UserMessageTemplate"
+      xmlns:vm="clr-namespace:SET.MAUI.ViewModels"
+      Padding="0, 0, 16, 0"
+      ColumnDefinitions="*, Auto, 10, Auto">
+
+    <Grid Grid.Column="1"
+          MaximumWidthRequest="260"
+          x:Name="G_Question">
+        <BoxView CornerRadius="16, 16, 16, 0"
+                 Color="{AppThemeBinding Light={StaticResource LightPrimary}, Dark={StaticResource LightPrimary}}"/>
+        <dxe:MultilineEdit BackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary}, Dark={StaticResource LightPrimary}}"
+                           TextFontSize="18"
+                           TextColor="{AppThemeBinding Light={StaticResource LightNormalText}, Dark={StaticResource DarkNormalText}}"
+                           x:Name="ME_Question"
+                           Text="{Binding Text}"
+                           TextFontFamily="MonaSansMedium"
+                           BorderThickness="0"
+                           ClearIconVisibility="Never"
+                           IsReadOnly="True"
+                           BoxPadding="5"
+                           Margin="10, 5"
+                           VerticalOptions="Start"
+                           BoxMinHeight="10"
+                           MinimumHeightRequest="18"
+                           TextVerticalAlignment="Center"/>
+    </Grid>
+
+    <Grid Grid.Column="3"
+          x:Name="G_UserIcon"
+          WidthRequest="35"
+          HeightRequest="35"
+          VerticalOptions="End">
+        <BoxView Color="{StaticResource LightPrimary}"
+                 CornerRadius="5, 5, 0, 5" />
+        <dx:DXImage Source="{Binding Gender,
+                                     Source={RelativeSource AncestorType={x:Type vm:HelperViewModel}},
+                                     Converter={StaticResource GenderToIcon}}"
+                    WidthRequest="22"
+                    HeightRequest="22"/>
+    </Grid>
+</Grid>
+

@@ -1,0 +1,109 @@
+﻿namespace SET.MAUI.ViewModels;
+
+public partial class ProfileViewModel : BaseViewModel
+{
+    private bool m_isInited;
+
+    public ProfileViewModel( IServiceProvider serviceProvider )
+        : base( serviceProvider )
+    {
+        Title = LocStrings.Profile;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanSaveUserName))]
+    private async Task SaveUserNameAsync()
+    {
+        bool isSuccess = false;
+        await UiBusyFor( async () =>
+        {
+            string url = $"{UrlBuilder.UserName}/{SettingsService.UserId}";
+            await RequestProvider.PutAsync( url, UserName.Value, SettingsService.AuthAccessToken );
+            isSuccess = true;
+        } );
+        
+        if (isSuccess)
+        {
+            NotifyUserInfoChanged();
+
+            await Snackbar.Make(
+                LocStrings.YourNameSuccessfullySaved,
+                visualOptions: SnackbarHelper.DefaultOptions()
+            ).Show();
+        }
+    }
+
+    private bool CanSaveUserName()
+    {
+        return UserName.IsValid;
+    }
+
+    [RelayCommand]
+    private void ValidateUserName()
+    {
+        UserName.Validate();
+    }
+
+    [RelayCommand]
+    private async Task SaveMainSloganAsync()
+    {
+        bool isSuccess = false;
+        await UiBusyFor( async () =>
+        {
+            string url = $"{UrlBuilder.UserMainSlogan}/{SettingsService.UserId}";
+            await RequestProvider.PutAsync( url, MainSlogan, SettingsService.AuthAccessToken );
+            isSuccess = true;
+        } );
+
+        if (isSuccess)
+        {
+            NotifyUserInfoChanged();
+
+            await Snackbar.Make( LocStrings.YourMainSloganSuccessfullySaved, visualOptions: SnackbarHelper.DefaultOptions() ).Show();
+        }
+    }
+
+    [RelayCommand]
+    private async Task SaveMissionAsync()
+    {
+        bool isSuccess = false;
+        await UiBusyFor( async () =>
+        {
+            string url = $"{UrlBuilder.UserMission}/{SettingsService.UserId}";
+            await RequestProvider.PutAsync( url, Mission, SettingsService.AuthAccessToken );
+            isSuccess = true;
+        } );
+
+        if (isSuccess)
+        {
+            NotifyUserInfoChanged();
+
+            await Snackbar.Make( LocStrings.YourMissionSuccessfullySaved, visualOptions: SnackbarHelper.DefaultOptions() ).Show();
+        }
+    }
+
+    private void NotifyUserInfoChanged()
+    {
+        UserInfoChangedMessage msg = new( new UserInfo
+        {
+            Gender = Gender,
+            Name = UserName.Value,
+            Id = Guid.Parse( SettingsService.UserId ),
+            MainSlogan = MainSlogan,
+            Mission = Mission
+        } );
+        ReferenceMessenger.Send( msg );
+    }
+
+    [RelayCommand]
+    private Task GoToSettingsAsync()
+    {
+        return Navigation.NavigateToAsync<SettingsViewModel>( isAbsoluteRoute: false );
+    }
+
+    public override async Task InitializeAsync( object? parameter = null )
+    {
+        await base.InitializeAsync( parameter );
+        await InitUserInfoAsync();
+        ValidateUserName();
+    }
+}

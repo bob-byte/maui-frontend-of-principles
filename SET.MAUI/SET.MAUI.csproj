@@ -1,0 +1,199 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net8.0-android;net8.0-ios</TargetFrameworks>
+        
+		<OutputType>Exe</OutputType>
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<RootNamespace>SET.MAUI</RootNamespace>
+		<NeutralLanguage>en</NeutralLanguage>
+		<Nullable>enable</Nullable>
+
+		<!-- App Identifier -->
+		<ApplicationId>com.set.principles</ApplicationId>
+
+		<!-- Versions -->
+		<ApplicationDisplayVersion>1</ApplicationDisplayVersion>
+		<ApplicationVersion>1</ApplicationVersion>
+
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net8.0-android'">21.0</SupportedOSPlatformVersion>
+		<ApplicationTitle>Principles</ApplicationTitle>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
+	  <NoWarn>1701;1702;8632</NoWarn>
+	  <CreatePackage>false</CreatePackage>
+	  <CodesignProvision>Automatic</CodesignProvision>
+	  <CodesignKey>iPhone Developer</CodesignKey>
+	  <CodesignEntitlements>Platforms\iOS\Entitlements.plist</CodesignEntitlements>
+	  <BuildIpa>true</BuildIpa>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
+	  <NoWarn>1701;1702;8632</NoWarn>
+	  <CodesignEntitlements>Platforms\iOS\Entitlements.plist</CodesignEntitlements>
+	  <CodesignKey>iPhone Distribution</CodesignKey>
+	  <CodesignProvision>Automatic</CodesignProvision>
+	  <CreatePackage>false</CreatePackage>
+	  <BuildIpa>true</BuildIpa>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- App Icon -->
+		<MauiIcon Include="Resources\AppIcon\appicon.png" Color="#1F1F1F" />
+
+		<!-- Splash Screen -->
+		<MauiSplashScreen Include="Resources\AppIcon\appicon.png" Color="#1F1F1F" BaseSize="300,300" />
+
+		<!-- Images -->
+		<MauiImage Include="Resources\Images\*svg" BaseSize="23, 23" />
+		<MauiImage Include="Resources\Images\*png" BaseSize="23, 23" />
+		<MauiImage Update="Resources\Images\settings.svg" BaseSize="40, 40" />
+		<MauiImage Update="Resources\Images\delete_account.svg" BaseSize="40, 40" />
+		<MauiImage Update="Resources\Images\plus.png" BaseSize="40, 40" />
+		<MauiImage Update="Resources\Images\edit.png" BaseSize="40, 40" />
+		<MauiImage Update="Resources\Images\delete.png" BaseSize="40, 40" />
+		<MauiImage Update="Resources\Images\logolargesize.png" BaseSize="200, 200" />
+		<MauiImage Include="Resources\Images\*jpg" BaseSize="23, 23" />
+
+		<!-- Custom Fonts -->
+		<MauiFont Include="Resources\Fonts\*" />
+		
+		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<ItemGroup Condition="$(TargetFramework.Contains('-ios'))">
+      <BundleResource Include="Platforms\iOS\Resources\**" TargetPath="%(RecursiveDir)%(Filename)%(Extension)" />
+    </ItemGroup>
+
+	<PropertyGroup Condition="$(TargetFramework.Contains('-ios'))">
+      <IPhoneResourcePrefix>Platforms/iOS/Resources/loc</IPhoneResourcePrefix>
+    </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />
+		<PackageReference Include="CommunityToolkit.MVVM" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
+		<PackageReference Include="Serilog" Version="3.0.1" />
+		<PackageReference Include="Serilog.Extensions.Logging" Version="7.0.0" />
+		<PackageReference Include="System.Net.Http" Version="4.3.4" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.10" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.10" />
+		<PackageReference Include="CommunityToolkit.Maui.Markup" Version="3.3.0" />
+		<PackageReference Include="Azure.AI.OpenAI" Version="1.0.0-beta.9" />
+		<PackageReference Include="Polly.Extensions" Version="8.2.0" />
+		<PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="2.0.0-preview.92" />
+		<PackageReference Include="DevExpress.Maui.Core" Version="23.2.5" />
+		<PackageReference Include="DevExpress.Maui.CollectionView" Version="23.2.5" />
+		<PackageReference Include="DevExpress.Maui.Controls" Version="23.2.5" />
+		<PackageReference Include="DevExpress.Maui.DataGrid" Version="23.2.5" />
+		<PackageReference Include="DevExpress.Maui.Editors" Version="23.2.5" />
+		<PackageReference Include="Serilog.Sinks.Xamarin" Version="1.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="App.xaml.cs">
+		  <DependentUpon>App.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\EditPrincipleView.xaml.cs">
+		  <DependentUpon>EditPrincipleView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\SettingsView.xaml.cs">
+		  <DependentUpon>SettingsView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\LoginView.xaml.cs">
+		  <DependentUpon>LoginView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\MentorView.xaml.cs">
+		  <DependentUpon>MentorView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\PrinciplesView.xaml.cs">
+		  <DependentUpon>PrinciplesView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\ProfileView.xaml.cs">
+		  <DependentUpon>ProfileView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\SignupView.xaml.cs">
+		  <DependentUpon>SignupView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Templates\DefaultActivityIndicator.xaml.cs">
+		  <DependentUpon>DefaultActivityIndicator.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Templates\BaseTemplateView.xaml.cs">
+		  <DependentUpon>BaseTemplateView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Platforms\iOS\LocStrings.Designer.cs">
+		  <ExcludeFromCurrentConfiguration>true</ExcludeFromCurrentConfiguration>
+		  <DependentUpon>LocStrings.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\AppStrings\LocStrings.Designer.cs">
+		  <ExcludeFromCurrentConfiguration>true</ExcludeFromCurrentConfiguration>
+		  <DependentUpon>LocStrings.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="App.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="AppShell.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Controls\CircularProgressBar.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\EditPrincipleView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\SettingsView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\MentorView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\PrinciplesView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ProfileView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\SignupView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Templates\DefaultActivityIndicator.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Templates\BaseTemplateView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Condition=" '$(EnableDefaultXamlItems)' == 'true' " Update="Views\BaseTemplateView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+	<ItemGroup>
+	  <EmbeddedResource Condition=" '$(EnableDefaultEmbeddedResourceItems)' == 'true' " Update="Resources\AppStrings\LocStrings.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>LocStrings.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	</ItemGroup>
+	<ItemGroup>
+	  <BundleResource Include="Platforms\iOS\Resources\loc\en.lproj\InfoPlist.strings" />
+	  <BundleResource Include="Platforms\iOS\Resources\loc\uk.lproj\InfoPlist.strings" />
+	  <BundleResource Include="Platforms\iOS\Resources\loc\ru.lproj\InfoPlist.strings" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\SET.Core\SET.Core.csproj" />
+	</ItemGroup>
+	<!--<ItemGroup>
+	  <Folder Include="Platforms\Android\Resources\values-ru\" />
+	  <Folder Include="Platforms\iOS\Resources\loc\ru.lproj\" />
+	</ItemGroup>-->
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+      <WarningLevel>4</WarningLevel>
+      <NoWarn>1701;1702;CS1573;CS1591;CS8632</NoWarn>
+    </PropertyGroup>
+</Project>

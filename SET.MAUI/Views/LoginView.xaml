@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<v:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                   xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+                   xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+                   xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+                   xmlns:loc="clr-namespace:SET.MAUI.Resources.AppStrings"
+                   xmlns:vm="clr-namespace:SET.MAUI.ViewModels"
+                   xmlns:v="clr-namespace:SET.MAUI.Views"
+                   xmlns:templates="clr-namespace:SET.MAUI.Views.Templates"
+                   x:Class="SET.MAUI.Views.LoginView"
+                   x:DataType="vm:LoginViewModel"
+                   Shell.FlyoutBehavior="Disabled"
+                   Shell.NavBarIsVisible="False"
+                   Shell.TabBarIsVisible="False"
+                   Title="{Binding Title}">
+    <Grid>
+        <ScrollView>
+        <VerticalStackLayout Padding="15"
+                             Spacing="20"
+                             VerticalOptions="CenterAndExpand">
+            <Image Source="logolargesize"
+                          WidthRequest="200"
+                          HeightRequest="200"/>
+            <Label Text="{Binding AppName, Converter={StaticResource ToUpperCase}}"
+                   TextColor="OrangeRed"
+                   HorizontalOptions="Center"
+                   FontSize="Title"
+                   FontFamily="Roboto"
+                   FontAttributes="Bold"/>
+            <dxe:TextEdit Text="{Binding Email.Value}"
+                          LabelText="{x:Static loc:LocStrings.Email}"
+                          AutofillContentType="EmailAddress"
+                          StartIcon="email"
+                          Keyboard="Email"
+                          ClearIconVisibility="Never"
+                          HasError="{Binding Email.IsValid,
+                                             Converter={StaticResource IsFalse}}"
+                          ErrorText="{Binding Email.Errors, 
+                                              Converter={StaticResource FirstValidationError}}"
+                          TextChangedCommand="{Binding ValidateEmailCommand}" />
+
+            
+            <dxe:PasswordEdit Text="{Binding Password.Value}"
+                              x:Name="PasswordEntry"
+                              LabelText="{x:Static loc:LocStrings.Password}"
+                              StartIcon="password"
+                              AutofillContentType="Password"
+                              HasError="{Binding Password.IsValid, Converter={StaticResource IsFalse}}"
+                              ErrorText="{Binding Password.Errors, 
+                                                  Converter={StaticResource FirstValidationError}}"
+                              TextChangedCommand="{Binding ValidatePasswordCommand}" />
+
+            <dxco:SimpleButton Text="{x:Static loc:LocStrings.Login}"
+                               Command="{Binding LoginCommand}"
+                               Style="{StaticResource PrimaryButton}" />
+
+            <dxco:SimpleButton Text="{x:Static loc:LocStrings.SignUp}"
+                               Command="{Binding SignupCommand}"
+                               BackgroundColor="{AppThemeBinding Light={StaticResource DarkPrimary}, Dark={StaticResource Primary}}"
+                               TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
+        </VerticalStackLayout>
+        </ScrollView>
+
+        <ActivityIndicator Color="{StaticResource Primary}"
+                           IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"
+                           WidthRequest="100" />
+    </Grid>
+</v:ContentPageBase>
