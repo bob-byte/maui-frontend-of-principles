@@ -12,8 +12,8 @@ public partial class EditHabitView : ContentPageBase
 {
     private bool m_doExecuteReloadOfRecommendedHabits;
 
-	public EditHabitView( EditHabitViewModel viewModel )
-	{
+    public EditHabitView( EditHabitViewModel viewModel )
+    {
         m_doExecuteReloadOfRecommendedHabits = true;
 
         BindingContext = viewModel;
@@ -22,11 +22,11 @@ public partial class EditHabitView : ContentPageBase
         ViewModel.PropertyChanged += ViewModel_OnIsInitializedChanged;
 
         InitializeComponent();
-	}
+    }
 
     private void ViewModel_OnIsInitializedChanged( object sender, PropertyChangedEventArgs e )
     {
-        if(e.PropertyName == nameof( BaseViewModel.IsInitialized ))
+        if (e.PropertyName == nameof( BaseViewModel.IsInitialized ))
         {
             if (ViewModel.IsInitialized)
             {
@@ -46,7 +46,7 @@ public partial class EditHabitView : ContentPageBase
         }
     }
 
-    private void SelectHabitTypeChip(object? sender, PropertyChangedEventArgs eventArgs)
+    private void SelectHabitTypeChip( object? sender, PropertyChangedEventArgs eventArgs )
     {
         UserHabit habit = ViewModel.Habit;
         if (eventArgs.PropertyName == nameof( EditHabitViewModel.Habit ) && habit != null)
@@ -170,7 +170,7 @@ public partial class EditHabitView : ContentPageBase
                 hasErrors = true;
             }
         }
-        else if(RB_SeveralTimesPerPeriod.IsChecked)
+        else if (RB_SeveralTimesPerPeriod.IsChecked)
         {
             try
             {
@@ -271,7 +271,7 @@ public partial class EditHabitView : ContentPageBase
 
     async void SB_Save_Clicked( System.Object sender, System.EventArgs e )
     {
-        if (ViewModel.SaveCommand.CanExecute(null))
+        if (ViewModel.SaveCommand.CanExecute( null ))
         {
             await ViewModel.SaveCommand.ExecuteAsync( null );
         }
@@ -307,7 +307,7 @@ public partial class EditHabitView : ContentPageBase
                 errorLabel.Text += $"{errMsg}";
                 DXS_ErrorMessages.Children.Add( errorLabel );
             }
-            
+
             DXP_Errors.MaximumWidthRequest = PageWidth - 40;
             DXP_Errors.MaximumHeightRequest = PageHeight - 60;
             HSL_ErrorMessages.MaximumWidthRequest = DXP_Errors.MaximumWidthRequest - (HSL_ErrorMessages.Margin.Left + HSL_ErrorMessages.Margin.Right);
@@ -324,7 +324,7 @@ public partial class EditHabitView : ContentPageBase
 
     async void ME_NameOfHabit_AiIconClicked( System.Object sender, System.EventArgs e )
     {
-        if(BS_RecommendedHabits.State == BottomSheetState.Hidden)
+        if (BS_RecommendedHabits.State == BottomSheetState.Hidden)
         {
             bool doShowRecommendedHabits = true;
 
@@ -359,7 +359,7 @@ public partial class EditHabitView : ContentPageBase
 
     private async void ShowSnackbarOfSuccessfulRecomendedHabitsReload()
     {
-        if(BS_RecommendedHabits.State == BottomSheetState.Hidden)
+        if (BS_RecommendedHabits.State == BottomSheetState.Hidden)
         {
             ISnackbar snackbar = Snackbar.Make(
                 LocStrings.RecommendedHabitsSuccessfullyLoaded,
@@ -389,16 +389,16 @@ public partial class EditHabitView : ContentPageBase
         }
     }
 
-    //void G_Title_SizeChanged( System.Object sender, System.EventArgs e )
-    //{
-    //    double titleWidth = G_Title.Width;
-    //    double buttonWidth = SL_SaveHabit.Width;
-    //    if (titleWidth != -1)
-    //    {
-    //        double titleLabelWidth = titleWidth - buttonWidth - 26;
-    //        L_TitleText.MaximumWidthRequest = titleLabelWidth;
-    //    }
-    //}
+    void G_Title_SizeChanged( System.Object sender, System.EventArgs e )
+    {
+        double titleWidth = G_Title.Width;
+        double buttonWidth = SB_SaveHabit.Width;
+        if (titleWidth != -1)
+        {
+            double titleLabelWidth = titleWidth - buttonWidth - 26;
+            L_TitleText.MaximumWidthRequest = titleLabelWidth;
+        }
+    }
 
     void G_SaveHabit_SizeChanged( System.Object sender, System.EventArgs e )
     {
@@ -418,7 +418,7 @@ public partial class EditHabitView : ContentPageBase
 
     void NE_Priority_EndIconClicked( System.Object sender, System.EventArgs e )
     {
-        if(BS_AllHabits.State == BottomSheetState.Hidden)
+        if (BS_AllHabits.State == BottomSheetState.Hidden)
         {
             bool isAddedCurrentHabit = ViewModel.UserHabits.Any( h => h.Id == ViewModel.Habit.Id );
             if (!isAddedCurrentHabit)
@@ -462,7 +462,7 @@ public partial class EditHabitView : ContentPageBase
                 ViewModel.ReorderUserHabitsCommand.Execute( null );
             }
         }
-        
+
     }
 
     void NE_Priority_DownIconClicked( System.Object sender, System.ComponentModel.HandledEventArgs e )
