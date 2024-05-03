@@ -48,7 +48,7 @@
         </Grid>
     </Shell.TitleView>
 
-    <Grid>
+    <VerticalStackLayout>
         <ScrollView>
     <dxco:TabView HeaderPanelPosition="Top"
                   x:Name="TV_Tabs"
@@ -65,17 +65,9 @@
                           SelectedHeaderTextColor="{StaticResource LightNormalText}"
                           HeaderWidth="160">
             <ScrollView>
-            <Grid Padding="10"
-                  RowSpacing="6">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <dxe:AutoCompleteTokenEdit LabelText="{x:Static loc:LocStrings.AreasOfHabit}"
+            <VerticalStackLayout Padding="10"
+                                 Spacing="6">
+                <dxe:AutoCompleteTokenEdit LabelText="{x:Static loc:LocStrings.AreasOfHabit}"
                                            EndIcon="dotshorizontal"
                                            ItemsSource="{Binding AllUserAreasOfLife}"
                                            EndIconClicked="TE_AreasOfLife_EndIconClicked"
@@ -85,8 +77,7 @@
                                            SelectedItems="{Binding Habit.AreasOfLife, Mode=TwoWay}"
                                            SelectionChanged="TE_AreasOfLife_SelectionChanged"
                                            DropDownSelectedItemBackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary}, Dark={StaticResource LightPrimary}}"
-                                           x:Name="TE_AreasOfLife"
-                                           Grid.Row="0">
+                                           x:Name="TE_AreasOfLife">
                     <dxe:AutoCompleteTokenEdit.TokenAppearance>
                         <dxe:TokenAppearance BorderColor="{StaticResource Primary}"
                                      BorderThickness="2"
@@ -113,13 +104,11 @@
                                    EndIcon="ai"
                                    IsEndIconVisible="{Binding IsNewHabit}"
                                    EndIconClicked="ME_NameOfHabit_AiIconClicked"
-                                   ClearIconVisibility="Never" 
-                                   Grid.Row="1"/>
+                                   ClearIconVisibility="Never" />
 
                 <dxe:ChoiceChipGroup x:Name="CCG_Types"
                                      HorizontalOptions="CenterAndExpand"
-                                     IsMultiline="True"
-                                     Grid.Row="2">
+                                     IsMultiline="True">
                     <dxe:Chip Text="{x:Static loc:LocStrings.WithoutExceptions}"
                               Icon="info"
                               x:Name="C_WithoutExceptionsType"
@@ -141,8 +130,7 @@
                               EndIcon="dotshorizontal"
                               EndIconClicked="FrequencyIcon_Clicked"
                               Text="{Binding FrequencyRepresentation}"
-                              LabelText="{x:Static loc:LocStrings.Frequency}"
-                              Grid.Row="3">
+                              LabelText="{x:Static loc:LocStrings.Frequency}">
                             <dxe:TextEdit.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="Frequency_Tapped"/>
                             </dxe:TextEdit.GestureRecognizers>
@@ -158,8 +146,7 @@
                                  StartIcon="priority"
                                  EndIcon="dotshorizontal"
                                  x:Name="NE_Priority"
-                                 EndIconClicked="NE_Priority_EndIconClicked" 
-                                 Grid.Row="4"/>
+                                 EndIconClicked="NE_Priority_EndIconClicked" />
                 <dxe:NumericEdit Value="{Binding Habit.Complexity}"
                                  LabelText="{x:Static loc:LocStrings.ComplexityWithRange}"
                                  MinValue="1"
@@ -168,8 +155,7 @@
                                  HelpText="{Binding ComplexityHelpText}"
                                  IsEnabled="{Binding IsNewHabit}"
                                  StartIcon="charts"
-                                 IsUpDownIconVisible="True" 
-                                 Grid.Row="5"/>
+                                 IsUpDownIconVisible="True" />
                 <dxco:BottomSheet x:Name="BS_AllHabits">
                     <Grid RowDefinitions="Auto, Auto"
                           RowSpacing="20"
@@ -439,7 +425,7 @@
                     </Grid>
 
                 </dxco:BottomSheet>
-            </Grid>
+            </VerticalStackLayout>
             </ScrollView>
         </dxco:TabViewItem>
         <dxco:TabViewItem HeaderText="{x:Static loc:LocStrings.HowToKeep}"
@@ -467,7 +453,7 @@
                               EndIcon="info"
                               EndIconCommand="{Binding ShowSnackbarForQuestionCommand}"
                               EndIconCommandParameter="{x:Reference TE_Habit}"/>
-                        <dxe:MultilineEdit Text="{Binding Habit.Description}"
+                <dxe:MultilineEdit Text="{Binding Habit.Description}"
                                    LabelText="{x:Static loc:LocStrings.NotesOrHowToKeepHabit}"
                                    ClearIconVisibility="Never"
                                    StartIcon="notes" />
@@ -475,8 +461,8 @@
                 </ScrollView>
         </dxco:TabViewItem>
     </dxco:TabView>
-        </ScrollView>
 
+        </ScrollView>
         <VerticalStackLayout HorizontalOptions="Center"
                                  VerticalOptions="Center"
                                  Spacing="0">
@@ -490,5 +476,5 @@
                    IsVisible="{Binding IsLoadingHabitInfo}"
                    HorizontalTextAlignment="Center" />
         </VerticalStackLayout>
-    </Grid>
+    </VerticalStackLayout>
 </v:ContentPageBase>
