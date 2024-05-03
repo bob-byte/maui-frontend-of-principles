@@ -74,18 +74,6 @@ public partial class EditHabitView : ContentPageBase
 
     private EditHabitViewModel ViewModel { get; }
 
-    private async void SubhabitsTapRecognizer_Tapped( System.Object sender, Microsoft.Maui.Controls.TappedEventArgs e )
-    {
-        Application.Current.Resources.TryGetValue( "Primary", out object? primaryColorObj );
-
-        //await I_SubHabitsInfo.DisplaySnackbar(
-        //    message: $"Don't use them for thought habits (e.g. \"Be a realistic optimist\").{Environment.NewLine}" +
-        //             $"Stop using them if they don't help you",
-        //    duration: TimeSpan.FromSeconds( 3 ),
-        //    visualOptions: SnackbarHelper.DefaultOptions()
-        //);
-    }
-
     void Frequency_Tapped( System.Object sender, Microsoft.Maui.Controls.TappedEventArgs e )
     {
         OpenFrequencyPopup();
@@ -386,17 +374,6 @@ public partial class EditHabitView : ContentPageBase
         if (e.IsFocused)
         {
             RB_SeveralTimesPerPeriod.IsChecked = true;
-        }
-    }
-
-    void G_Title_SizeChanged( System.Object sender, System.EventArgs e )
-    {
-        double titleWidth = G_Title.Width;
-        double buttonWidth = SB_SaveHabit.Width;
-        if (titleWidth != -1)
-        {
-            double titleLabelWidth = titleWidth - buttonWidth - 26;
-            L_TitleText.MaximumWidthRequest = titleLabelWidth;
         }
     }
 
