@@ -39,13 +39,14 @@ namespace SET.MAUI.ViewModels
             Name = new ValidatableObject<string>();
             Email = new ValidatableObject<string>();
             Password = new ValidatableObject<string>();
+            Gender = Gender.Man;
 
             LocSigningUp = LocStrings.SigningUp;
         }
 
         public string LocSigningUp { get; set; }
 
-        public override Task InitializeAsync( object parameter = null )
+        public override Task InitializeAsync( object? parameter = null )
         {
             Name = new ValidatableObject<string>();
             Email = new ValidatableObject<string>();

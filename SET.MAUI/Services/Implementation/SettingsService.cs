@@ -12,12 +12,12 @@ public class SettingsService : ISettingsService
     {
         get
         {
-            bool result = true;
-//#if DEBUG
-//            result = true;
-//#else
-//            result = false;
-//#endif
+            bool result;
+#if DEBUG
+            result = true;
+#else
+            result = false;
+#endif
             return result;
         }
     }

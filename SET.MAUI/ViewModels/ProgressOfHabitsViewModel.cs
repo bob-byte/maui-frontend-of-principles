@@ -53,6 +53,15 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
         StartProgressInterval = EndProgressInterval.AddDays( -HabitConstants.AVERAGE_NUMBER_OF_DAYS_TO_AUTOMATE_HABIT + 1 );
         m_isBusyForChangeCompleted = new ConcurrentDictionary<UserHabit, SemaphoreSlim>();
         UserHabits = new ObservableCollectionEx<UserHabit>();
+
+        ReferenceMessenger.Register<UserLoggedOutMessage>( this, ( sender, msg ) =>
+        {
+            m_isInitialized = false;
+
+            DefaultHandleLogout( msg );
+            UserHabits.Clear();
+            SelectedHabit = null;
+        } );
     }
 
     public IProgressOfHabitService ProgressOfHabitService { get; }

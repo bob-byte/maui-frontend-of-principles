@@ -3,7 +3,7 @@ namespace SET.Core.Extensions
 {
     public static class DateOnlyExtensions
     {
-        public static int DaysUntil(this DateOnly it, DateOnly other )
+        public static int DaysUntil(this DateOnly it, DateOnly other)
         {
             var zeroTime = TimeOnly.FromTimeSpan( TimeSpan.Zero );
             DateTime itAsDateTime = it.ToDateTime(zeroTime);

@@ -122,7 +122,20 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     public ISettingsService SettingsService { get; }
     public ICachingService CachingService { get; }
 
-    public event EventHandler<LoggedOutEventArgs>? Loggedout;
+    protected void DefaultHandleLogout(UserLoggedOutMessage message)
+    {
+        IsInitialized = false;
+        
+        if (UserName != null)
+        {
+            UserName.Value = string.Empty;
+        }
+
+        MainSlogan = string.Empty;
+        Mission = string.Empty;
+        Gender = 0;
+        UserIcon = null;
+    }
 
     partial void OnMissionChanged( string? value )
     {
@@ -153,24 +166,6 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         CachingService.SetForever( CacheKeys.USER_GENDER, value.ToString() );
     }
 
-
-    protected void Logout()
-    {
-        string token = SettingsService.AuthAccessToken;
-        string userId = SettingsService.UserId;
-        SettingsService.AuthAccessToken = string.Empty;
-        SettingsService.UserId = string.Empty;
-        MainSlogan = string.Empty;
-        Mission = string.Empty;
-        Gender = 0;
-
-        Loggedout?.Invoke( this, new LoggedOutEventArgs
-        {
-            Token = token,
-            UserId = userId
-        } );
-    }
-
     public virtual void ApplyQueryAttributes(IDictionary<string, object> query )
     {
         IsInitialized = false;
@@ -183,7 +178,6 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
 
     protected virtual async Task InitUserInfoAsync()
     {
-        await Task.Delay( 7000 );
         UserName.Value = CachingService.StoredValue( CacheKeys.USER_NAME );
 
         UserInfo userInfo;

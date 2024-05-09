@@ -23,7 +23,10 @@ public class ServiceOfHabit : BaseRemoteService, IServiceOfHabit
         DateTime endIntervalAsDateTime = endInterval.ToDateTime( zeroTime );
         int intervalLength = endIntervalAsDateTime.Subtract( startIntervalAsDateTime ).Days + 1;
 
-        List<UserHabit> result = await RequestProvider.GetAsync<List<UserHabit>>( url, SettingsService.AuthAccessToken );
+        List<UserHabit> result = await RequestProvider.GetAsync<List<UserHabit>>(
+            url,
+            SettingsService.AuthAccessToken
+        ).DefaultConfigureAwait();
 
         Stopwatch timeWatcher = Stopwatch.StartNew();
         foreach( UserHabit habit in result )

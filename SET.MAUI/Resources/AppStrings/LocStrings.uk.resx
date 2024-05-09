@@ -184,7 +184,7 @@
     <value>Сильна причина дотримуватись</value>
   </data>
   <data name="OptionalPlaceholder" xml:space="preserve">
-    <value>(Не обовʼязкове)</value>
+    <value>(Необовʼязково)</value>
   </data>
   <data name="Question" xml:space="preserve">
     <value>Питання</value>

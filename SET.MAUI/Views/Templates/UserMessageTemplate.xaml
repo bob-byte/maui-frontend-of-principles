@@ -41,8 +41,7 @@
           VerticalOptions="End">
         <BoxView Color="{StaticResource LightPrimary}"
                  CornerRadius="5, 5, 0, 5" />
-        <dx:DXImage Source="{Binding Gender,
-                                     Source={RelativeSource AncestorType={x:Type vm:HelperViewModel}},
+        <dx:DXImage Source="{Binding ViewModel.Gender,
                                      Converter={StaticResource GenderToIcon}}"
                     WidthRequest="22"
                     HeightRequest="22"/>

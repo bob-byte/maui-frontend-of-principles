@@ -64,6 +64,13 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         AllUserAreasOfLife = new ObservableCollectionEx<UserAreaOfLife>();
 
         UserHabits = new ObservableCollectionEx<UserHabit>();
+        ReferenceMessenger.Register<UserLoggedOutMessage>( this, ( sender, msg ) =>
+        {
+            DefaultHandleLogout( msg );
+
+            AllUserAreasOfLife.Clear();
+            UserHabits.Clear();
+        } );
     }
 
     public List<PeriodOfHabit> PeriodsOfHabit { get; }
@@ -173,10 +180,8 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
             {
                 await UiBusyFor( async () =>
                 {
-                    LoggingService.LogInfo( "I am before calling func ServiceOfHabit.UpdateHabitAsync( dto );" );
                     await ServiceOfHabit.UpdateHabitAsync( dto );
                     await Navigation.GoBackAsync();
-                    LoggingService.LogInfo( "I am before calling func ReferenceMessenger.Send( new HabitSavedMessage( Habit, UserHabits ) );" );
                     ReferenceMessenger.Send( new HabitSavedMessage( Habit, copyOfHabits ) );
                 } );
             }

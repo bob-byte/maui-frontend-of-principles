@@ -3,7 +3,7 @@ namespace SET.MAUI.Views.Templates;
 
 public class MessageDataTemplateSelector : DataTemplateSelector
 {
-    public MessageDataTemplateSelector(HelperViewModel viewModel )
+    public MessageDataTemplateSelector( HelperViewModel viewModel )
     {
         ViewModel = viewModel;
     }
@@ -17,7 +17,7 @@ public class MessageDataTemplateSelector : DataTemplateSelector
         var message = (DisplayMessage)item;
         if (message.IsUserMessage)
         {
-            if(message.View == null)
+            if (message.View == null)
             {
                 message.View = new UserMessageTemplate( PageWidth );
                 message.DataTemplate = new DataTemplate( () => message.View );
@@ -32,4 +32,3 @@ public class MessageDataTemplateSelector : DataTemplateSelector
         return message.DataTemplate!;
     }
 }
-

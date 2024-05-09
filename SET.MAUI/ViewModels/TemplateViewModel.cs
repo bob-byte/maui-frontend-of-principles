@@ -1,11 +1,10 @@
-﻿namespace SET.MAUI.ViewModels
+﻿namespace SET.MAUI.ViewModels;
+
+public class TemplateViewModel : BaseViewModel
 {
-    public class TemplateViewModel : BaseViewModel
+    public TemplateViewModel( IServiceProvider serviceProvider )
+        : base( serviceProvider )
     {
-        public TemplateViewModel( IServiceProvider serviceProvider )
-            : base( serviceProvider )
-        {
-            //do nothing
-        }
+        //do nothing
     }
 }

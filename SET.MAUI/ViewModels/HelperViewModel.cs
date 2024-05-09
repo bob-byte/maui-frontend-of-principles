@@ -24,13 +24,22 @@ public partial class HelperViewModel : BaseViewModel
         m_displayMessages = new ObservableCollectionEx<DisplayMessage>();
         m_aiChatService = aiChatService;
         m_cancellationSource = new CancellationTokenSource();
-        Loggedout += OnLogout;
+
+        ReferenceMessenger.Register<UserLoggedOutMessage>( this, ( sender, msg ) =>
+        {
+            DefaultHandleLogout( msg );
+
+            Prompt = string.Empty;
+            DisplayMessages.Clear();
+            m_aiChatService.ClearChat();
+            IsAnimationVisible = true;
+        } );
     }
 
-    private void OnLogout(object? sender, LoggedOutEventArgs eventArgs)
+    public override async Task InitializeAsync( object? parameter = null )
     {
-        DisplayMessages.Clear();
-        m_aiChatService.ClearChat();
+        await InitUserInfoAsync();
+        await base.InitializeAsync( parameter );
     }
 
     private void AddUserMessage(string msg)
@@ -43,7 +52,8 @@ public partial class HelperViewModel : BaseViewModel
         DisplayMessages.Add( new DisplayMessage
         {
             IsUserMessage = true,
-            Text = msg
+            Text = msg,
+            ViewModel = this
         } );
     }
 
@@ -65,7 +75,8 @@ public partial class HelperViewModel : BaseViewModel
                 DisplayMessage helperMsg = new()
                 {
                     IsUserMessage = false,
-                    Text = string.Empty
+                    Text = string.Empty,
+                    ViewModel = this
                 };
                 DisplayMessages.Add( helperMsg );
                 CancellationToken cancellationToken = m_cancellationSource.Token;

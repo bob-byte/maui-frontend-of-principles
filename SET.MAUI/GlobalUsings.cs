@@ -6,7 +6,6 @@ global using CommunityToolkit.Mvvm.ComponentModel;
 global using CommunityToolkit.Mvvm.Input;
 global using CommunityToolkit.Maui.Markup;
 global using SET.Core.Models;
-global using SET.MAUI.Models;
 global using SET.MAUI.ViewModels;
 global using SET.MAUI.Views;
 global using SET.MAUI.Views.Templates;

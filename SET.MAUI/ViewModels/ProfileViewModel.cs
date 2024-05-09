@@ -2,12 +2,11 @@
 
 public partial class ProfileViewModel : BaseViewModel
 {
-    private bool m_isInited;
-
     public ProfileViewModel( IServiceProvider serviceProvider )
         : base( serviceProvider )
     {
         Title = LocStrings.Profile;
+        ReferenceMessenger.Register<UserLoggedOutMessage>( this, ( sender, msg ) => DefaultHandleLogout( msg ) );
     }
 
     [RelayCommand(CanExecute = nameof(CanSaveUserName))]
