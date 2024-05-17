@@ -16,7 +16,7 @@ public class MockServiceOfHabit : IServiceOfHabit
         {
             new UserHabit
             {
-                Id = Guid.NewGuid(),
+                Id = 0,
                 Name = "I wake up before 5:00 a.m.",
                 ReasonToFollow = "I have more confidence, energy to achieve my goals",
                 Description = ""
@@ -24,7 +24,7 @@ public class MockServiceOfHabit : IServiceOfHabit
         };
     }
 
-    public Task DeleteAsync( Guid id )
+    public Task DeleteAsync( long id )
     {
         throw new NotImplementedException();
     }
@@ -34,15 +34,11 @@ public class MockServiceOfHabit : IServiceOfHabit
         return Task.FromResult(m_userHabits);
     }
 
-    public Task<UserHabit> UserHabitAsync( Guid id )
+    public Task<UserHabit> UserHabitAsync( long id )
     {
         throw new NotImplementedException();
     }
 
-    public Task UpdateHabitAsync( EditUserHabitDto habit )
-    {
-        throw new NotImplementedException();
-    }
 
     public Task<UserHabit> PostHabitAsync( UserHabit habit )
     {
@@ -75,6 +71,11 @@ public class MockServiceOfHabit : IServiceOfHabit
     }
 
     public void ResetPriorities( IEnumerable<UserHabit> habits )
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<SaveHabitResponse> UpdateHabitAsync( EditUserHabitDto habit )
     {
         throw new NotImplementedException();
     }

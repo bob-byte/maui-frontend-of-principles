@@ -8,7 +8,7 @@ namespace SET.Core.Models;
 
 public record UserStatement
 {
-    public Guid Id { get; set; }
+    public long Id { get; set; }
     public string Author { get; set; }
     public string ShortDescription { get; set; }
     public List<AreaOfLife> AreasOfLife { get; set; }

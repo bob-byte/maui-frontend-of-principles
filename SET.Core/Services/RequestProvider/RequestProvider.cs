@@ -204,7 +204,7 @@ public class RequestProvider : IRequestProvider
     {
         if (httpClient != null && !string.IsNullOrEmpty( parameter ))
         {
-            httpClient.DefaultRequestHeaders.Add( parameter, Guid.NewGuid().ToString() );
+            httpClient.DefaultRequestHeaders.Add( parameter, default( long ).ToString() );
         }
     }
 

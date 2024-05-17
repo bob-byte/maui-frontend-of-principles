@@ -86,7 +86,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
             {
                 habit.Progresses!.Insert( index: 0, new ProgressOfHabit
                 {
-                    Id = Guid.NewGuid(),
+                    Id = 0,
                     Date = today,
                     Habit = habit,
                     Value = ProgressValue.UNKNOWN

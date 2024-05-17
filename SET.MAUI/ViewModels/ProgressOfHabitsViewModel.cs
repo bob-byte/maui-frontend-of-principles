@@ -72,7 +72,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
                 {
                     ProgressOfHabit progress = new()
                     {
-                        Id = Guid.NewGuid(),
+                        Id = 0,
                         Date = date,
                         Value = ProgressValue.UNKNOWN,
                         Habit = savedHabit
@@ -171,7 +171,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     {
         Dictionary<string, object> routeParams = new()
         {
-            { "Id", default( Guid ) },
+            { "Id", default( long ) },
             { "UserHabits", UserHabits }
         };
 

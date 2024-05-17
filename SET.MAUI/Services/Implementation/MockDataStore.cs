@@ -9,13 +9,14 @@ namespace SET.MAUI.Services
         public MockDataStore()
         {
             DateTime baseDate = DateTime.Today;
+            long idCounter = 1;
             this.items = new List<Item>() {
-            new Item { Id = Guid.NewGuid(), Text = "First item", Description="This is an item description.", StartTime = baseDate.AddHours(1), EndTime = baseDate.AddHours(2), Value=17.098 },
-            new Item { Id = Guid.NewGuid(), Text = "Second item", Description="This is an item description.", StartTime = baseDate.AddHours(2), EndTime = baseDate.AddHours(4), Value=9.985 },
-            new Item { Id = Guid.NewGuid(), Text = "Third item", Description="This is an item description.", StartTime = baseDate.AddHours(3), EndTime = baseDate.AddHours(5), Value=9.597},
-            new Item { Id = Guid.NewGuid(), Text = "Fourth item", Description="This is an item description.", StartTime = baseDate.AddHours(5), EndTime = baseDate.AddHours(6), Value=9.834 },
-            new Item { Id = Guid.NewGuid(), Text = "Fifth item", Description="This is an item description.", StartTime = baseDate.AddHours(9), EndTime = baseDate.AddHours(12), Value=3.287 },
-            new Item { Id = Guid.NewGuid(), Text = "Sixth item", Description="This is an item description.", StartTime = baseDate.AddHours(12), EndTime = baseDate.AddHours(15), Value=81.2 }
+            new Item { Id = idCounter++, Text = "First item", Description="This is an item description.", StartTime = baseDate.AddHours(1), EndTime = baseDate.AddHours(2), Value=17.098 },
+            new Item { Id = idCounter++, Text = "Second item", Description="This is an item description.", StartTime = baseDate.AddHours(2), EndTime = baseDate.AddHours(4), Value=9.985 },
+            new Item { Id = idCounter++, Text = "Third item", Description="This is an item description.", StartTime = baseDate.AddHours(3), EndTime = baseDate.AddHours(5), Value=9.597},
+            new Item { Id = idCounter++, Text = "Fourth item", Description="This is an item description.", StartTime = baseDate.AddHours(5), EndTime = baseDate.AddHours(6), Value=9.834 },
+            new Item { Id = idCounter++, Text = "Fifth item", Description="This is an item description.", StartTime = baseDate.AddHours(9), EndTime = baseDate.AddHours(12), Value=3.287 },
+            new Item { Id = idCounter++, Text = "Sixth item", Description="This is an item description.", StartTime = baseDate.AddHours(12), EndTime = baseDate.AddHours(15), Value=81.2 }
         };
         }
 
@@ -35,7 +36,7 @@ namespace SET.MAUI.Services
             return await Task.FromResult( true );
         }
 
-        public async Task<bool> DeleteItemAsync( Guid id )
+        public async Task<bool> DeleteItemAsync( long id )
         {
             var oldItem = this.items.Where( ( Item arg ) => arg.Id == id ).FirstOrDefault();
             this.items.Remove( oldItem );
@@ -43,7 +44,7 @@ namespace SET.MAUI.Services
             return await Task.FromResult( true );
         }
 
-        public async Task<Item> GetItemAsync( Guid id )
+        public async Task<Item> GetItemAsync( long id )
         {
             return await Task.FromResult( this.items.FirstOrDefault( s => s.Id == id ) );
         }

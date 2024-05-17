@@ -9,7 +9,7 @@ namespace SET.Core.Models;
 public partial class UserAreaOfLife : ObservableObject
 {
     [ObservableProperty]
-    private Guid m_id;
+    private long m_id;
     [ObservableProperty]
     private string? m_name;
     [ObservableProperty]
@@ -22,7 +22,7 @@ public partial class UserAreaOfLife : ObservableObject
     [ObservableProperty]
     private double? m_rate;
     [ObservableProperty]
-    private Guid m_userId;
+    private long m_userId;
 
     public override string ToString()
     {

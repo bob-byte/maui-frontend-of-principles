@@ -5,7 +5,7 @@ namespace SET.Core.Models;
 public partial class UserHabit : ObservableObject
 {
     [ObservableProperty]
-    private Guid m_id;
+    private long m_id;
     [ObservableProperty]
     private string? m_name;
 
@@ -88,7 +88,7 @@ public partial class UserHabit : ObservableObject
         m_computedProgresses = new ListOfProgressOfHabit( this );
     }
 
-    public Guid UserId { get; set; }
+    public long UserId { get; set; }
 
     public override string ToString()
     {

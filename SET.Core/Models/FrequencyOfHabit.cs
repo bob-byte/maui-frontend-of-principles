@@ -12,7 +12,7 @@ public partial class FrequencyOfHabit : ObservableObject
 {
     public const double MAX_VALUE = 1.0;
     [ObservableProperty]
-    private Guid m_id = Guid.NewGuid();
+    private long m_id = 0;
     [ObservableProperty]
     private FrequencyType m_type = FrequencyType.EveryDay;
 

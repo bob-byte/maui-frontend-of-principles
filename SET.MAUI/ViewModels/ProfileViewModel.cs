@@ -87,7 +87,7 @@ public partial class ProfileViewModel : BaseViewModel
         {
             Gender = Gender,
             Name = UserName.Value,
-            Id = Guid.Parse( SettingsService.UserId ),
+            Id = long.Parse( SettingsService.UserId ),
             MainSlogan = MainSlogan,
             Mission = Mission
         } );

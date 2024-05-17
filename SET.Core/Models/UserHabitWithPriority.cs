@@ -3,7 +3,7 @@ namespace SET.Core.Models;
 
 public class UserHabitWithPriority
 {
-    public Guid Id { get; set; }
+    public long Id { get; set; }
     public int Priority { get; set; }
 }
 

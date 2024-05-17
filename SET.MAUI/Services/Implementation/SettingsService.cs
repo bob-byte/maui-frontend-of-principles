@@ -30,7 +30,7 @@ public class SettingsService : ISettingsService
 
     public string UserId
     {
-        get => Preferences.Get( key: "user_id", defaultValue: Guid.Empty.ToString() )!;
+        get => Preferences.Get( key: "user_id", defaultValue: "0" )!;
         set => Preferences.Set( key: "user_id", value );
     }
 }
