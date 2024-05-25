@@ -31,481 +31,461 @@
                    FontAttributes="Bold"
                    LineBreakMode="TailTruncation"
                    FontSize="17"
-                   Grid.Column="0"/>
+                   Grid.Column="0" />
             <Grid x:Name="G_SaveHabit"
-                         HorizontalOptions="End"
-                         VerticalOptions="CenterAndExpand"
-                         SizeChanged="G_SaveHabit_SizeChanged"
-                         Grid.Column="2">
-                <dxco:SimpleButton Text="{Binding LocSave, Converter={StaticResource ToUpperCase}}"
-                               Style="{StaticResource TitlePrimaryButton}"
-                               x:Name="SB_SaveHabit"
-                               Clicked="SB_Save_Clicked"
-                               Margin="0, 2, 0, 2"
-                               FontSize="14"
-                               BorderThickness="2"/>
+                  HorizontalOptions="End"
+                  VerticalOptions="CenterAndExpand"
+                  SizeChanged="G_SaveHabit_SizeChanged"
+                  Grid.Column="2">
+                <dxco:SimpleButton Text="{Binding LocSave,
+                                                  Converter={StaticResource ToUpperCase}}"
+                                   Style="{StaticResource TitlePrimaryButton}"
+                                   x:Name="SB_SaveHabit"
+                                   Clicked="SB_Save_Clicked"
+                                   Margin="0,2,0,2"
+                                   FontSize="14"
+                                   BorderThickness="2" />
             </Grid>
         </Grid>
     </Shell.TitleView>
 
     <Grid>
-        <ScrollView>
-    <dxco:TabView HeaderPanelPosition="Top"
-                  x:Name="TV_Tabs"
-                          ItemHeaderTextColor="{StaticResource LightPlaceholderColor}"
-                          SelectedItemHeaderTextColor="{StaticResource LightNormalText}"
-                  IsVisible="{Binding IsLoadingHabitInfo, Converter={StaticResource IsFalse}}"
-                  SwipeEnabled="True"
-                  BackgroundColor="White"
-                  HeaderPanelBackgroundColor="White"
-                  SelectedItemHeaderBackgroundColor="White">
-        <dxco:TabViewItem HeaderText="{x:Static loc:LocStrings.Info}"
-                          HeaderIconPosition="Right"
-                          HeaderTextColor="{StaticResource LightPlaceholderColor}"
-                          SelectedHeaderTextColor="{StaticResource LightNormalText}"
-                          HeaderWidth="160">
-            <ScrollView>
-            <VerticalStackLayout Padding="10"
-                                 Spacing="6">
-                <dxe:AutoCompleteTokenEdit LabelText="{x:Static loc:LocStrings.AreasOfHabit}"
-                                           EndIcon="dotshorizontal"
-                                           ItemsSource="{Binding AllUserAreasOfLife}"
-                                           EndIconClicked="TE_AreasOfLife_EndIconClicked"
-                                           StartIcon="rule"
-                                           IsStartIconVisible="True"
-                                           DisplayMember="Name"
-                                           SelectedItems="{Binding Habit.AreasOfLife, Mode=TwoWay}"
-                                           SelectionChanged="TE_AreasOfLife_SelectionChanged"
-                                           DropDownSelectedItemBackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary}, Dark={StaticResource LightPrimary}}"
-                                           x:Name="TE_AreasOfLife">
-                    <dxe:AutoCompleteTokenEdit.TokenAppearance>
-                        <dxe:TokenAppearance BorderColor="{StaticResource Primary}"
-                                     BorderThickness="2"
-                                     CornerRadius="14"
-                                     FontSize="14"
-                                     TextColor="{AppThemeBinding Light={StaticResource LightNormalText}, Dark={StaticResource DarkNormalText}}"
-                                     PressedBorderColor="{StaticResource Primary}"/>
-                    </dxe:AutoCompleteTokenEdit.TokenAppearance>
-                    <dxe:AutoCompleteTokenEdit.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1"
-                                              x:Name="TGR_AreasOfHabit"
-                                              Tapped="TGR_AreasOfHabit_Tapped"/>
-                    </dxe:AutoCompleteTokenEdit.GestureRecognizers>
-                </dxe:AutoCompleteTokenEdit>
+        <dxco:TabView HeaderPanelPosition="Top"
+                      x:Name="TV_Tabs"
+                      ItemHeaderTextColor="{StaticResource LightPlaceholderColor}"
+                      SelectedItemHeaderTextColor="{StaticResource LightNormalText}"
+                      IsVisible="{Binding IsLoadingHabitInfo,
+                                          Converter={StaticResource IsFalse}}"
+                      SwipeEnabled="True"
+                      BackgroundColor="White"
+                      HeaderPanelBackgroundColor="White"
+                      SelectedItemHeaderBackgroundColor="White">
+            <dxco:TabViewItem HeaderText="{x:Static loc:LocStrings.Info}"
+                              HeaderIconPosition="{OnPlatform iOS='Right'}"
+                              HeaderTextColor="{StaticResource LightPlaceholderColor}"
+                              SelectedHeaderTextColor="{StaticResource LightNormalText}"
+                              HeaderWidth="160">
+                <ScrollView>
+                    <VerticalStackLayout Padding="10"
+                                         Spacing="6">
+                        <dxe:AutoCompleteTokenEdit LabelText="{x:Static loc:LocStrings.AreasOfHabit}"
+                                                   EndIcon="dotshorizontal"
+                                                   ItemsSource="{Binding AllUserAreasOfLife}"
+                                                   EndIconClicked="TE_AreasOfLife_EndIconClicked"
+                                                   StartIcon="rule"
+                                                   IsStartIconVisible="True"
+                                                   DisplayMember="Name"
+                                                   SelectedItems="{Binding Habit.AreasOfLife,
+                                                                           Mode=TwoWay}"
+                                                   SelectionChanged="TE_AreasOfLife_SelectionChanged"
+                                                   DropDownSelectedItemBackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary},
+                                                                                                         Dark={StaticResource LightPrimary}}"
+                                                   x:Name="TE_AreasOfLife">
+                            <dxe:AutoCompleteTokenEdit.TokenAppearance>
+                                <dxe:TokenAppearance BorderColor="{StaticResource Primary}"
+                                                     BorderThickness="2"
+                                                     CornerRadius="14"
+                                                     FontSize="14"
+                                                     TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
+                                                                                 Dark={StaticResource DarkNormalText}}"
+                                                     PressedBorderColor="{StaticResource Primary}" />
+                            </dxe:AutoCompleteTokenEdit.TokenAppearance>
+                            <dxe:AutoCompleteTokenEdit.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                      x:Name="TGR_AreasOfHabit"
+                                                      Tapped="TGR_AreasOfHabit_Tapped" />
+                            </dxe:AutoCompleteTokenEdit.GestureRecognizers>
+                        </dxe:AutoCompleteTokenEdit>
 
-                <dxe:MultilineEdit Text="{Binding NameOfHabit.Value}"
-                                   LabelText="{x:Static loc:LocStrings.Name}"
-                                   HasError="{Binding NameOfHabit.IsValid, Converter={StaticResource IsFalse}}"
-                                   IsErrorIconVisible="True"
-                                   x:Name="ME_NameOfHabit"
-                                   MaxLineCount="5"
-                                   StartIcon="fire_first"
-                                   ReturnType="Done"
-                                   EndIcon="ai"
-                                   IsEndIconVisible="{Binding IsNewHabit}"
-                                   EndIconClicked="ME_NameOfHabit_AiIconClicked"
-                                   ClearIconVisibility="Never" />
+                        <dxe:MultilineEdit Text="{Binding NameOfHabit.Value}"
+                                           LabelText="{x:Static loc:LocStrings.Name}"
+                                           HasError="{Binding NameOfHabit.IsValid,
+                                                              Converter={StaticResource IsFalse}}"
+                                           IsErrorIconVisible="True"
+                                           x:Name="ME_NameOfHabit"
+                                           MaxLineCount="5"
+                                           StartIcon="fire_first"
+                                           ReturnType="Done"
+                                           EndIcon="ai"
+                                           IsEndIconVisible="{Binding IsNewHabit}"
+                                           EndIconClicked="ME_NameOfHabit_AiIconClicked"
+                                           ClearIconVisibility="Never" />
 
-                <dxe:ChoiceChipGroup x:Name="CCG_Types"
-                                     HorizontalOptions="CenterAndExpand"
-                                     IsMultiline="True">
-                    <dxe:Chip Text="{x:Static loc:LocStrings.WithoutExceptions}"
-                              Icon="info"
-                              x:Name="C_WithoutExceptionsType"
-                              TapCommand="{Binding TapWithoutExceptionsTypeCommand,
-                                                   Source={RelativeSource AncestorType={x:Type vm:EditHabitViewModel}}}"
-                              TapCommandParameter="{x:Reference C_WithoutExceptionsType}">
-                    </dxe:Chip>
-                    <dxe:Chip Text="{x:Static loc:LocStrings.IntegrallyWise}"
-                              Icon="info"
-                              x:Name="C_IntegrallyWiseType"
-                              TapCommand="{Binding TapIntegrallyWiseTypeCommand,
-                                                   Source={RelativeSource AncestorType={x:Type vm:EditHabitViewModel}}}"
-                              TapCommandParameter="{x:Reference C_IntegrallyWiseType}"/>
-                </dxe:ChoiceChipGroup>
+                        <dxe:ChoiceChipGroup x:Name="CCG_Types"
+                                             HorizontalOptions="CenterAndExpand"
+                                             IsMultiline="True">
+                            <dxe:Chip Text="{x:Static loc:LocStrings.WithoutExceptions}"
+                                      Icon="info"
+                                      x:Name="C_WithoutExceptionsType"
+                                      TapCommand="{Binding TapWithoutExceptionsTypeCommand,
+                                                           Source={RelativeSource AncestorType={x:Type vm:EditHabitViewModel}}}"
+                                      TapCommandParameter="{x:Reference C_WithoutExceptionsType}">
+                            </dxe:Chip>
+                            <dxe:Chip Text="{x:Static loc:LocStrings.IntegrallyWise}"
+                                      Icon="info"
+                                      x:Name="C_IntegrallyWiseType"
+                                      TapCommand="{Binding TapIntegrallyWiseTypeCommand,
+                                                           Source={RelativeSource AncestorType={x:Type vm:EditHabitViewModel}}}"
+                                      TapCommandParameter="{x:Reference C_IntegrallyWiseType}" />
+                        </dxe:ChoiceChipGroup>
 
-                <dxe:TextEdit IsReadOnly="True"
-                              StartIcon="restart"
-                              StartIconClicked="FrequencyIcon_Clicked"
-                              EndIcon="dotshorizontal"
-                              EndIconClicked="FrequencyIcon_Clicked"
-                              Text="{Binding FrequencyRepresentation}"
-                              LabelText="{x:Static loc:LocStrings.Frequency}">
-                    <dxe:TextEdit.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="Frequency_Tapped"/>
-                    </dxe:TextEdit.GestureRecognizers>
-                </dxe:TextEdit>
-                <!--<dxe:TimeEdit LabelText="{x:Static loc:LocStrings.Reminder}"
-                              StartIcon="scheduler"
-                              EndIcon="dotshorizontal"
-                              Time="{Binding Habit.Reminder.Time}" />-->
+                        <dxe:TextEdit IsReadOnly="True"
+                                      StartIcon="restart"
+                                      StartIconClicked="FrequencyIcon_Clicked"
+                                      EndIcon="dotshorizontal"
+                                      EndIconClicked="FrequencyIcon_Clicked"
+                                      Text="{Binding FrequencyRepresentation}"
+                                      LabelText="{x:Static loc:LocStrings.Frequency}">
+                            <dxe:TextEdit.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="Frequency_Tapped" />
+                            </dxe:TextEdit.GestureRecognizers>
+                        </dxe:TextEdit>
 
-                <dxe:NumericEdit Value="{Binding Habit.Priority}"
-                                 LabelText="{x:Static loc:LocStrings.Priority}"
-                                 MinValue="1"
-                                 AllowLooping="True"
-                                 AllowAnimation="True"
-                                 ValueChangedCommand="{Binding ReorderUserHabitsCommand}"
-                                 MaxValue="{Binding UserHabits.Count, Mode=OneTime}"
-                                 StartIcon="priority"
-                                 EndIcon="dotshorizontal"
-                                 x:Name="NE_Priority"
-                                 EndIconClicked="NE_Priority_EndIconClicked" />
-                <dxe:NumericEdit Value="{Binding Habit.Complexity}"
-                                 LabelText="{x:Static loc:LocStrings.ComplexityWithRange}"
-                                 MinValue="1"
-                                 MaxDecimalDigitCount="0"
-                                 MaxValue="10"
-                                 HelpText="{Binding ComplexityHelpText}"
-                                 IsEnabled="{Binding IsNewHabit}"
-                                 StartIcon="charts"
-                                 IsUpDownIconVisible="True" />
-                <dxco:BottomSheet x:Name="BS_AllHabits">
-                    <Grid RowDefinitions="Auto, Auto"
-                          RowSpacing="20"
-                          Padding="0, 7, 0, 15">
-                        <Label Style="{StaticResource CentralHeader}"
-                               LineBreakMode="WordWrap"
-                               HorizontalTextAlignment="Center"
-                               HorizontalOptions="CenterAndExpand"
-                               Text="{x:Static loc:LocStrings.SetPriorityByDragAndDrop}"
-                               Grid.Row="0"/>
+                        <dxe:NumericEdit Value="{Binding Habit.Priority}"
+                                         LabelText="{x:Static loc:LocStrings.Priority}"
+                                         MinValue="1"
+                                         AllowLooping="True"
+                                         AllowAnimation="True"
+                                         ValueChangedCommand="{Binding ReorderUserHabitsCommand}"
+                                         MaxValue="{Binding UserHabits.Count,
+                                                            Mode=OneTime}"
+                                         StartIcon="priority"
+                                         EndIcon="dotshorizontal"
+                                         x:Name="NE_Priority"
+                                         EndIconClicked="NE_Priority_EndIconClicked" />
+                        <dxe:NumericEdit Value="{Binding Habit.Complexity}"
+                                         LabelText="{x:Static loc:LocStrings.ComplexityWithRange}"
+                                         MinValue="1"
+                                         MaxDecimalDigitCount="0"
+                                         MaxValue="10"
+                                         HelpText="{Binding ComplexityHelpText}"
+                                         IsEnabled="{Binding IsNewHabit}"
+                                         StartIcon="charts"
+                                         IsUpDownIconVisible="True" />
+                        <dxco:BottomSheet x:Name="BS_AllHabits">
+                            <Grid RowDefinitions="Auto, Auto"
+                                  RowSpacing="20"
+                                  Padding="0,7,0,15">
+                                <Label Style="{StaticResource CentralHeader}"
+                                       LineBreakMode="WordWrap"
+                                       HorizontalTextAlignment="Center"
+                                       HorizontalOptions="CenterAndExpand"
+                                       Text="{x:Static loc:LocStrings.SetPriorityByDragAndDrop}"
+                                       Grid.Row="0" />
 
-                        <dxcv:DXCollectionView AllowDragDropItems="True"
-                                               ZIndex="100"
-                                           ItemsSource="{Binding UserHabits}"
-                                           x:Name="DXC_SelectPriority"
-                                               Grid.Row="1">
-                            <dxcv:DXCollectionView.Behaviors>
-                                <toolkit:EventToCommandBehavior EventName="CompleteItemDragDrop"
-                                                                Command="{Binding ResetPrioritiesCommand}"/>
-                            </dxcv:DXCollectionView.Behaviors>
-                            <dxcv:DXCollectionView.ItemTemplate>
-                                <DataTemplate x:DataType="m:UserHabit">
-                                    <Grid RowDefinitions="Auto, Auto"
-                                      ColumnDefinitions="*, 30"
-                                      ColumnSpacing="15">
-                                        <Label Text="{Binding Name}"
-                                           LineBreakMode="TailTruncation"
-                                           MaxLines="1"
-                                           Padding="10, 15, 0, 0"
-                                           FontAttributes="Bold"
-                                           VerticalOptions="End"
-                                           VerticalTextAlignment="End"
-                                           Grid.Row="0"
-                                           Grid.Column="0"/>
-                                        <Grid Margin="0, 0, 5, 0"
-                                          Padding="0"
-                                          RowSpacing="0"
-                                          ColumnSpacing="0"
-                                          Grid.Column="1">
-                                            <Frame BackgroundColor="{StaticResource LightPrimary}"
-                                               Margin="0"
-                                               Padding="0"
-                                               WidthRequest="30"
-                                               HeightRequest="30"
-                                               VerticalOptions="Center"
-                                               HorizontalOptions="Center"
-                                               HasShadow="False"
-                                               CornerRadius="15"
-                                               IsClippedToBounds="True">
-                                                <Label Text="{Binding Priority}"
-                                                   HorizontalTextAlignment="Center"
-                                                   VerticalTextAlignment="Center"/>
-                                            </Frame>
-                                        </Grid>
-                                        <BoxView Grid.Row="1"
-                                             Style="{StaticResource DefaultHorizonalSeparator}"
-                                             Grid.Column="0"
-                                             Grid.ColumnSpan="2"/>
-                                    </Grid>
-                                </DataTemplate>
-                            </dxcv:DXCollectionView.ItemTemplate>
-                        </dxcv:DXCollectionView>
-                    </Grid>
-                </dxco:BottomSheet>
-                <dxco:DXPopup x:Name="DXP_Errors"
-                              AllowScrim="True"
-                              AllowAnimation="True"
-                              AllowShadow="True"
-                              CloseOnScrimTap="True"
-                              MinimumWidthRequest="230"
-                              HeightRequest="200">
-                    <dx:DXStackLayout Orientation="Vertical">
-                        <Label Text="{x:Static loc:LocStrings.FixErrorsFirst}"
-                               HorizontalOptions="Center"
-                               VerticalOptions="Center"
-                               Margin="10, 10, 10, 0"
-                               FontSize="20"
-                               FontAttributes="Bold"/>
-                        <dx:DXStackLayout Margin="15"
-                                          Orientation="Horizontal"
-                                               ItemSpacing="10"
-                                               x:Name="HSL_ErrorMessages">
-                            <dx:DXImage Source="info"
-                                          x:Name="DXI_Error"
-                                          WidthRequest="25"
-                                          HeightRequest="25"
-                                              TintColor="{StaticResource Error}"
-                                              VerticalOptions="Center"/>
-                            <dx:DXStackLayout Orientation="Vertical"
-                                              x:Name="DXS_ErrorMessages"
-                                              VerticalOptions="Center"/>
-                        </dx:DXStackLayout>
-                        <dxco:SimpleButton x:Name="SB_CloseErrorsPopup"
-                                           Clicked="SB_CloseErrorsPopup_Clicked"
-                                           Text="{x:Static loc:LocStrings.OK}"
-                                           FontSize="16"
-                                           HorizontalOptions="End"
-                                           MinimumWidthRequest="60"
-                                           Margin="0, 5, 5, 5"
-                                           Style="{StaticResource PrimaryButton}"/>
-                    </dx:DXStackLayout>
-                </dxco:DXPopup>
-                <dxco:DXPopup x:Name="DXP_Frequency"
-                              AllowScrim="True"
-                              AllowAnimation="True"
-                              MinimumWidthRequest="250"
-                              AllowShadow="True"
-                              CloseOnScrimTap="True">
-                    <VerticalStackLayout Margin="15">
-                        <RadioButton Content="{x:Static loc:LocStrings.EveryDay}"
-                                     FontSize="16"
-                                     x:Name="RB_EveryDay"
-                                         GroupName="Frequency"/>
-
-                        <HorizontalStackLayout Margin="0, 10, 0, 10"
-                                               Focused="RepeatsOfSeveralDays_Focused">
-                            <RadioButton x:Name="RB_EverySeveralDays"
-                                         Content="{x:Static loc:LocStrings.Every}"
-                                         FontSize="16"
-                                         GroupName="Frequency"/>
-                            <Entry Keyboard="Numeric"
-                                   HorizontalTextAlignment="Center"
-                                   Margin="0, 0, 0, 5"
-                                   FontSize="16"
-                                   x:Name="E_RepeatsOfSeveralDays"
-                                   Focused="RepeatsOfSeveralDays_Focused"
-                                   MaxLength="2" />
-                            <Label Text="{x:Static loc:LocStrings.days}"
-                                   FontSize="16"
-                                   Margin="7, 6, 0, 0">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="EverySeveralDaysFrequency_Tapped" />
-                                </Label.GestureRecognizers>
-                            </Label>
-                        </HorizontalStackLayout>
-
-                        <HorizontalStackLayout>
-                            <HorizontalStackLayout.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="SeveralTimesPerPeriodFrequency_Tapped"/>
-                            </HorizontalStackLayout.GestureRecognizers>
-                            <RadioButton x:Name="RB_SeveralTimesPerPeriod"
-                                         GroupName="Frequency"/>
-                            <Entry Keyboard="Numeric"
-                                   Margin="0, 0, 0, 15"
-                                   MaxLength="3"
-                                   HorizontalTextAlignment="Center"
-                                   FontSize="16"
-                                   x:Name="E_RepeatsOfSeveralTimesPerPeriod"
-                                   Focused="E_RepeatsOfSeveralTimesPerPeriod_Focused">
-                            </Entry>
-                            <Label Text="{x:Static loc:LocStrings.timesPer}"
-                                   FontSize="16"
-                                   Margin="7, 10, 0, 0"/>
-                            <dxe:ComboBoxEdit ItemsSource="{Binding PeriodsOfHabit}"
-                                                      SelectedItem="{Binding SelectedPeriodOfHabit}"
-                                              DisplayMember="Name"
-                                              WidthRequest="100"
-                                              TextFontSize="16"
-                                              HeightRequest="37"
-                                              BoxPadding="10, 10, 0, 10"
-                                              IsDropDownIconVisible="False"
-                                              BorderThickness="1"
-                                              FocusedBorderThickness="1"
-                                              DropDownBackgroundColor="{AppThemeBinding Light={StaticResource Background}, Dark={StaticResource DarkBackground}}"
-                                              DropDownSelectedItemBackgroundColor="{StaticResource LightPrimary}"
-                                                      x:Name="CBE_Period"
-                                   Margin="7, 0, 0, 15">
-                                <dxe:ComboBoxEdit.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="SeveralTimesPerPeriodFrequency_Tapped"/>
-                                </dxe:ComboBoxEdit.GestureRecognizers>
-                                <dxe:ComboBoxEdit.BorderColor>
-                                    <Color>#e9e9e9</Color>
-                                </dxe:ComboBoxEdit.BorderColor>
-                                <dxe:ComboBoxEdit.FocusedBorderColor>
-                                    <Color>#e9e9e9</Color>
-                                </dxe:ComboBoxEdit.FocusedBorderColor>
-                            </dxe:ComboBoxEdit>
-                        </HorizontalStackLayout>
-
-                        <dxco:SimpleButton x:Name="SB_SaveFrequencyPopup"
-                                           Clicked="SB_SaveFrequencyPopup_Clicked"
-                                           Text="{Binding LocSave}"
-                                           HorizontalOptions="End"
-                                           FontSize="16"
-                                           Margin="0, 10, 0, 0"
-                                           Style="{StaticResource PrimaryButton}"/>
-                    </VerticalStackLayout>
-                </dxco:DXPopup>
-
-                <dxco:BottomSheet x:Name="BS_RecommendedHabits"
-                                  BackgroundColor="{AppThemeBinding Light={StaticResource Background}, Dark={StaticResource DarkBackground}}"
-                      ShowGrabber="True"
-                      AllowDismiss="True"
-                                  HalfExpandedRatio="0.6">
-                    <Grid>
-                        <VerticalStackLayout Padding="0, 7, 0, 15"
-                                     Spacing="20"
-                                     VerticalOptions="CenterAndExpand">
-                            <Label Text="{x:Static loc:LocStrings.RecommendedHabitsByAi}"
-                                       Style="{StaticResource CentralHeader}"/>
-
-                            <dxcv:DXCollectionView ItemsSource="{Binding RecommendedHabits}"
-                                                       x:Name="DXC_RecommendedHabits"
-                                                       Margin="0, 0, 0, 0">
-                                <dxcv:DXCollectionView.ItemTemplate>
-                                    <DataTemplate x:DataType="m:RecommendedHabit">
-                                        <Grid RowDefinitions="Auto, Auto"
-                                                  ColumnDefinitions="140, *"
+                                <dxcv:DXCollectionView AllowDragDropItems="True"
+                                                       ZIndex="100"
+                                                       ItemsSource="{Binding UserHabits}"
+                                                       x:Name="DXC_SelectPriority"
+                                                       Grid.Row="1">
+                                    <dxcv:DXCollectionView.Behaviors>
+                                        <toolkit:EventToCommandBehavior EventName="CompleteItemDragDrop"
+                                                                        Command="{Binding ResetPrioritiesCommand}" />
+                                    </dxcv:DXCollectionView.Behaviors>
+                                    <dxcv:DXCollectionView.ItemTemplate>
+                                        <DataTemplate x:DataType="m:UserHabit">
+                                            <Grid RowDefinitions="Auto, Auto"
+                                                  ColumnDefinitions="*, 30"
                                                   ColumnSpacing="15">
-                                            <Grid.GestureRecognizers>
-                                                <TapGestureRecognizer Tapped="TGR_RecommendedHabit_Tapped"
-                                                                          x:Name="TGR_RecommendedHabit"
-                                                                          CommandParameter="{Binding}"
-                                                                          NumberOfTapsRequired="1"/>
-                                            </Grid.GestureRecognizers>
-
-                                            <Label Text="{Binding Name}"
-                                                       Padding="10, 15, 0, 0"
+                                                <Label Text="{Binding Name}"
+                                                       LineBreakMode="TailTruncation"
+                                                       MaxLines="1"
+                                                       Padding="10,15,0,0"
                                                        FontAttributes="Bold"
                                                        VerticalOptions="End"
                                                        VerticalTextAlignment="End"
                                                        Grid.Row="0"
-                                                       Grid.Column="0"/>
-                                            <Label Text="{Binding ReasonToFollow}"
-                                                       ToolTipProperties.Text="{Binding ReasonToFollow}"
-                                                       LineBreakMode="TailTruncation"
-                                                       VerticalOptions="End"
-                                                       VerticalTextAlignment="Center"
-                                                       MaxLines="4"
-                                                       Margin="0, 0, 5, 0"
-                                                       Grid.Row="0"
-                                                       Grid.Column="1"/>
-                                            <BoxView Grid.Row="1"
+                                                       Grid.Column="0" />
+                                                <Grid Margin="0,0,5,0"
+                                                      Padding="0"
+                                                      RowSpacing="0"
+                                                      ColumnSpacing="0"
+                                                      Grid.Column="1">
+                                                    <Frame BackgroundColor="{StaticResource LightPrimary}"
+                                                           Margin="0"
+                                                           Padding="0"
+                                                           WidthRequest="30"
+                                                           HeightRequest="30"
+                                                           VerticalOptions="Center"
+                                                           HorizontalOptions="Center"
+                                                           HasShadow="False"
+                                                           CornerRadius="15"
+                                                           IsClippedToBounds="True">
+                                                        <Label Text="{Binding Priority}"
+                                                               HorizontalTextAlignment="Center"
+                                                               VerticalTextAlignment="Center" />
+                                                    </Frame>
+                                                </Grid>
+                                                <BoxView Grid.Row="1"
                                                          Style="{StaticResource DefaultHorizonalSeparator}"
                                                          Grid.Column="0"
-                                                         Grid.ColumnSpan="2"/>
-                                        </Grid>
-                                    </DataTemplate>
+                                                         Grid.ColumnSpan="2" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </dxcv:DXCollectionView.ItemTemplate>
+                                </dxcv:DXCollectionView>
+                            </Grid>
+                        </dxco:BottomSheet>
+                        <dxco:DXPopup x:Name="DXP_Errors"
+                                      AllowScrim="True"
+                                      AllowAnimation="True"
+                                      AllowShadow="True"
+                                      CloseOnScrimTap="True"
+                                      MinimumWidthRequest="230"
+                                      HeightRequest="200">
+                            <dx:DXStackLayout Orientation="Vertical">
+                                <Label Text="{x:Static loc:LocStrings.FixErrorsFirst}"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"
+                                       Margin="10,10,10,0"
+                                       FontSize="20"
+                                       FontAttributes="Bold" />
+                                <dx:DXStackLayout Margin="15"
+                                                  Orientation="Horizontal"
+                                                  ItemSpacing="10"
+                                                  x:Name="HSL_ErrorMessages">
+                                    <dx:DXImage Source="info"
+                                                x:Name="DXI_Error"
+                                                WidthRequest="25"
+                                                HeightRequest="25"
+                                                TintColor="{StaticResource Error}"
+                                                VerticalOptions="Center" />
+                                    <dx:DXStackLayout Orientation="Vertical"
+                                                      x:Name="DXS_ErrorMessages"
+                                                      VerticalOptions="Center" />
+                                </dx:DXStackLayout>
+                                <dxco:SimpleButton x:Name="SB_CloseErrorsPopup"
+                                                   Clicked="SB_CloseErrorsPopup_Clicked"
+                                                   Text="{x:Static loc:LocStrings.OK}"
+                                                   FontSize="16"
+                                                   HorizontalOptions="End"
+                                                   MinimumWidthRequest="60"
+                                                   Margin="0,5,5,5"
+                                                   Style="{StaticResource PrimaryButton}" />
+                            </dx:DXStackLayout>
+                        </dxco:DXPopup>
+                        <dxco:DXPopup x:Name="DXP_Frequency"
+                                      AllowScrim="True"
+                                      AllowAnimation="True"
+                                      MinimumWidthRequest="250"
+                                      AllowShadow="True"
+                                      CloseOnScrimTap="True">
+                            <VerticalStackLayout Margin="15">
+                                <RadioButton Content="{x:Static loc:LocStrings.EveryDay}"
+                                             FontSize="16"
+                                             x:Name="RB_EveryDay"
+                                             GroupName="Frequency" />
 
-                                </dxcv:DXCollectionView.ItemTemplate>
+                                <HorizontalStackLayout Margin="{OnPlatform iOS='0, 10, 0, 10',
+                                                                           Android='0, 25, 0, 10'}"
+                                                       Focused="RepeatsOfSeveralDays_Focused">
+                                    <RadioButton x:Name="RB_EverySeveralDays"
+                                                 Content="{x:Static loc:LocStrings.Every}"
+                                                 FontSize="16"
+                                                 GroupName="Frequency" />
+                                    <Entry Keyboard="Numeric"
+                                           HorizontalTextAlignment="Center"
+                                           Margin="{OnPlatform iOS='0,0,0,5',
+                                                               Android='0,7,0,5'}"
+                                           FontSize="16"
+                                           x:Name="E_RepeatsOfSeveralDays"
+                                           Focused="RepeatsOfSeveralDays_Focused"
+                                           MaxLength="2" />
+                                    <Label Text="{x:Static loc:LocStrings.days}"
+                                           FontSize="16"
+                                           Margin="{OnPlatform iOS='7, 6, 0, 0',
+                                                               Android='0, 16, 0, 0'}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="EverySeveralDaysFrequency_Tapped" />
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                </HorizontalStackLayout>
 
-                            </dxcv:DXCollectionView>
+                                <HorizontalStackLayout>
+                                    <HorizontalStackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="SeveralTimesPerPeriodFrequency_Tapped" />
+                                    </HorizontalStackLayout.GestureRecognizers>
+                                    <RadioButton x:Name="RB_SeveralTimesPerPeriod"
+                                                 GroupName="Frequency"
+                                                 WidthRequest="{OnPlatform Android='28'}" />
+                                    <Entry Keyboard="Numeric"
+                                           Margin="{OnPlatform iOS='0, 0, 0, 15',
+                                                               Android='0, 11, 0, 15'}"
+                                           MaxLength="3"
+                                           HorizontalTextAlignment="Center"
+                                           FontSize="16"
+                                           x:Name="E_RepeatsOfSeveralTimesPerPeriod"
+                                           Focused="E_RepeatsOfSeveralTimesPerPeriod_Focused">
+                                    </Entry>
+                                    <Label Text="{x:Static loc:LocStrings.timesPer}"
+                                           FontSize="16"
+                                           Margin="{OnPlatform iOS='7, 10, 0, 0',
+                                                               Android='3, 21, 0, 0'}" />
+                                    <dxe:ComboBoxEdit ItemsSource="{Binding PeriodsOfHabit}"
+                                                      SelectedItem="{Binding SelectedPeriodOfHabit}"
+                                                      DisplayMember="Name"
+                                                      WidthRequest="100"
+                                                      TextFontSize="16"
+                                                      HeightRequest="37"
+                                                      BoxPadding="10, 10, 0, 10"
+                                                      IsDropDownIconVisible="False"
+                                                      BorderThickness="1"
+                                                      FocusedBorderThickness="1"
+                                                      DropDownBackgroundColor="{AppThemeBinding Light={StaticResource Background},
+                                                                                                Dark={StaticResource DarkBackground}}"
+                                                      DropDownSelectedItemBackgroundColor="{StaticResource LightPrimary}"
+                                                      x:Name="CBE_Period"
+                                                      Margin="{OnPlatform iOS='7, 0, 0, 15',
+                                                                          Android='7, 15, 0, 15'}">
+                                        <dxe:ComboBoxEdit.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="SeveralTimesPerPeriodFrequency_Tapped" />
+                                        </dxe:ComboBoxEdit.GestureRecognizers>
+                                        <dxe:ComboBoxEdit.BorderColor>
+                                            <Color>#e9e9e9</Color>
+                                        </dxe:ComboBoxEdit.BorderColor>
+                                        <dxe:ComboBoxEdit.FocusedBorderColor>
+                                            <Color>#e9e9e9</Color>
+                                        </dxe:ComboBoxEdit.FocusedBorderColor>
+                                    </dxe:ComboBoxEdit>
+                                </HorizontalStackLayout>
 
-                        </VerticalStackLayout>
+                                <dxco:SimpleButton x:Name="SB_SaveFrequencyPopup"
+                                                   Clicked="SB_SaveFrequencyPopup_Clicked"
+                                                   Text="{Binding LocSave}"
+                                                   HorizontalOptions="End"
+                                                   FontSize="16"
+                                                   Margin="0,10,0,0"
+                                                   Style="{StaticResource PrimaryButton}" />
+                            </VerticalStackLayout>
+                        </dxco:DXPopup>
 
-                        <VerticalStackLayout HorizontalOptions="Center"
-                                                   VerticalOptions="Center"
-                                                 Spacing="0">
-                            <skia:SKLottieView IsVisible="{Binding IsBusy}"
-                                               RepeatCount="-1"
-                                               Source="fire_loading_second.json"
-                                               HorizontalOptions="Center"
-                                               WidthRequest="105"
-                                               HeightRequest="105"/>
-                            <Label Text="{x:Static loc:LocStrings.Loading}"
-                                   IsVisible="{Binding IsBusy}"
-                                   HorizontalTextAlignment="Center" />
-                            <Label Text="{x:Static loc:LocStrings.IfYouDontWantToWaitYouCanChangeOtherFields}"
-                                   IsVisible="{Binding IsBusy}"
-                                   HorizontalTextAlignment="Center"
-                                   WidthRequest="270"
-                                   HeightRequest="100"
-                                   LineBreakMode="TailTruncation"
-                                   MaxLines="4"/>
-                        </VerticalStackLayout>
-                    </Grid>
+                        <dxco:BottomSheet x:Name="BS_RecommendedHabits"
+                                          BackgroundColor="{AppThemeBinding Light={StaticResource Background},
+                                                                            Dark={StaticResource DarkBackground}}"
+                                          ShowGrabber="True"
+                                          AllowDismiss="True"
+                                          HalfExpandedRatio="0.6">
+                            <Grid>
+                                <VerticalStackLayout Padding="0,7,0,15"
+                                                     Spacing="20"
+                                                     VerticalOptions="CenterAndExpand">
+                                    <Label Text="{x:Static loc:LocStrings.RecommendedHabitsByAi}"
+                                           Style="{StaticResource CentralHeader}" />
 
-                </dxco:BottomSheet>
-            </VerticalStackLayout>
-            </ScrollView>
-        </dxco:TabViewItem>
-        <dxco:TabViewItem HeaderText="{x:Static loc:LocStrings.HowToKeep}"
-                          HeaderTextColor="{StaticResource LightPlaceholderColor}"
-                          SelectedHeaderTextColor="{StaticResource LightNormalText}"
-                          HeaderIconPosition="Right"
-                          HeaderWidth="160">
-            <ScrollView>
-            <VerticalStackLayout Padding="10">
-                <dxe:MultilineEdit Text="{Binding ReasonToFollow.Value}"
-                                   x:Name="ME_ReasonToFollow"
-                                   LabelText="{x:Static loc:LocStrings.StrongReasonToFollow}"
-                                   HasError="{Binding ReasonToFollow.IsValid, Converter={StaticResource IsFalse}}"
-                                   IsErrorIconVisible="False"
-                                   StartIcon="approved"
-                                   EndIcon="info"
-                                   EndIconCommand="{Binding ShowSnackbarForReasonToFollowCommand}"
-                                   EndIconCommandParameter="{x:Reference ME_ReasonToFollow}"
-                                   ClearIconVisibility="Never" />
-                <dxe:MultilineEdit Text="{Binding Habit.Question}"
-                              x:Name="TE_Habit"
-                              LabelText="{x:Static loc:LocStrings.Question}"
-                              StartIcon="question"
-                              ClearIconVisibility="Never"
-                              EndIcon="info"
-                              EndIconCommand="{Binding ShowSnackbarForQuestionCommand}"
-                              EndIconCommandParameter="{x:Reference TE_Habit}"/>
-                <dxe:MultilineEdit Text="{Binding Habit.Description}"
-                                   LabelText="{x:Static loc:LocStrings.NotesOrHowToKeepHabit}"
-                                   ClearIconVisibility="Never"
-                                   StartIcon="notes" />
-                <!--<Grid Margin="0, 10, 0, 0"
-                      ColumnDefinitions="Auto, Auto, Auto, *, Auto">
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="SubhabitsTapRecognizer_Tapped"
-                                              NumberOfTapsRequired="1" />
-                    </Grid.GestureRecognizers>
+                                    <dxcv:DXCollectionView ItemsSource="{Binding RecommendedHabits}"
+                                                           x:Name="DXC_RecommendedHabits"
+                                                           Margin="0,0,0,0">
+                                        <dxcv:DXCollectionView.ItemTemplate>
+                                            <DataTemplate x:DataType="m:RecommendedHabit">
+                                                <Grid RowDefinitions="Auto, Auto"
+                                                      ColumnDefinitions="140, *"
+                                                      ColumnSpacing="15">
+                                                    <Grid.GestureRecognizers>
+                                                        <TapGestureRecognizer Tapped="TGR_RecommendedHabit_Tapped"
+                                                                              x:Name="TGR_RecommendedHabit"
+                                                                              CommandParameter="{Binding}"
+                                                                              NumberOfTapsRequired="1" />
+                                                    </Grid.GestureRecognizers>
 
-                    <Switch IsToggled="{Binding Habit.HasSubhabits}"
-                            Grid.Column="0"
-                            VerticalOptions="Center"
-                            OnColor="{StaticResource Primary}"/>
-                    <Label Text="{x:Static loc:LocStrings.UseSubhabits}"
-                           VerticalOptions="Center"
-                           Grid.Column="1"
-                           Margin="5, 0, 5, 0"/>
-                    <Grid VerticalOptions="Center"
-                          Grid.Column="2">
-                        <dx:DXImage Source="info"
-                                    x:Name="I_SubHabitsInfo"
-                                    TintColor="{StaticResource Primary}" />
-                    </Grid>
+                                                    <Label Text="{Binding Name}"
+                                                           Padding="10,15,0,0"
+                                                           FontAttributes="Bold"
+                                                           VerticalOptions="End"
+                                                           VerticalTextAlignment="End"
+                                                           Grid.Row="0"
+                                                           Grid.Column="0" />
+                                                    <Label Text="{Binding ReasonToFollow}"
+                                                           ToolTipProperties.Text="{Binding ReasonToFollow}"
+                                                           LineBreakMode="TailTruncation"
+                                                           VerticalOptions="End"
+                                                           VerticalTextAlignment="Center"
+                                                           MaxLines="4"
+                                                           Margin="0,0,5,0"
+                                                           Grid.Row="0"
+                                                           Grid.Column="1" />
+                                                    <BoxView Grid.Row="1"
+                                                             Style="{StaticResource DefaultHorizonalSeparator}"
+                                                             Grid.Column="0"
+                                                             Grid.ColumnSpan="2" />
+                                                </Grid>
+                                            </DataTemplate>
 
-                    <dxco:SimpleButton Text="Додати"
-                                       IsVisible="{Binding Habit.HasSubhabits}"
-                                           Style="{StaticResource PrimaryButton}"
-                                           Grid.Column="4"
-                          HorizontalOptions="End"
-                          VerticalOptions="Center"/>
-                </Grid>-->
+                                        </dxcv:DXCollectionView.ItemTemplate>
 
+                                    </dxcv:DXCollectionView>
 
-            </VerticalStackLayout>
+                                </VerticalStackLayout>
+
+                                <VerticalStackLayout HorizontalOptions="Center"
+                                                     VerticalOptions="Center"
+                                                     Spacing="0">
+                                    <skia:SKLottieView IsVisible="{Binding IsBusy}"
+                                                       RepeatCount="-1"
+                                                       Source="fire_loading_second.json"
+                                                       HorizontalOptions="Center"
+                                                       WidthRequest="105"
+                                                       HeightRequest="105" />
+                                    <Label Text="{x:Static loc:LocStrings.Loading}"
+                                           IsVisible="{Binding IsBusy}"
+                                           HorizontalTextAlignment="Center" />
+                                    <Label Text="{x:Static loc:LocStrings.IfYouDontWantToWaitYouCanChangeOtherFields}"
+                                           IsVisible="{Binding IsBusy}"
+                                           HorizontalTextAlignment="Center"
+                                           WidthRequest="270"
+                                           HeightRequest="100"
+                                           LineBreakMode="TailTruncation"
+                                           MaxLines="4" />
+                                </VerticalStackLayout>
+                            </Grid>
+
+                        </dxco:BottomSheet>
+                    </VerticalStackLayout>
                 </ScrollView>
-        </dxco:TabViewItem>
-    </dxco:TabView>
-        </ScrollView>
+            </dxco:TabViewItem>
+            <dxco:TabViewItem HeaderText="{x:Static loc:LocStrings.HowToKeep}"
+                              HeaderTextColor="{StaticResource LightPlaceholderColor}"
+                              SelectedHeaderTextColor="{StaticResource LightNormalText}"
+                              HeaderIconPosition="{OnPlatform iOS='Right'}"
+                              HeaderWidth="160">
+                <ScrollView>
+                    <VerticalStackLayout Padding="10">
+                        <dxe:MultilineEdit Text="{Binding ReasonToFollow.Value}"
+                                           x:Name="ME_ReasonToFollow"
+                                           LabelText="{x:Static loc:LocStrings.StrongReasonToFollow}"
+                                           HasError="{Binding ReasonToFollow.IsValid,
+                                                              Converter={StaticResource IsFalse}}"
+                                           IsErrorIconVisible="False"
+                                           StartIcon="approved"
+                                           EndIcon="info"
+                                           EndIconCommand="{Binding ShowSnackbarForReasonToFollowCommand}"
+                                           EndIconCommandParameter="{x:Reference ME_ReasonToFollow}"
+                                           ClearIconVisibility="Never" />
+                        <dxe:MultilineEdit Text="{Binding Habit.Question}"
+                                           x:Name="TE_Habit"
+                                           LabelText="{x:Static loc:LocStrings.Question}"
+                                           StartIcon="question"
+                                           ClearIconVisibility="Never"
+                                           EndIcon="info"
+                                           EndIconCommand="{Binding ShowSnackbarForQuestionCommand}"
+                                           EndIconCommandParameter="{x:Reference TE_Habit}" />
+                        <dxe:MultilineEdit Text="{Binding Habit.Description}"
+                                           LabelText="{x:Static loc:LocStrings.NotesOrHowToKeepHabit}"
+                                           ClearIconVisibility="Never"
+                                           StartIcon="notes" />
+                    </VerticalStackLayout>
+                </ScrollView>
+            </dxco:TabViewItem>
+        </dxco:TabView>
 
         <VerticalStackLayout HorizontalOptions="Center"
-                                   VerticalOptions="Center"
-                                 Spacing="0">
+                             VerticalOptions="Center"
+                             Spacing="0">
             <skia:SKLottieView IsVisible="{Binding IsLoadingHabitInfo}"
                                RepeatCount="-1"
                                Source="fire_loading_second.json"
                                HorizontalOptions="Center"
                                WidthRequest="150"
-                               HeightRequest="150"/>
+                               HeightRequest="150" />
             <Label Text="{x:Static loc:LocStrings.LoadingContent}"
                    IsVisible="{Binding IsLoadingHabitInfo}"
                    HorizontalTextAlignment="Center" />
