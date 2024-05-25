@@ -2,7 +2,7 @@
 
 public class EditUserHabitDto
 {
-    public Guid Id { get; set; }
+    public long Id { get; set; }
     public string? Name { get; set; }
     public TypeOfHabit Type { get; set; }
     public ICollection<UserAreaOfLife>? AreasOfLife { get; set; }

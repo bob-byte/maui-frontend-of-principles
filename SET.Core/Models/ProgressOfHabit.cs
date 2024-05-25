@@ -3,7 +3,7 @@
 public partial class ProgressOfHabit : ObservableObject
 {
     [ObservableProperty]
-    private Guid m_id;
+    private long m_id;
     [ObservableProperty]
     private DateOnly m_date;
     [ObservableProperty]

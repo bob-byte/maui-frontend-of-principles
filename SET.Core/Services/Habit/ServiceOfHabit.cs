@@ -47,7 +47,7 @@ public class ServiceOfHabit : BaseRemoteService, IServiceOfHabit
                     {
                         ProgressOfHabit progress = new()
                         {
-                            Id = Guid.NewGuid(),
+                            Id = 0,
                             Date = date,
                             Value = ProgressValue.UNKNOWN,
                             Habit = habit
@@ -122,7 +122,7 @@ public class ServiceOfHabit : BaseRemoteService, IServiceOfHabit
         return result;
     }
 
-    public async Task<UserHabit> UserHabitAsync( Guid id )
+    public async Task<UserHabit> UserHabitAsync( long id )
     {
         if(id == default)
         {
@@ -135,18 +135,15 @@ public class ServiceOfHabit : BaseRemoteService, IServiceOfHabit
         return result;
     }
 
-    public async Task UpdateHabitAsync( EditUserHabitDto habit )
+    public async Task<SaveHabitResponse> UpdateHabitAsync(EditUserHabitDto habit)
     {
-        ArgumentNullException.ThrowIfNull( habit, nameof( habit ) );
-        if(habit.Id == default)
-        {
-            throw new InvalidOperationException( message: "Id of habit has default value" );
-        }
+        ArgumentNullException.ThrowIfNull(habit, nameof(habit));
 
         string url = $"{UrlBuilder.Habits}/{habit.Id}?userId={SettingsService.UserId}";
-        await RequestProvider.PutAsync( url, habit, SettingsService.AuthAccessToken );
+        SaveHabitResponse result = await RequestProvider.PostAsync<EditUserHabitDto, SaveHabitResponse>( url, habit, SettingsService.AuthAccessToken );
+    
+        return result;
     }
-
     public async Task UpdatePrioritiesAsync( IEnumerable<UserHabitWithPriority> habitsWithPriorities )
     {
         ArgumentNullException.ThrowIfNull( habitsWithPriorities );
@@ -401,7 +398,7 @@ public class ServiceOfHabit : BaseRemoteService, IServiceOfHabit
         return result;
     }
 
-    public async Task DeleteAsync(Guid id )
+    public async Task DeleteAsync(long id )
     {
         string url = $"{UrlBuilder.Habits}/{id}";
         await RequestProvider.DeleteAsync( url, SettingsService.AuthAccessToken );

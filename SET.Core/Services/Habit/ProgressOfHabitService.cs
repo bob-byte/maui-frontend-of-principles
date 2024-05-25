@@ -18,11 +18,6 @@ public class ProgressOfHabitService : BaseRemoteService, IProgressOfHabitService
     public async Task UpdateAsync( ProgressOfHabit progressOfHabit )
     {
         #region Check parameter
-        if (progressOfHabit.Id == default)
-        {
-            throw new ArgumentException( message: $"{nameof( progressOfHabit )}.{nameof( progressOfHabit.Id )} is default" );
-        }
-        
         if(progressOfHabit.Habit == null)
         {
             throw new ArgumentException( message: $"{nameof( progressOfHabit )}.{nameof( progressOfHabit.Habit )} is null" );
@@ -50,16 +45,16 @@ public class ProgressOfHabitService : BaseRemoteService, IProgressOfHabitService
         UpdateProgressDto dto = new()
         {
             Id = progressOfHabit.Id,
-            PercentageAchieved = habit.PercentageAchieved,
             Date = progressOfHabit.Date,
-            Value = (int)progressOfHabit.Value,
+            Value = progressOfHabit.Value,
             HabitId = habit.Id
         };
-        await RequestProvider.PutAsync(
+        SaveProgressOfHabitResponse response = await RequestProvider.PostAsync<UpdateProgressDto, SaveProgressOfHabitResponse>(
             url,
             dto,
             SettingsService.AuthAccessToken
         );
+        progressOfHabit.Id = response.Id;
 
         LoggingService.LogInfo( $"Before progress of habit: {beforeProgress};{Environment.NewLine}" +
             $"After {isCompletedAsStr}: {habit.PercentageAchieved}." );

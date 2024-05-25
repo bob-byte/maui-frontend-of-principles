@@ -4,6 +4,7 @@ using DevExpress.Maui.Editors;
 
 using System.Windows.Input;
 using Azure.AI.OpenAI;
+using static SET.Core.Services.ServiceOfHabit;
 
 namespace SET.MAUI.ViewModels;
 
@@ -171,7 +172,9 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
             {
                 await UiBusyFor( async () =>
                 {
-                    await ServiceOfHabit.UpdateHabitAsync( dto );
+                    SaveHabitResponse response = await ServiceOfHabit.UpdateHabitAsync( dto );
+                    Habit.Id = response.Id;
+                    Habit.Frequency.Id = response.FrequencyId;
                     ReferenceMessenger.Send( new HabitSavedMessage( Habit, copyOfHabits ) );
                     await Navigation.GoBackAsync();
                 } );
@@ -180,7 +183,10 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
             {
                 await UiBusyFor( async () =>
                 {
-                    await ServiceOfHabit.UpdateHabitAsync( dto );
+                    LoggingService.LogInfo( "I am before calling func ServiceOfHabit.UpdateHabitAsync( dto );" );
+                    SaveHabitResponse response = await ServiceOfHabit.UpdateHabitAsync( dto );
+                    Habit.Id = response.Id;
+                    Habit.Frequency.Id = response.FrequencyId;
                     await Navigation.GoBackAsync();
                     ReferenceMessenger.Send( new HabitSavedMessage( Habit, copyOfHabits ) );
                 } );
@@ -210,9 +216,9 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         base.ApplyQueryAttributes( query );
 
         Habit = new UserHabit();
-        if (query.TryGetValue( "Id", out object value ) && (Guid)value != Guid.Empty)
+        if (query.TryGetValue( "Id", out object? value ) && (long)value != 0)
         {
-            Habit.Id = (Guid)value;
+            Habit.Id = (long)value;
             ComplexityHelpText = "";
 
             IsNewHabit = false;
@@ -291,10 +297,15 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         Habit.Reminder ??= new Reminder();
         Habit.Frequency ??= new FrequencyOfHabit();
 
-        if (Habit.Id != Guid.Empty)
+        if (Habit.Id != 0)
         {
 
             Habit = await ServiceOfHabit.UserHabitAsync( Habit.Id );
+            if(Habit.Complexity < HabitConstants.MIN_HABIT_COMPLEXITY || HabitConstants.MIN_HABIT_COMPLEXITY < Habit.Complexity)
+            {
+                Habit.Complexity = 5;
+            }
+
             foreach (UserAreaOfLife area in Habit.AreasOfLife)
             {
                 //localize names
@@ -316,7 +327,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         }
         else
         {
-            Habit.Id = Guid.NewGuid();
+            Habit.Id = 0;
             UserHabits.Add( Habit );
             Habit.AreasOfLife = new ObservableCollectionEx<UserAreaOfLife>();
             Habit.Complexity = 5;

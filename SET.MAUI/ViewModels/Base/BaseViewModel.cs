@@ -185,7 +185,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         {
             string url = $"{UrlBuilder.Profile}/{SettingsService.UserId}";
             userInfo = await RequestProvider.GetAsync<UserInfo>( url, SettingsService.AuthAccessToken );
-            userInfo.Id = Guid.Parse( SettingsService.UserId );
+            userInfo.Id = long.Parse( SettingsService.UserId );
             UserName.Value = userInfo.Name;
             MainSlogan = userInfo.MainSlogan;
             Mission = userInfo.Mission;
@@ -194,7 +194,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         else
         {
             userInfo = new UserInfo();
-            userInfo.Id = Guid.Parse( SettingsService.UserId );
+            userInfo.Id = long.Parse( SettingsService.UserId );
 
             MainSlogan = CachingService.StoredValue( CacheKeys.USER_MAIN_SLOGAN );
             userInfo.MainSlogan = MainSlogan;

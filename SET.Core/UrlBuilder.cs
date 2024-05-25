@@ -27,7 +27,7 @@ public class UrlBuilder : IUrlBuilder
     {
         get
         {
-            m_baseUrl ??= "https://habitsmentorset.azurewebsites.net";
+            m_baseUrl ??= "https://principles-server.ckwavh.easypanel.host/";
             return m_baseUrl;
         }
     }

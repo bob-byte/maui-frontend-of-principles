@@ -55,12 +55,12 @@ public class MauiNavigationService : INavigationService
         return InternalNavigateToAsync( typeof( TViewModel ), routeParameters, isMainRoute: false, isAbsoluteRoute );
     }
 
-    public Task NavigateToAsync<TViewModel>( Guid? id ) where TViewModel : BaseViewModel
+    public Task NavigateToAsync<TViewModel>( long? id ) where TViewModel : BaseViewModel
     {
         return NavigateToAsync<TViewModel>( isAbsoluteRoute: false, id );
     }
 
-    public Task NavigateToAsync<TViewModel>( bool isAbsoluteRoute, Guid? id ) where TViewModel : BaseViewModel
+    public Task NavigateToAsync<TViewModel>( bool isAbsoluteRoute, long? id ) where TViewModel : BaseViewModel
     {
         Dictionary<string, object> parameters = null;
         if( id != null )

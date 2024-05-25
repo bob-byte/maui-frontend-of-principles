@@ -50,8 +50,9 @@ public partial class LoginViewModel : BaseViewModel
                 {
                     LoginResponse loginResponse = await LoginService.LoginAsync( Email.Value, Password.Value );
 
-                    SettingsService.AuthAccessToken = loginResponse.Token;
-                    SettingsService.UserId = loginResponse.UserId;
+                        //TODO: Change type of SettingsService.UserId to long
+                        SettingsService.AuthAccessToken = loginResponse.Token;
+                        SettingsService.UserId = loginResponse.UserId.ToString();
 
                     bool isLoggedIn = !string.IsNullOrWhiteSpace( loginResponse.Token );
                     if (isLoggedIn)
