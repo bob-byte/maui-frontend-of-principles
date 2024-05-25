@@ -8,7 +8,6 @@ namespace SET.Core;
 
 public class UrlBuilder : IUrlBuilder
 {
-    private readonly GlobalSettings m_globalSettings;
     private string? m_baseUrl;
     private string? m_baseApiUrl;
     private string? m_login;
@@ -24,16 +23,11 @@ public class UrlBuilder : IUrlBuilder
     private string? m_habits;
     private string? m_habitsPriorities;
 
-    public UrlBuilder()
-    {
-        m_globalSettings = GlobalSettings.Instance;
-    }
-
     public string BaseUrl
     {
         get
         {
-            m_baseUrl ??= m_globalSettings.AuthorizeEndpoint;
+            m_baseUrl ??= "https://principles-server.ckwavh.easypanel.host/";
             return m_baseUrl;
         }
     }

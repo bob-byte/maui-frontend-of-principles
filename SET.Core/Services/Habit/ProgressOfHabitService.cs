@@ -55,11 +55,12 @@ public class ProgressOfHabitService : BaseRemoteService, IProgressOfHabitService
             Value = (int)progressOfHabit.Value,
             HabitId = habit.Id
         };
-        await RequestProvider.PutAsync(
+        SaveProgressOfHabitResponse response = await RequestProvider.PostAsync<UpdateProgressDto, SaveProgressOfHabitResponse>(
             url,
             dto,
             SettingsService.AuthAccessToken
         );
+        progressOfHabit.Id = response.ProgressOfHabitId;
 
         LoggingService.LogInfo( $"Before progress of habit: {beforeProgress};{Environment.NewLine}" +
             $"After {isCompletedAsStr}: {habit.PercentageAchieved}." );

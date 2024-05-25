@@ -50,8 +50,9 @@ namespace SET.MAUI.ViewModels
                     {
                         LoginResponse loginResponse = await LoginService.LoginAsync( Email.Value, Password.Value );
 
+                        //TODO: Change type of SettingsService.UserId to long
                         SettingsService.AuthAccessToken = loginResponse.Token;
-                        SettingsService.UserId = loginResponse.UserId;
+                        SettingsService.UserId = loginResponse.UserId.ToString();
 
                         bool isLoggedIn = !string.IsNullOrWhiteSpace( loginResponse.Token );
                         if (isLoggedIn)

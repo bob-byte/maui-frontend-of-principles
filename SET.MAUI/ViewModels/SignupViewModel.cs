@@ -92,7 +92,7 @@ namespace SET.MAUI.ViewModels
                     );
 
                     SettingsService.AuthAccessToken = loginResponse.Token;
-                    SettingsService.UserId = loginResponse.UserId;
+                    SettingsService.UserId = loginResponse.UserId.ToString();
 
                     bool isLoggedIn = !string.IsNullOrWhiteSpace( loginResponse.Token );
                     if (isLoggedIn)
