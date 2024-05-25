@@ -183,7 +183,6 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
 
     protected virtual async Task InitUserInfoAsync()
     {
-        await Task.Delay( 7000 );
         UserName.Value = CachingService.StoredValue( CacheKeys.USER_NAME );
 
         UserInfo userInfo;

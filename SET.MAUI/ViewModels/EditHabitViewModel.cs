@@ -210,7 +210,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         base.ApplyQueryAttributes( query );
 
         Habit = new UserHabit();
-        if (query.TryGetValue( "Id", out object value ) && (long)value != 0)
+        if (query.TryGetValue( "Id", out object? value ) && (long)value != 0)
         {
             Habit.Id = (long)value;
             ComplexityHelpText = "";
@@ -295,6 +295,11 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         {
 
             Habit = await ServiceOfHabit.UserHabitAsync( Habit.Id );
+            if(Habit.Complexity < HabitConstants.MIN_HABIT_COMPLEXITY || HabitConstants.MIN_HABIT_COMPLEXITY < Habit.Complexity)
+            {
+                Habit.Complexity = 5;
+            }
+
             foreach (UserAreaOfLife area in Habit.AreasOfLife)
             {
                 //localize names
