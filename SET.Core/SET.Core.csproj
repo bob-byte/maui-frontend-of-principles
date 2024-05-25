@@ -49,6 +49,7 @@
 	  <Folder Include="Constants\" />
 	  <Folder Include="Exceptions\" />
 	  <Folder Include="Extensions\" />
+	  <Folder Include="Models\" />
 	  <Folder Include="Services\" />
 	  <Folder Include="Services\Caching\" />
 	</ItemGroup>

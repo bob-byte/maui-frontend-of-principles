@@ -6,20 +6,6 @@ namespace SET.MAUI.Services
     {
         readonly List<Item> items;
 
-        public MockDataStore()
-        {
-            DateTime baseDate = DateTime.Today;
-            long idCounter = 1;
-            this.items = new List<Item>() {
-            new Item { Id = idCounter++, Text = "First item", Description="This is an item description.", StartTime = baseDate.AddHours(1), EndTime = baseDate.AddHours(2), Value=17.098 },
-            new Item { Id = idCounter++, Text = "Second item", Description="This is an item description.", StartTime = baseDate.AddHours(2), EndTime = baseDate.AddHours(4), Value=9.985 },
-            new Item { Id = idCounter++, Text = "Third item", Description="This is an item description.", StartTime = baseDate.AddHours(3), EndTime = baseDate.AddHours(5), Value=9.597},
-            new Item { Id = idCounter++, Text = "Fourth item", Description="This is an item description.", StartTime = baseDate.AddHours(5), EndTime = baseDate.AddHours(6), Value=9.834 },
-            new Item { Id = idCounter++, Text = "Fifth item", Description="This is an item description.", StartTime = baseDate.AddHours(9), EndTime = baseDate.AddHours(12), Value=3.287 },
-            new Item { Id = idCounter++, Text = "Sixth item", Description="This is an item description.", StartTime = baseDate.AddHours(12), EndTime = baseDate.AddHours(15), Value=81.2 }
-        };
-        }
-
         public async Task<bool> AddItemAsync( Item item )
         {
             this.items.Add( item );
