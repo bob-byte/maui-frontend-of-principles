@@ -429,4 +429,10 @@
   <data name="TooManyMessagesError" xml:space="preserve">
     <value>Ви задали максимум повідомлень в одному чаті</value>
   </data>
+  <data name="PrivacyPolicy" xml:space="preserve">
+    <value>Політика конфіденційності</value>
+  </data>
+  <data name="UserAgreement" xml:space="preserve">
+    <value>Користувацька угода</value>
+  </data>
 </root>

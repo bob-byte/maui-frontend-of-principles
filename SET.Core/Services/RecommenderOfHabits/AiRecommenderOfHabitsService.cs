@@ -1,9 +1,4 @@
-﻿using SET.Core.Services;
-using Azure.AI.OpenAI;
-
-using System;
-using System.Net.Http.Headers;
-using System.Net.Mime;
+﻿using Azure.AI.OpenAI;
 using Azure;
 using System.Text;
 
@@ -22,11 +17,12 @@ public class AiRecommenderOfHabitsService : BaseRemoteService, IAiRecommenderOfH
         );
     }
 
-    //create user chat message that contains:
+    //it creates user chat message that contains:
     // - user mission
     // - name of current habits
     // - name of areas of life of new habit
     // - format of response (language, JSON array with fields name, reasonToFollow, notes)
+    //then parses and returns a response
     public async Task<List<RecommendedHabit>> RecommendedHabitsAsync( IEnumerable<UserHabit> currentHabits, IEnumerable<UserAreaOfLife> areasOfLifeOfNewHabit, Gender userGender, string? userMission, string? userMainSlogan )
     {
         var timeComputer = Stopwatch.StartNew();
@@ -81,7 +77,7 @@ public class AiRecommenderOfHabitsService : BaseRemoteService, IAiRecommenderOfH
 
         ChatCompletionsOptions chatResponseOptions = new( DEFAULT_AI_DEPLOYMENT_NAME, chatMessages );
         Response<ChatCompletions> response = await AiClient.GetChatCompletionsAsync( chatResponseOptions ).DefaultConfigureAwait();
-        if(response != null && response.Value.Choices.Count > 0)
+        if (response != null && response.Value.Choices.Count > 0)
         {
             string responseContent = response.Value.Choices[0].Message.Content;
             responseContent = responseContent.Replace( "```", string.Empty );
@@ -108,47 +104,5 @@ public class AiRecommenderOfHabitsService : BaseRemoteService, IAiRecommenderOfH
         {
             throw new InvalidOperationException( "SomethingWentWrong" );
         }
-    }
-
-    public Task<Response<ChatCompletions>> RecommendedHabitsStreamAsync( int choiceCount, IEnumerable<UserHabit> currentHabits, IEnumerable<UserAreaOfLife> areasOfLifeOfNewHabit, Gender userGender, string? userMission )
-    {
-        StringBuilder messageContentBuilder = new();
-        messageContentBuilder.Append( $"Please recommend me the next habit that I can follow." );
-        if (!string.IsNullOrWhiteSpace( userMission ))
-        {
-            messageContentBuilder.Append( $" My mission is: \"{userMission}\". " );
-        }
-
-        if (currentHabits.Any())
-        {
-            messageContentBuilder.Append( $"Now I adhere to the following habits:{Environment.NewLine}" );
-            foreach (UserHabit habit in currentHabits)
-            {
-                messageContentBuilder.Append( $"{habit.Name};" );
-            }
-            messageContentBuilder.Replace( oldChar: ';', newChar: '.', startIndex: messageContentBuilder.Length - 1, count: 1 );
-        }
-
-        if (areasOfLifeOfNewHabit.Any())
-        {
-            messageContentBuilder.Append( $"The habit you recommend will be applied to all the following areas of my life:{Environment.NewLine}" );
-            foreach (UserAreaOfLife areaOfLife in areasOfLifeOfNewHabit)
-            {
-                messageContentBuilder.Append( $"{areaOfLife.Name}," );
-            }
-            messageContentBuilder.Replace( ';', '.', messageContentBuilder.Length - 1, 1 );
-        }
-
-        messageContentBuilder.Append( $"Your answer should be in JSON format and contain a habit object. It should consist of the following fields: {nameof( RecommendedHabit.Name )}, {nameof( RecommendedHabit.ReasonToFollow )}. The {nameof( RecommendedHabit.Name )} field indicates the name of the habit, the {nameof( RecommendedHabit.ReasonToFollow )} field indicates why I should follow it and must be very briefly, but accurately explained. All field values must be in {CultureInfo.CurrentUICulture.Name} language. You must send only a JSON object in your response and nothing else. JSON object must be named \"Habit\". " );
-        ChatMessage newChatMessage = new( ChatRole.User, messageContentBuilder.ToString() );
-        List<ChatMessage> chatMessages = new()
-        {
-            m_setupMessage,
-            newChatMessage,
-        };
-
-        ChatCompletionsOptions chatResponseOptions = new( DEFAULT_AI_DEPLOYMENT_NAME, chatMessages );
-        chatResponseOptions.ChoiceCount = choiceCount;
-        return AiClient.GetChatCompletionsAsync( chatResponseOptions );
     }
 }

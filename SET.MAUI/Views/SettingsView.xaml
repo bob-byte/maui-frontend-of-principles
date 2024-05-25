@@ -27,13 +27,18 @@
                    FontSize="Title"
                    FontFamily="Roboto"
                    FontAttributes="Bold"/>
+            <dxco:SimpleButton Text="{x:Static loc:LocStrings.PrivacyPolicy}"
+                               x:Name="SB_PrivacyPolicy"
+                               Style="{StaticResource PrimaryButton}" />
+            <dxco:SimpleButton Text="{x:Static loc:LocStrings.UserAgreement}"
+                               x:Name="SB_UserAgreement"
+                               Style="{StaticResource PrimaryButton}" />
             <dxco:SimpleButton Command="{Binding LogoutCommand}"
-                           Text="{x:Static loc:LocStrings.Logout}"
-                           Style="{StaticResource PrimaryButton}" />
+                               Text="{x:Static loc:LocStrings.Logout}"
+                               Style="{StaticResource SecondaryButton}" />
             <dxco:SimpleButton Command="{Binding DeleteAccountCommand}"
-                           Text="{x:Static loc:LocStrings.DeleteAccount}"
-                           BackgroundColor="{AppThemeBinding Light={StaticResource DarkPrimary}, Dark={StaticResource Primary}}"
-                           TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"/>
+                               Text="{x:Static loc:LocStrings.DeleteAccount}"
+                               Style="{StaticResource SecondaryButton}"/>
         </VerticalStackLayout>
 
         <templates:DefaultActivityIndicator />

@@ -504,4 +504,10 @@
   <data name="TooManyMessagesError" xml:space="preserve">
     <value>You have sent the maximum number of messages in one chat</value>
   </data>
+  <data name="PrivacyPolicy" xml:space="preserve">
+    <value>Privacy policy</value>
+  </data>
+  <data name="UserAgreement" xml:space="preserve">
+    <value>User agreement</value>
+  </data>
 </root>

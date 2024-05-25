@@ -96,13 +96,11 @@ public static class MauiProgram
 
     private static void SetupSerilog()
     {
-        //string file = Path.Combine( FileSystem.AppDataDirectory, $"Principles.log ({DateTime.Today}).txt" );
-
         Log.Logger = new LoggerConfiguration()
 #if IOS
             .WriteTo.NSLog( restrictedToMinimumLevel: LogEventLevel.Information )
 #else
-            .WriteTo.AndroidLog(restrictedToMinimumLevel: LogEventLevel.Information)
+            .WriteTo.AndroidLog( restrictedToMinimumLevel: LogEventLevel.Information )
 #endif
             .Enrich.FromLogContext()
             .CreateLogger();

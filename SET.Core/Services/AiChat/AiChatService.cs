@@ -1,9 +1,4 @@
-﻿using SET.Core.Services;
-using Azure.AI.OpenAI;
-
-using System;
-using System.Net.Http.Headers;
-using System.Net.Mime;
+﻿using Azure.AI.OpenAI;
 using Azure;
 
 namespace SET.Core.Services;
@@ -25,7 +20,7 @@ public class AiChatService : BaseRemoteService, IAiChatService
 
     public Task<StreamingResponse<StreamingChatCompletionsUpdate>> GetAnswerStreamAsync( string prompt, int choiceCount, CancellationToken cancellationToken = default )
     {
-        ChatMessage newMessage = new(ChatRole.User, prompt);
+        ChatMessage newMessage = new( ChatRole.User, prompt );
         m_chatMessages.Add( newMessage );
 
         ChatCompletionsOptions options = new( DEFAULT_AI_DEPLOYMENT_NAME, m_chatMessages );
@@ -48,7 +43,7 @@ public class AiChatService : BaseRemoteService, IAiChatService
         return result;
     }
 
-    public void AddChatAnswer(string answer)
+    public void AddChatAnswer( string answer )
     {
         ChatMessage message = new( ChatRole.Assistant, answer );
         m_chatMessages.Add( message );

@@ -769,6 +769,15 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Privacy policy.
+        /// </summary>
+        internal static string PrivacyPolicy {
+            get {
+                return ResourceManager.GetString("PrivacyPolicy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Profile.
         /// </summary>
         internal static string Profile {
@@ -1053,6 +1062,15 @@ namespace SET.MAUI.Resources.AppStrings {
         internal static string Type {
             get {
                 return ResourceManager.GetString("Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User agreement.
+        /// </summary>
+        internal static string UserAgreement {
+            get {
+                return ResourceManager.GetString("UserAgreement", resourceCulture);
             }
         }
         
