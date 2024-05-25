@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 namespace SET.Core.Models;
 public class SaveProgressOfHabitResponse
 {
-    public long ProgressOfHabitId { get; set; }
+    public long Id { get; set; }
 }

@@ -65,33 +65,16 @@ public partial class EditHabitView : ContentPageBase
                     }
             }
         }
-
-        //if (habit != null && ViewModel.Habit.AreasOfLife != null && habit.AreasOfLife.Any())
-        //{
-        //    TE_AreasOfLife.IsLabelFloating = false;
-        //}
     }
 
     private EditHabitViewModel ViewModel { get; }
 
-    private async void SubhabitsTapRecognizer_Tapped( System.Object sender, Microsoft.Maui.Controls.TappedEventArgs e )
-    {
-        Application.Current.Resources.TryGetValue( "Primary", out object? primaryColorObj );
-
-        //await I_SubHabitsInfo.DisplaySnackbar(
-        //    message: $"Don't use them for thought habits (e.g. \"Be a realistic optimist\").{Environment.NewLine}" +
-        //             $"Stop using them if they don't help you",
-        //    duration: TimeSpan.FromSeconds( 3 ),
-        //    visualOptions: SnackbarHelper.DefaultOptions()
-        //);
-    }
-
-    void Frequency_Tapped( System.Object sender, Microsoft.Maui.Controls.TappedEventArgs e )
+    void Frequency_Tapped( object sender, TappedEventArgs e )
     {
         OpenFrequencyPopup();
     }
 
-    void FrequencyIcon_Clicked( System.Object sender, System.EventArgs e )
+    void FrequencyIcon_Clicked( object sender, EventArgs e )
     {
         OpenFrequencyPopup();
     }
@@ -131,7 +114,7 @@ public partial class EditHabitView : ContentPageBase
         DXP_Frequency.IsOpen = true;
     }
 
-    async void SB_SaveFrequencyPopup_Clicked( System.Object sender, System.EventArgs e )
+    async void SB_SaveFrequencyPopup_Clicked( object sender, EventArgs e )
     {
         FrequencyOfHabit frequency = ViewModel.Habit.Frequency;
         bool hasErrors = false;
