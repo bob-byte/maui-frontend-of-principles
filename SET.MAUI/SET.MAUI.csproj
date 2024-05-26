@@ -133,6 +133,8 @@
 		<Compile Update="Resources\AppStrings\LocStrings.Designer.cs">
 		  <ExcludeFromCurrentConfiguration>true</ExcludeFromCurrentConfiguration>
 		  <DependentUpon>LocStrings.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
 		</Compile>
 	</ItemGroup>
 

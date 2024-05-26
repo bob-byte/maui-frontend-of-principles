@@ -35,7 +35,7 @@ public partial class ProfileView : ContentPageBase
         ME_PromptResult.MaxCharacterCountOverflowMode = OverflowMode.LimitInput;
         ME_PromptResult.HeightRequest = 140;
         ME_PromptResult.MaximumHeightRequest = 140;
-        ME_PromptResult.MaxLineCount = -1;
+        ME_PromptResult.MaxLineCount = int.MaxValue;
         ME_MainSlogan.Unfocus();
 
         DXP_Prompt.IsOpen = true;
@@ -47,7 +47,7 @@ public partial class ProfileView : ContentPageBase
         ME_PromptResult.Text = ViewModel.Mission;
         ME_PromptResult.HeightRequest = 285;
         ME_PromptResult.MaximumHeightRequest = 300;
-        ME_PromptResult.MaxLineCount = -1;
+        ME_PromptResult.MaxLineCount = int.MaxValue;
         ME_PromptResult.MaxCharacterCount = 4000;
         ME_PromptResult.MaxCharacterCountOverflowMode = OverflowMode.None;
         ME_Mision.Unfocus();
