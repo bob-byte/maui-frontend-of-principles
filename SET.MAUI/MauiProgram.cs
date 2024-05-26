@@ -76,7 +76,7 @@ public static class MauiProgram
         services.AddSingleton<ProgressOfHabitsViewModel>();
         services.AddSingleton<EditHabitViewModel>();
         services.AddSingleton<ProfileViewModel>();
-        services.AddSingleton<TemplateViewModel>();
+        services.AddSingleton<UserAgreementViewModel>();
 
         return services;
     }
@@ -90,6 +90,7 @@ public static class MauiProgram
         services.AddTransient<EditHabitView>();
         services.AddTransient<HelperView>();
         services.AddTransient<ProfileView>();
+        services.AddTransient<UserAgreementView>();
 
         return services;
     }

@@ -31,6 +31,7 @@
                                x:Name="SB_PrivacyPolicy"
                                Style="{StaticResource PrimaryButton}" />
             <dxco:SimpleButton Text="{x:Static loc:LocStrings.UserAgreement}"
+                               Command="{Binding ShowUserAgreementCommand}"
                                x:Name="SB_UserAgreement"
                                Style="{StaticResource PrimaryButton}" />
             <dxco:SimpleButton Command="{Binding LogoutCommand}"

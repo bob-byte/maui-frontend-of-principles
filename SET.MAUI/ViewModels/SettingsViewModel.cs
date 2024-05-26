@@ -14,7 +14,13 @@ public partial class SettingsViewModel : BaseViewModel
     public IAccountService AccountService { get; }
 
     [RelayCommand]
-    private async Task LogoutAsync()
+    public Task ShowUserAgreementAsync()
+    {
+        return Navigation.NavigateToAsync<UserAgreementViewModel>();
+    }
+
+    [RelayCommand]
+    public async Task LogoutAsync()
     {
         bool doLogout = await DialogService.ShowConfirmAsync( msg: LocStrings.MessageInLogoutConfirm, title: $"{LocStrings.LogoutQuestion}" );
         if (doLogout)
@@ -44,7 +50,7 @@ public partial class SettingsViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private async Task DeleteAccountAsync()
+    public async Task DeleteAccountAsync()
     {
         bool doDelete = await DialogService.ShowConfirmAsync( msg: LocStrings.MessageInDeleteAccountConfirm, title: $"{LocStrings.DeleteAccountQuestion}" );
         if (doDelete)
