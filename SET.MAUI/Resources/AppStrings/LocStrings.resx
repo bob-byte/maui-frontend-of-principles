@@ -511,71 +511,63 @@
     <value>User agreement</value>
   </data>
   <data name="UserAgreementIntroduction" xml:space="preserve">
-    <value>     This User Agreement (hereinafter referred to as the "Agreement") is entered into between you (hereinafter referred to as "You") and an individual entrepreneur Bats Bogdan Mikhailovich (hereinafter referred to as "I", "me", "Principles") the owner and operator of the mobile application named Principles (hereinafter referred to as the "App"). Please carefully read this Agreement before using the App.</value>
+    <value>     This User Agreement (hereinafter referred to as the "Agreement") is entered into between you (hereinafter referred to as "You") and an individual entrepreneur Bats Bogdan (hereinafter referred to as "I", "me", "Principles") the owner and operator of the Application named Principles (hereinafter referred to as the "App"). Please carefully read this Agreement before using the App.</value>
   </data>
   <data name="UserAgreementAcceptanceofTermsTitle" xml:space="preserve">
     <value>1. Acceptance of Terms</value>
   </data>
   <data name="UserAgreementAcceptanceofTermsText" xml:space="preserve">
-    <value>     1.1 Your use of the App constitutes your agreement to all the terms of this Agreement. If you do not agree to these terms, please do not use the App.</value>
+    <value>     1.1. Your use of the App constitutes your agreement to all the terms of this Agreement. If you do not agree to these terms, please do not use the App.</value>
   </data>
   <data name="UserAgreementRightsandResponsibilitiesOfUserTitle" xml:space="preserve">
     <value>2. Rights and Responsibilities of the User</value>
   </data>
   <data name="UserAgreementRightsandResponsibilitiesOfUserText" xml:space="preserve">
-    <value>     2.1 You agree not to violate any copyrights, property rights, or other rights of any party associated with the use of the App.
-	   2.2. You are solely responsible for any information you provide through the App, including your comments, feedback, and any content.
-	   2.3. You agree not to use the App for any illegal or abusive purposes.</value>
+    <value>     2.1. You agree not to violate any copyrights, property rights, or other rights of any party associated with the use of the App.
+     2.2. You are solely responsible for any information you provide through the App, including your comments, feedback, and any content.
+     2.3. You agree not to use the App for any illegal or abusive purposes.</value>
   </data>
   <data name="UserAgreementRightsandResponsibilitiesofPrinciplesTitle" xml:space="preserve">
     <value>3. Rights and Responsibilities of Principles</value>
   </data>
   <data name="UserAgreementRightsandResponsibilitiesofPrinciplesText" xml:space="preserve">
     <value>     3.1. I reserve the right to make changes to the terms of this Agreement at any time. Any modifications will be effective immediately upon posting on the App. Your continued use of the App after such changes will constitute your acknowledgment and acceptance of the modified terms.
-    3.2. I reserve the right to suspend or terminate your access to the App at any time for any reason, including but not limited to violation of this Agreement or misuse of the App.</value>
+     3.2. I reserve the right to suspend or terminate your access to the App at any time for any reason, including but not limited to violation of this Agreement or misuse of the App.</value>
   </data>
   <data name="UserAgreementIntellectualPropertyTitle" xml:space="preserve">
     <value>4. Intellectual Property</value>
   </data>
   <data name="UserAgreementIntellectualPropertyText" xml:space="preserve">
-    <value>     4.1. The App and all of its content, including but not limited to text, graphics, logos, icons, images, audio clips, digital downloads, and software, are the property of Principles or its licensors and are protected by copyright laws.
-    4.2 Content provided by Principles is protected and cannot be reproduced, processed, distributed, framed, published, downloaded, transmitted, sold, or used in any form, in whole or in part, without the prior written consent of Principles. Unauthorized reproduction, copying, collection, systematization, storage, or transmission of content for creating a database for commercial or non-commercial purposes, in any manner, is strictly prohibited.
-    4.3. Users of the App services are required to respect the intellectual property rights of the Principles.
-    4.4. This Agreement does not grant Users the right to use the Mobile Application for any commercial purposes or any purposes not explicitly outlined in the Agreement. Users are prohibited from copying, distributing, or transferring the Mobile Application, its visual and sound design, content, algorithms of Training Programs, or any other materials provided through the Mobile Application, either in whole or in part, without express written consent from the Principles.</value>
+    <value>     4.1. The App and all of its content, including but not limited to text, graphics, logos, icons, images, and software, are the property of Principles or its licensors and are protected by copyright laws.
+     4.2. Content provided by Principles is protected and cannot be reproduced, processed, distributed, framed, published, downloaded, transmitted, sold, or used in any form, in whole or in part, without the prior written consent of Principles. Unauthorized reproduction, copying, collection, systematization, storage, or transmission of content for creating a database for commercial or non-commercial purposes, in any manner, is strictly prohibited.
+     4.3. Users of the App services are required to respect the intellectual property rights of the Principles.</value>
   </data>
   <data name="UserAgreementDisclaimerofWarrantiesTitle" xml:space="preserve">
     <value>5. Disclaimer of Warranties</value>
   </data>
 	<data name="UserAgreementDisclaimerofWarrantiesText" xml:space="preserve">
     <value>     5.1. The App is provided on an "as is" and "as available" basis without any warranties of any kind, express or implied.
-    5.2. Principles does not warrant that the App will be uninterrupted, error-free, or free of viruses or other harmful components.</value>
+     5.2. Principles does not warrant that the App will be uninterrupted, error-free, or free of viruses or other harmful components.</value>
   </data>
   <data name="UserAgreementLimitationofLiabilityTitle" xml:space="preserve">
     <value>6. Limitation of Liability</value>
   </data>
 	<data name="UserAgreementLimitationofLiabilityText" xml:space="preserve">
     <value>     6.1. In no event shall Principles be liable for any indirect, incidental, special, consequential, or punitive damages arising out of or in connection with your use of the App.
-    6.2. Principles' total liability to you for all claims arising out of or in connection with this Agreement shall not exceed the amount paid by you, if any, for accessing the App.</value>
+     6.2. Principles' total liability to you for all claims arising out of or in connection with this Agreement shall not exceed the amount paid by you, if any, for accessing the App.</value>
   </data>
   <data name="UserAgreementLicenseTitle" xml:space="preserve">
     <value>7. License</value>
   </data>
 	<data name="UserAgreementLicenseText" xml:space="preserve">
-    <value>     7.1. Under this Agreement, Principles grants the User a simple (non-exclusive) license to use the Mobile Application. This license is non-transferable and may be revoked at any time.
-    7.2. The User is authorized to download and use the Mobile Application immediately after Principles receives payment confirmation from the payment system.
-    7.3. The license for the Mobile Application remains valid indefinitely unless otherwise agreed upon in writing by the parties.</value>
-  </data>
-  <data name="UserAgreementLicenseCancellationPolicyTitle" xml:space="preserve">
-    <value>8. License Cancellation Policy</value>
-  </data>
-	<data name="UserAgreementLicenseCancellationPolicyText" xml:space="preserve">
-    <value>     8.1. The User has the right to discontinue use of the paid Mobile Application at any time. However, no refund will be issued for any payments made by the User, regardless of whether the Mobile Application was actually used or not.</value>
+    <value>     7.1. Under this Agreement, Principles grants the User a simple (non-exclusive) license to use the App. This license is non-transferable and may be revoked at any time.
+     7.2. The license for the App remains valid indefinitely unless otherwise agreed upon in writing by the parties.</value>
   </data>
   <data name="UserAgreementPersonalDataTitle" xml:space="preserve">
-    <value>9. Personal data</value>
+    <value>8. Personal data</value>
   </data>
 	<data name="UserAgreementPersonalDataText" xml:space="preserve">
-    <value>     9.1. The processing of the User's personal data is carried out in accordance with the legislation of the Ukraine and the Privacy Policy.</value>
+    <value>     8.1. The processing of the User's personal data is carried out in accordance with the legislation of the Ukraine and the Privacy Policy.</value>
   </data>
   <data name="UserAgreementSeverabilityTitle" xml:space="preserve">
     <value>Severability</value>
@@ -588,6 +580,6 @@ By using the App, you acknowledge that you have read, understood, and agree to b
     <value>Last Updated: 25.05.2024.</value>
   </data>
 	<data name="UserAgreementContactInformation" xml:space="preserve">
-    <value>If you have any questions about this Agreement, please contact me: batsbohdan@gmail.com.</value>
+    <value>     If you have any questions about this Agreement, please contact me: batsbohdan@gmail.com.</value>
   </data>
 </root>
