@@ -4,7 +4,7 @@
                    x:Class="SET.MAUI.Views.SettingsView"
                    xmlns:loc="clr-namespace:SET.MAUI.Resources.AppStrings"
                    xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
-             xmlns:dxg="clr-namespace:DevExpress.Maui.DataGrid;assembly=DevExpress.Maui.DataGrid"
+                   xmlns:dxg="clr-namespace:DevExpress.Maui.DataGrid;assembly=DevExpress.Maui.DataGrid"
                    xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
                    xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
                    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
@@ -15,19 +15,21 @@
                    x:DataType="vm:SettingsViewModel"
                    Title="{Binding Title}">
     <Grid>
-        <VerticalStackLayout Padding="15, 0, 15, 0"
+        <VerticalStackLayout Padding="15,0,15,0"
                              Spacing="20"
                              VerticalOptions="Center">
             <Image Source="logolargesize"
-                          WidthRequest="200"
-                          HeightRequest="200"/>
-            <Label Text="{Binding AppName, Converter={StaticResource ToUpperCase}}"
+                   WidthRequest="200"
+                   HeightRequest="200" />
+            <Label Text="{Binding AppName,
+                                  Converter={StaticResource ToUpperCase}}"
                    TextColor="OrangeRed"
                    HorizontalOptions="Center"
                    FontSize="Title"
                    FontFamily="Roboto"
-                   FontAttributes="Bold"/>
+                   FontAttributes="Bold" />
             <dxco:SimpleButton Text="{x:Static loc:LocStrings.PrivacyPolicy}"
+                               Command="{Binding ShowPrivacyPolicyCommand}"
                                x:Name="SB_PrivacyPolicy"
                                Style="{StaticResource PrimaryButton}" />
             <dxco:SimpleButton Text="{x:Static loc:LocStrings.UserAgreement}"
@@ -39,7 +41,7 @@
                                Style="{StaticResource SecondaryButton}" />
             <dxco:SimpleButton Command="{Binding DeleteAccountCommand}"
                                Text="{x:Static loc:LocStrings.DeleteAccount}"
-                               Style="{StaticResource SecondaryButton}"/>
+                               Style="{StaticResource SecondaryButton}" />
         </VerticalStackLayout>
 
         <templates:DefaultActivityIndicator />

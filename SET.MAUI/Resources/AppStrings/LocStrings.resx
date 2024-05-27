@@ -579,7 +579,48 @@ By using the App, you acknowledge that you have read, understood, and agree to b
   <data name="UserAgreementLastUpdate" xml:space="preserve">
     <value>Last Updated: 25.05.2024.</value>
   </data>
-	<data name="UserAgreementContactInformation" xml:space="preserve">
+  <data name="UserAgreementContactInformation" xml:space="preserve">
     <value>     If you have any questions about this Agreement, please contact me: batsbohdan@gmail.com.</value>
+  </data>
+  <data name="PrivacyPolicyIntroduction" xml:space="preserve">
+    <value>     Principles operates cognominal app, which provides the SERVICE.
+    This page is used to inform visitors regarding our policies with the collection, use, and disclosure of Personal Information if anyone decided to use our Service, the Principles.
+    If you choose to use our Service, then you agree to the collection and use of information in relation with this policy. The Personal Information that we collect are used for providing and improving the Service. We will not use or share your information with anyone except as described in this Privacy Policy.</value>
+  </data>
+  <data name="PrivacyPolicyInformationCollectionandUseTitle" xml:space="preserve">
+    <value>Information Collection and Use</value>
+  </data>
+  <data name="PrivacyPolicyInformationCollectionandUseText" xml:space="preserve">
+    <value>     For a better experience while using our Service, we may require you to provide us with certain personally identifiable information, including but not limited to your name and email address. The information that we collect will be used to contact or identify you.</value>
+  </data>
+  <data name="PrivacyPolicyLogDataTitle" xml:space="preserve">
+    <value>Log Data</value>
+  </data>
+	<data name="PrivacyPolicyLogDataText" xml:space="preserve">
+    <value>     Please be aware that each time you use our app, we automatically gather information sent by your device. This includes details such as your device’s Internet Protocol (IP) address, the specific pages of our app that you visit, the date and time of your access, the amount of time you spend on these pages, and other related statistics.</value>
+  </data>
+  <data name="PrivacyPolicySecurityTitle" xml:space="preserve">
+    <value>Security</value>
+  </data>
+  <data name="PrivacyPolicySecurityText" xml:space="preserve">
+    <value>     We value your trust in providing us your Personal Information, thus we are striving to use commercially acceptable means of protecting it. But remember that no method of transmission over the internet, or method of electronic storage is 100% secure and reliable, and we cannot guarantee its absolute security.</value>
+  </data>
+  <data name="PrivacyPolicyChildrensPrivacyTitle" xml:space="preserve">
+    <value>Children's Privacy</value>
+  </data>
+  <data name="PrivacyPolicyChildrensPrivacyText" xml:space="preserve">
+    <value>    Our Services do not address anyone under the age of 13. We do not knowingly collect personal identifiable information from children under 13. In the case we discover that a child under 13 has provided us with personal information, we immediately delete this from our servers. If you are a parent or guardian and you are aware that your child has provided us with personal information, please contact us so that we will be able to do necessary actions.</value>
+  </data>
+  <data name="PrivacyPolicyChangesTitle" xml:space="preserve">
+    <value>Changes to This Privacy Policy</value>
+  </data>
+  <data name="PrivacyPolicyChangesText" xml:space="preserve">
+    <value>    We may update our Privacy Policy from time to time. Thus, we advise you to review this page periodically for any changes. We will notify you of any changes by posting the new Privacy Policy on this page. These changes are effective immediately, after they are posted on this page.</value>
+  </data>
+  <data name="PrivacyPolicyContactInfoTitle" xml:space="preserve">
+    <value>Contact Us</value>
+  </data>
+  <data name="PrivacyPolicyContactInfoText" xml:space="preserve">
+    <value>    If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us on email: **batsbohdan@gmail.com**.</value>
   </data>
 </root>

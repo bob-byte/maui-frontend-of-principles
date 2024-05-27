@@ -77,6 +77,7 @@ public static class MauiProgram
         services.AddSingleton<EditHabitViewModel>();
         services.AddSingleton<ProfileViewModel>();
         services.AddSingleton<UserAgreementViewModel>();
+        services.AddSingleton<PrivacyPolicyViewModel>();
 
         return services;
     }
@@ -91,6 +92,7 @@ public static class MauiProgram
         services.AddTransient<HelperView>();
         services.AddTransient<ProfileView>();
         services.AddTransient<UserAgreementView>();
+        services.AddTransient<PrivacyPolicyView>();
 
         return services;
     }

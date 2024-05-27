@@ -99,6 +99,9 @@
 		<Compile Update="App.xaml.cs">
 		  <DependentUpon>App.xaml</DependentUpon>
 		</Compile>
+		<Compile Update="Views\PrivacyPolicyView.xaml.cs">
+		  <DependentUpon>PrivacyPolicyView.xaml</DependentUpon>
+		</Compile>
 		<Compile Update="Views\EditPrincipleView.xaml.cs">
 		  <DependentUpon>EditPrincipleView.xaml</DependentUpon>
 		</Compile>
@@ -172,7 +175,7 @@
 	  <MauiXaml Update="Views\Templates\BaseTemplateView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Condition=" '$(EnableDefaultXamlItems)' == 'true' " Update="Views\BaseTemplateView.xaml">
+	  <MauiXaml Condition=" '$(EnableDefaultXamlItems)' == 'true' " Update="Views\PrivacyPolicyView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

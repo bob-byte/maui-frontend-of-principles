@@ -20,6 +20,12 @@ public partial class SettingsViewModel : BaseViewModel
     }
 
     [RelayCommand]
+    public Task ShowPrivacyPolicyAsync()
+    {
+        return Navigation.NavigateToAsync<PrivacyPolicyViewModel>();
+    }
+
+    [RelayCommand]
     public async Task LogoutAsync()
     {
         bool doLogout = await DialogService.ShowConfirmAsync( msg: LocStrings.MessageInLogoutConfirm, title: $"{LocStrings.LogoutQuestion}" );
