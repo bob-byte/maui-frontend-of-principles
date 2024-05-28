@@ -591,7 +591,7 @@ By using the App, you acknowledge that you have read, understood, and agree to b
     <value>Information Collection and Use</value>
   </data>
   <data name="PrivacyPolicyInformationCollectionandUseText" xml:space="preserve">
-    <value>     For a better experience while using our Service, we may require you to provide us with certain personally identifiable information, including but not limited to your name and email address. The information that we collect will be used to contact and identify you. We retain this information until the User deletes their account or violates the User Agreement or Privacy Policy.</value>
+    <value>     For a better experience while using our Service, we may require you to provide us with certain personally identifiable information, including but not limited to your name and email address. The information that we collect will be used to contact and identify you. We retain this information until the User deletes account or violates the User Agreement or Privacy Policy.</value>
   </data>
   <data name="PrivacyPolicyLogDataTitle" xml:space="preserve">
     <value>Log Data</value>
