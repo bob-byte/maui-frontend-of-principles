@@ -591,13 +591,13 @@ By using the App, you acknowledge that you have read, understood, and agree to b
     <value>Information Collection and Use</value>
   </data>
   <data name="PrivacyPolicyInformationCollectionandUseText" xml:space="preserve">
-    <value>     For a better experience while using our Service, we may require you to provide us with certain personally identifiable information, including but not limited to your name and email address. The information that we collect will be used to contact or identify you.</value>
+    <value>     For a better experience while using our Service, we may require you to provide us with certain personally identifiable information, including but not limited to your name and email address. The information that we collect will be used to contact and identify you.</value>
   </data>
   <data name="PrivacyPolicyLogDataTitle" xml:space="preserve">
     <value>Log Data</value>
   </data>
 	<data name="PrivacyPolicyLogDataText" xml:space="preserve">
-    <value>     Please be aware that each time you use our app, we automatically gather information sent by your device. This includes details such as your device’s Internet Protocol (IP) address, the specific pages of our app that you visit, the date and time of your access, the amount of time you spend on these pages, and other related statistics.</value>
+    <value>     Please be aware that each time you use our app, we automatically gather information sent by your device. This includes details such as your device’s Internet Protocol (IP) address, device's operating system version, device model, error details if it occurs, and other related data.</value>
   </data>
   <data name="PrivacyPolicySecurityTitle" xml:space="preserve">
     <value>Security</value>
@@ -609,7 +609,7 @@ By using the App, you acknowledge that you have read, understood, and agree to b
     <value>Children's Privacy</value>
   </data>
   <data name="PrivacyPolicyChildrensPrivacyText" xml:space="preserve">
-    <value>    Our Services do not address anyone under the age of 13. We do not knowingly collect personal identifiable information from children under 13. In the case we discover that a child under 13 has provided us with personal information, we immediately delete this from our servers. If you are a parent or guardian and you are aware that your child has provided us with personal information, please contact us so that we will be able to do necessary actions.</value>
+    <value>    Our Services do not address anyone under the age of 13. We do not knowingly collect personal identifiable information from children under 13. In the case we discover that a child under 13 has provided us with personal information, we will delete this from our servers. If you are a parent or guardian and you are aware that your child has provided us with personal information, please contact us so that we will be able to do necessary actions.</value>
   </data>
   <data name="PrivacyPolicyChangesTitle" xml:space="preserve">
     <value>Changes to This Privacy Policy</value>
@@ -621,6 +621,6 @@ By using the App, you acknowledge that you have read, understood, and agree to b
     <value>Contact Us</value>
   </data>
   <data name="PrivacyPolicyContactInfoText" xml:space="preserve">
-    <value>    If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us on email: **batsbohdan@gmail.com**.</value>
+    <value>    If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us on email: batsbohdan@gmail.com.</value>
   </data>
 </root>
