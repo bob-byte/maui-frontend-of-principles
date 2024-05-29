@@ -24,27 +24,29 @@
                    FontSize="17">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer NumberOfTapsRequired="1"
-                                          Command="{Binding BackCommand}"/>
+                                          Command="{Binding BackCommand}" />
                 </Label.GestureRecognizers>
             </Label>
             <Grid x:Name="G_SaveHabit"
-                         HorizontalOptions="End"
-                         VerticalOptions="CenterAndExpand"
-                         Grid.Column="1">
-                <dxco:SimpleButton Text="{Binding LocSigningUp, Converter={StaticResource ToUpperCase}}"
-                               Style="{StaticResource TitlePrimaryButton}"
-                               Command="{Binding SignupCommand}"
-                               Margin="0, 2, 0, 2"
-                               FontSize="14"
-                               BorderThickness="2"/>
+                  HorizontalOptions="End"
+                  VerticalOptions="CenterAndExpand"
+                  Grid.Column="1">
+                <dxco:SimpleButton Text="{Binding LocSigningUp,
+                                                  Converter={StaticResource ToUpperCase}}"
+                                   Style="{StaticResource TitlePrimaryButton}"
+                                   Command="{Binding SignupCommand}"
+                                   Margin="0,2,0,2"
+                                   FontSize="14"
+                                   BorderThickness="2" />
             </Grid>
         </Grid>
     </Shell.TitleView>
     <ScrollView>
         <Grid>
-            <VerticalStackLayout Padding="15, 15, 15, 15"
+
+            <VerticalStackLayout Padding="15,15,15,15"
                                  VerticalOptions="StartAndExpand"
-                                 Spacing="10">
+                                 Spacing="5">
                 <skia:SKLottieView IsAnimationEnabled="True"
                                    RepeatCount="-1"
                                    WidthRequest="500"
@@ -93,7 +95,7 @@
                     <dxe:Chip Text="{x:Static loc:LocStrings.Woman}" />
                     <dxe:Chip Text="{x:Static loc:LocStrings.OtherSex}" />
                 </dxe:ChoiceChipGroup>
-                
+
                 <dxe:MultilineEdit Text="{Binding Mission}"
                                    x:Name="ME_Mission"
                                    LabelText="{x:Static loc:LocStrings.Mission}"
@@ -117,6 +119,52 @@
                                    EndIcon="info"
                                    EndIconCommand="{Binding ShowSnackbarForMainSloganCommand}"
                                    EndIconCommandParameter="{x:Reference ME_MainSlogan}" />
+
+                <VerticalStackLayout VerticalOptions="CenterAndExpand"
+                                     HorizontalOptions="CenterAndExpand"
+                                     Spacing="5">
+                    <Label Text="{x:Static loc:LocStrings.SignUpAgreementText}"
+                           TextColor="Gray"
+                           FontSize="Caption"
+                           FontFamily="MonaSansMedium"
+                           FontAttributes="Italic"
+                           Margin="0,5,0,0"
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center" />
+                    <HorizontalStackLayout HorizontalOptions="Center"
+                                           Spacing="5">
+                        <Label Text="{x:Static loc:LocStrings.UserAgreementStrInLoginAndSignupViews}"
+                               TextColor="{StaticResource Primary}"
+                               FontSize="Caption"
+                               FontFamily="MonaSansMedium"
+                               WidthRequest="145"
+                               FontAttributes="Italic"
+                               Margin="20,0,0,0"
+                               HorizontalTextAlignment="End">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenUserAgreementCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label Text="{x:Static loc:LocStrings.LoginSignUpAgreementСonnectingText}"
+                               TextColor="Gray"
+                               FontSize="Caption"
+                               FontFamily="MonaSansMedium"
+                               FontAttributes="Italic"
+                               HorizontalTextAlignment="Center"
+                               WidthRequest="25" />
+
+                        <Label Text="{x:Static loc:LocStrings.PrivacyPolicyStrInLoginAndSignupViews}"
+                               TextColor="{StaticResource Primary}"
+                               FontSize="Caption"
+                               FontFamily="MonaSansMedium"
+                               FontAttributes="Italic"
+                               WidthRequest="170">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenPrivacyPolicyCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
             </VerticalStackLayout>
 
             <ActivityIndicator Color="{StaticResource Primary}"

@@ -580,7 +580,7 @@ By using the App, you acknowledge that you have read, understood, and agree to b
     <value>Last Updated: 25.05.2024.</value>
   </data>
   <data name="UserAgreementContactInformation" xml:space="preserve">
-    <value>     If you have any questions about this Agreement, please contact me: batsbohdan@gmail.com.</value>
+    <value>     If you have any questions about this Agreement, please contact me: app@principles.top.</value>
   </data>
   <data name="PrivacyPolicyIntroduction" xml:space="preserve">
     <value>     Principles operates cognominal app, which provides the SERVICE.
@@ -621,6 +621,21 @@ By using the App, you acknowledge that you have read, understood, and agree to b
     <value>Contact Us</value>
   </data>
   <data name="PrivacyPolicyContactInfoText" xml:space="preserve">
-    <value>    If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us on email: batsbohdan@gmail.com.</value>
+    <value>    If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us on email: app@principles.top.</value>
+  </data>
+  <data name="LoginAgreementText" xml:space="preserve">
+    <value>By clicking the 'Login' button, you agree to:</value>
+  </data>
+  <data name="LoginSignUpAgreementСonnectingText" xml:space="preserve">
+    <value>and</value>
+  </data>
+  <data name="UserAgreementStrInLoginAndSignupViews" xml:space="preserve">
+    <value>User Agreement</value>
+  </data>
+  <data name="PrivacyPolicyStrInLoginAndSignupViews" xml:space="preserve">
+    <value>Privacy Policy</value>
+  </data>
+  <data name="SignUpAgreementText" xml:space="preserve">
+    <value>By clicking the 'Signing Up' button, you agree to:</value>
   </data>
 </root>

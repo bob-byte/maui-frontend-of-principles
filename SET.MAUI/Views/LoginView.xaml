@@ -16,50 +16,100 @@
                    Title="{Binding Title}">
     <Grid>
         <ScrollView>
-        <VerticalStackLayout Padding="15"
-                             Spacing="20"
-                             VerticalOptions="CenterAndExpand">
-            <Image Source="logolargesize"
-                          WidthRequest="200"
-                          HeightRequest="200"/>
-            <Label Text="{Binding AppName, Converter={StaticResource ToUpperCase}}"
-                   TextColor="OrangeRed"
-                   HorizontalOptions="Center"
-                   FontSize="Title"
-                   FontFamily="Roboto"
-                   FontAttributes="Bold"/>
-            <dxe:TextEdit Text="{Binding Email.Value}"
-                          LabelText="{x:Static loc:LocStrings.Email}"
-                          AutofillContentType="EmailAddress"
-                          StartIcon="email"
-                          Keyboard="Email"
-                          ClearIconVisibility="Never"
-                          HasError="{Binding Email.IsValid,
-                                             Converter={StaticResource IsFalse}}"
-                          ErrorText="{Binding Email.Errors, 
-                                              Converter={StaticResource FirstValidationError}}"
-                          TextChangedCommand="{Binding ValidateEmailCommand}" />
-
-            
-            <dxe:PasswordEdit Text="{Binding Password.Value}"
-                              x:Name="PasswordEntry"
-                              LabelText="{x:Static loc:LocStrings.Password}"
-                              StartIcon="password"
-                              AutofillContentType="Password"
-                              HasError="{Binding Password.IsValid, Converter={StaticResource IsFalse}}"
-                              ErrorText="{Binding Password.Errors, 
+            <VerticalStackLayout Padding="15"
+                                 Spacing="20"
+                                 VerticalOptions="CenterAndExpand">
+                <Image Source="logolargesize"
+                       WidthRequest="200"
+                       HeightRequest="200" />
+                <Label Text="{Binding AppName,
+                                      Converter={StaticResource ToUpperCase}}"
+                       TextColor="OrangeRed"
+                       HorizontalOptions="Center"
+                       FontSize="Title"
+                       FontFamily="Roboto"
+                       FontAttributes="Bold" />
+                <dxe:TextEdit Text="{Binding Email.Value}"
+                              LabelText="{x:Static loc:LocStrings.Email}"
+                              AutofillContentType="EmailAddress"
+                              StartIcon="email"
+                              Keyboard="Email"
+                              ClearIconVisibility="Never"
+                              HasError="{Binding Email.IsValid,
+                                                 Converter={StaticResource IsFalse}}"
+                              ErrorText="{Binding Email.Errors,
                                                   Converter={StaticResource FirstValidationError}}"
-                              TextChangedCommand="{Binding ValidatePasswordCommand}" />
+                              TextChangedCommand="{Binding ValidateEmailCommand}" />
 
-            <dxco:SimpleButton Text="{x:Static loc:LocStrings.Login}"
-                               Command="{Binding LoginCommand}"
-                               Style="{StaticResource PrimaryButton}" />
 
-            <dxco:SimpleButton Text="{x:Static loc:LocStrings.SignUp}"
-                               Command="{Binding SignupCommand}"
-                               BackgroundColor="{AppThemeBinding Light={StaticResource DarkPrimary}, Dark={StaticResource Primary}}"
-                               TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
-        </VerticalStackLayout>
+                <dxe:PasswordEdit Text="{Binding Password.Value}"
+                                  x:Name="PasswordEntry"
+                                  LabelText="{x:Static loc:LocStrings.Password}"
+                                  StartIcon="password"
+                                  AutofillContentType="Password"
+                                  HasError="{Binding Password.IsValid,
+                                                     Converter={StaticResource IsFalse}}"
+                                  ErrorText="{Binding Password.Errors,
+                                                      Converter={StaticResource FirstValidationError}}"
+                                  TextChangedCommand="{Binding ValidatePasswordCommand}" />
+
+                <dxco:SimpleButton Text="{x:Static loc:LocStrings.Login}"
+                                   Command="{Binding LoginCommand}"
+                                   Style="{StaticResource PrimaryButton}" />
+
+                <dxco:SimpleButton Text="{x:Static loc:LocStrings.SignUp}"
+                                   Command="{Binding SignupCommand}"
+                                   BackgroundColor="{AppThemeBinding Light={StaticResource DarkPrimary},
+                                                                     Dark={StaticResource Primary}}"
+                                   TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                               Dark={StaticResource DarkPrimary}}" />
+
+                <VerticalStackLayout VerticalOptions="CenterAndExpand"
+                                     HorizontalOptions="CenterAndExpand"
+                                     Spacing="5">
+                    <Label Text="{x:Static loc:LocStrings.LoginAgreementText}"
+                           TextColor="Gray"
+                           FontSize="Caption"
+                           FontFamily="MonaSansMedium"
+                           FontAttributes="Italic"
+                           Margin="0,5,0,0"
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center" />
+                    <HorizontalStackLayout HorizontalOptions="Center"
+                                           Spacing="5">
+                        <Label Text="{x:Static loc:LocStrings.UserAgreementStrInLoginAndSignupViews}"
+                               TextColor="{StaticResource Primary}"
+                               FontSize="Caption"
+                               FontFamily="MonaSansMedium"
+                               WidthRequest="145"
+                               FontAttributes="Italic"
+                               Margin="20,0,0,0"
+                               HorizontalTextAlignment="End">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenUserAgreementCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label Text="{x:Static loc:LocStrings.LoginSignUpAgreementСonnectingText}"
+                               TextColor="Gray"
+                               FontSize="Caption"
+                               FontFamily="MonaSansMedium"
+                               FontAttributes="Italic"
+                               HorizontalTextAlignment="Center"
+                               WidthRequest="25"/>
+
+                        <Label Text="{x:Static loc:LocStrings.PrivacyPolicyStrInLoginAndSignupViews}"
+                               TextColor="{StaticResource Primary}"
+                               FontSize="Caption"
+                               FontFamily="MonaSansMedium"
+                               FontAttributes="Italic"
+                               WidthRequest="170">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenPrivacyPolicyCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
         </ScrollView>
 
         <ActivityIndicator Color="{StaticResource Primary}"

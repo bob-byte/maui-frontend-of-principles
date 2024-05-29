@@ -506,7 +506,7 @@
     <value>Останнє оновлення: 25.05.2024.</value>
   </data>
 	<data name="UserAgreementContactInformation" xml:space="preserve">
-    <value>     Якщо у вас виникли запитання щодо цієї Угоди, зв’яжіться зі мною: batsbohdan@gmail.com.</value>
+    <value>     Якщо у вас виникли запитання щодо цієї Угоди, зв’яжіться зі мною: app@principles.top.</value>
   </data>
   <data name="PrivacyPolicyIntroduction" xml:space="preserve">
     <value>     Принципи керують одноіменним додатком, який надає СЕРВІС.
@@ -547,6 +547,21 @@
     <value>Зв'яжіться з нами</value>
   </data>
 	<data name="PrivacyPolicyContactInfoText" xml:space="preserve">
-    <value>    Якщо у вас є запитання чи пропозиції щодо нашої Політики Конфіденційності, не соромтеся зв’язатися з нами через електронну пошту: batsbohdan@gmail.com.</value>
+    <value>    Якщо у вас є запитання чи пропозиції щодо нашої Політики Конфіденційності, не соромтеся зв’язатися з нами через електронну пошту: app@principles.top.</value>
+  </data>
+  <data name="LoginAgreementText" xml:space="preserve">
+    <value>Натискаючи кнопку 'Логін', ви погоджуєтесь з:</value>
+  </data>
+  <data name="LoginSignUpAgreementСonnectingText" xml:space="preserve">
+    <value>та</value>
+  </data>
+	<data name="UserAgreementStrInLoginAndSignupViews" xml:space="preserve">
+    <value>Користувацькою Угодою</value>
+  </data>
+	<data name="PrivacyPolicyStrInLoginAndSignupViews" xml:space="preserve">
+    <value>Політикою Конфіденційності</value>
+  </data>
+  <data name="SignUpAgreementText" xml:space="preserve">
+    <value>Натискаючи кнопку ' Реєстрація', ви погоджуєтесь з:</value>
   </data>
 </root>

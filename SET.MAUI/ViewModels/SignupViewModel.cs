@@ -132,7 +132,17 @@ namespace SET.MAUI.ViewModels
         {
             Password.Validate();
         }
+        [RelayCommand]
+        public Task OpenUserAgreementAsync()
+        {
+            return Navigation.NavigateToAsync<UserAgreementViewModel>();
+        }
 
+        [RelayCommand]
+        public Task OpenPrivacyPolicyAsync()
+        {
+            return Navigation.NavigateToAsync<PrivacyPolicyViewModel>();
+        }
         private void AddValidators()
         {
             Name.Validations.Add(item: new IsNotNullOrWhiteSpaceRule { ValidationMessage = LocStrings.RequiredErrorText });
