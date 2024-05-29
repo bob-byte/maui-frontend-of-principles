@@ -553,6 +553,24 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to By clicking the &apos;Login&apos; button, you agree to:.
+        /// </summary>
+        internal static string LoginAgreementText {
+            get {
+                return ResourceManager.GetString("LoginAgreementText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to and.
+        /// </summary>
+        internal static string LoginSignUpAgreementСonnectingText {
+            get {
+                return ResourceManager.GetString("LoginSignUpAgreementСonnectingText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Logout.
         /// </summary>
         internal static string Logout {
@@ -814,7 +832,7 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to     If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us on email: batsbohdan@gmail.com..
+        ///   Looks up a localized string similar to     If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us on email: app@principles.top..
         /// </summary>
         internal static string PrivacyPolicyContactInfoText {
             get {
@@ -893,6 +911,15 @@ namespace SET.MAUI.Resources.AppStrings {
         internal static string PrivacyPolicySecurityTitle {
             get {
                 return ResourceManager.GetString("PrivacyPolicySecurityTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Privacy Policy.
+        /// </summary>
+        internal static string PrivacyPolicyStrInLoginAndSignupViews {
+            get {
+                return ResourceManager.GetString("PrivacyPolicyStrInLoginAndSignupViews", resourceCulture);
             }
         }
         
@@ -1077,6 +1104,15 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to By clicking the &apos;Signing Up&apos; button, you agree to:.
+        /// </summary>
+        internal static string SignUpAgreementText {
+            get {
+                return ResourceManager.GetString("SignUpAgreementText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sociality.
         /// </summary>
         internal static string Sociality {
@@ -1212,7 +1248,7 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to      If you have any questions about this Agreement, please contact me: batsbohdan@gmail.com..
+        ///   Looks up a localized string similar to      If you have any questions about this Agreement, please contact me: app@principles.top..
         /// </summary>
         internal static string UserAgreementContactInformation {
             get {
@@ -1268,7 +1304,7 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Last Updated: 25.05.2024..
+        ///   Looks up a localized string similar to Last Updated: 29.05.2024..
         /// </summary>
         internal static string UserAgreementLastUpdate {
             get {
@@ -1387,6 +1423,15 @@ namespace SET.MAUI.Resources.AppStrings {
         internal static string UserAgreementSeverabilityTitle {
             get {
                 return ResourceManager.GetString("UserAgreementSeverabilityTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Agreement.
+        /// </summary>
+        internal static string UserAgreementStrInLoginAndSignupViews {
+            get {
+                return ResourceManager.GetString("UserAgreementStrInLoginAndSignupViews", resourceCulture);
             }
         }
         

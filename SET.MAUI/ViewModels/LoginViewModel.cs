@@ -92,6 +92,18 @@ public partial class LoginViewModel : BaseViewModel
         Password.Validate();
     }
 
+    [RelayCommand]
+    public Task OpenUserAgreementAsync()
+    {
+        return Navigation.NavigateToAsync<UserAgreementViewModel>();
+    }
+
+    [RelayCommand]
+    public Task OpenPrivacyPolicyAsync()
+    {
+        return Navigation.NavigateToAsync<PrivacyPolicyViewModel>();
+    }
+
     private void AddValidations()
     {
         Email.Validations.Add( new IsNotNullOrWhiteSpaceRule{ ValidationMessage = LocStrings.RequiredErrorText } );
