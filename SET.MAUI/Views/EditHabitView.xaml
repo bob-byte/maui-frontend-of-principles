@@ -394,8 +394,8 @@
                                                            VerticalTextAlignment="End"
                                                            Grid.Row="0"
                                                            Grid.Column="0" />
-                                                    <Label Text="{Binding ReasonToFollow}"
-                                                           ToolTipProperties.Text="{Binding ReasonToFollow}"
+                                                    <Label Text="{Binding Description}"
+                                                           ToolTipProperties.Text="{Binding Description}"
                                                            LineBreakMode="TailTruncation"
                                                            VerticalOptions="End"
                                                            VerticalTextAlignment="Center"

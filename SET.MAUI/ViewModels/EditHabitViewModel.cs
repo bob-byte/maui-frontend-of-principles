@@ -288,7 +288,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
     private void SelectedRecommendedHabit(RecommendedHabit recommendedHabit)
     {
         NameOfHabit.Value = recommendedHabit.Name;
-        ReasonToFollow.Value = recommendedHabit.ReasonToFollow;
+        Habit.Description = recommendedHabit.Description;
     }
 
     public override async Task InitializeAsync( object? parameter = null )
