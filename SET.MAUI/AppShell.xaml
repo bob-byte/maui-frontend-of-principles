@@ -22,7 +22,7 @@
         <ShellContent ContentTemplate="{DataTemplate local:ProgressOfHabitsView}"
                       Title="{x:Static loc:LocStrings.Progress}"
                       Route="progressofhabits"
-                      Icon="fire_fifth"/>
+                      Icon="boost"/>
 
         <ShellContent ContentTemplate="{DataTemplate local:ProfileView}"
                       Title="{x:Static loc:LocStrings.Profile}"
