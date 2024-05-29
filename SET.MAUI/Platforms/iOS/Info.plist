@@ -11,7 +11,6 @@
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>arm64</string>
-		<string>gamekit</string>
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
@@ -24,10 +23,9 @@
 	<array>
 		<string>en</string>
 		<string>uk</string>
-		<string>ru</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>uk</string>
+	<string>en</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

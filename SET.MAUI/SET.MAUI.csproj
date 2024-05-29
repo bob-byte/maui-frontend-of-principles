@@ -188,7 +188,6 @@
 	<ItemGroup>
 	  <BundleResource Include="Platforms\iOS\Resources\loc\en.lproj\InfoPlist.strings" />
 	  <BundleResource Include="Platforms\iOS\Resources\loc\uk.lproj\InfoPlist.strings" />
-	  <BundleResource Include="Platforms\iOS\Resources\loc\ru.lproj\InfoPlist.strings" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\SET.Core\SET.Core.csproj" />
