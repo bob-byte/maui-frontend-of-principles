@@ -12,9 +12,7 @@ public partial class App : Application
         ServiceLocator.GetCurrentLocator = () => serviceLocator;
 
         //uncaught exception for iOS is handled in the Program.cs file
-#if ANDROID
         AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-#endif
 
         UserAppTheme = AppTheme.Light;
         InitializeComponent();
@@ -41,6 +39,6 @@ public partial class App : Application
         }
 
         // wait for Serilog to send new logs to the server
-        Thread.Sleep( millisecondsTimeout: 1000 );
+        Thread.Sleep( millisecondsTimeout: 2000 );
     }
 }

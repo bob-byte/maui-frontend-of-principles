@@ -1,5 +1,7 @@
 ﻿using Foundation;
 
+using ObjCRuntime;
+
 namespace SET.MAUI
 {
     [Register("AppDelegate")]
@@ -8,6 +10,13 @@ namespace SET.MAUI
         protected override MauiApp CreateMauiApp()
         {
             return MauiProgram.CreateMauiApp();
+        }
+
+        public override bool FinishedLaunching( UIApplication application, NSDictionary launchOptions )
+        {
+            Runtime.MarshalManagedException += ( _, e ) => e.ExceptionMode = MarshalManagedExceptionMode.UnwindNativeCode;
+            Runtime.MarshalObjectiveCException += ( _, e ) => e.ExceptionMode = MarshalObjectiveCExceptionMode.UnwindManagedCode;
+            return base.FinishedLaunching( application, launchOptions );
         }
     }
 }
