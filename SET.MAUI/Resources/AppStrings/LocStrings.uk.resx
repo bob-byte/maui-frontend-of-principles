@@ -564,4 +564,10 @@
   <data name="SignUpAgreementText" xml:space="preserve">
     <value>Натискаючи кнопку 'Реєстрація', ви погоджуєтесь з:</value>
   </data>
+  <data name="ContactInfoText" xml:space="preserve">
+    <value>Якщо у вас є запитання чи пропозиції, будь ласка, звертайтесь:</value>
+  </data>
+  <data name="ContactEmail" xml:space="preserve">
+    <value>Надішліть лист на app@principles.top</value>
+  </data>
 </root>

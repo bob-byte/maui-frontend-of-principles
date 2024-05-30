@@ -26,6 +26,23 @@ public partial class SettingsViewModel : BaseViewModel
     }
 
     [RelayCommand]
+    public void OpenEmail()
+    {
+        try
+        {
+            string email = "app@principles.top";
+
+            var uri = new Uri( $"mailto:{email}" );
+
+            Launcher.OpenAsync( uri );
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+        }
+    }
+
+    [RelayCommand]
     public async Task LogoutAsync()
     {
         bool doLogout = await DialogService.ShowConfirmAsync( msg: LocStrings.MessageInLogoutConfirm, title: $"{LocStrings.LogoutQuestion}" );

@@ -638,4 +638,10 @@ By using the App, you acknowledge that you have read, understood, and agree to b
   <data name="SignUpAgreementText" xml:space="preserve">
     <value>By clicking the 'Signing Up' button, you agree to:</value>
   </data>
+  <data name="ContactInfoText" xml:space="preserve">
+    <value>If you have any questions or suggestions, please contact:</value>
+  </data>
+  <data name="ContactEmail" xml:space="preserve">
+    <value>Send an email to app@principles.top</value>
+  </data>
 </root>
