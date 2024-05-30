@@ -11,7 +11,6 @@ public partial class App : Application
     {
         ServiceLocator.GetCurrentLocator = () => serviceLocator;
 
-        //uncaught exception for iOS is handled in the Program.cs file
         AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
         UserAppTheme = AppTheme.Light;
