@@ -1,11 +1,5 @@
 ﻿using Serilog;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace SET.Core.Services;
 
 public class LoggingService : ILoggingService
@@ -13,20 +7,40 @@ public class LoggingService : ILoggingService
     public virtual void LogCriticalError( Exception exception )
     {
         Log.Error( exception, exception.Message );
+
         if (exception.InnerException != null)
         {
-            Log.Error( exception.InnerException, exception.InnerException.Message );
+            Log.Error( exception.InnerException, $"InnerException message: {exception.InnerException.Message}" );
         }
     }
 
-    public virtual void LogCriticalError( string message, Exception exception )
+    public virtual void LogCriticalError( Exception exception, string message )
     {
-        Log.Error( exception, exception.Message );
-        Log.Error( message );
+        Log.Error( exception, message );
 
         if (exception.InnerException != null)
         {
-            Log.Error( exception.InnerException, exception.InnerException.Message );
+            Log.Error( exception.InnerException, $"InnerException message: {exception.InnerException.Message}" );
+        }
+    }
+
+    public virtual void LogFatal( Exception exception, string message )
+    {
+        Log.Fatal( exception, message );
+
+        if (exception.InnerException != null)
+        {
+            Log.Fatal( exception.InnerException, $"InnerException message: {exception.InnerException.Message}" );
+        }
+    }
+
+    public virtual void LogFatal( Exception exception )
+    {
+        Log.Fatal( exception, exception.Message );
+
+        if (exception.InnerException != null)
+        {
+            Log.Fatal( exception.InnerException, $"InnerException message: {exception.InnerException.Message}" );
         }
     }
 

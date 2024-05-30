@@ -333,7 +333,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
             Habit.Complexity = 5;
             Habit.Priority = UserHabits.Count;
 
-            var normalTextColor = (Color)Application.Current.Resources["LightNormalText"];
+            var normalTextColor = (Color)Application.Current!.Resources["LightNormalText"];
             Habit.ColorName = normalTextColor.ToArgbHex();
         }
 
@@ -343,7 +343,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
             foreach (UserAreaOfLife area in areasOfLife)
             {
                 //localize names
-                string locName = LocStrings.ResourceManager.GetString( area.Name );
+                string? locName = LocStrings.ResourceManager.GetString( area.Name );
                 if (!string.IsNullOrWhiteSpace( locName ))
                 {
                     area.Name = locName;

@@ -13,6 +13,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection RegisterAppCore( this IServiceCollection services )
     {
+        services.AddSingleton<ILoggingService, LoggingService>();
         services.AddHttpClient<IRequestProvider, RequestProvider>().AddPolicyHandler( RetryPolicy() );
         services.AddSingleton<ICachingService, CachingService>();
         services.AddSingleton<IUrlBuilder, UrlBuilder>();
@@ -24,8 +25,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IAccountService, AccountService>();
         services.AddSingleton<IAiChatService, AiChatService>();
         services.AddSingleton<IAiRecommenderOfHabitsService, AiRecommenderOfHabitsService>();
-
-        services.AddSingleton<ILoggingService, LoggingService>();
+        services.AddSingleton<IServiceLocator, ServiceLocator>();
 
         return services;
     }

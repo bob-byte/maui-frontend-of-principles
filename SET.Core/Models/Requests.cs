@@ -10,3 +10,4 @@ public record SignUpRequest( string name, string email, string password, int gen
 public record LoginRequest( string email, string password );
 public record SaveUserNameRequest( string userName );
 public record SaveMainSloganRequest( string mainSlogan );
+public record SaveLogRequest( long UserId, string DeviceOs, string DeviceModelName, string DeviceType, string DeviceManufacturer, string AppVersion, string LogType, string LogMessage, string? StackTrace );

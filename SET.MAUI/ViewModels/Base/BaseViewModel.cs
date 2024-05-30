@@ -223,23 +223,26 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     {
         IsBusy = true;
 
+        Exception? thrownException = null;
+
         try
         {
             await unitOfWork();
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            if (displayAlertOnException)
-            {
-                string errorMsg = ex.Message;
-
-                LoggingService.LogError( logRecord: ex.ToString() );
-                await DialogService.ShowAlertAsync( errorMsg, LocStrings.Error, buttonLabel: LocStrings.OK );
-            }
+            thrownException = ex;
+            LoggingService.LogCriticalError( ex );
         }
         finally
         {
             IsBusy = false;
+        }
+
+        if (displayAlertOnException && thrownException != null)
+        {
+            string errorMsg = thrownException.Message;
+            await DialogService.ShowAlertAsync( errorMsg, LocStrings.Error, buttonLabel: LocStrings.OK ).DefaultConfigureAwait();
         }
     }
 

@@ -22,6 +22,7 @@ public class UrlBuilder : IUrlBuilder
     private string? m_progressOfHabit;
     private string? m_habits;
     private string? m_habitsPriorities;
+    private string? m_log;
 
     public string BaseUrl
     {
@@ -146,6 +147,15 @@ public class UrlBuilder : IUrlBuilder
         {
             m_userMission ??= Combine( BaseApiUrl, "profile", "mission" );
             return m_userMission;
+        }
+    }
+
+    public string Log
+    {
+        get
+        {
+            m_log ??= Combine( BaseApiUrl, "log" );
+            return m_log;
         }
     }
 

@@ -95,13 +95,6 @@
                           IsHorizontalScrollBarVisible="False"
                           FullSwipeMode="Start"
                       AllowLiveDataShaping="True">
-            <!--<dxg:DataGridView.StartSwipeItems>
-                <dxg:SwipeItem Command="{Binding DeleteHabitCommand}"
-                               BackgroundColor="{StaticResource Primary}"
-                               Image="delete"
-                               Caption="Delete"
-                               Width="60" />
-            </dxg:DataGridView.StartSwipeItems>-->
             <dxg:DataGridView.Behaviors>
                 <toolkit:EventToCommandBehavior EventName="CompleteRowDragDrop"
                                                 Command="{Binding ResetPrioritiesCommand}"/>

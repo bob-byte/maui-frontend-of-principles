@@ -49,16 +49,16 @@ public static class MauiProgram
             } )
             .Services
             .RegisterAppCore()
-            .RegisterAppServices()
+            .RegisterMauiServices()
             .RegisterViewModels()
             .RegisterViews();
-
+        
         AllowMultiLineTruncation();
 
         return builder.Build();
     }
 
-    public static IServiceCollection RegisterAppServices( this IServiceCollection services )
+    public static IServiceCollection RegisterMauiServices( this IServiceCollection services )
     {
         services.AddSingleton<ISettingsService, SettingsService>();
         services.AddSingleton<INavigationService, MauiNavigationService>();
@@ -100,13 +100,41 @@ public static class MauiProgram
     private static void SetupSerilog()
     {
         Log.Logger = new LoggerConfiguration()
+#if DEBUG
 #if IOS
             .WriteTo.NSLog( restrictedToMinimumLevel: LogEventLevel.Information )
 #else
             .WriteTo.AndroidLog( restrictedToMinimumLevel: LogEventLevel.Information )
 #endif
+#else
+            //for Release mode and any OS
+            .WriteTo.Sink( new LoggerToServer( CreateSaveLogRequest ), LogEventLevel.Error )
+#endif
             .Enrich.FromLogContext()
             .CreateLogger();
+    }
+
+    private static SaveLogRequest CreateSaveLogRequest( LogEvent logEvent, IServiceProvider serviceProvider )
+    {
+        IDeviceInfo deviceInfo = DeviceInfo.Current;
+        IAppInfo appInfo = AppInfo.Current;
+
+        ISettingsService settingsService = serviceProvider.GetRequiredService<ISettingsService>();
+
+        _ = long.TryParse( settingsService.UserId, out long userId );
+
+        SaveLogRequest result = new(
+            UserId: userId,
+            DeviceOs: $"{deviceInfo.Platform} {deviceInfo.VersionString}",
+            DeviceModelName: $"{deviceInfo.Name} {deviceInfo.Model}",
+            DeviceType: deviceInfo.DeviceType.ToString(),
+            DeviceManufacturer: deviceInfo.Manufacturer,
+            AppVersion: appInfo.VersionString,
+            LogType: logEvent.Level.ToString(),
+            LogMessage: logEvent.MessageTemplate.Text,
+            StackTrace: logEvent.Exception?.ToString()
+        );
+        return result;
     }
 
     private static void AllowMultiLineTruncation()
