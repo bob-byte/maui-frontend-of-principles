@@ -29,7 +29,6 @@ public partial class ProgressOfHabitsView : ContentPageBase
         ViewModel = viewModel;
 
         InitializeComponent();
-
         ViewModel.PropertyChanged += ViewModel_PropertyChanged;
 
         AddFirstCol();

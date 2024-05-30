@@ -33,13 +33,14 @@ public partial class App : Application
         }
         else
         {
-            string errorMsg = $"Sender of uncaught exception is: {sender?.ToString()}. Error msg:" +
-                e?.ExceptionObject?.ToString() ?? string.Empty;
+            string errorMsg = e?.ExceptionObject?.ToString() ?? string.Empty;
+            string logRecord = $"Sender of uncaught exception is: {sender?.ToString()}. Error msg:" +
+                errorMsg;
 
-            loggingService.LogFatal( errorMsg );
+            loggingService.LogFatal( logRecord );
         }
 
-        //wait while Serilog send client log to the server
-        Thread.Sleep( millisecondsTimeout: 100 );
+        // wait for Serilog to send new logs to the server
+        Thread.Sleep( millisecondsTimeout: 1000 );
     }
 }

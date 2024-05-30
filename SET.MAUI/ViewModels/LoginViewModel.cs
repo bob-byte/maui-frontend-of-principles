@@ -61,6 +61,7 @@ public partial class LoginViewModel : BaseViewModel
                     }
                     else
                     {
+                        LoggingService.LogFatal( loginResponse.Message );
                         await DialogService.ShowErrorAsync( loginResponse.Message );
                     }
                 }

@@ -170,8 +170,8 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
         }
         catch ( Exception ex )
         {
-            await DialogService.ShowErrorAsync( ex.Message );
             LoggingService.LogCriticalError( ex );
+            await DialogService.ShowErrorAsync( ex.Message ).DefaultConfigureAwait();
         }
     }
 
@@ -223,7 +223,8 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await DialogService.ShowErrorAsync( ex.ToString() );
+            LoggingService.LogCriticalError( ex );
+            await DialogService.ShowErrorAsync( ex.Message ).DefaultConfigureAwait();
         }
     }
 
@@ -259,14 +260,8 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
                 }
                 catch(Exception ex)
                 {
-                    if (SettingsService.IsDebug)
-                    {
-                        await DialogService.ShowErrorAsync( ex.ToString() );
-                    }
-                    else
-                    {
-                        await DialogService.ShowErrorAsync( ex.Message );
-                    }
+                    LoggingService.LogCriticalError( ex );
+                    await DialogService.ShowErrorAsync( ex.Message ).DefaultConfigureAwait();
                 }
             }
         }

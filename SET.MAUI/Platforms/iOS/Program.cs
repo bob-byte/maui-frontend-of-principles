@@ -20,7 +20,7 @@ public class Program
         catch (Exception ex)
         {
             IServiceLocator? serviceLocator = ServiceLocator.Current;
-            ILoggingService? loggingService = serviceLocator?.GetService<ILoggingService>();
+            ILoggingService? loggingService = serviceLocator?.GetServiceOrNull<ILoggingService>();
 
             if (serviceLocator is null || loggingService is null)
             {
@@ -35,8 +35,8 @@ public class Program
                 loggingService.LogFatal( ex, message: "Uncaught fatal error" );
             }
 
-            //wait while Serilog send client log to the server
-            Thread.Sleep( millisecondsTimeout: 100 );
+            // wait for Serilog to send new logs to the server
+            Thread.Sleep( millisecondsTimeout: 1000 );
 
             throw;
         }

@@ -143,13 +143,18 @@ public partial class EditHabitView : ContentPageBase
                 else
                 {
                     frequency.IntervalLengthInDays = previousInterval;
-                    await ViewModel.DialogService.ShowErrorAsync( $"{maxIntervalLengthInDays} {LocStrings.IsMaxValue.ToLower()}" );
+
+                    string errorMsg = $"{maxIntervalLengthInDays} {LocStrings.IsMaxValue.ToLower()}";
+                    ViewModel.LoggingService.LogError( errorMsg );
+                    await ViewModel.DialogService.ShowErrorAsync( errorMsg );
                     hasErrors = true;
                 }
             }
             catch
             {
-                await ViewModel.DialogService.ShowErrorAsync( $"{LocStrings.CannotParse} \"{E_RepeatsOfSeveralDays.Text}\" {LocStrings.ToInteger.ToLower()}" );
+                string errorMsg = $"{LocStrings.CannotParse} \"{E_RepeatsOfSeveralDays.Text}\" {LocStrings.ToInteger.ToLower()}";
+                ViewModel.LoggingService.LogError( errorMsg );
+                await ViewModel.DialogService.ShowErrorAsync( errorMsg );
                 hasErrors = true;
             }
         }
@@ -329,6 +334,7 @@ public partial class EditHabitView : ContentPageBase
                 else
                 {
                     doShowRecommendedHabits = false;
+
                     await ViewModel.DialogService.ShowErrorAsync( LocStrings.CannotReloadHabits );
                 }
             }

@@ -22,7 +22,6 @@ public class DialogService : IDialogService
 
     public Task ShowErrorAsync( string msg )
     {
-        m_loggingService.LogError( msg );
         return Application.Current.MainPage.DisplayAlert( title: LocStrings.Error, msg, cancel: LocStrings.OK );
     }
 

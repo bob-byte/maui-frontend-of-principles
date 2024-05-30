@@ -102,6 +102,7 @@ namespace SET.MAUI.ViewModels
                     }
                     else
                     {
+                        LoggingService.LogFatal( loginResponse.Message );
                         await DialogService.ShowErrorAsync( loginResponse.Message );
                     }
                 } );
