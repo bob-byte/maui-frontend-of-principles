@@ -85,7 +85,8 @@
                                WidthRequest="145"
                                FontAttributes="Italic"
                                Margin="20,0,0,0"
-                               HorizontalTextAlignment="End">
+                               HorizontalTextAlignment="End"
+                               LineBreakMode="TailTruncation">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding OpenUserAgreementCommand}" />
                             </Label.GestureRecognizers>
@@ -96,13 +97,14 @@
                                FontFamily="MonaSansMedium"
                                FontAttributes="Italic"
                                HorizontalTextAlignment="Center"
-                               WidthRequest="25" />
+                               WidthRequest="30" />
                         <Label Text="{x:Static loc:LocStrings.PrivacyPolicyStrInLoginAndSignupViews}"
                                TextColor="{StaticResource Primary}"
                                FontSize="Caption"
                                FontFamily="MonaSansMedium"
                                FontAttributes="Italic"
-                               WidthRequest="170">
+                               WidthRequest="170"
+                               LineBreakMode="TailTruncation">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding OpenPrivacyPolicyCommand}" />
                             </Label.GestureRecognizers>
