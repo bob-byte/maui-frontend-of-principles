@@ -24,7 +24,15 @@ public class LoggerToServer : ILogEventSink
 
         SaveLogRequest request = m_funcToCreateRequest( logEvent, serviceLocator.ServiceProvider );
         string url = $"{urlBuilder.Log}";
-        await requestProvider.PutAsync( url, request, settingsService.AuthAccessToken );
+
+        try
+        {
+            await requestProvider.PostAsync( url, request, settingsService.AuthAccessToken );
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine( $"Cannot post client log on the server: {ex.Message}" );
+        }
     }
 }
 

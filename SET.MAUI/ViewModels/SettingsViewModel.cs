@@ -41,7 +41,7 @@ public partial class SettingsViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            LoggingService.LogCriticalError( message: "Cannot open app to send an email", ex );
+            LoggingService.LogCriticalError( ex, message: "Cannot open app to send an email" );
             await DialogService.ShowErrorAsync( LocStrings.MsgWhenCannotOpenAppToSendEmail ).DefaultConfigureAwait();
         }
     }

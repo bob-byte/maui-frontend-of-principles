@@ -183,7 +183,6 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
             {
                 await UiBusyFor( async () =>
                 {
-                    LoggingService.LogInfo( "I am before calling func ServiceOfHabit.UpdateHabitAsync( dto );" );
                     SaveHabitResponse response = await ServiceOfHabit.UpdateHabitAsync( dto );
                     Habit.Id = response.Id;
                     Habit.Frequency.Id = response.FrequencyId;
