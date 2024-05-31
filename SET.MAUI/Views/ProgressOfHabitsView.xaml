@@ -1,82 +1,85 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <v:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
-             xmlns:dxg="clr-namespace:DevExpress.Maui.DataGrid;assembly=DevExpress.Maui.DataGrid"
+                   xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
+                   xmlns:dxg="clr-namespace:DevExpress.Maui.DataGrid;assembly=DevExpress.Maui.DataGrid"
                    xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
                    xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
                    xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
                    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             xmlns:vm="clr-namespace:SET.MAUI.ViewModels"
-             xmlns:v="clr-namespace:SET.MAUI.Views"
-             xmlns:m="clr-namespace:SET.Core.Models;assembly=SET.Core"
+                   xmlns:vm="clr-namespace:SET.MAUI.ViewModels"
+                   xmlns:v="clr-namespace:SET.MAUI.Views"
+                   xmlns:m="clr-namespace:SET.Core.Models;assembly=SET.Core"
                    xmlns:loc="clr-namespace:SET.MAUI.Resources.AppStrings"
-             xmlns:controls="clr-namespace:SET.MAUI.Controls"
-             IconImageSource="fire_third.svg"
-             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
-             x:DataType="vm:ProgressOfHabitsViewModel"
-             x:Class="SET.MAUI.Views.ProgressOfHabitsView"
-             Shell.NavBarIsVisible="True">
+                   xmlns:controls="clr-namespace:SET.MAUI.Controls"
+                   IconImageSource="fire_third.svg"
+                   xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+                   x:DataType="vm:ProgressOfHabitsViewModel"
+                   x:Class="SET.MAUI.Views.ProgressOfHabitsView"
+                   Shell.NavBarIsVisible="True">
     <Shell.TitleView>
         <Grid VerticalOptions="CenterAndExpand"
               ColumnDefinitions="Auto, 0, Auto, *, Auto, 10, Auto"
-              Margin="0, 0, 5, 0">
+              Margin="0,0,5,0">
             <dx:DXImage Source="fire_seventh"
                         TintColor="{StaticResource DarkIconColor}"
                         WidthRequest="30"
                         HeightRequest="30"
-                        Grid.Column="0"/>
+                        Grid.Column="0" />
             <Label Text="{x:Static loc:LocStrings.AtomicHabits}"
                    VerticalOptions="Center"
                    VerticalTextAlignment="Center"
                    HorizontalOptions="Start"
-                       TextColor="{StaticResource TitleTextColor}"
+                   TextColor="{StaticResource TitleTextColor}"
                    FontSize="20"
                    FontAttributes="Bold"
                    HeightRequest="50"
                    Grid.Column="2" />
             <dx:DXImage Source="plus"
-                          IsVisible="{Binding SelectedHabit, Converter={StaticResource IsNull}}"
-                             VerticalOptions="Center"
-                             HorizontalOptions="End"
-                              TintColor="{StaticResource TitleTextColor}"
-                             Margin="65, 0, 0, 0"
-                             WidthRequest="40"
-                             HeightRequest="40"
-                          Grid.Column="6">
+                        IsVisible="{Binding SelectedHabit,
+                                            Converter={StaticResource IsNull}}"
+                        VerticalOptions="Center"
+                        HorizontalOptions="End"
+                        TintColor="{StaticResource TitleTextColor}"
+                        Margin="65,0,0,0"
+                        WidthRequest="40"
+                        HeightRequest="40"
+                        Grid.Column="6">
                 <dx:DXImage.GestureRecognizers>
                     <TapGestureRecognizer NumberOfTapsRequired="1"
-                                              Command="{Binding AddHabitCommand}"/>
+                                          Command="{Binding AddHabitCommand}" />
                 </dx:DXImage.GestureRecognizers>
             </dx:DXImage>
             <dx:DXImage Source="edit"
-                          TintColor="{StaticResource TitleTextColor}"
-                          Margin="35, 0, 0, 0"
-                          HorizontalOptions="End"
-                          WidthRequest="40"
-                          VerticalOptions="Center"
-                          IsVisible="{Binding SelectedHabit, Converter={StaticResource IsNotNull}}"
-                          HeightRequest="30"
-                          Grid.Column="4">
+                        TintColor="{StaticResource TitleTextColor}"
+                        Margin="35,0,0,0"
+                        HorizontalOptions="End"
+                        WidthRequest="40"
+                        VerticalOptions="Center"
+                        IsVisible="{Binding SelectedHabit,
+                                            Converter={StaticResource IsNotNull}}"
+                        HeightRequest="30"
+                        Grid.Column="4">
                 <dx:DXImage.GestureRecognizers>
                     <TapGestureRecognizer NumberOfTapsRequired="1"
-                                              Command="{Binding EditHabitCommand}"
-                                              CommandParameter="{Binding SelectedHabit}"/>
+                                          Command="{Binding EditHabitCommand}"
+                                          CommandParameter="{Binding SelectedHabit}" />
                 </dx:DXImage.GestureRecognizers>
             </dx:DXImage>
             <dx:DXImage Source="delete"
-                          TintColor="{StaticResource TitleTextColor}"
-                          Margin="3, 0, 0, 0"
-                          HorizontalOptions="End"
-                          WidthRequest="40"
-                          VerticalOptions="Center"
-                          IsVisible="{Binding SelectedHabit, Converter={StaticResource IsNotNull}}"
-                          HeightRequest="30"
-                          Grid.Column="6">
+                        TintColor="{StaticResource TitleTextColor}"
+                        Margin="3,0,0,0"
+                        HorizontalOptions="End"
+                        WidthRequest="40"
+                        VerticalOptions="Center"
+                        IsVisible="{Binding SelectedHabit,
+                                            Converter={StaticResource IsNotNull}}"
+                        HeightRequest="30"
+                        Grid.Column="6">
                 <dx:DXImage.GestureRecognizers>
                     <TapGestureRecognizer NumberOfTapsRequired="1"
-                                              Command="{Binding DeleteHabitCommand}"
-                                              CommandParameter="{Binding SelectedHabit}"/>
+                                          Command="{Binding DeleteHabitCommand}"
+                                          CommandParameter="{Binding SelectedHabit}" />
                 </dx:DXImage.GestureRecognizers>
             </dx:DXImage>
         </Grid>
@@ -86,29 +89,29 @@
         <dxg:DataGridView ItemsSource="{Binding UserHabits}"
                           AllowDragDropRows="True"
                           x:Name="DGV_Habits"
-                          LongPress="DGV_Habits_LongPress"
+                          RowLongPressCommand="{Binding SelectRowCommand}"
                           AllowInitiallySelectedRow="False"
                           BackgroundColor="{StaticResource Background}"
                           AllowSort="False"
-                          AllowVirtualHorizontalScrolling="{OnPlatform Android=False, iOS=True}"
+                          AllowVirtualHorizontalScrolling="{OnPlatform Android=False,
+                                                                       iOS=True}"
                           VerticalLineThickness="0"
                           IsHorizontalScrollBarVisible="False"
                           FullSwipeMode="Start"
                           AllowLiveDataShaping="True">
-            <dxg:DataGridView.Behaviors>
-                <toolkit:EventToCommandBehavior EventName="CompleteRowDragDrop"
-                                                Command="{Binding ResetPrioritiesCommand}"/>
-            </dxg:DataGridView.Behaviors>
-            <dxg:DataGridView.ColumnHeaderAppearance>
-                <dxg:ColumnHeaderAppearance BackgroundColor="WhiteSmoke"/>
-            </dxg:DataGridView.ColumnHeaderAppearance>
+            <dxg:DataGridView.StartSwipeItems>
+                <dxg:SwipeItem Command="{Binding DeleteHabitCommand}"
+                               BackgroundColor="{StaticResource Primary}"
+                               Caption="{x:Static loc:LocStrings.Delete}" />
+            </dxg:DataGridView.StartSwipeItems>
+
             <dxg:DataGridView.Columns>
-                <dxg:TextColumn FieldName="Name"/>
+                <dxg:TextColumn FieldName="Name" />
             </dxg:DataGridView.Columns>
 
             <dxg:DataGridView.CellAppearance>
                 <dxg:CellAppearance SelectionColor="LightGray"
-                                    BackgroundColor="{StaticResource Background}"/>
+                                    BackgroundColor="{StaticResource Background}" />
             </dxg:DataGridView.CellAppearance>
         </dxg:DataGridView>
 
@@ -116,35 +119,29 @@
                           ItemSpacing="10"
                           HorizontalOptions="CenterAndExpand"
                           VerticalOptions="Start"
-                          IsVisible="{Binding UserHabits.Count, Converter={StaticResource IsEmptyCollection}}">
+                          IsVisible="{Binding UserHabits.Count,
+                                              Converter={StaticResource IsEmptyCollection}}">
             <skia:SKLottieView IsAnimationEnabled="True"
                                RepeatCount="-1"
                                WidthRequest="300"
                                HeightRequest="250"
-                               Margin="0, 150, 0, 0"
+                               Margin="0,150,0,0"
                                Source="checks.json" />
             <Label Text="{x:Static loc:LocStrings.LoadingContent}"
                    IsVisible="{Binding IsBusy}"
                    FontFamily="MonaSansMedium"
                    FontSize="14"
-                   TextColor="{AppThemeBinding Light={StaticResource LightNormalText}, Dark={StaticResource DarkNormalText}}"
-                   HorizontalTextAlignment="Center"/>
+                   TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
+                                               Dark={StaticResource DarkNormalText}}"
+                   HorizontalTextAlignment="Center" />
             <Label Text="{x:Static loc:LocStrings.HabitCollectionIsEmptyDescription}"
-                   IsVisible="{Binding IsBusy, Converter={StaticResource IsFalse}}"
+                   IsVisible="{Binding IsBusy,
+                                       Converter={StaticResource IsFalse}}"
                    FontFamily="MonaSansMedium"
                    FontSize="14"
-                   TextColor="{AppThemeBinding Light={StaticResource LightNormalText}, Dark={StaticResource DarkNormalText}}"
-                   HorizontalTextAlignment="Center"/>
+                   TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
+                                               Dark={StaticResource DarkNormalText}}"
+                   HorizontalTextAlignment="Center" />
         </dx:DXStackLayout>
-
-
-        <!--<ActivityIndicator Color="{StaticResource Primary}"
-                           IsRunning="{Binding IsBusy}"
-                           IsVisible="{Binding IsBusy}"
-                           VerticalOptions="Center"
-                           HorizontalOptions="Center"
-                           WidthRequest="100" />-->
-
-
     </Grid>
 </v:ContentPageBase>

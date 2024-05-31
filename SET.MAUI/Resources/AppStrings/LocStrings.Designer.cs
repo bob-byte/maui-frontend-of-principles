@@ -229,6 +229,15 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        internal static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete account.
         /// </summary>
         internal static string DeleteAccount {

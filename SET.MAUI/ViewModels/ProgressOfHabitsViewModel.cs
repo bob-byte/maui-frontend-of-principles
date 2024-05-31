@@ -73,6 +73,8 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
 
     public IProgressOfHabitService ProgressOfHabitService { get; }
 
+    internal DataGridView? DataGridViewWithHabits { get; set; }
+
     public void HandleHabitSave(object receiver, HabitSavedMessage message)
     {
         UserHabit savedHabit = message.Value;
@@ -291,6 +293,29 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
                     await DialogService.ShowErrorAsync( ex.Message ).DefaultConfigureAwait();
                 }
             }
+        }
+    }
+
+    [RelayCommand]
+    private void SelectRow( UserHabit selectedHabit )
+    {
+        if(SelectedHabit == null || SelectedHabit.Id != selectedHabit.Id)
+        {
+            if(DataGridViewWithHabits != null)
+            {
+                DataGridViewWithHabits.SelectedRowHandle = UserHabits.IndexOf( selectedHabit );
+            }
+
+            SelectedHabit = selectedHabit;
+        }
+        else
+        {
+            if (DataGridViewWithHabits != null)
+            {
+                DataGridViewWithHabits.SelectedRowHandle = -1;
+            }
+
+            SelectedHabit = null;
         }
     }
 }
