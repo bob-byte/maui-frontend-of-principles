@@ -73,6 +73,31 @@
 					<string>API integration</string>
 				</array>
 			</dict>
+			<dict>
+				<key>NSPrivacyCollectedDataType</key>
+				<string>Crash Data</string>
+				<key>NSPrivacyCollectedDataTypeDescription</key>
+				<string>Such as crash logs.</string>
+				<key>NSPrivacyCollectedDataTypeValue</key>
+				<string>NSPrivacyCollectedDataTypeCrashData</string>
+				<key>NSPrivacyCollectedDataTypeReasons</key>
+				<array>
+					<string>Bug fixing</string>
+					<string>Service reliability</string>
+				</array>
+			</dict>
+			<dict>
+				<key>NSPrivacyCollectedDataType</key>
+				<string>Other Data Types</string>
+				<key>NSPrivacyCollectedDataTypeDescription</key>
+				<string>Any other data types not mentioned.</string>
+				<key>NSPrivacyCollectedDataTypeValue</key>
+				<string>NSPrivacyCollectedDataTypeOtherDataTypes</string>
+				<key>NSPrivacyCollectedDataTypeReasons</key>
+				<array>
+					<string>Other purposes as specified</string>
+				</array>
+			</dict>
 		</array>
 	</dict>
 </plist>
