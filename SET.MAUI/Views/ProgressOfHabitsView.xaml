@@ -89,7 +89,7 @@
         <dxg:DataGridView ItemsSource="{Binding UserHabits}"
                           AllowDragDropRows="True"
                           x:Name="DGV_Habits"
-                          LongPress="DGV_Habits_LongPress"
+                          RowLongPressCommand="{Binding SelectRowCommand}"
                           AllowInitiallySelectedRow="False"
                           BackgroundColor="{StaticResource Background}"
                           AllowSort="False"
@@ -102,9 +102,7 @@
             <dxg:DataGridView.StartSwipeItems>
                 <dxg:SwipeItem Command="{Binding DeleteHabitCommand}"
                                BackgroundColor="{StaticResource Primary}"
-                               Caption="Delete"
-                               Width="60"
-                               FontSize="15" />
+                               Caption="{x:Static loc:LocStrings.Delete}" />
             </dxg:DataGridView.StartSwipeItems>
 
             <dxg:DataGridView.Columns>

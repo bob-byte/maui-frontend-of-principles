@@ -570,4 +570,7 @@
   <data name="MsgWhenCannotOpenAppToSendEmail" xml:space="preserve">
     <value>Не вдається відкрити програму для надсилання електронного листа. Можливо, її не встановлено.</value>
   </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Видалити</value>
+  </data>
 </root>

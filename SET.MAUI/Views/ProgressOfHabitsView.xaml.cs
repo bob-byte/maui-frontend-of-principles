@@ -29,6 +29,8 @@ public partial class ProgressOfHabitsView : ContentPageBase
         ViewModel = viewModel;
 
         InitializeComponent();
+
+        ViewModel.DataGridViewWithHabits = DGV_Habits;
         ViewModel.PropertyChanged += ViewModel_PropertyChanged;
 
         AddFirstCol();
@@ -125,25 +127,9 @@ public partial class ProgressOfHabitsView : ContentPageBase
     void SwipeItem_Tap( System.Object sender, DevExpress.Maui.DataGrid.SwipeItemTapEventArgs e )
     {
         ICommand command = ViewModel.DeleteHabitCommand;
-        if (command.CanExecute( e.Item))
+        if (command.CanExecute( e.Item ))
         {
             command.Execute( e.Item );
-        }
-    }
-    private void DGV_Habits_LongPress( object sender, DataGridGestureEventArgs e )
-    {
-        if (e.Element == DataGridElement.Row)
-        {
-            if (DGV_Habits.SelectedRowHandle == e.RowHandle)
-            {
-                DGV_Habits.SelectedRowHandle = -1;
-                ViewModel.SelectedHabit = null;
-            }
-            else
-            {
-                DGV_Habits.SelectedRowHandle = e.RowHandle;
-                ViewModel.SelectedHabit = ViewModel.UserHabits[e.RowHandle];
-            }
         }
     }
 

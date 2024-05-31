@@ -52,7 +52,6 @@
 		<MauiImage Include="Resources\Images\*svg" BaseSize="23, 23" />
 		<MauiImage Include="Resources\Images\*png" BaseSize="23, 23" />
 		<MauiImage Update="Resources\Images\settings.svg" BaseSize="40, 40" />
-		<MauiImage Update="Resources\Images\delete_account.svg" BaseSize="40, 40" />
 		<MauiImage Update="Resources\Images\plus.png" BaseSize="40, 40" />
 		<MauiImage Update="Resources\Images\edit.png" BaseSize="40, 40" />
 		<MauiImage Update="Resources\Images\delete.png" BaseSize="40, 40" />
