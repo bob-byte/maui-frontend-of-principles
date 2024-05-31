@@ -8,7 +8,7 @@
       xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
       x:DataType="msgs:DisplayMessage"
       ColumnDefinitions="35, 10, Auto, *"
-      Padding="16, 0, 0, 0"
+      Padding="16,0,0,0"
       x:Name="G_HelperMessageTemplate">
 
     <Grid Grid.Column="0"
@@ -16,22 +16,26 @@
           WidthRequest="35"
           HeightRequest="35"
           VerticalOptions="End">
-        <BoxView Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
+        <BoxView Color="{AppThemeBinding Light={StaticResource Primary},
+                                         Dark={StaticResource DarkPrimary}}"
                  CornerRadius="5, 5, 5, 0" />
         <dx:DXImage Source="ai"
                     TintColor="White"
                     WidthRequest="22"
-                    HeightRequest="22"/>
+                    HeightRequest="22" />
     </Grid>
-    
+
     <Grid Grid.Column="2"
           MaximumWidthRequest="260"
           x:Name="G_Answer">
         <BoxView CornerRadius="16, 16, 0, 16"
-                 Color="{AppThemeBinding Light={StaticResource TertiaryLight}, Dark={StaticResource TertiaryDark}}"/>
-        <dxe:MultilineEdit BackgroundColor="{AppThemeBinding Light={StaticResource TertiaryLight}, Dark={StaticResource TertiaryDark}}"
+                 Color="{AppThemeBinding Light={StaticResource TertiaryLight},
+                                         Dark={StaticResource TertiaryDark}}" />
+        <dxe:MultilineEdit BackgroundColor="{AppThemeBinding Light={StaticResource TertiaryLight},
+                                                             Dark={StaticResource TertiaryDark}}"
                            TextFontSize="18"
-                           TextColor="{AppThemeBinding Light={StaticResource LightNormalText}, Dark={StaticResource DarkNormalText}}"
+                           TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
+                                                       Dark={StaticResource DarkNormalText}}"
                            x:Name="ME_Answer"
                            Text="{Binding Text}"
                            TextFontFamily="MonaSansMedium"
@@ -39,11 +43,11 @@
                            ClearIconVisibility="Never"
                            IsReadOnly="True"
                            BoxPadding="5"
-                           Margin="10, 5"
+                           Margin="10,5"
                            VerticalOptions="Start"
                            BoxMinHeight="10"
                            MinimumHeightRequest="18"
-                           TextChanged="ME_Answer_TextChanged"/>
+                           TextChanged="ME_Answer_TextChanged" />
     </Grid>
 </Grid>
 

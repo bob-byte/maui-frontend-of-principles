@@ -23,9 +23,9 @@ public partial class HelperMessageTemplate : Grid
 
     void ME_Answer_TextChanged( object sender, EventArgs e )
     {
+#if IOS
         bool isThisMessageLast = m_viewModel.DisplayMessages.LastOrDefault() == m_message;
-
-        if (isThisMessageLast && !string.IsNullOrWhiteSpace(m_message.Text) && ME_Answer.Height != -1 && G_HelperMessageTemplate.Height < ME_Answer.Height + 10)
+        if (isThisMessageLast && !string.IsNullOrWhiteSpace( m_message.Text ) && ME_Answer.Height != -1 && G_HelperMessageTemplate.Height < ME_Answer.Height + 10)
         {
             G_HelperMessageTemplate.HeightRequest = ME_Answer.Height + 10;
         }
@@ -33,5 +33,6 @@ public partial class HelperMessageTemplate : Grid
         {
             G_HelperMessageTemplate.HeightRequest = 44;
         }
+#endif
     }
 }

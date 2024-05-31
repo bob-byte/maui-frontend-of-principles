@@ -74,7 +74,7 @@
                               TextChangedCommand="{Binding ValidateEmailCommand}"
                               ClearIconVisibility="Never"
                               x:Name="EmailTextEdit"
-                              Margin="0, 5, 0, 0" />
+                              Margin="0,5,0,0" />
                 <dxe:PasswordEdit LabelText="{x:Static loc:LocStrings.Password}"
                                   Text="{Binding Password.Value}"
                                   StartIcon="password"
@@ -86,7 +86,7 @@
                                   TextChangedCommand="{Binding ValidatePasswordCommand}"
                                   ClearIconVisibility="Never"
                                   x:Name="PasswordTextEdit"
-                                  Margin="0, 5, 0, 0" />
+                                  Margin="0,5,0,0" />
 
                 <dxe:ChoiceChipGroup IsMultiline="False"
                                      x:Name="CCG_Genders"
@@ -120,12 +120,12 @@
                                    EndIcon="info"
                                    EndIconCommand="{Binding ShowSnackbarForMainSloganCommand}"
                                    EndIconCommandParameter="{x:Reference ME_MainSlogan}"
-                                   Margin="0, 5, 0, 0" />
+                                   Margin="0,5,0,0" />
 
                 <VerticalStackLayout VerticalOptions="CenterAndExpand"
                                      HorizontalOptions="CenterAndExpand"
                                      Spacing="5"
-                                     Margin="0, 10, 0, 0">
+                                     Margin="0,10,0,0">
                     <Label Text="{x:Static loc:LocStrings.SignUpAgreementText}"
                            TextColor="Gray"
                            FontSize="Caption"
@@ -142,7 +142,8 @@
                                WidthRequest="145"
                                FontAttributes="Italic"
                                Margin="20,0,0,0"
-                               HorizontalTextAlignment="End">
+                               HorizontalTextAlignment="End"
+                               LineBreakMode="TailTruncation">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding OpenUserAgreementCommand}" />
                             </Label.GestureRecognizers>
@@ -153,14 +154,15 @@
                                FontFamily="MonaSansMedium"
                                FontAttributes="Italic"
                                HorizontalTextAlignment="Center"
-                               WidthRequest="25" />
+                               WidthRequest="30" />
 
                         <Label Text="{x:Static loc:LocStrings.PrivacyPolicyStrInLoginAndSignupViews}"
                                TextColor="{StaticResource Primary}"
                                FontSize="Caption"
                                FontFamily="MonaSansMedium"
                                FontAttributes="Italic"
-                               WidthRequest="170">
+                               WidthRequest="170"
+                               LineBreakMode="TailTruncation">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding OpenPrivacyPolicyCommand}" />
                             </Label.GestureRecognizers>
