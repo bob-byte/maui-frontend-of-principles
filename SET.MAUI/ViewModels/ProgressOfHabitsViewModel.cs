@@ -10,7 +10,9 @@ namespace SET.MAUI.ViewModels;
 
 public partial class ProgressOfHabitsViewModel : BaseViewModel
 {
+    private bool m_isInitialized;
     private bool m_isProgressesInitialized;
+
     private readonly ConcurrentDictionary<UserHabit, SemaphoreSlim> m_isBusyForChangeCompleted;
 
     private UserHabit? m_selectedHabit;
@@ -60,6 +62,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
 
         ReferenceMessenger.Register<UserLoggedOutMessage>( this, ( sender, msg ) =>
         {
+            m_isInitialized = false;
             m_isProgressesInitialized = false;
 
             DefaultHandleLogout( msg );
@@ -122,13 +125,13 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     {
         await base.InitializeAsync( parameter );
 
-        if (!m_isProgressesInitialized)
+        if (!m_isInitialized)
         {
             await m_initLocker.WaitAsync();
 
             try
             {
-                if (!m_isProgressesInitialized)
+                if (!m_isInitialized)
                 {
                     await InitUserInfoAsync();
                     List<UserHabit> habits = await ServiceOfHabit.ActiveHabitsAsync( StartProgressInterval, EndProgressInterval );
@@ -149,6 +152,8 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
 #else
                     m_isProgressesInitialized = true;
 #endif
+
+                    m_isInitialized = true;
                 }
             }
             finally
