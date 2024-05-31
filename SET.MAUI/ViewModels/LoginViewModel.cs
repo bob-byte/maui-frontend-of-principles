@@ -15,6 +15,7 @@ public partial class LoginViewModel : BaseViewModel
         m_email = new ValidatableObject<string>();
         m_password = new ValidatableObject<string>();
         LoginService = serviceProvider.GetRequiredService<ILoginService>();
+        AddValidations();
 
         Title = LocStrings.Login;
     }
@@ -32,14 +33,10 @@ public partial class LoginViewModel : BaseViewModel
 
     public override Task InitializeAsync( object? parameter = null )
     {
-        Email = new ValidatableObject<string>();
-        Password = new ValidatableObject<string>();
-        AddValidations();
-
         return base.InitializeAsync( parameter );
     }
 
-    [RelayCommand(CanExecute = nameof(IsEmailAndPasswordValid))]
+    [RelayCommand]
     private async Task LoginAsync()
     {
         ValidateEmail();
@@ -61,6 +58,10 @@ public partial class LoginViewModel : BaseViewModel
                     if (isLoggedIn)
                     {
                         await Navigation.GoToInitialViewAsync();
+
+                        Email = new ValidatableObject<string>();
+                        Password = new ValidatableObject<string>();
+                        AddValidations();
                     }
                     else
                     {

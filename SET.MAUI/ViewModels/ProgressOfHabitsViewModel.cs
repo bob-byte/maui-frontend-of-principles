@@ -10,7 +10,7 @@ namespace SET.MAUI.ViewModels;
 
 public partial class ProgressOfHabitsViewModel : BaseViewModel
 {
-    private bool m_isInitialized;
+    private bool m_isProgressesInitialized;
     private readonly ConcurrentDictionary<UserHabit, SemaphoreSlim> m_isBusyForChangeCompleted;
 
     private UserHabit? m_selectedHabit;
@@ -34,6 +34,8 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     [ObservableProperty]
     private ObservableCollectionEx<UserHabit> m_userHabits;
 
+    private readonly SemaphoreSlim m_initLocker;
+
     ~ProgressOfHabitsViewModel()
     {
         foreach (SemaphoreSlim locker in m_isBusyForChangeCompleted.Values)
@@ -45,6 +47,8 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     public ProgressOfHabitsViewModel( IServiceProvider serviceProvider, IProgressOfHabitService progressOfHabitService )
         : base( serviceProvider )
     {
+        m_initLocker = new SemaphoreSlim( initialCount: 1, maxCount: 1 );
+
         Title = LocStrings.ProgressOfHabits;
         ReferenceMessenger.Register<HabitSavedMessage>( this, HandleHabitSave );
         ProgressOfHabitService = progressOfHabitService;
@@ -56,7 +60,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
 
         ReferenceMessenger.Register<UserLoggedOutMessage>( this, ( sender, msg ) =>
         {
-            m_isInitialized = false;
+            m_isProgressesInitialized = false;
 
             DefaultHandleLogout( msg );
             UserHabits.Clear();
@@ -95,11 +99,8 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
         }
         else
         {
-            //TODO: try to change frequency of existing habit and check whether icons of progresses is changed
-            //ObservableCollectionEx<ProgressOfHabit> progresses = foundHabit.Progresses;
             foundHabit.Name = savedHabit.Name;
             foundHabit.Complexity = savedHabit.Complexity;
-            //foundHabit.Progresses = progresses;
             foundHabit.Frequency = savedHabit.Frequency;
             foundHabit.Priority = savedHabit.Priority;
 
@@ -121,25 +122,46 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     {
         await base.InitializeAsync( parameter );
 
-        if (!m_isInitialized)
+        if (!m_isProgressesInitialized)
         {
-            await InitUserInfoAsync();
-            List<UserHabit> habits = await ServiceOfHabit.ActiveHabitsAsync( StartProgressInterval, EndProgressInterval );
-            UserHabits.Reload( habits );
+            await m_initLocker.WaitAsync();
 
-            foreach (UserHabit habit in habits)
+            try
             {
-                m_isBusyForChangeCompleted.TryAdd( habit, new SemaphoreSlim( 1, 1 ) );
-            }
+                if (!m_isProgressesInitialized)
+                {
+                    await InitUserInfoAsync();
+                    List<UserHabit> habits = await ServiceOfHabit.ActiveHabitsAsync( StartProgressInterval, EndProgressInterval );
+                    UserHabits.Reload( habits );
 
-            m_isInitialized = true;
+                    foreach (UserHabit habit in habits)
+                    {
+                        m_isBusyForChangeCompleted.TryAdd( habit, new SemaphoreSlim( 1, 1 ) );
+                    }
+
+#if ANDROID
+                    //to avoid performing ChangeValueOfProgressOfHabitAsync during CheckEdit rendering
+                    Task.Run( async () =>
+                    {
+                        await Task.Delay( 1000 ).DefaultConfigureAwait();
+                        m_isProgressesInitialized = true;
+                    } ).GetAwaiter();
+#else
+                    m_isProgressesInitialized = true;
+#endif
+                }
+            }
+            finally
+            {
+                m_initLocker.Release();
+            }
         }
     }
 
     [RelayCommand]
     private async Task ChangeValueOfProgressOfHabitAsync( ProgressOfHabit progressOfHabit )
     {
-        if (progressOfHabit == null)
+        if (!m_isProgressesInitialized || progressOfHabit == null)
         {
             return;
         }

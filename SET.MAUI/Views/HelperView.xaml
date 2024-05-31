@@ -5,6 +5,7 @@
                    xmlns:dxc="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
                    xmlns:v="clr-namespace:SET.MAUI.Views"
                    xmlns:viewmodels="clr-namespace:SET.MAUI.ViewModels"
+                   xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
                    xmlns:collectionview="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
                    xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
                    xmlns:editors="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
@@ -33,10 +34,8 @@
                                               Dark={StaticResource NavigationBarColorDark}}"
                                Spacing="10"
                                VerticalOptions="CenterAndExpand">
-            <dxc:DXImage Source="helper"
-                         TintColor="{StaticResource DarkIconColor}"
-                         WidthRequest="40"
-                         HeightRequest="40" />
+            <dx:DXImage Source="larger_help"
+                        TintColor="{StaticResource DarkIconColor}" />
             <Label Text="{Binding Title}"
                    TextColor="{StaticResource TitleTextColor}"
                    VerticalOptions="Center"
@@ -94,7 +93,7 @@
                                       Completed="TE_Prompt_Completed"
                                       Text="{Binding Prompt}"
                                       TextFontFamily="MonaSansMedium"
-                                      TextFontSize="14"
+                                      TextFontSize="13"
                                       BorderThickness="0"
                                       HeightRequest="48"
                                       FocusedBorderThickness="0"
@@ -127,28 +126,18 @@
                               IconColor="{AppThemeBinding Light={StaticResource SecondaryLight}, Dark={StaticResource SecondaryDark}}"
                               Grid.Column="1" />
 
-            <dxc:DXImage Source="stop_video"
-                         HeightRequest="35"
-                         WidthRequest="35"
-                         Margin="7"
-                         VerticalOptions="CenterAndExpand"
-                         IsVisible="{Binding IsBusy}"
-                         TintColor="{AppThemeBinding Light={StaticResource QuinaryLight}, Dark={StaticResource QuinaryDark}}"
-                         Grid.Column="1">
-                <dxc:DXImage.GestureRecognizers>
+            <dx:DXImage Source="stop_video"
+                        HeightRequest="35"
+                        WidthRequest="35"
+                        Margin="7"
+                        VerticalOptions="CenterAndExpand"
+                        IsVisible="{Binding IsBusy}"
+                        TintColor="{AppThemeBinding Light={StaticResource QuinaryLight}, Dark={StaticResource QuinaryDark}}"
+                        Grid.Column="1">
+                <dx:DXImage.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding CancelAnswerGenerationCommand}"/>
-                </dxc:DXImage.GestureRecognizers>
-            </dxc:DXImage>
-                         
-            <!--<dxc:SimpleButton Icon="stop_video"
-                              HeightRequest="48"
-                              WidthRequest="48"
-                              IsVisible="{Binding IsBusy}"
-                              Command="{Binding CancelAnswerGenerationCommand}"
-                              Style="{StaticResource PrimaryButton}"
-                              BackgroundColor="{StaticResource LightPrimary}"
-                              IconColor="{AppThemeBinding Light={StaticResource SecondaryLight}, Dark={StaticResource SecondaryDark}}"
-                              Grid.Column="1" />-->
+                </dx:DXImage.GestureRecognizers>
+            </dx:DXImage>
         </Grid>
     </Grid>
 </v:ContentPageBase>

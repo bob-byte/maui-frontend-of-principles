@@ -36,7 +36,7 @@
                                    Style="{StaticResource TitlePrimaryButton}"
                                    Command="{Binding SignupCommand}"
                                    Margin="0,2,0,2"
-                                   FontSize="14"
+                                   FontSize="12"
                                    BorderThickness="2" />
             </Grid>
         </Grid>
@@ -103,7 +103,6 @@
                                    IsLabelFloating="False"
                                    PlaceholderText="{x:Static loc:LocStrings.OptionalPlaceholder}"
                                    ClearIconVisibility="Never"
-                                   ReturnType="Done"
                                    StartIcon="mission"
                                    EndIcon="info"
                                    EndIconCommand="{Binding ShowSnackbarForMissionCommand}"
@@ -114,7 +113,6 @@
                                    LabelText="{x:Static loc:LocStrings.MainSlogan}"
                                    IsLabelFloating="False"
                                    PlaceholderText="{x:Static loc:LocStrings.OptionalPlaceholder}"
-                                   ReturnType="Done"
                                    ClearIconVisibility="Never"
                                    StartIcon="slogan"
                                    EndIcon="info"
@@ -128,18 +126,18 @@
                                      Margin="0,10,0,0">
                     <Label Text="{x:Static loc:LocStrings.SignUpAgreementText}"
                            TextColor="Gray"
-                           FontSize="Caption"
+                           FontSize="12"
                            FontFamily="MonaSansMedium"
                            FontAttributes="Italic"
                            HorizontalOptions="Center"
                            HorizontalTextAlignment="Center" />
                     <HorizontalStackLayout HorizontalOptions="CenterAndExpand"
-                                           Spacing="5">
+                                           Spacing="0">
                         <Label Text="{x:Static loc:LocStrings.UserAgreementStrInLoginAndSignupViews}"
-                               TextColor="{StaticResource Primary}"
-                               FontSize="Caption"
+                               TextColor="{StaticResource LightNormalText}"
+                               FontSize="12"
                                FontFamily="MonaSansMedium"
-                               WidthRequest="145"
+                               WidthRequest="141"
                                FontAttributes="Italic"
                                Margin="20,0,0,0"
                                HorizontalTextAlignment="End"
@@ -150,18 +148,18 @@
                         </Label>
                         <Label Text="{x:Static loc:LocStrings.LoginSignUpAgreementСonnectingText}"
                                TextColor="Gray"
-                               FontSize="Caption"
+                               FontSize="12"
                                FontFamily="MonaSansMedium"
                                FontAttributes="Italic"
                                HorizontalTextAlignment="Center"
                                WidthRequest="30" />
 
                         <Label Text="{x:Static loc:LocStrings.PrivacyPolicyStrInLoginAndSignupViews}"
-                               TextColor="{StaticResource Primary}"
-                               FontSize="Caption"
+                               TextColor="{StaticResource LightNormalText}"
+                               FontSize="12"
                                FontFamily="MonaSansMedium"
                                FontAttributes="Italic"
-                               WidthRequest="170"
+                               WidthRequest="163"
                                LineBreakMode="TailTruncation">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding OpenPrivacyPolicyCommand}" />

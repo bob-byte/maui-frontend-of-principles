@@ -85,16 +85,16 @@
     <Grid BackgroundColor="{StaticResource Background}">
         <dxg:DataGridView ItemsSource="{Binding UserHabits}"
                           AllowDragDropRows="True"
-                      x:Name="DGV_Habits"
-                      LongPress="DGV_Habits_LongPress"
-                      AllowInitiallySelectedRow="False"
+                          x:Name="DGV_Habits"
+                          LongPress="DGV_Habits_LongPress"
+                          AllowInitiallySelectedRow="False"
                           BackgroundColor="{StaticResource Background}"
                           AllowSort="False"
-                          AllowVirtualHorizontalScrolling="True"
-                      VerticalLineThickness="0"
+                          AllowVirtualHorizontalScrolling="{OnPlatform Android=False, iOS=True}"
+                          VerticalLineThickness="0"
                           IsHorizontalScrollBarVisible="False"
                           FullSwipeMode="Start"
-                      AllowLiveDataShaping="True">
+                          AllowLiveDataShaping="True">
             <dxg:DataGridView.Behaviors>
                 <toolkit:EventToCommandBehavior EventName="CompleteRowDragDrop"
                                                 Command="{Binding ResetPrioritiesCommand}"/>
@@ -117,7 +117,7 @@
                           HorizontalOptions="CenterAndExpand"
                           VerticalOptions="Start"
                           IsVisible="{Binding UserHabits.Count, Converter={StaticResource IsEmptyCollection}}">
-            <skia:SKLottieView IsAnimationEnabled="{Binding UserHabits.Count, Converter={StaticResource IsEmptyCollection}}"
+            <skia:SKLottieView IsAnimationEnabled="True"
                                RepeatCount="-1"
                                WidthRequest="300"
                                HeightRequest="250"

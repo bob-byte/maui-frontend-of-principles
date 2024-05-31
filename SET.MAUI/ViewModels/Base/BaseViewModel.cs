@@ -30,10 +30,10 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     [ObservableProperty]
     public string? m_appName;
 
-    public BaseViewModel(IServiceProvider serviceProvider)
+    public BaseViewModel( IServiceProvider serviceProvider )
     {
         CachingService = serviceProvider.GetRequiredService<ICachingService>();
-        m_userName = new CachedValidatableObject(CacheKeys.USER_NAME, CachingService);
+        m_userName = new CachedValidatableObject( CacheKeys.USER_NAME, CachingService );
 
         Navigation = serviceProvider.GetRequiredService<INavigationService>();
         RequestProvider = serviceProvider.GetRequiredService<IRequestProvider>();

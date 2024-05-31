@@ -295,7 +295,7 @@
     <value>Ні</value>
   </data>
   <data name="AtomicHabits" xml:space="preserve">
-    <value>Атомні звички</value>
+    <value>Атомні Звички</value>
   </data>
   <data name="Principles" xml:space="preserve">
     <value>Принципи</value>
@@ -550,7 +550,7 @@
     <value>    Якщо у вас є запитання чи пропозиції щодо нашої Політики Конфіденційності, не соромтеся зв’язатися з нами через електронну пошту: app@principles.top.</value>
   </data>
   <data name="LoginAgreementText" xml:space="preserve">
-    <value>Натискаючи кнопку 'Логін', ви погоджуєтесь з:</value>
+    <value>Натискаючи кнопку 'Вхід', ви погоджуєтесь з:</value>
   </data>
   <data name="LoginSignUpAgreementСonnectingText" xml:space="preserve">
     <value>та</value>
@@ -563,9 +563,6 @@
   </data>
   <data name="SignUpAgreementText" xml:space="preserve">
     <value>Натискаючи кнопку 'Реєстрація', ви погоджуєтесь з:</value>
-  </data>
-  <data name="ContactInfoText" xml:space="preserve">
-    <value>Якщо у вас є запитання чи пропозиції, будь ласка, звертайтесь:</value>
   </data>
   <data name="ContactEmail" xml:space="preserve">
     <value>Написати лист до app@principles.top</value>

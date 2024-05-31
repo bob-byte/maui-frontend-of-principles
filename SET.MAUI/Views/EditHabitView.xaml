@@ -43,12 +43,12 @@
                                    x:Name="SB_SaveHabit"
                                    Clicked="SB_Save_Clicked"
                                    Margin="0,2,0,2"
-                                   FontSize="14"
+                                   FontSize="12"
                                    BorderThickness="2" />
             </Grid>
         </Grid>
     </Shell.TitleView>
-
+    
     <Grid>
         <dxco:TabView HeaderPanelPosition="Top"
                       x:Name="TV_Tabs"
@@ -448,7 +448,8 @@
                               HeaderIconPosition="{OnPlatform iOS='Right'}"
                               HeaderWidth="160">
                 <ScrollView>
-                    <VerticalStackLayout Padding="10">
+                    <VerticalStackLayout Padding="10"
+                                         Spacing="6">
                         <dxe:MultilineEdit Text="{Binding ReasonToFollow.Value}"
                                            x:Name="ME_ReasonToFollow"
                                            LabelText="{x:Static loc:LocStrings.StrongReasonToFollow}"

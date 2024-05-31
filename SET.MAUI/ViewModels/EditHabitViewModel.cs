@@ -54,11 +54,6 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
             {
                 Type = PeriodTypeOfHabit.Month,
                 Name = LocStrings.ResourceManager.GetString("Month").ToLower()
-            },
-            new PeriodOfHabit
-            {
-                Type = PeriodTypeOfHabit.Year,
-                Name = LocStrings.ResourceManager.GetString("Year").ToLower()
             }
         };
         AiRecommenderOfHabits = aiRecommenderOfHabits;

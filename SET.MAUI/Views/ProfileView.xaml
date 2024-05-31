@@ -142,18 +142,18 @@
                        HorizontalOptions="Center"
                                VerticalOptions="Center"
                                Margin="0, 10, 0, 0"
-                               FontSize="Subtitle"
+                               FontSize="20"
                                FontAttributes="Bold"/>
                 <dxe:MultilineEdit x:Name="ME_PromptResult"
                                    ClearIconVisibility="Never"
                                    SizeChanged="ME_PromptResult_SizeChanged"
                                    Margin="10"
-                                   TextFontSize="Medium"/>
+                                   TextFontSize="16"/>
                 <dxco:SimpleButton x:Name="SB_Save"
                                            Style="{StaticResource PrimaryButton}"
                                            Text="{Binding LocSave}"
                                            HorizontalOptions="End"
-                                           FontSize="Medium"
+                                           FontSize="16"
                                            Margin="0, 5, 5, 5"
                                            Clicked="SB_Save_Clicked"/>
             </VerticalStackLayout>

@@ -39,6 +39,8 @@ namespace SET.MAUI.ViewModels
             Name = new ValidatableObject<string>();
             Email = new ValidatableObject<string>();
             Password = new ValidatableObject<string>();
+            AddValidators();
+
             Gender = Gender.Man;
 
             LocSigningUp = LocStrings.SigningUp;
@@ -48,13 +50,6 @@ namespace SET.MAUI.ViewModels
 
         public override Task InitializeAsync( object? parameter = null )
         {
-            Name = new ValidatableObject<string>();
-            Email = new ValidatableObject<string>();
-            Password = new ValidatableObject<string>();
-            MainSlogan = "";
-            Mission = "";
-            AddValidators();
-
             return base.InitializeAsync( parameter );
         }
 
@@ -99,6 +94,14 @@ namespace SET.MAUI.ViewModels
                     if (isLoggedIn)
                     {
                         await Navigation.GoToInitialViewAsync();
+
+                        Name = new ValidatableObject<string>();
+                        Email = new ValidatableObject<string>();
+                        Password = new ValidatableObject<string>();
+                        AddValidators();
+                        
+                        MainSlogan = "";
+                        Mission = "";
                     }
                     else
                     {

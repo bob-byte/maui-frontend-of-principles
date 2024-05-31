@@ -90,7 +90,9 @@ namespace SET.MAUI.Drawables
             }
 
             // Make the percentage always the same size in relation to the size of the progress bar
-            float fontSize = effectiveSize / 2.86f;
+            float fontSize = Progress == 100
+                ? effectiveSize / 3.5f
+                : effectiveSize / 2.86f;
             canvas.FontSize = fontSize;
             canvas.FontColor = TextColor;
             canvas.FillColor = TextColor;

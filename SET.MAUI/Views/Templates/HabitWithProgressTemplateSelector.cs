@@ -1,4 +1,6 @@
-﻿using DevExpress.Maui.DataGrid;
+﻿using CommunityToolkit.Maui.Behaviors;
+
+using DevExpress.Maui.DataGrid;
 using DevExpress.Maui.Editors;
 
 using System;
@@ -40,12 +42,9 @@ public class HabitWithProgressTemplateSelector : DataTemplateSelector
                 mode: BindingMode.OneWay
             );
 
-            //checkEdit.SetBinding( CheckEdit.IsVisibleProperty, binding: new Binding( path: $"Item.IsYesOrNo" ) );
             checkEdit.CheckedCheckBoxImage = ImageSource.FromFile( "fire_second" );
 
-            //Application.Current.Resources.TryGetValue( "FromHexToColor", out object converterObj );
-            //IValueConverter stringToColorConverter = (IValueConverter)converterObj;
-            Color primaryColor = (Color)Application.Current!.Resources["Primary"];
+            var primaryColor = (Color)Application.Current!.Resources["Primary"];
             checkEdit.CheckedCheckBoxColor = primaryColor;
 
             IValueConverter uncheckedProgressToImgConverter = new UncheckedProgressToImgConverter();
@@ -55,7 +54,29 @@ public class HabitWithProgressTemplateSelector : DataTemplateSelector
                 converter: uncheckedProgressToImgConverter
             );
 
-            checkEdit.BindTapGesture( commandPath: "ChangeValueOfProgressOfHabitCommand", commandSource: m_progressOfHabitsViewModel, parameterPath: $"Item.Progresses[{progressIndex}]", numberOfTapsRequired: 1 );
+#if IOS
+            checkEdit.BindTapGesture(
+                commandPath: "ChangeValueOfProgressOfHabitCommand",
+                commandSource: m_progressOfHabitsViewModel,
+                parameterPath: $"Item.Progresses[{progressIndex}]",
+                numberOfTapsRequired: 1
+            );
+#else
+            EventToCommandBehavior eventToCommandBehavior = new()
+            {
+                EventName = "CheckedChanged"
+            };
+            eventToCommandBehavior.SetBinding(
+                EventToCommandBehavior.CommandProperty,
+                new Binding( path: "ChangeValueOfProgressOfHabitCommand", source: m_progressOfHabitsViewModel )
+            );
+            eventToCommandBehavior.SetBinding(
+                EventToCommandBehavior.CommandParameterProperty,
+                new Binding( path: $"Item.Progresses[{progressIndex}]")
+            );
+
+            checkEdit.Behaviors.Add( eventToCommandBehavior );
+#endif
 
             return checkEdit;
         } );
@@ -63,8 +84,6 @@ public class HabitWithProgressTemplateSelector : DataTemplateSelector
 
     protected override DataTemplate OnSelectTemplate( object item, BindableObject container )
     {
-        //var cellData = (CellData)item;
-        //var dataGridView = (DataGridView)container;
         return m_dataTemplate;
     }
 }

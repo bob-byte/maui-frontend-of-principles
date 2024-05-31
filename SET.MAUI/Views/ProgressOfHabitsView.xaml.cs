@@ -196,26 +196,6 @@ public partial class ProgressOfHabitsView : ContentPageBase
                 Color primaryColor = (Color)Application.Current!.Resources["Primary"];
                 Color normalTextColor = (Color)Application.Current.Resources["LightNormalText"];
 
-                //SwipeView swipeView = new();
-                //swipeView.On<Microsoft.Maui.Controls.PlatformConfiguration.Android>().SetSwipeTransitionMode( SwipeTransitionMode.Drag );
-
-                //SwipeItems swipeItems = new();
-                //SwipeItemView deleteSwipeItem = new();
-                //DXImage deleteImg = new()
-                //{
-                //    Source = "delete",
-                //    TintColor = Colors.White,
-                //    BackgroundColor = primaryColor,
-                //    WidthRequest = 20,
-                //    Margin = new Thickness(3)
-                //};
-                //deleteSwipeItem.Invoked += SwipeItem_Invoked;
-                //deleteSwipeItem.Content = deleteImg;
-                //swipeItems.Mode = SwipeMode.Reveal;
-                ////deleteSwipeItem.BindCommand( "DeleteHabitCommand", ViewModel, "." );
-                //swipeItems.Add( deleteSwipeItem );
-                //swipeView.LeftItems = swipeItems;
-
                 HorizontalStackLayout stack = new()
                 {
                     VerticalOptions = LayoutOptions.Center,
@@ -239,7 +219,20 @@ public partial class ProgressOfHabitsView : ContentPageBase
                     VerticalTextAlignment = TextAlignment.Center,
                     LineBreakMode = LineBreakMode.TailTruncation,
                     MaxLines = 2,
-                    HeightRequest = 40
+#if IOS16_0_OR_GREATER
+                    HeightRequest = 40,
+#else
+                    HeightRequest = 45,
+#endif
+#if IOS17_0_OR_GREATER
+                    FontSize = 14
+#elif IOS16_0_OR_GREATER
+                    FontSize = 13
+#elif IOS
+                    FontSize = 12
+#elif ANDROID
+                    FontSize = 13
+#endif
                 };
                 habitName.Bind( Label.TextProperty, "Item.Name", BindingMode.TwoWay );
 
@@ -247,7 +240,6 @@ public partial class ProgressOfHabitsView : ContentPageBase
                 habitName.WidthRequest = 145;
                 stack.Add( progressBar );
                 stack.Add( habitName );
-                //swipeView.Content = stack;
 
                 return stack;
             } )

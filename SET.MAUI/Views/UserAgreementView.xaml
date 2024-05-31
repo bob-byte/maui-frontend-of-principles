@@ -17,7 +17,7 @@
                    x:DataType="vm:UserAgreementViewModel"
                    Title="{x:Static loc:LocStrings.UserAgreement}">
     <ScrollView>
-        <VerticalStackLayout Margin="20, 0, 20, 20">
+        <VerticalStackLayout Margin="20, 20, 20, 20">
             <Label Text="{x:Static loc:LocStrings.UserAgreementIntroduction}"
                    HorizontalOptions="FillAndExpand"
                    VerticalOptions="Start" />

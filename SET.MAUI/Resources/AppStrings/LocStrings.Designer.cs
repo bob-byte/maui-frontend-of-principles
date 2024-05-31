@@ -202,15 +202,6 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If you have any questions or suggestions, please contact:.
-        /// </summary>
-        internal static string ContactInfoText {
-            get {
-                return ResourceManager.GetString("ContactInfoText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Correct.
         /// </summary>
         internal static string Correct {
