@@ -12,17 +12,6 @@ public partial class UserAreaOfLife : ObservableObject
     private long m_id;
     [ObservableProperty]
     private string? m_name;
-    [ObservableProperty]
-    private int m_priority;
-    //public ImageSource Icon { get; set; }
-    [ObservableProperty]
-    private string? m_description;
-    [ObservableProperty]
-    private string? m_colorName;
-    [ObservableProperty]
-    private double? m_rate;
-    [ObservableProperty]
-    private long m_userId;
 
     public override string ToString()
     {

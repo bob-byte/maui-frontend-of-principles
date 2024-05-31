@@ -1,5 +1,4 @@
-﻿using System.Windows.Input;
-
+﻿
 namespace SET.MAUI.ViewModels;
 
 public partial class SettingsViewModel : BaseViewModel
@@ -23,6 +22,28 @@ public partial class SettingsViewModel : BaseViewModel
     public Task ShowPrivacyPolicyAsync()
     {
         return Navigation.NavigateToAsync<PrivacyPolicyViewModel>();
+    }
+
+    [RelayCommand]
+    public async Task OpenEmailAsync()
+    {
+        try
+        {
+            string email = "app@principles.top";
+
+            var uri = new Uri( $"mailto:{email}" );
+
+            bool isAppOpened = await Launcher.OpenAsync( uri );
+            if (!isAppOpened)
+            {
+                await DialogService.ShowErrorAsync( LocStrings.MsgWhenCannotOpenAppToSendEmail );
+            }
+        }
+        catch (Exception ex)
+        {
+            LoggingService.LogCriticalError( message: "Cannot open app to send an email", ex );
+            await DialogService.ShowErrorAsync( LocStrings.MsgWhenCannotOpenAppToSendEmail ).DefaultConfigureAwait();
+        }
     }
 
     [RelayCommand]

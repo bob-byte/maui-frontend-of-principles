@@ -193,6 +193,24 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Send an email to app@principles.top.
+        /// </summary>
+        internal static string ContactEmail {
+            get {
+                return ResourceManager.GetString("ContactEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If you have any questions or suggestions, please contact:.
+        /// </summary>
+        internal static string ContactInfoText {
+            get {
+                return ResourceManager.GetString("ContactInfoText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Correct.
         /// </summary>
         internal static string Correct {
@@ -693,6 +711,15 @@ namespace SET.MAUI.Resources.AppStrings {
         internal static string Month {
             get {
                 return ResourceManager.GetString("Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot open app to send an email. Maybe this program is not installed..
+        /// </summary>
+        internal static string MsgWhenCannotOpenAppToSendEmail {
+            get {
+                return ResourceManager.GetString("MsgWhenCannotOpenAppToSendEmail", resourceCulture);
             }
         }
         
