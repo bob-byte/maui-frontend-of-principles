@@ -54,6 +54,7 @@ public class HabitWithProgressTemplateSelector : DataTemplateSelector
                 path: $"Item.Progresses[{progressIndex}]",
                 converter: uncheckedProgressToImgConverter
             );
+
             checkEdit.BindTapGesture( commandPath: "ChangeValueOfProgressOfHabitCommand", commandSource: m_progressOfHabitsViewModel, parameterPath: $"Item.Progresses[{progressIndex}]", numberOfTapsRequired: 1 );
 
             return checkEdit;

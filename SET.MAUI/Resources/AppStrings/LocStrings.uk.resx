@@ -568,6 +568,9 @@
     <value>Якщо у вас є запитання чи пропозиції, будь ласка, звертайтесь:</value>
   </data>
   <data name="ContactEmail" xml:space="preserve">
-    <value>Надішліть лист на app@principles.top</value>
+    <value>Написати лист до app@principles.top</value>
+  </data>
+  <data name="MsgWhenCannotOpenAppToSendEmail" xml:space="preserve">
+    <value>Не вдається відкрити програму для надсилання електронного листа. Можливо, її не встановлено.</value>
   </data>
 </root>

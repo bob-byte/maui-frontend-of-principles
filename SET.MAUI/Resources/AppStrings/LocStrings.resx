@@ -644,4 +644,7 @@ By using the App, you acknowledge that you have read, understood, and agree to b
   <data name="ContactEmail" xml:space="preserve">
     <value>Send an email to app@principles.top</value>
   </data>
+  <data name="MsgWhenCannotOpenAppToSendEmail" xml:space="preserve">
+    <value>Cannot open app to send an email. Maybe this program is not installed.</value>
+  </data>
 </root>

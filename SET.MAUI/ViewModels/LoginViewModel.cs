@@ -42,6 +42,9 @@ public partial class LoginViewModel : BaseViewModel
     [RelayCommand(CanExecute = nameof(IsEmailAndPasswordValid))]
     private async Task LoginAsync()
     {
+        ValidateEmail();
+        ValidatePassword();
+
         if (IsEmailAndPasswordValid)
         {
             await UiBusyFor( async () =>
