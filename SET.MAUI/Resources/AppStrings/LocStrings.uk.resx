@@ -573,4 +573,7 @@
   <data name="Delete" xml:space="preserve">
     <value>Видалити</value>
   </data>
+  <data name="Goals" xml:space="preserve">
+    <value>Цілі</value>
+  </data>
 </root>

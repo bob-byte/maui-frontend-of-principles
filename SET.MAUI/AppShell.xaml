@@ -24,6 +24,10 @@
                       Route="progressofhabits"
                       Icon="boost"/>
 
+        <ShellContent ContentTemplate="{DataTemplate local:GoalsView}"
+              Title="{x:Static loc:LocStrings.Goals}"
+              Icon="goals"/>
+
         <ShellContent ContentTemplate="{DataTemplate local:ProfileView}"
                       Title="{x:Static loc:LocStrings.Profile}"
                       Route="profile"

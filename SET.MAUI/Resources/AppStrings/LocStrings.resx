@@ -647,4 +647,7 @@ By using the App, you acknowledge that you have read, understood, and agree to b
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="Goals" xml:space="preserve">
+    <value>Goals</value>
+  </data>
 </root>

@@ -99,6 +99,9 @@
 		<Compile Update="App.xaml.cs">
 		  <DependentUpon>App.xaml</DependentUpon>
 		</Compile>
+		<Compile Update="Views\GoalsView.xaml.cs">
+		  <DependentUpon>GoalsView.xaml</DependentUpon>
+		</Compile>
 		<Compile Update="Views\PrivacyPolicyView.xaml.cs">
 		  <DependentUpon>PrivacyPolicyView.xaml</DependentUpon>
 		</Compile>
@@ -149,6 +152,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Controls\CircularProgressBar.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\GoalsView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\EditPrincipleView.xaml">
