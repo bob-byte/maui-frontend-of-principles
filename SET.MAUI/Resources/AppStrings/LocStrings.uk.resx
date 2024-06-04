@@ -579,4 +579,10 @@
   <data name="Retry" xml:space="preserve">
     <value>Повторити</value>
   </data>
+  <data name="Principles" xml:space="preserve">
+    <value>Принципи</value>
+  </data>
+  <data name="Habits" xml:space="preserve">
+    <value>Звички</value>
+  </data>
 </root>

@@ -20,9 +20,13 @@
                       Icon="helper" />
 
         <ShellContent ContentTemplate="{DataTemplate local:ProgressOfHabitsView}"
-                      Title="{x:Static loc:LocStrings.Progress}"
+                      Title="{x:Static loc:LocStrings.Habits}"
                       Route="progressofhabits"
-                      Icon="boost"/>
+                      Icon="fire_seventh" />
+
+        <ShellContent ContentTemplate="{DataTemplate local:PrinciplesView}"
+                      Title="{x:Static loc:LocStrings.Principles}"
+                      Icon="logo" />
 
         <ShellContent ContentTemplate="{DataTemplate local:ProfileView}"
                       Title="{x:Static loc:LocStrings.Profile}"

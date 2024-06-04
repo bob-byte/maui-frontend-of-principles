@@ -653,4 +653,10 @@ By using the App, you acknowledge that you have read, understood, and agree to b
   <data name="Retry" xml:space="preserve">
     <value>Retry</value>
   </data>
+  <data name="Principles" xml:space="preserve">
+    <value>Principles</value>
+  </data>
+  <data name="Habits" xml:space="preserve">
+    <value>Habits</value>
+  </data>
 </root>

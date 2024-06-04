@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<v:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                   x:Class="SET.MAUI.Views.PrinciplesView"
+                   xmlns:loc="clr-namespace:SET.MAUI.Resources.AppStrings"
+                   xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
+                   xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+                   xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+                   xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
+                   xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+                   xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+                   xmlns:v="clr-namespace:SET.MAUI.Views"
+                   xmlns:vm="clr-namespace:SET.MAUI.ViewModels"
+                   xmlns:m="clr-namespace:SET.Core.Models;assembly=SET.Core"
+                   xmlns:templates="clr-namespace:SET.MAUI.Views.Templates"
+                   xmlns:controls="clr-namespace:SET.MAUI.Controls"
+                   x:DataType="vm:PrinciplesViewModel"
+                   Shell.NavBarIsVisible="True">
+    <Shell.TitleView>
+        <Grid VerticalOptions="CenterAndExpand"
+              ColumnDefinitions="Auto, 0, Auto, *, Auto, 10, Auto"
+              Margin="0,0,5,0">
+            <dx:DXImage Source="logo"
+                        TintColor="{StaticResource DarkIconColor}"
+                        WidthRequest="30"
+                        HeightRequest="30"
+                        Grid.Column="0" />
+            <Label Text="{x:Static loc:LocStrings.Principles}"
+                   VerticalOptions="Center"
+                   VerticalTextAlignment="Center"
+                   HorizontalOptions="Start"
+                   TextColor="{StaticResource TitleTextColor}"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   HeightRequest="50"
+                   Grid.Column="2" />
+            <dx:DXImage Source="plus"
+                        VerticalOptions="Center"
+                        HorizontalOptions="End"
+                        TintColor="{StaticResource TitleTextColor}"
+                        Margin="65,0,0,0"
+                        WidthRequest="40"
+                        HeightRequest="40"
+                        Grid.Column="6">
+                <dx:DXImage.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" />
+                </dx:DXImage.GestureRecognizers>
+            </dx:DXImage>
+        </Grid>
+    </Shell.TitleView>
+    <VerticalStackLayout>
+
+    </VerticalStackLayout>
+</v:ContentPageBase>
