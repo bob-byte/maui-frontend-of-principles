@@ -18,12 +18,6 @@ public class HabitWithProgressTemplateSelector : DataTemplateSelector
         m_progressOfHabitsViewModel = viewModel;
         m_dataTemplate = new DataTemplate( loadTemplate: () =>
         {
-            CheckEdit checkEdit = new()
-            {
-                Margin = new Thickness( 15, 0, 0, 0 )
-            };
-
-            IValueConverter progressValueConverter = new ProgressOfHabitValueConverter();
             int progressIndex = 0;
             ProgressOfHabit[] progresses = m_progressOfHabitsViewModel.UserHabits[0].Progresses!.ToArray();
             for (int numProgress = 0; numProgress < progresses.Length; numProgress++)
@@ -35,50 +29,32 @@ public class HabitWithProgressTemplateSelector : DataTemplateSelector
                 }
             }
 
-            checkEdit.Bind(
-                CheckEdit.IsCheckedProperty,
-                path: $"Item.Progresses[{progressIndex}].Value",
-                converter: progressValueConverter,
-                mode: BindingMode.OneWay
-            );
-
-            checkEdit.CheckedCheckBoxImage = ImageSource.FromFile( "fire_second" );
-
-            var primaryColor = (Color)Application.Current!.Resources["Primary"];
-            checkEdit.CheckedCheckBoxColor = primaryColor;
-
-            IValueConverter uncheckedProgressToImgConverter = new UncheckedProgressToImgConverter();
-            checkEdit.Bind(
-                targetProperty: CheckEdit.UncheckedCheckBoxImageProperty,
+            ContentView contentView = new();
+            contentView.Bind(
+                targetProperty: ContentView.ContentProperty,
                 path: $"Item.Progresses[{progressIndex}]",
-                converter: uncheckedProgressToImgConverter
+                converter: new ProgressToImgConverter()
             );
 
-#if IOS
-            checkEdit.BindTapGesture(
+#if ANDROID
+            TouchBehavior touchBehavior = new()
+            {
+                LongPressCommand = m_progressOfHabitsViewModel.SelectRowCommand,
+                Command = m_progressOfHabitsViewModel.ChangeValueOfProgressOfHabitCommand
+            };
+            touchBehavior.Bind( TouchBehavior.LongPressCommandParameterProperty, "Item" );
+            touchBehavior.Bind( TouchBehavior.CommandParameterProperty, $"Item.Progresses[{progressIndex}]" );
+            contentView.Behaviors.Add( touchBehavior );
+#else
+            contentView.BindTapGesture(
                 commandPath: "ChangeValueOfProgressOfHabitCommand",
                 commandSource: m_progressOfHabitsViewModel,
                 parameterPath: $"Item.Progresses[{progressIndex}]",
                 numberOfTapsRequired: 1
             );
-#else
-            EventToCommandBehavior eventToCommandBehavior = new()
-            {
-                EventName = "CheckedChanged"
-            };
-            eventToCommandBehavior.SetBinding(
-                EventToCommandBehavior.CommandProperty,
-                new Binding( path: "ChangeValueOfProgressOfHabitCommand", source: m_progressOfHabitsViewModel )
-            );
-            eventToCommandBehavior.SetBinding(
-                EventToCommandBehavior.CommandParameterProperty,
-                new Binding( path: $"Item.Progresses[{progressIndex}]")
-            );
-
-            checkEdit.Behaviors.Add( eventToCommandBehavior );
 #endif
 
-            return checkEdit;
+            return contentView;
         } );
     }
 

@@ -114,10 +114,6 @@ public partial class ProgressOfHabitsView : ContentPageBase
                 DGV_Habits.Columns.Insert( index: 1, templateColumn );
             } ).DefaultConfigureAwait();
 
-#if ANDROID
-            await Task.Delay( 1500 ).DefaultConfigureAwait();
-#endif
-
             ViewModel.IsProgressesInitialized = true;
         }
 
@@ -199,7 +195,21 @@ public partial class ProgressOfHabitsView : ContentPageBase
                     VerticalOptions = LayoutOptions.Center,
                     Spacing = 4
                 };
+
+#if ANDROID
+                TouchBehavior touchBehavior = new()
+                {
+                    LongPressCommand = ViewModel.SelectRowCommand,
+                    Command = ViewModel.EditHabitCommand
+                };
+                touchBehavior.Bind( TouchBehavior.LongPressCommandParameterProperty, "Item" );
+                touchBehavior.Bind( TouchBehavior.CommandParameterProperty, "Item" );
+
+                stack.Behaviors.Add( touchBehavior );
+#else
                 stack.BindTapGesture( "EditHabitCommand", commandSource: ViewModel, parameterPath: "Item", numberOfTapsRequired: 1 );
+#endif
+
                 CircularProgressBar progressBar = new();
                 IValueConverter progressConverter = new ProgressOfHabitToInt32Converter( ViewModel.ProgressOfHabitService );
                 progressBar.Bind( CircularProgressBar.ProgressProperty, path: "Item.PercentageAchieved", converter: progressConverter );

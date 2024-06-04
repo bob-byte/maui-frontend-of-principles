@@ -136,17 +136,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
                         m_isBusyForChangeCompleted.TryAdd( habit, new SemaphoreSlim( 1, 1 ) );
                     }
 
-#if ANDROID
-                    //to avoid performing ChangeValueOfProgressOfHabitAsync during CheckEdit rendering
-                    Task.Run( async () =>
-                    {
-                        await Task.Delay( 1500 ).DefaultConfigureAwait();
-                        IsProgressesInitialized = true;
-                    } ).GetAwaiter();
-#else
                     IsProgressesInitialized = true;
-#endif
-
                     m_isInitialized = true;
                 }
             }
