@@ -12,6 +12,9 @@
 *.user
 *.sln.docstates
 
+#publish
+*.keystore
+
 # Build results
 [Dd]ebug/
 [Rr]elease/

@@ -573,4 +573,10 @@
   <data name="Delete" xml:space="preserve">
     <value>Видалити</value>
   </data>
+  <data name="NoInternetConnection" xml:space="preserve">
+    <value>Відсутнє зʼєднання з інтернетом.</value>
+  </data>
+  <data name="Retry" xml:space="preserve">
+    <value>Повторити</value>
+  </data>
 </root>

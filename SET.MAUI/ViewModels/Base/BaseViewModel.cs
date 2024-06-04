@@ -223,27 +223,31 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     {
         IsBusy = true;
 
-        Exception? thrownException = null;
+        bool doTryAgain = false;
 
-        try
+        do
         {
-            await unitOfWork();
-        }
-        catch (Exception ex)
-        {
-            thrownException = ex;
-            LoggingService.LogCriticalError( ex );
-        }
-        finally
-        {
-            IsBusy = false;
-        }
+            try
+            {
+                await unitOfWork();
+            }
+            catch (Exception ex)
+            {
+                LoggingService.LogCriticalError( ex );
 
-        if (displayAlertOnException && thrownException != null)
-        {
-            string errorMsg = thrownException.Message;
-            await DialogService.ShowAlertAsync( errorMsg, LocStrings.Error, buttonLabel: LocStrings.OK ).DefaultConfigureAwait();
+                string errorMsg = SettingsService.IsDebug ? ex.ToString() : LocStrings.NoInternetConnection;
+
+                doTryAgain = await DialogService.ShowAlertWithTwoBtnsAsync(
+                    errorMsg,
+                    title: LocStrings.Error,
+                    accept: LocStrings.Retry,
+                    cancel: LocStrings.Cancel
+                );
+            }
         }
+        while ( doTryAgain );
+
+        IsBusy = false;
     }
 
     protected bool SetProperty<T>(ref T backingStore, T value,

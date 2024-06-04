@@ -132,7 +132,7 @@ public static class MauiProgram
             AppVersion: appInfo.VersionString,
             LogType: logEvent.Level.ToString(),
             LogMessage: logEvent.MessageTemplate.Text,
-            StackTrace: logEvent.Exception?.ToString()
+            StackTrace: logEvent.Exception?.StackTrace
         );
         return result;
     }

@@ -16,7 +16,7 @@ public interface IUrlBuilder
     string ProgressOfHabit { get; }
     string AreasOfLife { get; }
     string Account { get; }
-    string Log { get; }
+    string Logs { get; }
 
     string Combine( params string[] uri );
 }

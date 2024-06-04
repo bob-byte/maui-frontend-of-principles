@@ -647,4 +647,10 @@ By using the App, you acknowledge that you have read, understood, and agree to b
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="NoInternetConnection" xml:space="preserve">
+    <value>No internet connection.</value>
+  </data>
+  <data name="Retry" xml:space="preserve">
+    <value>Retry</value>
+  </data>
 </root>

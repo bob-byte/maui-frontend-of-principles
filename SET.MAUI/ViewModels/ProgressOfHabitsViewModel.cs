@@ -11,21 +11,11 @@ namespace SET.MAUI.ViewModels;
 public partial class ProgressOfHabitsViewModel : BaseViewModel
 {
     private bool m_isInitialized;
-    private bool m_isProgressesInitialized;
 
     private readonly ConcurrentDictionary<UserHabit, SemaphoreSlim> m_isBusyForChangeCompleted;
 
+    [ObservableProperty]
     private UserHabit? m_selectedHabit;
-    public UserHabit? SelectedHabit
-    {
-        get => m_selectedHabit;
-        set
-        {
-            OnPropertyChanging();
-            m_selectedHabit = value;
-            OnPropertyChanged();
-        }
-    }
 
     [ObservableProperty]
     private DateOnly m_startProgressInterval;
@@ -58,12 +48,12 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
         EndProgressInterval = DateOnly.FromDateTime( DateTime.Today );
         StartProgressInterval = EndProgressInterval.AddDays( -HabitConstants.AVERAGE_NUMBER_OF_DAYS_TO_AUTOMATE_HABIT + 1 );
         m_isBusyForChangeCompleted = new ConcurrentDictionary<UserHabit, SemaphoreSlim>();
-        UserHabits = new ObservableCollectionEx<UserHabit>();
+        m_userHabits = new ObservableCollectionEx<UserHabit>();
 
         ReferenceMessenger.Register<UserLoggedOutMessage>( this, ( sender, msg ) =>
         {
             m_isInitialized = false;
-            m_isProgressesInitialized = false;
+            IsProgressesInitialized = false;
 
             DefaultHandleLogout( msg );
             UserHabits.Clear();
@@ -74,6 +64,8 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     public IProgressOfHabitService ProgressOfHabitService { get; }
 
     internal DataGridView? DataGridViewWithHabits { get; set; }
+
+    internal bool IsProgressesInitialized { get; set; }
 
     public void HandleHabitSave(object receiver, HabitSavedMessage message)
     {
@@ -148,11 +140,11 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
                     //to avoid performing ChangeValueOfProgressOfHabitAsync during CheckEdit rendering
                     Task.Run( async () =>
                     {
-                        await Task.Delay( 1000 ).DefaultConfigureAwait();
-                        m_isProgressesInitialized = true;
+                        await Task.Delay( 1500 ).DefaultConfigureAwait();
+                        IsProgressesInitialized = true;
                     } ).GetAwaiter();
 #else
-                    m_isProgressesInitialized = true;
+                    IsProgressesInitialized = true;
 #endif
 
                     m_isInitialized = true;
@@ -168,7 +160,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     [RelayCommand]
     private async Task ChangeValueOfProgressOfHabitAsync( ProgressOfHabit progressOfHabit )
     {
-        if (!m_isProgressesInitialized || progressOfHabit == null)
+        if (!IsProgressesInitialized || progressOfHabit == null)
         {
             return;
         }

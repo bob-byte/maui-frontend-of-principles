@@ -22,7 +22,7 @@ public class UrlBuilder : IUrlBuilder
     private string? m_progressOfHabit;
     private string? m_habits;
     private string? m_habitsPriorities;
-    private string? m_log;
+    private string? m_logs;
 
     public string BaseUrl
     {
@@ -150,12 +150,12 @@ public class UrlBuilder : IUrlBuilder
         }
     }
 
-    public string Log
+    public string Logs
     {
         get
         {
-            m_log ??= Combine( BaseApiUrl, "log" );
-            return m_log;
+            m_logs ??= Combine( BaseApiUrl, "logs" );
+            return m_logs;
         }
     }
 

@@ -751,6 +751,15 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No internet connection..
+        /// </summary>
+        internal static string NoInternetConnection {
+            get {
+                return ResourceManager.GetString("NoInternetConnection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Notes / How to keep habit.
         /// </summary>
         internal static string NotesOrHowToKeepHabit {
@@ -1064,6 +1073,15 @@ namespace SET.MAUI.Resources.AppStrings {
         internal static string RequiredHelpText {
             get {
                 return ResourceManager.GetString("RequiredHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Retry.
+        /// </summary>
+        internal static string Retry {
+            get {
+                return ResourceManager.GetString("Retry", resourceCulture);
             }
         }
         

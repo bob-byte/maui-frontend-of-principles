@@ -23,7 +23,7 @@ public class LoggerToServer : ILogEventSink
         IRequestProvider requestProvider = serviceLocator.GetService<IRequestProvider>();
 
         SaveLogRequest request = m_funcToCreateRequest( logEvent, serviceLocator.ServiceProvider );
-        string url = $"{urlBuilder.Log}";
+        string url = $"{urlBuilder.Logs}";
 
         try
         {
@@ -31,7 +31,7 @@ public class LoggerToServer : ILogEventSink
         }
         catch(Exception ex)
         {
-            Console.WriteLine( $"Cannot post client log on the server: {ex.Message}" );
+            Console.WriteLine( $"Cannot post client log on the server: {ex}" );
         }
     }
 }

@@ -52,26 +52,26 @@ public partial class ProgressOfHabitsView : ContentPageBase
         if (e.PropertyName == nameof( ViewModel.IsInitialized ) && ViewModel.IsInitialized && m_newDayEventTimer is null)
         {
             TimeSpan timeUntilMidnight = TimeUntilMidnight();
-            m_newDayEventTimer = new Timer( OnNewDay, state: null, dueTime: timeUntilMidnight, period: TimeSpan.FromHours( 24 ) );
+            m_newDayEventTimer = new Timer( OnNewDay, state: null, dueTime: timeUntilMidnight, period: Timeout.InfiniteTimeSpan );
 
 #if IOS
             m_timeZoneChangeObserver = new TimeZoneChangeObserver();
             m_timeZoneChangeObserver.StartObservingTimeZoneChanges( ( notification ) =>
             {
                 TimeSpan timeUntilMidnight = TimeUntilMidnight();
-                m_newDayEventTimer!.Change( timeUntilMidnight, TimeSpan.FromHours( 24 ) );
+                m_newDayEventTimer!.Change( timeUntilMidnight, Timeout.InfiniteTimeSpan );
             } );
 #elif ANDROID
             m_timeZoneChangeReceiver = new TimeZoneChangedReceiver( ( context, intent ) =>
             {
                 TimeSpan timeUntilMidnight = TimeUntilMidnight();
-                m_newDayEventTimer!.Change( timeUntilMidnight, TimeSpan.FromHours( 24 ) );
+                m_newDayEventTimer!.Change( timeUntilMidnight, Timeout.InfiniteTimeSpan );
             } );
 #endif
         }
     }
 
-    private void OnNewDay( object? state )
+    private async void OnNewDay( object? state )
     {
         DateTime todayAsDatetime = DateTime.Today;
         DateOnly today = DateOnly.FromDateTime( todayAsDatetime );
@@ -83,31 +83,42 @@ public partial class ProgressOfHabitsView : ContentPageBase
         bool isAlreadyAddedCol = DGV_Habits.Columns[1].Caption == colCaption || DGV_Habits.Columns[2].Caption == colCaption;
         if (!isAlreadyAddedCol)
         {
-            foreach (UserHabit habit in ViewModel.UserHabits)
+            ViewModel.IsProgressesInitialized = false;
+
+            await MainThread.InvokeOnMainThreadAsync( () =>
             {
-                habit.Progresses!.Insert( index: 0, new ProgressOfHabit
+                foreach (UserHabit habit in ViewModel.UserHabits)
                 {
-                    Id = 0,
-                    Date = today,
-                    Habit = habit,
-                    Value = ProgressValue.UNKNOWN
-                } );
+                    habit.Progresses!.Insert( index: 0, new ProgressOfHabit
+                    {
+                        Id = 0,
+                        Date = today,
+                        Habit = habit,
+                        Value = ProgressValue.UNKNOWN
+                    } );
 
-                ViewModel.ServiceOfHabit.Recompute( habit );
-            }
+                    ViewModel.ServiceOfHabit.Recompute( habit );
+                }
 
-            TemplateColumn templateColumn = new()
-            {
-                Caption = colCaption,
-                HeaderFontSize = 7,
-                HeaderCaptionLineBreakMode = LineBreakMode.WordWrap,
-                VerticalContentAlignment = TextAlignment.Center,
-                HorizontalContentAlignment = TextAlignment.Center,
-                HorizontalHeaderAlignment = TextAlignment.Center,
-                DisplayTemplate = new HabitWithProgressTemplateSelector( ViewModel, today )
-            };
+                TemplateColumn templateColumn = new()
+                {
+                    Caption = colCaption,
+                    HeaderFontSize = 7,
+                    HeaderCaptionLineBreakMode = LineBreakMode.WordWrap,
+                    VerticalContentAlignment = TextAlignment.Center,
+                    HorizontalContentAlignment = TextAlignment.Center,
+                    HorizontalHeaderAlignment = TextAlignment.Center,
+                    DisplayTemplate = new HabitWithProgressTemplateSelector( ViewModel, today )
+                };
 
-            DGV_Habits.Columns.Insert( index: 1, templateColumn );
+                DGV_Habits.Columns.Insert( index: 1, templateColumn );
+            } ).DefaultConfigureAwait();
+
+#if ANDROID
+            await Task.Delay( 1500 ).DefaultConfigureAwait();
+#endif
+
+            ViewModel.IsProgressesInitialized = true;
         }
 
         TimeSpan timeUntilMidnight = TimeUntilMidnight();
@@ -119,6 +130,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
         DateTime now = TimeZoneInfo.ConvertTimeFromUtc( DateTime.UtcNow, TimeZoneInfo.Local );
         DateTime midnight = now.Date.AddDays( 1 );
         TimeSpan result = midnight - now;
+
         return result;
     }
 
