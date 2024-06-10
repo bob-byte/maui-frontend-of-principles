@@ -252,6 +252,7 @@
                                                 VerticalOptions="Center" />
                                     <dx:DXStackLayout Orientation="Vertical"
                                                       x:Name="DXS_ErrorMessages"
+                                                      ItemSpacing="7"
                                                       VerticalOptions="Center" />
                                 </dx:DXStackLayout>
                                 <dxco:SimpleButton x:Name="SB_CloseErrorsPopup"

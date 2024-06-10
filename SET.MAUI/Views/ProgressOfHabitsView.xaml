@@ -99,7 +99,7 @@
                           FullSwipeMode="Start"
                           AllowLiveDataShaping="True">
             <dxg:DataGridView.Behaviors>
-                <toolkit:EventToCommandBehavior EventName="CompleteItemDragDrop"
+                <toolkit:EventToCommandBehavior EventName="CompleteRowDragDrop"
                                                 Command="{Binding ResetPrioritiesCommand}" />
             </dxg:DataGridView.Behaviors>
             <dxg:DataGridView.StartSwipeItems>

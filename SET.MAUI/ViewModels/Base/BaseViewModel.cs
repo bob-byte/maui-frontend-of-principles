@@ -263,12 +263,13 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
                     }
                 }
 
-                doTryAgain = await DialogService.ShowAlertWithTwoBtnsAsync(
-                    errorMsg,
-                    title: LocStrings.Error,
-                    accept: LocStrings.Retry,
-                    cancel: LocStrings.Cancel
-                );
+                doTryAgain = displayAlertOnException &&
+                    await DialogService.ShowAlertWithTwoBtnsAsync(
+                        errorMsg,
+                        title: LocStrings.Error,
+                        accept: LocStrings.Retry,
+                        cancel: LocStrings.Cancel
+                    );
             }
         }
         while ( doTryAgain );

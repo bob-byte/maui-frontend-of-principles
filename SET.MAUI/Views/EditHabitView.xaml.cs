@@ -273,6 +273,7 @@ public partial class EditHabitView : ContentPageBase
                 Label errorLabel = new()
                 {
                     FontSize = 16,
+                    FontFamily = "Roboto",
                     LineBreakMode = LineBreakMode.WordWrap,
                     VerticalOptions = LayoutOptions.Center,
                     VerticalTextAlignment = TextAlignment.Center
@@ -286,6 +287,7 @@ public partial class EditHabitView : ContentPageBase
                 Label errorLabel = new()
                 {
                     FontSize = 16,
+                    FontFamily = "Roboto",
                     LineBreakMode = LineBreakMode.WordWrap,
                     VerticalOptions = LayoutOptions.Center,
                     VerticalTextAlignment = TextAlignment.Center
