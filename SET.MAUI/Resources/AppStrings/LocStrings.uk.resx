@@ -165,7 +165,7 @@
   <data name="HowToKeep" xml:space="preserve">
     <value>Як утримувати</value>
   </data>
-  <data name="Info" xml:space="preserve">
+  <data name="Data" xml:space="preserve">
     <value>Дані</value>
   </data>
   <data name="NotesOrHowToKeepHabit" xml:space="preserve">
@@ -181,7 +181,7 @@
     <value>Причина дотримуватись</value>
   </data>
   <data name="StrongReasonToFollow" xml:space="preserve">
-    <value>Сильна причина дотримуватись</value>
+    <value>Причина дотримуватись</value>
   </data>
   <data name="OptionalPlaceholder" xml:space="preserve">
     <value>(Необовʼязково)</value>
@@ -337,7 +337,7 @@
     <value>На основі вибраних сфер, місії та гасла</value>
   </data>
   <data name="DescriptionOfAiLampTap" xml:space="preserve">
-    <value>Торкніться ШІ-лампи, щоб переглянути рекомендовані звички, визначені на основі обраних сфер, місії та основного гасла.</value>
+    <value>Торкніться ШІ-лампи, щоб переглянути рекомендовані звички.</value>
   </data>
   <data name="IfYouDontWantToWaitYouCanChangeOtherFields" xml:space="preserve">
     <value>Якщо ви не хочете чекати, ви можете поки що змінити інші поля</value>
@@ -578,5 +578,23 @@
   </data>
   <data name="Retry" xml:space="preserve">
     <value>Повторити</value>
+  </data>
+  <data name="EmailOrPasswordIsIncorrect" xml:space="preserve">
+    <value>Пошта або пароль введений неправильно.</value>
+  </data>
+  <data name="YouAreNotAuthorized" xml:space="preserve">
+    <value>Ви не авторизовані.</value>
+  </data>
+  <data name="TabData" xml:space="preserve">
+    <value>Вкладка "Дані"</value>
+  </data>
+  <data name="TabHowToKeep" xml:space="preserve">
+    <value>Вкладка "Як утримувати"</value>
+  </data>
+  <data name="FieldName" xml:space="preserve">
+    <value>Поле "Назва"</value>
+  </data>
+  <data name="FieldReasonToFollow" xml:space="preserve">
+    <value>Поле "Причина дотримуватись"</value>
   </data>
 </root>

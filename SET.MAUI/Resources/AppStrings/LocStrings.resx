@@ -243,8 +243,8 @@
   <data name="HowToKeep" xml:space="preserve">
     <value>How to keep</value>
   </data>
-  <data name="Info" xml:space="preserve">
-    <value>Info</value>
+  <data name="Data" xml:space="preserve">
+    <value>Data</value>
   </data>
   <data name="NotesOrHowToKeepHabit" xml:space="preserve">
     <value>Notes / How to keep habit</value>
@@ -259,7 +259,7 @@
     <value>Reason to follow</value>
   </data>
   <data name="StrongReasonToFollow" xml:space="preserve">
-    <value>Strong reason to follow</value>
+    <value>Reason to follow</value>
   </data>
   <data name="OptionalPlaceholder" xml:space="preserve">
     <value>(Optional)</value>
@@ -415,7 +415,7 @@
     <value>Based on selected areas, mission and slogan</value>
   </data>
   <data name="DescriptionOfAiLampTap" xml:space="preserve">
-    <value>Tap the AI-lamp to watch recommended habits based on the selected areas</value>
+    <value>Tap the AI-lamp to get recommended habits.</value>
   </data>
   <data name="IfYouDontWantToWaitYouCanChangeOtherFields" xml:space="preserve">
     <value>If you don't want to wait, you can change the other fields for now</value>
@@ -652,5 +652,23 @@ By using the App, you acknowledge that you have read, understood, and agree to b
   </data>
   <data name="Retry" xml:space="preserve">
     <value>Retry</value>
+  </data>
+  <data name="EmailOrPasswordIsIncorrect" xml:space="preserve">
+    <value>Email or password is incorrect.</value>
+  </data>
+  <data name="YouAreNotAuthorized" xml:space="preserve">
+    <value>You are not authorized.</value>
+  </data>
+  <data name="TabData" xml:space="preserve">
+    <value>The tab "Data"</value>
+  </data>
+  <data name="TabHowToKeep" xml:space="preserve">
+    <value>The tab "How to keep"</value>
+  </data>
+  <data name="FieldName" xml:space="preserve">
+    <value>The field "Name"</value>
+  </data>
+  <data name="FieldReasonToFollow" xml:space="preserve">
+    <value>The field "Reason to follow"</value>
   </data>
 </root>

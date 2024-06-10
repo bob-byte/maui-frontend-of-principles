@@ -1,4 +1,6 @@
-﻿namespace SET.MAUI.ViewModels;
+﻿using SET.MAUI.Exceptions;
+
+namespace SET.MAUI.ViewModels;
 
 public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
 {
@@ -233,9 +235,33 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
             }
             catch (Exception ex)
             {
-                LoggingService.LogCriticalError( ex );
-
-                string errorMsg = SettingsService.IsDebug ? ex.ToString() : LocStrings.NoInternetConnection;
+                string errorMsg;
+                if (SettingsService.IsDebug)
+                {
+                    errorMsg = ex.ToString();
+                    LoggingService.LogError( ex, ex.Message );
+                }
+                else
+                {
+                    if(ex.Message == "Email or password is incorrect")
+                    {
+                        errorMsg = LocStrings.EmailOrPasswordIsIncorrect;
+                    }
+                    else if (ex is ExtendedHttpRequestException extendedEx)
+                    {
+                        LoggingService.LogCriticalError( ex );
+                        errorMsg = extendedEx.Message;
+                    }
+                    else if (ex is ServiceAuthenticationException)
+                    {
+                        LoggingService.LogCriticalError( ex );
+                        errorMsg = LocStrings.YouAreNotAuthorized;
+                    }
+                    else
+                    {
+                        errorMsg = LocStrings.NoInternetConnection;
+                    }
+                }
 
                 doTryAgain = await DialogService.ShowAlertWithTwoBtnsAsync(
                     errorMsg,

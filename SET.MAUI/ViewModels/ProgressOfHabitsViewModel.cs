@@ -2,6 +2,7 @@
 using DevExpress.Maui.DataGrid;
 
 using SET.Core.Models;
+using SET.MAUI.Exceptions;
 
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
@@ -157,32 +158,70 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
 
         UserHabit habit = progressOfHabit.Habit!;
 
+        bool doTryAgain = false;
+
+        SemaphoreSlim locker = m_isBusyForChangeCompleted[habit];
+        await locker.WaitAsync();
+
+        int previousValueOfProgress = progressOfHabit.Value;
+
         try
         {
-            SemaphoreSlim locker = m_isBusyForChangeCompleted[habit];
+            do
+            {
+                try
+                {
+                    progressOfHabit.Value = ProgressValue.NextToggled( progressOfHabit.Value );
+                    await ProgressOfHabitService.UpdateAsync( progressOfHabit );
+                }
+                catch (Exception ex)
+                {
+                    string errorMsg;
+                    if (SettingsService.IsDebug)
+                    {
+                        errorMsg = ex.ToString();
+                        LoggingService.LogError( ex, ex.Message );
+                    }
+                    else
+                    {
+                        if (ex.Message == "Email or password is incorrect")
+                        {
+                            errorMsg = LocStrings.EmailOrPasswordIsIncorrect;
+                        }
+                        else if (ex is ExtendedHttpRequestException extendedEx)
+                        {
+                            LoggingService.LogCriticalError( ex );
+                            errorMsg = extendedEx.Message;
+                        }
+                        else if (ex is ServiceAuthenticationException)
+                        {
+                            LoggingService.LogCriticalError( ex );
+                            errorMsg = LocStrings.YouAreNotAuthorized;
+                        }
+                        else
+                        {
+                            errorMsg = LocStrings.NoInternetConnection;
+                        }
+                    }
 
-            await locker.WaitAsync();
-            int previousValueOfProgress = progressOfHabit.Value;
+                    doTryAgain = await DialogService.ShowAlertWithTwoBtnsAsync(
+                        errorMsg,
+                        title: LocStrings.Error,
+                        accept: LocStrings.Retry,
+                        cancel: LocStrings.Cancel
+                    );
 
-            try
-            {
-                progressOfHabit.Value = ProgressValue.NextToggled( progressOfHabit.Value );
-                await ProgressOfHabitService.UpdateAsync( progressOfHabit );
+                    if (!doTryAgain)
+                    {
+                        progressOfHabit.Value = previousValueOfProgress;
+                    }
+                }
             }
-            catch
-            {
-                progressOfHabit.Value = previousValueOfProgress;
-                throw;
-            }
-            finally
-            {
-                locker.Release();
-            }
+            while (doTryAgain);
         }
-        catch ( Exception ex )
+        finally
         {
-            LoggingService.LogCriticalError( ex );
-            await DialogService.ShowErrorAsync( ex.Message ).DefaultConfigureAwait();
+            locker.Release();
         }
     }
 
@@ -228,15 +267,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
             };
         }
 
-        try
-        {
-            await ServiceOfHabit.UpdatePrioritiesAsync( habitsWithPriorities );
-        }
-        catch (Exception ex)
-        {
-            LoggingService.LogCriticalError( ex );
-            await DialogService.ShowErrorAsync( ex.Message ).DefaultConfigureAwait();
-        }
+        await UiBusyFor( () => ServiceOfHabit.UpdatePrioritiesAsync( habitsWithPriorities ) ).DefaultConfigureAwait();
     }
 
     private bool CanResetPriorities()
@@ -256,7 +287,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
 
             if (doDelete)
             {
-                try
+                await UiBusyFor( async () =>
                 {
                     await ServiceOfHabit.DeleteAsync( habit.Id );
 
@@ -266,14 +297,11 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
 
                     if (habit.Id == SelectedHabit?.Id)
                     {
-                        SelectedHabit = null;
+                        SelectedHabit = DataGridViewWithHabits!.SelectedRowHandle >= 0
+                            ? UserHabits[DataGridViewWithHabits.SelectedRowHandle]
+                            : null;
                     }
-                }
-                catch(Exception ex)
-                {
-                    LoggingService.LogCriticalError( ex );
-                    await DialogService.ShowErrorAsync( ex.Message ).DefaultConfigureAwait();
-                }
+                } ).DefaultConfigureAwait();
             }
         }
     }

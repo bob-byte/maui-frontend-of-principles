@@ -273,7 +273,6 @@ public partial class EditHabitView : ContentPageBase
                 Label errorLabel = new()
                 {
                     FontSize = 16,
-                    MaxLines = 10,
                     LineBreakMode = LineBreakMode.WordWrap,
                     VerticalOptions = LayoutOptions.Center,
                     VerticalTextAlignment = TextAlignment.Center
@@ -287,7 +286,6 @@ public partial class EditHabitView : ContentPageBase
                 Label errorLabel = new()
                 {
                     FontSize = 16,
-                    MaxLines = 10,
                     LineBreakMode = LineBreakMode.WordWrap,
                     VerticalOptions = LayoutOptions.Center,
                     VerticalTextAlignment = TextAlignment.Center

@@ -220,6 +220,15 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data.
+        /// </summary>
+        internal static string Data {
+            get {
+                return ResourceManager.GetString("Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to days.
         /// </summary>
         internal static string days {
@@ -265,7 +274,7 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tap the AI-lamp to watch recommended habits based on the selected areas.
+        ///   Looks up a localized string similar to Tap the AI-lamp to get recommended habits..
         /// </summary>
         internal static string DescriptionOfAiLampTap {
             get {
@@ -297,6 +306,15 @@ namespace SET.MAUI.Resources.AppStrings {
         internal static string EmailMustHaveCorrectValue {
             get {
                 return ResourceManager.GetString("EmailMustHaveCorrectValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email or password is incorrect..
+        /// </summary>
+        internal static string EmailOrPasswordIsIncorrect {
+            get {
+                return ResourceManager.GetString("EmailOrPasswordIsIncorrect", resourceCulture);
             }
         }
         
@@ -378,6 +396,24 @@ namespace SET.MAUI.Resources.AppStrings {
         internal static string Field {
             get {
                 return ResourceManager.GetString("Field", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The field &quot;Name&quot;.
+        /// </summary>
+        internal static string FieldName {
+            get {
+                return ResourceManager.GetString("FieldName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The field &quot;Reason to follow&quot;.
+        /// </summary>
+        internal static string FieldReasonToFollow {
+            get {
+                return ResourceManager.GetString("FieldReasonToFollow", resourceCulture);
             }
         }
         
@@ -486,15 +522,6 @@ namespace SET.MAUI.Resources.AppStrings {
         internal static string IfYouDontWantToWaitYouCanChangeOtherFields {
             get {
                 return ResourceManager.GetString("IfYouDontWantToWaitYouCanChangeOtherFields", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Info.
-        /// </summary>
-        internal static string Info {
-            get {
-                return ResourceManager.GetString("Info", resourceCulture);
             }
         }
         
@@ -1185,7 +1212,7 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Strong reason to follow.
+        ///   Looks up a localized string similar to Reason to follow.
         /// </summary>
         internal static string StrongReasonToFollow {
             get {
@@ -1199,6 +1226,24 @@ namespace SET.MAUI.Resources.AppStrings {
         internal static string SundayShort {
             get {
                 return ResourceManager.GetString("SundayShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The tab &quot;Data&quot;.
+        /// </summary>
+        internal static string TabData {
+            get {
+                return ResourceManager.GetString("TabData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The tab &quot;How to keep&quot;.
+        /// </summary>
+        internal static string TabHowToKeep {
+            get {
+                return ResourceManager.GetString("TabHowToKeep", resourceCulture);
             }
         }
         
@@ -1585,6 +1630,15 @@ namespace SET.MAUI.Resources.AppStrings {
         internal static string Yes {
             get {
                 return ResourceManager.GetString("Yes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You are not authorized..
+        /// </summary>
+        internal static string YouAreNotAuthorized {
+            get {
+                return ResourceManager.GetString("YouAreNotAuthorized", resourceCulture);
             }
         }
         

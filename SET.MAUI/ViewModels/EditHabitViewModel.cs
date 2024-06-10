@@ -394,7 +394,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         {
             NameOfHabit = new ValidatableObject<string>();
 
-            IValidationRule<string> rule = new IsNotNullOrWhiteSpaceRule( $"{LocStrings.Field} \"{LocStrings.Name}\" {isRequired}" );
+            IValidationRule<string> rule = new IsNotNullOrWhiteSpaceRule( $"{LocStrings.TabData}. {LocStrings.FieldName} {isRequired}." );
             NameOfHabit.Validations.Add( rule );
         }
         NameOfHabit.Value = Habit.Name;
@@ -403,7 +403,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         {
             ReasonToFollow = new ValidatableObject<string>();
 
-            IValidationRule<string> rule = new IsNotNullOrWhiteSpaceRule( $"{LocStrings.Field} \"{LocStrings.StrongReasonToFollow}\" {isRequired}" );
+            IValidationRule<string> rule = new IsNotNullOrWhiteSpaceRule( $"{LocStrings.TabHowToKeep}. {LocStrings.FieldReasonToFollow} {isRequired}" );
             ReasonToFollow.Validations.Add( rule );
         }
         ReasonToFollow.Value = Habit.ReasonToFollow;

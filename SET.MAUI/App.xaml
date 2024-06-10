@@ -339,6 +339,18 @@
                         Value="{AppThemeBinding Light={StaticResource LightNormalText}, Dark={StaticResource DarkNormalText}}" />
 
             </Style>
+            <Style TargetType="Entry">
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Light={StaticResource Background}, Dark={StaticResource DarkBackground}}"/>
+                <Setter Property="TextColor"
+                        Value="{AppThemeBinding Light={StaticResource LightNormalText}, Dark={StaticResource DarkNormalText}}" />
+            </Style>
+            <Style TargetType="RadioButton">
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Light={StaticResource Background}, Dark={StaticResource DarkBackground}}"/>
+                <Setter Property="TextColor"
+                        Value="{AppThemeBinding Light={StaticResource LightNormalText}, Dark={StaticResource DarkNormalText}}" />
+            </Style>
             <Style x:Key="TxtSubtitle2_1"
                    TargetType="Label">
                 <Setter Property="FontFamily" Value="MonaSansMedium" />
