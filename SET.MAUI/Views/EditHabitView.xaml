@@ -12,8 +12,6 @@
                    xmlns:v="clr-namespace:SET.MAUI.Views"
                    xmlns:vm="clr-namespace:SET.MAUI.ViewModels"
                    xmlns:m="clr-namespace:SET.Core.Models;assembly=SET.Core"
-                   xmlns:templates="clr-namespace:SET.MAUI.Views.Templates"
-                   xmlns:controls="clr-namespace:SET.MAUI.Controls"
                    x:DataType="vm:EditHabitViewModel"
                    x:Name="CPB_EditHabit"
                    Shell.TabBarIsVisible="False">
@@ -96,7 +94,6 @@
                                                       Tapped="TGR_AreasOfHabit_Tapped" />
                             </dxe:AutoCompleteTokenEdit.GestureRecognizers>
                         </dxe:AutoCompleteTokenEdit>
-
                         <dxe:MultilineEdit Text="{Binding NameOfHabit.Value}"
                                            LabelText="{x:Static loc:LocStrings.Name}"
                                            HasError="{Binding NameOfHabit.IsValid,
@@ -110,7 +107,6 @@
                                            IsEndIconVisible="{Binding IsNewHabit}"
                                            EndIconClicked="ME_NameOfHabit_AiIconClicked"
                                            ClearIconVisibility="Never" />
-
                         <dxe:ChoiceChipGroup x:Name="CCG_Types"
                                              HorizontalOptions="CenterAndExpand"
                                              IsMultiline="True">
@@ -128,7 +124,6 @@
                                                            Source={RelativeSource AncestorType={x:Type vm:EditHabitViewModel}}}"
                                       TapCommandParameter="{x:Reference C_IntegrallyWiseType}" />
                         </dxe:ChoiceChipGroup>
-
                         <dxe:TextEdit IsReadOnly="True"
                                       StartIcon="restart"
                                       StartIconClicked="FrequencyIcon_Clicked"
@@ -140,7 +135,6 @@
                                 <TapGestureRecognizer Tapped="Frequency_Tapped" />
                             </dxe:TextEdit.GestureRecognizers>
                         </dxe:TextEdit>
-
                         <dxe:NumericEdit Value="{Binding Habit.Priority}"
                                          LabelText="{x:Static loc:LocStrings.Priority}"
                                          MinValue="1"
@@ -276,7 +270,6 @@
                                              FontSize="16"
                                              x:Name="RB_EveryDay"
                                              GroupName="Frequency" />
-
                                 <HorizontalStackLayout Margin="{OnPlatform iOS='0, 10, 0, 10',
                                                                            Android='0, 25, 0, 10'}"
                                                        Focused="RepeatsOfSeveralDays_Focused">
@@ -349,7 +342,6 @@
                                         </dxe:ComboBoxEdit.FocusedBorderColor>
                                     </dxe:ComboBoxEdit>
                                 </HorizontalStackLayout>
-
                                 <dxco:SimpleButton x:Name="SB_SaveFrequencyPopup"
                                                    Clicked="SB_SaveFrequencyPopup_Clicked"
                                                    Text="{Binding LocSave}"
@@ -416,11 +408,8 @@
                                                              Grid.ColumnSpan="2" />
                                                 </Grid>
                                             </DataTemplate>
-
                                         </dxcv:DXCollectionView.ItemTemplate>
-
                                     </dxcv:DXCollectionView>
-
                                 </VerticalStackLayout>
 
                                 <VerticalStackLayout HorizontalOptions="Center"
@@ -428,7 +417,7 @@
                                                      Spacing="0">
                                     <skia:SKLottieView IsVisible="{Binding IsBusy}"
                                                        RepeatCount="-1"
-                                                       Source="fire_loading_second.json"
+                                                       Source="fire_loading.json"
                                                        HorizontalOptions="Center"
                                                        WidthRequest="105"
                                                        HeightRequest="105" />
@@ -444,7 +433,6 @@
                                            MaxLines="4" />
                                 </VerticalStackLayout>
                             </Grid>
-
                         </dxco:BottomSheet>
                     </VerticalStackLayout>
                 </ScrollView>
@@ -490,7 +478,7 @@
                              Spacing="0">
             <skia:SKLottieView IsVisible="{Binding IsLoadingHabitInfo}"
                                RepeatCount="-1"
-                               Source="fire_loading_second.json"
+                               Source="fire_loading.json"
                                HorizontalOptions="Center"
                                WidthRequest="150"
                                HeightRequest="150" />
