@@ -24,7 +24,6 @@
                     WidthRequest="22"
                     HeightRequest="22" />
     </Grid>
-
     <Grid Grid.Column="2"
           MaximumWidthRequest="260"
           x:Name="G_Answer">
@@ -38,7 +37,7 @@
                                                        Dark={StaticResource DarkNormalText}}"
                            x:Name="ME_Answer"
                            Text="{Binding Text}"
-                           TextFontFamily="MonaSansMedium"
+                           TextFontFamily="Roboto"
                            BorderThickness="0"
                            ClearIconVisibility="Never"
                            IsReadOnly="True"
@@ -50,4 +49,3 @@
                            TextChanged="ME_Answer_TextChanged" />
     </Grid>
 </Grid>
-

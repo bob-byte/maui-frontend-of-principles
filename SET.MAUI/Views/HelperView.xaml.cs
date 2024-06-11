@@ -1,3 +1,4 @@
+
 using System.Collections.Specialized;
 
 namespace SET.MAUI.Views;
@@ -32,7 +33,20 @@ public partial class HelperView : ContentPageBase
 
     async void SB_AskQuestion_Clicked( System.Object sender, System.EventArgs e )
     {
+        HideKeyboard();
+
         await AskQuestionAsync();
+    }
+
+    private static void HideKeyboard()
+    {
+#if ANDROID
+        E_Prompt.IsEnabled = false;
+        E_Prompt.IsEnabled = true;
+#elif iOS
+        TE_Prompt.IsEnabled = false;
+        TE_Prompt.IsEnabled = true;
+#endif
     }
 
     async void TE_Prompt_Completed( System.Object sender, System.EventArgs e )

@@ -44,11 +44,10 @@
                    FontFamily="MonaSansBold"
                    FontAttributes="Bold" />
         </HorizontalStackLayout>
-
         <Border Grid.Row="1"
-                Padding="0, 10, 0, 30"
+                Padding="0,10,0,30"
                 BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColorLight},
-                                              Dark={StaticResource SurfaceColorDark}}"
+                                                  Dark={StaticResource SurfaceColorDark}}"
                 StrokeShape="RoundRectangle 0, 0, 36, 36"
                 StrokeThickness="0">
             <collectionview:DXCollectionView x:Name="DXC_DisplayMessages"
@@ -57,7 +56,7 @@
                                              Orientation="Vertical"
                                              IsScrollBarVisible="True"
                                              IsPullToRefreshEnabled="False"
-                                             IsLoadMoreEnabled="False"/>
+                                             IsLoadMoreEnabled="False" />
         </Border>
 
         <Grid ColumnDefinitions="15*, 70*, 15*"
@@ -66,78 +65,109 @@
               Grid.Row="1">
             <skia:SKLottieView IsAnimationEnabled="{Binding IsAnimationVisible}"
                                RepeatCount="-1"
-                               Source="{AppThemeBinding Light=emptychat_light.json, Dark=emptychat_dark.json}"
+                               Source="emptychat_light.json"
                                Grid.Row="1"
                                Grid.Column="1" />
             <Label Text="{x:Static loc:LocStrings.SelfDevelopmentAssistantShortDescription}"
                    FontFamily="MonaSansMedium"
                    FontSize="14"
-                   TextColor="{AppThemeBinding Light={StaticResource LightNormalText}, Dark={StaticResource DarkNormalText}}"
+                   TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
+                                               Dark={StaticResource DarkNormalText}}"
+                   LineBreakMode="WordWrap"
                    HorizontalTextAlignment="Center"
-                   Padding="15, 0, 15, 0"
+                   Padding="15,0,15,0"
                    Grid.Row="2"
-                   Grid.ColumnSpan="3"/>
+                   Grid.ColumnSpan="3" />
         </Grid>
-
         <Grid ColumnDefinitions="*, Auto"
               ColumnSpacing="3"
-              Padding="16, 0"
+              Padding="16,0"
               Grid.Row="3">
-            <Border BackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary}, Dark={StaticResource DarkPrimary}}"
-                    HeightRequest="48"
-                    StrokeShape="RoundRectangle 36,36,36,36"
-                    Grid.Column="0">
-                <Grid ColumnDefinitions="*, Auto">
-                    <editors:TextEdit PlaceholderText="{x:Static loc:LocStrings.EnterText}"
-                                      x:Name="TE_Prompt"
-                                      Completed="TE_Prompt_Completed"
-                                      Text="{Binding Prompt}"
-                                      TextFontFamily="MonaSansMedium"
-                                      TextFontSize="13"
-                                      BorderThickness="0"
-                                      HeightRequest="48"
-                                      FocusedBorderThickness="0"
-                                      TextColor="{AppThemeBinding Light={StaticResource LightNormalText}, Dark={StaticResource DarkNormalText}}"
-                                      PlaceholderColor="{AppThemeBinding Light={StaticResource SecondaryLight}, Dark={StaticResource SecondaryDark}}"
-                                      BackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary}, Dark={StaticResource DarkPrimary}}"
-                                      TranslationY="4"
-                                      ClearIconVisibility="Never"
-                                      Margin="16, 0, 16, 5"
-                                      RotationX="20"/>
-
-                    <skia:SKLottieView IsVisible="{Binding IsBusy}"
-                                       RepeatCount="-1"
-                                       Source="loading.json"
-                                       HorizontalOptions="Center"
-                                       WidthRequest="48"
+            <Border BackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary},
+                                                          Dark={StaticResource DarkPrimary}}"
+                        HeightRequest="48"
+                        StrokeShape="RoundRectangle 36,36,36,36"
+                        Grid.Column="0">
+                    <Grid ColumnDefinitions="*, Auto">
+                        <OnPlatform x:TypeArguments="View">
+                            <On Platform="Android">
+                                <Entry Placeholder="{x:Static loc:LocStrings.EnterText}"
+                                       Completed="TE_Prompt_Completed"
+                                       x:Name="E_Prompt"
+                                       Text="{Binding Prompt}"
+                                       FontFamily="Roboto"
+                                       FontSize="13"
                                        HeightRequest="48"
-                                       Grid.Column="1"/>
-                </Grid>
-            </Border>
+                                       TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
+                                                                   Dark={StaticResource DarkNormalText}}"
+                                       PlaceholderColor="{AppThemeBinding Light={StaticResource SecondaryLight},
+                                                                          Dark={StaticResource SecondaryDark}}"
+                                       BackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary},
+                                                                         Dark={StaticResource DarkPrimary}}"
+                                       TranslationY="4"
+                                       ClearButtonVisibility="Never"
+                                       Margin="16,0,16,5"
+                                       RotationX="20" />
+                            </On>
+                            <On Platform="iOS">
+                                <editors:TextEdit PlaceholderText="{x:Static loc:LocStrings.EnterText}"
+                                                  Completed="TE_Prompt_Completed"
+                                                  x:Name="TE_Prompt"
+                                                  Text="{Binding Prompt}"
+                                                  TextFontFamily="Roboto"
+                                                  TextFontSize="13"
+                                                  HeightRequest="48"
+                                                  BorderThickness="0"
+                                                  FocusedBorderThickness="0"
+                                                  DisabledBorderThickness="0"
+                                                  TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
+                                                                              Dark={StaticResource DarkNormalText}}"
+                                                  PlaceholderColor="{AppThemeBinding Light={StaticResource SecondaryLight},
+                                                                                     Dark={StaticResource SecondaryDark}}"
+                                                  BackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary},
+                                                                                    Dark={StaticResource DarkPrimary}}"
+                                                  TranslationY="4"
+                                                  ClearIconVisibility="Never"
+                                                  Margin="16,0,16,5"
+                                                  RotationX="20" />
+                            </On>
+                        </OnPlatform>
+                        <skia:SKLottieView IsVisible="{Binding IsBusy}"
+                                           RepeatCount="-1"
+                                           Source="loading.json"
+                                           HorizontalOptions="Center"
+                                           WidthRequest="48"
+                                           HeightRequest="48"
+                                           Grid.Column="1" />
+                    </Grid>
+                </Border>
 
-            <dxc:SimpleButton Icon="send_message"
-                              x:Name="SB_AskQuestion"
-                              HeightRequest="48"
-                              WidthRequest="48"
-                              IsVisible="{Binding IsBusy, Converter={StaticResource IsFalse}}"
-                              Clicked="SB_AskQuestion_Clicked"
-                              Style="{StaticResource PrimaryButton}"
-                              BackgroundColor="{StaticResource LightPrimary}"
-                              IconColor="{AppThemeBinding Light={StaticResource SecondaryLight}, Dark={StaticResource SecondaryDark}}"
-                              Grid.Column="1" />
+                <dxc:SimpleButton Icon="send_message"
+                                  x:Name="SB_AskQuestion"
+                                  HeightRequest="48"
+                                  WidthRequest="48"
+                                  IsVisible="{Binding IsBusy,
+                                                      Converter={StaticResource IsFalse}}"
+                                  Clicked="SB_AskQuestion_Clicked"
+                                  Style="{StaticResource PrimaryButton}"
+                                  BackgroundColor="{StaticResource LightPrimary}"
+                                  IconColor="{AppThemeBinding Light={StaticResource SecondaryLight},
+                                                              Dark={StaticResource SecondaryDark}}"
+                                  Grid.Column="1" />
 
-            <dx:DXImage Source="stop_video"
-                        HeightRequest="35"
-                        WidthRequest="35"
-                        Margin="7"
-                        VerticalOptions="CenterAndExpand"
-                        IsVisible="{Binding IsBusy}"
-                        TintColor="{AppThemeBinding Light={StaticResource QuinaryLight}, Dark={StaticResource QuinaryDark}}"
-                        Grid.Column="1">
-                <dx:DXImage.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding CancelAnswerGenerationCommand}"/>
-                </dx:DXImage.GestureRecognizers>
-            </dx:DXImage>
+                <dx:DXImage Source="stop_video"
+                            HeightRequest="35"
+                            WidthRequest="35"
+                            Margin="7"
+                            VerticalOptions="CenterAndExpand"
+                            IsVisible="{Binding IsBusy}"
+                            TintColor="{AppThemeBinding Light={StaticResource QuinaryLight},
+                                                        Dark={StaticResource QuinaryDark}}"
+                            Grid.Column="1">
+                    <dx:DXImage.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding CancelAnswerGenerationCommand}" />
+                    </dx:DXImage.GestureRecognizers>
+                </dx:DXImage>
         </Grid>
     </Grid>
 </v:ContentPageBase>

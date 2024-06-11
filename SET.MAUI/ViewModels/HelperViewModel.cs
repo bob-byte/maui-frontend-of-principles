@@ -70,6 +70,7 @@ public partial class HelperViewModel : BaseViewModel
             {
                 string promptCopy = Prompt;
                 Prompt = string.Empty;
+
                 AddUserMessage( promptCopy );
 
                 DisplayMessage helperMsg = new()
