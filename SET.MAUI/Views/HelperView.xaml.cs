@@ -16,6 +16,8 @@ public partial class HelperView : ContentPageBase
         DXC_DisplayMessages.ItemTemplate = new MessageDataTemplateSelector( ViewModel );
     }
 
+    private HelperViewModel ViewModel { get; }
+
     private void DisplayMessages_CollectionChanged( object? sender, NotifyCollectionChangedEventArgs e )
     {
 		if(e.Action == NotifyCollectionChangedAction.Add)
@@ -29,8 +31,6 @@ public partial class HelperView : ContentPageBase
         }
     }
 
-    private HelperViewModel ViewModel { get; }
-
     async void SB_AskQuestion_Clicked( System.Object sender, System.EventArgs e )
     {
         HideKeyboard();
@@ -38,14 +38,14 @@ public partial class HelperView : ContentPageBase
         await AskQuestionAsync();
     }
 
-    private static void HideKeyboard()
+    private void HideKeyboard()
     {
-#if ANDROID
-        E_Prompt.IsEnabled = false;
-        E_Prompt.IsEnabled = true;
-#elif iOS
+#if iOS
         TE_Prompt.IsEnabled = false;
         TE_Prompt.IsEnabled = true;
+#elif ANDROID
+        E_Prompt.IsEnabled = false;
+        E_Prompt.IsEnabled = true;
 #endif
     }
 
