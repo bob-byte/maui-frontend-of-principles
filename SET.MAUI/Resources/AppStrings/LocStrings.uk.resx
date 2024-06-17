@@ -597,4 +597,28 @@
   <data name="FieldReasonToFollow" xml:space="preserve">
     <value>Поле "Причина дотримуватись"</value>
   </data>
+	<data name="ForgetPasswordNavigation" xml:space="preserve">
+    <value>Забули Пароль?</value>
+  </data>
+	<data name="ForgetPasswordTitle" xml:space="preserve">
+    <value>Відновлення Паролю</value>
+  </data>
+  <data name="ChangePasswordButton" xml:space="preserve">
+    <value>Змінити пароль</value>
+  </data>
+  <data name="ConfirmationPasswordChangeLabel" xml:space="preserve">
+    <value>На вашу пошту надіслано одноразовий код для підтвердження зміни паролю</value>
+  </data>
+  <data name="ConfirmPasswordChangeButton" xml:space="preserve">
+    <value>Підтвердити</value>
+  </data>
+  <data name="EmailAndPasswordFieldsAreEmpty" xml:space="preserve">
+    <value>Поля з поштою і паролем мають бути заповнені</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>Новий Пароль</value>
+  </data>
+  <data name="WrongConfirmationCode" xml:space="preserve">
+    <value>Не правильний код підтведження!</value>
+  </data>
 </root>

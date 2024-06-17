@@ -13,6 +13,8 @@ public interface IUrlBuilder
     string UserMainSlogan { get; }
     string UserMission { get; }
     string SignUp { get; }
+    string Password { get; }
+    string Email { get; }
     string ProgressOfHabit { get; }
     string AreasOfLife { get; }
     string Account { get; }

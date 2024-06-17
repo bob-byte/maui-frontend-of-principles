@@ -23,6 +23,8 @@ public class UrlBuilder : IUrlBuilder
     private string? m_habits;
     private string? m_habitsPriorities;
     private string? m_logs;
+    private string? m_changePassword;
+    private string? m_sendEmail;
 
     public string BaseUrl
     {
@@ -105,6 +107,23 @@ public class UrlBuilder : IUrlBuilder
         }
     }
 
+    public string Password
+    {
+        get
+        {
+            m_changePassword ??= Combine( BaseApiUrl, "account", "password" );
+            return m_changePassword;
+        }
+    }
+
+    public string Email
+    {
+        get
+        {
+            m_sendEmail ??= Combine( BaseApiUrl, "account", "email" );
+            return m_sendEmail;
+        }
+    }
     public string Account
     {
         get

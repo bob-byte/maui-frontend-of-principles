@@ -109,6 +109,16 @@ public partial class LoginViewModel : BaseViewModel
         return Navigation.NavigateToAsync<PrivacyPolicyViewModel>();
     }
 
+    [RelayCommand]
+    public async Task OpenForgetPasswordAsync()
+    {
+        Dictionary<string, object> routeParams = new()
+        {
+            { "Email", Email }
+        };
+        await Navigation.NavigateToAsync<ForgetPasswordViewModel>( routeParams );
+    }
+
     private void AddValidations()
     {
         Email.Validations.Add( new IsNotNullOrWhiteSpaceRule{ ValidationMessage = LocStrings.RequiredErrorText } );
