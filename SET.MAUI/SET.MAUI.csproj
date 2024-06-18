@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>net8.0-android;net8.0-ios</TargetFrameworks>
@@ -44,6 +44,7 @@
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.png" Color="#1F1F1F" BaseSize="320,320" />
+		<MauiIcon Include="Resources\AppIcon\appiconforandroid.png" BackgroundColor="#1F1F1F" ForegroundScale="0.65"/>
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Images\logolargesize.png" Color="#1F1F1F" BaseSize="300,300" />

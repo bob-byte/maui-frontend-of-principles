@@ -9,8 +9,8 @@ public class ProgressToImgConverter : BaseConverterOneWay<ProgressOfHabit, View>
 {
     private static readonly ImageSource s_fireIcon = ImageSource.FromFile( "fire_second" );
     private static readonly ImageSource s_crossIcon = ImageSource.FromFile( "cross" );
-    
-    private static readonly Color s_grayColor = Color.FromArgb( "#534f58" );
+
+    private static readonly Color s_grayColor = (Application.Current!.Resources["GrayColor"] as Color)!;
     private static readonly Color s_primaryColor = (Application.Current!.Resources["Primary"] as Color)!;
 
     private static readonly Thickness s_margin = new( 0, 0, 0, 0 );

@@ -18,12 +18,12 @@
         <ScrollView>
         <VerticalStackLayout Padding="15,0,15,0"
                              VerticalOptions="Center">
-            <Image Source="logolargesize"
+                <Image Source="logolargesize"
                    WidthRequest="200"
                    HeightRequest="200" />
             <Label Text="{Binding AppName,
                                   Converter={StaticResource ToUpperCase}}"
-                   TextColor="OrangeRed"
+                   TextColor="{StaticResource Primary}"
                    HorizontalOptions="Center"
                    FontSize="30"
                    FontFamily="Roboto"
