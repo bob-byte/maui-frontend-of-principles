@@ -12,7 +12,7 @@
     <Application.Resources>
         <ResourceDictionary>
 
-            <Color x:Key="SecondaryLight">#484F58</Color>
+            <Color x:Key="SecondaryLight">#d9d4d4</Color>
             <Color x:Key="SecondaryDark">White</Color>
             <Color x:Key="TertiaryLight">#F0F0F0</Color>
             <Color x:Key="TertiaryDark">#FF7F7F</Color>
@@ -26,7 +26,7 @@
             <Color x:Key="Primary">#007BFF</Color>
             <Color x:Key="DarkPrimary">#1F1F1F</Color>
             <!--  #bf0000  -->
-            <Color x:Key="LightPrimary">#FF7F7F</Color>
+            <Color x:Key="LightPrimary">#80BFFF</Color>
             <Color x:Key="Accent">#009a49</Color>
 
             <Color x:Key="Background">White</Color>
@@ -67,7 +67,7 @@
             <Color x:Key="NavigationBarColorLight">White</Color>
             <Color x:Key="NavigationBarColorDark">#111111</Color>
             <Color x:Key="OrangeColor">Orange</Color>
-            <Color x:Key="GrayColor">#534f58</Color>
+            <Color x:Key="GrayColor">#d9d4d4</Color>
 
             <Style TargetType="Page"
                    ApplyToDerivedTypes="True">
