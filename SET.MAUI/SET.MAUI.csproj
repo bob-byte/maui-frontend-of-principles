@@ -57,7 +57,7 @@
 		<MauiImage Update="Resources\Images\edit.png" BaseSize="40, 40" />
 		<MauiImage Update="Resources\Images\delete.png" BaseSize="40, 40" />
 		<MauiImage Update="Resources\Images\logolargesize.png" BaseSize="200, 200" />
-		<MauiImage Update="Resources\Images\larger_help.png" BaseSize="40, 40" />
+		<MauiImage Update="Resources\Images\larger_help.png" BaseSize="30, 30" />
 		<MauiImage Include="Resources\Images\*jpg" BaseSize="23, 23" />
 
 		<!-- Custom Fonts -->

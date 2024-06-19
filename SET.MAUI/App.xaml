@@ -16,8 +16,8 @@
             <Color x:Key="SecondaryDark">White</Color>
             <Color x:Key="TertiaryLight">#F0F0F0</Color>
             <Color x:Key="TertiaryDark">#FF7F7F</Color>
-            <Color x:Key="QuaternaryLight">#ED2939</Color>
-            <Color x:Key="QuaternaryDark">#ED2939</Color>
+            <Color x:Key="QuaternaryLight">#007BFF</Color>
+            <Color x:Key="QuaternaryDark">#007BFF</Color>
             <Color x:Key="QuinaryDark">#64eecb</Color>
             <Color x:Key="QuinaryLight">#64eecb</Color>
             <Color x:Key="SextenaryLight">#39f67f</Color>
@@ -25,7 +25,7 @@
 
             <Color x:Key="Primary">#007BFF</Color>
             <Color x:Key="DarkPrimary">#1F1F1F</Color>
-            <!--  #bf0000  -->
+
             <Color x:Key="LightPrimary">#80BFFF</Color>
             <Color x:Key="Accent">#009a49</Color>
 
@@ -38,8 +38,8 @@
             <Color x:Key="CardBackground">White</Color>
             <Color x:Key="DarkCardBackground">#1C1C1E</Color>
 
-            <Color x:Key="BorderColor">#007BFF</Color>
-            <Color x:Key="DarkBorderColor">#007BFF</Color>
+            <Color x:Key="BorderColor">#d9d4d4</Color>
+            <Color x:Key="DarkBorderColor">White</Color>
 
             <Color x:Key="FocusedBorderColor">#007BFF</Color>
             <Color x:Key="DarkFocusedBorderColor">#007BFF</Color>
@@ -61,7 +61,7 @@
             <Color x:Key="TitleTextColor">White</Color>
             <Color x:Key="LightEditControlBackColor">#F5F5F5</Color>
             <Color x:Key="DarkEditControlBackColor">#d3d3d3</Color>
-            <Color x:Key="LightTitleBackgroundColor">#FF2400</Color>
+            <Color x:Key="LightTitleBackgroundColor">#007BFF</Color>
             <Color x:Key="DarkTitleBackgroundColor">#1C1C1C</Color>
             <Color x:Key="ForegroundColor">White</Color>
             <Color x:Key="NavigationBarColorLight">White</Color>
@@ -121,7 +121,7 @@
             <Style TargetType="dxe:TextEdit"
                    ApplyToDerivedTypes="True">
                 <Setter Property="FocusedBorderColor" Value="{StaticResource Primary}" />
-                <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
+                <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" />
                 <Setter Property="FocusedLabelColor" Value="{AppThemeBinding Light={StaticResource LabelText}, Dark={StaticResource DarkLabelText}}" />
                 <Setter Property="CursorColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
                 <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource LightNormalText}, Dark={StaticResource DarkNormalText}}" />
@@ -130,7 +130,7 @@
             <Style TargetType="dxe:PasswordEdit"
                    ApplyToDerivedTypes="True">
                 <Setter Property="FocusedBorderColor" Value="{StaticResource Primary}" />
-                <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
+                <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" />
                 <Setter Property="FocusedLabelColor" Value="{AppThemeBinding Light={StaticResource LabelText}, Dark={StaticResource DarkLabelText}}" />
                 <Setter Property="CursorColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
                 <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource LightNormalText}, Dark={StaticResource DarkNormalText}}" />
@@ -139,7 +139,7 @@
             <Style TargetType="dxe:MultilineEdit"
                    ApplyToDerivedTypes="True">
                 <Setter Property="FocusedBorderColor" Value="{StaticResource Primary}" />
-                <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
+                <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" />
                 <Setter Property="FocusedLabelColor" Value="{AppThemeBinding Light={StaticResource LabelText}, Dark={StaticResource DarkLabelText}}" />
                 <Setter Property="CursorColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
                 <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource LightNormalText}, Dark={StaticResource DarkNormalText}}" />
@@ -149,7 +149,7 @@
             <Style TargetType="dxe:TimeEdit"
                    ApplyToDerivedTypes="True">
                 <Setter Property="FocusedBorderColor" Value="{StaticResource Primary}" />
-                <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
+                <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" />
                 <Setter Property="FocusedLabelColor" Value="{AppThemeBinding Light={StaticResource LabelText}, Dark={StaticResource DarkLabelText}}" />
                 <Setter Property="IsTimeIconVisible" Value="False" />
                 <Setter Property="CursorColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
@@ -160,7 +160,7 @@
             <Style TargetType="dxe:NumericEdit"
                    ApplyToDerivedTypes="True">
                 <Setter Property="FocusedBorderColor" Value="{StaticResource Primary}" />
-                <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
+                <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" />
                 <Setter Property="FocusedLabelColor" Value="{AppThemeBinding Light={StaticResource LabelText}, Dark={StaticResource DarkLabelText}}" />
                 <Setter Property="IsUpDownIconVisible" Value="True" />
                 <Setter Property="CursorColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
@@ -225,12 +225,6 @@
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Background}, Dark={StaticResource DarkBackground}}" />
                 <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource LightNormalText}, Dark={StaticResource DarkNormalText}}" />
             </Style>
-            <Style x:Key="TxtSubtitle2_1"
-                   TargetType="Label">
-                <Setter Property="FontFamily" Value="MonaSansMedium" />
-                <Setter Property="FontSize" Value="14" />
-                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource QuaternaryLight}, Dark={StaticResource QuaternaryDark}}" />
-            </Style>
 
             <Style x:Key="CentralHeader"
                    TargetType="Label">
@@ -241,13 +235,6 @@
                 <Setter Property="LineBreakMode" Value="TailTruncation" />
                 <Setter Property="MaxLines" Value="4" />
             </Style>
-
-            <!--<Style TargetType="dxe:TokenAppearance">
-                <Setter Property="BorderThickness"
-                        Value="2"/>
-                <Setter Property="CornerRadius"
-                        Value="14"/>
-            </Style>-->
 
             <!--  CONVERTERS  -->
             <toolkit:IsNullConverter x:Key="IsNull" />

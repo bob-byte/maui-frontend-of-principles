@@ -643,7 +643,7 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The main slogan will be used to form better recommended habits. It helps you determine how to act when you don&apos;t want to do something or when you are faced with a challenge or temptation. For example, only Jesus..
+        ///   Looks up a localized string similar to The main slogan will be used to form better recommended habits. It helps you determine how to act when you don&apos;t want to do something or when you are faced with a challenge or temptation. An example of the main slogan: a relationship with God and a strong character determine the quality of life..
         /// </summary>
         internal static string MainSloganExplanation {
             get {

@@ -23,10 +23,9 @@
         <Color x:Key="SurfaceColorLight">#FAFAFA</Color>
         <Color x:Key="SurfaceColorDark">#1D1E24</Color>
     </v:ContentPageBase.Resources>
+
     <Shell.TitleView>
         <HorizontalStackLayout HorizontalOptions="Start"
-                               Grid.Row="0"
-                               Padding="16,0"
                                BackgroundColor="{AppThemeBinding Light={StaticResource Primary},
                                                                  Dark={StaticResource NavigationBarColorDark}}"
                                Spacing="10"
@@ -100,7 +99,7 @@
                                    HeightRequest="48"
                                    TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
                                                                Dark={StaticResource DarkNormalText}}"
-                                   PlaceholderColor="#8c8f8d"
+                                   PlaceholderColor="#3F3F3F"
                                    BackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary},
                                                                      Dark={StaticResource DarkPrimary}}"
                                    TranslationY="4"
@@ -121,8 +120,7 @@
                                               DisabledBorderThickness="0"
                                               TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
                                                                           Dark={StaticResource DarkNormalText}}"
-                                              PlaceholderColor="{AppThemeBinding Light={StaticResource SecondaryLight},
-                                                                                 Dark={StaticResource SecondaryDark}}"
+                                              PlaceholderColor="#3F3F3F"
                                               BackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary},
                                                                                 Dark={StaticResource DarkPrimary}}"
                                               TranslationY="4"
@@ -150,7 +148,7 @@
                               Clicked="SB_AskQuestion_Clicked"
                               Style="{StaticResource PrimaryButton}"
                               BackgroundColor="{StaticResource LightPrimary}"
-                              IconColor="#8c8f8d"
+                              IconColor="#3F3F3F"
                               Grid.Column="1" />
 
             <dx:DXImage Source="stop_video"
