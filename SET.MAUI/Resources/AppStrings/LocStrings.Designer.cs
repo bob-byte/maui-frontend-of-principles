@@ -301,6 +301,15 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The user not found at the specified email address..
+        /// </summary>
+        internal static string EmailIsIncorrect {
+            get {
+                return ResourceManager.GetString("EmailIsIncorrect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email must have correct value.
         /// </summary>
         internal static string EmailMustHaveCorrectValue {
@@ -499,6 +508,15 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Household chores.
+        /// </summary>
+        internal static string HouseholdChores {
+            get {
+                return ResourceManager.GetString("HouseholdChores", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to How can I help you?.
         /// </summary>
         internal static string HowCanIHelpYou {
@@ -558,6 +576,15 @@ namespace SET.MAUI.Resources.AppStrings {
         internal static string IsMaxValue {
             get {
                 return ResourceManager.GetString("IsMaxValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is not found.
+        /// </summary>
+        internal static string IsNotFound {
+            get {
+                return ResourceManager.GetString("IsNotFound", resourceCulture);
             }
         }
         
@@ -828,6 +855,15 @@ namespace SET.MAUI.Resources.AppStrings {
         internal static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Incorrect password..
+        /// </summary>
+        internal static string PasswordIsIncorrect {
+            get {
+                return ResourceManager.GetString("PasswordIsIncorrect", resourceCulture);
             }
         }
         
@@ -1248,6 +1284,15 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The user.
+        /// </summary>
+        internal static string TheUser {
+            get {
+                return ResourceManager.GetString("TheUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Thu.
         /// </summary>
         internal static string ThursdayShort {
@@ -1535,6 +1580,15 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A user with an identical email already exists. To register, please change it..
+        /// </summary>
+        internal static string UserWithIdenticalEmailAlreadyExists {
+            get {
+                return ResourceManager.GetString("UserWithIdenticalEmailAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Use subhabits.
         /// </summary>
         internal static string UseSubhabits {
@@ -1603,6 +1657,15 @@ namespace SET.MAUI.Resources.AppStrings {
         internal static string WithoutExceptionsHabitTypeShortDescription {
             get {
                 return ResourceManager.GetString("WithoutExceptionsHabitTypeShortDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to With unknown name.
+        /// </summary>
+        internal static string WithUnknownName {
+            get {
+                return ResourceManager.GetString("WithUnknownName", resourceCulture);
             }
         }
         

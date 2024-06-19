@@ -52,28 +52,8 @@ public partial class SettingsViewModel : BaseViewModel
         bool doLogout = await DialogService.ShowConfirmAsync( msg: LocStrings.MessageInLogoutConfirm, title: $"{LocStrings.LogoutQuestion}" );
         if (doLogout)
         {
-            Logout();
-
-            await Navigation.GoToInitialViewAsync();
+            await base.LogoutAsync().DefaultConfigureAwait();
         }
-    }
-
-    private void Logout()
-    {
-        SettingsService.AuthAccessToken = string.Empty;
-        SettingsService.UserId = string.Empty;
-
-        if (UserName != null)
-        {
-            UserName.Value = string.Empty;
-        }
-
-        MainSlogan = string.Empty;
-        Mission = string.Empty;
-        Gender = Gender.Man;
-        UserIcon = null;
-
-        ReferenceMessenger.Send( new UserLoggedOutMessage() );
     }
 
     [RelayCommand]
@@ -86,8 +66,7 @@ public partial class SettingsViewModel : BaseViewModel
             {
                 await AccountService.DeleteAccountAsync();
 
-                Logout();
-                await Navigation.GoToInitialViewAsync();
+                await base.LogoutAsync().DefaultConfigureAwait();
             } );
         }
     }

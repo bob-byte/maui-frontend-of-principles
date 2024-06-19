@@ -597,4 +597,25 @@
   <data name="FieldReasonToFollow" xml:space="preserve">
     <value>Поле "Причина дотримуватись"</value>
   </data>
+  <data name="HouseholdChores" xml:space="preserve">
+    <value>Побут</value>
+  </data>
+  <data name="EmailIsIncorrect" xml:space="preserve">
+    <value>Користувача не знайдено за вказаною поштою.</value>
+  </data>
+  <data name="PasswordIsIncorrect" xml:space="preserve">
+    <value>Неправильний пароль.</value>
+  </data>
+  <data name="UserWithIdenticalEmailAlreadyExists" xml:space="preserve">
+    <value>Користувач з ідентичною поштою вже існує. Для реєстрації змініть її, будь ласка.</value>
+  </data>
+  <data name="TheUser" xml:space="preserve">
+    <value>Користувач</value>
+  </data>
+  <data name="WithUnknownName" xml:space="preserve">
+    <value>З невідомим імʼям</value>
+  </data>
+  <data name="IsNotFound" xml:space="preserve">
+    <value>Не знайдений</value>
+  </data>
 </root>

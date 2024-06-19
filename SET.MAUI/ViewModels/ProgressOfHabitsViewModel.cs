@@ -176,41 +176,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
                 }
                 catch (Exception ex)
                 {
-                    string errorMsg;
-                    if (SettingsService.IsDebug)
-                    {
-                        errorMsg = ex.ToString();
-                        LoggingService.LogError( ex, ex.Message );
-                    }
-                    else
-                    {
-                        if (ex.Message == "Email or password is incorrect")
-                        {
-                            errorMsg = LocStrings.EmailOrPasswordIsIncorrect;
-                        }
-                        else if (ex is ExtendedHttpRequestException extendedEx)
-                        {
-                            LoggingService.LogCriticalError( ex );
-                            errorMsg = extendedEx.Message;
-                        }
-                        else if (ex is ServiceAuthenticationException)
-                        {
-                            LoggingService.LogCriticalError( ex );
-                            errorMsg = LocStrings.YouAreNotAuthorized;
-                        }
-                        else
-                        {
-                            errorMsg = LocStrings.NoInternetConnection;
-                        }
-                    }
-
-                    doTryAgain = await DialogService.ShowAlertWithTwoBtnsAsync(
-                        errorMsg,
-                        title: LocStrings.Error,
-                        accept: LocStrings.Retry,
-                        cancel: LocStrings.Cancel
-                    );
-
+                    doTryAgain = await DoRetryOperationOnErrorAsync( ex );
                     if (!doTryAgain)
                     {
                         progressOfHabit.Value = previousValueOfProgress;

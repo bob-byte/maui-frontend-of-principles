@@ -671,4 +671,25 @@ By using the App, you acknowledge that you have read, understood, and agree to b
   <data name="FieldReasonToFollow" xml:space="preserve">
     <value>The field "Reason to follow"</value>
   </data>
+  <data name="HouseholdChores" xml:space="preserve">
+    <value>Household chores</value>
+  </data>
+  <data name="EmailIsIncorrect" xml:space="preserve">
+    <value>The user not found at the specified email address.</value>
+  </data>
+  <data name="PasswordIsIncorrect" xml:space="preserve">
+    <value>Incorrect password.</value>
+  </data>
+  <data name="UserWithIdenticalEmailAlreadyExists" xml:space="preserve">
+    <value>A user with an identical email already exists. To register, please change it.</value>
+  </data>
+  <data name="TheUser" xml:space="preserve">
+    <value>The user</value>
+  </data>
+  <data name="WithUnknownName" xml:space="preserve">
+    <value>With unknown name</value>
+  </data>
+  <data name="IsNotFound" xml:space="preserve">
+    <value>Is not found</value>
+  </data>
 </root>

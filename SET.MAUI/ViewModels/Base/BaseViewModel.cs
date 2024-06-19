@@ -1,5 +1,7 @@
 ﻿using SET.MAUI.Exceptions;
 
+using System.Net;
+
 namespace SET.MAUI.ViewModels;
 
 public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
@@ -235,46 +237,97 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
             }
             catch (Exception ex)
             {
-                string errorMsg;
-                if (SettingsService.IsDebug)
-                {
-                    errorMsg = ex.ToString();
-                    LoggingService.LogError( ex, ex.Message );
-                }
-                else
-                {
-                    if(ex.Message == "Email or password is incorrect")
-                    {
-                        errorMsg = LocStrings.EmailOrPasswordIsIncorrect;
-                    }
-                    else if (ex is ExtendedHttpRequestException extendedEx)
-                    {
-                        LoggingService.LogCriticalError( ex );
-                        errorMsg = extendedEx.Message;
-                    }
-                    else if (ex is ServiceAuthenticationException)
-                    {
-                        LoggingService.LogCriticalError( ex );
-                        errorMsg = LocStrings.YouAreNotAuthorized;
-                    }
-                    else
-                    {
-                        errorMsg = LocStrings.NoInternetConnection;
-                    }
-                }
-
-                doTryAgain = displayAlertOnException &&
-                    await DialogService.ShowAlertWithTwoBtnsAsync(
-                        errorMsg,
-                        title: LocStrings.Error,
-                        accept: LocStrings.Retry,
-                        cancel: LocStrings.Cancel
-                    );
+                doTryAgain = displayAlertOnException && await DoRetryOperationOnErrorAsync( ex );
             }
         }
         while ( doTryAgain );
 
         IsBusy = false;
+    }
+
+    protected async Task<bool> DoRetryOperationOnErrorAsync( Exception ex )
+    {
+        bool showPopupWithRetry = true;
+
+        string errorMsg;
+        if (SettingsService.IsDebug)
+        {
+            errorMsg = ex.ToString();
+            LoggingService.LogError( ex, ex.Message );
+        }
+        else
+        {
+            if (ex is ExtendedHttpRequestException extendedEx)
+            {
+                if (extendedEx.HttpCode == HttpStatusCode.BadRequest)
+                {
+                    showPopupWithRetry = false;
+
+                    if (ex.Message == "UserIsNotFound")
+                    {
+                        string userName = $"{LocStrings.TheUser} ${(string.IsNullOrWhiteSpace( UserName?.Value ) ? LocStrings.WithUnknownName.ToLower() : UserName.Value)}";
+                        errorMsg = $"{userName} {LocStrings.IsNotFound.ToLower()}.";
+                        await DialogService.ShowErrorAsync( errorMsg );
+
+                        await LogoutAsync();
+                    }
+                    else
+                    {
+                        errorMsg = LocStrings.ResourceManager.GetString( ex.Message ) ?? string.Empty;
+                        if (string.IsNullOrWhiteSpace( errorMsg ))
+                        {
+                            LoggingService.LogError( $"{ex.Message} error message is not in the {nameof( LocStrings )}" );
+                            errorMsg = ex.Message;
+                        }
+
+                        await DialogService.ShowErrorAsync( errorMsg );
+                    }
+                }
+                else
+                {
+                    LoggingService.LogCriticalError( ex );
+                    errorMsg = extendedEx.Message;
+                }
+            }
+            else if (ex is ServiceAuthenticationException)
+            {
+                LoggingService.LogCriticalError( ex );
+                errorMsg = LocStrings.YouAreNotAuthorized;
+            }
+            else
+            {
+                errorMsg = LocStrings.NoInternetConnection;
+            }
+        }
+
+        bool result = showPopupWithRetry &&
+            await DialogService.ShowAlertWithTwoBtnsAsync(
+                errorMsg,
+                title: LocStrings.Error,
+                accept: LocStrings.Retry,
+                cancel: LocStrings.Cancel
+            );
+        return result;
+    }
+
+    protected Task LogoutAsync()
+    {
+        SettingsService.AuthAccessToken = string.Empty;
+        SettingsService.UserId = string.Empty;
+
+        if (UserName != null)
+        {
+            UserName.Value = string.Empty;
+        }
+
+        MainSlogan = string.Empty;
+        Mission = string.Empty;
+        Gender = Gender.Man;
+        UserIcon = null;
+
+        ReferenceMessenger.Send( new UserLoggedOutMessage() );
+
+        return Navigation.GoToInitialViewAsync();
     }
 
     protected bool SetProperty<T>(ref T backingStore, T value,

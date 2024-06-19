@@ -88,7 +88,7 @@ public partial class HelperViewModel : BaseViewModel
                     {
                         if (!string.IsNullOrWhiteSpace( chatUpdate.ContentUpdate ))
                         {
-                            helperMsg.Text += chatUpdate.ContentUpdate;
+                            helperMsg.Text += chatUpdate.ContentUpdate.Replace("`", "");
                             await Task.Delay( millisecondsDelay: 65 );
                         }
                     }
