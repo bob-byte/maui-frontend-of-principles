@@ -46,7 +46,7 @@
             </Grid>
         </Grid>
     </Shell.TitleView>
-    
+
     <Grid>
         <dxco:TabView HeaderPanelPosition="Top"
                       x:Name="TV_Tabs"
@@ -266,17 +266,27 @@
                                       AllowShadow="True"
                                       CloseOnScrimTap="True">
                             <VerticalStackLayout Margin="15">
-                                <RadioButton Content="{x:Static loc:LocStrings.EveryDay}"
-                                             FontSize="16"
-                                             x:Name="RB_EveryDay"
-                                             GroupName="Frequency" />
+                                <dxe:CheckEdit Label="{x:Static loc:LocStrings.EveryDay}"
+                                               x:Name="RB_EveryDay"
+                                               CheckedCheckBoxImage="checkedcheckedit.svg"
+                                               UncheckedCheckBoxImage="uncheckedcheckedit.svg"
+                                               CheckBoxColor="{StaticResource Primary}"
+                                               CheckedCheckBoxColor="{StaticResource Primary}"
+                                               CheckedChanged="OnCheckEditChanged"
+                                               DisabledCheckedCheckBoxColor="{StaticResource Primary}"
+                                               DisabledLabelColor="{StaticResource LabelText}" />
                                 <HorizontalStackLayout Margin="{OnPlatform iOS='0, 10, 0, 10',
                                                                            Android='0, 25, 0, 10'}"
                                                        Focused="RepeatsOfSeveralDays_Focused">
-                                    <RadioButton x:Name="RB_EverySeveralDays"
-                                                 Content="{x:Static loc:LocStrings.Every}"
-                                                 FontSize="16"
-                                                 GroupName="Frequency" />
+                                    <dxe:CheckEdit x:Name="RB_EverySeveralDays"
+                                                   Label="{x:Static loc:LocStrings.Every}"
+                                                   CheckedCheckBoxImage="checkedcheckedit.svg"
+                                                   UncheckedCheckBoxImage="uncheckedcheckedit.svg"
+                                                   CheckBoxColor="{StaticResource Primary}"
+                                                   CheckedCheckBoxColor="{StaticResource Primary}"
+                                                   CheckedChanged="OnCheckEditChanged"
+                                                   DisabledCheckedCheckBoxColor="{StaticResource Primary}"
+                                                   DisabledLabelColor="Black" />
                                     <Entry Keyboard="Numeric"
                                            HorizontalTextAlignment="Center"
                                            Margin="{OnPlatform iOS='0,0,0,5',
@@ -288,7 +298,7 @@
                                     <Label Text="{x:Static loc:LocStrings.days}"
                                            FontSize="16"
                                            Margin="{OnPlatform iOS='7, 6, 0, 0',
-                                                               Android='0, 16, 0, 0'}">
+                                                               Android='0, 15, 0, 0'}">
                                         <Label.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="EverySeveralDaysFrequency_Tapped" />
                                         </Label.GestureRecognizers>
@@ -299,9 +309,14 @@
                                     <HorizontalStackLayout.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="SeveralTimesPerPeriodFrequency_Tapped" />
                                     </HorizontalStackLayout.GestureRecognizers>
-                                    <RadioButton x:Name="RB_SeveralTimesPerPeriod"
-                                                 GroupName="Frequency"
-                                                 WidthRequest="{OnPlatform Android='28'}" />
+                                    <dxe:CheckEdit x:Name="RB_SeveralTimesPerPeriod"
+                                                   CheckedCheckBoxImage="checkedcheckedit.svg"
+                                                   UncheckedCheckBoxImage="uncheckedcheckedit.svg"
+                                                   CheckBoxColor="{StaticResource Primary}"
+                                                   CheckedCheckBoxColor="{StaticResource Primary}"
+                                                   CheckedChanged="OnCheckEditChanged"
+                                                   DisabledCheckedCheckBoxColor="{StaticResource Primary}"
+                                                   DisabledLabelColor="Black" />
                                     <Entry Keyboard="Numeric"
                                            Margin="{OnPlatform iOS='0, 0, 0, 15',
                                                                Android='0, 11, 0, 15'}"

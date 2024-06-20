@@ -118,13 +118,13 @@ public partial class EditHabitView : ContentPageBase
     {
         FrequencyOfHabit frequency = ViewModel.Habit.Frequency;
         bool hasErrors = false;
-        if (RB_EveryDay.IsChecked)
+        if (RB_EveryDay.IsChecked == true)
         {
             frequency.IntervalLengthInDays = 1;
             frequency.Repeats = 1;
             frequency.Type = FrequencyType.EveryDay;
         }
-        else if (RB_EverySeveralDays.IsChecked)
+        else if (RB_EverySeveralDays.IsChecked == true)
         {
             try
             {
@@ -158,7 +158,7 @@ public partial class EditHabitView : ContentPageBase
                 hasErrors = true;
             }
         }
-        else if (RB_SeveralTimesPerPeriod.IsChecked)
+        else if (RB_SeveralTimesPerPeriod.IsChecked == true)
         {
             try
             {
@@ -459,6 +459,29 @@ public partial class EditHabitView : ContentPageBase
             }
 
             ViewModel.ReorderUserHabitsCommand.Execute( null );
+        }
+    }
+
+    private void OnCheckEditChanged( object sender, EventArgs e )
+    {
+        var selectedCheckEdit = sender as CheckEdit;
+
+        if (selectedCheckEdit != null && selectedCheckEdit.IsChecked == true)
+        {
+            var checkEdits = new List<CheckEdit> { RB_EveryDay, RB_EverySeveralDays, RB_SeveralTimesPerPeriod };
+
+            foreach (var checkEdit in checkEdits)
+            {
+                if (checkEdit != selectedCheckEdit)
+                {
+                    checkEdit.IsChecked = false;
+                    checkEdit.IsEnabled = true;
+                }
+                else
+                {
+                    checkEdit.IsEnabled = false;
+                }
+            }
         }
     }
 }
