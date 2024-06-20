@@ -24,7 +24,7 @@ public class UrlBuilder : IUrlBuilder
     private string? m_habitsPriorities;
     private string? m_logs;
     private string? m_changePassword;
-    private string? m_sendEmail;
+    private string? m_codeGeneration;
 
     public string BaseUrl
     {
@@ -116,12 +116,12 @@ public class UrlBuilder : IUrlBuilder
         }
     }
 
-    public string Email
+    public string CodeGeneration
     {
         get
         {
-            m_sendEmail ??= Combine( BaseApiUrl, "account", "email" );
-            return m_sendEmail;
+            m_codeGeneration ??= Combine( BaseApiUrl, "account", "code" );
+            return m_codeGeneration;
         }
     }
     public string Account

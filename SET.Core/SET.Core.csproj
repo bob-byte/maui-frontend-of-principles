@@ -45,6 +45,7 @@
 	  <None Remove="Services\" />
 	  <None Remove="Services\Caching\" />
 	  <None Remove="Services\Locator\" />
+	  <None Remove="Services\Signup\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Constants\" />
@@ -54,5 +55,6 @@
 	  <Folder Include="Services\" />
 	  <Folder Include="Services\Caching\" />
 	  <Folder Include="Services\Locator\" />
+	  <Folder Include="Services\Signup\" />
 	</ItemGroup>
 </Project>

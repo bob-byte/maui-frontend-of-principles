@@ -14,7 +14,7 @@ public interface IUrlBuilder
     string UserMission { get; }
     string SignUp { get; }
     string Password { get; }
-    string Email { get; }
+    string CodeGeneration { get; }
     string ProgressOfHabit { get; }
     string AreasOfLife { get; }
     string Account { get; }

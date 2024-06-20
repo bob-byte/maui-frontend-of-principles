@@ -3,7 +3,6 @@ using Polly.Extensions.Http;
 using Polly.Retry;
 
 using SET.Core.Services;
-using SET.Core.Services.ChangePassword;
 
 using System;
 using System.Net;
@@ -28,6 +27,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IAiRecommenderOfHabitsService, AiRecommenderOfHabitsService>();
         services.AddSingleton<IServiceLocator, ServiceLocator>();
         services.AddSingleton<IChangePasswordService, ChangePasswordService>();
+        services.AddSingleton<ISignupService, SignupService>();
 
         return services;
     }

@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace SET.MAUI.Validations;
 
 public class IsNotNullOrWhiteSpaceRule : IValidationRule<string>
 {
     public IsNotNullOrWhiteSpaceRule()
     {
-        //do nothing
+        ValidationMessage = LocStrings.RequiredErrorText;
     }
 
     public IsNotNullOrWhiteSpaceRule( string errMsg )

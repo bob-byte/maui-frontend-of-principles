@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SET.Core.Services.ChangePassword;
+namespace SET.Core.Services;
+
 public interface IChangePasswordService
 {
     Task ChangePasswordAsync( string email, string newPassword );
-    Task SendEmailAsync( string emailAddress );
-    Task<string> GetConfirmationCodeAsync();
+    Task<int> GeneratedCodeAsync( string emailWhereSendCode );
 }

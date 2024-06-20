@@ -690,9 +690,18 @@ By using the App, you acknowledge that you have read, understood, and agree to b
     <value>You should fill email and password fields</value>
   </data>
   <data name="NewPassword" xml:space="preserve">
-    <value>New Password</value>
+    <value>New password</value>
   </data>
   <data name="WrongConfirmationCode" xml:space="preserve">
     <value>Wrong confirmation code!</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="YourPasswordSuccessfullyChanged" xml:space="preserve">
+    <value>Your password successfully changed.</value>
+  </data>
+  <data name="NewPasswordIsIncorrectError" xml:space="preserve">
+    <value>Password must be at least 8 characters long and contain at least one lowercase letter and one digit.</value>
   </data>
 </root>
