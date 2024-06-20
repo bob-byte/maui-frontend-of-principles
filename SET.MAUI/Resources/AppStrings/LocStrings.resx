@@ -692,4 +692,37 @@ By using the App, you acknowledge that you have read, understood, and agree to b
   <data name="IsNotFound" xml:space="preserve">
     <value>Is not found</value>
   </data>
+  <data name="ForgetPasswordNavigation" xml:space="preserve">
+    <value>Forget Password?</value>
+  </data>
+  <data name="ForgetPasswordTitle" xml:space="preserve">
+    <value>Password Recovery</value>
+  </data>
+  <data name="ChangePasswordButton" xml:space="preserve">
+    <value>Change password</value>
+  </data>
+  <data name="ConfirmationPasswordChangeLabel" xml:space="preserve">
+    <value>A one-time code to confirm the password change has been sent to your email</value>
+  </data>
+  <data name="ConfirmPasswordChangeButton" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="EmailAndPasswordFieldsAreEmpty" xml:space="preserve">
+    <value>You should fill email and password fields</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>New password</value>
+  </data>
+  <data name="WrongConfirmationCode" xml:space="preserve">
+    <value>Wrong confirmation code!</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="YourPasswordSuccessfullyChanged" xml:space="preserve">
+    <value>Your password successfully changed.</value>
+  </data>
+  <data name="NewPasswordIsIncorrectError" xml:space="preserve">
+    <value>Password must be at least 8 characters long and contain at least one lowercase letter and one digit.</value>
+  </data>
 </root>

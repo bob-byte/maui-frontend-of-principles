@@ -26,6 +26,8 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IAiChatService, AiChatService>();
         services.AddSingleton<IAiRecommenderOfHabitsService, AiRecommenderOfHabitsService>();
         services.AddSingleton<IServiceLocator, ServiceLocator>();
+        services.AddSingleton<IChangePasswordService, ChangePasswordService>();
+        services.AddSingleton<ISignupService, SignupService>();
 
         return services;
     }

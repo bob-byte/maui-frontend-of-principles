@@ -99,6 +99,9 @@
 		<Compile Update="App.xaml.cs">
 		  <DependentUpon>App.xaml</DependentUpon>
 		</Compile>
+		<Compile Update="Views\ForgetPasswordView.xaml.cs">
+		  <DependentUpon>ForgetPasswordView.xaml</DependentUpon>
+		</Compile>
 		<Compile Update="Views\PrivacyPolicyView.xaml.cs">
 		  <DependentUpon>PrivacyPolicyView.xaml</DependentUpon>
 		</Compile>
@@ -151,6 +154,9 @@
 	  <MauiXaml Update="Controls\CircularProgressBar.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\ForgetPasswordView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\EditPrincipleView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -194,6 +200,15 @@
 	</ItemGroup>
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
 		<BundleResource Include="Platforms\iOS\PrivacyInfo.xcprivacy" LogicalName="PrivacyInfo.xcprivacy" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="appsettings.json" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="Validations\Rules\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Validations\Rules\" />
 	</ItemGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
       <WarningLevel>4</WarningLevel>

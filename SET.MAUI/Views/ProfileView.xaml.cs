@@ -16,15 +16,15 @@ public partial class ProfileView : ContentPageBase
 
     void TRG_UserName_Focused( object sender, FocusEventArgs e )
     {
-            L_Prompt.Text = LocStrings.YourName;
-            ME_PromptResult.Text = ViewModel.UserName.Value;
-            ME_PromptResult.MaxCharacterCount = 100;
-            ME_PromptResult.HeightRequest = -1;
-            ME_PromptResult.MaxLineCount = 1;
-            ME_PromptResult.MaxCharacterCountOverflowMode = OverflowMode.LimitInput;
-            TE_UserName.Unfocus();
+        L_Prompt.Text = LocStrings.YourName;
+        ME_PromptResult.Text = ViewModel.UserName.Value;
+        ME_PromptResult.MaxCharacterCount = 100;
+        ME_PromptResult.HeightRequest = -1;
+        ME_PromptResult.MaxLineCount = 1;
+        ME_PromptResult.MaxCharacterCountOverflowMode = OverflowMode.LimitInput;
+        TE_UserName.Unfocus();
 
-            DXP_Prompt.IsOpen = true;
+        DXP_Prompt.IsOpen = true;
     }
 
     void TGR_MainSlogan_Focused( object sender, FocusEventArgs e )

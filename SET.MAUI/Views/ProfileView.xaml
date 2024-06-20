@@ -123,7 +123,7 @@
                           AllowScrim="True"
                           AllowShadow="True"
                           CloseOnScrimTap="True"
-                          MinimumWidthRequest="300">
+                          MaximumWidthRequest="320">
                 <VerticalStackLayout>
                     <Label x:Name="L_Prompt"
                            HorizontalOptions="Center"

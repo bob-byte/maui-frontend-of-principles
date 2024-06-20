@@ -130,6 +130,15 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change password.
+        /// </summary>
+        internal static string ChangePasswordButton {
+            get {
+                return ResourceManager.GetString("ChangePasswordButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Character.
         /// </summary>
         internal static string Character {
@@ -175,11 +184,29 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A one-time code to confirm the password change has been sent to your email.
+        /// </summary>
+        internal static string ConfirmationPasswordChangeLabel {
+            get {
+                return ResourceManager.GetString("ConfirmationPasswordChangeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to load recommended habits based on your chosen areas, mission and main slogan?.
         /// </summary>
         internal static string ConfirmMessageOnRecommededHabitsView {
             get {
                 return ResourceManager.GetString("ConfirmMessageOnRecommededHabitsView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm.
+        /// </summary>
+        internal static string ConfirmPasswordChangeButton {
+            get {
+                return ResourceManager.GetString("ConfirmPasswordChangeButton", resourceCulture);
             }
         }
         
@@ -297,6 +324,15 @@ namespace SET.MAUI.Resources.AppStrings {
         internal static string Email {
             get {
                 return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You should fill email and password fields.
+        /// </summary>
+        internal static string EmailAndPasswordFieldsAreEmpty {
+            get {
+                return ResourceManager.GetString("EmailAndPasswordFieldsAreEmpty", resourceCulture);
             }
         }
         
@@ -432,6 +468,24 @@ namespace SET.MAUI.Resources.AppStrings {
         internal static string FixErrorsFirst {
             get {
                 return ResourceManager.GetString("FixErrorsFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Forget Password?.
+        /// </summary>
+        internal static string ForgetPasswordNavigation {
+            get {
+                return ResourceManager.GetString("ForgetPasswordNavigation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password Recovery.
+        /// </summary>
+        internal static string ForgetPasswordTitle {
+            get {
+                return ResourceManager.GetString("ForgetPasswordTitle", resourceCulture);
             }
         }
         
@@ -792,6 +846,24 @@ namespace SET.MAUI.Resources.AppStrings {
         internal static string Name {
             get {
                 return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New password.
+        /// </summary>
+        internal static string NewPassword {
+            get {
+                return ResourceManager.GetString("NewPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password must be at least 8 characters long and contain at least one lowercase letter and one digit..
+        /// </summary>
+        internal static string NewPasswordIsIncorrectError {
+            get {
+                return ResourceManager.GetString("NewPasswordIsIncorrectError", resourceCulture);
             }
         }
         
@@ -1257,6 +1329,15 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Success.
+        /// </summary>
+        internal static string Success {
+            get {
+                return ResourceManager.GetString("Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sun.
         /// </summary>
         internal static string SundayShort {
@@ -1679,6 +1760,15 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Wrong confirmation code!.
+        /// </summary>
+        internal static string WrongConfirmationCode {
+            get {
+                return ResourceManager.GetString("WrongConfirmationCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Year.
         /// </summary>
         internal static string Year {
@@ -1756,6 +1846,15 @@ namespace SET.MAUI.Resources.AppStrings {
         internal static string YourNameSuccessfullySaved {
             get {
                 return ResourceManager.GetString("YourNameSuccessfullySaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your password successfully changed..
+        /// </summary>
+        internal static string YourPasswordSuccessfullyChanged {
+            get {
+                return ResourceManager.GetString("YourPasswordSuccessfullyChanged", resourceCulture);
             }
         }
     }

@@ -50,10 +50,6 @@ public partial class LoginViewModel : BaseViewModel
                 {
                     LoginResponse loginResponse = await LoginService.LoginAsync( Email.Value, Password.Value );
 
-                        //TODO: Change type of SettingsService.UserId to long
-                        SettingsService.AuthAccessToken = loginResponse.Token;
-                        SettingsService.UserId = loginResponse.UserId.ToString();
-
                     bool isLoggedIn = !string.IsNullOrWhiteSpace( loginResponse.Token );
                     if (isLoggedIn)
                     {
@@ -107,6 +103,16 @@ public partial class LoginViewModel : BaseViewModel
     public Task OpenPrivacyPolicyAsync()
     {
         return Navigation.NavigateToAsync<PrivacyPolicyViewModel>();
+    }
+
+    [RelayCommand]
+    public async Task OpenForgetPasswordAsync()
+    {
+        Dictionary<string, object> routeParams = new()
+        {
+            { "Email", Email }
+        };
+        await Navigation.NavigateToAsync<ForgetPasswordViewModel>( routeParams );
     }
 
     private void AddValidations()

@@ -9,6 +9,8 @@ using DevExpress.Maui.Editors;
 using Microsoft.Maui;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using DevExpress.Maui.Editors.Internal;
+using System.Reflection;
+
 #if IOS
 using Microsoft.Maui.Platform;
 #endif
@@ -52,7 +54,18 @@ public static class MauiProgram
             .RegisterMauiServices()
             .RegisterViewModels()
             .RegisterViews();
-        
+
+        var assembly = Assembly.GetExecutingAssembly();
+
+        using Stream? stream = assembly.GetManifestResourceStream( $"{assembly.GetName().Name}.appsettings.json" );
+
+        IConfigurationRoot configuration = new ConfigurationBuilder()
+            .AddJsonStream( stream )
+            .Build();
+
+        builder.Configuration.AddConfiguration( configuration );
+        builder.Services.AddSingleton<IConfiguration>( configuration );
+
         AllowMultiLineTruncation();
 
         return builder.Build();
@@ -78,6 +91,7 @@ public static class MauiProgram
         services.AddSingleton<ProfileViewModel>();
         services.AddSingleton<UserAgreementViewModel>();
         services.AddSingleton<PrivacyPolicyViewModel>();
+        services.AddSingleton<ForgetPasswordViewModel>();
 
         return services;
     }
@@ -93,6 +107,7 @@ public static class MauiProgram
         services.AddTransient<ProfileView>();
         services.AddTransient<UserAgreementView>();
         services.AddTransient<PrivacyPolicyView>();
+        services.AddTransient<ForgetPasswordView>();
 
         return services;
     }

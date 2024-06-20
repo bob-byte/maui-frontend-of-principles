@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace SET.MAUI.Services;
 
 public class SettingsService : ISettingsService
@@ -12,12 +7,7 @@ public class SettingsService : ISettingsService
     {
         get
         {
-            bool result;
-#if DEBUG
-            result = true;
-#else
-            result = false;
-#endif
+            bool result = false;
             return result;
         }
     }
