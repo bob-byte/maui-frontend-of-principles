@@ -190,7 +190,7 @@
     <value>It will be used to create more appropriate recommended habits for you. A mission is a life goal that keeps you motivated and helps you make the best choices in a variety of situations. For example, a mission might be to become the best and most moral entrepreneur in the world.</value>
   </data>
   <data name="MainSloganExplanation" xml:space="preserve">
-    <value>The main slogan will be used to form better recommended habits. It helps you determine how to act when you don't want to do something or when you are faced with a challenge or temptation. For example, only Jesus.</value>
+    <value>The main slogan will be used to form better recommended habits. It helps you determine how to act when you don't want to do something or when you are faced with a challenge or temptation. An example of the main slogan: a relationship with God and a strong character determine the quality of life.</value>
   </data>
   <data name="Vision" xml:space="preserve">
     <value>Vision</value>
@@ -681,7 +681,7 @@ By using the App, you acknowledge that you have read, understood, and agree to b
     <value>Incorrect password.</value>
   </data>
   <data name="UserWithIdenticalEmailAlreadyExists" xml:space="preserve">
-    <value>A user with an identical email already exists. To register, please change it.</value>
+    <value>A user with an identical email already exists. To register, please change specified email address.</value>
   </data>
   <data name="TheUser" xml:space="preserve">
     <value>The user</value>

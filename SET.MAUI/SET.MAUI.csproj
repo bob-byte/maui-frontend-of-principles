@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>net8.0-android;net8.0-ios</TargetFrameworks>
@@ -15,8 +15,8 @@
 		<ApplicationId>com.set.principles</ApplicationId>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>1.0.6</ApplicationDisplayVersion>
-		<ApplicationVersion>7</ApplicationVersion>
+		<ApplicationDisplayVersion>1.1.0</ApplicationDisplayVersion>
+		<ApplicationVersion>8</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net8.0-android'">21.0</SupportedOSPlatformVersion>
@@ -44,9 +44,10 @@
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.png" Color="#1F1F1F" BaseSize="320,320" />
+		<MauiIcon Include="Resources\AppIcon\appiconforandroid.png" ForegroundScale="0.65" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Images\logolargesize.png" Color="#1F1F1F" BaseSize="300,300" />
+		<MauiSplashScreen Include="Resources\AppIcon\appicon.png" Color="#1F1F1F" BaseSize="300,300" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*svg" BaseSize="23, 23" />
@@ -56,7 +57,7 @@
 		<MauiImage Update="Resources\Images\edit.png" BaseSize="40, 40" />
 		<MauiImage Update="Resources\Images\delete.png" BaseSize="40, 40" />
 		<MauiImage Update="Resources\Images\logolargesize.png" BaseSize="200, 200" />
-		<MauiImage Update="Resources\Images\larger_help.png" BaseSize="40, 40" />
+		<MauiImage Update="Resources\Images\larger_help.png" BaseSize="30, 30" />
 		<MauiImage Include="Resources\Images\*jpg" BaseSize="23, 23" />
 
 		<!-- Custom Fonts -->

@@ -57,7 +57,7 @@
                       RowSpacing="0"
                       ColumnSpacing="0"
                       Grid.Column="0">
-                    <Frame BackgroundColor="{StaticResource LightPrimary}"
+                    <Frame BackgroundColor="{StaticResource DarkEditControlBackColor}"
                            Margin="0"
                            Padding="0"
                            WidthRequest="48"

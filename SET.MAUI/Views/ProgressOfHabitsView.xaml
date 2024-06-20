@@ -104,7 +104,7 @@
             </dxg:DataGridView.Behaviors>
             <dxg:DataGridView.StartSwipeItems>
                 <dxg:SwipeItem Command="{Binding DeleteHabitCommand}"
-                               BackgroundColor="{StaticResource Primary}"
+                               BackgroundColor="{StaticResource RedColor}"
                                Caption="{x:Static loc:LocStrings.Delete}" />
             </dxg:DataGridView.StartSwipeItems>
 
@@ -113,7 +113,7 @@
             </dxg:DataGridView.Columns>
 
             <dxg:DataGridView.CellAppearance>
-                <dxg:CellAppearance SelectionColor="LightGray"
+                <dxg:CellAppearance SelectionColor="{StaticResource LightPrimary}"
                                     BackgroundColor="{StaticResource Background}" />
             </dxg:DataGridView.CellAppearance>
         </dxg:DataGridView>

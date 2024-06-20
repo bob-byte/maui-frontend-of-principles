@@ -5,7 +5,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AE49ED99-EAEB-4962-911F-E806EF0A6F2B}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
-		appsettings.json = appsettings.json
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SET.MAUI", "SET.MAUI\SET.MAUI.csproj", "{7B3FADAD-6158-420B-925F-566CF28EE448}"

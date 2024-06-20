@@ -22,9 +22,9 @@
                 <Image Source="logolargesize"
                        WidthRequest="200"
                        HeightRequest="200" />
-                <Label Text="{Binding AppName,
-                                      Converter={StaticResource ToUpperCase}}"
-                       TextColor="OrangeRed"
+                <Label Text="{Binding AppName, 
+                                  Converter={StaticResource ToUpperCase}}"
+                       TextColor="{StaticResource Primary}"
                        HorizontalOptions="Center"
                        FontSize="30"
                        FontFamily="Roboto"
@@ -74,9 +74,8 @@
                             <FormattedString>
                                 <Span Text="{x:Static loc:LocStrings.ForgetPasswordNavigation}"
                                       TextColor="{StaticResource LightNormalText}"
-                                      FontSize="15"
-                                      FontFamily="Roboto"
-                                      FontAttributes="Italic" />
+                                      FontSize="16"
+                                      FontFamily="Roboto" />
                             </FormattedString>
                         </Label.FormattedText>
                         <Label.GestureRecognizers>

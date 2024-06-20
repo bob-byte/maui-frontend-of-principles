@@ -16,8 +16,7 @@
                    x:DataType="viewmodels:HelperViewModel"
                    ios:Page.UseSafeArea="False"
                    x:Name="CPB_Helper"
-                   SizeChanged="CPB_Helper_SizeChanged"
-                   Shell.NavBarIsVisible="False">
+                   SizeChanged="CPB_Helper_SizeChanged">
     <v:ContentPageBase.Resources>
         <Color x:Key="NavigationBarColorLight">White</Color>
         <Color x:Key="NavigationBarColorDark">#111111</Color>
@@ -25,13 +24,10 @@
         <Color x:Key="SurfaceColorDark">#1D1E24</Color>
     </v:ContentPageBase.Resources>
 
-    <Grid RowDefinitions="58, *, 16, Auto, 16"
-          BackgroundColor="{StaticResource Primary}">
+    <Shell.TitleView>
         <HorizontalStackLayout HorizontalOptions="Start"
-                               Grid.Row="0"
-                               Padding="16, 0"
                                BackgroundColor="{AppThemeBinding Light={StaticResource Primary},
-                                              Dark={StaticResource NavigationBarColorDark}}"
+                                                                 Dark={StaticResource NavigationBarColorDark}}"
                                Spacing="10"
                                VerticalOptions="CenterAndExpand">
             <dx:DXImage Source="larger_help"
@@ -44,6 +40,9 @@
                    FontFamily="MonaSansBold"
                    FontAttributes="Bold" />
         </HorizontalStackLayout>
+    </Shell.TitleView>
+    <Grid RowDefinitions="0, *, 16, Auto, 16"
+          BackgroundColor="{StaticResource Primary}">
         <Border Grid.Row="1"
                 Padding="0,10,0,30"
                 BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColorLight},
@@ -84,90 +83,87 @@
               Padding="16,0"
               Grid.Row="3">
             <Border BackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary},
-                                                          Dark={StaticResource DarkPrimary}}"
-                        HeightRequest="48"
-                        StrokeShape="RoundRectangle 36,36,36,36"
-                        Grid.Column="0">
-                    <Grid ColumnDefinitions="*, Auto">
-                        <OnPlatform x:TypeArguments="View">
-                            <On Platform="Android">
-                                <Entry Placeholder="{x:Static loc:LocStrings.EnterText}"
-                                       Completed="TE_Prompt_Completed"
-                                       x:Name="E_Prompt"
-                                       Text="{Binding Prompt}"
-                                       FontFamily="Roboto"
-                                       FontSize="13"
+                                                      Dark={StaticResource DarkPrimary}}"
+                    HeightRequest="48"
+                    StrokeShape="RoundRectangle 36,36,36,36"
+                    Grid.Column="0">
+                <Grid ColumnDefinitions="*, Auto">
+                    <OnPlatform x:TypeArguments="View">
+                        <On Platform="Android">
+                            <Entry Placeholder="{x:Static loc:LocStrings.EnterText}"
+                                   Completed="TE_Prompt_Completed"
+                                   x:Name="E_Prompt"
+                                   Text="{Binding Prompt}"
+                                   FontFamily="Roboto"
+                                   FontSize="13"
+                                   HeightRequest="48"
+                                   TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
+                                                               Dark={StaticResource DarkNormalText}}"
+                                   PlaceholderColor="#3F3F3F"
+                                   BackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary},
+                                                                     Dark={StaticResource DarkPrimary}}"
+                                   TranslationY="4"
+                                   ClearButtonVisibility="Never"
+                                   Margin="16,0,16,5"
+                                   RotationX="20" />
+                        </On>
+                        <On Platform="iOS">
+                            <editors:TextEdit PlaceholderText="{x:Static loc:LocStrings.EnterText}"
+                                              Completed="TE_Prompt_Completed"
+                                              x:Name="TE_Prompt"
+                                              Text="{Binding Prompt}"
+                                              TextFontFamily="Roboto"
+                                              TextFontSize="13"
+                                              HeightRequest="48"
+                                              BorderThickness="0"
+                                              FocusedBorderThickness="0"
+                                              DisabledBorderThickness="0"
+                                              TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
+                                                                          Dark={StaticResource DarkNormalText}}"
+                                              PlaceholderColor="#3F3F3F"
+                                              BackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary},
+                                                                                Dark={StaticResource DarkPrimary}}"
+                                              TranslationY="4"
+                                              ClearIconVisibility="Never"
+                                              Margin="16,0,16,5"
+                                              RotationX="20" />
+                        </On>
+                    </OnPlatform>
+                    <skia:SKLottieView IsVisible="{Binding IsBusy}"
+                                       RepeatCount="-1"
+                                       Source="loading.json"
+                                       HorizontalOptions="Center"
+                                       WidthRequest="48"
                                        HeightRequest="48"
-                                       TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
-                                                                   Dark={StaticResource DarkNormalText}}"
-                                       PlaceholderColor="{AppThemeBinding Light={StaticResource SecondaryLight},
-                                                                          Dark={StaticResource SecondaryDark}}"
-                                       BackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary},
-                                                                         Dark={StaticResource DarkPrimary}}"
-                                       TranslationY="4"
-                                       ClearButtonVisibility="Never"
-                                       Margin="16,0,16,5"
-                                       RotationX="20" />
-                            </On>
-                            <On Platform="iOS">
-                                <editors:TextEdit PlaceholderText="{x:Static loc:LocStrings.EnterText}"
-                                                  Completed="TE_Prompt_Completed"
-                                                  x:Name="TE_Prompt"
-                                                  Text="{Binding Prompt}"
-                                                  TextFontFamily="Roboto"
-                                                  TextFontSize="13"
-                                                  HeightRequest="48"
-                                                  BorderThickness="0"
-                                                  FocusedBorderThickness="0"
-                                                  DisabledBorderThickness="0"
-                                                  TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
-                                                                              Dark={StaticResource DarkNormalText}}"
-                                                  PlaceholderColor="{AppThemeBinding Light={StaticResource SecondaryLight},
-                                                                                     Dark={StaticResource SecondaryDark}}"
-                                                  BackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary},
-                                                                                    Dark={StaticResource DarkPrimary}}"
-                                                  TranslationY="4"
-                                                  ClearIconVisibility="Never"
-                                                  Margin="16,0,16,5"
-                                                  RotationX="20" />
-                            </On>
-                        </OnPlatform>
-                        <skia:SKLottieView IsVisible="{Binding IsBusy}"
-                                           RepeatCount="-1"
-                                           Source="loading.json"
-                                           HorizontalOptions="Center"
-                                           WidthRequest="48"
-                                           HeightRequest="48"
-                                           Grid.Column="1" />
-                    </Grid>
-                </Border>
+                                       Grid.Column="1" />
+                </Grid>
+            </Border>
 
-                <dxc:SimpleButton Icon="send_message"
-                                  x:Name="SB_AskQuestion"
-                                  HeightRequest="48"
-                                  WidthRequest="48"
-                                  IsVisible="{Binding IsBusy,
-                                                      Converter={StaticResource IsFalse}}"
-                                  Clicked="SB_AskQuestion_Clicked"
-                                  Style="{StaticResource PrimaryButton}"
-                                  BackgroundColor="{StaticResource LightPrimary}"
-                                  IconColor="{AppThemeBinding Light={StaticResource SecondaryLight},
-                                                              Dark={StaticResource SecondaryDark}}"
-                                  Grid.Column="1" />
+            <dxc:SimpleButton Icon="send_message"
+                              x:Name="SB_AskQuestion"
+                              HeightRequest="48"
+                              WidthRequest="48"
+                              IsVisible="{Binding IsBusy,
+                                                  Converter={StaticResource IsFalse}}"
+                              Clicked="SB_AskQuestion_Clicked"
+                              Style="{StaticResource PrimaryButton}"
+                              BackgroundColor="{StaticResource LightPrimary}"
+                              IconColor="#3F3F3F"
+                              Grid.Column="1" />
 
-                <dx:DXImage Source="stop_video"
-                            HeightRequest="35"
-                            WidthRequest="35"
-                            Margin="7"
-                            VerticalOptions="CenterAndExpand"
-                            IsVisible="{Binding IsBusy}"
-                            TintColor="{AppThemeBinding Light={StaticResource QuinaryLight},
-                                                        Dark={StaticResource QuinaryDark}}"
-                            Grid.Column="1">
-                    <dx:DXImage.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding CancelAnswerGenerationCommand}" />
-                    </dx:DXImage.GestureRecognizers>
-                </dx:DXImage>
+            <dx:DXImage Source="stop_video"
+                        HeightRequest="35"
+                        WidthRequest="35"
+                        Margin="7"
+                        VerticalOptions="CenterAndExpand"
+                        IsVisible="{Binding IsBusy}"
+                        TintColor="{AppThemeBinding Light={StaticResource QuinaryLight},
+                                                    Dark={StaticResource QuinaryDark}}"
+                        Grid.Column="1">
+                <dx:DXImage.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding CancelAnswerGenerationCommand}" />
+                </dx:DXImage.GestureRecognizers>
+            </dx:DXImage>
         </Grid>
     </Grid>
 </v:ContentPageBase>

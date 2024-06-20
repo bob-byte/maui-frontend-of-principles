@@ -265,7 +265,6 @@ public partial class EditHabitView : ContentPageBase
         }
         else
         {
-            //L_ErrorMessages.Text = string.Empty;
             DXS_ErrorMessages.Children.Clear();
 
             foreach (string errMsg in ViewModel.NameOfHabit.Errors)
