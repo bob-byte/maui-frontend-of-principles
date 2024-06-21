@@ -40,7 +40,8 @@
                                    Style="{StaticResource TitlePrimaryButton}"
                                    x:Name="SB_SaveHabit"
                                    Clicked="SB_Save_Clicked"
-                                   Margin="0,2,0,2"
+                                   Margin="{OnPlatform iOS='0,2,0,2',
+                                                       Android='0, 2, 5, 0'}"
                                    FontSize="12"
                                    BorderThickness="2" />
             </Grid>
@@ -265,7 +266,8 @@
                                       MinimumWidthRequest="250"
                                       AllowShadow="True"
                                       CloseOnScrimTap="True">
-                            <VerticalStackLayout Margin="15">
+                            <VerticalStackLayout Margin="15"
+                                                 Spacing="0">
                                 <dxe:CheckEdit Label="{x:Static loc:LocStrings.EveryDay}"
                                                x:Name="RB_EveryDay"
                                                CheckedCheckBoxImage="checkedcheckedit.svg"
@@ -294,7 +296,7 @@
                                            FontSize="16"
                                            x:Name="E_RepeatsOfSeveralDays"
                                            Focused="RepeatsOfSeveralDays_Focused"
-                                           MaxLength="2" />
+                                           MaxLength="2"/>
                                     <Label Text="{x:Static loc:LocStrings.days}"
                                            FontSize="16"
                                            Margin="{OnPlatform iOS='7, 6, 0, 0',

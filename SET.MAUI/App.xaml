@@ -340,8 +340,6 @@
 
             </Style>
             <Style TargetType="Entry">
-                <Setter Property="BackgroundColor"
-                        Value="{AppThemeBinding Light={StaticResource Background}, Dark={StaticResource DarkBackground}}"/>
                 <Setter Property="TextColor"
                         Value="{AppThemeBinding Light={StaticResource LightNormalText}, Dark={StaticResource DarkNormalText}}" />
             </Style>
