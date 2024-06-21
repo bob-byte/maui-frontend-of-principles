@@ -7,7 +7,12 @@ public class SettingsService : ISettingsService
     {
         get
         {
-            bool result = false;
+            bool result;
+#if DEBUG
+            result = true;
+#else
+            result = false;
+#endif
             return result;
         }
     }

@@ -57,6 +57,7 @@ public static class MauiProgram
 
         var assembly = Assembly.GetExecutingAssembly();
 
+        //TODO: replace appsettings.json and implementation of the config to SET.Core project
         using Stream? stream = assembly.GetManifestResourceStream( $"{assembly.GetName().Name}.appsettings.json" );
 
         IConfigurationRoot configuration = new ConfigurationBuilder()

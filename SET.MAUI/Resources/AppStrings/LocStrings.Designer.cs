@@ -67,6 +67,15 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All areas of life.
+        /// </summary>
+        internal static string AllAreasOfLife {
+            get {
+                return ResourceManager.GetString("AllAreasOfLife", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Appearance.
         /// </summary>
         internal static string Appearance {

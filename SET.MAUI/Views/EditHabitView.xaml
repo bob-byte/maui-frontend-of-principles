@@ -70,6 +70,7 @@
                                                    EndIcon="dotshorizontal"
                                                    ItemsSource="{Binding AllUserAreasOfLife}"
                                                    EndIconClicked="TE_AreasOfLife_EndIconClicked"
+                                                   Focused="TE_AreasOfLife_Focused"
                                                    StartIcon="rule"
                                                    IsStartIconVisible="True"
                                                    DisplayMember="Name"
@@ -78,21 +79,17 @@
                                                    SelectionChanged="TE_AreasOfLife_SelectionChanged"
                                                    DropDownSelectedItemBackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary},
                                                                                                          Dark={StaticResource LightPrimary}}"
-                                                   x:Name="TE_AreasOfLife">
+                                                   x:Name="TE_AreasOfLife"
+                                                   TextChanged="TE_AreasOfLife_TextChanged">
                             <dxe:AutoCompleteTokenEdit.TokenAppearance>
                                 <dxe:TokenAppearance BorderColor="{StaticResource Primary}"
-                                                     BorderThickness="2"
+                                                     BorderThickness="2.5"
                                                      CornerRadius="14"
                                                      FontSize="14"
                                                      TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
                                                                                  Dark={StaticResource DarkNormalText}}"
                                                      PressedBorderColor="{StaticResource Primary}" />
                             </dxe:AutoCompleteTokenEdit.TokenAppearance>
-                            <dxe:AutoCompleteTokenEdit.GestureRecognizers>
-                                <TapGestureRecognizer NumberOfTapsRequired="1"
-                                                      x:Name="TGR_AreasOfHabit"
-                                                      Tapped="TGR_AreasOfHabit_Tapped" />
-                            </dxe:AutoCompleteTokenEdit.GestureRecognizers>
                         </dxe:AutoCompleteTokenEdit>
                         <dxe:MultilineEdit Text="{Binding NameOfHabit.Value}"
                                            LabelText="{x:Static loc:LocStrings.Name}"

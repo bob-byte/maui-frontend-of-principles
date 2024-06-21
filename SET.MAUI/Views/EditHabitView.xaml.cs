@@ -2,9 +2,6 @@
 using DevExpress.Maui.Controls;
 using DevExpress.Maui.Editors;
 
-using Microsoft.VisualBasic;
-
-using SET.Core.Models;
 
 namespace SET.MAUI.Views;
 
@@ -230,18 +227,31 @@ public partial class EditHabitView : ContentPageBase
         TE_AreasOfLife.IsDropDownOpen = !TE_AreasOfLife.IsDropDownOpen;
     }
 
-    void TE_AreasOfLife_SelectionChanged( System.Object sender, System.EventArgs e )
+    void TE_AreasOfLife_SelectionChanged( object sender, EventArgs e )
     {
-        if (TE_AreasOfLife.SelectedItems?.Count == 0)
-        {
-            TE_AreasOfLife.IsLabelFloating = true;
-        }
-        else
-        {
-            TE_AreasOfLife.IsLabelFloating = false;
-        }
+        TE_AreasOfLife.IsLabelFloating = TE_AreasOfLife.SelectedItems?.Count == 0;
 
         m_doExecuteReloadOfRecommendedHabits = true;
+    }
+
+    void TE_AreasOfLife_TextChanged( object sender, AutoCompleteEditTextChangedEventArgs e )
+    {
+        if (e.Reason == AutoCompleteEditTextChangeReason.UserInput && !string.IsNullOrEmpty( TE_AreasOfLife.Text ))
+        {
+            TE_AreasOfLife.Text = string.Empty;
+        }
+    }
+
+    void TE_AreasOfLife_Focused( object sender, FocusEventArgs e )
+    {
+        try
+        {
+            TE_AreasOfLife.IsDropDownOpen = !TE_AreasOfLife.IsDropDownOpen;
+        }
+        catch
+        {
+            //do nothing
+        }
     }
 
     void RepeatsOfSeveralDays_Focused( System.Object sender, Microsoft.Maui.Controls.FocusEventArgs e )

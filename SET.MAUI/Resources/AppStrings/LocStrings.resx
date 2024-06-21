@@ -725,4 +725,7 @@ By using the App, you acknowledge that you have read, understood, and agree to b
   <data name="NewPasswordIsIncorrectError" xml:space="preserve">
     <value>Password must be at least 8 characters long and contain at least one lowercase letter and one digit.</value>
   </data>
+  <data name="AllAreasOfLife" xml:space="preserve">
+    <value>All areas of life</value>
+  </data>
 </root>

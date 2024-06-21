@@ -180,14 +180,14 @@ public class ServiceOfHabit : BaseRemoteService, IServiceOfHabit
     public bool CanAddNewHabit( UserHabit newHabit, IEnumerable<UserHabit> allHabits )
     {
         bool? result = null;
-        if (newHabit.AreasOfLife != null && newHabit.AreasOfLife.Any())
+        if (newHabit.AreasOfLife?.Any( a => a.Id != 0 ) == true)
         {
             foreach (UserAreaOfLife sphere in newHabit.AreasOfLife!)
             {
                 List<UserHabit> habitsInSphere = allHabits.
-                    Where( h => h.AreasOfLife!.Any( a => a.Id == sphere.Id ) && h.PercentageAchieved < 0.5 && h.Status == StatusOfHabit.InProgress ).
+                    Where( h => h.AreasOfLife!.Any( a => a.Id == sphere.Id ) && h.PercentageAchieved < 0.8 && h.Status == StatusOfHabit.InProgress ).
                     ToList();
-                if (habitsInSphere.Count >= 3)
+                if (habitsInSphere.Count >= 2)
                 {
                     result = false;
                     break;
@@ -214,9 +214,11 @@ public class ServiceOfHabit : BaseRemoteService, IServiceOfHabit
         else
         {
             List<UserHabit> habitsWithoutAnyArea = allHabits.
-                Where( h => (h.AreasOfLife == null || !h.AreasOfLife.Any()) && h.PercentageAchieved < 0.5 && h.Status == StatusOfHabit.InProgress ).
+                Where( h => (h.AreasOfLife == null || !h.AreasOfLife.Any( a => a.Id != 0 )) &&
+                             h.PercentageAchieved < 0.8 &&
+                             h.Status == StatusOfHabit.InProgress ).
                 ToList();
-            if (habitsWithoutAnyArea.Count >= 3)
+            if (habitsWithoutAnyArea.Count >= 2)
             {
                 result = false;
             }

@@ -651,4 +651,7 @@
   <data name="NewPasswordIsIncorrectError" xml:space="preserve">
     <value>Пароль повинен мати щонайменше 8 символів і містити принаймні одну малу літеру та одну цифру.</value>
   </data>
+  <data name="AllAreasOfLife" xml:space="preserve">
+    <value>Усі сфери життя</value>
+  </data>
 </root>
