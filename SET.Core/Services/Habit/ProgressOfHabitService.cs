@@ -56,8 +56,11 @@ public class ProgressOfHabitService : BaseRemoteService, IProgressOfHabitService
         );
         progressOfHabit.Id = response.Id;
 
-        LoggingService.LogInfo( $"Before progress of habit: {beforeProgress};{Environment.NewLine}" +
-            $"After {isCompletedAsStr}: {habit.PercentageAchieved}." );
+        if (SettingsService.IsDebug)
+        {
+            LoggingService.LogInfo( $"Before progress of habit: {beforeProgress};{Environment.NewLine}" +
+                $"After {isCompletedAsStr}: {habit.PercentageAchieved}." );
+        }
     }
 
     public double ComputeScore( double frequency, double previousScore, double checkmarkValue, int complexity )

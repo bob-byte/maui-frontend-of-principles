@@ -123,7 +123,7 @@ public static class MauiProgram
 #endif
 #else
             //for Release mode and any OS
-            .WriteTo.Sink( new LoggerToServer( CreateSaveLogRequest ), LogEventLevel.Error )
+            .WriteTo.Sink( new LoggerToServer( CreateSaveLogRequest ), LogEventLevel.Information )
 #endif
             .Enrich.FromLogContext()
             .CreateLogger();

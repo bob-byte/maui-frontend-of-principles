@@ -231,12 +231,16 @@ public class RequestProvider : IRequestProvider
             content = await response.Content.ReadAsStringAsync().DefaultConfigureAwait();
             m_loggingService.LogInfo( logRecord: $"Response content: {content}" );
         }
-        else if(!response.IsSuccessStatusCode)
+        else if (!response.IsSuccessStatusCode)
         {
             content = await response.Content.ReadAsStringAsync().DefaultConfigureAwait();
-            m_loggingService.LogInfo( logRecord: $"Response content: {content}" );
 
-            if (response.StatusCode == HttpStatusCode.Forbidden || 
+            if (m_settingsService.IsDebug)
+            {
+                m_loggingService.LogInfo( $"Response content: {content}" );
+            }
+
+            if (response.StatusCode == HttpStatusCode.Forbidden ||
                 response.StatusCode == HttpStatusCode.Unauthorized)
             {
                 throw new ServiceAuthenticationException( content );

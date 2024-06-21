@@ -27,7 +27,7 @@ public class AiRecommenderOfHabitsService : BaseRemoteService, IAiRecommenderOfH
     {
         var timeComputer = Stopwatch.StartNew();
         StringBuilder messageContentBuilder = new();
-        messageContentBuilder.Append( $"Please recommend me a list of 5 next atomic habits that I can select. " );
+        messageContentBuilder.Append( $"Please recommend me a list of 4 next atomic habits that I can select. " );
         if (!string.IsNullOrWhiteSpace( userMission ))
         {
             messageContentBuilder.Append( $"They shouldn't conflict with my mission: \"{userMission}\". " );
@@ -67,7 +67,7 @@ public class AiRecommenderOfHabitsService : BaseRemoteService, IAiRecommenderOfH
         messageContentBuilder.Append( $"Your answer should be in JSON format and contain an array of habits. Each array object should consist of the following fields: {nameof( RecommendedHabit.Name )}, {nameof( RecommendedHabit.ReasonToFollow )}. The {nameof( RecommendedHabit.Name )} field indicates the name of the habit, the {nameof( RecommendedHabit.ReasonToFollow )} field indicates why I should follow it and must be very briefly, but accurately explained. You must send only a JSON array in your response and nothing else. Your response must be in the {CultureInfo.CurrentUICulture.ThreeLetterISOLanguageName} language. JSON object which contains array of habits must be named \"Habits\" in english. " );
 
         string userMsg = messageContentBuilder.ToString();
-        LoggingService.LogInfo( $"Request to get recommended habits: {userMsg}" );
+
         ChatMessage newChatMessage = new( ChatRole.User, userMsg );
         List<ChatMessage> chatMessages = new()
         {

@@ -80,7 +80,11 @@ public class ServiceOfHabit : BaseRemoteService, IServiceOfHabit
         }
 
         timeWatcher.Stop();
-        LoggingService.LogInfo( $"Time of habits initialization: {timeWatcher.ElapsedMilliseconds} milliseconds" );
+
+        if (SettingsService.IsDebug)
+        {
+            LoggingService.LogInfo( $"Time of habits initialization: {timeWatcher.ElapsedMilliseconds} milliseconds" );
+        }
 
         return result;
     }

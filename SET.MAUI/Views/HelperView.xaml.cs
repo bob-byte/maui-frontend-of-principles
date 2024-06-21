@@ -40,7 +40,7 @@ public partial class HelperView : ContentPageBase
 
     private void HideKeyboard()
     {
-#if iOS
+#if IOS
         TE_Prompt.IsEnabled = false;
         TE_Prompt.IsEnabled = true;
 #elif ANDROID

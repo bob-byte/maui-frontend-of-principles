@@ -282,7 +282,6 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
     private void SelectedRecommendedHabit(RecommendedHabit recommendedHabit)
     {
         NameOfHabit.Value = recommendedHabit.Name;
-        ReasonToFollow.Value = recommendedHabit.ReasonToFollow;
     }
 
     public override async Task InitializeAsync( object? parameter = null )
@@ -293,7 +292,6 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
 
         if (Habit.Id != 0)
         {
-
             Habit = await ServiceOfHabit.UserHabitAsync( Habit.Id );
             if(Habit.Complexity < HabitConstants.MIN_HABIT_COMPLEXITY || HabitConstants.MIN_HABIT_COMPLEXITY < Habit.Complexity)
             {
