@@ -33,20 +33,9 @@ public partial class HelperView : ContentPageBase
 
     async void SB_AskQuestion_Clicked( System.Object sender, System.EventArgs e )
     {
-        HideKeyboard();
+        KeyboardHelper.HideKeyboard();
 
         await AskQuestionAsync();
-    }
-
-    private void HideKeyboard()
-    {
-#if IOS
-        TE_Prompt.IsEnabled = false;
-        TE_Prompt.IsEnabled = true;
-#elif ANDROID
-        E_Prompt.IsEnabled = false;
-        E_Prompt.IsEnabled = true;
-#endif
     }
 
     async void TE_Prompt_Completed( System.Object sender, System.EventArgs e )
