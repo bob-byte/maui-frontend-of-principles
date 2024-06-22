@@ -278,7 +278,7 @@
                                                DisabledCheckedCheckBoxColor="{StaticResource Primary}"
                                                DisabledLabelColor="{StaticResource LabelText}" />
                                 <HorizontalStackLayout Margin="{OnPlatform iOS='0, 10, 0, 10',
-                                                                           Android='0, 25, 0, 10'}"
+                                                                           Android='0, 5, 0, 0'}"
                                                        Focused="RepeatsOfSeveralDays_Focused">
                                     <dxe:CheckEdit x:Name="RB_EverySeveralDays"
                                                    Label="{x:Static loc:LocStrings.Every}"
@@ -289,18 +289,22 @@
                                                    CheckedChanged="OnCheckEditChanged"
                                                    DisabledCheckedCheckBoxColor="{StaticResource Primary}"
                                                    DisabledLabelColor="Black" />
-                                    <Entry Keyboard="Numeric"
-                                           HorizontalTextAlignment="Center"
-                                           Margin="{OnPlatform iOS='0,0,0,5',
-                                                               Android='0,7,0,5'}"
-                                           FontSize="16"
-                                           x:Name="E_RepeatsOfSeveralDays"
-                                           Focused="RepeatsOfSeveralDays_Focused"
-                                           MaxLength="2"/>
+                                    <dxe:TextEdit Keyboard="Numeric"
+                                                  Margin="{OnPlatform iOS='0,0,0,5',
+                                                                      Android='3,5,0,5'}"
+                                                  x:Name="E_RepeatsOfSeveralDays"
+                                                  Focused="RepeatsOfSeveralDays_Focused"
+                                                  HeightRequest="30"
+                                                  BoxMinWidth="20"
+                                                  BoxPadding="6,5,5,5"
+                                                  ClearIconVisibility="Never"
+                                                  TextFontSize="16"
+                                                  TextChanged="E_RepeatsOfSeveralDays_TextChanged"
+                                                  BackgroundColor="{StaticResource SecondaryDark}" />
                                     <Label Text="{x:Static loc:LocStrings.days}"
                                            FontSize="16"
                                            Margin="{OnPlatform iOS='7, 6, 0, 0',
-                                                               Android='0, 15, 0, 0'}">
+                                                               Android='3, 8, 0, 0'}">
                                         <Label.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="EverySeveralDaysFrequency_Tapped" />
                                         </Label.GestureRecognizers>
@@ -319,19 +323,22 @@
                                                    CheckedChanged="OnCheckEditChanged"
                                                    DisabledCheckedCheckBoxColor="{StaticResource Primary}"
                                                    DisabledLabelColor="Black" />
-                                    <Entry Keyboard="Numeric"
-                                           Margin="{OnPlatform iOS='0, 0, 0, 15',
-                                                               Android='0, 11, 0, 15'}"
-                                           MaxLength="3"
-                                           HorizontalTextAlignment="Center"
-                                           FontSize="16"
-                                           x:Name="E_RepeatsOfSeveralTimesPerPeriod"
-                                           Focused="E_RepeatsOfSeveralTimesPerPeriod_Focused">
-                                    </Entry>
+                                    <dxe:TextEdit Keyboard="Numeric"
+                                                  Margin="{OnPlatform iOS='0, 0, 0, 15',
+                                                                      Android='9, 8, 0, 5'}"
+                                                  TextFontSize="16"
+                                                  HeightRequest="30"
+                                                  BoxMinWidth="20"
+                                                  BoxPadding="6,5,5,5"
+                                                  ClearIconVisibility="Never"
+                                                  x:Name="E_RepeatsOfSeveralTimesPerPeriod"
+                                                  Focused="E_RepeatsOfSeveralTimesPerPeriod_Focused"
+                                                  TextChanged="E_RepeatsOfSeveralTimesPerPeriod_TextChanged"
+                                                  BackgroundColor="{StaticResource SecondaryDark}" />
                                     <Label Text="{x:Static loc:LocStrings.timesPer}"
                                            FontSize="16"
                                            Margin="{OnPlatform iOS='7, 10, 0, 0',
-                                                               Android='3, 21, 0, 0'}" />
+                                                               Android='3, 10, 3, 0'}" />
                                     <dxe:ComboBoxEdit ItemsSource="{Binding PeriodsOfHabit}"
                                                       SelectedItem="{Binding SelectedPeriodOfHabit}"
                                                       DisplayMember="Name"
@@ -347,7 +354,7 @@
                                                       DropDownSelectedItemBackgroundColor="{StaticResource LightPrimary}"
                                                       x:Name="CBE_Period"
                                                       Margin="{OnPlatform iOS='7, 0, 0, 15',
-                                                                          Android='7, 15, 0, 15'}">
+                                                                          Android='0, 3, 0, 0'}">
                                         <dxe:ComboBoxEdit.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="SeveralTimesPerPeriodFrequency_Tapped" />
                                         </dxe:ComboBoxEdit.GestureRecognizers>

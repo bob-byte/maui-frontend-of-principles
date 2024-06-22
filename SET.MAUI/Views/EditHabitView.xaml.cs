@@ -484,4 +484,24 @@ public partial class EditHabitView : ContentPageBase
             }
         }
     }
+
+    private void E_RepeatsOfSeveralDays_TextChanged( object sender, EventArgs e )
+    {
+        var enteredText = sender as TextEdit;
+
+        if (enteredText.Text.Length > 2)
+        {
+            enteredText.Text = enteredText.Text.Substring( 0, 2 );
+        }
+    }
+
+    private void E_RepeatsOfSeveralTimesPerPeriod_TextChanged( object sender, EventArgs e )
+    {
+        var enteredText = sender as TextEdit;
+
+        if (enteredText.Text.Length > 3)
+        {
+            enteredText.Text = enteredText.Text.Substring( 0, 3 );
+        }
+    }
 }
