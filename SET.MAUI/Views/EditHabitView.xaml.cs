@@ -66,9 +66,12 @@ public partial class EditHabitView : ContentPageBase
 
     private EditHabitViewModel ViewModel { get; }
 
-    void Frequency_Tapped( object sender, TappedEventArgs e )
+    void TE_Frequency_Focused( object sender, FocusEventArgs e )
     {
-        OpenFrequencyPopup();
+        if (e.IsFocused)
+        {
+            OpenFrequencyPopup();
+        }
     }
 
     void FrequencyIcon_Clicked( object sender, EventArgs e )
@@ -83,25 +86,25 @@ public partial class EditHabitView : ContentPageBase
         {
             case FrequencyType.EverySeveralDays:
                 {
-                    E_RepeatsOfSeveralTimesPerPeriod.Text = "3";
-                    E_RepeatsOfSeveralDays.Text = frequency.IntervalLengthInDays.ToString();
-                    RB_EverySeveralDays.IsChecked = true;
+                    TE_RepeatsOfSeveralTimesPerPeriod.Text = "3";
+                    TE_RepeatsOfSeveralDays.Text = frequency.IntervalLengthInDays.ToString();
+                    CE_EverySeveralDays.IsChecked = true;
                     break;
                 }
 
             case FrequencyType.SeveralTimesPerPeriod:
                 {
-                    E_RepeatsOfSeveralDays.Text = "3";
-                    E_RepeatsOfSeveralTimesPerPeriod.Text = frequency.Repeats.ToString();
-                    RB_SeveralTimesPerPeriod.IsChecked = true;
+                    TE_RepeatsOfSeveralDays.Text = "3";
+                    TE_RepeatsOfSeveralTimesPerPeriod.Text = frequency.Repeats.ToString();
+                    CE_SeveralTimesPerPeriod.IsChecked = true;
                     break;
                 }
 
             default:
                 {
-                    E_RepeatsOfSeveralDays.Text = "3";
-                    E_RepeatsOfSeveralTimesPerPeriod.Text = "3";
-                    RB_EveryDay.IsChecked = true;
+                    TE_RepeatsOfSeveralDays.Text = "3";
+                    TE_RepeatsOfSeveralTimesPerPeriod.Text = "3";
+                    CE_EveryDay.IsChecked = true;
 
                     break;
                 }
@@ -113,78 +116,83 @@ public partial class EditHabitView : ContentPageBase
 
     async void SB_SaveFrequencyPopup_Clicked( object sender, EventArgs e )
     {
-        FrequencyOfHabit frequency = ViewModel.Habit.Frequency;
+        FrequencyOfHabit frequency = ViewModel.Habit.Frequency!;
         bool hasErrors = false;
-        if (RB_EveryDay.IsChecked == true)
+        if (CE_EveryDay.IsChecked == true)
         {
             frequency.IntervalLengthInDays = 1;
             frequency.Repeats = 1;
             frequency.Type = FrequencyType.EveryDay;
         }
-        else if (RB_EverySeveralDays.IsChecked == true)
+        else if (CE_EverySeveralDays.IsChecked == true)
         {
             try
             {
                 int previousInterval = frequency.IntervalLengthInDays;
-                frequency.IntervalLengthInDays = Convert.ToUInt16( E_RepeatsOfSeveralDays.Text );
+                frequency.IntervalLengthInDays = Convert.ToUInt16( TE_RepeatsOfSeveralDays.Text );
 
-                int maxIntervalLengthInDays = HabitConstants.AVERAGE_NUMBER_OF_DAYS_TO_AUTOMATE_HABIT;
-                if (frequency.IntervalLengthInDays <= maxIntervalLengthInDays)
-                {
-                    frequency.Type = frequency.IntervalLengthInDays > 1
+                frequency.Type = frequency.IntervalLengthInDays > 1
                         ? FrequencyType.EverySeveralDays
                         : FrequencyType.EveryDay;
 
-                    frequency.Repeats = 1;
-                }
-                else
-                {
-                    frequency.IntervalLengthInDays = previousInterval;
-
-                    string errorMsg = $"{maxIntervalLengthInDays} {LocStrings.IsMaxValue.ToLower()}";
-                    ViewModel.LoggingService.LogError( errorMsg );
-                    await ViewModel.DialogService.ShowErrorAsync( errorMsg );
-                    hasErrors = true;
-                }
+                frequency.Repeats = 1;
             }
             catch
             {
-                string errorMsg = $"{LocStrings.CannotParse} \"{E_RepeatsOfSeveralDays.Text}\" {LocStrings.ToInteger.ToLower()}";
+                string errorMsg = $"{LocStrings.CannotParse} \"{TE_RepeatsOfSeveralDays.Text}\" {LocStrings.ToInteger.ToLower()}";
                 ViewModel.LoggingService.LogError( errorMsg );
                 await ViewModel.DialogService.ShowErrorAsync( errorMsg );
                 hasErrors = true;
             }
         }
-        else if (RB_SeveralTimesPerPeriod.IsChecked == true)
+        else if (CE_SeveralTimesPerPeriod.IsChecked == true)
         {
             try
             {
                 frequency.Type = FrequencyType.SeveralTimesPerPeriod;
-                frequency.Repeats = Convert.ToUInt16( E_RepeatsOfSeveralTimesPerPeriod.Text );
+                int repeats = Convert.ToUInt16( TE_RepeatsOfSeveralTimesPerPeriod.Text );
+
                 switch (ViewModel.SelectedPeriodOfHabit.Type)
                 {
                     case PeriodTypeOfHabit.Week:
                         {
                             frequency.IntervalLengthInDays = 7;
+                            if(repeats > 7)
+                            {
+                                repeats = 7;
+                            }
+
                             break;
                         }
 
                     case PeriodTypeOfHabit.Month:
                         {
                             frequency.IntervalLengthInDays = 30;
+                            if (repeats > 30)
+                            {
+                                repeats = 30;
+                            }
+
                             break;
                         }
 
                     case PeriodTypeOfHabit.Year:
                         {
                             frequency.IntervalLengthInDays = 365;
+                            if (repeats > 365)
+                            {
+                                repeats = 365;
+                            }
+
                             break;
                         }
                 }
+
+                frequency.Repeats = repeats;
             }
             catch
             {
-                await ViewModel.DialogService.ShowErrorAsync( $"{LocStrings.CannotParse} \"{E_RepeatsOfSeveralDays.Text}\" {LocStrings.ToInteger.ToLower()}" );
+                await ViewModel.DialogService.ShowErrorAsync( $"{LocStrings.CannotParse} \"{TE_RepeatsOfSeveralDays.Text}\" {LocStrings.ToInteger.ToLower()}" );
                 hasErrors = true;
             }
         }
@@ -194,11 +202,6 @@ public partial class EditHabitView : ContentPageBase
             ViewModel.UpdateFrequencyRepresentation();
             DXP_Frequency.IsOpen = false;
         }
-    }
-
-    void SeveralTimesPerPeriodFrequency_Tapped( System.Object sender, Microsoft.Maui.Controls.TappedEventArgs e )
-    {
-        RB_SeveralTimesPerPeriod.IsChecked = true;
     }
 
     //TODO: replace to ViewModel
@@ -242,7 +245,7 @@ public partial class EditHabitView : ContentPageBase
         }
     }
 
-    void TE_AreasOfLife_Focused( object sender, FocusEventArgs e )
+    void TE_AreasOfLife_Tap( object sender, HandledEventArgs e )
     {
         try
         {
@@ -258,13 +261,13 @@ public partial class EditHabitView : ContentPageBase
     {
         if (e.IsFocused)
         {
-            RB_EverySeveralDays.IsChecked = true;
+            CE_EverySeveralDays.IsChecked = true;
         }
     }
 
     void EverySeveralDaysFrequency_Tapped( System.Object sender, Microsoft.Maui.Controls.TappedEventArgs e )
     {
-        RB_EverySeveralDays.IsChecked = true;
+        CE_EverySeveralDays.IsChecked = true;
     }
 
     async void SB_Save_Clicked( System.Object sender, System.EventArgs e )
@@ -379,14 +382,6 @@ public partial class EditHabitView : ContentPageBase
         }
     }
 
-    void E_RepeatsOfSeveralTimesPerPeriod_Focused( System.Object sender, Microsoft.Maui.Controls.FocusEventArgs e )
-    {
-        if (e.IsFocused)
-        {
-            RB_SeveralTimesPerPeriod.IsChecked = true;
-        }
-    }
-
     void G_SaveHabit_SizeChanged( System.Object sender, System.EventArgs e )
     {
         double titleWidth = G_Title.Width;
@@ -477,7 +472,7 @@ public partial class EditHabitView : ContentPageBase
 
         if (selectedCheckEdit != null && selectedCheckEdit.IsChecked == true)
         {
-            var checkEdits = new List<CheckEdit> { RB_EveryDay, RB_EverySeveralDays, RB_SeveralTimesPerPeriod };
+            var checkEdits = new List<CheckEdit> { CE_EveryDay, CE_EverySeveralDays, CE_SeveralTimesPerPeriod };
 
             foreach (var checkEdit in checkEdits)
             {
@@ -494,23 +489,46 @@ public partial class EditHabitView : ContentPageBase
         }
     }
 
-    private void E_RepeatsOfSeveralDays_TextChanged( object sender, EventArgs e )
+    private void TE_RepeatsOfSeveralDays_TextChanged( object sender, EventArgs e )
     {
         var enteredText = sender as TextEdit;
 
-        if (enteredText.Text.Length > 2)
+        if (enteredText?.Text?.Length > 2)
         {
-            enteredText.Text = enteredText.Text.Substring( 0, 2 );
+            enteredText.Text = enteredText.Text.Substring( startIndex: 0, length: 2 );
         }
     }
 
-    private void E_RepeatsOfSeveralTimesPerPeriod_TextChanged( object sender, EventArgs e )
+    private void TE_RepeatsOfSeveralTimesPerPeriod_TextChanged( object sender, EventArgs e )
     {
         var enteredText = sender as TextEdit;
 
-        if (enteredText.Text.Length > 3)
+        if (enteredText?.Text?.Length > 2)
         {
-            enteredText.Text = enteredText.Text.Substring( 0, 3 );
+            enteredText.Text = enteredText.Text.Substring( startIndex: 0, length: 2 );
         }
+    }
+
+    void SeveralTimesPerPeriodFrequency_Tapped( object sender, TappedEventArgs e )
+    {
+        CE_SeveralTimesPerPeriod.IsChecked = true;
+    }
+
+    void SeveralTimesPerPeriodFrequency_Focused( object sender, FocusEventArgs e )
+    {
+        if (e.IsFocused)
+        {
+            CE_SeveralTimesPerPeriod.IsChecked = true;
+        }
+    }
+
+    void CBE_Period_Tap( System.Object sender, System.ComponentModel.HandledEventArgs e )
+    {
+        CE_SeveralTimesPerPeriod.IsChecked = true;
+    }
+
+    void TE_Frequency_Tap( System.Object sender, System.ComponentModel.HandledEventArgs e )
+    {
+        OpenFrequencyPopup();
     }
 }

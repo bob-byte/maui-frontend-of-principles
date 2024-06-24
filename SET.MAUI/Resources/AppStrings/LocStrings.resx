@@ -327,9 +327,6 @@
   <data name="ToInteger" xml:space="preserve">
     <value>To integer</value>
   </data>
-  <data name="IsMaxValue" xml:space="preserve">
-    <value>is max value</value>
-  </data>
   <data name="Close" xml:space="preserve">
     <value>Close</value>
   </data>

@@ -249,9 +249,6 @@
   <data name="ToInteger" xml:space="preserve">
     <value>В ціле число</value>
   </data>
-  <data name="IsMaxValue" xml:space="preserve">
-    <value>є максимальним значенням</value>
-  </data>
   <data name="Close" xml:space="preserve">
     <value>Закрити</value>
   </data>

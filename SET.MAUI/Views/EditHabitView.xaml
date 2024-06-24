@@ -71,7 +71,7 @@
                                                    EndIcon="dotshorizontal"
                                                    ItemsSource="{Binding AllUserAreasOfLife}"
                                                    EndIconClicked="TE_AreasOfLife_EndIconClicked"
-                                                   Focused="TE_AreasOfLife_Focused"
+                                                   Tap="TE_AreasOfLife_Tap"
                                                    StartIcon="rule"
                                                    IsStartIconVisible="True"
                                                    DisplayMember="Name"
@@ -122,17 +122,15 @@
                                                            Source={RelativeSource AncestorType={x:Type vm:EditHabitViewModel}}}"
                                       TapCommandParameter="{x:Reference C_IntegrallyWiseType}" />
                         </dxe:ChoiceChipGroup>
-                        <dxe:TextEdit IsReadOnly="True"
+                        <dxe:TextEdit x:Name="TE_Frequency"
+                                      Text="{Binding FrequencyRepresentation}"
+                                      LabelText="{x:Static loc:LocStrings.Frequency}"
+                                      IsReadOnly="True"
                                       StartIcon="restart"
                                       StartIconClicked="FrequencyIcon_Clicked"
                                       EndIcon="dotshorizontal"
                                       EndIconClicked="FrequencyIcon_Clicked"
-                                      Text="{Binding FrequencyRepresentation}"
-                                      LabelText="{x:Static loc:LocStrings.Frequency}">
-                            <dxe:TextEdit.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="Frequency_Tapped" />
-                            </dxe:TextEdit.GestureRecognizers>
-                        </dxe:TextEdit>
+                                      Tap="TE_Frequency_Tap" />
                         <dxe:NumericEdit Value="{Binding Habit.Priority}"
                                          LabelText="{x:Static loc:LocStrings.Priority}"
                                          MinValue="1"
@@ -266,40 +264,40 @@
                             <VerticalStackLayout Margin="15"
                                                  Spacing="0">
                                 <dxe:CheckEdit Label="{x:Static loc:LocStrings.EveryDay}"
-                                               x:Name="RB_EveryDay"
-                                               CheckedCheckBoxImage="checkedcheckedit.svg"
-                                               UncheckedCheckBoxImage="uncheckedcheckedit.svg"
+                                               x:Name="CE_EveryDay"
+                                               CheckedCheckBoxImage="checkedcheckedit"
+                                               UncheckedCheckBoxImage="uncheckedcheckedit"
                                                CheckedChanged="OnCheckEditChangedInFrequencyPopup"
                                                DisabledCheckedCheckBoxColor="{StaticResource Primary}"
                                                DisabledLabelColor="{AppThemeBinding Light={StaticResource LightNormalText},
                                                                                     Dark={StaticResource DarkNormalText}}" />
                                 <HorizontalStackLayout Margin="{OnPlatform iOS='0, 10, 0, 10',
-                                                                           Android='0, 5, 0, 0'}"
-                                                       Focused="RepeatsOfSeveralDays_Focused">
-                                    <dxe:CheckEdit x:Name="RB_EverySeveralDays"
+                                                                           Android='0, 5, 0, 0'}">
+                                    <dxe:CheckEdit x:Name="CE_EverySeveralDays"
                                                    CheckedChanged="OnCheckEditChangedInFrequencyPopup"
                                                    Label="{x:Static loc:LocStrings.Every}"
-                                                   CheckedCheckBoxImage="checkedcheckedit.svg"
-                                                   UncheckedCheckBoxImage="uncheckedcheckedit.svg"
+                                                   CheckedCheckBoxImage="checkedcheckedit"
+                                                   UncheckedCheckBoxImage="uncheckedcheckedit"
                                                    DisabledCheckedCheckBoxColor="{StaticResource Primary}"
                                                    DisabledLabelColor="{AppThemeBinding Light={StaticResource LightNormalText},
                                                                                         Dark={StaticResource DarkNormalText}}" />
                                     <dxe:TextEdit Keyboard="Numeric"
-                                                  Margin="{OnPlatform iOS='0,0,0,5',
+                                                  Margin="{OnPlatform iOS='6,0,0,5',
                                                                       Android='3,5,0,5'}"
-                                                  x:Name="E_RepeatsOfSeveralDays"
+                                                  x:Name="TE_RepeatsOfSeveralDays"
                                                   Focused="RepeatsOfSeveralDays_Focused"
                                                   HeightRequest="30"
-                                                  BoxMinWidth="20"
+                                                  BoxMinWidth="30"
                                                   BoxPadding="6,5,5,5"
                                                   ClearIconVisibility="Never"
-                                                  TextFontSize="16"
-                                                  TextChanged="E_RepeatsOfSeveralDays_TextChanged"
-                                                  BackgroundColor="{StaticResource SecondaryDark}" />
+                                                  TextChanged="TE_RepeatsOfSeveralDays_TextChanged"
+                                                  TextHorizontalAlignment="Center"
+                                                  BackgroundColor="{AppThemeBinding Light={StaticResource Background}, Dark={StaticResource DarkBackground}}" />
                                     <Label Text="{x:Static loc:LocStrings.days}"
                                            FontSize="16"
                                            Margin="{OnPlatform iOS='7, 6, 0, 0',
-                                                               Android='3, 8, 0, 0'}">
+                                                               Android='3, 8, 0, 0'}"
+                                           Focused="RepeatsOfSeveralDays_Focused">
                                         <Label.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="EverySeveralDaysFrequency_Tapped" />
                                         </Label.GestureRecognizers>
@@ -307,58 +305,49 @@
                                 </HorizontalStackLayout>
 
                                 <HorizontalStackLayout>
-                                    <HorizontalStackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="SeveralTimesPerPeriodFrequency_Tapped" />
-                                    </HorizontalStackLayout.GestureRecognizers>
-                                    <dxe:CheckEdit x:Name="RB_SeveralTimesPerPeriod"
-                                                   CheckedCheckBoxImage="checkedcheckedit.svg"
-                                                   UncheckedCheckBoxImage="uncheckedcheckedit.svg"
+                                    <dxe:CheckEdit x:Name="CE_SeveralTimesPerPeriod"
+                                                   CheckedCheckBoxImage="checkedcheckedit"
+                                                   UncheckedCheckBoxImage="uncheckedcheckedit"
                                                    CheckedChanged="OnCheckEditChangedInFrequencyPopup"
                                                    DisabledCheckedCheckBoxColor="{StaticResource Primary}"
                                                    DisabledLabelColor="{AppThemeBinding Light={StaticResource LightNormalText},
-                                                                                        Dark={StaticResource DarkNormalText}}" />
+                                                                                        Dark={StaticResource DarkNormalText}}"
+                                                   Margin="{OnPlatform iOS='0, 0, 0, 15'}"/>
                                     <dxe:TextEdit Keyboard="Numeric"
                                                   Margin="{OnPlatform iOS='0, 0, 0, 15',
                                                                       Android='9, 8, 0, 5'}"
-                                                  TextFontSize="16"
+                                                  TextHorizontalAlignment="Center"
                                                   HeightRequest="30"
-                                                  BoxMinWidth="20"
+                                                  BoxMinWidth="30"
                                                   BoxPadding="6,5,5,5"
                                                   ClearIconVisibility="Never"
-                                                  x:Name="E_RepeatsOfSeveralTimesPerPeriod"
-                                                  Focused="E_RepeatsOfSeveralTimesPerPeriod_Focused"
-                                                  TextChanged="E_RepeatsOfSeveralTimesPerPeriod_TextChanged"
-                                                  BackgroundColor="{StaticResource SecondaryDark}" />
+                                                  x:Name="TE_RepeatsOfSeveralTimesPerPeriod"
+                                                  Focused="SeveralTimesPerPeriodFrequency_Focused"
+                                                  TextChanged="TE_RepeatsOfSeveralTimesPerPeriod_TextChanged"
+                                                  BackgroundColor="{AppThemeBinding Light={StaticResource Background},
+                                                                                    Dark={StaticResource DarkBackground}}" />
                                     <Label Text="{x:Static loc:LocStrings.timesPer}"
                                            FontSize="16"
                                            Margin="{OnPlatform iOS='7, 10, 0, 0',
-                                                               Android='3, 10, 3, 0'}" />
-                                    <dxe:ComboBoxEdit ItemsSource="{Binding PeriodsOfHabit}"
+                                                               Android='3, 10, 3, 0'}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="SeveralTimesPerPeriodFrequency_Tapped"/>
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                    <dxe:ComboBoxEdit x:Name="CBE_Period"
+                                                      ItemsSource="{Binding PeriodsOfHabit}"
                                                       SelectedItem="{Binding SelectedPeriodOfHabit}"
                                                       DisplayMember="Name"
                                                       WidthRequest="100"
-                                                      TextFontSize="16"
                                                       HeightRequest="37"
                                                       BoxPadding="10, 10, 0, 10"
                                                       IsDropDownIconVisible="False"
-                                                      BorderThickness="1"
-                                                      FocusedBorderThickness="1"
-                                                      DropDownBackgroundColor="{AppThemeBinding Light={StaticResource Background},
-                                                                                                Dark={StaticResource DarkBackground}}"
-                                                      DropDownSelectedItemBackgroundColor="{StaticResource LightPrimary}"
-                                                      x:Name="CBE_Period"
+                                                      Tap="CBE_Period_Tap"
+                                                      Focused="SeveralTimesPerPeriodFrequency_Focused"
                                                       Margin="{OnPlatform iOS='7, 0, 0, 15',
-                                                                          Android='0, 3, 0, 0'}">
-                                        <dxe:ComboBoxEdit.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="SeveralTimesPerPeriodFrequency_Tapped" />
-                                        </dxe:ComboBoxEdit.GestureRecognizers>
-                                        <dxe:ComboBoxEdit.BorderColor>
-                                            <Color>#e9e9e9</Color>
-                                        </dxe:ComboBoxEdit.BorderColor>
-                                        <dxe:ComboBoxEdit.FocusedBorderColor>
-                                            <Color>#e9e9e9</Color>
-                                        </dxe:ComboBoxEdit.FocusedBorderColor>
-                                    </dxe:ComboBoxEdit>
+                                                                          Android='0, 3, 0, 0'}"
+                                                      BackgroundColor="{AppThemeBinding Light={StaticResource Background},
+                                                                                    Dark={StaticResource DarkBackground}}" />
                                 </HorizontalStackLayout>
                                 <dxco:SimpleButton x:Name="SB_SaveFrequencyPopup"
                                                    Clicked="SB_SaveFrequencyPopup_Clicked"

@@ -634,15 +634,6 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to is max value.
-        /// </summary>
-        internal static string IsMaxValue {
-            get {
-                return ResourceManager.GetString("IsMaxValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Is not found.
         /// </summary>
         internal static string IsNotFound {

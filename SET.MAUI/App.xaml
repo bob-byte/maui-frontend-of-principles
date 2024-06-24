@@ -224,12 +224,30 @@
                 <Setter Property="LabelColor"
                         Value="{AppThemeBinding Light={StaticResource LightNormalText},
                                                 Dark={StaticResource DarkNormalText}}" />
-                <Setter Property="CheckBoxColor"
-                        Value="{StaticResource Primary}" />
                 <Setter Property="CheckedCheckBoxColor"
                         Value="{StaticResource Primary}" />
+                <Setter Property="CheckBoxColor"
+                        Value="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"/>
                 <Setter Property="LabelFontSize"
                         Value="16" />
+            </Style>
+            <Style TargetType="dxe:ComboBoxEdit">
+                <Setter Property="FocusedBorderColor" Value="{StaticResource Primary}" />
+                <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" />
+                <Setter Property="FocusedLabelColor" Value="{AppThemeBinding Light={StaticResource LabelText}, Dark={StaticResource DarkLabelText}}" />
+                <Setter Property="CursorColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource LightNormalText}, Dark={StaticResource DarkNormalText}}" />
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightEditControlBackColor}, Dark={StaticResource DarkEditControlBackColor}}" />
+                <Setter Property="ErrorColor" Value="{StaticResource Error}" />
+                <Setter Property="TextFontSize"
+                        Value="16" />
+                <Setter Property="BorderThickness"
+                        Value="1" />
+                <Setter Property="DropDownBackgroundColor"
+                        Value="{AppThemeBinding Light={StaticResource Background},
+                                                Dark={StaticResource DarkBackground}}" />
+                <Setter Property="DropDownSelectedItemBackgroundColor"
+                        Value="{StaticResource LightPrimary}"/>
             </Style>
 
             <Style TargetType="Label">
