@@ -333,6 +333,17 @@
                 <Setter Property="BackgroundColor"
                         Value="{AppThemeBinding Light={StaticResource Background}, Dark={StaticResource DarkBackground}}"/>
             </Style>
+            <Style TargetType="dxe:CheckEdit">
+                <Setter Property="LabelColor"
+                        Value="{AppThemeBinding Light={StaticResource LightNormalText},
+                                                Dark={StaticResource DarkNormalText}}" />
+                <Setter Property="CheckBoxColor"
+                        Value="{StaticResource Primary}" />
+                <Setter Property="CheckedCheckBoxColor"
+                        Value="{StaticResource Primary}" />
+                <Setter Property="LabelFontSize"
+                        Value="16" />
+            </Style>
 
             <Style TargetType="Label">
                 <Setter Property="TextColor"

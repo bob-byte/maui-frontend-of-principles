@@ -272,23 +272,21 @@
                                                x:Name="RB_EveryDay"
                                                CheckedCheckBoxImage="checkedcheckedit.svg"
                                                UncheckedCheckBoxImage="uncheckedcheckedit.svg"
-                                               CheckBoxColor="{StaticResource Primary}"
-                                               CheckedCheckBoxColor="{StaticResource Primary}"
-                                               CheckedChanged="OnCheckEditChanged"
+                                               CheckedChanged="OnCheckEditChangedInFrequencyPopup"
                                                DisabledCheckedCheckBoxColor="{StaticResource Primary}"
-                                               DisabledLabelColor="{StaticResource LabelText}" />
+                                               DisabledLabelColor="{AppThemeBinding Light={StaticResource LightNormalText},
+                                                                                    Dark={StaticResource DarkNormalText}}" />
                                 <HorizontalStackLayout Margin="{OnPlatform iOS='0, 10, 0, 10',
                                                                            Android='0, 5, 0, 0'}"
                                                        Focused="RepeatsOfSeveralDays_Focused">
                                     <dxe:CheckEdit x:Name="RB_EverySeveralDays"
+                                                   CheckedChanged="OnCheckEditChangedInFrequencyPopup"
                                                    Label="{x:Static loc:LocStrings.Every}"
                                                    CheckedCheckBoxImage="checkedcheckedit.svg"
                                                    UncheckedCheckBoxImage="uncheckedcheckedit.svg"
-                                                   CheckBoxColor="{StaticResource Primary}"
-                                                   CheckedCheckBoxColor="{StaticResource Primary}"
-                                                   CheckedChanged="OnCheckEditChanged"
                                                    DisabledCheckedCheckBoxColor="{StaticResource Primary}"
-                                                   DisabledLabelColor="Black" />
+                                                   DisabledLabelColor="{AppThemeBinding Light={StaticResource LightNormalText},
+                                                                                        Dark={StaticResource DarkNormalText}}" />
                                     <dxe:TextEdit Keyboard="Numeric"
                                                   Margin="{OnPlatform iOS='0,0,0,5',
                                                                       Android='3,5,0,5'}"
@@ -318,11 +316,10 @@
                                     <dxe:CheckEdit x:Name="RB_SeveralTimesPerPeriod"
                                                    CheckedCheckBoxImage="checkedcheckedit.svg"
                                                    UncheckedCheckBoxImage="uncheckedcheckedit.svg"
-                                                   CheckBoxColor="{StaticResource Primary}"
-                                                   CheckedCheckBoxColor="{StaticResource Primary}"
-                                                   CheckedChanged="OnCheckEditChanged"
+                                                   CheckedChanged="OnCheckEditChangedInFrequencyPopup"
                                                    DisabledCheckedCheckBoxColor="{StaticResource Primary}"
-                                                   DisabledLabelColor="Black" />
+                                                   DisabledLabelColor="{AppThemeBinding Light={StaticResource LightNormalText},
+                                                                                        Dark={StaticResource DarkNormalText}}" />
                                     <dxe:TextEdit Keyboard="Numeric"
                                                   Margin="{OnPlatform iOS='0, 0, 0, 15',
                                                                       Android='9, 8, 0, 5'}"

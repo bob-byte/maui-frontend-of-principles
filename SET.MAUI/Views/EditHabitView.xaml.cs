@@ -462,7 +462,7 @@ public partial class EditHabitView : ContentPageBase
         }
     }
 
-    private void OnCheckEditChanged( object sender, EventArgs e )
+    private void OnCheckEditChangedInFrequencyPopup( object sender, EventArgs e )
     {
         var selectedCheckEdit = sender as CheckEdit;
 
