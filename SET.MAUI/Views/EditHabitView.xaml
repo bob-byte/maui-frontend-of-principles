@@ -225,11 +225,8 @@
                                       HeightRequest="200">
                             <dx:DXStackLayout Orientation="Vertical">
                                 <Label Text="{x:Static loc:LocStrings.FixErrorsFirst}"
-                                       HorizontalOptions="Center"
-                                       VerticalOptions="Center"
-                                       Margin="10,10,10,0"
-                                       FontSize="20"
-                                       FontAttributes="Bold" />
+                                       Style="{StaticResource CentralHeader}"
+                                       Margin="10,10,10,0" />
                                 <dx:DXStackLayout Margin="15"
                                                   Orientation="Horizontal"
                                                   ItemSpacing="10"

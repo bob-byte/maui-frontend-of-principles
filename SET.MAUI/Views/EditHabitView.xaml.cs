@@ -287,6 +287,8 @@ public partial class EditHabitView : ContentPageBase
                     FontSize = 16,
                     FontFamily = "Roboto",
                     LineBreakMode = LineBreakMode.WordWrap,
+                    HorizontalOptions = LayoutOptions.StartAndExpand,
+                    HorizontalTextAlignment = TextAlignment.Start,
                     VerticalOptions = LayoutOptions.Center,
                     VerticalTextAlignment = TextAlignment.Center
                 };
@@ -301,6 +303,8 @@ public partial class EditHabitView : ContentPageBase
                     FontSize = 16,
                     FontFamily = "Roboto",
                     LineBreakMode = LineBreakMode.WordWrap,
+                    HorizontalOptions = LayoutOptions.StartAndExpand,
+                    HorizontalTextAlignment = TextAlignment.Start,
                     VerticalOptions = LayoutOptions.Center,
                     VerticalTextAlignment = TextAlignment.Center
                 };
