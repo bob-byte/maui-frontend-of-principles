@@ -310,55 +310,55 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
                 var normalTextColor = (Color)Application.Current!.Resources["LightNormalText"];
                 Habit.ColorName = normalTextColor.ToArgbHex();
             }
+
+            if (AllUserAreasOfLife.Count == 0)
+            {
+                List<UserAreaOfLife> areasOfLife = await AreaOfLifeService.UserAreasOfLife();
+                foreach (UserAreaOfLife area in areasOfLife)
+                {
+                    //localize names
+                    string? locName = LocStrings.ResourceManager.GetString( area.Name! );
+                    if (!string.IsNullOrWhiteSpace( locName ))
+                    {
+                        area.Name = locName;
+                    }
+                }
+                areasOfLife.Insert( index: 0, AllAreasOfLifeAsOneItem );
+
+                AllUserAreasOfLife.Reload( areasOfLife );
+            }
+
+            InitValidations();
+
+            switch (Habit.Frequency!.IntervalLengthInDays)
+            {
+                default:
+                    {
+                        SelectedPeriodOfHabit = PeriodsOfHabit.First( p => p.Type == PeriodTypeOfHabit.Week );
+                        break;
+                    }
+                case 30:
+                    {
+                        SelectedPeriodOfHabit = PeriodsOfHabit.First( p => p.Type == PeriodTypeOfHabit.Month );
+                        break;
+                    }
+                case 365:
+                    {
+                        SelectedPeriodOfHabit = PeriodsOfHabit.First( p => p.Type == PeriodTypeOfHabit.Year );
+                        break;
+                    }
+            }
+
+            UpdateFrequencyRepresentation();
+
+            Habit.AreasOfLife.CollectionChanged += AreasOfLife_CollectionChanged;
+
+            await base.InitializeAsync( parameter );
         }
         finally
         {
             IsLoadingHabitInfo = false;
         }
-
-        if (AllUserAreasOfLife.Count == 0)
-        {
-            List<UserAreaOfLife> areasOfLife = await AreaOfLifeService.UserAreasOfLife();
-            foreach (UserAreaOfLife area in areasOfLife)
-            {
-                //localize names
-                string? locName = LocStrings.ResourceManager.GetString( area.Name! );
-                if (!string.IsNullOrWhiteSpace( locName ))
-                {
-                    area.Name = locName;
-                }
-            }
-            areasOfLife.Insert( index: 0, AllAreasOfLifeAsOneItem );
-
-            AllUserAreasOfLife.Reload( areasOfLife );
-        }
-
-        InitValidations();
-
-        switch (Habit.Frequency!.IntervalLengthInDays)
-        {
-            default:
-                {
-                    SelectedPeriodOfHabit = PeriodsOfHabit.First( p => p.Type == PeriodTypeOfHabit.Week );
-                    break;
-                }
-            case 30:
-                {
-                    SelectedPeriodOfHabit = PeriodsOfHabit.First( p => p.Type == PeriodTypeOfHabit.Month );
-                    break;
-                }
-            case 365:
-                {
-                    SelectedPeriodOfHabit = PeriodsOfHabit.First( p => p.Type == PeriodTypeOfHabit.Year );
-                    break;
-                }
-        }
-
-        UpdateFrequencyRepresentation();
-
-        Habit.AreasOfLife.CollectionChanged += AreasOfLife_CollectionChanged;
-
-        await base.InitializeAsync( parameter );
     }
 
     private async void AreasOfLife_CollectionChanged( object? sender, NotifyCollectionChangedEventArgs e )

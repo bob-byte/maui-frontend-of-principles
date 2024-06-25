@@ -11,7 +11,7 @@ public class AiChatService : BaseRemoteService, IAiChatService
     public AiChatService( IServiceProvider serviceProvider )
         : base( serviceProvider )
     {
-        m_systemMsg = new ChatMessage( role: ChatRole.System, content: "You are a self-development assistant, but you can answer at any question. You have to support the user in their quest to become better and help them identify their atomic habits. You should also provide information on how to better stick to them and become better every day in all areas of the user's life. But don't ask current user atomic habits" );
+        m_systemMsg = new ChatMessage( role: ChatRole.System, content: "You are a self-development assistant, but you can answer at any question except those that contradict the Bible. You have to support the user in their quest to become better and help them identify their atomic habits. You should also provide information on how to better stick to them and become better every day in all areas of the user's life. But don't ask current user atomic habits" );
         m_chatMessages = new List<ChatMessage>
         {
             m_systemMsg
