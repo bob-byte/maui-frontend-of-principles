@@ -725,4 +725,7 @@ By using the App, you acknowledge that you have read, understood, and agree to b
   <data name="AllAreasOfLife" xml:space="preserve">
     <value>All areas of life</value>
   </data>
+  <data name="RecommendedHabitsButton" xml:space="preserve">
+    <value>Recommended habits</value>
+  </data>
 </root>

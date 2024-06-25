@@ -35,12 +35,6 @@ public partial class EditHabitView : ContentPageBase
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-
-        if (ViewModel.IsNewHabit)
-        {
-            await Task.Delay( 1500 );
-            await ME_NameOfHabit.DisplaySnackbar( LocStrings.DescriptionOfAiLampTap, duration: TimeSpan.FromSeconds( 6 ), visualOptions: SnackbarHelper.DefaultOptions() );
-        }
     }
 
     private void SelectHabitTypeChip( object? sender, PropertyChangedEventArgs eventArgs )
@@ -326,7 +320,7 @@ public partial class EditHabitView : ContentPageBase
         DXP_Errors.IsOpen = false;
     }
 
-    async void ME_NameOfHabit_AiIconClicked( System.Object sender, System.EventArgs e )
+    async void SB_RecomendedHabit_Clicked( System.Object sender, System.EventArgs e )
     {
         if (BS_RecommendedHabits.State == BottomSheetState.Hidden)
         {

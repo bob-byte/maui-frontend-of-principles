@@ -101,13 +101,12 @@
                                            MaxLineCount="5"
                                            StartIcon="fire_first"
                                            ReturnType="Done"
-                                           EndIcon="ai"
-                                           IsEndIconVisible="{Binding IsNewHabit}"
-                                           EndIconClicked="ME_NameOfHabit_AiIconClicked"
-                                           ClearIconVisibility="Never" />
+                                           ClearIconVisibility="Never"
+                                           Margin="0,0,0,-10" />
                         <dxe:ChoiceChipGroup x:Name="CCG_Types"
                                              HorizontalOptions="CenterAndExpand"
-                                             IsMultiline="True">
+                                             IsMultiline="True"
+                                             Margin="0,0,0,-10">
                             <dxe:Chip Text="{x:Static loc:LocStrings.WithoutExceptions}"
                                       Icon="info"
                                       x:Name="C_WithoutExceptionsType"
@@ -152,6 +151,9 @@
                                          IsEnabled="{Binding IsNewHabit}"
                                          StartIcon="charts"
                                          IsUpDownIconVisible="True" />
+                        <dxco:SimpleButton Text="{x:Static loc:LocStrings.RecommendedHabitsButton}"
+                                           Style="{StaticResource PrimaryButton}"
+                                           Clicked="SB_RecomendedHabit_Clicked" />
                         <dxco:BottomSheet x:Name="BS_AllHabits">
                             <Grid RowDefinitions="Auto, Auto"
                                   RowSpacing="20"
@@ -268,8 +270,7 @@
                                                DisabledCheckedCheckBoxColor="{StaticResource Primary}"
                                                DisabledLabelColor="{AppThemeBinding Light={StaticResource LightNormalText},
                                                                                     Dark={StaticResource DarkNormalText}}" />
-                                <HorizontalStackLayout Margin="{OnPlatform iOS='0, 10, 0, 10',
-                                                                           Android='0, 5, 0, 0'}">
+                                <HorizontalStackLayout Margin="{OnPlatform iOS='0, 10, 0, 10', Android='0, 5, 0, 0'}">
                                     <dxe:CheckEdit x:Name="CE_EverySeveralDays"
                                                    CheckedChanged="OnCheckEditChangedInFrequencyPopup"
                                                    Label="{x:Static loc:LocStrings.Every}"
@@ -289,7 +290,8 @@
                                                   ClearIconVisibility="Never"
                                                   TextChanged="TE_RepeatsOfSeveralDays_TextChanged"
                                                   TextHorizontalAlignment="Center"
-                                                  BackgroundColor="{AppThemeBinding Light={StaticResource Background}, Dark={StaticResource DarkBackground}}" />
+                                                  BackgroundColor="{AppThemeBinding Light={StaticResource Background},
+                                                                                    Dark={StaticResource DarkBackground}}" />
                                     <Label Text="{x:Static loc:LocStrings.days}"
                                            FontSize="16"
                                            Margin="{OnPlatform iOS='7, 6, 0, 0',
@@ -309,7 +311,7 @@
                                                    DisabledCheckedCheckBoxColor="{StaticResource Primary}"
                                                    DisabledLabelColor="{AppThemeBinding Light={StaticResource LightNormalText},
                                                                                         Dark={StaticResource DarkNormalText}}"
-                                                   Margin="{OnPlatform iOS='0, 0, 0, 15'}"/>
+                                                   Margin="{OnPlatform iOS='0, 0, 0, 15'}" />
                                     <dxe:TextEdit Keyboard="Numeric"
                                                   Margin="{OnPlatform iOS='0, 0, 0, 15',
                                                                       Android='9, 8, 0, 5'}"
@@ -328,7 +330,7 @@
                                            Margin="{OnPlatform iOS='7, 10, 0, 0',
                                                                Android='3, 10, 3, 0'}">
                                         <Label.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="SeveralTimesPerPeriodFrequency_Tapped"/>
+                                            <TapGestureRecognizer Tapped="SeveralTimesPerPeriodFrequency_Tapped" />
                                         </Label.GestureRecognizers>
                                     </Label>
                                     <dxe:ComboBoxEdit x:Name="CBE_Period"
@@ -344,7 +346,7 @@
                                                       Margin="{OnPlatform iOS='7, 0, 0, 15',
                                                                           Android='0, 3, 0, 0'}"
                                                       BackgroundColor="{AppThemeBinding Light={StaticResource Background},
-                                                                                    Dark={StaticResource DarkBackground}}" />
+                                                                                        Dark={StaticResource DarkBackground}}" />
                                 </HorizontalStackLayout>
                                 <dxco:SimpleButton x:Name="SB_SaveFrequencyPopup"
                                                    Clicked="SB_SaveFrequencyPopup_Clicked"

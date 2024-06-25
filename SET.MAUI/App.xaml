@@ -176,7 +176,7 @@
 
             <Style TargetType="dxe:Chip">
                 <Setter Property="SelectedBackgroundColor" Value="{StaticResource LightPrimary}" />
-                <Setter Property="BorderColor" Value="{StaticResource Primary}" />
+                <Setter Property="BorderColor" Value="{StaticResource BorderColor}" />
                 <Setter Property="IconColor" Value="{AppThemeBinding Light={StaticResource IconColor}, Dark={StaticResource DarkIconColor}}" />
                 <Setter Property="IsIconVisible" Value="True" />
                 <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource LightNormalText}, Dark={StaticResource DarkNormalText}}" />

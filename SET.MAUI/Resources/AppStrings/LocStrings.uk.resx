@@ -651,4 +651,7 @@
   <data name="AllAreasOfLife" xml:space="preserve">
     <value>Усі сфери життя</value>
   </data>
+  <data name="RecommendedHabitsButton" xml:space="preserve">
+    <value>Рекомендовані звички</value>
+  </data>
 </root>
