@@ -179,6 +179,7 @@
                 <Setter Property="BorderColor" Value="{StaticResource BorderColor}" />
                 <Setter Property="IconColor" Value="{AppThemeBinding Light={StaticResource IconColor}, Dark={StaticResource DarkIconColor}}" />
                 <Setter Property="IsIconVisible" Value="True" />
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightEditControlBackColor}, Dark={StaticResource DarkEditControlBackColor}}" />
                 <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource LightNormalText}, Dark={StaticResource DarkNormalText}}" />
                 <Setter Property="PressedBackgroundColor" Value="{AppThemeBinding Light={StaticResource LightEditControlBackColor}, Dark={StaticResource DarkEditControlBackColor}}" />
             </Style>
