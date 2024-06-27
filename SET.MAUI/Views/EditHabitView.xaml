@@ -40,8 +40,8 @@
                                    Style="{StaticResource TitlePrimaryButton}"
                                    x:Name="SB_SaveHabit"
                                    Clicked="SB_Save_Clicked"
-                                   Margin="{OnPlatform iOS='0,2,0,2',
-                                                       Android='0, 2, 5, 0'}"
+                                   Margin="{OnPlatform iOS='0, 2, 0, 2',
+                                                       Android='0, 2, 5, 2'}"
                                    FontSize="12"
                                    BorderThickness="2" />
             </Grid>

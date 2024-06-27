@@ -242,7 +242,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
                     FontSize = 13
 #endif
                 };
-                habitName.Bind( Label.TextProperty, "Item.Name", BindingMode.TwoWay );
+                habitName.Bind( Label.TextProperty, path: "Item.Name", mode: BindingMode.TwoWay );
 
                 habitName.TextColor = normalTextColor;
                 habitName.WidthRequest = 145;

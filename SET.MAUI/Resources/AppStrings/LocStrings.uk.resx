@@ -429,8 +429,14 @@
   <data name="PrivacyPolicy" xml:space="preserve">
     <value>Політика конфіденційності</value>
   </data>
+  <data name="PrivacyPolicyTitle" xml:space="preserve">
+    <value>Політика Конфіденційності</value>
+  </data>
   <data name="UserAgreement" xml:space="preserve">
-    <value>Користувацька угода</value>
+    <value>Угода користувача</value>
+  </data>
+  <data name="UserAgreementTitle" xml:space="preserve">
+    <value>Угода Користувача</value>
   </data>
   <data name="UserAgreementIntroduction" xml:space="preserve">
     <value>     Ця Угода користувача (надалі – «Угода») укладена між Вами (надалі – «Ви») та фізичною особою-підприємцем Бацом Богданом Михайловичем (надалі – «я», «Принципи») власник і оператор мобільного додатку під назвою Принципи (надалі «Додаток»). Будь ласка, уважно прочитайте цю Угоду перед використанням Додатку.</value>
@@ -547,19 +553,19 @@
     <value>    Якщо у вас є запитання чи пропозиції щодо нашої Політики Конфіденційності, не соромтеся зв’язатися з нами через електронну пошту: app@principles.top.</value>
   </data>
   <data name="LoginAgreementText" xml:space="preserve">
-    <value>Натискаючи кнопку 'Вхід', ви погоджуєтесь з:</value>
+    <value>Натискаючи кнопку 'Вхід', ви погоджуєтесь з</value>
   </data>
   <data name="LoginSignUpAgreementСonnectingText" xml:space="preserve">
     <value>та</value>
   </data>
 	<data name="UserAgreementStrInLoginAndSignupViews" xml:space="preserve">
-    <value>Користувацькою Угодою</value>
+    <value>Угодою Користувача</value>
   </data>
 	<data name="PrivacyPolicyStrInLoginAndSignupViews" xml:space="preserve">
     <value>Політикою Конфіденційності</value>
   </data>
   <data name="SignUpAgreementText" xml:space="preserve">
-    <value>Натискаючи кнопку 'Реєстрація', ви погоджуєтесь з:</value>
+    <value>Натискаючи кнопку 'Реєстрація', ви погоджуєтесь з</value>
   </data>
   <data name="ContactEmail" xml:space="preserve">
     <value>Написати лист до app@principles.top</value>

@@ -15,7 +15,7 @@
                    xmlns:templates="clr-namespace:SET.MAUI.Views.Templates"
                    xmlns:controls="clr-namespace:SET.MAUI.Controls"
                    x:DataType="vm:UserAgreementViewModel"
-                   Title="{x:Static loc:LocStrings.UserAgreement}">
+                   Title="{x:Static loc:LocStrings.UserAgreementTitle}">
     <ScrollView>
         <VerticalStackLayout Margin="20, 20, 20, 20">
             <Label Text="{x:Static loc:LocStrings.UserAgreementIntroduction}"

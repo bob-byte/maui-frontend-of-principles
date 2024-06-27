@@ -670,7 +670,7 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Login.
+        ///   Looks up a localized string similar to Log in.
         /// </summary>
         internal static string Login {
             get {
@@ -679,7 +679,7 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to By clicking the &apos;Login&apos; button, you agree to:.
+        ///   Looks up a localized string similar to By clicking the &apos;Log in&apos; button, you agree to.
         /// </summary>
         internal static string LoginAgreementText {
             get {
@@ -1104,6 +1104,15 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Privacy Policy.
+        /// </summary>
+        internal static string PrivacyPolicyTitle {
+            get {
+                return ResourceManager.GetString("PrivacyPolicyTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Profile.
         /// </summary>
         internal static string Profile {
@@ -1302,7 +1311,7 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to By clicking the &apos;Signing Up&apos; button, you agree to:.
+        ///   Looks up a localized string similar to By clicking the &apos;Signing Up&apos; button, you agree to.
         /// </summary>
         internal static string SignUpAgreementText {
             get {
@@ -1667,6 +1676,15 @@ namespace SET.MAUI.Resources.AppStrings {
         internal static string UserAgreementStrInLoginAndSignupViews {
             get {
                 return ResourceManager.GetString("UserAgreementStrInLoginAndSignupViews", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Agreement.
+        /// </summary>
+        internal static string UserAgreementTitle {
+            get {
+                return ResourceManager.GetString("UserAgreementTitle", resourceCulture);
             }
         }
         

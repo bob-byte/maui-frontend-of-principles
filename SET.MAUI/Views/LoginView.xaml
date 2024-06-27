@@ -65,8 +65,7 @@
                                                                Dark={StaticResource DarkPrimary}}"
                                    Margin="0,15,0,0" />
 
-                <VerticalStackLayout VerticalOptions="CenterAndExpand"
-                                     HorizontalOptions="EndAndExpand"
+                <VerticalStackLayout VerticalOptions="Start"
                                      Spacing="5"
                                      Margin="0,25,0,0">
                     <Label HorizontalTextAlignment="End">
@@ -74,56 +73,56 @@
                             <FormattedString>
                                 <Span Text="{x:Static loc:LocStrings.ForgetPasswordNavigation}"
                                       TextColor="{StaticResource LightNormalText}"
-                                      FontSize="16"
-                                      FontFamily="MonaSansMedium" />
+                                      FontSize="14"
+                                      FontFamily="MonaSansMedium"
+                                      FontAttributes="Italic">
+                                    <Span.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenForgetPasswordCommand}" />
+                                    </Span.GestureRecognizers>
+                                </Span>
                             </FormattedString>
                         </Label.FormattedText>
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding OpenForgetPasswordCommand}" />
-                        </Label.GestureRecognizers>
                     </Label>
                     <Label Text="{x:Static loc:LocStrings.LoginAgreementText}"
                            TextColor="Gray"
                            FontSize="12"
                            FontFamily="MonaSansMedium"
                            FontAttributes="Italic"
-                           Margin="0,5,0,0"
-                           HorizontalOptions="Center"
+                           Margin="0,15,0,0"
                            HorizontalTextAlignment="Center" />
-                    <HorizontalStackLayout HorizontalOptions="Center"
-                                           Spacing="0">
-                        <Label Text="{x:Static loc:LocStrings.UserAgreementStrInLoginAndSignupViews}"
-                               TextColor="{StaticResource LightNormalText}"
-                               FontSize="12"
-                               FontFamily="MonaSansMedium"
-                               WidthRequest="141"
-                               FontAttributes="Italic"
-                               Margin="20,0,0,0"
-                               HorizontalTextAlignment="End"
-                               LineBreakMode="TailTruncation">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding OpenUserAgreementCommand}" />
-                            </Label.GestureRecognizers>
-                        </Label>
-                        <Label Text="{x:Static loc:LocStrings.LoginSignUpAgreementСonnectingText}"
-                               TextColor="Gray"
-                               FontSize="12"
-                               FontFamily="MonaSansMedium"
-                               FontAttributes="Italic"
-                               HorizontalTextAlignment="Center"
-                               WidthRequest="30" />
-                        <Label Text="{x:Static loc:LocStrings.PrivacyPolicyStrInLoginAndSignupViews}"
-                               TextColor="{StaticResource LightNormalText}"
-                               FontSize="12"
-                               FontFamily="MonaSansMedium"
-                               FontAttributes="Italic"
-                               WidthRequest="163"
-                               LineBreakMode="TailTruncation">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding OpenPrivacyPolicyCommand}" />
-                            </Label.GestureRecognizers>
-                        </Label>
-                    </HorizontalStackLayout>
+                    <Label HorizontalTextAlignment="Center"
+                           LineBreakMode="TailTruncation"
+                           MaxLines="1">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{x:Static loc:LocStrings.UserAgreementStrInLoginAndSignupViews}"
+                                      TextColor="{StaticResource LightNormalText}"
+                                      FontSize="12"
+                                      FontFamily="MonaSansMedium"
+                                      FontAttributes="Italic">
+                                    <Span.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenUserAgreementCommand}" />
+                                    </Span.GestureRecognizers>
+                                </Span>
+                                <Span Text=" "/>
+                                <Span Text="{x:Static loc:LocStrings.LoginSignUpAgreementСonnectingText}"
+                                      TextColor="Gray"
+                                      FontSize="12"
+                                      FontFamily="MonaSansMedium"
+                                      FontAttributes="Italic" />
+                                <Span Text=" "/>
+                                <Span Text="{x:Static loc:LocStrings.PrivacyPolicyStrInLoginAndSignupViews}"
+                                      TextColor="{StaticResource LightNormalText}"
+                                      FontSize="12"
+                                      FontFamily="MonaSansMedium"
+                                      FontAttributes="Italic">
+                                    <Span.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenPrivacyPolicyCommand}" />
+                                    </Span.GestureRecognizers>
+                                </Span>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
                 </VerticalStackLayout>
             </VerticalStackLayout>
         </ScrollView>

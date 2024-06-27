@@ -130,7 +130,7 @@
     <value>Error</value>
   </data>
   <data name="Login" xml:space="preserve">
-    <value>Login</value>
+    <value>Log in</value>
   </data>
   <data name="Logout" xml:space="preserve">
     <value>Logout</value>
@@ -504,8 +504,14 @@
   <data name="PrivacyPolicy" xml:space="preserve">
     <value>Privacy policy</value>
   </data>
+  <data name="PrivacyPolicyTitle" xml:space="preserve">
+    <value>Privacy Policy</value>
+  </data>
   <data name="UserAgreement" xml:space="preserve">
     <value>User agreement</value>
+  </data>
+  <data name="UserAgreementTitle" xml:space="preserve">
+    <value>User Agreement</value>
   </data>
   <data name="UserAgreementIntroduction" xml:space="preserve">
     <value>     This User Agreement (hereinafter referred to as the "Agreement") is entered into between you (hereinafter referred to as "You") and an individual entrepreneur Bats Bogdan (hereinafter referred to as "I", "me", "Principles") the owner and operator of the Application named Principles (hereinafter referred to as the "App"). Please carefully read this Agreement before using the App.</value>
@@ -622,7 +628,7 @@ By using the App, you acknowledge that you have read, understood, and agree to b
     <value>    If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us on email: app@principles.top.</value>
   </data>
   <data name="LoginAgreementText" xml:space="preserve">
-    <value>By clicking the 'Login' button, you agree to:</value>
+    <value>By clicking the 'Log in' button, you agree to</value>
   </data>
   <data name="LoginSignUpAgreementСonnectingText" xml:space="preserve">
     <value>and</value>
@@ -634,7 +640,7 @@ By using the App, you acknowledge that you have read, understood, and agree to b
     <value>Privacy Policy</value>
   </data>
   <data name="SignUpAgreementText" xml:space="preserve">
-    <value>By clicking the 'Signing Up' button, you agree to:</value>
+    <value>By clicking the 'Signing Up' button, you agree to</value>
   </data>
   <data name="ContactEmail" xml:space="preserve">
     <value>Send an email to app@principles.top</value>
