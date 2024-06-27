@@ -294,6 +294,11 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
                 LoggingService.LogCriticalError( ex );
                 errorMsg = LocStrings.YouAreNotAuthorized;
             }
+            else if ((ex is TaskCanceledException taskCanceledException && taskCanceledException.InnerException is TimeoutException) ||
+                      ex is TimeoutException)
+            {
+                errorMsg = LocStrings.OperationTimeoutMessage;
+            }
             else
             {
                 errorMsg = LocStrings.NoInternetConnection;

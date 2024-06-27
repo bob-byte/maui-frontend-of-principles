@@ -1,11 +1,12 @@
 ﻿using Polly;
 using Polly.Extensions.Http;
 using Polly.Retry;
+using Polly.Timeout;
+using Polly.Wrap;
 
-using SET.Core.Services;
-
-using System;
 using System.Net;
+using System.Net.Http.Headers;
+using System.Net.Mime;
 
 namespace SET.Core.Extensions;
 
@@ -14,7 +15,14 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection RegisterAppCore( this IServiceCollection services )
     {
         services.AddSingleton<ILoggingService, LoggingService>();
-        services.AddHttpClient<IRequestProvider, RequestProvider>().AddPolicyHandler( RetryPolicy() );
+        services.AddHttpClient<IRequestProvider, RequestProvider>().
+            ConfigureHttpClient( httpClient =>
+            {
+                httpClient.Timeout = TimeSpan.FromSeconds( value: 30 );
+                httpClient.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( MediaTypeNames.Text.Plain ) );
+            } ).
+            AddPolicyHandler( RetryPolicy() );
+
         services.AddSingleton<ICachingService, CachingService>();
         services.AddSingleton<IUrlBuilder, UrlBuilder>();
         services.AddSingleton<IRequestProvider, RequestProvider>();
@@ -34,8 +42,20 @@ public static class ServiceCollectionExtensions
 
     private static AsyncRetryPolicy<HttpResponseMessage> RetryPolicy()
     {
-        PolicyBuilder<HttpResponseMessage> policyBuilder = HttpPolicyExtensions.HandleTransientHttpError();
-        return policyBuilder.WaitAndRetryAsync( retryCount: 5, ( numRetry ) => TimeSpan.FromSeconds( Math.Pow( 1.5, numRetry ) ) );
+        return HttpPolicyExtensions.
+            HandleTransientHttpError().
+            WaitAndRetryAsync(
+                retryCount: 3,
+                sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds( Math.Pow( 1.5, retryAttempt ) ),
+                onRetry: ( outcome, timespan, retryAttempt, context ) =>
+                {
+                    // Do not retry if the exception is a request timeout
+                    if (outcome.Result.StatusCode == HttpStatusCode.RequestTimeout)
+                    {
+                        Exception ex = outcome.Exception ?? new TimeoutException( message: "HTTP request timeout" );
+                        throw ex;
+                    }
+                }
+            );
     }
 }
-

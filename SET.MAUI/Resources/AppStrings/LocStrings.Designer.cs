@@ -904,6 +904,15 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The request has timed out. Please check your network connection and try again..
+        /// </summary>
+        internal static string OperationTimeoutMessage {
+            get {
+                return ResourceManager.GetString("OperationTimeoutMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to (Optional).
         /// </summary>
         internal static string OptionalPlaceholder {

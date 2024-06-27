@@ -75,7 +75,7 @@
                                 <Span Text="{x:Static loc:LocStrings.ForgetPasswordNavigation}"
                                       TextColor="{StaticResource LightNormalText}"
                                       FontSize="16"
-                                      FontFamily="Roboto" />
+                                      FontFamily="MonaSansMedium" />
                             </FormattedString>
                         </Label.FormattedText>
                         <Label.GestureRecognizers>

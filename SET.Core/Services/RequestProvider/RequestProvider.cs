@@ -30,7 +30,6 @@ public class RequestProvider : IRequestProvider
             valueFactory: () =>
                 {
                     HttpClient httpClient = m_httpClientFactory.CreateClient();
-                    httpClient.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( MediaTypeNames.Text.Plain ) );
                     return httpClient;
                 },
             mode: LazyThreadSafetyMode.ExecutionAndPublication 

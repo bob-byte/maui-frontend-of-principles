@@ -651,4 +651,7 @@
   <data name="AllAreasOfLife" xml:space="preserve">
     <value>Усі сфери життя</value>
   </data>
+  <data name="OperationTimeoutMessage" xml:space="preserve">
+    <value>Запит перевищив час очікування. Будь ласка, перевірте ваше інтернет-з'єднання та спробуйте знову.</value>
+  </data>
 </root>

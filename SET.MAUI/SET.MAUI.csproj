@@ -43,11 +43,10 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.png" Color="#1F1F1F" BaseSize="320,320" />
-		<MauiIcon Include="Resources\AppIcon\appiconforandroid.png" ForegroundScale="0.65" />
+		<MauiIcon Include="Resources\AppIcon\appicon.png" Color="#1F1F1F" ForegroundScale="0.65" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\AppIcon\appicon.png" Color="#1F1F1F" BaseSize="300,300" />
+		<MauiSplashScreen Include="Resources\Splash\appicon.png" Color="#1F1F1F" BaseSize="320,320" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*svg" BaseSize="23, 23" />

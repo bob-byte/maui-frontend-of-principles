@@ -725,4 +725,7 @@ By using the App, you acknowledge that you have read, understood, and agree to b
   <data name="AllAreasOfLife" xml:space="preserve">
     <value>All areas of life</value>
   </data>
+  <data name="OperationTimeoutMessage" xml:space="preserve">
+    <value>The request has timed out. Please check your network connection and try again.</value>
+  </data>
 </root>
