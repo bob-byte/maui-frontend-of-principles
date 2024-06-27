@@ -419,6 +419,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
     private void SelectedRecommendedHabit( RecommendedHabit recommendedHabit )
     {
         NameOfHabit.Value = recommendedHabit.Name;
+        ReasonToFollow.Value = recommendedHabit.ReasonToFollow;
     }
 
     [RelayCommand(CanExecute = nameof(CanResetPriorities))]
