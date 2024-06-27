@@ -328,7 +328,7 @@
     <value>Звички, рекомендовані ШІ</value>
   </data>
   <data name="ConfirmMessageOnRecommededHabitsView" xml:space="preserve">
-    <value>Ви впевнені, що хочете завантажити звички, на основі обраних областей звички, місії та основного гасла?</value>
+    <value>Ви впевнені, що хочете завантажити звички, на основі обраних сфер звички, місії та основного гасла?</value>
   </data>
   <data name="ConfirmTitleOnRecommendedHabitsView" xml:space="preserve">
     <value>На основі вибраних сфер, місії та гасла</value>

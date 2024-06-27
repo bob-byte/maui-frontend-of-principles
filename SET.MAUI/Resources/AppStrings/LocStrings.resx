@@ -690,7 +690,7 @@ By using the App, you acknowledge that you have read, understood, and agree to b
     <value>Is not found</value>
   </data>
   <data name="ForgetPasswordNavigation" xml:space="preserve">
-    <value>Forget Password?</value>
+    <value>Forget password?</value>
   </data>
   <data name="ForgetPasswordTitle" xml:space="preserve">
     <value>Password Recovery</value>
