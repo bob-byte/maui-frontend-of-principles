@@ -540,4 +540,14 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
             visualOptions: SnackbarHelper.DefaultOptions()
         );
     }
+
+    [RelayCommand]
+    private Task TapComplexityInfoAsync( VisualElement visualElement )
+    {
+        return visualElement.DisplaySnackbar(
+            ComplexityHelpText,
+            duration: TimeSpan.FromSeconds( 6 ),
+            visualOptions: SnackbarHelper.DefaultOptions()
+        );
+    }
 }

@@ -481,7 +481,7 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Forget Password?.
+        ///   Looks up a localized string similar to Forget password?.
         /// </summary>
         internal static string ForgetPasswordNavigation {
             get {
@@ -1163,6 +1163,15 @@ namespace SET.MAUI.Resources.AppStrings {
         internal static string ReasonToFollowExplanation {
             get {
                 return ResourceManager.GetString("ReasonToFollowExplanation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recommended habits.
+        /// </summary>
+        internal static string RecommendedHabitsButton {
+            get {
+                return ResourceManager.GetString("RecommendedHabitsButton", resourceCulture);
             }
         }
         
