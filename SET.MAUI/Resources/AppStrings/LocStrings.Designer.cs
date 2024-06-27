@@ -1615,7 +1615,8 @@ namespace SET.MAUI.Resources.AppStrings {
         /// <summary>
         ///   Looks up a localized string similar to      2.1. You agree not to violate any copyrights, property rights, or other rights of any party associated with the use of the App.
         ///     2.2. You are solely responsible for any information you provide through the App, including your comments, feedback, and any content.
-        ///     2.3. You agree not to use the App for any illegal or abusive purposes..
+        ///     2.3. You agree not to use the App for any illegal or abusive purposes.
+        ///     2.4. You agree not to create habits, slogan, or mission that contradict the principles of morality or the international laws..
         /// </summary>
         internal static string UserAgreementRightsandResponsibilitiesOfUserText {
             get {
