@@ -29,9 +29,7 @@ public class RequestProvider : IRequestProvider
         m_httpClient = new( 
             valueFactory: () =>
                 {
-                    HttpClient httpClient = m_httpClientFactory.CreateClient();
-                    httpClient.Timeout = TimeSpan.FromSeconds( value: 30 );
-                    httpClient.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( MediaTypeNames.Text.Plain ) );
+                    HttpClient httpClient = m_httpClientFactory.CreateClient( nameof( RequestProvider ) );
                     return httpClient;
                 },
             mode: LazyThreadSafetyMode.ExecutionAndPublication 

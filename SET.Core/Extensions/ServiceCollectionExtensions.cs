@@ -15,7 +15,16 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection RegisterAppCore( this IServiceCollection services )
     {
         services.AddSingleton<ILoggingService, LoggingService>();
-        services.AddHttpClient<IRequestProvider, RequestProvider>().AddPolicyHandler( RetryPolicy() );
+
+        services.
+            AddHttpClient( nameof( RequestProvider ) ).
+            ConfigureHttpClient(httpClient =>
+            {
+                httpClient.Timeout = TimeSpan.FromSeconds( value: 30 );
+                httpClient.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( MediaTypeNames.Text.Plain ) );
+            } ).
+            AddPolicyHandler( RetryPolicy() );
+
         services.AddSingleton<ICachingService, CachingService>();
         services.AddSingleton<IUrlBuilder, UrlBuilder>();
         services.AddSingleton<IRequestProvider, RequestProvider>();
