@@ -15,14 +15,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection RegisterAppCore( this IServiceCollection services )
     {
         services.AddSingleton<ILoggingService, LoggingService>();
-        services.AddHttpClient<IRequestProvider, RequestProvider>().
-            ConfigureHttpClient( httpClient =>
-            {
-                httpClient.Timeout = TimeSpan.FromSeconds( value: 30 );
-                httpClient.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( MediaTypeNames.Text.Plain ) );
-            } ).
-            AddPolicyHandler( RetryPolicy() );
-
+        services.AddHttpClient<IRequestProvider, RequestProvider>().AddPolicyHandler( RetryPolicy() );
         services.AddSingleton<ICachingService, CachingService>();
         services.AddSingleton<IUrlBuilder, UrlBuilder>();
         services.AddSingleton<IRequestProvider, RequestProvider>();
@@ -46,16 +39,7 @@ public static class ServiceCollectionExtensions
             HandleTransientHttpError().
             WaitAndRetryAsync(
                 retryCount: 3,
-                sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds( Math.Pow( 1.5, retryAttempt ) ),
-                onRetry: ( outcome, timespan, retryAttempt, context ) =>
-                {
-                    // Do not retry if the exception is a request timeout
-                    if (outcome.Result.StatusCode == HttpStatusCode.RequestTimeout)
-                    {
-                        Exception ex = outcome.Exception ?? new TimeoutException( message: "HTTP request timeout" );
-                        throw ex;
-                    }
-                }
+                sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds( Math.Pow( 1.5, retryAttempt ) )
             );
     }
 }

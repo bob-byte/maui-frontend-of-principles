@@ -73,7 +73,8 @@
                             <FormattedString>
                                 <Span Text="{x:Static loc:LocStrings.ForgetPasswordNavigation}"
                                       TextColor="{StaticResource LightNormalText}"
-                                      FontSize="14"
+                                      FontSize="{OnPlatform iOS=14, 
+                                                            Android=12}"
                                       FontFamily="MonaSansMedium"
                                       FontAttributes="Italic">
                                     <Span.GestureRecognizers>

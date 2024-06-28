@@ -279,9 +279,9 @@ public partial class EditHabitView : ContentPageBase
                 Label errorLabel = new()
                 {
                     FontSize = 16,
-                    FontFamily = "Roboto",
+                    FontFamily = "MonaSansMedium",
                     LineBreakMode = LineBreakMode.WordWrap,
-                    HorizontalOptions = LayoutOptions.StartAndExpand,
+                    HorizontalOptions = LayoutOptions.Start,
                     HorizontalTextAlignment = TextAlignment.Start,
                     VerticalOptions = LayoutOptions.Center,
                     VerticalTextAlignment = TextAlignment.Center
@@ -295,9 +295,9 @@ public partial class EditHabitView : ContentPageBase
                 Label errorLabel = new()
                 {
                     FontSize = 16,
-                    FontFamily = "Roboto",
+                    FontFamily = "MonaSansMedium",
                     LineBreakMode = LineBreakMode.WordWrap,
-                    HorizontalOptions = LayoutOptions.StartAndExpand,
+                    HorizontalOptions = LayoutOptions.Start,
                     HorizontalTextAlignment = TextAlignment.Start,
                     VerticalOptions = LayoutOptions.Center,
                     VerticalTextAlignment = TextAlignment.Center
@@ -326,7 +326,7 @@ public partial class EditHabitView : ContentPageBase
         {
             bool doShowRecommendedHabits = true;
 
-            if (m_doExecuteReloadOfRecommendedHabits)
+            if (m_doExecuteReloadOfRecommendedHabits || ViewModel.RecommendedHabits.Count == 0)
             {
                 bool canReload = ViewModel.ReloadRecommendedHabitsCommand.CanExecute( ShowSnackbarOfSuccessfulRecomendedHabitsReload );
 

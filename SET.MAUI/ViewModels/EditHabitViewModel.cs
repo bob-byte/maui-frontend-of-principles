@@ -145,7 +145,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
 
             EditUserHabitDto dto = new()
             {
-                AreasOfLife = Habit.AreasOfLife,
+                AreasOfLife = Habit.AreasOfLife!.ToList(),//get copy, because it will be changed
                 ColorName = Habit.ColorName,
                 Description = Habit.Description,
                 Complexity = Habit.Complexity,

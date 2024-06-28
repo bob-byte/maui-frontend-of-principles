@@ -1,6 +1,7 @@
 ﻿using SET.MAUI.Exceptions;
 
 using System.Net;
+using System.Net.Sockets;
 
 namespace SET.MAUI.ViewModels;
 
@@ -294,14 +295,20 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
                 LoggingService.LogCriticalError( ex );
                 errorMsg = LocStrings.YouAreNotAuthorized;
             }
-            else if ((ex is TaskCanceledException taskCanceledException && taskCanceledException.InnerException is TimeoutException) ||
-                      ex is TimeoutException)
+            else if (ex is TaskCanceledException or TimeoutException)
             {
                 errorMsg = LocStrings.OperationTimeoutMessage;
             }
-            else
+            else if (ex is HttpRequestException &&
+                     ex.InnerException is SocketException socketEx &&
+                     socketEx.SocketErrorCode is SocketError.NetworkUnreachable)
             {
                 errorMsg = LocStrings.NoInternetConnection;
+            }
+            else
+            {
+                LoggingService.LogError( ex, ex.Message );
+                errorMsg = ex.Message;
             }
         }
 

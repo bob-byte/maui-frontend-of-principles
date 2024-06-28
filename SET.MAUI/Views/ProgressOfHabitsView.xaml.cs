@@ -229,6 +229,8 @@ public partial class ProgressOfHabitsView : ContentPageBase
                     MaxLines = 2,
 #if IOS16_0_OR_GREATER
                     HeightRequest = 40,
+#elif IOS
+                    HeightRequest = 50,
 #else
                     HeightRequest = 45,
 #endif

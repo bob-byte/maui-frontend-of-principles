@@ -156,6 +156,7 @@
                                          StartIcon="charts"
                                          IsUpDownIconVisible="True" />
                         <dxco:SimpleButton Text="{x:Static loc:LocStrings.RecommendedHabitsButton}"
+                                           IsVisible="{Binding IsNewHabit}"
                                            Style="{StaticResource PrimaryButton}"
                                            Clicked="SB_RecomendedHabit_Clicked"
                                            Margin="0, 5, 0, 0" />
