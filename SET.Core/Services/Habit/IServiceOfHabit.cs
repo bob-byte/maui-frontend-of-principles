@@ -2,6 +2,8 @@
 
 public interface IServiceOfHabit
 {
+    List<UserHabit>? StoredUserHabits { get; set; }
+
     Task<List<UserHabit>> ActiveHabitsAsync( DateOnly startInterval, DateOnly endInterval );
     Task<UserHabit> UserHabitAsync( long id );
     Task<SaveHabitResponse> UpdateHabitAsync( EditUserHabitDto habit );

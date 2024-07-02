@@ -65,24 +65,20 @@
                                                                Dark={StaticResource DarkPrimary}}"
                                    Margin="0,15,0,0" />
 
-                <VerticalStackLayout VerticalOptions="Start"
-                                     Spacing="5"
-                                     Margin="0,25,0,0">
-                    <Label HorizontalTextAlignment="End">
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="{x:Static loc:LocStrings.ForgetPasswordNavigation}"
-                                      TextColor="{StaticResource LightNormalText}"
-                                      FontSize="{OnPlatform iOS=14, 
-                                                            Android=12}"
-                                      FontFamily="MonaSansMedium"
-                                      FontAttributes="Italic">
-                                    <Span.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding OpenForgetPasswordCommand}" />
-                                    </Span.GestureRecognizers>
-                                </Span>
-                            </FormattedString>
-                        </Label.FormattedText>
+                <Grid VerticalOptions="Start"
+                      RowDefinitions="Auto, Auto, Auto"
+                      RowSpacing="5"
+                      Margin="0,25,0,0">
+                    <Label HorizontalTextAlignment="End"
+                           Text="{x:Static loc:LocStrings.ForgetPasswordNavigation}"
+                           TextColor="{StaticResource LightNormalText}"
+                           FontSize="{OnPlatform Android=12,
+                                                 iOS=14}"
+                           FontFamily="MonaSansMedium"
+                           Grid.Row="0">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenForgetPasswordCommand}" />
+                        </Label.GestureRecognizers>
                     </Label>
                     <Label Text="{x:Static loc:LocStrings.LoginAgreementText}"
                            TextColor="Gray"
@@ -90,10 +86,12 @@
                            FontFamily="MonaSansMedium"
                            FontAttributes="Italic"
                            Margin="0,15,0,0"
-                           HorizontalTextAlignment="Center" />
+                           HorizontalTextAlignment="Center"
+                           Grid.Row="1" />
                     <Label HorizontalTextAlignment="Center"
                            LineBreakMode="TailTruncation"
-                           MaxLines="1">
+                           MaxLines="1"
+                           Grid.Row="2">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="{x:Static loc:LocStrings.UserAgreementStrInLoginAndSignupViews}"
@@ -124,7 +122,7 @@
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
-                </VerticalStackLayout>
+                </Grid>
             </VerticalStackLayout>
         </ScrollView>
         <ActivityIndicator Color="{StaticResource Primary}"

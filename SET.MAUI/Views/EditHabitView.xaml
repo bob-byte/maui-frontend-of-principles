@@ -104,8 +104,8 @@
                                            ClearIconVisibility="Never"
                                            Margin="0,0,0,-10" />
                         <dxe:ChoiceChipGroup x:Name="CCG_Types"
-                                             HorizontalOptions="CenterAndExpand"
-                                             IsMultiline="True"
+                                             HorizontalOptions="Center"
+                                             IsMultiline="False"
                                              Margin="0,0,0,-10">
                             <dxe:Chip Text="{x:Static loc:LocStrings.WithoutExceptions}"
                                       Icon="info"
@@ -245,10 +245,9 @@
                                                 HeightRequest="25"
                                                 TintColor="{StaticResource Error}"
                                                 VerticalOptions="Center" />
-                                    <dx:DXStackLayout Orientation="Vertical"
-                                                      x:Name="DXS_ErrorMessages"
-                                                      ItemSpacing="7"
-                                                      VerticalOptions="Center" />
+                                    <Grid x:Name="DXS_ErrorMessages"
+                                          RowSpacing="7"
+                                          VerticalOptions="Center" />
                                 </dx:DXStackLayout>
                                 <dxco:SimpleButton x:Name="SB_CloseErrorsPopup"
                                                    Clicked="SB_CloseErrorsPopup_Clicked"

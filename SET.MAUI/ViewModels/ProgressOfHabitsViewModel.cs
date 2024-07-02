@@ -58,6 +58,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
 
             DefaultHandleLogout( msg );
             UserHabits.Clear();
+            ServiceOfHabit.StoredUserHabits?.Clear();
             SelectedHabit = null;
         } );
     }
@@ -111,7 +112,8 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
             foundHabit.Priority = habit.Priority;
         }
 
-        UserHabits = new ObservableCollectionEx<UserHabit>( UserHabits.OrderBy( h => h.Priority ) );
+        ServiceOfHabit.StoredUserHabits = UserHabits.OrderBy( h => h.Priority ).ToList();
+        UserHabits = new ObservableCollectionEx<UserHabit>( ServiceOfHabit.StoredUserHabits );
 
         SelectedHabit = null;
     }
@@ -131,6 +133,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
                     await InitUserInfoAsync();
                     List<UserHabit> habits = await ServiceOfHabit.ActiveHabitsAsync( StartProgressInterval, EndProgressInterval );
                     UserHabits.Reload( habits );
+                    ServiceOfHabit.StoredUserHabits = habits;
 
                     foreach (UserHabit habit in habits)
                     {
@@ -171,7 +174,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
             {
                 try
                 {
-                    progressOfHabit.Value = ProgressValue.NextToggled( progressOfHabit.Value );
+                    progressOfHabit.Value = ProgressValue.NextToggled( previousValueOfProgress );
                     await ProgressOfHabitService.UpdateAsync( progressOfHabit );
                 }
                 catch (Exception ex)
@@ -180,6 +183,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
                     if (!doTryAgain)
                     {
                         progressOfHabit.Value = previousValueOfProgress;
+                        ServiceOfHabit.Recompute( habit );
                     }
                 }
             }
@@ -258,6 +262,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
                     await ServiceOfHabit.DeleteAsync( habit.Id );
 
                     UserHabits.Remove( habit );
+                    ServiceOfHabit.StoredUserHabits?.Remove( habit );
                     m_isBusyForChangeCompleted.TryRemove( habit, out SemaphoreSlim? locker );
                     locker?.Dispose();
 

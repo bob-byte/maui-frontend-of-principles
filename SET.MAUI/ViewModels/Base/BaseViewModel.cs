@@ -299,16 +299,14 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
             {
                 errorMsg = LocStrings.OperationTimeoutMessage;
             }
-            else if (ex is HttpRequestException &&
-                     ex.InnerException is SocketException socketEx &&
-                     socketEx.SocketErrorCode is SocketError.NetworkUnreachable)
+            else if (ex is HttpRequestException or AggregateException or WebException)
             {
                 errorMsg = LocStrings.NoInternetConnection;
             }
             else
             {
                 LoggingService.LogError( ex, ex.Message );
-                errorMsg = ex.Message;
+                errorMsg = ex.ToString();
             }
         }
 
@@ -318,7 +316,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
                 title: LocStrings.Error,
                 accept: LocStrings.Retry,
                 cancel: LocStrings.Cancel
-            );
+            ).DefaultConfigureAwait();
         return result;
     }
 

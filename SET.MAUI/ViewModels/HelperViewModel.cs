@@ -90,7 +90,6 @@ public partial class HelperViewModel : BaseViewModel
                         {
                             helperMsg.Text += chatUpdate.
                                 ContentUpdate.
-                                Replace( oldValue: "`", newValue: string.Empty ).
                                 Replace( "**", string.Empty );
 
                             await Task.Delay( millisecondsDelay: 65 );

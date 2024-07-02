@@ -215,6 +215,8 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         base.ApplyQueryAttributes( query );
 
         Habit = new UserHabit();
+        InitValidations();
+        
         if (query.TryGetValue( "Id", out object? value ) && (long)value != 0)
         {
             Habit.Id = (long)value;
@@ -450,7 +452,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         {
             ReasonToFollow = new ValidatableObject<string>();
 
-            IValidationRule<string> rule = new IsNotNullOrWhiteSpaceRule( $"{LocStrings.TabHowToKeep}. {LocStrings.FieldReasonToFollow} {isRequired}" );
+            IValidationRule<string> rule = new IsNotNullOrWhiteSpaceRule( $"{LocStrings.TabHowToKeep}. {LocStrings.FieldReasonToFollow} {isRequired}." );
             ReasonToFollow.Validations.Add( rule );
         }
         ReasonToFollow.Value = Habit.ReasonToFollow;

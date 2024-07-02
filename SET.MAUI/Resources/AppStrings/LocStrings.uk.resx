@@ -349,7 +349,7 @@
     <value>Огляд</value>
   </data>
   <data name="SelfDevelopmentAssistantShortDescription" xml:space="preserve">
-    <value>Я асистент з саморозвитку. Ви можете звернутися до мене стосовно різноманітних питаннь. Для прикладу, "Що таке атомна звичка?"</value>
+    <value>Я асистент з саморозвитку. Ви можете звернутися до мене стосовно різноманітних питань. Наприклад, "Що таке атомна звичка?"</value>
   </data>
   <data name="ChatWithHelper" xml:space="preserve">
     <value>Чат з помічником</value>

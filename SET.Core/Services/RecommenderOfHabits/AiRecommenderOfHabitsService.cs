@@ -25,7 +25,9 @@ public class AiRecommenderOfHabitsService : BaseRemoteService, IAiRecommenderOfH
     //then parses and returns a response
     public async Task<List<RecommendedHabit>> RecommendedHabitsAsync( IEnumerable<UserHabit> currentHabits, IEnumerable<UserAreaOfLife> areasOfLifeOfNewHabit, Gender userGender, string? userMission, string? userMainSlogan )
     {
+#if DEBUG
         var timeComputer = Stopwatch.StartNew();
+#endif
         StringBuilder messageContentBuilder = new();
         messageContentBuilder.Append( $"Please recommend me a list of 4 next atomic habits that I can select. " );
         if (!string.IsNullOrWhiteSpace( userMission ))
@@ -95,8 +97,10 @@ public class AiRecommenderOfHabitsService : BaseRemoteService, IAiRecommenderOfH
                 result = JsonSerializer.Deserialize<List<RecommendedHabit>>( responseContent )!;
             }
 
+#if DEBUG
             timeComputer.Stop();
             LoggingService.LogInfo( $"Time to find recommended habits: {timeComputer.ElapsedMilliseconds} milliseconds" );
+#endif
 
             return result;
         }

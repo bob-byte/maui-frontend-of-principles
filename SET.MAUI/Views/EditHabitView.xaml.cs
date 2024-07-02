@@ -21,7 +21,7 @@ public partial class EditHabitView : ContentPageBase
         InitializeComponent();
     }
 
-    private void ViewModel_OnIsInitializedChanged( object sender, PropertyChangedEventArgs e )
+    private void ViewModel_OnIsInitializedChanged( object? sender, PropertyChangedEventArgs e )
     {
         if (e.PropertyName == nameof( BaseViewModel.IsInitialized ))
         {
@@ -30,11 +30,6 @@ public partial class EditHabitView : ContentPageBase
                 NE_Priority.MaxValue = ViewModel.UserHabits.Count;
             }
         }
-    }
-
-    protected override async void OnAppearing()
-    {
-        base.OnAppearing();
     }
 
     private void SelectHabitTypeChip( object? sender, PropertyChangedEventArgs eventArgs )
@@ -143,17 +138,22 @@ public partial class EditHabitView : ContentPageBase
         {
             try
             {
-                frequency.Type = FrequencyType.SeveralTimesPerPeriod;
                 int repeats = Convert.ToUInt16( TE_RepeatsOfSeveralTimesPerPeriod.Text );
 
                 switch (ViewModel.SelectedPeriodOfHabit.Type)
                 {
                     case PeriodTypeOfHabit.Week:
                         {
-                            frequency.IntervalLengthInDays = 7;
-                            if(repeats > 7)
+                            if(repeats >= 7)
                             {
-                                repeats = 7;
+                                frequency.Type = FrequencyType.EveryDay;
+                                repeats = 1;
+                                frequency.IntervalLengthInDays = 1;
+                            }
+                            else
+                            {
+                                frequency.Type = FrequencyType.SeveralTimesPerPeriod;
+                                frequency.IntervalLengthInDays = 7;
                             }
 
                             break;
@@ -161,10 +161,16 @@ public partial class EditHabitView : ContentPageBase
 
                     case PeriodTypeOfHabit.Month:
                         {
-                            frequency.IntervalLengthInDays = 30;
-                            if (repeats > 30)
+                            if (repeats >= 30)
                             {
-                                repeats = 30;
+                                frequency.Type = FrequencyType.EveryDay;
+                                frequency.IntervalLengthInDays = 1;
+                                repeats = 1;
+                            }
+                            else
+                            {
+                                frequency.Type = FrequencyType.SeveralTimesPerPeriod;
+                                frequency.IntervalLengthInDays = 30;
                             }
 
                             break;
@@ -172,10 +178,16 @@ public partial class EditHabitView : ContentPageBase
 
                     case PeriodTypeOfHabit.Year:
                         {
-                            frequency.IntervalLengthInDays = 365;
-                            if (repeats > 365)
+                            if (repeats >= 365)
                             {
-                                repeats = 365;
+                                frequency.Type = FrequencyType.EveryDay;
+                                frequency.IntervalLengthInDays = 1;
+                                repeats = 1;
+                            }
+                            else
+                            {
+                                frequency.Type = FrequencyType.SeveralTimesPerPeriod;
+                                frequency.IntervalLengthInDays = 365;
                             }
 
                             break;
@@ -273,37 +285,58 @@ public partial class EditHabitView : ContentPageBase
         else
         {
             DXS_ErrorMessages.Children.Clear();
+            DXS_ErrorMessages.RowDefinitions.Clear();
 
+            int numRow = 0;
             foreach (string errMsg in ViewModel.NameOfHabit.Errors)
             {
                 Label errorLabel = new()
                 {
+                    Text = errMsg,
                     FontSize = 16,
                     FontFamily = "MonaSansMedium",
-                    LineBreakMode = LineBreakMode.WordWrap,
+                    LineBreakMode = LineBreakMode.TailTruncation,
+                    MaxLines = 5,
                     HorizontalOptions = LayoutOptions.Start,
                     HorizontalTextAlignment = TextAlignment.Start,
                     VerticalOptions = LayoutOptions.Center,
                     VerticalTextAlignment = TextAlignment.Center
                 };
-                errorLabel.Text += $"{errMsg}";
+
+                RowDefinition row = new()
+                {
+                    Height = new GridLength( value: 1, GridUnitType.Auto )
+                };
+                DXS_ErrorMessages.AddRowDefinition( row );
                 DXS_ErrorMessages.Children.Add( errorLabel );
+                DXS_ErrorMessages.SetRow( errorLabel, numRow );
+                numRow++;
             }
 
             foreach (string errMsg in ViewModel.ReasonToFollow.Errors)
             {
                 Label errorLabel = new()
                 {
+                    Text = errMsg,
                     FontSize = 16,
                     FontFamily = "MonaSansMedium",
-                    LineBreakMode = LineBreakMode.WordWrap,
+                    LineBreakMode = LineBreakMode.TailTruncation,
+                    MaxLines = 5,
                     HorizontalOptions = LayoutOptions.Start,
                     HorizontalTextAlignment = TextAlignment.Start,
                     VerticalOptions = LayoutOptions.Center,
-                    VerticalTextAlignment = TextAlignment.Center
+                    VerticalTextAlignment = TextAlignment.Center,
+                    MaximumHeightRequest = PageHeight - 60
                 };
-                errorLabel.Text += $"{errMsg}";
+
+                RowDefinition row = new()
+                {
+                    Height = new GridLength( 1, GridUnitType.Auto )
+                };
+                DXS_ErrorMessages.AddRowDefinition( row );
                 DXS_ErrorMessages.Children.Add( errorLabel );
+                DXS_ErrorMessages.SetRow( errorLabel, numRow );
+                numRow++;
             }
 
             DXP_Errors.MaximumWidthRequest = PageWidth - 40;
