@@ -1,7 +1,4 @@
-﻿using Polly;
-using Polly.Extensions.Http;
-using Polly.Retry;
-using System.Net.Http.Headers;
+﻿using System.Net.Http.Headers;
 using System.Net.Mime;
 
 namespace SET.Core.Extensions;
@@ -18,8 +15,7 @@ public static class ServiceCollectionExtensions
             {
                 httpClient.Timeout = TimeSpan.FromSeconds( value: 30 );
                 httpClient.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( MediaTypeNames.Text.Plain ) );
-            } ).
-            AddPolicyHandler( RetryPolicy() );
+            } );
 
         services.AddSingleton<ICachingService, CachingService>();
         services.AddSingleton<IUrlBuilder, UrlBuilder>();
@@ -36,15 +32,5 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<ISignupService, SignupService>();
 
         return services;
-    }
-
-    private static AsyncRetryPolicy<HttpResponseMessage> RetryPolicy()
-    {
-        return HttpPolicyExtensions.
-            HandleTransientHttpError().
-            WaitAndRetryAsync(
-                retryCount: 3,
-                sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds( Math.Pow( 1.5, retryAttempt ) )
-            );
     }
 }

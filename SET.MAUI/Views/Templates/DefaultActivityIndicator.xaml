@@ -13,7 +13,7 @@
                            IsRunning="{Binding IsBusy}"
                            VerticalOptions="Center"
                            HorizontalOptions="Center"
-                           WidthRequest="130"
-                           HeightRequest="130" />
+                           WidthRequest="100"
+                           HeightRequest="100" />
 </ContentView>
 

@@ -415,7 +415,7 @@
     <value>Tap the AI-lamp to get recommended habits.</value>
   </data>
   <data name="IfYouDontWantToWaitYouCanChangeOtherFields" xml:space="preserve">
-    <value>If you don't want to wait, you can change the other fields for now</value>
+    <value>If you don't want to wait, you can change the other fields for now.</value>
   </data>
   <data name="CannotReloadHabits" xml:space="preserve">
     <value>It is impossible to reload habits</value>

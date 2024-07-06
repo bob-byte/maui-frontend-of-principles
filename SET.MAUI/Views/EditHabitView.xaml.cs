@@ -15,29 +15,20 @@ public partial class EditHabitView : ContentPageBase
 
         BindingContext = viewModel;
         ViewModel = viewModel;
-        ViewModel.PropertyChanged += SelectHabitTypeChip;
+        ViewModel.PropertyChanged += ViewModel_HabitPropertyChanged;
         ViewModel.PropertyChanged += ViewModel_OnIsInitializedChanged;
 
         InitializeComponent();
     }
 
-    private void ViewModel_OnIsInitializedChanged( object? sender, PropertyChangedEventArgs e )
-    {
-        if (e.PropertyName == nameof( BaseViewModel.IsInitialized ))
-        {
-            if (ViewModel.IsInitialized)
-            {
-                NE_Priority.MaxValue = ViewModel.UserHabits.Count;
-            }
-        }
-    }
-
-    private void SelectHabitTypeChip( object? sender, PropertyChangedEventArgs eventArgs )
+    private void ViewModel_HabitPropertyChanged( object? sender, PropertyChangedEventArgs e )
     {
         UserHabit habit = ViewModel.Habit;
-        if (eventArgs.PropertyName == nameof( EditHabitViewModel.Habit ) && habit != null)
+        if (e.PropertyName == nameof( EditHabitViewModel.Habit ) && habit != null)
         {
-            switch (habit.Type)
+            habit.PropertyChanged += TypeOfHabit_PropertyChanged;
+
+            switch (ViewModel.Habit.Type)
             {
                 default:
                     {
@@ -49,6 +40,37 @@ public partial class EditHabitView : ContentPageBase
                         CCG_Types.SelectChip( C_IntegrallyWiseType );
                         break;
                     }
+            }
+        }
+    }
+
+    private void TypeOfHabit_PropertyChanged( object? sender, PropertyChangedEventArgs e )
+    {
+        if(e.PropertyName == nameof( UserHabit.Type ))
+        {
+            switch (ViewModel.Habit.Type)
+            {
+                default:
+                    {
+                        CCG_Types.SelectChip( C_WithoutExceptionsType );
+                        break;
+                    }
+                case TypeOfHabit.IntegrallyWise:
+                    {
+                        CCG_Types.SelectChip( C_IntegrallyWiseType );
+                        break;
+                    }
+            }
+        }
+    }
+
+    private void ViewModel_OnIsInitializedChanged( object? sender, PropertyChangedEventArgs e )
+    {
+        if (e.PropertyName == nameof( BaseViewModel.IsInitialized ))
+        {
+            if (ViewModel.IsInitialized)
+            {
+                NE_Priority.MaxValue = ViewModel.UserHabits.Count;
             }
         }
     }
@@ -282,7 +304,7 @@ public partial class EditHabitView : ContentPageBase
         {
             await ViewModel.SaveCommand.ExecuteAsync( null );
         }
-        else
+        else if( !ViewModel.IsBusy && !ViewModel.IsLoadingHabitInfo )
         {
             DXS_ErrorMessages.Children.Clear();
             DXS_ErrorMessages.RowDefinitions.Clear();

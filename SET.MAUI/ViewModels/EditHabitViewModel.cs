@@ -34,6 +34,9 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
     [ObservableProperty]
     private bool m_isLoadingHabitInfo;
 
+    [ObservableProperty]
+    private bool m_isRecommendedHabitsLoading;
+
     public EditHabitViewModel( IServiceProvider serviceProvider, IAiRecommenderOfHabitsService aiRecommenderOfHabits)
         : base(serviceProvider)
     {
@@ -198,7 +201,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         NameOfHabit.Validate();
         ReasonToFollow.Validate();
 
-        return NameOfHabit.IsValid && ReasonToFollow.IsValid;
+        return NameOfHabit.IsValid && ReasonToFollow.IsValid && !IsBusy && !IsLoadingHabitInfo;
     }
 
     [RelayCommand]
@@ -268,99 +271,100 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         Habit.Reminder ??= new Reminder();
         Habit.Frequency ??= new FrequencyOfHabit();
 
-        try
+        if (IsNewHabit)
         {
-            if (Habit.Id != 0)
+            Habit.Id = 0;
+
+            if (!UserHabits.Contains( Habit ))
             {
-                Habit = await ServiceOfHabit.UserHabitAsync( Habit.Id );
-                if (Habit.Complexity < HabitConstants.MIN_HABIT_COMPLEXITY || HabitConstants.MIN_HABIT_COMPLEXITY < Habit.Complexity)
-                {
-                    Habit.Complexity = 5;
-                }
-
-                Habit.AreasOfLife ??= new ObservableCollectionEx<UserAreaOfLife>();
-                foreach (UserAreaOfLife area in Habit.AreasOfLife!)
-                {
-                    //localize names
-                    string? locName = LocStrings.ResourceManager.GetString( area.Name! );
-                    if (!string.IsNullOrWhiteSpace( locName ))
-                    {
-                        area.Name = locName;
-                    }
-                }
-
-                if (Habit.AreasOfLife.Count == 0)
-                {
-                    Habit.AreasOfLife.Add( AllAreasOfLifeAsOneItem );
-                }
-
-                UserHabit? foundHabit = UserHabits.FirstOrDefault( h => h.Id == Habit.Id );
-                if (foundHabit != null)
-                {
-                    int index = UserHabits.IndexOf( foundHabit );
-                    UserHabits[index] = Habit;
-                }
-            }
-            else
-            {
-                Habit.Id = 0;
                 UserHabits.Add( Habit );
-                Habit.AreasOfLife = new ObservableCollectionEx<UserAreaOfLife>();
-                Habit.Complexity = 5;
-                Habit.Priority = UserHabits.Count;
-
-                var normalTextColor = (Color)Application.Current!.Resources["LightNormalText"];
-                Habit.ColorName = normalTextColor.ToArgbHex();
             }
 
-            if (AllUserAreasOfLife.Count == 0)
-            {
-                List<UserAreaOfLife> areasOfLife = await AreaOfLifeService.UserAreasOfLife();
-                foreach (UserAreaOfLife area in areasOfLife)
-                {
-                    //localize names
-                    string? locName = LocStrings.ResourceManager.GetString( area.Name! );
-                    if (!string.IsNullOrWhiteSpace( locName ))
-                    {
-                        area.Name = locName;
-                    }
-                }
-                areasOfLife.Insert( index: 0, AllAreasOfLifeAsOneItem );
+            Habit.AreasOfLife = new ObservableCollectionEx<UserAreaOfLife>();
+            Habit.Complexity = 5;
+            Habit.Priority = UserHabits.Count;
+            Habit.Type = TypeOfHabit.IntegrallyWise;
 
-                AllUserAreasOfLife.Reload( areasOfLife );
-            }
-
-            InitValidations();
-
-            switch (Habit.Frequency!.IntervalLengthInDays)
-            {
-                default:
-                    {
-                        SelectedPeriodOfHabit = PeriodsOfHabit.First( p => p.Type == PeriodTypeOfHabit.Week );
-                        break;
-                    }
-                case 30:
-                    {
-                        SelectedPeriodOfHabit = PeriodsOfHabit.First( p => p.Type == PeriodTypeOfHabit.Month );
-                        break;
-                    }
-                case 365:
-                    {
-                        SelectedPeriodOfHabit = PeriodsOfHabit.First( p => p.Type == PeriodTypeOfHabit.Year );
-                        break;
-                    }
-            }
-
-            UpdateFrequencyRepresentation();
-
-            Habit.AreasOfLife.CollectionChanged += AreasOfLife_CollectionChanged;
-
-            await base.InitializeAsync( parameter );
+            var normalTextColor = (Color)Application.Current!.Resources["LightNormalText"];
+            Habit.ColorName = normalTextColor.ToArgbHex();
         }
-        finally
+        else
         {
-            IsLoadingHabitInfo = false;
+            Habit = await ServiceOfHabit.UserHabitAsync( Habit.Id );
+            if (Habit.Complexity < HabitConstants.MIN_HABIT_COMPLEXITY || HabitConstants.MAX_HABIT_COMPLEXITY < Habit.Complexity)
+            {
+                Habit.Complexity = 5;
+            }
+
+            Habit.AreasOfLife ??= new ObservableCollectionEx<UserAreaOfLife>();
+            foreach (UserAreaOfLife area in Habit.AreasOfLife!)
+            {
+                //localize names
+                string? locName = LocStrings.ResourceManager.GetString( area.Name! );
+                if (!string.IsNullOrWhiteSpace( locName ))
+                {
+                    area.Name = locName;
+                }
+            }
+
+            if (Habit.AreasOfLife.Count == 0)
+            {
+                Habit.AreasOfLife.Add( AllAreasOfLifeAsOneItem );
+            }
+
+            UserHabit? foundHabit = UserHabits.FirstOrDefault( h => h.Id == Habit.Id );
+            if (foundHabit != null)
+            {
+                int index = UserHabits.IndexOf( foundHabit );
+                UserHabits[index] = Habit;
+            }
         }
+
+        InitValidations();
+
+        switch (Habit.Frequency!.IntervalLengthInDays)
+        {
+            default:
+                {
+                    SelectedPeriodOfHabit = PeriodsOfHabit.First( p => p.Type == PeriodTypeOfHabit.Week );
+                    break;
+                }
+            case 30:
+                {
+                    SelectedPeriodOfHabit = PeriodsOfHabit.First( p => p.Type == PeriodTypeOfHabit.Month );
+                    break;
+                }
+            case 365:
+                {
+                    SelectedPeriodOfHabit = PeriodsOfHabit.First( p => p.Type == PeriodTypeOfHabit.Year );
+                    break;
+                }
+        }
+
+        UpdateFrequencyRepresentation();
+
+        Habit.AreasOfLife.CollectionChanged += AreasOfLife_CollectionChanged;
+
+        if (AllUserAreasOfLife.Count == 0)
+        {
+            List<UserAreaOfLife> areasOfLife = await AreaOfLifeService.UserAreasOfLife();
+            foreach (UserAreaOfLife area in areasOfLife)
+            {
+                //localize names
+                string? locName = LocStrings.ResourceManager.GetString( area.Name! );
+                if (!string.IsNullOrWhiteSpace( locName ))
+                {
+                    area.Name = locName;
+                }
+            }
+            areasOfLife.Insert( index: 0, AllAreasOfLifeAsOneItem );
+
+            AllUserAreasOfLife.Reload( areasOfLife );
+        }
+
+        await base.InitializeAsync( parameter );
+
+        IsLoadingHabitInfo = false;
     }
 
     private async void AreasOfLife_CollectionChanged( object? sender, NotifyCollectionChangedEventArgs e )
@@ -388,7 +392,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
             if (areasOfLife.Count != Habit.AreasOfLife!.Count)
             {
                 //to change collection after collection change event
-                await Task.Delay( millisecondsDelay: 20 );
+                await Task.Delay( millisecondsDelay: 5 );
                 Habit.AreasOfLife!.Reload( areasOfLife );
             }
         }
@@ -397,22 +401,36 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
     [RelayCommand]
     private async Task ReloadRecommendedHabitsAsync( Action afterAction )
     {
-        await UiBusyFor( async () =>
-        {
-            if (RecommendedHabits.Any())
-            {
-                RecommendedHabits.Clear();
-            }
+        IsRecommendedHabitsLoading = true;
 
-            List<RecommendedHabit> recommendedHabits = await AiRecommenderOfHabits.RecommendedHabitsAsync(
-                UserHabits,
-                Habit.AreasOfLife!,
-                Gender,
-                Mission,
-                MainSlogan
-            );
-            RecommendedHabits.Reload( recommendedHabits );
-        } );
+        bool doTryAgain = false;
+
+        do
+        {
+            try
+            {
+                if (RecommendedHabits.Any())
+                {
+                    RecommendedHabits.Clear();
+                }
+
+                List<RecommendedHabit> recommendedHabits = await AiRecommenderOfHabits.RecommendedHabitsAsync(
+                    UserHabits,
+                    Habit.AreasOfLife!,
+                    Gender,
+                    Mission,
+                    MainSlogan
+                );
+                RecommendedHabits.Reload( recommendedHabits );
+            }
+            catch (Exception ex)
+            {
+                doTryAgain = await DoRetryOperationOnErrorAsync( ex );
+            }
+        }
+        while (doTryAgain);
+
+        IsRecommendedHabitsLoading = false;
 
         afterAction();
     }

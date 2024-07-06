@@ -598,7 +598,7 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If you don&apos;t want to wait, you can change the other fields for now.
+        ///   Looks up a localized string similar to If you don&apos;t want to wait, you can change the other fields for now..
         /// </summary>
         internal static string IfYouDontWantToWaitYouCanChangeOtherFields {
             get {

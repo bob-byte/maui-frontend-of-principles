@@ -113,7 +113,7 @@
             </dxg:DataGridView.Columns>
 
             <dxg:DataGridView.CellAppearance>
-                <dxg:CellAppearance SelectionColor="{StaticResource LightPrimary}"
+                <dxg:CellAppearance SelectionColor="{StaticResource TertiaryLight}"
                                     BackgroundColor="{StaticResource Background}" />
             </dxg:DataGridView.CellAppearance>
         </dxg:DataGridView>

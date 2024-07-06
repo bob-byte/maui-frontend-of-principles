@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.set.principles" android:versionName="1.1.1" android:versionCode="9">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.set.principles" android:versionName="1.1.3" android:versionCode="11">
 	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="34" />
 	<application android:allowBackup="true" android:label="Principles" android:icon="@mipmap/appicon"></application>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

@@ -107,6 +107,12 @@
                                              HorizontalOptions="Center"
                                              IsMultiline="False"
                                              Margin="0,0,0,-10">
+                            <dxe:Chip Text="{x:Static loc:LocStrings.IntegrallyWise}"
+                                      Icon="info"
+                                      x:Name="C_IntegrallyWiseType"
+                                      TapCommand="{Binding TapIntegrallyWiseTypeCommand,
+                                                           Source={RelativeSource AncestorType={x:Type vm:EditHabitViewModel}}}"
+                                      TapCommandParameter="{x:Reference C_IntegrallyWiseType}" />
                             <dxe:Chip Text="{x:Static loc:LocStrings.WithoutExceptions}"
                                       Icon="info"
                                       x:Name="C_WithoutExceptionsType"
@@ -114,12 +120,6 @@
                                                            Source={RelativeSource AncestorType={x:Type vm:EditHabitViewModel}}}"
                                       TapCommandParameter="{x:Reference C_WithoutExceptionsType}">
                             </dxe:Chip>
-                            <dxe:Chip Text="{x:Static loc:LocStrings.IntegrallyWise}"
-                                      Icon="info"
-                                      x:Name="C_IntegrallyWiseType"
-                                      TapCommand="{Binding TapIntegrallyWiseTypeCommand,
-                                                           Source={RelativeSource AncestorType={x:Type vm:EditHabitViewModel}}}"
-                                      TapCommandParameter="{x:Reference C_IntegrallyWiseType}" />
                         </dxe:ChoiceChipGroup>
                         <dxe:TextEdit x:Name="TE_Frequency"
                                       Text="{Binding FrequencyRepresentation}"
@@ -426,17 +426,17 @@
                                 <VerticalStackLayout HorizontalOptions="Center"
                                                      VerticalOptions="Center"
                                                      Spacing="0">
-                                    <skia:SKLottieView IsVisible="{Binding IsBusy}"
+                                    <skia:SKLottieView IsVisible="{Binding IsRecommendedHabitsLoading}"
                                                        RepeatCount="-1"
                                                        Source="fire_loading.json"
                                                        HorizontalOptions="Center"
                                                        WidthRequest="105"
                                                        HeightRequest="105" />
                                     <Label Text="{x:Static loc:LocStrings.Loading}"
-                                           IsVisible="{Binding IsBusy}"
+                                           IsVisible="{Binding IsRecommendedHabitsLoading}"
                                            HorizontalTextAlignment="Center" />
                                     <Label Text="{x:Static loc:LocStrings.IfYouDontWantToWaitYouCanChangeOtherFields}"
-                                           IsVisible="{Binding IsBusy}"
+                                           IsVisible="{Binding IsRecommendedHabitsLoading}"
                                            HorizontalTextAlignment="Center"
                                            WidthRequest="270"
                                            HeightRequest="100"
@@ -458,7 +458,7 @@
                                          Spacing="6">
                         <dxe:MultilineEdit Text="{Binding ReasonToFollow.Value}"
                                            x:Name="ME_ReasonToFollow"
-                                           LabelText="{x:Static loc:LocStrings.StrongReasonToFollow}"
+                                           LabelText="{x:Static loc:LocStrings.ReasonToFollow}"
                                            HasError="{Binding ReasonToFollow.IsValid,
                                                               Converter={StaticResource IsFalse}}"
                                            IsErrorIconVisible="False"
@@ -484,18 +484,12 @@
             </dxco:TabViewItem>
         </dxco:TabView>
 
-        <VerticalStackLayout HorizontalOptions="Center"
-                             VerticalOptions="Center"
-                             Spacing="0">
-            <skia:SKLottieView IsVisible="{Binding IsLoadingHabitInfo}"
-                               RepeatCount="-1"
-                               Source="fire_loading.json"
-                               HorizontalOptions="Center"
-                               WidthRequest="150"
-                               HeightRequest="150" />
-            <Label Text="{x:Static loc:LocStrings.LoadingContent}"
-                   IsVisible="{Binding IsLoadingHabitInfo}"
-                   HorizontalTextAlignment="Center" />
-        </VerticalStackLayout>
+        <ActivityIndicator Color="{StaticResource Primary}"
+                           IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"
+                           WidthRequest="100"
+                           HeightRequest="100" />
     </Grid>
 </v:ContentPageBase>

@@ -58,6 +58,13 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
 
             DefaultHandleLogout( msg );
             UserHabits.Clear();
+
+            foreach (SemaphoreSlim locker in m_isBusyForChangeCompleted.Values)
+            {
+                locker.Dispose();
+            }
+            m_isBusyForChangeCompleted.Clear();
+
             ServiceOfHabit.StoredUserHabits?.Clear();
             SelectedHabit = null;
         } );
