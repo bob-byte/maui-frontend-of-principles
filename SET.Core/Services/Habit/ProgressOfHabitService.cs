@@ -83,14 +83,12 @@ public class ProgressOfHabitService : BaseRemoteService, IProgressOfHabitService
 
         double exponentialSmoothingFactor = 0.5;
         double scalingFactor = 13.0;
-        double decayFactor = Math.Pow( exponentialSmoothingFactor, Math.Sqrt( frequency ) * coefOfComplexity / scalingFactor );
+        double decayFactor = Math.Pow( exponentialSmoothingFactor, coefOfComplexity / scalingFactor );
 
         double score = previousScore * decayFactor;
         score += checkmarkValue * (1 - decayFactor);
         return score;
     }
-
-    
 
     public int ConvertScoreToPercentage( double score )
     {

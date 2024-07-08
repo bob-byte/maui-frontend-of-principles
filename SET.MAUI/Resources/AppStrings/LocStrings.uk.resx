@@ -67,7 +67,7 @@
     <value>Ментор</value>
   </data>
   <data name="MyHabits" xml:space="preserve">
-    <value>Мої звички</value>
+    <value>Мої Звички</value>
   </data>
   <data name="OK" xml:space="preserve">
     <value>OK</value>
@@ -349,7 +349,7 @@
     <value>Огляд</value>
   </data>
   <data name="SelfDevelopmentAssistantShortDescription" xml:space="preserve">
-    <value>Я асистент з саморозвитку. Ви можете звернутися до мене стосовно різноманітних питань. Наприклад, "Що таке атомна звичка?"</value>
+    <value>Я асистент з саморозвитку. Ви можете звернутися до мене стосовно різноманітних питань. Наприклад, "Чи визначає моя ідентичність моє життя?"</value>
   </data>
   <data name="ChatWithHelper" xml:space="preserve">
     <value>Чат з помічником</value>
@@ -400,7 +400,7 @@
     <value>Завантаження змісту...</value>
   </data>
   <data name="HabitCollectionIsEmptyDescription" xml:space="preserve">
-    <value>У вас ще немає атомних звичок</value>
+    <value>У вас ще немає звичок</value>
   </data>
   <data name="Appearance" xml:space="preserve">
     <value>Тема додатку</value>

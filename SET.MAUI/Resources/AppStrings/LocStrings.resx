@@ -427,7 +427,7 @@
     <value>Inspect</value>
   </data>
   <data name="SelfDevelopmentAssistantShortDescription" xml:space="preserve">
-    <value>I am a self-development assistant. You can ask me different questions. For example, "What is an atomic habit?"</value>
+    <value>I am a self-development assistant. You can ask me different questions. For example, "Does my identity determine my life?"</value>
   </data>
   <data name="ChatWithHelper" xml:space="preserve">
     <value>Chat With Helper</value>
@@ -478,7 +478,7 @@
     <value>Loading content...</value>
   </data>
   <data name="HabitCollectionIsEmptyDescription" xml:space="preserve">
-    <value>You don't have any atomic habits yet</value>
+    <value>You don't have any habits yet</value>
   </data>
   <data name="Appearance" xml:space="preserve">
     <value>Appearance</value>

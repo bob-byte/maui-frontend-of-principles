@@ -26,7 +26,7 @@
                         WidthRequest="30"
                         HeightRequest="30"
                         Grid.Column="0" />
-            <Label Text="{x:Static loc:LocStrings.AtomicHabits}"
+            <Label Text="{x:Static loc:LocStrings.MyHabits}"
                    VerticalOptions="Center"
                    VerticalTextAlignment="Center"
                    HorizontalOptions="Start"

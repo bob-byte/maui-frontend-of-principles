@@ -526,7 +526,7 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You don&apos;t have any atomic habits yet.
+        ///   Looks up a localized string similar to You don&apos;t have any habits yet.
         /// </summary>
         internal static string HabitCollectionIsEmptyDescription {
             get {
@@ -1266,7 +1266,7 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to I am a self-development assistant. You can ask me different questions. For example, &quot;What is an atomic habit?&quot;.
+        ///   Looks up a localized string similar to I am a self-development assistant. You can ask me different questions. For example, &quot;Does my identity determine my life?&quot;.
         /// </summary>
         internal static string SelfDevelopmentAssistantShortDescription {
             get {

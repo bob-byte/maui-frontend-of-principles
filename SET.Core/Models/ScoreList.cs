@@ -32,7 +32,7 @@ public class ScoreList
         double frequencyValue = frequency.Value;
         int[] values = progressList.GetByInterval( from, to ).Select( p => p.Value ).ToArray();
 
-        // For non-daily boolean habits, we double the numerator and the denominator to smooth
+        // For non-daily boolean habits, we double the repeats and the intervalInDays to smooth
         // out irregular repetition schedules (for example, weekly habits performed on different
         // days of the week)
         if (frequencyValue < FrequencyOfHabit.MAX_VALUE)
