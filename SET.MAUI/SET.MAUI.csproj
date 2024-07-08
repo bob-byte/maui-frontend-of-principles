@@ -15,7 +15,7 @@
 		<ApplicationId>com.set.principles</ApplicationId>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>1.1.3</ApplicationDisplayVersion>
+		<ApplicationDisplayVersion>1.1.4</ApplicationDisplayVersion>
 		<ApplicationVersion>11</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
