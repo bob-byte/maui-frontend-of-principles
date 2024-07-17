@@ -23,7 +23,7 @@ public class AiRecommenderOfHabitsService : BaseRemoteService, IAiRecommenderOfH
     // - name of areas of life of new habit
     // - format of response (language, JSON array with fields name, reasonToFollow, notes)
     //then parses and returns a response
-    public async Task<List<RecommendedHabit>> RecommendedHabitsAsync( IEnumerable<UserHabit> currentHabits, IEnumerable<UserAreaOfLife> areasOfLifeOfNewHabit, Gender userGender, string? userMission, string? userMainSlogan )
+    public async Task<List<RecommendedHabit>> RecommendedHabitsAsync( IEnumerable<UserHabit> currentHabits, IEnumerable<UserAreaOfLife> areasOfLifeOfNewHabit, Gender userGender, string? userMission, string? userMainSlogan, string? goal )
     {
 #if DEBUG
         var timeComputer = Stopwatch.StartNew();
@@ -38,6 +38,11 @@ public class AiRecommenderOfHabitsService : BaseRemoteService, IAiRecommenderOfH
         if (!string.IsNullOrWhiteSpace( userMainSlogan ))
         {
             messageContentBuilder.Append( $"They also shouldn't conflict with my main slogan of life: \"{userMainSlogan}\". " );
+        }
+
+        if (!string.IsNullOrWhiteSpace( goal ))
+        {
+            messageContentBuilder.Append( $"They also shouldn't conflict with my goal: \"{goal}\". " );
         }
 
         messageContentBuilder.Append( $"I am a {userGender}. " );

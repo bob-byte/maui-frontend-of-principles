@@ -123,7 +123,7 @@
                           HorizontalOptions="CenterAndExpand"
                           VerticalOptions="Start"
                           IsVisible="{Binding UserHabits.Count,
-                                              Converter={StaticResource IsEmptyCollection}}">
+                                              Converter={StaticResource IsZero}}">
             <skia:SKLottieView IsAnimationEnabled="True"
                                RepeatCount="-1"
                                WidthRequest="300"

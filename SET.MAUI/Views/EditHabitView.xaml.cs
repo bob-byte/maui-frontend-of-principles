@@ -335,32 +335,6 @@ public partial class EditHabitView : ContentPageBase
                 numRow++;
             }
 
-            foreach (string errMsg in ViewModel.ReasonToFollow.Errors)
-            {
-                Label errorLabel = new()
-                {
-                    Text = errMsg,
-                    FontSize = 16,
-                    FontFamily = "MonaSansMedium",
-                    LineBreakMode = LineBreakMode.TailTruncation,
-                    MaxLines = 5,
-                    HorizontalOptions = LayoutOptions.Start,
-                    HorizontalTextAlignment = TextAlignment.Start,
-                    VerticalOptions = LayoutOptions.Center,
-                    VerticalTextAlignment = TextAlignment.Center,
-                    MaximumHeightRequest = PageHeight - 60
-                };
-
-                RowDefinition row = new()
-                {
-                    Height = new GridLength( 1, GridUnitType.Auto )
-                };
-                DXS_ErrorMessages.AddRowDefinition( row );
-                DXS_ErrorMessages.Children.Add( errorLabel );
-                DXS_ErrorMessages.SetRow( errorLabel, numRow );
-                numRow++;
-            }
-
             DXP_Errors.MaximumWidthRequest = PageWidth - 40;
             DXP_Errors.MaximumHeightRequest = PageHeight - 60;
             HSL_ErrorMessages.MaximumWidthRequest = DXP_Errors.MaximumWidthRequest - (HSL_ErrorMessages.Margin.Left + HSL_ErrorMessages.Margin.Right);
@@ -583,5 +557,56 @@ public partial class EditHabitView : ContentPageBase
     void TE_Frequency_Tap( System.Object sender, System.ComponentModel.HandledEventArgs e )
     {
         OpenFrequencyPopup();
+    }
+
+    private void ME_SetGoals( object sender, HandledEventArgs e )
+    {
+        GoalsBottomSheet.State = BottomSheetState.HalfExpanded;
+        double bottomSheetHeight = PageHeight * GoalsBottomSheet.HalfExpandedRatio;
+        double rowSpacing = G_Goals.RowSpacing * (G_Goals.RowDefinitions.Count - 1);
+        double additionalSpacing = 10;
+        double size = bottomSheetHeight - rowSpacing - L_GoalSelectionCenterHeader.HeightRequest - L_GoalRecommendation.HeightRequest - additionalSpacing;
+        SKL_Goals.HeightRequest = size;
+        SKL_Goals.WidthRequest = PageWidth - (G_Goals.Padding.Left + G_Goals.Padding.Right);
+        DXCV_Goals.HeightRequest = size;
+    }
+
+    private void OnGoalAddTap( object sender, TappedEventArgs e )
+    {
+        DXP_GoalAdd.IsOpen = true;
+        ViewModel.EditedGoal = new UserGoal()
+        {
+            Id = 0,
+            Name = $"{LocStrings.ToBecome} "
+        };
+    }
+
+
+    private void OnGoalNameTap( object sender, TappedEventArgs e )
+    {
+        GoalsBottomSheet.State = BottomSheetState.Hidden;
+    }
+
+    private void OnME_GoalNameEndIconClicked( object sender, EventArgs e )
+    {
+        DXP_GoalAdd.IsOpen = true;
+
+    }
+
+    private async void Sb_SaveGoal_Clicked( object sender, EventArgs e )
+    {
+        if (ViewModel.SaveGoalCommand.CanExecute( null ))
+        {
+            await ViewModel.SaveGoalCommand.ExecuteAsync(null);
+            DXP_GoalAdd.IsOpen = false;
+        }
+    }
+
+    private void OnGoalNameTapped( object sender, HandledEventArgs e )
+    {
+        var multilineEdit = sender as MultilineEdit;
+        var goal = multilineEdit.BindingContext as UserGoal;
+        ViewModel.OnGoalNameTapped( goal );
+        GoalsBottomSheet.State = BottomSheetState.Hidden;
     }
 }

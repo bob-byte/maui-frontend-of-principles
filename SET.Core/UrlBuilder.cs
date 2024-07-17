@@ -25,6 +25,7 @@ public class UrlBuilder : IUrlBuilder
     private string? m_logs;
     private string? m_changePassword;
     private string? m_codeGeneration;
+    private string? m_goal;
 
     public string BaseUrl
     {
@@ -168,6 +169,15 @@ public class UrlBuilder : IUrlBuilder
             return m_userMission;
         }
     }
+    public string Goal
+    {
+        get
+        {
+            m_userMission ??= Combine( BaseApiUrl, "goals" );
+            return m_userMission;
+        }
+    }
+
 
     public string Logs
     {

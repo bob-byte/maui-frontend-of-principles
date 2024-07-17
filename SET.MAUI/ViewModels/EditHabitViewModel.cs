@@ -11,10 +11,10 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
     private ValidatableObject<string> m_nameOfHabit;
 
     [ObservableProperty]
-    private ValidatableObject<string> m_reasonToFollow;
+    private bool m_isNewHabit;
 
     [ObservableProperty]
-    private bool m_isNewHabit;
+    private UserGoal m_editedGoal;
 
     [ObservableProperty]
     private PeriodOfHabit m_selectedPeriodOfHabit;
@@ -29,6 +29,9 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
     private ObservableCollectionEx<UserHabit> m_userHabits;
 
     [ObservableProperty]
+    private ObservableCollectionEx<UserGoal> m_userGoals;
+
+    [ObservableProperty]
     private string m_complexityHelpText;
 
     [ObservableProperty]
@@ -37,7 +40,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
     [ObservableProperty]
     private bool m_isRecommendedHabitsLoading;
 
-    public EditHabitViewModel( IServiceProvider serviceProvider, IAiRecommenderOfHabitsService aiRecommenderOfHabits)
+    public EditHabitViewModel( IServiceProvider serviceProvider, IAiRecommenderOfHabitsService aiRecommenderOfHabits, IGoalService goalService)
         : base(serviceProvider)
     {
         AllAreasOfLifeAsOneItem = new UserAreaOfLife
@@ -60,6 +63,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
             }
         };
         AiRecommenderOfHabits = aiRecommenderOfHabits;
+        GoalService = goalService;
         AllUserAreasOfLife = new ObservableCollectionEx<UserAreaOfLife>();
 
         UserHabits = new ObservableCollectionEx<UserHabit>();
@@ -69,6 +73,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
 
             AllUserAreasOfLife.Clear();
             UserHabits.Clear();
+            UserGoals.Clear();
         } );
     }
 
@@ -77,6 +82,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
     public List<PeriodOfHabit> PeriodsOfHabit { get; }
 
     public IAiRecommenderOfHabitsService AiRecommenderOfHabits { get; }
+    public IGoalService GoalService { get; set; }
 
     public ObservableCollectionEx<UserAreaOfLife> AllUserAreasOfLife { get; set; }
 
@@ -144,8 +150,6 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         if (canSaveHabit)
         {
             Habit.Name = NameOfHabit.Value;
-            Habit.ReasonToFollow = ReasonToFollow.Value;
-
             EditUserHabitDto dto = new()
             {
                 AreasOfLife = Habit.AreasOfLife!.ToList(),//get copy, because it will be changed
@@ -157,12 +161,16 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
                 Name = Habit.Name,
                 Priority = Habit.Priority,
                 Question = Habit.Question,
-                ReasonToFollow = Habit.ReasonToFollow,
+                Goal = new UserGoal()
+                {
+                    Id = EditedGoal.Id,
+                    Name = EditedGoal?.Name,
+                },
                 Status = Habit.Status,
                 Type = Habit.Type,
                 PrioritizedHabits = new List<UserHabitWithPriority>()
             };
-
+            
             dto.AreasOfLife!.Remove( AllAreasOfLifeAsOneItem );
 
             copyOfHabits.Add( Habit );
@@ -199,9 +207,8 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
     public bool CanSave()
     {
         NameOfHabit.Validate();
-        ReasonToFollow.Validate();
 
-        return NameOfHabit.IsValid && ReasonToFollow.IsValid && !IsBusy && !IsLoadingHabitInfo;
+        return NameOfHabit.IsValid && !IsBusy && !IsLoadingHabitInfo;
     }
 
     [RelayCommand]
@@ -361,7 +368,8 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
 
             AllUserAreasOfLife.Reload( areasOfLife );
         }
-
+        Habit.Goal = new UserGoal();
+        await LoadGoalsAsync();
         await base.InitializeAsync( parameter );
 
         IsLoadingHabitInfo = false;
@@ -419,7 +427,8 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
                     Habit.AreasOfLife!,
                     Gender,
                     Mission,
-                    MainSlogan
+                    MainSlogan,
+                    Habit.Goal.Name
                 );
                 RecommendedHabits.Reload( recommendedHabits );
             }
@@ -439,7 +448,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
     private void SelectedRecommendedHabit( RecommendedHabit recommendedHabit )
     {
         NameOfHabit.Value = recommendedHabit.Name;
-        ReasonToFollow.Value = recommendedHabit.ReasonToFollow;
+        Habit.Description = recommendedHabit.ReasonToFollow;
     }
 
     [RelayCommand(CanExecute = nameof(CanResetPriorities))]
@@ -465,15 +474,6 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
             NameOfHabit.Validations.Add( rule );
         }
         NameOfHabit.Value = Habit.Name;
-
-        if (ReasonToFollow == null)
-        {
-            ReasonToFollow = new ValidatableObject<string>();
-
-            IValidationRule<string> rule = new IsNotNullOrWhiteSpaceRule( $"{LocStrings.TabHowToKeep}. {LocStrings.FieldReasonToFollow} {isRequired}." );
-            ReasonToFollow.Validations.Add( rule );
-        }
-        ReasonToFollow.Value = Habit.ReasonToFollow;
     }
 
     public void UpdateFrequencyRepresentation(FrequencyOfHabit? frequency, PeriodOfHabit periodOfHabit)
@@ -532,13 +532,83 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
     }
 
     [RelayCommand]
-    private Task ShowSnackbarForReasonToFollow( VisualElement visualElement )
+    private async Task SaveGoalAsync()
     {
-        return visualElement.DisplaySnackbar(
-            LocStrings.ReasonToFollowExplanation,
-            duration: TimeSpan.FromMinutes( 1 ),
-            visualOptions: SnackbarHelper.DefaultOptions()
-        );
+        bool isNewGoal = EditedGoal.Id == 0;
+
+        await GoalService.SaveGoalAsync( EditedGoal );
+        if (isNewGoal)
+        {
+            UserGoals.Add( EditedGoal );
+        }
+        else
+        {
+            UserGoal foundGoalInCollection = UserGoals.FirstOrDefault( g => g.Id == EditedGoal.Id );
+            foundGoalInCollection.Name = EditedGoal.Name;
+        }
+    }
+
+
+    [RelayCommand]
+    private async Task DeleteGoalAsync(UserGoal goal)
+    {
+        bool isConfirmed = await DialogService.ShowAlertWithTwoBtnsAsync( LocStrings.DeleteConfirmationMessage, LocStrings.ConfirmDelete, LocStrings.OK, LocStrings.Cancel );
+        if (isConfirmed)
+        {
+            await UiBusyFor( async () =>
+            {
+                await GoalService.DeleteGoalAsync( goal );
+                UserGoals.Remove( goal );
+
+                if(Habit.Goal?.Id > 0 && Habit.Goal.Id == goal.Id && ClearHabitGoalCommand.CanExecute(null))
+                {
+                    ClearHabitGoalCommand.Execute(null);
+                }
+            } );
+            
+        }
+    }
+    [RelayCommand]
+    private void ClearHabitGoal()
+    {
+        if (Habit.Goal != null)
+        {
+            Habit.Goal.Id = 0;
+            Habit.Goal.Name = null;
+        }
+    }
+
+    [RelayCommand]
+    public void OnGoalNameTapped( UserGoal goal )
+    {
+        if (goal != null)
+        {
+            EditedGoal = new UserGoal
+            {
+                Id = goal.Id,
+                Name = goal.Name
+            };
+            Habit.Goal = goal;
+        }
+    }
+    [RelayCommand]
+    private void OpenUpdateGoalPopup( UserGoal goal )
+    {
+        EditedGoal = new UserGoal
+        {
+            Id = goal.Id,
+            Name = goal.Name
+        };
+    }
+
+    [RelayCommand]
+    private async Task LoadGoalsAsync()
+    {
+        if (UserGoals == null)
+        {
+            var userGoals = await GoalService.LoadGoalsAsync( SettingsService.UserId );
+            UserGoals = new ObservableCollectionEx<UserGoal>( userGoals );
+        }
     }
 
     [RelayCommand]

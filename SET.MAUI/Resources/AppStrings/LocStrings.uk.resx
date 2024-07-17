@@ -1,18 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
                 <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
                 <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
               <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
               <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
@@ -31,13 +109,13 @@
     <value>text/microsoft-resx</value>
   </resheader>
   <resheader name="version">
-    <value>1.3</value>
+    <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CreateNewAccount" xml:space="preserve">
     <value>Створити новий акаунт</value>
@@ -177,12 +255,6 @@
   <data name="Name" xml:space="preserve">
     <value>Назва</value>
   </data>
-  <data name="ReasonToFollow" xml:space="preserve">
-    <value>Причина дотримуватись</value>
-  </data>
-  <data name="StrongReasonToFollow" xml:space="preserve">
-    <value>Причина дотримуватись</value>
-  </data>
   <data name="OptionalPlaceholder" xml:space="preserve">
     <value>(Необовʼязково)</value>
   </data>
@@ -261,9 +333,6 @@
   <data name="IntegrallyWiseHabitTypeShortDescription" xml:space="preserve">
     <value>Зберігання у більшості випадків, але дозволено робити винятки у ситуаціях, коли існує більш важлива звичка. Наприклад, виконувати усі цілі за високим пріоритетом протягом дня, але оскільки звичка дотримання режиму є важливішою, то слід почати готуватись до сну у відмічений час. </value>
   </data>
-  <data name="ReasonToFollowExplanation" xml:space="preserve">
-    <value>Підвищує мотивацію для виконання звички та відображає ваш характер.</value>
-  </data>
   <data name="MessageInDeleteHabitConfirm" xml:space="preserve">
     <value>Звичку буде видалено назавжди. Ця дія не може бути скасована.</value>
   </data>
@@ -328,10 +397,10 @@
     <value>Звички, рекомендовані ШІ</value>
   </data>
   <data name="ConfirmMessageOnRecommededHabitsView" xml:space="preserve">
-    <value>Ви впевнені, що хочете завантажити звички, на основі обраних сфер звички, місії та основного гасла?</value>
+    <value>Ви впевнені, що хочете завантажити звички, на основі обраних сфер звички, місії, цілі та основного гасла?</value>
   </data>
   <data name="ConfirmTitleOnRecommendedHabitsView" xml:space="preserve">
-    <value>На основі вибраних сфер, місії та гасла</value>
+    <value>На основі вибраних сфер, місії, цілі та гасла</value>
   </data>
   <data name="DescriptionOfAiLampTap" xml:space="preserve">
     <value>Торкніться ШІ-лампи, щоб переглянути рекомендовані звички.</value>
@@ -456,17 +525,17 @@
      2.3. Ви погоджуєтеся не використовувати Додаток для будь-яких незаконних або образливих цілей.
 	   2.4. Ви погоджуєтесь не створювати звички, слоган чи місію, що суперечать принципам моралі або міжнародним законам.</value>
   </data>
-	<data name="UserAgreementRightsandResponsibilitiesofPrinciplesTitle" xml:space="preserve">
+  <data name="UserAgreementRightsandResponsibilitiesofPrinciplesTitle" xml:space="preserve">
     <value>3. Права та обов'язки "Принципів"</value>
   </data>
-	<data name="UserAgreementRightsandResponsibilitiesofPrinciplesText" xml:space="preserve">
+  <data name="UserAgreementRightsandResponsibilitiesofPrinciplesText" xml:space="preserve">
     <value>     3.1. Я залишаю за собою право вносити зміни в умови цієї Угоди в будь-який час. Будь-які зміни набудуть чинності одразу після публікації в Додатку. Продовження використання Додатку після таких змін означатиме, що Ви ознайомилися зі зміненими умовами та приймаєте їх.
      3.2. Я залишаю за собою право призупинити або припинити Ваш доступ до Додатку в будь-який час з будь-якої причини, включаючи, але не обмежуючись порушенням цієї Угоди або неправильним використанням Додатку.</value>
   </data>
-	<data name="UserAgreementIntellectualPropertyTitle" xml:space="preserve">
+  <data name="UserAgreementIntellectualPropertyTitle" xml:space="preserve">
     <value>4. Інтелектуальна Власність</value>
   </data>
-	<data name="UserAgreementIntellectualPropertyText" xml:space="preserve">
+  <data name="UserAgreementIntellectualPropertyText" xml:space="preserve">
     <value>     4.1. Додаток та весь її вміст, включаючи, але не обмежуючись, текстом, графікою, логотипами, піктограмами, зображеннями та програмним забезпеченням, є власністю Принципів і захищені законами про авторське право.
      4.2. Контент, наданий Принципами, захищений і не може бути відтворений, оброблений, поширений, оформлений, опублікований, завантажений, переданий, проданий або використаний у будь-якій формі, повністю або частково, без попередньої письмової згоди Принципів. Несанкціоноване відтворення, копіювання, збирання, систематизація, зберігання або передача контенту для створення бази даних у комерційних чи некомерційних цілях будь-яким способом суворо заборонено.
      4.3. Користувачі послуг Додатка зобов’язані поважати права інтелектуальної власності Принципів.</value>
@@ -474,41 +543,41 @@
   <data name="UserAgreementDisclaimerofWarrantiesTitle" xml:space="preserve">
     <value>5. Відмова від Гарантій</value>
   </data>
-	<data name="UserAgreementDisclaimerofWarrantiesText" xml:space="preserve">
+  <data name="UserAgreementDisclaimerofWarrantiesText" xml:space="preserve">
     <value>     5.1. Додаток надається на умовах «як є» та «як доступно» без будь-яких гарантій, явних чи неявних.
      5.2. Принципи не гарантують, що Додаток працюватиме безперебійно, без помилок або без вірусів чи інших шкідливих компонентів.</value>
   </data>
   <data name="UserAgreementLimitationofLiabilityTitle" xml:space="preserve">
     <value>6. Обмеження Відповідальності</value>
   </data>
-	<data name="UserAgreementLimitationofLiabilityText" xml:space="preserve">
+  <data name="UserAgreementLimitationofLiabilityText" xml:space="preserve">
     <value>     6.1. За жодних обставин Принципи не несуть відповідальності за будь-які непрямі, випадкові, спеціальні, непрямі чи штрафні збитки, що виникають унаслідок або у зв’язку з використанням Вами Додатку.
      6.2. Загальна відповідальність Принципів перед Вами за всіма претензіями, що випливають із цієї Угоди або у зв’язку з нею, не повинна перевищувати суму, сплачену вами за доступ до Додатку, якщо така є.</value>
   </data>
   <data name="UserAgreementLicenseTitle" xml:space="preserve">
     <value>7. Ліцензія</value>
   </data>
-	<data name="UserAgreementLicenseText" xml:space="preserve">
+  <data name="UserAgreementLicenseText" xml:space="preserve">
     <value>     7.1. За цією Угодою Принципи надають Користувачеві просту (невиключну) ліцензію на використання Додатку. Ця ліцензія не підлягає передачі та може бути відкликана в будь-який час.
      7.2. Ліцензія на Додаток залишається чинною безстроково, якщо інше не домовлено сторонами в письмовій формі.</value>
   </data>
   <data name="UserAgreementPersonalDataTitle" xml:space="preserve">
     <value>8. Персональні дані</value>
   </data>
-	<data name="UserAgreementPersonalDataText" xml:space="preserve">
+  <data name="UserAgreementPersonalDataText" xml:space="preserve">
     <value>     8.1. Обробка персональних даних Користувача здійснюється відповідно до законодавства України та Політики Конфіденційності.</value>
   </data>
-	<data name="UserAgreementSeverabilityTitle" xml:space="preserve">
+  <data name="UserAgreementSeverabilityTitle" xml:space="preserve">
     <value>Подільність</value>
   </data>
-	<data name="UserAgreementSeverabilityText" xml:space="preserve">
+  <data name="UserAgreementSeverabilityText" xml:space="preserve">
     <value>     Якщо будь-яке положення цієї Угоди буде визнано недійсним або таким, що не підлягає виконанню, таке положення буде вилучено з Угоди, а решта положень залишатимуться в повній силі.
 Використовуючи Додаток, ви підтверджуєте, що прочитали, зрозуміли та погоджуєтеся дотримуватися умов цієї Угоди.</value>
   </data>
-	<data name="UserAgreementLastUpdate" xml:space="preserve">
+  <data name="UserAgreementLastUpdate" xml:space="preserve">
     <value>Останнє оновлення: 29.05.2024.</value>
   </data>
-	<data name="UserAgreementContactInformation" xml:space="preserve">
+  <data name="UserAgreementContactInformation" xml:space="preserve">
     <value>     Якщо у вас виникли запитання щодо цієї Угоди, зв’яжіться зі мною: app@principles.top.</value>
   </data>
   <data name="PrivacyPolicyIntroduction" xml:space="preserve">
@@ -540,16 +609,16 @@
   <data name="PrivacyPolicyChildrensPrivacyText" xml:space="preserve">
     <value>    Наші Послуги не стосуються осіб віком до 12 років включно. Ми свідомо не збираємо особисту інформацію дітей віком до 12 років включно. Якщо ми виявимо, що дитина до 12 років надала нам особисту інформацію, ми видалимо її з нашого серверу. Якщо ви є батьком або опікуном і знаєте, що ваша дитина надала нам особисту інформацію, будь ласка, зв’яжіться з нами, щоб ми змогли виконати необхідні дії.</value>
   </data>
-	<data name="PrivacyPolicyChangesTitle" xml:space="preserve">
+  <data name="PrivacyPolicyChangesTitle" xml:space="preserve">
     <value>Зміни в Політиці Конфіденційності</value>
   </data>
-	<data name="PrivacyPolicyChangesText" xml:space="preserve">
+  <data name="PrivacyPolicyChangesText" xml:space="preserve">
     <value>    Час від часу ми можемо оновлювати нашу Політику Конфіденційності. Тому ми радимо вам періодично переглядати цю сторінку на предмет будь-яких змін. Ми повідомимо вас про будь-які зміни, опублікувавши нову Політику конфіденційності на цій сторінці. Ці зміни набувають чинності негайно після їх публікації на цій сторінці.</value>
   </data>
-	<data name="PrivacyPolicyContactInfoTitle" xml:space="preserve">
+  <data name="PrivacyPolicyContactInfoTitle" xml:space="preserve">
     <value>Зв'яжіться з нами</value>
   </data>
-	<data name="PrivacyPolicyContactInfoText" xml:space="preserve">
+  <data name="PrivacyPolicyContactInfoText" xml:space="preserve">
     <value>    Якщо у вас є запитання чи пропозиції щодо нашої Політики Конфіденційності, не соромтеся зв’язатися з нами через електронну пошту: app@principles.top.</value>
   </data>
   <data name="LoginAgreementText" xml:space="preserve">
@@ -558,10 +627,10 @@
   <data name="LoginSignUpAgreementСonnectingText" xml:space="preserve">
     <value>та</value>
   </data>
-	<data name="UserAgreementStrInLoginAndSignupViews" xml:space="preserve">
+  <data name="UserAgreementStrInLoginAndSignupViews" xml:space="preserve">
     <value>Угодою Користувача</value>
   </data>
-	<data name="PrivacyPolicyStrInLoginAndSignupViews" xml:space="preserve">
+  <data name="PrivacyPolicyStrInLoginAndSignupViews" xml:space="preserve">
     <value>Політикою Конфіденційності</value>
   </data>
   <data name="SignUpAgreementText" xml:space="preserve">
@@ -596,9 +665,6 @@
   </data>
   <data name="FieldName" xml:space="preserve">
     <value>Поле "Назва"</value>
-  </data>
-  <data name="FieldReasonToFollow" xml:space="preserve">
-    <value>Поле "Причина дотримуватись"</value>
   </data>
   <data name="HouseholdChores" xml:space="preserve">
     <value>Побут</value>
@@ -662,5 +728,32 @@
   </data>
   <data name="OperationTimeoutMessage" xml:space="preserve">
     <value>Запит перевищив час очікування. Будь ласка, перевірте ваше інтернет-з'єднання та спробуйте знову.</value>
+  </data>
+  <data name="Goal" xml:space="preserve">
+    <value>Ціль</value>
+  </data>
+  <data name="ChooseGoal" xml:space="preserve">
+    <value>Оберіть Ціль</value>
+  </data>
+  <data name="CreateNewGoal" xml:space="preserve">
+    <value>Додайте нову ціль</value>
+  </data>
+  <data name="ToBecome" xml:space="preserve">
+    <value>Стати</value>
+  </data>
+  <data name="GoalLableRecommendation" xml:space="preserve">
+    <value>Рекомендація: "Виберіть ціль, яка орієнтована на вашу ідентичність, оскільки вона визначає ваше життя".</value>
+  </data>
+  <data name="UpdateGoal" xml:space="preserve">
+    <value>Оновіть вибрану ціль</value>
+  </data>
+  <data name="ConfirmDelete" xml:space="preserve">
+    <value>Підтвердіть видалення</value>
+  </data>
+  <data name="DeleteConfirmationMessage" xml:space="preserve">
+    <value>Ви впевнені, що хочете видалити дану ціль?</value>
+  </data>
+  <data name="GoalExamples" xml:space="preserve">
+    <value>Приклади цілей спрямованих на вашу ідентичність: стати сеньйор розробником, стати хорошою дружиною, стати спортсменом, стати дисциплінованим.</value>
   </data>
 </root>

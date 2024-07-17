@@ -24,7 +24,7 @@ public partial class UserHabit : ObservableObject
     [ObservableProperty]
     private string? m_description;
     [ObservableProperty]
-    private string? m_reasonToFollow;
+    private UserGoal? m_goal;
     [ObservableProperty]
     private string? m_question;
     [ObservableProperty]

@@ -30,6 +30,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IServiceLocator, ServiceLocator>();
         services.AddSingleton<IChangePasswordService, ChangePasswordService>();
         services.AddSingleton<ISignupService, SignupService>();
+        services.AddSingleton<IGoalService, GoalService>();
 
         return services;
     }

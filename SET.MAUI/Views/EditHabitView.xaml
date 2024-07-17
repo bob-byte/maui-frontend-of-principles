@@ -101,8 +101,17 @@
                                            MaxLineCount="5"
                                            StartIcon="fire_first"
                                            ReturnType="Done"
-                                           ClearIconVisibility="Never"
-                                           Margin="0,0,0,-10" />
+                                           ClearIconVisibility="Never" />
+                        <dxe:MultilineEdit Text="{Binding Habit.Goal.Name}"
+                                           LabelText="{x:Static loc:LocStrings.Goal}"
+                                           IsErrorIconVisible="False"
+                                           StartIcon="goal"
+                                           EndIcon="dotshorizontal"
+                                           ClearIconVisibility="Auto"
+                                           ClearIconCommand="{Binding ClearHabitGoalCommand}"
+                                           Tap="ME_SetGoals"
+                                           IsReadOnly="True"
+                                           x:Name="EditedGoalName" />
                         <dxe:ChoiceChipGroup x:Name="CCG_Types"
                                              HorizontalOptions="Center"
                                              IsMultiline="False"
@@ -130,18 +139,7 @@
                                       EndIcon="dotshorizontal"
                                       EndIconClicked="FrequencyIcon_Clicked"
                                       Tap="TE_Frequency_Tap" />
-                        <dxe:NumericEdit Value="{Binding Habit.Priority}"
-                                         LabelText="{x:Static loc:LocStrings.Priority}"
-                                         MinValue="1"
-                                         AllowLooping="True"
-                                         AllowAnimation="True"
-                                         ValueChangedCommand="{Binding ReorderUserHabitsCommand}"
-                                         MaxValue="{Binding UserHabits.Count,
-                                                            Mode=OneTime}"
-                                         StartIcon="priority"
-                                         EndIcon="dotshorizontal"
-                                         x:Name="NE_Priority"
-                                         EndIconClicked="NE_Priority_EndIconClicked" />
+
                         <dxe:NumericEdit x:Name="NE_Complexity"
                                          Value="{Binding Habit.Complexity}"
                                          LabelText="{x:Static loc:LocStrings.ComplexityWithRange}"
@@ -159,7 +157,7 @@
                                            IsVisible="{Binding IsNewHabit}"
                                            Style="{StaticResource PrimaryButton}"
                                            Clicked="SB_RecomendedHabit_Clicked"
-                                           Margin="0, 5, 0, 0" />
+                                           Margin="0,5,0,0" />
                         <dxco:BottomSheet x:Name="BS_AllHabits">
                             <Grid RowDefinitions="Auto, Auto"
                                   RowSpacing="20"
@@ -400,21 +398,6 @@
                                                                                   NumberOfTapsRequired="1" />
                                                         </Label.GestureRecognizers>
                                                     </Label>
-                                                    <Label Text="{Binding ReasonToFollow}"
-                                                           ToolTipProperties.Text="{Binding ReasonToFollow}"
-                                                           LineBreakMode="TailTruncation"
-                                                           VerticalOptions="End"
-                                                           VerticalTextAlignment="Center"
-                                                           MaxLines="5"
-                                                           Margin="0,0,5,0"
-                                                           Grid.Row="0"
-                                                           Grid.Column="1">
-                                                        <Label.GestureRecognizers>
-                                                            <TapGestureRecognizer Tapped="TGR_RecommendedHabit_Tapped"
-                                                                                  CommandParameter="{Binding}"
-                                                                                  NumberOfTapsRequired="1" />
-                                                        </Label.GestureRecognizers>
-                                                    </Label>
                                                     <BoxView Grid.Row="1"
                                                              Style="{StaticResource DefaultHorizonalSeparator}"
                                                              Grid.Column="0"
@@ -458,17 +441,18 @@
                 <ScrollView>
                     <VerticalStackLayout Padding="10"
                                          Spacing="6">
-                        <dxe:MultilineEdit Text="{Binding ReasonToFollow.Value}"
-                                           x:Name="ME_ReasonToFollow"
-                                           LabelText="{x:Static loc:LocStrings.ReasonToFollow}"
-                                           HasError="{Binding ReasonToFollow.IsValid,
-                                                              Converter={StaticResource IsFalse}}"
-                                           IsErrorIconVisible="False"
-                                           StartIcon="approved"
-                                           EndIcon="info"
-                                           EndIconCommand="{Binding ShowSnackbarForReasonToFollowCommand}"
-                                           EndIconCommandParameter="{x:Reference ME_ReasonToFollow}"
-                                           ClearIconVisibility="Never" />
+                        <dxe:NumericEdit Value="{Binding Habit.Priority}"
+                                         LabelText="{x:Static loc:LocStrings.Priority}"
+                                         MinValue="1"
+                                         AllowLooping="True"
+                                         AllowAnimation="True"
+                                         ValueChangedCommand="{Binding ReorderUserHabitsCommand}"
+                                         MaxValue="{Binding UserHabits.Count,
+                                                            Mode=OneTime}"
+                                         StartIcon="priority"
+                                         EndIcon="dotshorizontal"
+                                         x:Name="NE_Priority"
+                                         EndIconClicked="NE_Priority_EndIconClicked" />
                         <dxe:MultilineEdit Text="{Binding Habit.Question}"
                                            x:Name="TE_Habit"
                                            LabelText="{x:Static loc:LocStrings.Question}"
@@ -481,6 +465,154 @@
                                            LabelText="{x:Static loc:LocStrings.NotesOrHowToKeepHabit}"
                                            ClearIconVisibility="Never"
                                            StartIcon="notes" />
+                        <dxco:BottomSheet x:Name="GoalsBottomSheet"
+                                          BackgroundColor="{AppThemeBinding Light={StaticResource Background},
+                                                                            Dark={StaticResource DarkBackground}}"
+                                          ShowGrabber="True"
+                                          AllowDismiss="True"
+                                          HalfExpandedRatio="0.6">
+                            <Grid Padding="10,0,10,0"
+                                  x:Name="G_Goals">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Label x:Name="L_GoalSelectionCenterHeader"
+                                       Text="{x:Static loc:LocStrings.ChooseGoal}"
+                                       Style="{StaticResource CentralHeader}"
+                                       VerticalOptions="Start"
+                                       Grid.Column="1"
+                                       Grid.Row="0"
+                                       HeightRequest="40" />
+
+                                <dx:DXImage Source="plus"
+                                            VerticalOptions="Start"
+                                            HorizontalOptions="End"
+                                            TintColor="{StaticResource LabelText}"
+                                            WidthRequest="40"
+                                            HeightRequest="40"
+                                            Grid.Column="2"
+                                            Grid.Row="0">
+                                    <dx:DXImage.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                              Tapped="OnGoalAddTap" />
+                                    </dx:DXImage.GestureRecognizers>
+                                </dx:DXImage>
+                                <skia:SKLottieView IsAnimationEnabled="True"
+                                                   x:Name="SKL_Goals"
+                                                   RepeatCount="-1"
+                                                   Source="goals.json"
+                                                   VerticalOptions="Start"
+                                                   Grid.Row="1"
+                                                   IsVisible="{Binding UserGoals.Count,
+                                                                       Converter={StaticResource IsZero}}" />
+                                <dxcv:DXCollectionView x:Name="DXCV_Goals"
+                                                       AllowDragDropItems="True"
+                                                       ZIndex="100"
+                                                       ItemsSource="{Binding UserGoals}"
+                                                       Grid.Row="1"
+                                                       IsScrollBarVisible="True"
+                                                       IsVisible="{Binding UserGoals.Count,
+                                                                           Converter={StaticResource IsMoreThanZero}}">
+                                    <dxcv:DXCollectionView.ItemTemplate>
+                                        <DataTemplate x:DataType="m:UserGoal">
+                                            <dx:DXStackLayout Orientation="Vertical">
+                                                <dxe:MultilineEdit Text="{Binding Name}"
+                                                                   MaxLineCount="1"
+                                                                   TextFontAttributes="Bold"
+                                                                   TextVerticalAlignment="Center"
+                                                                   HeightRequest="50"
+                                                                   StartIcon="deletegoal"
+                                                                   StartIconColor="{StaticResource LabelText}"
+                                                                   EndIconColor="{StaticResource LabelText}"
+                                                                   EndIcon="editgoal"
+                                                                   ClearIconVisibility="Never"
+                                                                   BackgroundColor="{StaticResource LightPrimary}"
+                                                                   BorderColor="{StaticResource Primary}"
+                                                                   IsReadOnly="True"
+                                                                   StartIconCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:EditHabitViewModel}},
+                                                                                              Path=DeleteGoalCommand}"
+                                                                   StartIconCommandParameter="{Binding .}"
+                                                                   EndIconCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:EditHabitViewModel}},
+                                                                                            Path=OpenUpdateGoalPopupCommand}"
+                                                                   EndIconCommandParameter="{Binding .}"
+                                                                   EndIconClicked="OnME_GoalNameEndIconClicked"
+                                                                   Margin="0,10,0,0"
+                                                                   Tap="OnGoalNameTapped"
+                                                                   CornerRadius="20" />
+                                            </dx:DXStackLayout>
+                                        </DataTemplate>
+                                    </dxcv:DXCollectionView.ItemTemplate>
+                                </dxcv:DXCollectionView>
+                                <Label x:Name="L_GoalRecommendation"
+                                       Text="{x:Static loc:LocStrings.GoalLableRecommendation}"
+                                       FontSize="16"
+                                       FontFamily="MonaSansMedium"
+                                       HorizontalTextAlignment="Center"
+                                       VerticalTextAlignment="Start"
+                                       Grid.Row="2"
+                                       VerticalOptions="Start"
+                                       HeightRequest="120" />
+                                <dxco:DXPopup x:Name="DXP_GoalAdd"
+                                              AllowScrim="True"
+                                              AllowAnimation="True"
+                                              AllowShadow="True"
+                                              CloseOnScrimTap="True"
+                                              MinimumWidthRequest="300"
+                                              MaximumWidthRequest="400"
+                                              HeightRequest="200">
+                                    <Grid Padding="10">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label Text="{x:Static loc:LocStrings.Goal}"
+                                               Style="{StaticResource CentralHeader}"
+                                               Margin="0,0,0,15"
+                                               Grid.Row="0"
+                                               Grid.Column="1"
+                                               VerticalOptions="Start"
+                                               HorizontalOptions="Center" />
+
+                                        <dxe:MultilineEdit x:Name="ME_NewGoal"
+                                                           Text="{Binding EditedGoal.Name}"
+                                                           IsErrorIconVisible="False"
+                                                           ClearIconVisibility="Never"
+                                                           MaxCharacterCount="255"
+                                                           MaxCharacterCountOverflowMode="LimitInput"
+                                                           Grid.Row="1"
+                                                           Grid.ColumnSpan="2" />
+
+                                        <Label Text="{x:Static loc:LocStrings.GoalExamples}"
+                                               FontSize="13"
+                                               FontFamily="MonaSansMedium"
+                                               HorizontalTextAlignment="Start"
+                                               VerticalTextAlignment="Start"
+                                               Grid.Row="2"
+                                               VerticalOptions="Start"
+                                               Grid.ColumnSpan="2"
+                                               Margin="0,8,0,0" />
+                                        <dxco:SimpleButton x:Name="SB_Save"
+                                                           Style="{StaticResource PrimaryButton}"
+                                                           Text="{Binding LocSave}"
+                                                           HorizontalOptions="End"
+                                                           FontSize="16"
+                                                           Grid.Row="3"
+                                                           Grid.ColumnSpan="2"
+                                                           Margin="0,10,0,0"
+                                                           Clicked="Sb_SaveGoal_Clicked" />
+                                    </Grid>
+                                </dxco:DXPopup>
+                            </Grid>
+                        </dxco:BottomSheet>
                     </VerticalStackLayout>
                 </ScrollView>
             </dxco:TabViewItem>
