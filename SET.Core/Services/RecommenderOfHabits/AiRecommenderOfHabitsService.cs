@@ -32,48 +32,49 @@ public class AiRecommenderOfHabitsService : BaseRemoteService, IAiRecommenderOfH
         messageContentBuilder.Append( $"Please recommend me a list of 4 next atomic habits that I can select. " );
         if (!string.IsNullOrWhiteSpace( userMission ))
         {
-            messageContentBuilder.Append( $"They shouldn't conflict with my mission: \"{userMission}\". " );
+           messageContentBuilder.Append( $"They shouldn't conflict with my mission: \"{userMission}\". " );
         }
 
         if (!string.IsNullOrWhiteSpace( userMainSlogan ))
         {
-            messageContentBuilder.Append( $"They also shouldn't conflict with my main slogan of life: \"{userMainSlogan}\". " );
+           messageContentBuilder.Append( $"They also shouldn't conflict with my main slogan of life: \"{userMainSlogan}\". " );
         }
 
-        if (!string.IsNullOrWhiteSpace( goal ))
-        {
-            messageContentBuilder.Append( $"They also shouldn't conflict with my goal: \"{goal}\". " );
-        }
-
-        messageContentBuilder.Append( $"I am a {userGender}. " );
+        messageContentBuilder.Append( $"I am a {userGender.ToString().ToLower()}. " );
 
         if (currentHabits.Any())
         {
             messageContentBuilder.Append( $"Now I adhere to the following habits:{Environment.NewLine}" );
             foreach (UserHabit habit in currentHabits)
             {
-                messageContentBuilder.Append( $"{habit.Name};" );
+                messageContentBuilder.Append( $"{habit.Name}; " );
             }
-            messageContentBuilder.Replace( oldChar: ';', newChar: '.', startIndex: messageContentBuilder.Length - 1, count: 1 );
+            messageContentBuilder.Remove( startIndex: messageContentBuilder.Length - 2, length: 2 );
 
-            messageContentBuilder.Append( " The atomic habits you recommend should be related to specified." );
+            messageContentBuilder.Append( ". The atomic habits you recommend should be related to specified habits." );
         }
 
         if (areasOfLifeOfNewHabit.Any())
         {
-            messageContentBuilder.Append( $"The atomic habits you recommend will be applied to all the following areas of my life:{Environment.NewLine}" );
+            messageContentBuilder.Append( $"The atomic habits you recommend will be applied to all the following areas of my life: {Environment.NewLine}" );
             foreach (UserAreaOfLife areaOfLife in areasOfLifeOfNewHabit)
             {
-                messageContentBuilder.Append( $"{areaOfLife.Name};" );
+                messageContentBuilder.Append( $"{areaOfLife.Name}; " );
             }
-            messageContentBuilder.Replace( ';', '.', messageContentBuilder.Length - 1, 1 );
+            messageContentBuilder.Remove( messageContentBuilder.Length - 2, 2 );
 
-            messageContentBuilder.Append( " So you should recommend me habits which are related to them. " );
+            messageContentBuilder.Append( ". So you should recommend me habits which are related to them. " );
         }
 
-        messageContentBuilder.Append( $"Your answer should be in JSON format and contain an array of habits. Each array object should consist of the following fields: {nameof( RecommendedHabit.Name )}, {nameof( RecommendedHabit.ReasonToFollow )}. The {nameof( RecommendedHabit.Name )} field indicates habit name and time when execute habit (for example, \"when I wake up\") or location (\"when I am in a gym\"). It should NOT contain frequency of a habit (for example, \"every day\"). Example of the {nameof( RecommendedHabit.Name )} field is \"Meditate at least 5 minutes when I wake up\". The {nameof( RecommendedHabit.ReasonToFollow )} field indicates why I should follow it and must be very briefly, but accurately explained. You must send only a JSON array in your response and nothing else. Your response must be in the {CultureInfo.CurrentUICulture.ThreeLetterISOLanguageName} language. JSON object which contains array of habits must be named \"Habits\" in english. " );
+        if (!string.IsNullOrWhiteSpace( goal ))
+        {
+            messageContentBuilder.Append( $"The atomic habits you recommend will be applied to achieve my goal: \"{goal}\"." );
+        }
+
+        messageContentBuilder.Append( $"{Environment.NewLine}Your answer should be in JSON format and contain an array of habits. Each array object should consist of the following fields: {nameof( RecommendedHabit.Name )}, {nameof( RecommendedHabit.ReasonToFollow )}. The {nameof( RecommendedHabit.Name )} field indicates habit name and time when execute habit (for example, \"when I wake up\") or location (\"when I am in a gym\"). It should NOT contain frequency of a habit (for example, \"every day\"). Example of the {nameof( RecommendedHabit.Name )} field is \"Meditate at least 5 minutes when I wake up\". The {nameof( RecommendedHabit.ReasonToFollow )} field indicates why I should follow it and must be very briefly, but accurately explained. You must send only a JSON array in your response and nothing else. Your response must be in the {CultureInfo.CurrentUICulture.ThreeLetterISOLanguageName} language. JSON object which contains array of habits must be named \"Habits\" in english. " );
 
         string userMsg = messageContentBuilder.ToString();
+        LoggingService.LogInfo( userMsg );
 
         ChatMessage newChatMessage = new( ChatRole.User, userMsg );
         List<ChatMessage> chatMessages = new()

@@ -32,9 +32,6 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
     private ObservableCollectionEx<UserGoal> m_userGoals;
 
     [ObservableProperty]
-    private string m_complexityHelpText;
-
-    [ObservableProperty]
     private bool m_isLoadingHabitInfo;
 
     [ObservableProperty]
@@ -161,11 +158,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
                 Name = Habit.Name,
                 Priority = Habit.Priority,
                 Question = Habit.Question,
-                Goal = new UserGoal()
-                {
-                    Id = EditedGoal.Id,
-                    Name = EditedGoal?.Name,
-                },
+                Goal = Habit.Goal,
                 Status = Habit.Status,
                 Type = Habit.Type,
                 PrioritizedHabits = new List<UserHabitWithPriority>()
@@ -230,14 +223,12 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         if (query.TryGetValue( "Id", out object? value ) && (long)value != 0)
         {
             Habit.Id = (long)value;
-            ComplexityHelpText = "";
 
             IsNewHabit = false;
         }
         else
         {
             IsNewHabit = true;
-            ComplexityHelpText = LocStrings.ComplexityHelpText;
         }
 
         query.TryGetValue( "UserHabits", out object? userHabitsObj );
@@ -368,8 +359,10 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
 
             AllUserAreasOfLife.Reload( areasOfLife );
         }
-        Habit.Goal = new UserGoal();
+
+        Habit.Goal ??= new UserGoal();
         await LoadGoalsAsync();
+
         await base.InitializeAsync( parameter );
 
         IsLoadingHabitInfo = false;
@@ -411,7 +404,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
     {
         IsRecommendedHabitsLoading = true;
 
-        bool doTryAgain = false;
+        bool doTryAgain;
 
         do
         {
@@ -428,9 +421,13 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
                     Gender,
                     Mission,
                     MainSlogan,
-                    Habit.Goal.Name
+                    Habit.Goal!.Name
                 );
                 RecommendedHabits.Reload( recommendedHabits );
+
+                doTryAgain = false;
+
+                afterAction();
             }
             catch (Exception ex)
             {
@@ -440,15 +437,21 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         while (doTryAgain);
 
         IsRecommendedHabitsLoading = false;
-
-        afterAction();
     }
 
     [RelayCommand]
     private void SelectedRecommendedHabit( RecommendedHabit recommendedHabit )
     {
         NameOfHabit.Value = recommendedHabit.Name;
-        Habit.Description = recommendedHabit.ReasonToFollow;
+
+        if (string.IsNullOrWhiteSpace( Habit.Description ))
+        {
+            Habit.Description = recommendedHabit.ReasonToFollow;
+        }
+        else
+        {
+            Habit.Description += $"{Environment.NewLine}{Environment.NewLine}{recommendedHabit.ReasonToFollow}";
+        }
     }
 
     [RelayCommand(CanExecute = nameof(CanResetPriorities))]
@@ -473,7 +476,8 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
             IValidationRule<string> rule = new IsNotNullOrWhiteSpaceRule( $"{LocStrings.TabData}. {LocStrings.FieldName} {isRequired}." );
             NameOfHabit.Validations.Add( rule );
         }
-        NameOfHabit.Value = Habit.Name;
+
+        NameOfHabit.Value = Habit!.Name ?? string.Empty;
     }
 
     public void UpdateFrequencyRepresentation(FrequencyOfHabit? frequency, PeriodOfHabit periodOfHabit)
@@ -543,35 +547,40 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         }
         else
         {
-            UserGoal foundGoalInCollection = UserGoals.FirstOrDefault( g => g.Id == EditedGoal.Id );
+            UserGoal foundGoalInCollection = UserGoals.First( g => g.Id == EditedGoal.Id );
             foundGoalInCollection.Name = EditedGoal.Name;
         }
     }
 
-
     [RelayCommand]
-    private async Task DeleteGoalAsync(UserGoal goal)
+    private async Task DeleteGoalAsync( UserGoal goal )
     {
-        bool isConfirmed = await DialogService.ShowAlertWithTwoBtnsAsync( LocStrings.DeleteConfirmationMessage, LocStrings.ConfirmDelete, LocStrings.OK, LocStrings.Cancel );
-        if (isConfirmed)
+        bool isConfirmedDelete = await DialogService.ShowAlertWithTwoBtnsAsync(
+            LocStrings.MessageInDeleteGoalConfirm,
+            LocStrings.DeleteGoalQuestion,
+            LocStrings.OK,
+            LocStrings.Cancel
+        );
+
+        if (isConfirmedDelete)
         {
             await UiBusyFor( async () =>
             {
                 await GoalService.DeleteGoalAsync( goal );
                 UserGoals.Remove( goal );
 
-                if(Habit.Goal?.Id > 0 && Habit.Goal.Id == goal.Id && ClearHabitGoalCommand.CanExecute(null))
+                if (Habit.Goal?.Id > 0 && Habit.Goal.Id == goal.Id && ClearHabitGoalCommand.CanExecute( null ))
                 {
-                    ClearHabitGoalCommand.Execute(null);
+                    ClearHabitGoalCommand.Execute( null );
                 }
             } );
-            
         }
     }
+
     [RelayCommand]
     private void ClearHabitGoal()
     {
-        if (Habit.Goal != null)
+        if (Habit.Goal is not null)
         {
             Habit.Goal.Id = 0;
             Habit.Goal.Name = null;
@@ -591,6 +600,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
             Habit.Goal = goal;
         }
     }
+
     [RelayCommand]
     private void OpenUpdateGoalPopup( UserGoal goal )
     {
@@ -604,11 +614,21 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
     [RelayCommand]
     private async Task LoadGoalsAsync()
     {
-        if (UserGoals == null)
+        if (UserGoals is null)
         {
-            var userGoals = await GoalService.LoadGoalsAsync( SettingsService.UserId );
+            List<UserGoal> userGoals = await GoalService.UserGoalsAsync();
             UserGoals = new ObservableCollectionEx<UserGoal>( userGoals );
         }
+    }
+
+    [RelayCommand]
+    private Task TapHabitNameInfoAsync( VisualElement visualElement )
+    {
+        return visualElement.DisplaySnackbar(
+            LocStrings.HabitNameRecommendation,
+            duration: TimeSpan.FromSeconds( 6 ),
+            visualOptions: SnackbarHelper.DefaultOptions()
+        );
     }
 
     [RelayCommand]
@@ -636,7 +656,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
     private Task TapComplexityInfoAsync( VisualElement visualElement )
     {
         return visualElement.DisplaySnackbar(
-            ComplexityHelpText,
+            LocStrings.ComplexityHelpText,
             duration: TimeSpan.FromSeconds( 6 ),
             visualOptions: SnackbarHelper.DefaultOptions()
         );

@@ -168,7 +168,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
 
         UserHabit habit = progressOfHabit.Habit!;
 
-        bool doTryAgain = false;
+        bool doTryAgain;
 
         SemaphoreSlim locker = m_isBusyForChangeCompleted[habit];
         await locker.WaitAsync();
@@ -183,6 +183,8 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
                 {
                     progressOfHabit.Value = ProgressValue.NextToggled( previousValueOfProgress );
                     await ProgressOfHabitService.UpdateAsync( progressOfHabit );
+
+                    doTryAgain = false;
                 }
                 catch (Exception ex)
                 {

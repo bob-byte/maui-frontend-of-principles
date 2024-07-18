@@ -339,6 +339,12 @@
   <data name="DeleteHabitQuestion" xml:space="preserve">
     <value>Видалити звичку?</value>
   </data>
+  <data name="MessageInDeleteGoalConfirm" xml:space="preserve">
+    <value>Ціль буде видалено назавжди. Ця дія не може бути скасована.</value>
+  </data>
+  <data name="DeleteGoalQuestion" xml:space="preserve">
+    <value>Видалити ціль?</value>
+  </data>
   <data name="MessageInDeleteAccountConfirm" xml:space="preserve">
     <value>Акаунт буде видалено назавжди. Ця дія не може бути скасована.</value>
   </data>
@@ -397,10 +403,10 @@
     <value>Звички, рекомендовані ШІ</value>
   </data>
   <data name="ConfirmMessageOnRecommededHabitsView" xml:space="preserve">
-    <value>Ви впевнені, що хочете завантажити звички, на основі обраних сфер звички, місії, цілі та основного гасла?</value>
+    <value>Ви впевнені, що хочете завантажити звички, на основі вибраних сфер звички, цілі, місії та основного гасла?</value>
   </data>
   <data name="ConfirmTitleOnRecommendedHabitsView" xml:space="preserve">
-    <value>На основі вибраних сфер, місії, цілі та гасла</value>
+    <value>На основі сфер, цілі, місії та гасла</value>
   </data>
   <data name="DescriptionOfAiLampTap" xml:space="preserve">
     <value>Торкніться ШІ-лампи, щоб переглянути рекомендовані звички.</value>
@@ -742,18 +748,18 @@
     <value>Стати</value>
   </data>
   <data name="GoalLableRecommendation" xml:space="preserve">
-    <value>Рекомендація: "Виберіть ціль, яка орієнтована на вашу ідентичність, оскільки вона визначає ваше життя".</value>
+    <value>Рекомендація: виберіть ціль, яка орієнтована на вашу ідентичність, оскільки вона визначає ваше життя.</value>
   </data>
   <data name="UpdateGoal" xml:space="preserve">
     <value>Оновіть вибрану ціль</value>
   </data>
-  <data name="ConfirmDelete" xml:space="preserve">
-    <value>Підтвердіть видалення</value>
-  </data>
-  <data name="DeleteConfirmationMessage" xml:space="preserve">
-    <value>Ви впевнені, що хочете видалити дану ціль?</value>
-  </data>
   <data name="GoalExamples" xml:space="preserve">
     <value>Приклади цілей спрямованих на вашу ідентичність: стати сеньйор розробником, стати хорошою дружиною, стати спортсменом, стати дисциплінованим.</value>
+  </data>
+  <data name="HabitNameRecommendation" xml:space="preserve">
+    <value>Рекомендація: вкажіть назву звички та час або місце її виконання. Це збільшить ймовірність її дотримання. Приклад: я молюсь, як тільки прокинусь.</value>
+  </data>
+  <data name="UnableToLoadData" xml:space="preserve">
+    <value>Не вдалось завантажити дані.</value>
   </data>
 </root>

@@ -222,8 +222,13 @@ public class RequestProvider : IRequestProvider
         //httpClient.DefaultRequestHeaders.Authorization = new BasicAuthenticationHeaderValue( clientId, clientSecret );
     }
 
-    private async Task HandleResponse( HttpResponseMessage response )
+    private async Task HandleResponse( HttpResponseMessage? response )
     {
+        if(response is null)
+        {
+            throw new HttpRequestException("ResponseIsNull");
+        }
+
         string content;
         if (m_settingsService.IsDebug && response.IsSuccessStatusCode)
         {

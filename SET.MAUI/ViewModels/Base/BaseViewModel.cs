@@ -228,13 +228,14 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     {
         IsBusy = true;
 
-        bool doTryAgain = false;
+        bool doTryAgain;
 
         do
         {
             try
             {
                 await unitOfWork();
+                doTryAgain = false;
             }
             catch (Exception ex)
             {
@@ -260,7 +261,11 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         {
             if (ex is ExtendedHttpRequestException extendedEx)
             {
-                if (extendedEx.HttpCode == HttpStatusCode.BadRequest)
+                if (ex.Message == "ResponseIsNull")
+                {
+                    errorMsg = LocStrings.UnableToLoadData;
+                }
+                else if (extendedEx.HttpCode == HttpStatusCode.BadRequest)
                 {
                     showPopupWithRetry = false;
 

@@ -339,6 +339,12 @@
   <data name="DeleteHabitQuestion" xml:space="preserve">
     <value>Delete habit?</value>
   </data>
+  <data name="MessageInDeleteGoalConfirm" xml:space="preserve">
+    <value>The goal will be permanently deleted. This action cannot be undone.</value>
+  </data>
+  <data name="DeleteGoalQuestion" xml:space="preserve">
+    <value>Delete goal?</value>
+  </data>
   <data name="MessageInDeleteAccountConfirm" xml:space="preserve">
     <value>The account will be permanently deleted. This action cannot be undone.</value>
   </data>
@@ -397,10 +403,10 @@
     <value>Recommended habits by AI</value>
   </data>
   <data name="ConfirmMessageOnRecommededHabitsView" xml:space="preserve">
-    <value>Are you sure you want to load recommended habits based on your chosen areas, mission, goal and main slogan?</value>
+    <value>Are you sure you want to load recommended habits based on your chosen areas, goal, mission and main slogan?</value>
   </data>
   <data name="ConfirmTitleOnRecommendedHabitsView" xml:space="preserve">
-    <value>Based on selected areas, mission, goal and slogan</value>
+    <value>Based on areas, goal, mission and slogan</value>
   </data>
   <data name="DescriptionOfAiLampTap" xml:space="preserve">
     <value>Tap the AI-lamp to get recommended habits.</value>
@@ -744,13 +750,13 @@ By using the App, you acknowledge that you have read, understood, and agree to b
   <data name="UpdateGoal" xml:space="preserve">
     <value>Update chosen goal</value>
   </data>
-  <data name="ConfirmDelete" xml:space="preserve">
-    <value>Confirm Delete</value>
-  </data>
-  <data name="DeleteConfirmationMessage" xml:space="preserve">
-    <value>Are you sure you want to delete this goal?</value>
-  </data>
   <data name="GoalExamples" xml:space="preserve">
     <value>Examples of goals aimed at your identity: to become a senior developer, to become a good wife, to become an athlete, to become disciplined.</value>
+  </data>
+  <data name="HabitNameRecommendation" xml:space="preserve">
+    <value>Recommendation: specify the name of the habit and the time or place of its implementation. This will increase the probability of compliance. Example: I pray as soon as I wake up.</value>
+  </data>
+  <data name="UnableToLoadData" xml:space="preserve">
+    <value>Unable to load data.</value>
   </data>
 </root>

@@ -559,16 +559,34 @@ public partial class EditHabitView : ContentPageBase
         OpenFrequencyPopup();
     }
 
-    private void ME_SetGoals( object sender, HandledEventArgs e )
+    private void ME_HabitGoal_IconClicked( System.Object sender, System.EventArgs e )
     {
-        GoalsBottomSheet.State = BottomSheetState.HalfExpanded;
-        double bottomSheetHeight = PageHeight * GoalsBottomSheet.HalfExpandedRatio;
-        double rowSpacing = G_Goals.RowSpacing * (G_Goals.RowDefinitions.Count - 1);
-        double additionalSpacing = 10;
-        double size = bottomSheetHeight - rowSpacing - L_GoalSelectionCenterHeader.HeightRequest - L_GoalRecommendation.HeightRequest - additionalSpacing;
-        SKL_Goals.HeightRequest = size;
-        SKL_Goals.WidthRequest = PageWidth - (G_Goals.Padding.Left + G_Goals.Padding.Right);
-        DXCV_Goals.HeightRequest = size;
+        ShowOrHideUserGoals();
+    }
+
+    private void ME_HabitGoal_Tap( object sender, HandledEventArgs e )
+    {
+        ShowOrHideUserGoals();
+    }
+
+    private void ShowOrHideUserGoals()
+    {
+        if(GoalsBottomSheet.State == BottomSheetState.Hidden)
+        {
+            GoalsBottomSheet.State = BottomSheetState.HalfExpanded;
+            double bottomSheetHeight = PageHeight * GoalsBottomSheet.HalfExpandedRatio;
+            double rowSpacing = G_Goals.RowSpacing * (G_Goals.RowDefinitions.Count - 1);
+            double additionalSpacing = 15;
+            double height = bottomSheetHeight - rowSpacing - L_GoalSelectionCenterHeader.HeightRequest - L_GoalRecommendation.HeightRequest - additionalSpacing;
+
+            SKL_Goals.HeightRequest = height;
+            SKL_Goals.WidthRequest = PageWidth - (G_Goals.Padding.Left + G_Goals.Padding.Right);
+            DXCV_Goals.HeightRequest = height;
+        }
+        else
+        {
+            GoalsBottomSheet.State = BottomSheetState.Hidden;
+        }
     }
 
     private void OnGoalAddTap( object sender, TappedEventArgs e )
@@ -605,8 +623,11 @@ public partial class EditHabitView : ContentPageBase
     private void OnGoalNameTapped( object sender, HandledEventArgs e )
     {
         var multilineEdit = sender as MultilineEdit;
-        var goal = multilineEdit.BindingContext as UserGoal;
-        ViewModel.OnGoalNameTapped( goal );
-        GoalsBottomSheet.State = BottomSheetState.Hidden;
+        if(multilineEdit is not null)
+        {
+            var goal = multilineEdit.BindingContext as UserGoal;
+            ViewModel.OnGoalNameTapped( goal! );
+            GoalsBottomSheet.State = BottomSheetState.Hidden;
+        }
     }
 }

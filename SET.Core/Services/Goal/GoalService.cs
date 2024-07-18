@@ -8,11 +8,10 @@ public class GoalService : BaseRemoteService, IGoalService
         //do nothing
     }
 
-    public async Task<List<UserGoal>> LoadGoalsAsync( string userId )
+    public Task<List<UserGoal>> UserGoalsAsync()
     {
-        string url = $"{UrlBuilder.Goal}?userId={userId}";
-        var userGoals = await RequestProvider.GetAsync<List<UserGoal>>( url, SettingsService.AuthAccessToken );
-        return userGoals;
+        string url = $"{UrlBuilder.Goal}?userId={SettingsService.UserId}";
+        return RequestProvider.GetAsync<List<UserGoal>>( url, SettingsService.AuthAccessToken );
     }
 
     public async Task SaveGoalAsync( UserGoal goal )
