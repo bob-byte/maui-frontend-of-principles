@@ -272,16 +272,21 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         if (IsNewHabit)
         {
             Habit.Id = 0;
+            Habit.Type = TypeOfHabit.IntegrallyWise;
+            Habit.AreasOfLife = new ObservableCollectionEx<UserAreaOfLife>();
+            Habit.Complexity = 5;
 
             if (!UserHabits.Contains( Habit ))
             {
-                UserHabits.Add( Habit );
+                UserHabits.Insert( index: 0, Habit );
             }
 
-            Habit.AreasOfLife = new ObservableCollectionEx<UserAreaOfLife>();
-            Habit.Complexity = 5;
-            Habit.Priority = UserHabits.Count;
-            Habit.Type = TypeOfHabit.IntegrallyWise;
+            int priority = 1;
+            foreach (UserHabit habit in UserHabits)
+            {
+                habit.Priority = priority;
+                priority++;
+            }
 
             var normalTextColor = (Color)Application.Current!.Resources["LightNormalText"];
             Habit.ColorName = normalTextColor.ToArgbHex();
@@ -295,6 +300,8 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
             }
 
             Habit.AreasOfLife ??= new ObservableCollectionEx<UserAreaOfLife>();
+            List<UserAreaOfLife> habitAreas = new( Habit.AreasOfLife.Count );
+
             foreach (UserAreaOfLife area in Habit.AreasOfLife!)
             {
                 //localize names
@@ -303,7 +310,12 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
                 {
                     area.Name = locName;
                 }
+
+                habitAreas.Add( area );
             }
+
+            //otherwise, the areas are not localised for some reason
+            Habit.AreasOfLife.Reload( habitAreas );
 
             if (Habit.AreasOfLife.Count == 0)
             {

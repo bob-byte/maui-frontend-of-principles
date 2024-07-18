@@ -144,7 +144,18 @@
                                       EndIcon="dotshorizontal"
                                       EndIconClicked="FrequencyIcon_Clicked"
                                       Tap="TE_Frequency_Tap" />
-
+                        <dxe:NumericEdit Value="{Binding Habit.Priority}"
+                                         LabelText="{x:Static loc:LocStrings.Priority}"
+                                         MinValue="1"
+                                         AllowLooping="True"
+                                         AllowAnimation="True"
+                                         ValueChangedCommand="{Binding ReorderUserHabitsCommand}"
+                                         MaxValue="{Binding UserHabits.Count,
+                                                            Mode=OneTime}"
+                                         StartIcon="priority"
+                                         EndIcon="dotshorizontal"
+                                         x:Name="NE_Priority"
+                                         EndIconClicked="NE_Priority_EndIconClicked" />
                         <dxe:NumericEdit x:Name="NE_Complexity"
                                          Value="{Binding Habit.Complexity}"
                                          LabelText="{x:Static loc:LocStrings.ComplexityWithRange}"
@@ -166,7 +177,7 @@
                         <dxco:BottomSheet x:Name="GoalsBottomSheet"
                                           BackgroundColor="{AppThemeBinding Light={StaticResource Background},
                                                                             Dark={StaticResource DarkBackground}}"
-                                          ShowGrabber="True"
+                                          ShowGrabber="False"
                                           AllowDismiss="True"
                                           AllowedState="HalfExpanded"
                                           HalfExpandedRatio="0.7">
@@ -610,18 +621,6 @@
                 <ScrollView>
                     <VerticalStackLayout Padding="10"
                                          Spacing="6">
-                        <dxe:NumericEdit Value="{Binding Habit.Priority}"
-                                         LabelText="{x:Static loc:LocStrings.Priority}"
-                                         MinValue="1"
-                                         AllowLooping="True"
-                                         AllowAnimation="True"
-                                         ValueChangedCommand="{Binding ReorderUserHabitsCommand}"
-                                         MaxValue="{Binding UserHabits.Count,
-                                                            Mode=OneTime}"
-                                         StartIcon="priority"
-                                         EndIcon="dotshorizontal"
-                                         x:Name="NE_Priority"
-                                         EndIconClicked="NE_Priority_EndIconClicked" />
                         <dxe:MultilineEdit Text="{Binding Habit.Question}"
                                            x:Name="TE_Habit"
                                            LabelText="{x:Static loc:LocStrings.Question}"
