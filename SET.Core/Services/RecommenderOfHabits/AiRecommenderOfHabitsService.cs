@@ -32,12 +32,12 @@ public class AiRecommenderOfHabitsService : BaseRemoteService, IAiRecommenderOfH
         messageContentBuilder.Append( $"Please recommend me a list of 4 next atomic habits that I can select. " );
         if (!string.IsNullOrWhiteSpace( userMission ))
         {
-           messageContentBuilder.Append( $"They shouldn't conflict with my mission: \"{userMission}\". " );
+            messageContentBuilder.Append( $"They shouldn't conflict with my mission: \"{userMission}\". " );
         }
 
         if (!string.IsNullOrWhiteSpace( userMainSlogan ))
         {
-           messageContentBuilder.Append( $"They also shouldn't conflict with my main slogan of life: \"{userMainSlogan}\". " );
+            messageContentBuilder.Append( $"They also shouldn't conflict with my main slogan of life: \"{userMainSlogan}\". " );
         }
 
         messageContentBuilder.Append( $"I am a {userGender.ToString().ToLower()}. " );
@@ -49,9 +49,10 @@ public class AiRecommenderOfHabitsService : BaseRemoteService, IAiRecommenderOfH
             {
                 messageContentBuilder.Append( $"{habit.Name}; " );
             }
-            messageContentBuilder.Remove( startIndex: messageContentBuilder.Length - 2, length: 2 );
 
-            messageContentBuilder.Append( ". The atomic habits you recommend should be related to specified habits." );
+            messageContentBuilder.Replace( oldChar: ';', newChar: '.', startIndex: messageContentBuilder.Length - 2, count: 1 );
+
+            messageContentBuilder.Append( " The atomic habits you recommend should be related to specified habits." );
         }
 
         if (areasOfLifeOfNewHabit.Any())
@@ -61,9 +62,10 @@ public class AiRecommenderOfHabitsService : BaseRemoteService, IAiRecommenderOfH
             {
                 messageContentBuilder.Append( $"{areaOfLife.Name}; " );
             }
-            messageContentBuilder.Remove( messageContentBuilder.Length - 2, 2 );
 
-            messageContentBuilder.Append( ". So you should recommend me habits which are related to them. " );
+            messageContentBuilder.Replace( ';', '.', messageContentBuilder.Length - 2, 1 );
+
+            messageContentBuilder.Append( " So you should recommend me habits which are related to them. " );
         }
 
         if (!string.IsNullOrWhiteSpace( goal ))

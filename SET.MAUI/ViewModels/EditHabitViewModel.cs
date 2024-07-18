@@ -415,8 +415,9 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
                     RecommendedHabits.Clear();
                 }
 
+                IEnumerable<UserHabit> userHabits = UserHabits.Where( u => u.Id > 0 );
                 List<RecommendedHabit> recommendedHabits = await AiRecommenderOfHabits.RecommendedHabitsAsync(
-                    UserHabits,
+                    userHabits,
                     Habit.AreasOfLife!,
                     Gender,
                     Mission,

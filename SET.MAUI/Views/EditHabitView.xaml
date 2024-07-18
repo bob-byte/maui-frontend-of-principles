@@ -67,31 +67,6 @@
                 <ScrollView>
                     <VerticalStackLayout Padding="10"
                                          Spacing="6">
-                        <dxe:AutoCompleteTokenEdit LabelText="{x:Static loc:LocStrings.AreasOfHabit}"
-                                                   EndIcon="dotshorizontal"
-                                                   ItemsSource="{Binding AllUserAreasOfLife}"
-                                                   EndIconClicked="TE_AreasOfLife_EndIconClicked"
-                                                   Tap="TE_AreasOfLife_Tap"
-                                                   StartIcon="rule"
-                                                   IsStartIconVisible="True"
-                                                   DisplayMember="Name"
-                                                   SelectedItems="{Binding Habit.AreasOfLife,
-                                                                           Mode=TwoWay}"
-                                                   SelectionChanged="TE_AreasOfLife_SelectionChanged"
-                                                   DropDownSelectedItemBackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary},
-                                                                                                         Dark={StaticResource LightPrimary}}"
-                                                   x:Name="TE_AreasOfLife"
-                                                   TextChanged="TE_AreasOfLife_TextChanged">
-                            <dxe:AutoCompleteTokenEdit.TokenAppearance>
-                                <dxe:TokenAppearance BorderColor="{StaticResource Primary}"
-                                                     BorderThickness="2.5"
-                                                     CornerRadius="14"
-                                                     FontSize="14"
-                                                     TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
-                                                                                 Dark={StaticResource DarkNormalText}}"
-                                                     PressedBorderColor="{StaticResource Primary}" />
-                            </dxe:AutoCompleteTokenEdit.TokenAppearance>
-                        </dxe:AutoCompleteTokenEdit>
                         <dxe:MultilineEdit Text="{Binding NameOfHabit.Value}"
                                            LabelText="{x:Static loc:LocStrings.Name}"
                                            HasError="{Binding NameOfHabit.IsValid,
@@ -117,6 +92,31 @@
                                            ClearIconVisibility="Auto"
                                            ClearIconCommand="{Binding ClearHabitGoalCommand}"
                                            IsReadOnly="True"/>
+                        <dxe:AutoCompleteTokenEdit LabelText="{x:Static loc:LocStrings.AreasOfHabit}"
+                                                   EndIcon="dotshorizontal"
+                                                   ItemsSource="{Binding AllUserAreasOfLife}"
+                                                   EndIconClicked="TE_AreasOfLife_EndIconClicked"
+                                                   Tap="TE_AreasOfLife_Tap"
+                                                   StartIcon="rule"
+                                                   IsStartIconVisible="True"
+                                                   DisplayMember="Name"
+                                                   SelectedItems="{Binding Habit.AreasOfLife,
+                                                                           Mode=TwoWay}"
+                                                   SelectionChanged="TE_AreasOfLife_SelectionChanged"
+                                                   DropDownSelectedItemBackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary},
+                                                                                                         Dark={StaticResource LightPrimary}}"
+                                                   x:Name="TE_AreasOfLife"
+                                                   TextChanged="TE_AreasOfLife_TextChanged">
+                            <dxe:AutoCompleteTokenEdit.TokenAppearance>
+                                <dxe:TokenAppearance BorderColor="{StaticResource Primary}"
+                                                     BorderThickness="2.5"
+                                                     CornerRadius="14"
+                                                     FontSize="14"
+                                                     TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
+                                                                                 Dark={StaticResource DarkNormalText}}"
+                                                     PressedBorderColor="{StaticResource Primary}" />
+                            </dxe:AutoCompleteTokenEdit.TokenAppearance>
+                        </dxe:AutoCompleteTokenEdit>
                         <dxe:ChoiceChipGroup x:Name="CCG_Types"
                                              HorizontalOptions="Center"
                                              IsMultiline="False"

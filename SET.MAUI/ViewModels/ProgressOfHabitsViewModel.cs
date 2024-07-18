@@ -78,6 +78,8 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
 
     public void HandleHabitSave(object receiver, HabitSavedMessage message)
     {
+        SelectedHabit = null;
+
         UserHabit savedHabit = message.Value;
         UserHabit? foundHabit = UserHabits.FirstOrDefault( u => u.Id == savedHabit.Id );
 
@@ -109,6 +111,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
             foundHabit.Complexity = savedHabit.Complexity;
             foundHabit.Frequency = savedHabit.Frequency;
             foundHabit.Priority = savedHabit.Priority;
+            foundHabit.Goal = savedHabit.Goal;
 
             ServiceOfHabit.Recompute( foundHabit );
         }
@@ -121,8 +124,6 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
 
         ServiceOfHabit.StoredUserHabits = UserHabits.OrderBy( h => h.Priority ).ToList();
         UserHabits = new ObservableCollectionEx<UserHabit>( ServiceOfHabit.StoredUserHabits );
-
-        SelectedHabit = null;
     }
 
     public override async Task InitializeAsync( object? parameter = null )
