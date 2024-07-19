@@ -759,4 +759,7 @@ By using the App, you acknowledge that you have read, understood, and agree to b
   <data name="UnableToLoadData" xml:space="preserve">
     <value>Unable to load data.</value>
   </data>
+  <data name="NoGoalSpecified" xml:space="preserve">
+    <value>No goal specified</value>
+  </data>
 </root>

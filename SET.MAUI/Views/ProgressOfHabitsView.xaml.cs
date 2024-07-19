@@ -178,7 +178,6 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
     private void AddFirstCol()
     {
-        DGV_Habits.Columns.Clear();
         TemplateColumn habitNameCol = new()
         {
             FixedStyle = FixedStyle.Start,
@@ -267,6 +266,22 @@ public partial class ProgressOfHabitsView : ContentPageBase
         if (command.CanExecute( cellData.Item ))
         {
             command.Execute( cellData.Item );
+        }
+    }
+
+    private void DVG_SortByGoalName( object sender, CustomSortEventArgs e )
+    {
+        if (e.Column.FieldName != "Goal.Name") return;
+
+        string goalNameToCompare = e.Value1 as string;
+
+        if (goalNameToCompare == LocStrings.NoGoalSpecified)
+        {
+            e.Result = -1;
+        }
+        else
+        {
+            e.Result = 0;
         }
     }
 }

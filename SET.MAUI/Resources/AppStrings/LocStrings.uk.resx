@@ -762,4 +762,7 @@
   <data name="UnableToLoadData" xml:space="preserve">
     <value>Не вдалось завантажити дані.</value>
   </data>
+  <data name="NoGoalSpecified" xml:space="preserve">
+    <value>Ціль не визначена</value>
+  </data>
 </root>

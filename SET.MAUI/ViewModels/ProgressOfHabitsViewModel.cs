@@ -69,7 +69,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
             SelectedHabit = null;
         } );
     }
-
+    
     public IProgressOfHabitService ProgressOfHabitService { get; }
 
     internal DataGridView? DataGridViewWithHabits { get; set; }
@@ -100,6 +100,12 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
                     };
                     savedHabit.Progresses.Add( progress );
                 }
+            }
+
+            savedHabit.Goal ??= new UserGoal();
+            if (savedHabit.Goal.Id == 0)
+            {
+                savedHabit.Goal.Name = LocStrings.NoGoalSpecified;
             }
 
             UserHabits.Add( savedHabit );
@@ -140,14 +146,18 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
                 {
                     await InitUserInfoAsync();
                     List<UserHabit> habits = await ServiceOfHabit.ActiveHabitsAsync( StartProgressInterval, EndProgressInterval );
-                    UserHabits.Reload( habits );
-                    ServiceOfHabit.StoredUserHabits = habits;
-
                     foreach (UserHabit habit in habits)
                     {
                         m_isBusyForChangeCompleted.TryAdd( habit, new SemaphoreSlim( 1, 1 ) );
+                        habit.Goal ??= new UserGoal();
+                        if (habit.Goal.Id == 0)
+                        {
+                            habit.Goal.Name = LocStrings.NoGoalSpecified;
+                        }
                     }
-
+                    UserHabits.Reload( habits );
+                    ServiceOfHabit.StoredUserHabits = habits;
+                                        
                     IsProgressesInitialized = true;
                     m_isInitialized = true;
                 }

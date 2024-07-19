@@ -97,7 +97,8 @@
                           VerticalLineThickness="0"
                           IsHorizontalScrollBarVisible="False"
                           FullSwipeMode="Start"
-                          AllowLiveDataShaping="True">
+                          AllowLiveDataShaping="True"
+                          CustomSort="DVG_SortByGoalName">
             <dxg:DataGridView.Behaviors>
                 <toolkit:EventToCommandBehavior EventName="CompleteRowDragDrop"
                                                 Command="{Binding ResetPrioritiesCommand}" />
@@ -109,7 +110,18 @@
             </dxg:DataGridView.StartSwipeItems>
 
             <dxg:DataGridView.Columns>
-                <dxg:TextColumn FieldName="Name" />
+                <!--{} in GroupCaptionDisplayFormat means display Goal.Name without a caption-->
+                <dxg:TextColumn FieldName="Goal.Name"
+                                IsGrouped="True"
+                                GroupInterval="DisplayText"
+                                GroupCaptionDisplayFormat="{}{1}" 
+                                SortMode="Custom">
+                    <dxg:TextColumn.GroupCaptionTemplate>
+                        <DataTemplate x:DataType="dxg:GroupRowData">
+                            <Label Text="{Binding GroupValueText}" FontSize="15"/>
+                        </DataTemplate>
+                    </dxg:TextColumn.GroupCaptionTemplate>
+                </dxg:TextColumn>
             </dxg:DataGridView.Columns>
 
             <dxg:DataGridView.CellAppearance>
