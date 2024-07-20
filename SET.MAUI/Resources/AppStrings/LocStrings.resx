@@ -334,19 +334,19 @@
     <value>This is a habit type that a person follows most of the time, but may make exceptions in special situations. For example, it may be the habit of telling the truth but being able to keep silent or deceive when it could cause serious harm to others.</value>
   </data>
   <data name="MessageInDeleteHabitConfirm" xml:space="preserve">
-    <value>The habit will be permanently deleted. This action cannot be undone.</value>
+    <value>Once you delete, it's gone for good.</value>
   </data>
   <data name="DeleteHabitQuestion" xml:space="preserve">
     <value>Delete habit?</value>
   </data>
   <data name="MessageInDeleteGoalConfirm" xml:space="preserve">
-    <value>The goal will be permanently deleted. This action cannot be undone.</value>
+    <value>Once you delete, it's gone for good.</value>
   </data>
   <data name="DeleteGoalQuestion" xml:space="preserve">
     <value>Delete goal?</value>
   </data>
   <data name="MessageInDeleteAccountConfirm" xml:space="preserve">
-    <value>The account will be permanently deleted. This action cannot be undone.</value>
+    <value>Once you delete, it's gone for good.</value>
   </data>
   <data name="DeleteAccountQuestion" xml:space="preserve">
     <value>Delete account?</value>

@@ -814,7 +814,7 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The account will be permanently deleted. This action cannot be undone..
+        ///   Looks up a localized string similar to Once you delete, it&apos;s gone for good..
         /// </summary>
         internal static string MessageInDeleteAccountConfirm {
             get {
@@ -823,7 +823,7 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The goal will be permanently deleted. This action cannot be undone..
+        ///   Looks up a localized string similar to Once you delete, it&apos;s gone for good..
         /// </summary>
         internal static string MessageInDeleteGoalConfirm {
             get {
@@ -832,7 +832,7 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The habit will be permanently deleted. This action cannot be undone..
+        ///   Looks up a localized string similar to Once you delete, it&apos;s gone for good..
         /// </summary>
         internal static string MessageInDeleteHabitConfirm {
             get {
