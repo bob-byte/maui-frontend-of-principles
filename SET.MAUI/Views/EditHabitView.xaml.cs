@@ -16,7 +16,6 @@ public partial class EditHabitView : ContentPageBase
         BindingContext = viewModel;
         ViewModel = viewModel;
         ViewModel.PropertyChanged += ViewModel_HabitPropertyChanged;
-        ViewModel.PropertyChanged += ViewModel_OnIsInitializedChanged;
 
         InitializeComponent();
     }
@@ -60,17 +59,6 @@ public partial class EditHabitView : ContentPageBase
                         CCG_Types.SelectChip( C_IntegrallyWiseType );
                         break;
                     }
-            }
-        }
-    }
-
-    private void ViewModel_OnIsInitializedChanged( object? sender, PropertyChangedEventArgs e )
-    {
-        if (e.PropertyName == nameof( BaseViewModel.IsInitialized ))
-        {
-            if (ViewModel.IsInitialized)
-            {
-                NE_Priority.MaxValue = ViewModel.UserHabits.Count;
             }
         }
     }
@@ -425,71 +413,11 @@ public partial class EditHabitView : ContentPageBase
         TE_AreasOfLife.IsDropDownOpen = !TE_AreasOfLife.IsDropDownOpen;
     }
 
-    void NE_Priority_EndIconClicked( System.Object sender, System.EventArgs e )
-    {
-        if (BS_AllHabits.State == BottomSheetState.Hidden)
-        {
-            bool isAddedCurrentHabit = ViewModel.UserHabits.Any( h => h.Id == ViewModel.Habit.Id );
-            if (!isAddedCurrentHabit)
-            {
-                ViewModel.UserHabits.Add( ViewModel.Habit );
-            }
-
-            ViewModel.Habit.Name = ViewModel.NameOfHabit.Value;
-            BS_AllHabits.State = BottomSheetState.HalfExpanded;
-        }
-        else
-        {
-            BS_AllHabits.State = BottomSheetState.Hidden;
-        }
-    }
-
     void DXC_SelectPriority_CompleteItemDragDrop( System.Object sender, DevExpress.Maui.CollectionView.CompleteItemDragDropEventArgs e )
     {
         for (int priority = 1; priority <= ViewModel.UserHabits.Count; priority++)
         {
             ViewModel.UserHabits[priority - 1].Priority = priority;
-        }
-    }
-
-    void NE_Priority_UpIconClicked( System.Object sender, System.ComponentModel.HandledEventArgs e )
-    {
-        if (!e.Handled)
-        {
-            UserHabit habit = ViewModel.Habit;
-            if (ViewModel.ReorderUserHabitsCommand.CanExecute( null ))
-            {
-                if (habit.Priority < ViewModel.UserHabits.Count)
-                {
-                    ViewModel.Habit.Priority++;
-                }
-                else
-                {
-                    habit.Priority = 1;
-                }
-
-                ViewModel.ReorderUserHabitsCommand.Execute( null );
-            }
-        }
-
-    }
-
-    void NE_Priority_DownIconClicked( System.Object sender, System.ComponentModel.HandledEventArgs e )
-    {
-        UserHabit habit = ViewModel.Habit;
-
-        if (ViewModel.ReorderUserHabitsCommand.CanExecute( null ))
-        {
-            if (habit.Priority == 1)
-            {
-                habit.Priority = ViewModel.UserHabits.Count;
-            }
-            else
-            {
-                habit.Priority--;
-            }
-
-            ViewModel.ReorderUserHabitsCommand.Execute( null );
         }
     }
 

@@ -83,38 +83,6 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
 
     public ObservableCollectionEx<UserAreaOfLife> AllUserAreasOfLife { get; set; }
 
-    [RelayCommand(CanExecute = nameof(CanReorderHabits))]
-    private void ReorderUserHabits()
-    {
-        UserHabit? habitWithSamePriority = UserHabits.FirstOrDefault( h => h.Priority == Habit.Priority && h.Id != Habit.Id );
-        if (habitWithSamePriority != null)
-        {
-            List<UserHabit> copyOfHabits = UserHabits.Where( h => h.Id != Habit.Id ).ToList();//except Habit
-            UserHabits.Clear();
-
-            for (int priority = 1, numHabit = 0; priority <= copyOfHabits.Count + 1; priority++)
-            {
-                if (Habit.Priority == priority)
-                {
-                    UserHabits.Add( Habit );
-                }
-                else
-                {
-                    UserHabit userHabit = copyOfHabits[numHabit];
-                    userHabit.Priority = priority;
-                    UserHabits.Add( userHabit );
-
-                    numHabit++;
-                }
-            }
-        }
-    }
-
-    private bool CanReorderHabits()
-    {
-        return IsInitialized && UserHabits.Count > 1;
-    }
-
     [RelayCommand(CanExecute = nameof( CanSave ) )]
     private async Task SaveAsync()
     {

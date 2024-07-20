@@ -87,7 +87,8 @@
 
     <Grid BackgroundColor="{StaticResource Background}">
         <dxg:DataGridView ItemsSource="{Binding UserHabits}"
-                          AllowDragDropRows="True"
+                          SelectedItem="{Binding SelectedHabit}"
+                          AllowDragDropRows="False"
                           x:Name="DGV_Habits"
                           RowLongPressCommand="{OnPlatform iOS={Binding SelectRowCommand}}"
                           AllowInitiallySelectedRow="False"
@@ -98,11 +99,14 @@
                           IsHorizontalScrollBarVisible="False"
                           FullSwipeMode="Start"
                           AllowLiveDataShaping="True"
-                          CustomSort="DVG_SortByGoalName">
-            <dxg:DataGridView.Behaviors>
-                <toolkit:EventToCommandBehavior EventName="CompleteRowDragDrop"
-                                                Command="{Binding ResetPrioritiesCommand}" />
-            </dxg:DataGridView.Behaviors>
+                          CustomSort="DGV_Habits_SortByGoalName">
+            <dxg:DataGridView.ColumnHeaderAppearance>
+                <dxg:ColumnHeaderAppearance BackgroundColor="#f7f2f7"/>
+            </dxg:DataGridView.ColumnHeaderAppearance>
+            <dxg:DataGridView.GroupRowAppearance>
+                <dxg:GroupRowAppearance BackgroundColor="#f7f2f7"/>
+            </dxg:DataGridView.GroupRowAppearance>
+
             <dxg:DataGridView.StartSwipeItems>
                 <dxg:SwipeItem Command="{Binding DeleteHabitCommand}"
                                BackgroundColor="{StaticResource RedColor}"
@@ -118,7 +122,8 @@
                                 SortMode="Custom">
                     <dxg:TextColumn.GroupCaptionTemplate>
                         <DataTemplate x:DataType="dxg:GroupRowData">
-                            <Label Text="{Binding GroupValueText}" FontSize="15"/>
+                            <Label Text="{Binding GroupValueText}"
+                                   FontSize="15"/>
                         </DataTemplate>
                     </dxg:TextColumn.GroupCaptionTemplate>
                 </dxg:TextColumn>

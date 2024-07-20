@@ -269,19 +269,13 @@ public partial class ProgressOfHabitsView : ContentPageBase
         }
     }
 
-    private void DVG_SortByGoalName( object sender, CustomSortEventArgs e )
+    private void DGV_Habits_SortByGoalName( object sender, CustomSortEventArgs e )
     {
-        if (e.Column.FieldName != "Goal.Name") return;
-
-        string goalNameToCompare = e.Value1 as string;
-
-        if (goalNameToCompare == LocStrings.NoGoalSpecified)
+        if (e.Column.FieldName == "Goal.Name")
         {
-            e.Result = -1;
-        }
-        else
-        {
-            e.Result = 0;
+            string goalNameToCompare = e.Value1 as string;
+
+            e.Result = goalNameToCompare == LocStrings.NoGoalSpecified ? 1 : 0;
         }
     }
 }

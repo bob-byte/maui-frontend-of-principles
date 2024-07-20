@@ -117,7 +117,14 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
             foundHabit.Complexity = savedHabit.Complexity;
             foundHabit.Frequency = savedHabit.Frequency;
             foundHabit.Priority = savedHabit.Priority;
-            foundHabit.Goal = savedHabit.Goal;
+
+            foundHabit.Goal = savedHabit.Goal is null || savedHabit.Goal.Id == 0
+                ? new UserGoal()
+                {
+                    Id = 0,
+                    Name = LocStrings.NoGoalSpecified
+                }
+                : savedHabit.Goal;
 
             ServiceOfHabit.Recompute( foundHabit );
         }
@@ -128,7 +135,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
             foundHabit.Priority = habit.Priority;
         }
 
-        ServiceOfHabit.StoredUserHabits = UserHabits.OrderBy( h => h.Priority ).ToList();
+        ServiceOfHabit.StoredUserHabits = UserHabits.OrderBy( h => h.Goal!.Id ).ThenBy( h => h.Id ).ToList();
         UserHabits = new ObservableCollectionEx<UserHabit>( ServiceOfHabit.StoredUserHabits );
     }
 
@@ -146,16 +153,21 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
                 {
                     await InitUserInfoAsync();
                     List<UserHabit> habits = await ServiceOfHabit.ActiveHabitsAsync( StartProgressInterval, EndProgressInterval );
+
                     foreach (UserHabit habit in habits)
                     {
                         m_isBusyForChangeCompleted.TryAdd( habit, new SemaphoreSlim( 1, 1 ) );
+
                         habit.Goal ??= new UserGoal();
                         if (habit.Goal.Id == 0)
                         {
                             habit.Goal.Name = LocStrings.NoGoalSpecified;
                         }
                     }
+
+                    habits = habits.OrderBy( h => h.Goal!.Id ).ThenBy( h => h.Id ).ToList();
                     UserHabits.Reload( habits );
+
                     ServiceOfHabit.StoredUserHabits = habits;
                                         
                     IsProgressesInitialized = true;
@@ -241,30 +253,6 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
         }
     }
 
-    [RelayCommand( CanExecute = nameof( CanResetPriorities ) )]
-    private async Task ResetPrioritiesAsync()
-    {
-        UserHabit[] habits = UserHabits.ToArray();
-        ServiceOfHabit.ResetPriorities( habits );
-
-        var habitsWithPriorities = new UserHabitWithPriority[UserHabits.Count];
-        for (int numHabit = 0; numHabit < habits.Length; numHabit++)
-        {
-            habitsWithPriorities[numHabit] = new UserHabitWithPriority
-            {
-                Id = habits[numHabit].Id,
-                Priority = habits[numHabit].Priority
-            };
-        }
-
-        await UiBusyFor( () => ServiceOfHabit.UpdatePrioritiesAsync( habitsWithPriorities ) ).DefaultConfigureAwait();
-    }
-
-    private bool CanResetPriorities()
-    {
-        return UserHabits.Count >= 2;
-    }
-
     [RelayCommand]
     private async Task DeleteHabitAsync(object? obj)
     {
@@ -302,20 +290,10 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     {
         if(SelectedHabit == null || SelectedHabit.Id != selectedHabit.Id)
         {
-            if(DataGridViewWithHabits != null)
-            {
-                DataGridViewWithHabits.SelectedRowHandle = UserHabits.IndexOf( selectedHabit );
-            }
-
             SelectedHabit = selectedHabit;
         }
         else
         {
-            if (DataGridViewWithHabits != null)
-            {
-                DataGridViewWithHabits.SelectedRowHandle = -1;
-            }
-
             SelectedHabit = null;
         }
     }
