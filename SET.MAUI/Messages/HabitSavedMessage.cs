@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SET.MAUI.Messages;
 
 /// <summary>
-/// Signals that habit count was added
+/// Signals that habit was updated
 /// </summary>
 public class HabitSavedMessage : ValueChangedMessage<UserHabit>
 {

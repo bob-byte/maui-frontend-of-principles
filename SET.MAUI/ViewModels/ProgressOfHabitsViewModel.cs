@@ -68,6 +68,22 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
             ServiceOfHabit.StoredUserHabits?.Clear();
             SelectedHabit = null;
         } );
+
+        ReferenceMessenger.Register<GoalIsDeletedMessage>( this, ( sender, msg ) =>
+        {
+            UserGoal deletedGoal = msg.Value;
+
+            foreach (UserHabit habit in UserHabits.Where( h => h.Goal!.Id == deletedGoal.Id ))
+            {
+                habit.Goal = new UserGoal()
+                {
+                    Id = 0,
+                    Name = LocStrings.NoGoalSpecified
+                };
+            }
+
+            UserHabits.Reload( UserHabits.ToArray() );
+        } );
     }
     
     public IProgressOfHabitService ProgressOfHabitService { get; }

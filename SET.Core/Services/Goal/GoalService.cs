@@ -14,11 +14,10 @@ public class GoalService : BaseRemoteService, IGoalService
         return RequestProvider.GetAsync<List<UserGoal>>( url, SettingsService.AuthAccessToken );
     }
 
-    public async Task SaveGoalAsync( UserGoal goal )
+    public Task<DtoWithId> SaveGoalAsync( UserGoal goal )
     {
         string url = $"{UrlBuilder.Goal}/{goal.Id}?userId={SettingsService.UserId}";
-        DtoWithId response = await RequestProvider.PostAsync<UserGoal, DtoWithId>( url, goal, SettingsService.AuthAccessToken ).DefaultConfigureAwait();
-        goal.Id = response.Id;
+        return RequestProvider.PostAsync<UserGoal, DtoWithId>( url, goal, SettingsService.AuthAccessToken );
     }
 
     public async Task DeleteGoalAsync( UserGoal existedGoal )

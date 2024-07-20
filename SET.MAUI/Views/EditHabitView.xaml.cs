@@ -527,7 +527,6 @@ public partial class EditHabitView : ContentPageBase
         };
     }
 
-
     private void OnGoalNameTap( object sender, TappedEventArgs e )
     {
         GoalsBottomSheet.State = BottomSheetState.Hidden;

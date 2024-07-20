@@ -521,7 +521,9 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
     {
         bool isNewGoal = EditedGoal.Id == 0;
 
-        await GoalService.SaveGoalAsync( EditedGoal );
+        DtoWithId response = await GoalService.SaveGoalAsync( EditedGoal );
+        EditedGoal.Id = response.Id;
+
         if (isNewGoal)
         {
             UserGoals.Add( EditedGoal );
@@ -548,7 +550,9 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
             await UiBusyFor( async () =>
             {
                 await GoalService.DeleteGoalAsync( goal );
+
                 UserGoals.Remove( goal );
+                ReferenceMessenger.Send( new GoalIsDeletedMessage( goal ) );
 
                 if (Habit.Goal?.Id > 0 && Habit.Goal.Id == goal.Id && ClearHabitGoalCommand.CanExecute( null ))
                 {

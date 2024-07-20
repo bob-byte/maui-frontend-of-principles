@@ -751,7 +751,7 @@ By using the App, you acknowledge that you have read, understood, and agree to b
     <value>Update chosen goal</value>
   </data>
   <data name="GoalExamples" xml:space="preserve">
-    <value>Examples of goals aimed at your identity are: become a programmer, become an athlete, become disciplined, become confident.</value>
+    <value>Examples of goals aimed at your identity are: become a programmer, become an athlete, become confident. But you can specify ordinary goal. For instance, reach the B2 level of English.</value>
   </data>
   <data name="HabitNameRecommendation" xml:space="preserve">
     <value>Recommendation: specify the name of the habit and the time or place of its implementation. This will increase the probability of compliance. Example: I pray as soon as I wake up.</value>
@@ -760,6 +760,6 @@ By using the App, you acknowledge that you have read, understood, and agree to b
     <value>Unable to load data.</value>
   </data>
   <data name="NoGoalSpecified" xml:space="preserve">
-    <value>No goal specified</value>
+    <value>*No goal specified</value>
   </data>
 </root>
