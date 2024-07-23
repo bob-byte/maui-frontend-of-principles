@@ -544,7 +544,7 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Examples of goals aimed at your identity are: become a programmer, become an athlete, become confident. But you can specify ordinary goal. For instance, reach the B2 level of English..
+        ///   Looks up a localized string similar to Examples of goals aimed at your identity are: to be a Senior developer, to be an athlete, to be confident..
         /// </summary>
         internal static string GoalExamples {
             get {
@@ -1473,11 +1473,11 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to To become.
+        ///   Looks up a localized string similar to To be.
         /// </summary>
-        internal static string ToBecome {
+        internal static string ToBe {
             get {
-                return ResourceManager.GetString("ToBecome", resourceCulture);
+                return ResourceManager.GetString("ToBe", resourceCulture);
             }
         }
         

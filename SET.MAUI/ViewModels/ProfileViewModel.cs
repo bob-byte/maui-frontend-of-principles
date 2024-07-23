@@ -10,18 +10,20 @@ public partial class ProfileViewModel : BaseViewModel
     }
 
     [RelayCommand(CanExecute = nameof(CanSaveUserName))]
-    private async Task SaveUserNameAsync()
+    private async Task SaveUserNameAsync(string newValue)
     {
         bool isSuccess = false;
         await UiBusyFor( async () =>
         {
             string url = $"{UrlBuilder.UserName}/{SettingsService.UserId}";
-            await RequestProvider.PutAsync( url, UserName.Value, SettingsService.AuthAccessToken );
+            await RequestProvider.PutAsync( url, newValue, SettingsService.AuthAccessToken );
             isSuccess = true;
         } );
         
         if (isSuccess)
         {
+            UserName.Value = newValue;
+
             NotifyUserInfoChanged();
 
             await Snackbar.Make(
@@ -43,18 +45,21 @@ public partial class ProfileViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private async Task SaveMainSloganAsync()
+    private async Task SaveMainSloganAsync(string newValue)
     {
         bool isSuccess = false;
         await UiBusyFor( async () =>
         {
             string url = $"{UrlBuilder.UserMainSlogan}/{SettingsService.UserId}";
-            await RequestProvider.PutAsync( url, MainSlogan, SettingsService.AuthAccessToken );
+            await RequestProvider.PutAsync( url, newValue, SettingsService.AuthAccessToken );
             isSuccess = true;
         } );
 
         if (isSuccess)
         {
+            MainSlogan = newValue;
+            CachingService.SetForever( CacheKeys.USER_MAIN_SLOGAN, MainSlogan );
+
             NotifyUserInfoChanged();
 
             await Snackbar.Make( LocStrings.YourMainSloganSuccessfullySaved, visualOptions: SnackbarHelper.DefaultOptions() ).Show();
@@ -62,18 +67,21 @@ public partial class ProfileViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private async Task SaveMissionAsync()
+    private async Task SaveMissionAsync( string newValue )
     {
         bool isSuccess = false;
         await UiBusyFor( async () =>
         {
             string url = $"{UrlBuilder.UserMission}/{SettingsService.UserId}";
-            await RequestProvider.PutAsync( url, Mission, SettingsService.AuthAccessToken );
+            await RequestProvider.PutAsync( url, newValue, SettingsService.AuthAccessToken );
             isSuccess = true;
         } );
 
         if (isSuccess)
         {
+            Mission = newValue;
+            CachingService.SetForever( CacheKeys.USER_MISSION, Mission );
+
             NotifyUserInfoChanged();
 
             await Snackbar.Make( LocStrings.YourMissionSuccessfullySaved, visualOptions: SnackbarHelper.DefaultOptions() ).Show();
@@ -85,10 +93,10 @@ public partial class ProfileViewModel : BaseViewModel
         UserInfoChangedMessage msg = new( new UserInfo
         {
             Gender = Gender,
-            Name = UserName.Value,
+            Name = UserName.Value!,
             Id = long.Parse( SettingsService.UserId ),
-            MainSlogan = MainSlogan,
-            Mission = Mission
+            MainSlogan = MainSlogan!,
+            Mission = Mission!
         } );
         ReferenceMessenger.Send( msg );
     }

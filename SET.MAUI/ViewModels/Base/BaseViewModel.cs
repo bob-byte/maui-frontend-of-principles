@@ -67,17 +67,17 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
             } );
         } );
 
-        ReferenceMessenger.Register<UserInfoChangedMessage>( this, ( sender, msg ) =>
+        if (GetType() != typeof( ProfileViewModel ))
         {
-            if(sender != this)
+            ReferenceMessenger.Register<UserInfoChangedMessage>( this, ( sender, msg ) =>
             {
                 UserInfo newUserInfo = msg.Value;
                 UserName.Value = newUserInfo.Name;
                 Gender = newUserInfo.Gender;
                 Mission = newUserInfo.Mission;
                 MainSlogan = newUserInfo.MainSlogan;
-            }
-        } );
+            } );
+        }
     }
 
     public IAsyncRelayCommand InitializeAsyncCommand { get; }

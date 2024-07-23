@@ -523,7 +523,7 @@ public partial class EditHabitView : ContentPageBase
         ViewModel.EditedGoal = new UserGoal()
         {
             Id = 0,
-            Name = $"{LocStrings.ToBecome} "
+            Name = $"{LocStrings.ToBe} "
         };
     }
 
@@ -552,9 +552,12 @@ public partial class EditHabitView : ContentPageBase
         var multilineEdit = sender as MultilineEdit;
         if(multilineEdit is not null)
         {
+            GoalsBottomSheet.State = BottomSheetState.Hidden;
+
             var goal = multilineEdit.BindingContext as UserGoal;
             ViewModel.OnGoalNameTapped( goal! );
-            GoalsBottomSheet.State = BottomSheetState.Hidden;
+
+            m_doExecuteReloadOfRecommendedHabits = true;
         }
     }
 }

@@ -531,7 +531,16 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         else
         {
             UserGoal foundGoalInCollection = UserGoals.First( g => g.Id == EditedGoal.Id );
-            foundGoalInCollection.Name = EditedGoal.Name;
+            if(foundGoalInCollection.Name != EditedGoal.Name)
+            {
+                foundGoalInCollection.Name = EditedGoal.Name;
+                ReferenceMessenger.Send( new ChangedGoalMessage( EditedGoal ) );
+
+                if (Habit.Goal?.Id == EditedGoal.Id)
+                {
+                    Habit.Goal.Name = EditedGoal.Name;
+                }
+            }
         }
     }
 

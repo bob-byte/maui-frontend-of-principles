@@ -741,8 +741,8 @@ By using the App, you acknowledge that you have read, understood, and agree to b
   <data name="CreateNewGoal" xml:space="preserve">
     <value>Create new goal</value>
   </data>
-  <data name="ToBecome" xml:space="preserve">
-    <value>To become</value>
+  <data name="ToBe" xml:space="preserve">
+    <value>To be</value>
   </data>
   <data name="GoalLableRecommendation" xml:space="preserve">
     <value>Recommendation: "Choose a goal that is based on your identity because it defines your life".</value>
@@ -751,7 +751,7 @@ By using the App, you acknowledge that you have read, understood, and agree to b
     <value>Update chosen goal</value>
   </data>
   <data name="GoalExamples" xml:space="preserve">
-    <value>Examples of goals aimed at your identity are: become a programmer, become an athlete, become confident. But you can specify ordinary goal. For instance, reach the B2 level of English.</value>
+    <value>Examples of goals aimed at your identity are: to be a Senior developer, to be an athlete, to be confident.</value>
   </data>
   <data name="HabitNameRecommendation" xml:space="preserve">
     <value>Recommendation: specify the name of the habit and the time or place of its implementation. This will increase the probability of compliance. Example: I pray as soon as I wake up.</value>

@@ -97,6 +97,7 @@
                           AllowVirtualHorizontalScrolling="True"
                           VerticalLineThickness="0"
                           IsHorizontalScrollBarVisible="False"
+                          IsLoadMoreEnabled="False"
                           FullSwipeMode="Start"
                           AllowLiveDataShaping="True"
                           CustomSort="DGV_Habits_SortByGoalName">

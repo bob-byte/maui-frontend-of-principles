@@ -69,6 +69,17 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
             SelectedHabit = null;
         } );
 
+        ReferenceMessenger.Register<ChangedGoalMessage>( this, ( sender, msg ) =>
+        {
+            UserGoal editedGoal = msg.Value;
+
+            foreach (UserHabit habit in UserHabits.Where( h => h.Goal!.Id == editedGoal.Id ))
+            {
+                habit.Goal!.Name = editedGoal.Name;
+            }
+
+            UserHabits.Reload( UserHabits.ToArray() );
+        } );
         ReferenceMessenger.Register<GoalIsDeletedMessage>( this, ( sender, msg ) =>
         {
             UserGoal deletedGoal = msg.Value;

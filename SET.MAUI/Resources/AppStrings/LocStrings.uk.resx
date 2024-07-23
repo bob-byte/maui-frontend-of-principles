@@ -744,8 +744,8 @@
   <data name="CreateNewGoal" xml:space="preserve">
     <value>Додайте нову ціль</value>
   </data>
-  <data name="ToBecome" xml:space="preserve">
-    <value>Стати</value>
+  <data name="ToBe" xml:space="preserve">
+    <value>Бути</value>
   </data>
   <data name="GoalLableRecommendation" xml:space="preserve">
     <value>Рекомендація: виберіть ціль, яка орієнтована на вашу ідентичність, оскільки вона визначає ваше життя.</value>
@@ -754,7 +754,7 @@
     <value>Оновіть вибрану ціль</value>
   </data>
   <data name="GoalExamples" xml:space="preserve">
-    <value>Приклади цілей спрямованих на вашу ідентичність: стати програмістом, стати спортсменом, стати впевненим. Але ви можете вказати звичайну мету. Наприклад, досягнути рівень англ B2.</value>
+    <value>Приклади цілей спрямованих на вашу ідентичність: бути програмістом, бути спортсменом, бути впевненим в собі.</value>
   </data>
   <data name="HabitNameRecommendation" xml:space="preserve">
     <value>Рекомендація: вкажіть назву звички та час або місце її виконання. Це збільшить ймовірність її дотримання. Приклад: я молюсь, як тільки прокинусь.</value>

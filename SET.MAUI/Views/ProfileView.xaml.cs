@@ -18,10 +18,8 @@ public partial class ProfileView : ContentPageBase
     {
         L_Prompt.Text = LocStrings.YourName;
         ME_PromptResult.Text = ViewModel.UserName.Value;
-        ME_PromptResult.MaxCharacterCount = 100;
         ME_PromptResult.HeightRequest = -1;
         ME_PromptResult.MaxLineCount = 1;
-        ME_PromptResult.MaxCharacterCountOverflowMode = OverflowMode.LimitInput;
         TE_UserName.Unfocus();
 
         DXP_Prompt.IsOpen = true;
@@ -31,8 +29,6 @@ public partial class ProfileView : ContentPageBase
     {
         L_Prompt.Text = LocStrings.YourMainSlogan;
         ME_PromptResult.Text = ViewModel.MainSlogan;
-        ME_PromptResult.MaxCharacterCount = 255;
-        ME_PromptResult.MaxCharacterCountOverflowMode = OverflowMode.LimitInput;
         ME_PromptResult.HeightRequest = 140;
         ME_PromptResult.MaximumHeightRequest = 140;
         ME_PromptResult.MaxLineCount = 5;
@@ -48,46 +44,32 @@ public partial class ProfileView : ContentPageBase
         ME_PromptResult.HeightRequest = 285;
         ME_PromptResult.MaximumHeightRequest = 300;
         ME_PromptResult.MaxLineCount = 12;
-        ME_PromptResult.MaxCharacterCount = 4000;
-        ME_PromptResult.MaxCharacterCountOverflowMode = OverflowMode.None;
         ME_Mision.Unfocus();
 
         DXP_Prompt.IsOpen = true;
     }
 
-    async void SB_Save_Clicked( System.Object sender, System.EventArgs e )
+    async void SB_Save_Clicked( object sender, EventArgs e )
     {
-        DXP_Prompt.IsOpen = false;
-
+        IAsyncRelayCommand command;
         if (L_Prompt.Text == LocStrings.YourName)
         {
-            ViewModel.UserName.Value = ME_PromptResult.Text;
-            ViewModel.UserName.Validate();
-            if (ViewModel.SaveUserNameCommand.CanExecute( null ))
-            {
-                await ViewModel.SaveUserNameCommand.ExecuteAsync( null );
-            }
+            command = ViewModel.SaveUserNameCommand;
         }
         else if (L_Prompt.Text == LocStrings.YourMainSlogan)
         {
-            ViewModel.MainSlogan = ME_PromptResult.Text;
-            if (ViewModel.SaveMainSloganCommand.CanExecute( null ))
-            {
-                await ViewModel.SaveMainSloganCommand.ExecuteAsync( null );
-            }
+            command = ViewModel.SaveMainSloganCommand;
         }
-        else if (L_Prompt.Text == LocStrings.YourMission)
+        else
         {
-            ViewModel.Mission = ME_PromptResult.Text;
-            if (ViewModel.SaveMissionCommand.CanExecute( null ))
-            {
-                await ViewModel.SaveMissionCommand.ExecuteAsync( null );
-            }
+            command = ViewModel.SaveMissionCommand;
         }
-    }
 
-    void ME_PromptResult_SizeChanged( System.Object sender, System.EventArgs e )
-    {
+        if (command.CanExecute( ME_PromptResult.Text ))
+        {
+            await command.ExecuteAsync( ME_PromptResult.Text );
+        }
 
+        DXP_Prompt.IsOpen = false;
     }
 }
