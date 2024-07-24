@@ -93,6 +93,7 @@ public static class MauiProgram
         services.AddSingleton<UserAgreementViewModel>();
         services.AddSingleton<PrivacyPolicyViewModel>();
         services.AddSingleton<ForgetPasswordViewModel>();
+        services.AddSingleton<StartupViewModel>();
 
         return services;
     }
@@ -109,6 +110,7 @@ public static class MauiProgram
         services.AddTransient<UserAgreementView>();
         services.AddTransient<PrivacyPolicyView>();
         services.AddTransient<ForgetPasswordView>();
+        services.AddTransient<StartupView>();
 
         return services;
     }

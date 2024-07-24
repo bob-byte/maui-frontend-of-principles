@@ -12,7 +12,7 @@
     <Application.Resources>
         <ResourceDictionary>
 
-            <Color x:Key="SecondaryLight">#d9d4d4</Color>
+            <Color x:Key="SecondaryLight">White</Color>
             <Color x:Key="SecondaryDark">White</Color>
             <Color x:Key="TertiaryLight">#F0F0F0</Color>
             <Color x:Key="TertiaryDark">#FF7F7F</Color>
@@ -92,6 +92,10 @@
                 <Setter Property="IconColor"
                         Value="{AppThemeBinding Light={StaticResource DarkIconColor},
                                                 Dark={StaticResource IconColor}}" />
+                <Setter Property="BorderThickness"
+                        Value="2" />
+                <Setter Property="BorderColor"
+                        Value="{StaticResource TitleTextColor}" />
             </Style>
             <Color x:Key="DarkGray">#18191A</Color>
             <Style x:Key="SecondaryButton"
@@ -105,6 +109,10 @@
                 <Setter Property="IconColor"
                         Value="{AppThemeBinding Light={StaticResource DarkIconColor},
                                                 Dark={StaticResource IconColor}}" />
+                <Setter Property="BorderThickness"
+                        Value="2" />
+                <Setter Property="BorderColor"
+                        Value="{StaticResource TitleTextColor}" />
             </Style>
             <Style x:Key="TitlePrimaryButton"
                    TargetType="dxco:SimpleButton">

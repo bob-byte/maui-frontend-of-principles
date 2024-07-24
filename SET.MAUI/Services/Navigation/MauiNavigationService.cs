@@ -27,7 +27,7 @@ public class MauiNavigationService : INavigationService
 
     public Task GoToInitialViewAsync()
     {
-        return IsLoggedIn ? NavigateToMainAsync<ProgressOfHabitsViewModel>() : NavigateToAsync<LoginViewModel>(isAbsoluteRoute: true);
+        return IsLoggedIn ? NavigateToMainAsync<ProgressOfHabitsViewModel>() : NavigateToAsync<StartupViewModel>();
     }
 
     public async Task NavigateToMainAsync<TViewModel>() where TViewModel : BaseViewModel

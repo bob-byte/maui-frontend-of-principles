@@ -30,6 +30,8 @@ public partial class AppShell : Shell
         RegisterRoute( typeof( UserAgreementView ) );
         RegisterRoute( typeof( PrivacyPolicyView ) );
         RegisterRoute( typeof( ForgetPasswordView ) );
+        RegisterRoute( typeof( StartupView ) );
+        RegisterRoute( typeof( LoginView ) );
     }
 
     private static void RegisterRoute( Type viewType )

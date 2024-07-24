@@ -765,4 +765,43 @@
   <data name="NoGoalSpecified" xml:space="preserve">
     <value>*Ціль не визначена</value>
   </data>
+  <data name="ContinueWithGoogle" xml:space="preserve">
+    <value>Продовжити через Google</value>
+  </data>
+  <data name="SignUpWithEmail" xml:space="preserve">
+    <value>Зареєструватися через електронну пошту</value>
+  </data>
+  <data name="LogInWithEmail" xml:space="preserve">
+    <value>Увійти через електронну пошту</value>
+  </data>
+	<data name="TransformAreasOfLifeTitle" xml:space="preserve">
+    <value>Трансформуй сфери життя</value>
+  </data>
+	<data name="TransformAreasOfLifeDescription" xml:space="preserve">
+    <value>Встановлюй правильні цілі та будуй свої звички</value>
+  </data>
+	<data name="GroupHabitsByGoalsTitle" xml:space="preserve">
+    <value>Групуй звички за цілями</value>
+  </data>
+	<data name="GroupHabitsByGoalsDescription" xml:space="preserve">
+    <value>Визначай свої звики вказавши цілі та систематизуй досягнення цілей</value>
+  </data>
+	<data name="GetRecommendationsByAITitle" xml:space="preserve">
+    <value>Отримуй рекомендації від ШІ</value>
+  </data>
+	<data name="GetRecommendationsByAIDescription" xml:space="preserve">
+    <value>Рекомендації сформовані на основі твоєї місії, статі, сфери життя, гасла та цілі</value>
+  </data>
+	<data name="ChatWithHelperTitle" xml:space="preserve">
+    <value>Чат з помічником</value>
+  </data>
+	<data name="ChatWithHelperDescription" xml:space="preserve">
+    <value>Отримай відповідь на різноманітні питання від помічника по саморозвитку, який зважає на твої вказані дані</value>
+  </data>
+	<data name="BecomeTruePersonalityTitle" xml:space="preserve">
+    <value>Стань справжньою особистістю</value>
+  </data>
+	<data name="BecomeTruePersonalityDescription" xml:space="preserve">
+    <value>Встановлення цілей, що орієнтовані на твою ідентичність</value>
+  </data>
 </root>

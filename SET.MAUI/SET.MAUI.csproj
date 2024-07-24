@@ -104,6 +104,9 @@
 		<Compile Update="App.xaml.cs">
 		  <DependentUpon>App.xaml</DependentUpon>
 		</Compile>
+		<Compile Update="Views\StartupView.xaml.cs">
+		  <DependentUpon>StartupView.xaml</DependentUpon>
+		</Compile>
 		<Compile Update="Views\ForgetPasswordView.xaml.cs">
 		  <DependentUpon>ForgetPasswordView.xaml</DependentUpon>
 		</Compile>
@@ -157,6 +160,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Controls\CircularProgressBar.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\StartupView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\ForgetPasswordView.xaml">

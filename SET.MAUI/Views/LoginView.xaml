@@ -11,7 +11,7 @@
                    x:Class="SET.MAUI.Views.LoginView"
                    x:DataType="vm:LoginViewModel"
                    Shell.FlyoutBehavior="Disabled"
-                   Shell.NavBarIsVisible="False"
+                   Shell.NavBarIsVisible="True"
                    Shell.TabBarIsVisible="False"
                    Title="{Binding Title}">
     <Grid>

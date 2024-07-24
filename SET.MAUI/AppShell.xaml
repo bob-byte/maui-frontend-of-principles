@@ -9,10 +9,6 @@
        ios:Page.UseSafeArea="true"
        xmlns:local="clr-namespace:SET.MAUI.Views"
        xmlns:app="clr-namespace:SET.MAUI">
-    <FlyoutItem>
-        <ShellContent ContentTemplate="{DataTemplate local:LoginView}"
-                      Route="login" />
-    </FlyoutItem>
     <TabBar Route="main">
         <ShellContent ContentTemplate="{DataTemplate local:HelperView}"
                       Title="{x:Static loc:LocStrings.Helper}"
