@@ -60,12 +60,15 @@ public static class MauiProgram
         //TODO: replace appsettings.json and implementation of the config to SET.Core project
         using Stream? stream = assembly.GetManifestResourceStream( $"{assembly.GetName().Name}.appsettings.json" );
 
-        IConfigurationRoot configuration = new ConfigurationBuilder()
-            .AddJsonStream( stream )
-            .Build();
+        if(stream is not null)
+        {
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                .AddJsonStream( stream )
+                .Build();
 
-        builder.Configuration.AddConfiguration( configuration );
-        builder.Services.AddSingleton<IConfiguration>( configuration );
+            builder.Configuration.AddConfiguration( configuration );
+            builder.Services.AddSingleton<IConfiguration>( configuration );
+        }
 
         AllowMultiLineTruncation();
 

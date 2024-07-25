@@ -24,14 +24,13 @@ public partial class AppShell : Shell
 
     private static void InitRouting()
     {
+        RegisterRoute( typeof( LoginView ) );
         RegisterRoute( typeof( SignupView ) );
         RegisterRoute( typeof( EditHabitView ) );
         RegisterRoute( typeof( SettingsView ) );
         RegisterRoute( typeof( UserAgreementView ) );
         RegisterRoute( typeof( PrivacyPolicyView ) );
         RegisterRoute( typeof( ForgetPasswordView ) );
-        RegisterRoute( typeof( StartupView ) );
-        RegisterRoute( typeof( LoginView ) );
     }
 
     private static void RegisterRoute( Type viewType )

@@ -14,19 +14,8 @@
                    Shell.NavBarIsVisible="True"
                    Shell.TabBarIsVisible="False">
     <Shell.TitleView>
-        <Grid ColumnDefinitions="Auto, *, Auto"
+        <Grid ColumnDefinitions="*, Auto"
               x:Name="G_Title">
-            <Label Text="{x:Static loc:LocStrings.Login}"
-                   Grid.Column="0"
-                   FontAttributes="Bold"
-                   VerticalOptions="Center"
-                   TextColor="{StaticResource TitleTextColor}"
-                   FontSize="17">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer NumberOfTapsRequired="1"
-                                          Command="{Binding BackCommand}" />
-                </Label.GestureRecognizers>
-            </Label>
             <Grid x:Name="G_SaveHabit"
                   HorizontalOptions="End"
                   VerticalOptions="CenterAndExpand"

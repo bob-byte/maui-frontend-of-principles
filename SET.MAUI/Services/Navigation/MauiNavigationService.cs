@@ -23,11 +23,13 @@ public class MauiNavigationService : INavigationService
 
     public bool IsLoggedIn => !string.IsNullOrWhiteSpace( m_settingsService.AuthAccessToken );
 
-    public IUrlBuilder UrlBuilder { get; } 
+    public IUrlBuilder UrlBuilder { get; }
 
     public Task GoToInitialViewAsync()
     {
-        return IsLoggedIn ? NavigateToMainAsync<ProgressOfHabitsViewModel>() : NavigateToAsync<StartupViewModel>();
+        return IsLoggedIn ?
+            NavigateToMainAsync<ProgressOfHabitsViewModel>() :
+            NavigateToAsync<StartupViewModel>( isAbsoluteRoute: true );
     }
 
     public async Task NavigateToMainAsync<TViewModel>() where TViewModel : BaseViewModel

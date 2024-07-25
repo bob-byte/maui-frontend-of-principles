@@ -3,17 +3,18 @@
 public partial class StartupViewModel : BaseViewModel
 {
     [ObservableProperty]
-    private ObservableCollectionEx<AppFeatures> m_appFeatures;
+    private ObservableCollectionEx<AppFeature> m_appFeatures;
+
     public StartupViewModel( IServiceProvider serviceProvider )
         : base( serviceProvider )
     {
-        AppFeatures = new ObservableCollectionEx<AppFeatures>
+        m_appFeatures = new ObservableCollectionEx<AppFeature>
         {
-            new AppFeatures {  Title = LocStrings.TransformAreasOfLifeTitle, Description =  LocStrings.TransformAreasOfLifeDescription},
-            new AppFeatures {  Title = LocStrings.GroupHabitsByGoalsTitle, Description = LocStrings.GroupHabitsByGoalsDescription },
-            new AppFeatures {  Title = LocStrings.GetRecommendationsByAITitle, Description = LocStrings.GetRecommendationsByAIDescription },
-            new AppFeatures {  Title = LocStrings.ChatWithHelperTitle, Description = LocStrings.ChatWithHelperDescription },
-            new AppFeatures {  Title = LocStrings.BecomeTruePersonalityTitle, Description = LocStrings.BecomeTruePersonalityDescription }
+            new() {  Title = LocStrings.TransformAreasOfLifeTitle, Description =  LocStrings.TransformAreasOfLifeDescription},
+            new() {  Title = LocStrings.ChatWithHelperTitle, Description = LocStrings.ChatWithHelperDescription },
+            new() {  Title = LocStrings.GroupHabitsByGoalsTitle, Description = LocStrings.GroupHabitsByGoalsDescription },
+            new() {  Title = LocStrings.GetRecommendationsByAITitle, Description = LocStrings.GetRecommendationsByAIDescription },
+            new() {  Title = LocStrings.BecomeTruePersonalityTitle, Description = LocStrings.BecomeTruePersonalityDescription }
         };
     }
 

@@ -92,8 +92,6 @@
                 <Setter Property="IconColor"
                         Value="{AppThemeBinding Light={StaticResource DarkIconColor},
                                                 Dark={StaticResource IconColor}}" />
-                <Setter Property="BorderThickness"
-                        Value="2" />
                 <Setter Property="BorderColor"
                         Value="{StaticResource TitleTextColor}" />
             </Style>
@@ -109,8 +107,6 @@
                 <Setter Property="IconColor"
                         Value="{AppThemeBinding Light={StaticResource DarkIconColor},
                                                 Dark={StaticResource IconColor}}" />
-                <Setter Property="BorderThickness"
-                        Value="2" />
                 <Setter Property="BorderColor"
                         Value="{StaticResource TitleTextColor}" />
             </Style>
