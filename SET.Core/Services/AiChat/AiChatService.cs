@@ -9,6 +9,7 @@ public class AiChatService : BaseRemoteService, IAiChatService
 {
     private readonly ICachingService m_cachingService;
     private readonly IServiceOfHabit m_serviceOfHabit;
+    private readonly IGoalService m_goalService;
     private readonly List<ChatMessage> m_chatMessages;
 
     public AiChatService( IServiceProvider serviceProvider )
@@ -16,26 +17,33 @@ public class AiChatService : BaseRemoteService, IAiChatService
     {
         m_cachingService = serviceProvider.GetRequiredService<ICachingService>();
         m_serviceOfHabit = serviceProvider.GetRequiredService<IServiceOfHabit>();
+        m_goalService = serviceProvider.GetRequiredService<IGoalService>();
+
         m_chatMessages = new List<ChatMessage>();
     }
 
-    public Task<StreamingResponse<StreamingChatCompletionsUpdate>> GetAnswerStreamAsync( string prompt, int choiceCount, CancellationToken cancellationToken = default )
+    public async Task<StreamingResponse<StreamingChatCompletionsUpdate>> GetAnswerStreamAsync( string prompt, int choiceCount, CancellationToken cancellationToken = default )
     {
+        ChatMessage systemMsg = await SystemMessage().DefaultConfigureAwait();
         if(m_chatMessages.Count == 0)
         {
-            m_chatMessages.Add( SystemMessage() );
+            m_chatMessages.Add( systemMsg );
         }
         else
         {
-            m_chatMessages[0] = SystemMessage();
+            m_chatMessages[0] = systemMsg;
         }
 
         ChatMessage newMessage = new( ChatRole.User, prompt );
         m_chatMessages.Add( newMessage );
 
-        ChatCompletionsOptions options = new( DEFAULT_AI_DEPLOYMENT_NAME, m_chatMessages );
-        options.ChoiceCount = choiceCount;
-        return AiClient.GetChatCompletionsStreamingAsync( options, cancellationToken );
+        ChatCompletionsOptions options = new( DEFAULT_AI_DEPLOYMENT_NAME, m_chatMessages )
+        {
+            ChoiceCount = choiceCount
+        };
+
+        StreamingResponse<StreamingChatCompletionsUpdate> result = await AiClient.GetChatCompletionsStreamingAsync( options, cancellationToken ).DefaultConfigureAwait();
+        return result;
     }
 
     public void AddChatAnswer( string answer )
@@ -49,7 +57,7 @@ public class AiChatService : BaseRemoteService, IAiChatService
         m_chatMessages.Clear();
     }
 
-    private ChatMessage SystemMessage()
+    private async ValueTask<ChatMessage> SystemMessage()
     {
         StringBuilder systemMessageBuilder = new();
         systemMessageBuilder.Append( "You are a self-development assistant, but you can answer at any question. You have to support the user in their quest to become better and help them identify their habits. You should also provide information on how to better stick to them and become better every day in all areas of the user's life. But don't ask current user habits." );
@@ -89,6 +97,19 @@ public class AiChatService : BaseRemoteService, IAiChatService
             }
 
             systemMessageBuilder.Replace( oldValue: "; ", newValue: ".", startIndex: systemMessageBuilder.Length - 2, count: 2 );
+        }
+
+        IEnumerable<UserGoal> userGoals = await m_goalService.UserGoalsAsync().DefaultConfigureAwait();
+
+        if (userGoals.Any())
+        {
+            systemMessageBuilder.Append( " My current goals are: " );
+            foreach (UserGoal userGoal in userGoals)
+            {
+                systemMessageBuilder.Append( $"{userGoal.Name}; " );
+            }
+
+            systemMessageBuilder.Replace( ';', '.', systemMessageBuilder.Length - 2, 1 );
         }
 
         systemMessageBuilder.Append( $"{newLine}If you generate a program code, it must be without ``` delimiters. The programming language should be specified on a separate line before the code." );

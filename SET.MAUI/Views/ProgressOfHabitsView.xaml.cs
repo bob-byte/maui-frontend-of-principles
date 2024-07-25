@@ -52,20 +52,21 @@ public partial class ProgressOfHabitsView : ContentPageBase
         if (e.PropertyName == nameof( ViewModel.IsInitialized ) && ViewModel.IsInitialized && m_newDayEventTimer is null)
         {
             TimeSpan timeUntilMidnight = TimeUntilMidnight();
-            m_newDayEventTimer = new Timer( OnNewDay, state: null, dueTime: timeUntilMidnight, period: Timeout.InfiniteTimeSpan );
+            TimeSpan period = TimeSpan.FromHours( 24 );
+            m_newDayEventTimer = new Timer( OnNewDay, state: null, dueTime: timeUntilMidnight, period );
 
 #if IOS
             m_timeZoneChangeObserver = new TimeZoneChangeObserver();
             m_timeZoneChangeObserver.StartObservingTimeZoneChanges( ( notification ) =>
             {
                 TimeSpan timeUntilMidnight = TimeUntilMidnight();
-                m_newDayEventTimer!.Change( timeUntilMidnight, Timeout.InfiniteTimeSpan );
+                m_newDayEventTimer!.Change( timeUntilMidnight, period );
             } );
 #elif ANDROID
             m_timeZoneChangeReceiver = new TimeZoneChangedReceiver( ( context, intent ) =>
             {
                 TimeSpan timeUntilMidnight = TimeUntilMidnight();
-                m_newDayEventTimer!.Change( timeUntilMidnight, Timeout.InfiniteTimeSpan );
+                m_newDayEventTimer!.Change( timeUntilMidnight, period );
             } );
 #endif
         }
@@ -114,11 +115,9 @@ public partial class ProgressOfHabitsView : ContentPageBase
                 DGV_Habits.Columns.Insert( index: 1, templateColumn );
             } ).DefaultConfigureAwait();
 
+            ViewModel.EndProgressInterval = today;
             ViewModel.IsProgressesInitialized = true;
         }
-
-        TimeSpan timeUntilMidnight = TimeUntilMidnight();
-        m_newDayEventTimer!.Change( timeUntilMidnight, Timeout.InfiniteTimeSpan );
     }
 
     private TimeSpan TimeUntilMidnight()

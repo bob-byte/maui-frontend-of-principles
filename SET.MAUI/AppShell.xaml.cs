@@ -24,6 +24,7 @@ public partial class AppShell : Shell
 
     private static void InitRouting()
     {
+        RegisterRoute( typeof( StartupView ) );
         RegisterRoute( typeof( LoginView ) );
         RegisterRoute( typeof( SignupView ) );
         RegisterRoute( typeof( EditHabitView ) );

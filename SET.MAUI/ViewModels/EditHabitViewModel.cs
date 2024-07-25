@@ -29,7 +29,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
     private ObservableCollectionEx<UserHabit> m_userHabits;
 
     [ObservableProperty]
-    private ObservableCollectionEx<UserGoal> m_userGoals;
+    private ObservableCollectionEx<UserGoal>? m_userGoals;
 
     [ObservableProperty]
     private bool m_isLoadingHabitInfo;
@@ -37,7 +37,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
     [ObservableProperty]
     private bool m_isRecommendedHabitsLoading;
 
-    public EditHabitViewModel( IServiceProvider serviceProvider, IAiRecommenderOfHabitsService aiRecommenderOfHabits, IGoalService goalService)
+    public EditHabitViewModel( IServiceProvider serviceProvider )
         : base(serviceProvider)
     {
         AllAreasOfLifeAsOneItem = new UserAreaOfLife
@@ -59,8 +59,10 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
                 Name = LocStrings.ResourceManager.GetString("Month")!.ToLower()
             }
         };
-        AiRecommenderOfHabits = aiRecommenderOfHabits;
-        GoalService = goalService;
+
+        AiRecommenderOfHabits = serviceProvider.GetRequiredService<IAiRecommenderOfHabitsService>();
+        GoalService = serviceProvider.GetRequiredService<IGoalService>();
+
         AllUserAreasOfLife = new ObservableCollectionEx<UserAreaOfLife>();
 
         UserHabits = new ObservableCollectionEx<UserHabit>();
@@ -68,9 +70,9 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         {
             DefaultHandleLogout( msg );
 
-            AllUserAreasOfLife.Clear();
-            UserHabits.Clear();
-            UserGoals.Clear();
+            AllUserAreasOfLife?.Clear();
+            UserHabits?.Clear();
+            UserGoals?.Clear();
         } );
     }
 
@@ -526,11 +528,11 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
 
         if (isNewGoal)
         {
-            UserGoals.Add( EditedGoal );
+            UserGoals!.Add( EditedGoal );
         }
         else
         {
-            UserGoal foundGoalInCollection = UserGoals.First( g => g.Id == EditedGoal.Id );
+            UserGoal foundGoalInCollection = UserGoals!.First( g => g.Id == EditedGoal.Id );
             if(foundGoalInCollection.Name != EditedGoal.Name)
             {
                 foundGoalInCollection.Name = EditedGoal.Name;
@@ -560,7 +562,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
             {
                 await GoalService.DeleteGoalAsync( goal );
 
-                UserGoals.Remove( goal );
+                UserGoals!.Remove( goal );
                 ReferenceMessenger.Send( new GoalIsDeletedMessage( goal ) );
 
                 if (Habit.Goal?.Id > 0 && Habit.Goal.Id == goal.Id && ClearHabitGoalCommand.CanExecute( null ))
@@ -608,10 +610,15 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
     [RelayCommand]
     private async Task LoadGoalsAsync()
     {
-        if (UserGoals is null)
+        if (m_userGoals is null)
         {
-            List<UserGoal> userGoals = await GoalService.UserGoalsAsync();
-            UserGoals = new ObservableCollectionEx<UserGoal>( userGoals );
+            UserGoals = new ObservableCollectionEx<UserGoal>();
+            IEnumerable<UserGoal> goals = await GoalService.UserGoalsAsync();
+            
+            //sometimes goals are not displayed without reloading
+            UserGoals.Reload( goals );
+
+            GoalService.StoredGoals = UserGoals;
         }
     }
 

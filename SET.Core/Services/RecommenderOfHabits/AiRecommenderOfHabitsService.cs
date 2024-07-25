@@ -7,6 +7,7 @@ namespace SET.Core.Services;
 public class AiRecommenderOfHabitsService : BaseRemoteService, IAiRecommenderOfHabitsService
 {
     private readonly ChatMessage m_setupMessage;
+    private readonly IGoalService m_goalService;
 
     public AiRecommenderOfHabitsService( IServiceProvider serviceProvider )
         : base( serviceProvider )
@@ -15,6 +16,8 @@ public class AiRecommenderOfHabitsService : BaseRemoteService, IAiRecommenderOfH
             role: ChatRole.System,
             content: "You are self development assistant. You are in the app that focuses on helping users to create, keep and track their atomic habits. You should recommend new atomic habits for user."
         );
+
+        m_goalService = serviceProvider.GetRequiredService<IGoalService>();
     }
 
     //it creates user chat message that contains:
@@ -23,11 +26,19 @@ public class AiRecommenderOfHabitsService : BaseRemoteService, IAiRecommenderOfH
     // - name of areas of life of new habit
     // - format of response (language, JSON array with fields name, reasonToFollow, notes)
     //then parses and returns a response
-    public async Task<List<RecommendedHabit>> RecommendedHabitsAsync( IEnumerable<UserHabit> currentHabits, IEnumerable<UserAreaOfLife> areasOfLifeOfNewHabit, Gender userGender, string? userMission, string? userMainSlogan, string? goal )
-    {
+    public async Task<List<RecommendedHabit>> RecommendedHabitsAsync(
+        IEnumerable<UserHabit> currentHabits,
+        IEnumerable<UserAreaOfLife> areasOfLifeOfNewHabit,
+        Gender userGender,
+        string? userMission,
+        string? userMainSlogan,
+        string? goal
+    ) {
+
 #if DEBUG
         var timeComputer = Stopwatch.StartNew();
 #endif
+
         StringBuilder messageContentBuilder = new();
         messageContentBuilder.Append( $"Please recommend me a list of 4 next atomic habits that I can select. " );
         if (!string.IsNullOrWhiteSpace( userMission ))
@@ -52,7 +63,7 @@ public class AiRecommenderOfHabitsService : BaseRemoteService, IAiRecommenderOfH
 
             messageContentBuilder.Replace( oldChar: ';', newChar: '.', startIndex: messageContentBuilder.Length - 2, count: 1 );
 
-            messageContentBuilder.Append( " The atomic habits you recommend should be related to specified habits." );
+            messageContentBuilder.Append( " The atomic habits you recommend should be related to specified habits. " );
         }
 
         if (areasOfLifeOfNewHabit.Any())
@@ -68,9 +79,21 @@ public class AiRecommenderOfHabitsService : BaseRemoteService, IAiRecommenderOfH
             messageContentBuilder.Append( " So you should recommend me habits which are related to them. " );
         }
 
-        if (!string.IsNullOrWhiteSpace( goal ))
+        if (string.IsNullOrWhiteSpace( goal ))
         {
-            messageContentBuilder.Append( $"The atomic habits you recommend will be applied to achieve my goal: \"{goal}\"." );
+            IEnumerable<UserGoal> userGoals = await m_goalService.UserGoalsAsync().DefaultConfigureAwait();
+
+            messageContentBuilder.Append( "My current goals are: " );
+            foreach (UserGoal userGoal in userGoals)
+            {
+                messageContentBuilder.Append( $"{userGoal.Name}; " );
+            }
+
+            messageContentBuilder.Replace( ';', '.', messageContentBuilder.Length - 2, 1 );
+        }
+        else
+        {
+            messageContentBuilder.Append( $"NOTE: The atomic habits you recommend will be applied to achieve my goal: \"{goal}\"." );
         }
 
         messageContentBuilder.Append( $"{Environment.NewLine}Your answer should be in JSON format and contain an array of habits. Each array object should consist of the following fields: {nameof( RecommendedHabit.Name )}, {nameof( RecommendedHabit.ReasonToFollow )}. The {nameof( RecommendedHabit.Name )} field indicates habit name and time when execute habit (for example, \"when I wake up\") or location (\"when I am in a gym\"). It should NOT contain frequency of a habit (for example, \"every day\"). Example of the {nameof( RecommendedHabit.Name )} field is \"Meditate at least 5 minutes when I wake up\". The {nameof( RecommendedHabit.ReasonToFollow )} field indicates why I should follow it and must be very briefly, but accurately explained. You must send only a JSON array in your response and nothing else. Your response must be in the {CultureInfo.CurrentUICulture.ThreeLetterISOLanguageName} language. JSON object which contains array of habits must be named \"Habits\" in english. " );

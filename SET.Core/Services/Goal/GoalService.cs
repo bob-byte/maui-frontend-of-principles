@@ -8,10 +8,33 @@ public class GoalService : BaseRemoteService, IGoalService
         //do nothing
     }
 
-    public Task<List<UserGoal>> UserGoalsAsync()
+    public ObservableCollectionEx<UserGoal>? StoredGoals { get; set; }
+
+    public async Task<ObservableCollectionEx<UserGoal>> UserGoalsAsync()
     {
-        string url = $"{UrlBuilder.Goal}?userId={SettingsService.UserId}";
-        return RequestProvider.GetAsync<List<UserGoal>>( url, SettingsService.AuthAccessToken );
+        ObservableCollectionEx<UserGoal> result;
+
+        if (StoredGoals?.Any() == true)
+        {
+            result = StoredGoals;
+        }
+        else
+        {
+            string url = $"{UrlBuilder.Goal}?userId={SettingsService.UserId}";
+
+            result = await RequestProvider.GetAsync<ObservableCollectionEx<UserGoal>>( url, SettingsService.AuthAccessToken ).DefaultConfigureAwait();
+
+            if(result is null)
+            {
+                result = new ObservableCollectionEx<UserGoal>();
+            }
+            else
+            {
+                StoredGoals = result;
+            }
+        }
+
+        return result;
     }
 
     public Task<DtoWithId> SaveGoalAsync( UserGoal goal )

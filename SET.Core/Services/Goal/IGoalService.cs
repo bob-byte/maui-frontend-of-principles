@@ -1,7 +1,10 @@
 ﻿namespace SET.Core.Services;
+
 public interface IGoalService
 {
+    ObservableCollectionEx<UserGoal>? StoredGoals { get; set; }
+
     Task<DtoWithId> SaveGoalAsync( UserGoal goal );
-    Task<List<UserGoal>> UserGoalsAsync();
+    Task<ObservableCollectionEx<UserGoal>> UserGoalsAsync();
     Task DeleteGoalAsync( UserGoal goal );
 }
