@@ -30,7 +30,7 @@
                                RepeatCount="-1"
                                WidthRequest="200"
                                HeightRequest="200"
-                               Source="fire_loading.json" />
+                               Source="blue_fire_loading.json" />
             <CarouselView ItemsSource="{Binding AppFeatures}"
                           HeightRequest="170"
                           IndicatorView="IV_AppFeatures"
@@ -64,7 +64,7 @@
                 </CarouselView.ItemTemplate>
             </CarouselView>
             <IndicatorView x:Name="IV_AppFeatures"
-                           IndicatorColor="#464646"
+                           IndicatorColor="#1C1C1C"
                            SelectedIndicatorColor="White"
                            HorizontalOptions="Center"
                            Margin="0, 0, 0, 20"/>
