@@ -112,7 +112,7 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Become a true personality.
+        ///   Looks up a localized string similar to Become a real personality.
         /// </summary>
         internal static string BecomeTruePersonalityTitle {
             get {
@@ -634,7 +634,7 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your constant progress.
+        ///   Looks up a localized string similar to Constant progress.
         /// </summary>
         internal static string GroupHabitsByGoalsTitle {
             get {

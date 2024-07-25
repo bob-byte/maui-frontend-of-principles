@@ -19,10 +19,10 @@
                    Shell.FlyoutBehavior="Disabled"
                    Shell.NavBarIsVisible="False"
                    Shell.TabBarIsVisible="False"
-                   BackgroundColor="{StaticResource LightPrimary}"
+                   BackgroundColor="#1C1C1C"
                    ios:Page.UseSafeArea="True">
     <Grid RowDefinitions="*, Auto"
-          BackgroundColor="White">
+          BackgroundColor="{StaticResource LightPrimary}">
         <VerticalStackLayout VerticalOptions="End"
                              Spacing="0"
                              Grid.Row="0">
@@ -42,33 +42,35 @@
                                                   Converter={StaticResource ToUpperCase}}"
                                    FontSize="25"
                                    FontAttributes="Bold"
-                                   TextColor="#02b4a7"
+                                   TextColor="White"
                                    HorizontalOptions="Center"
                                    HorizontalTextAlignment="Center"
-                                   Margin="10,0,10,20"
+                                   Margin="20,0,20,20"
                                    LineBreakMode="TailTruncation"
                                    MaxLines="2" />
                             <Label Text="{Binding Description}"
                                    FontSize="16"
-                                   TextColor="#02b4a7"
+                                   FontAttributes="Bold"
+                                   TextColor="#464646"
                                    HorizontalOptions="Center"
                                    HorizontalTextAlignment="Center"
                                    LineBreakMode="TailTruncation"
                                    MaxLines="6"
+                                   Margin="20,0,20,0"
                                    WidthRequest="275"
-                                   HeightRequest="60"/>
+                                   HeightRequest="80"/>
                         </dx:DXStackLayout>
                     </DataTemplate>
                 </CarouselView.ItemTemplate>
             </CarouselView>
             <IndicatorView x:Name="IV_AppFeatures"
-                           IndicatorColor="#02b4a7"
-                           SelectedIndicatorColor="{StaticResource Primary}"
+                           IndicatorColor="#464646"
+                           SelectedIndicatorColor="White"
                            HorizontalOptions="Center"
                            Margin="0, 0, 0, 20"/>
         </VerticalStackLayout>
 
-        <Border BackgroundColor="{StaticResource LightPrimary}"
+        <Border BackgroundColor="#1C1C1C"
                 StrokeShape="RoundRectangle 36, 36, 0, 0"
                 StrokeThickness="0"
                 VerticalOptions="EndAndExpand"
