@@ -32,7 +32,7 @@
                                HeightRequest="200"
                                Source="blue_fire_loading.json" />
             <CarouselView ItemsSource="{Binding AppFeatures}"
-                          HeightRequest="170"
+                          HeightRequest="160"
                           IndicatorView="IV_AppFeatures"
                           HorizontalScrollBarVisibility="Never">
                 <CarouselView.ItemTemplate>
@@ -71,12 +71,12 @@
         </VerticalStackLayout>
 
         <Border BackgroundColor="#1C1C1C"
-                StrokeShape="RoundRectangle 36, 36, 0, 0"
+                StrokeShape="RoundRectangle 30, 30, 0, 0"
                 StrokeThickness="0"
                 VerticalOptions="EndAndExpand"
                 Grid.Row="1">
             <VerticalStackLayout VerticalOptions="Center"
-                                 Padding="5,0,5,0">
+                                 Padding="5,10,5,0">
                 <dxco:SimpleButton Text="{x:Static loc:LocStrings.ContinueWithGoogle}"
                                    Style="{StaticResource TitlePrimaryButton}"
                                    Icon="google"
@@ -90,15 +90,14 @@
                                    Margin="0,10,0,0"
                                    BorderColor="{StaticResource SecondaryLight}"
                                    Command="{Binding OpenSignUpViewCommand}" />
-                <dxco:SimpleButton Text="{x:Static loc:LocStrings.LogInWithEmail}"
+                <dxco:SimpleButton Text="{x:Static loc:LocStrings.Login}"
                                    Style="{StaticResource SecondaryButton}"
                                    TextColor="{StaticResource Primary}"
                                    BorderThickness="2"
                                    BorderColor="{StaticResource SecondaryLight}"
                                    Margin="0,10,0,10"
                                    IconColor="{StaticResource Primary}"
-                                   Command="{Binding OpenLoginViewCommand}"
-                                   Icon="login" />
+                                   Command="{Binding OpenLoginViewCommand}" />
             </VerticalStackLayout>
         </Border>
     </Grid>

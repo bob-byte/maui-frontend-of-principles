@@ -99,7 +99,10 @@ public class AiRecommenderOfHabitsService : BaseRemoteService, IAiRecommenderOfH
         messageContentBuilder.Append( $"{Environment.NewLine}Your answer should be in JSON format and contain an array of habits. Each array object should consist of the following fields: {nameof( RecommendedHabit.Name )}, {nameof( RecommendedHabit.ReasonToFollow )}. The {nameof( RecommendedHabit.Name )} field indicates habit name and time when execute habit (for example, \"when I wake up\") or location (\"when I am in a gym\"). It should NOT contain frequency of a habit (for example, \"every day\"). Example of the {nameof( RecommendedHabit.Name )} field is \"Meditate at least 5 minutes when I wake up\". The {nameof( RecommendedHabit.ReasonToFollow )} field indicates why I should follow it and must be very briefly, but accurately explained. You must send only a JSON array in your response and nothing else. Your response must be in the {CultureInfo.CurrentUICulture.ThreeLetterISOLanguageName} language. JSON object which contains array of habits must be named \"Habits\" in english. " );
 
         string userMsg = messageContentBuilder.ToString();
-        LoggingService.LogInfo( userMsg );
+        if (SettingsService.IsDebug)
+        {
+            LoggingService.LogInfo( userMsg );
+        }
 
         ChatMessage newChatMessage = new( ChatRole.User, userMsg );
         List<ChatMessage> chatMessages = new()
