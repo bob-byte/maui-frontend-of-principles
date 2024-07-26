@@ -95,6 +95,7 @@
                                    TextColor="{StaticResource Primary}"
                                    BorderThickness="2"
                                    BorderColor="{StaticResource SecondaryLight}"
+                                   PressedBorderColor="{StaticResource SecondaryLight}"
                                    Margin="0,10,0,10"
                                    IconColor="{StaticResource Primary}"
                                    Command="{Binding OpenLoginViewCommand}" />
