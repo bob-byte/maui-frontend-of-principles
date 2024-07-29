@@ -25,4 +25,8 @@
                       Route="profile"
                       Icon="profile" />
     </TabBar>
+    
+    <FlyoutItem Route="startup">
+        <ShellContent ContentTemplate="{DataTemplate local:StartupView}" />
+    </FlyoutItem>
 </Shell>

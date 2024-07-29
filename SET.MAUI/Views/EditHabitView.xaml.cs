@@ -523,7 +523,7 @@ public partial class EditHabitView : ContentPageBase
         ViewModel.EditedGoal = new UserGoal()
         {
             Id = 0,
-            Name = $"{LocStrings.ToBe} "
+            Name = $"{LocStrings.Be} "
         };
     }
 

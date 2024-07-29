@@ -19,6 +19,12 @@ public partial class StartupViewModel : BaseViewModel
     }
 
     [RelayCommand]
+    public Task ContinueWithGoogleAsync()
+    {
+        return DialogService.ShowErrorAsync( LocStrings.NotYetImplemented );
+    }
+
+    [RelayCommand]
     public Task OpenLoginViewAsync()
     {
         return Navigation.NavigateToAsync<LoginViewModel>();

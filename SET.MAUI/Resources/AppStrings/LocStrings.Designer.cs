@@ -103,6 +103,15 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Be.
+        /// </summary>
+        internal static string Be {
+            get {
+                return ResourceManager.GetString("Be", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Set goals that focus on your identity. Let&apos;s go!.
         /// </summary>
         internal static string BecomeTruePersonalityDescription {
@@ -607,7 +616,7 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Examples of goals aimed at your identity are: to be a Senior developer, to be an athlete, to be confident..
+        ///   Looks up a localized string similar to Examples of goals aimed at your identity are: be an Olympic champion, be an athlete, be confident, be smoke free..
         /// </summary>
         internal static string GoalExamples {
             get {
@@ -1053,6 +1062,15 @@ namespace SET.MAUI.Resources.AppStrings {
         internal static string NotesOrHowToKeepHabit {
             get {
                 return ResourceManager.GetString("NotesOrHowToKeepHabit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not yet implemented..
+        /// </summary>
+        internal static string NotYetImplemented {
+            get {
+                return ResourceManager.GetString("NotYetImplemented", resourceCulture);
             }
         }
         
@@ -1568,15 +1586,6 @@ namespace SET.MAUI.Resources.AppStrings {
         internal static string TitleOfCannotAddNewHabit {
             get {
                 return ResourceManager.GetString("TitleOfCannotAddNewHabit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to To be.
-        /// </summary>
-        internal static string ToBe {
-            get {
-                return ResourceManager.GetString("ToBe", resourceCulture);
             }
         }
         

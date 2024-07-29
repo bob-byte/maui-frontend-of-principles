@@ -64,13 +64,13 @@
                 </CarouselView.ItemTemplate>
             </CarouselView>
             <IndicatorView x:Name="IV_AppFeatures"
-                           IndicatorColor="#1C1C1C"
+                           IndicatorColor="{StaticResource DarkGray}"
                            SelectedIndicatorColor="White"
                            HorizontalOptions="Center"
                            Margin="0, 0, 0, 20"/>
         </VerticalStackLayout>
 
-        <Border BackgroundColor="#1C1C1C"
+        <Border BackgroundColor="{StaticResource DarkGray}"
                 StrokeShape="RoundRectangle 30, 30, 0, 0"
                 StrokeThickness="0"
                 VerticalOptions="EndAndExpand"
@@ -78,6 +78,7 @@
             <VerticalStackLayout VerticalOptions="Center"
                                  Padding="5,10,5,0">
                 <dxco:SimpleButton Text="{x:Static loc:LocStrings.ContinueWithGoogle}"
+                                   Command="{Binding ContinueWithGoogleCommand}"
                                    Style="{StaticResource TitlePrimaryButton}"
                                    Icon="google"
                                    BorderColor="{StaticResource SecondaryLight}"
