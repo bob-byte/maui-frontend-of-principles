@@ -341,9 +341,13 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
 
             AllUserAreasOfLife.Reload( areasOfLife );
         }
+        else
+        {
+            AllUserAreasOfLife.Reload( AllUserAreasOfLife.ToList() );
+        }
 
         Habit.Goal ??= new UserGoal();
-        await LoadGoalsAsync();
+        await ReloadGoalsAsync();
 
         await base.InitializeAsync( parameter );
 
@@ -352,7 +356,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
 
     private async void AreasOfLife_CollectionChanged( object? sender, NotifyCollectionChangedEventArgs e )
     {
-        if(e.Action == NotifyCollectionChangedAction.Add && e.NewItems is not null)
+        if(!IsLoadingHabitInfo && e.Action == NotifyCollectionChangedAction.Add && e.NewItems is not null)
         {
             List<UserAreaOfLife> areasOfLife = Habit.AreasOfLife!.ToList();
 
@@ -608,18 +612,15 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
     }
 
     [RelayCommand]
-    private async Task LoadGoalsAsync()
+    private async Task ReloadGoalsAsync()
     {
-        if (m_userGoals is null)
-        {
-            UserGoals = new ObservableCollectionEx<UserGoal>();
-            IEnumerable<UserGoal> goals = await GoalService.UserGoalsAsync();
-            
-            //sometimes goals are not displayed without reloading
-            UserGoals.Reload( goals );
+        UserGoals = new ObservableCollectionEx<UserGoal>();
+        IEnumerable<UserGoal> goals = await GoalService.UserGoalsAsync();
 
-            GoalService.StoredGoals = UserGoals;
-        }
+        //sometimes goals are not displayed without reloading
+        UserGoals.Reload( goals );
+
+        GoalService.StoredGoals = UserGoals;
     }
 
     [RelayCommand]

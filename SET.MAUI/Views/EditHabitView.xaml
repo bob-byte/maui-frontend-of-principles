@@ -52,7 +52,7 @@
         <dxco:TabView HeaderPanelPosition="Top"
                       x:Name="TV_Tabs"
                       ItemHeaderTextColor="{StaticResource LightPlaceholderColor}"
-                      SelectedItemHeaderTextColor="{StaticResource LightNormalText}"
+                      SelectedItemHeaderTextColor="{StaticResource Primary}"
                       IsVisible="{Binding IsLoadingHabitInfo,
                                           Converter={StaticResource IsFalse}}"
                       SwipeEnabled="True"
@@ -62,7 +62,7 @@
             <dxco:TabViewItem HeaderText="{x:Static loc:LocStrings.Data}"
                               HeaderIconPosition="{OnPlatform iOS='Right'}"
                               HeaderTextColor="{StaticResource LightPlaceholderColor}"
-                              SelectedHeaderTextColor="{StaticResource LightNormalText}"
+                              SelectedHeaderTextColor="{StaticResource Primary}"
                               HeaderWidth="160">
                 <ScrollView>
                     <VerticalStackLayout Padding="10"
@@ -92,31 +92,6 @@
                                            ClearIconVisibility="Auto"
                                            ClearIconCommand="{Binding ClearHabitGoalCommand}"
                                            IsReadOnly="True"/>
-                        <dxe:AutoCompleteTokenEdit LabelText="{x:Static loc:LocStrings.AreasOfHabit}"
-                                                   EndIcon="dotshorizontal"
-                                                   ItemsSource="{Binding AllUserAreasOfLife}"
-                                                   EndIconClicked="TE_AreasOfLife_EndIconClicked"
-                                                   Tap="TE_AreasOfLife_Tap"
-                                                   StartIcon="rule"
-                                                   IsStartIconVisible="True"
-                                                   DisplayMember="Name"
-                                                   SelectedItems="{Binding Habit.AreasOfLife,
-                                                                           Mode=TwoWay}"
-                                                   SelectionChanged="TE_AreasOfLife_SelectionChanged"
-                                                   DropDownSelectedItemBackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary},
-                                                                                                         Dark={StaticResource LightPrimary}}"
-                                                   x:Name="TE_AreasOfLife"
-                                                   TextChanged="TE_AreasOfLife_TextChanged">
-                            <dxe:AutoCompleteTokenEdit.TokenAppearance>
-                                <dxe:TokenAppearance BorderColor="{StaticResource Primary}"
-                                                     BorderThickness="2.5"
-                                                     CornerRadius="14"
-                                                     FontSize="14"
-                                                     TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
-                                                                                 Dark={StaticResource DarkNormalText}}"
-                                                     PressedBorderColor="{StaticResource Primary}" />
-                            </dxe:AutoCompleteTokenEdit.TokenAppearance>
-                        </dxe:AutoCompleteTokenEdit>
                         <dxe:ChoiceChipGroup x:Name="CCG_Types"
                                              HorizontalOptions="Center"
                                              IsMultiline="False"
@@ -144,19 +119,32 @@
                                       EndIcon="dotshorizontal"
                                       EndIconClicked="FrequencyIcon_Clicked"
                                       Tap="TE_Frequency_Tap" />
-                        <dxe:NumericEdit x:Name="NE_Complexity"
-                                         Value="{Binding Habit.Complexity}"
-                                         LabelText="{x:Static loc:LocStrings.ComplexityWithRange}"
-                                         MinValue="1"
-                                         MaxDecimalDigitCount="0"
-                                         MaxValue="10"
-                                         IsEnabled="{Binding IsNewHabit}"
-                                         EndIcon="info"
-                                         IsEndIconVisible="{Binding IsNewHabit}"
-                                         EndIconCommand="{Binding TapComplexityInfoCommand}"
-                                         EndIconCommandParameter="{x:Reference NE_Complexity}"
-                                         StartIcon="charts"
-                                         IsUpDownIconVisible="True" />
+                        <dxe:AutoCompleteTokenEdit LabelText="{x:Static loc:LocStrings.AreasOfHabit}"
+                                                   EndIcon="dotshorizontal"
+                                                   ItemsSource="{Binding AllUserAreasOfLife}"
+                                                   EndIconClicked="TE_AreasOfLife_EndIconClicked"
+                                                   Tap="TE_AreasOfLife_Tap"
+                                                   StartIcon="rule"
+                                                   TextHorizontalAlignment="Center"
+                                                   IsStartIconVisible="True"
+                                                   DisplayMember="Name"
+                                                   SelectedItems="{Binding Habit.AreasOfLife,
+                                                                           Mode=TwoWay}"
+                                                   SelectionChanged="TE_AreasOfLife_SelectionChanged"
+                                                   DropDownSelectedItemBackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary},
+                                                                                                         Dark={StaticResource LightPrimary}}"
+                                                   x:Name="TE_AreasOfLife"
+                                                   TextChanged="TE_AreasOfLife_TextChanged">
+                            <dxe:AutoCompleteTokenEdit.TokenAppearance>
+                                <dxe:TokenAppearance BorderColor="{StaticResource Primary}"
+                                                     BorderThickness="2.5"
+                                                     CornerRadius="14"
+                                                     FontSize="14"
+                                                     TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
+                                                                                 Dark={StaticResource DarkNormalText}}"
+                                                     PressedBorderColor="{StaticResource Primary}" />
+                            </dxe:AutoCompleteTokenEdit.TokenAppearance>
+                        </dxe:AutoCompleteTokenEdit>
                         <dxco:SimpleButton Text="{x:Static loc:LocStrings.RecommendedHabitsButton}"
                                            IsVisible="{Binding IsNewHabit}"
                                            Style="{StaticResource PrimaryButton}"
@@ -603,20 +591,25 @@
             </dxco:TabViewItem>
             <dxco:TabViewItem HeaderText="{x:Static loc:LocStrings.HowToKeep}"
                               HeaderTextColor="{StaticResource LightPlaceholderColor}"
-                              SelectedHeaderTextColor="{StaticResource LightNormalText}"
+                              SelectedHeaderTextColor="{StaticResource Primary}"
                               HeaderIconPosition="{OnPlatform iOS='Right'}"
                               HeaderWidth="160">
                 <ScrollView>
                     <VerticalStackLayout Padding="10"
                                          Spacing="6">
-                        <dxe:MultilineEdit Text="{Binding Habit.Question}"
-                                           x:Name="TE_Habit"
-                                           LabelText="{x:Static loc:LocStrings.Question}"
-                                           StartIcon="question"
-                                           ClearIconVisibility="Never"
-                                           EndIcon="info"
-                                           EndIconCommand="{Binding ShowSnackbarForQuestionCommand}"
-                                           EndIconCommandParameter="{x:Reference TE_Habit}" />
+                        <dxe:NumericEdit x:Name="NE_Complexity"
+                                         Value="{Binding Habit.Complexity}"
+                                         LabelText="{x:Static loc:LocStrings.ComplexityWithRange}"
+                                         MinValue="1"
+                                         MaxDecimalDigitCount="0"
+                                         MaxValue="10"
+                                         IsEnabled="{Binding IsNewHabit}"
+                                         EndIcon="info"
+                                         IsEndIconVisible="{Binding IsNewHabit}"
+                                         EndIconCommand="{Binding TapComplexityInfoCommand}"
+                                         EndIconCommandParameter="{x:Reference NE_Complexity}"
+                                         StartIcon="charts"
+                                         IsUpDownIconVisible="True" />
                         <dxe:MultilineEdit Text="{Binding Habit.Description}"
                                            LabelText="{x:Static loc:LocStrings.NotesOrHowToKeepHabit}"
                                            ClearIconVisibility="Never"

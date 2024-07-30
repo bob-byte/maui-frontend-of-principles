@@ -28,8 +28,8 @@ public class ProgressToImgConverter : BaseConverterOneWay<ProgressOfHabit, View>
         DXImage image = new()
         {
             Margin = s_margin,
-            WidthRequest = 28,
-            HeightRequest = 28
+            WidthRequest = 30,
+            HeightRequest = 30
         };
         switch (computed.Value)
         {

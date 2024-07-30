@@ -169,12 +169,13 @@ public class UrlBuilder : IUrlBuilder
             return m_userMission;
         }
     }
+
     public string Goal
     {
         get
         {
-            m_userMission ??= Combine( BaseApiUrl, "goals" );
-            return m_userMission;
+            m_goal ??= Combine( BaseApiUrl, "goals" );
+            return m_goal;
         }
     }
 

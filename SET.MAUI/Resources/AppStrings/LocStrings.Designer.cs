@@ -229,6 +229,24 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Comming Soon.
+        /// </summary>
+        internal static string CommingSoon {
+            get {
+                return ResourceManager.GetString("CommingSoon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New features and improvements are on the way!.
+        /// </summary>
+        internal static string CommingSoonMessage {
+            get {
+                return ResourceManager.GetString("CommingSoonMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Complexity can&apos;t be changed after creation of a habit.
         /// </summary>
         internal static string ComplexityHelpText {
@@ -1347,7 +1365,7 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recommended habits by AI.
+        ///   Looks up a localized string similar to Recommended habits.
         /// </summary>
         internal static string RecommendedHabitsByAi {
             get {

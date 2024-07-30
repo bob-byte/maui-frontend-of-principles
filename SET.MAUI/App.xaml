@@ -270,17 +270,20 @@
                 <Setter Property="ErrorColor"
                         Value="{StaticResource Error}" />
             </Style>
-
-            <Style TargetType="dxe:Chip">
-                <Setter Property="SelectedBackgroundColor"
+            <Style TargetType="dxe:ChoiceChipGroup">
+                <Setter Property="ChipPressedBorderColor"
                         Value="{StaticResource LightPrimary}" />
-                <Setter Property="BorderColor"
+                <Setter Property="ChipBorderColor"
                         Value="{StaticResource BorderColor}" />
+            </Style>
+            <Style TargetType="dxe:Chip">
                 <Setter Property="IconColor"
                         Value="{AppThemeBinding Light={StaticResource IconColor},
                                                 Dark={StaticResource DarkIconColor}}" />
                 <Setter Property="IsIconVisible"
                         Value="True" />
+                <Setter Property="SelectedBackgroundColor"
+                        Value="{StaticResource LightPrimary}" />
                 <Setter Property="BackgroundColor"
                         Value="{AppThemeBinding Light={StaticResource LightEditControlBackColor},
                                                 Dark={StaticResource DarkEditControlBackColor}}" />
@@ -294,8 +297,7 @@
 
             <Style TargetType="dxco:TabView">
                 <Setter Property="SelectedItemIndicatorColor"
-                        Value="{AppThemeBinding Light={StaticResource DarkPrimary},
-                                                Dark={StaticResource Primary}}" />
+                        Value="{StaticResource Primary}" />
                 <Setter Property="SwipeEnabled"
                         Value="True" />
                 <Setter Property="ItemHeaderWidth"

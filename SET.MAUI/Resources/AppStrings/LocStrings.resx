@@ -400,7 +400,7 @@
     <value>Something went wrong</value>
   </data>
   <data name="RecommendedHabitsByAi" xml:space="preserve">
-    <value>Recommended habits by AI</value>
+    <value>Recommended habits</value>
   </data>
   <data name="ConfirmMessageOnRecommededHabitsView" xml:space="preserve">
     <value>Are you sure you want to load recommended habits based on your chosen areas, goal, mission and main slogan?</value>
@@ -803,5 +803,11 @@ By using the App, you acknowledge that you have read, understood, and agree to b
   </data>
   <data name="NotYetImplemented" xml:space="preserve">
     <value>Not yet implemented.</value>
+  </data>
+  <data name="CommingSoon" xml:space="preserve">
+    <value>Comming Soon</value>
+  </data>
+  <data name="CommingSoonMessage" xml:space="preserve">
+    <value>New features and improvements are on the way!</value>
   </data>
 </root>

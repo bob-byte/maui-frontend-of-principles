@@ -400,7 +400,7 @@
     <value>Щось пішло не так</value>
   </data>
   <data name="RecommendedHabitsByAi" xml:space="preserve">
-    <value>Звички, рекомендовані ШІ</value>
+    <value>Рекомендовані Звички</value>
   </data>
   <data name="ConfirmMessageOnRecommededHabitsView" xml:space="preserve">
     <value>Ви впевнені, що хочете завантажити звички, на основі вибраних сфер звички, цілі, місії та основного гасла?</value>
@@ -806,5 +806,11 @@
   </data>
   <data name="NotYetImplemented" xml:space="preserve">
     <value>Ще не реалізовано.</value>
+  </data>
+  <data name="CommingSoon" xml:space="preserve">
+    <value>Незабаром</value>
+  </data>
+  <data name="CommingSoonMessage" xml:space="preserve">
+    <value>Нові функції та покращення вже на підході!</value>
   </data>
 </root>

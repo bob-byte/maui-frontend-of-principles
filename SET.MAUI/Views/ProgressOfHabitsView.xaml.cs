@@ -104,7 +104,8 @@ public partial class ProgressOfHabitsView : ContentPageBase
                 TemplateColumn templateColumn = new()
                 {
                     Caption = colCaption,
-                    HeaderFontSize = 7,
+                    HeaderFontSize = 9,
+                    Width = new GridLength( 55 ),
                     HeaderCaptionLineBreakMode = LineBreakMode.WordWrap,
                     VerticalContentAlignment = TextAlignment.Center,
                     HorizontalContentAlignment = TextAlignment.Center,
@@ -150,7 +151,6 @@ public partial class ProgressOfHabitsView : ContentPageBase
              endTime <= day;
              day = day.Subtract( oneDay ), columnIndex++)
         {
-            //string dayOfWeek = LocStringsExtensions.Value( propName: $"{day.DayOfWeek}Short" );
             string dayOfWeek = LocStrings.ResourceManager.GetString( name: $"{day.DayOfWeek}Short" )!.ToUpperInvariant();
             int dayOfMonth = day.Day;
             string colCaption = $"{dayOfWeek}{Environment.NewLine}{dayOfMonth}";
@@ -158,7 +158,8 @@ public partial class ProgressOfHabitsView : ContentPageBase
             TemplateColumn templateColumn = new()
             {
                 Caption = colCaption,
-                HeaderFontSize = 7,
+                HeaderFontSize = 9,
+                Width = new GridLength(55),
                 HeaderCaptionLineBreakMode = LineBreakMode.WordWrap,
                 VerticalContentAlignment = TextAlignment.Center,
                 HorizontalContentAlignment = TextAlignment.Center,
@@ -228,7 +229,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
 #if IOS16_0_OR_GREATER
                     HeightRequest = 40,
 #elif IOS
-                    HeightRequest = 50,
+                    HeightRequest = 60,
 #else
                     HeightRequest = 45,
 #endif

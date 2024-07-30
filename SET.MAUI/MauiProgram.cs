@@ -32,11 +32,7 @@ public static class MauiProgram
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
             .UseMauiCommunityToolkitMarkup()
-            .UseDevExpressCollectionView()
-            .UseDevExpressControls()
-            .UseDevExpressDataGrid()
-            .UseDevExpressEditors()
-            .UseDevExpress( useLocalization: true ) //register handlers for all DevExpress controls
+            .UseDevExpress( useLocalization: false ) //register handlers for all DevExpress controls
             .UseSkiaSharp()
             .ConfigureFonts( fonts =>
             {
