@@ -229,20 +229,20 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Comming Soon.
+        ///   Looks up a localized string similar to Coming Soon.
         /// </summary>
-        internal static string CommingSoon {
+        internal static string ComingSoon {
             get {
-                return ResourceManager.GetString("CommingSoon", resourceCulture);
+                return ResourceManager.GetString("ComingSoon", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to New features and improvements are on the way!.
         /// </summary>
-        internal static string CommingSoonMessage {
+        internal static string ComingSoonMessage {
             get {
-                return ResourceManager.GetString("CommingSoonMessage", resourceCulture);
+                return ResourceManager.GetString("ComingSoonMessage", resourceCulture);
             }
         }
         

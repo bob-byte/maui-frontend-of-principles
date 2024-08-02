@@ -597,23 +597,12 @@
                 <ScrollView>
                     <VerticalStackLayout Padding="10"
                                          Spacing="6">
-                        <dxe:NumericEdit x:Name="NE_Complexity"
-                                         Value="{Binding Habit.Complexity}"
-                                         LabelText="{x:Static loc:LocStrings.ComplexityWithRange}"
-                                         MinValue="1"
-                                         MaxDecimalDigitCount="0"
-                                         MaxValue="10"
-                                         IsEnabled="{Binding IsNewHabit}"
-                                         EndIcon="info"
-                                         IsEndIconVisible="{Binding IsNewHabit}"
-                                         EndIconCommand="{Binding TapComplexityInfoCommand}"
-                                         EndIconCommandParameter="{x:Reference NE_Complexity}"
-                                         StartIcon="charts"
-                                         IsUpDownIconVisible="True" />
-                        <dxe:MultilineEdit Text="{Binding Habit.Description}"
-                                           LabelText="{x:Static loc:LocStrings.NotesOrHowToKeepHabit}"
-                                           ClearIconVisibility="Never"
-                                           StartIcon="notes" />
+                        <skia:SKLottieView Source="comming_soon.json"
+                                           RepeatCount="-1"
+                                           RepeatMode="Reverse"
+                                           WidthRequest="300"
+                                           HeightRequest="300"
+                                           IsAnimationEnabled="True"/>
                     </VerticalStackLayout>
                 </ScrollView>
             </dxco:TabViewItem>

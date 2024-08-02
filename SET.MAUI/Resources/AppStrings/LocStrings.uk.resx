@@ -807,10 +807,10 @@
   <data name="NotYetImplemented" xml:space="preserve">
     <value>Ще не реалізовано.</value>
   </data>
-  <data name="CommingSoon" xml:space="preserve">
+  <data name="ComingSoon" xml:space="preserve">
     <value>Незабаром</value>
   </data>
-  <data name="CommingSoonMessage" xml:space="preserve">
+  <data name="ComingSoonMessage" xml:space="preserve">
     <value>Нові функції та покращення вже на підході!</value>
   </data>
 </root>

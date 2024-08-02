@@ -21,7 +21,7 @@ public partial class StartupViewModel : BaseViewModel
     [RelayCommand]
     public Task ContinueWithGoogleAsync()
     {
-        return DialogService.ShowAlertAsync( LocStrings.CommingSoonMessage, LocStrings.CommingSoon, LocStrings.OK );
+        return DialogService.ShowAlertAsync( LocStrings.ComingSoonMessage, LocStrings.ComingSoon, LocStrings.OK );
     }
 
     [RelayCommand]

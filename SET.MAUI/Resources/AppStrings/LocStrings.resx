@@ -804,10 +804,10 @@ By using the App, you acknowledge that you have read, understood, and agree to b
   <data name="NotYetImplemented" xml:space="preserve">
     <value>Not yet implemented.</value>
   </data>
-  <data name="CommingSoon" xml:space="preserve">
-    <value>Comming Soon</value>
+  <data name="ComingSoon" xml:space="preserve">
+    <value>Coming Soon</value>
   </data>
-  <data name="CommingSoonMessage" xml:space="preserve">
+  <data name="ComingSoonMessage" xml:space="preserve">
     <value>New features and improvements are on the way!</value>
   </data>
 </root>
