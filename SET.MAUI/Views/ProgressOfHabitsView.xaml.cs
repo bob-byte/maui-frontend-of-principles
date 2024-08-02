@@ -1,15 +1,9 @@
 using CommunityToolkit.Maui.Behaviors;
-
-using DevExpress.Maui.CollectionView;
 using DevExpress.Maui.DataGrid;
-using DevExpress.Maui.Editors;
 using SET.MAUI.Controls;
-using Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;
-using Application = Microsoft.Maui.Controls.Application;
-using SwipeView = Microsoft.Maui.Controls.SwipeView;
-using DevExpress.Maui.Controls;
 using System.Windows.Input;
-using System.Threading;
+
+using Application = Microsoft.Maui.Controls.Application;
 
 namespace SET.MAUI.Views;
 
@@ -46,6 +40,8 @@ public partial class ProgressOfHabitsView : ContentPageBase
         m_timeZoneChangeReceiver?.Dispose();
 #endif
     }
+
+    private ProgressOfHabitsViewModel ViewModel { get; }
 
     private void ViewModel_PropertyChanged( object? sender, PropertyChangedEventArgs e )
     {
@@ -129,8 +125,6 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
         return result;
     }
-
-    private ProgressOfHabitsViewModel ViewModel { get; }
 
     void SwipeItem_Tap( System.Object sender, DevExpress.Maui.DataGrid.SwipeItemTapEventArgs e )
     {

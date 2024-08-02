@@ -52,7 +52,7 @@
         <dxco:TabView HeaderPanelPosition="Top"
                       x:Name="TV_Tabs"
                       ItemHeaderTextColor="{StaticResource LightPlaceholderColor}"
-                      SelectedItemHeaderTextColor="{StaticResource Primary}"
+                      SelectedItemHeaderTextColor="{StaticResource LightNormalText}"
                       IsVisible="{Binding IsLoadingHabitInfo,
                                           Converter={StaticResource IsFalse}}"
                       SwipeEnabled="True"
@@ -62,7 +62,7 @@
             <dxco:TabViewItem HeaderText="{x:Static loc:LocStrings.Data}"
                               HeaderIconPosition="{OnPlatform iOS='Right'}"
                               HeaderTextColor="{StaticResource LightPlaceholderColor}"
-                              SelectedHeaderTextColor="{StaticResource Primary}"
+                              SelectedHeaderTextColor="{StaticResource LightNormalText}"
                               HeaderWidth="160">
                 <ScrollView>
                     <VerticalStackLayout Padding="10"
@@ -591,7 +591,7 @@
             </dxco:TabViewItem>
             <dxco:TabViewItem HeaderText="{x:Static loc:LocStrings.HowToKeep}"
                               HeaderTextColor="{StaticResource LightPlaceholderColor}"
-                              SelectedHeaderTextColor="{StaticResource Primary}"
+                              SelectedHeaderTextColor="{StaticResource LightNormalText}"
                               HeaderIconPosition="{OnPlatform iOS='Right'}"
                               HeaderWidth="160">
                 <ScrollView>

@@ -1039,7 +1039,7 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password must be at least 8 characters long and contain at least one lowercase letter and one digit..
+        ///   Looks up a localized string similar to Password must be 8-20 characters long and contain at least one lowercase letter and one digit..
         /// </summary>
         internal static string NewPasswordIsIncorrectError {
             get {

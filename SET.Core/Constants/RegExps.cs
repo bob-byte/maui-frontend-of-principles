@@ -18,7 +18,7 @@ public static class RegExps
     );
 
     public static Regex NewPassword { get; } = new Regex(
-        pattern: @"^(?=.*[a-zа-яїієґ])(?=.*\d)[a-zа-яїієґ\d\W]{8,}$",
+        pattern: @"^(?=.*[a-zа-яїієґ])(?=.*\d)[a-zа-яїієґ\d\W]{8,20}$",
         RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture,
         s_defaultMatchTimeout
     );
