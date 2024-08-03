@@ -288,6 +288,9 @@ public partial class EditHabitView : ContentPageBase
 
     async void SB_Save_Clicked( System.Object sender, System.EventArgs e )
     {
+        //NameOfHabit.Value is not updated in some devices
+        ViewModel.NameOfHabit.Value = ME_NameOfHabit.Text;
+
         if (ViewModel.SaveCommand.CanExecute( null ))
         {
             await ViewModel.SaveCommand.ExecuteAsync( null );
@@ -540,10 +543,14 @@ public partial class EditHabitView : ContentPageBase
 
     private async void Sb_SaveGoal_Clicked( object sender, EventArgs e )
     {
-        if (ViewModel.SaveGoalCommand.CanExecute( null ))
+        //EditedGoal.Name is not updated in some devices
+        ViewModel.EditedGoal.Name = ME_EditedGoal.Text;
+
+        void closePopup() => DXP_GoalAdd.IsOpen = false;
+
+        if (ViewModel.SaveGoalCommand.CanExecute( closePopup ))
         {
-            await ViewModel.SaveGoalCommand.ExecuteAsync(null);
-            DXP_GoalAdd.IsOpen = false;
+            await ViewModel.SaveGoalCommand.ExecuteAsync( closePopup );
         }
     }
 

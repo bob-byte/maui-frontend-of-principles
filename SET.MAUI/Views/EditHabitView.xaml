@@ -72,6 +72,7 @@
                                            HasError="{Binding NameOfHabit.IsValid,
                                                               Converter={StaticResource IsFalse}}"
                                            IsErrorIconVisible="True"
+                                           TextChangedCommand="{Binding ValidateHabitNameCommand}"
                                            x:Name="ME_NameOfHabit"
                                            MaxLineCount="5"
                                            StartIcon="fire_first"
@@ -269,7 +270,7 @@
                                                VerticalOptions="Start"
                                                HorizontalOptions="Center" />
 
-                                        <dxe:MultilineEdit x:Name="ME_NewGoal"
+                                        <dxe:MultilineEdit x:Name="ME_EditedGoal"
                                                            Text="{Binding EditedGoal.Name}"
                                                            IsErrorIconVisible="False"
                                                            ClearIconVisibility="Never"
@@ -379,7 +380,7 @@
                                                   Orientation="Horizontal"
                                                   ItemSpacing="10"
                                                   x:Name="HSL_ErrorMessages">
-                                    <dx:DXImage Source="info"
+                                    <dx:DXImage Source="error"
                                                 x:Name="DXI_Error"
                                                 WidthRequest="25"
                                                 HeightRequest="25"
@@ -387,7 +388,8 @@
                                                 VerticalOptions="Center" />
                                     <Grid x:Name="DXS_ErrorMessages"
                                           RowSpacing="7"
-                                          VerticalOptions="Center" />
+                                          VerticalOptions="Center"
+                                          Padding="0, 0, 8, 0" />
                                 </dx:DXStackLayout>
                                 <dxco:SimpleButton x:Name="SB_CloseErrorsPopup"
                                                    Clicked="SB_CloseErrorsPopup_Clicked"

@@ -170,17 +170,9 @@ public class ServiceOfHabit : BaseRemoteService, IServiceOfHabit
     {
         bool? result = null;
         List<UserHabit> activeHabits = allHabits.
-            Where( h => h.PercentageAchieved < 0.7 && h.Status == StatusOfHabit.InProgress ).
+            Where( h => h.PercentageAchieved < 0.4 && h.Status == StatusOfHabit.InProgress ).
             ToList();
-        if (activeHabits.Count >= 2)
-        {
-            result = false;
-        }
-
-        //Assess the overall complexity of habits in this area
-        double overallComplexity = activeHabits.Sum( h => h.Complexity ) + newHabit.Complexity;
-        double maxOverallComplexity = HabitConstants.MAX_HABIT_COMPLEXITY + (HabitConstants.MAX_HABIT_COMPLEXITY / 5.0);
-        if (overallComplexity >= maxOverallComplexity)
+        if (activeHabits.Count > 2)
         {
             result = false;
         }

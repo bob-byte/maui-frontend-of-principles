@@ -220,13 +220,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
                     VerticalTextAlignment = TextAlignment.Center,
                     LineBreakMode = LineBreakMode.TailTruncation,
                     MaxLines = 2,
-#if IOS16_0_OR_GREATER
-                    HeightRequest = 40,
-#elif IOS
-                    HeightRequest = 60,
-#else
                     HeightRequest = 45,
-#endif
 #if IOS17_0_OR_GREATER
                     FontSize = 14
 #elif IOS16_0_OR_GREATER

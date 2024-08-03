@@ -523,31 +523,36 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
     }
 
     [RelayCommand]
-    private async Task SaveGoalAsync()
+    private async Task SaveGoalAsync(Action afterAction)
     {
         bool isNewGoal = EditedGoal.Id == 0;
 
-        DtoWithId response = await GoalService.SaveGoalAsync( EditedGoal );
-        EditedGoal.Id = response.Id;
+        await UiBusyFor( async () =>
+        {
+            DtoWithId response = await GoalService.SaveGoalAsync( EditedGoal );
+            EditedGoal.Id = response.Id;
 
-        if (isNewGoal)
-        {
-            UserGoals!.Add( EditedGoal );
-        }
-        else
-        {
-            UserGoal foundGoalInCollection = UserGoals!.First( g => g.Id == EditedGoal.Id );
-            if(foundGoalInCollection.Name != EditedGoal.Name)
+            if (isNewGoal)
             {
-                foundGoalInCollection.Name = EditedGoal.Name;
-                ReferenceMessenger.Send( new ChangedGoalMessage( EditedGoal ) );
-
-                if (Habit.Goal?.Id == EditedGoal.Id)
+                UserGoals!.Add( EditedGoal );
+            }
+            else
+            {
+                UserGoal foundGoalInCollection = UserGoals!.First( g => g.Id == EditedGoal.Id );
+                if (foundGoalInCollection.Name != EditedGoal.Name)
                 {
-                    Habit.Goal.Name = EditedGoal.Name;
+                    foundGoalInCollection.Name = EditedGoal.Name;
+                    ReferenceMessenger.Send( new ChangedGoalMessage( EditedGoal ) );
+
+                    if (Habit.Goal?.Id == EditedGoal.Id)
+                    {
+                        Habit.Goal.Name = EditedGoal.Name;
+                    }
                 }
             }
-        }
+
+            afterAction();
+        } );
     }
 
     [RelayCommand]
@@ -662,5 +667,11 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
             duration: TimeSpan.FromSeconds( 6 ),
             visualOptions: SnackbarHelper.DefaultOptions()
         );
+    }
+
+    [RelayCommand]
+    private void ValidateHabitName()
+    {
+        NameOfHabit?.Validate();
     }
 }
