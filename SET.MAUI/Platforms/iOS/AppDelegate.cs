@@ -18,5 +18,10 @@ namespace SET.MAUI
             Runtime.MarshalObjectiveCException += ( _, e ) => e.ExceptionMode = MarshalObjectiveCExceptionMode.UnwindManagedCode;
             return base.FinishedLaunching( application, launchOptions );
         }
+
+        //public override bool OpenUrl( UIApplication application, NSUrl url, NSDictionary options )
+        //{
+        //    return url.AbsoluteString != null && LaunchUriHelper.TryHandle( new Uri( url.AbsoluteString ) );
+        //}
     }
 }
