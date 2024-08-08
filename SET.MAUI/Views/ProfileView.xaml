@@ -84,7 +84,7 @@
                               x:Name="TE_UserName"
                               ClearIconVisibility="Never"
                               IsReadOnly="True"
-                              EndIcon="check"
+                              EndIcon="check_third"
                               EndIconColor="{StaticResource Primary}"
                               IsEndIconVisible="{Binding UserName.IsValid}"
                               ErrorColor="{StaticResource Error}"
@@ -103,7 +103,7 @@
                                x:Name="ME_MainSlogan"
                                ClearIconVisibility="Never"
                                IsReadOnly="True"
-                               EndIcon="check"
+                               EndIcon="check_third"
                                EndIconColor="{StaticResource Primary}"
                                Margin="0,2"
                                Focused="TGR_MainSlogan_Focused" />
@@ -113,7 +113,7 @@
                                x:Name="ME_Mision"
                                ClearIconVisibility="Never"
                                IsReadOnly="True"
-                               EndIcon="check"
+                               EndIcon="check_third"
                                EndIconColor="{StaticResource Primary}"
                                Margin="0,2"
                                Focused="TGR_Mission_Focused" />

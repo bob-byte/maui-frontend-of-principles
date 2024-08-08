@@ -418,7 +418,7 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tip: &quot;create this habit and then automate the others&quot;. This will help you not to burn out and stick to other habits..
+        ///   Looks up a localized string similar to Tip: &quot;automate other habits, and then create this one&quot;. It will help you not to burn out and keep your other habits going..
         /// </summary>
         internal static string DescriptionOfCannotAddNewHabit {
             get {
@@ -1599,7 +1599,7 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Adding one more habit can be overwhelming.
+        ///   Looks up a localized string similar to Adding it can be overwhelming.
         /// </summary>
         internal static string TitleOfCannotAddNewHabit {
             get {

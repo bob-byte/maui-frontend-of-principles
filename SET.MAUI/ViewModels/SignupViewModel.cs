@@ -121,17 +121,19 @@ public partial class SignupViewModel : BaseViewModel
     {
         Password.Validate();
     }
+
     [RelayCommand]
     public Task OpenUserAgreementAsync()
     {
-        return Navigation.NavigateToAsync<UserAgreementViewModel>();
+        return BrowserHelper.OpenUrl( "https://principles.top/useragreement" );
     }
 
     [RelayCommand]
     public Task OpenPrivacyPolicyAsync()
     {
-        return Navigation.NavigateToAsync<PrivacyPolicyViewModel>();
+        return BrowserHelper.OpenUrl( "https://principles.top/privacypolicy" );
     }
+
     private void AddValidators()
     {
         Name.Validations.Add(item: new IsNotNullOrWhiteSpaceRule { ValidationMessage = LocStrings.RequiredErrorText });

@@ -484,7 +484,7 @@
     <value>Порада: "створіть цю звичку після того автоматизуєте інші". Це допоможе вам не перегоріти та дотримуватись інших звичок.</value>
   </data>
   <data name="TitleOfCannotAddNewHabit" xml:space="preserve">
-    <value>Збереження може бути надмірним</value>
+    <value>Додання може бути надмірним</value>
   </data>
   <data name="Add" xml:space="preserve">
     <value>Додати</value>

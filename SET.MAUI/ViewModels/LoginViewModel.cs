@@ -96,13 +96,13 @@ public partial class LoginViewModel : BaseViewModel
     [RelayCommand]
     public Task OpenUserAgreementAsync()
     {
-        return Navigation.NavigateToAsync<UserAgreementViewModel>();
+        return BrowserHelper.OpenUrl( "https://principles.top/useragreement" );
     }
 
     [RelayCommand]
     public Task OpenPrivacyPolicyAsync()
     {
-        return Navigation.NavigateToAsync<PrivacyPolicyViewModel>();
+        return BrowserHelper.OpenUrl( "https://principles.top/privacypolicy" );
     }
 
     [RelayCommand]

@@ -15,13 +15,13 @@ public partial class SettingsViewModel : BaseViewModel
     [RelayCommand]
     public Task ShowUserAgreementAsync()
     {
-        return Navigation.NavigateToAsync<UserAgreementViewModel>();
+        return BrowserHelper.OpenUrl( "https://principles.top/useragreement" );
     }
 
     [RelayCommand]
     public Task ShowPrivacyPolicyAsync()
     {
-        return Navigation.NavigateToAsync<PrivacyPolicyViewModel>();
+        return BrowserHelper.OpenUrl( "https://principles.top/privacypolicy" );
     }
 
     [RelayCommand]

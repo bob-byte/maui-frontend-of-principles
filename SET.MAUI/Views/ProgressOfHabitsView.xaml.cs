@@ -209,7 +209,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
                 progressBar.ProgressColor = primaryColor;
                 progressBar.TextColor = primaryColor;
-                progressBar.ProgressLeftColor = Color.FromArgb("#d9d4d4");
+                progressBar.ProgressLeftColor = (Application.Current!.Resources["GrayColor"] as Color)!;
                 progressBar.Size = 30;
                 progressBar.Thickness = 2.5f;
                 progressBar.Margin = new Thickness( 3 );

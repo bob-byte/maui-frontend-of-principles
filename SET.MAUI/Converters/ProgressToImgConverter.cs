@@ -7,7 +7,7 @@ namespace SET.MAUI.Converters;
 
 public class ProgressToImgConverter : BaseConverterOneWay<ProgressOfHabit, View>
 {
-    private static readonly ImageSource s_fireIcon = ImageSource.FromFile( "fire_second" );
+    private static readonly ImageSource s_fireIcon = ImageSource.FromFile( "check_third" );
     private static readonly ImageSource s_crossIcon = ImageSource.FromFile( "cross" );
 
     private static readonly Color s_grayColor = (Application.Current!.Resources["GrayColor"] as Color)!;
@@ -28,8 +28,8 @@ public class ProgressToImgConverter : BaseConverterOneWay<ProgressOfHabit, View>
         DXImage image = new()
         {
             Margin = s_margin,
-            WidthRequest = 30,
-            HeightRequest = 30
+            WidthRequest = 29,
+            HeightRequest = 29
         };
         switch (computed.Value)
         {
@@ -37,6 +37,7 @@ public class ProgressToImgConverter : BaseConverterOneWay<ProgressOfHabit, View>
                 {
                     image.Source = s_fireIcon;
                     image.TintColor = s_primaryColor;
+
                     break;
                 }
 
@@ -44,6 +45,7 @@ public class ProgressToImgConverter : BaseConverterOneWay<ProgressOfHabit, View>
                 {
                     image.Source = s_fireIcon;
                     image.TintColor = s_grayColor;
+
                     break;
                 }
 
@@ -51,6 +53,9 @@ public class ProgressToImgConverter : BaseConverterOneWay<ProgressOfHabit, View>
                 {
                     image.Source = s_crossIcon;
                     image.TintColor = s_grayColor;
+                    image.WidthRequest = 33;
+                    image.HeightRequest = 33;
+
                     break;
                 }
         }
