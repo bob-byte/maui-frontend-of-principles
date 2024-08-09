@@ -14,22 +14,14 @@ namespace SET.MAUI;
 )]
 public class MainActivity : MauiAppCompatActivity
 {
-    protected override void OnCreate( Bundle savedInstanceState )
-    {
-        base.OnCreate( savedInstanceState );
-      
-    }
-    protected override void OnActivityResult( int requestCode, Result resultCode, Intent data )
-    {
-        base.OnActivityResult( requestCode, resultCode, data );
-        //AuthenticationContinuationHelper.SetAuthenticationContinuationEventArgs( requestCode, resultCode, data );
-    }
-
     protected override void OnNewIntent( Intent? intent )
     {
         base.OnNewIntent( intent );
+
         string? rawUri = intent?.Data?.ToString();
-        if (rawUri == null) return;
-        LaunchUriHelper.TryHandle( new Uri( rawUri ) );
+        if (rawUri is not null)
+        {
+            LaunchUriHelper.TryHandle( new Uri( rawUri ) );
+        }
     }
 }
