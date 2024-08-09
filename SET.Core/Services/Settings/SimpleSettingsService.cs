@@ -28,7 +28,18 @@ public class SimpleSettingsService : ISettingsService
         }
     }
 
-    public string AuthAccessToken { get; set; }
+    public string AuthAccessToken { get; private set; }
 
     public string UserId { get; set; }
+
+    public Task<string> GetAuthAccessTokenAsync()
+    {
+        return Task.FromResult(AuthAccessToken);
+    }
+
+    public Task SetAuthAccessTokenAsync( string value )
+    {
+        AuthAccessToken = value;
+        return Task.CompletedTask;
+    }
 }

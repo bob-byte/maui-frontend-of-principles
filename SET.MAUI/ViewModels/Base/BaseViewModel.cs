@@ -183,40 +183,44 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
 
     protected virtual async Task InitUserInfoAsync()
     {
-        UserName.Value = CachingService.StoredValue( CacheKeys.USER_NAME );
-
-        UserInfo userInfo;
-        if (string.IsNullOrEmpty( UserName.Value ))
+        if (IsLoggedIn)
         {
-            string url = $"{UrlBuilder.Profile}/{SettingsService.UserId}";
-            userInfo = await RequestProvider.GetAsync<UserInfo>( url, SettingsService.AuthAccessToken );
-            userInfo.Id = long.Parse( SettingsService.UserId );
-            UserName.Value = userInfo.Name;
-            MainSlogan = userInfo.MainSlogan;
-            Mission = userInfo.Mission;
-            Gender = userInfo.Gender;
+            UserName.Value = CachingService.StoredValue( CacheKeys.USER_NAME );
+
+            UserInfo userInfo;
+            if (string.IsNullOrEmpty( UserName.Value ))
+            {
+                string url = $"{UrlBuilder.Profile}/{SettingsService.UserId}";
+                userInfo = await RequestProvider.GetAsync<UserInfo>( url, SettingsService.AuthAccessToken );
+                userInfo.Id = long.Parse( SettingsService.UserId );
+                UserName.Value = userInfo.Name;
+                MainSlogan = userInfo.MainSlogan;
+                Mission = userInfo.Mission;
+                Gender = userInfo.Gender;
+            }
+            else
+            {
+                userInfo = new UserInfo();
+                userInfo.Id = long.Parse( SettingsService.UserId );
+
+                MainSlogan = CachingService.StoredValue( CacheKeys.USER_MAIN_SLOGAN );
+                userInfo.MainSlogan = MainSlogan;
+
+                Mission = CachingService.StoredValue( CacheKeys.USER_MISSION );
+                userInfo.Mission = Mission;
+
+                //if gender is not parsed then it will set zero value
+                _ = Enum.TryParse( CachingService.StoredValue( CacheKeys.USER_GENDER ), out Gender gender );
+                Gender = gender;
+                userInfo.Gender = Gender;
+            }
+
+            AddValidators();
+
+            UserInfoChangedMessage userInfoChangedMsg = new( userInfo );
+            ReferenceMessenger.Send( userInfoChangedMsg );
         }
-        else
-        {
-            userInfo = new UserInfo();
-            userInfo.Id = long.Parse( SettingsService.UserId );
-
-            MainSlogan = CachingService.StoredValue( CacheKeys.USER_MAIN_SLOGAN );
-            userInfo.MainSlogan = MainSlogan;
-
-            Mission = CachingService.StoredValue( CacheKeys.USER_MISSION );
-            userInfo.Mission = Mission;
-
-            //if gender is not parsed then it will set zero value
-            _ = Enum.TryParse( CachingService.StoredValue( CacheKeys.USER_GENDER ), out Gender gender );
-            Gender = gender;
-            userInfo.Gender = Gender;
-        }
-
-        AddValidators();
-
-        UserInfoChangedMessage userInfoChangedMsg = new( userInfo );
-        ReferenceMessenger.Send( userInfoChangedMsg );
+        
     }
 
     private void AddValidators()
@@ -325,9 +329,9 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         return result;
     }
 
-    protected Task LogoutAsync()
+    protected async Task LogoutAsync()
     {
-        SettingsService.AuthAccessToken = string.Empty;
+        await SettingsService.SetAuthAccessTokenAsync(string.Empty);
         SettingsService.UserId = string.Empty;
 
         if (UserName != null)
@@ -342,7 +346,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
 
         ReferenceMessenger.Send( new UserLoggedOutMessage() );
 
-        return Navigation.GoToInitialViewAsync();
+        await Navigation.GoToInitialViewAsync();
     }
 
     protected bool SetProperty<T>(ref T backingStore, T value,

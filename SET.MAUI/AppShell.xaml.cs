@@ -3,22 +3,24 @@ namespace SET.MAUI;
 public partial class AppShell : Shell
 {
     private readonly INavigationService m_navigationService;
+    private readonly ISettingsService m_settingsService;
 
-    public AppShell( INavigationService navigationService )
+    public AppShell( INavigationService navigationService, ISettingsService settingsService )
     {
         m_navigationService = navigationService;
-
+        m_settingsService = settingsService;
         InitRouting();
         InitializeComponent();
     }
 
-    protected override async void OnHandlerChanged()
+    protected override void OnHandlerChanged()
     {
         base.OnHandlerChanged();
         
         if (Handler is not null)
         {
-            await m_navigationService.GoToInitialViewAsync();
+            m_settingsService.GetAuthAccessTokenAsync().GetAwaiter().GetResult();
+            m_navigationService.GoToInitialViewAsync();
         }
     }
 

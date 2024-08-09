@@ -7,7 +7,7 @@ namespace SET.MAUI;
 
 public partial class App : Application
 {
-    public App( INavigationService navigationService, IServiceLocator serviceLocator )
+    public App( INavigationService navigationService, IServiceLocator serviceLocator, ISettingsService settingsService )
     {
         ServiceLocator.GetCurrentLocator = () => serviceLocator;
 
@@ -16,7 +16,7 @@ public partial class App : Application
         UserAppTheme = AppTheme.Light;
         InitializeComponent();
 
-        MainPage = new AppShell( navigationService );
+        MainPage = new AppShell( navigationService, settingsService );
     }
 
     private void CurrentDomain_UnhandledException( object sender, UnhandledExceptionEventArgs e )
