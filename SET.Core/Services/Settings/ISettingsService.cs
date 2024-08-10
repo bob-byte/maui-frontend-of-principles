@@ -3,6 +3,9 @@
 public interface ISettingsService
 {
     bool IsDebug { get; }
-    string AuthAccessToken { get; set; }
+    string? AuthAccessToken { get; }
     string UserId { get; set; }
+
+    Task<string> GetAuthAccessTokenAsync();
+    Task SetAuthAccessTokenAsync( string value );
 }

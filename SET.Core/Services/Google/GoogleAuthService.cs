@@ -44,10 +44,11 @@ public class GoogleAuthService : IGoogleAuthService
             ClientSecret = ""
         };
 
+        string authId = Guid.NewGuid().ToString();
         UserCredential credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
             secrets,
             requestedScopes,
-            "user",
+            user: authId,
             CancellationToken.None,
             dataStore,
             codeReceiver
@@ -61,7 +62,7 @@ public class GoogleAuthService : IGoogleAuthService
         };
         GoogleAuthResponse response = await m_requestProvider.PostAsync<GoogleAuthRequest, GoogleAuthResponse>( url, request ).DefaultConfigureAwait();
 
-        m_settingsService.AuthAccessToken = response.Token;
+        await m_settingsService.SetAuthAccessTokenAsync( response.Token ).DefaultConfigureAwait();
         m_settingsService.UserId = response.UserId.ToString();
     }
 }

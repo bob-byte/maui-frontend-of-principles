@@ -17,10 +17,19 @@ public class SettingsService : ISettingsService
         }
     }
 
-    public string AuthAccessToken
+    public string? AuthAccessToken { get; private set; }
+
+    public async Task<string> GetAuthAccessTokenAsync()
     {
-        get => Preferences.Get( key: "access_token", defaultValue: "" )!;
-        set => Preferences.Set( key: "access_token", value );
+        string token = await SecureStorage.GetAsync( "access_token" ).DefaultConfigureAwait();
+        AuthAccessToken = token ?? string.Empty;
+        return AuthAccessToken;
+    }
+
+    public async Task SetAuthAccessTokenAsync( string value )
+    {
+        await SecureStorage.SetAsync( "access_token", value );
+        AuthAccessToken = value;
     }
 
     public string UserId
