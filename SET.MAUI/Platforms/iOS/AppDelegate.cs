@@ -18,10 +18,4 @@ public class AppDelegate : MauiUIApplicationDelegate
         Runtime.MarshalObjectiveCException += ( _, e ) => e.ExceptionMode = MarshalObjectiveCExceptionMode.UnwindManagedCode;
         return base.FinishedLaunching( application, launchOptions );
     }
-
-    public override bool OpenUrl( UIApplication application, NSUrl url, NSDictionary options )
-    {
-        bool doOpenUrl = url.AbsoluteString != null && LaunchUriHelper.TryHandle( new Uri( url.AbsoluteString ) );
-        return doOpenUrl;
-    }
 }

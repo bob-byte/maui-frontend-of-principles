@@ -80,6 +80,7 @@ public static class MauiProgram
         services.AddSingleton<ISettingsService, SettingsService>();
         services.AddSingleton<INavigationService, MauiNavigationService>();
         services.AddSingleton<IDialogService, DialogService>();
+        services.AddSingleton<ILaunchUriHelper, LaunchUriHelper>();
 
         return services;
     }

@@ -7,7 +7,7 @@ namespace SET.MAUI;
 
 
 
-[Activity(Label = "@string/app_name", Theme = "@style/Maui.SplashTheme", MainLauncher = true, LaunchMode = LaunchMode.SingleTop, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density)]
+[Activity(Label = "@string/app_name", Exported = true, Theme = "@style/Maui.SplashTheme", MainLauncher = true, LaunchMode = LaunchMode.SingleTop, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density)]
 [IntentFilter( new[] { Intent.ActionView },
     Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
     DataScheme = "com.set.principles"
@@ -21,7 +21,25 @@ public class MainActivity : MauiAppCompatActivity
         string? rawUri = intent?.Data?.ToString();
         if (rawUri is not null)
         {
-            LaunchUriHelper.TryHandle( new Uri( rawUri ) );
+            ILaunchUriHelper launchUriHelper = ServiceLocator.Current!.GetService<ILaunchUriHelper>();
+            launchUriHelper.TryHandle( new Uri( rawUri ) );
+        }
+    }
+
+    protected override void OnResume()
+    {
+        base.OnResume();
+
+        if(Intent is not null && ServiceLocator.Current is not null)
+        {
+            ILaunchUriHelper launchUriHelper = ServiceLocator.Current.GetService<ILaunchUriHelper>();
+
+            if(Intent.Data is null)
+            {
+                launchUriHelper.Reset();
+            }
+
+            WebAuthenticator.Default.OnResume( Intent );
         }
     }
 }

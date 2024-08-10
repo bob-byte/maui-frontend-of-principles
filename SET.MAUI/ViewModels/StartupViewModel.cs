@@ -1,5 +1,4 @@
-﻿using Google.Apis.Util.Store;
-
+﻿
 namespace SET.MAUI.ViewModels;
 
 public partial class StartupViewModel : BaseViewModel
@@ -25,16 +24,20 @@ public partial class StartupViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    public Task ContinueWithGoogleAsync()
+    public async Task ContinueWithGoogleAsync()
     {
-        return UiBusyFor( async () =>
+        try
         {
-            string folder = Path.Combine( Environment.GetFolderPath( Environment.SpecialFolder.Personal ), "GoogleOAuthDataStore" );
-            IDataStore dataStore = new FileDataStore(folder);
-
-            await m_googleAuthService.AuthorizeAsync( new GoogleCodeReceiver(), dataStore );
+            await m_googleAuthService.AuthorizeAsync();
             await Navigation.GoToInitialViewAsync();
-        } );
+        }
+        catch(Exception ex)
+        {
+            if (SettingsService.IsDebug)
+            {
+                LoggingService.LogError( ex, ex.Message );
+            }
+        }
     }
 
     [RelayCommand]

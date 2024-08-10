@@ -93,7 +93,9 @@
                         Value="{AppThemeBinding Light={StaticResource DarkIconColor},
                                                 Dark={StaticResource IconColor}}" />
                 <Setter Property="BorderColor"
-                        Value="{StaticResource TitleTextColor}" />
+                        Value="{StaticResource SecondaryLight}" />
+                <Setter Property="PressedBorderColor"
+                        Value="{StaticResource SecondaryLight}" />
             </Style>
             <Color x:Key="DarkGray">#18191A</Color>
             <Style x:Key="SecondaryButton"

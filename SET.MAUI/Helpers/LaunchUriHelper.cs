@@ -2,41 +2,35 @@
 using System.Web;
 
 namespace SET.MAUI.Helpers;
-public static class LaunchUriHelper
+
+public class LaunchUriHelper : ILaunchUriHelper
 {
-    private static TaskCompletionSource<LaunchResult> s_onReturned = new();
+    private TaskCompletionSource<LaunchExternalOAuthResult> m_onReturned = new();
 
-    public static Task<LaunchResult> LaunchResult => s_onReturned.Task;
+    public Task<LaunchExternalOAuthResult> LaunchResult => m_onReturned.Task;
 
-    public static void Reset()
-    {
-        s_onReturned = new TaskCompletionSource<LaunchResult>();
-    }
-
-    public static bool TryHandle( Uri uri )
+    public bool TryHandle( Uri uri )
     {
         if (uri.Scheme != AppInfo.PackageName)
         {
             return false;
         }
 
-        LaunchType type = uri.AbsolutePath == LaunchUriBuilder.REDIRECT_PATH 
-            ? LaunchType.OAuth2Redirect 
+        LaunchType type = uri.AbsolutePath == LaunchUriBuilder.REDIRECT_PATH
+            ? LaunchType.OAuth2Redirect
             : LaunchType.Unknown;
         NameValueCollection query = HttpUtility.ParseQueryString( uri.Query );
-        s_onReturned.SetResult( new LaunchResult( type, query ) );
+        m_onReturned.SetResult( new LaunchExternalOAuthResult( type, query.Get( "code" ), query.Get( "error" ) ) );
         return true;
     }
-}
 
-public class LaunchResult
-{
-    public LaunchResult( LaunchType type, NameValueCollection query )
+    public void Reset()
     {
-        Type = type;
-        Query = query;
-    }
+        if (!m_onReturned.Task.IsCompleted)
+        {
+            m_onReturned.SetCanceled();
+        }
 
-    public LaunchType Type { get; }
-    public NameValueCollection Query { get; }
+        m_onReturned = new();
+    }
 }

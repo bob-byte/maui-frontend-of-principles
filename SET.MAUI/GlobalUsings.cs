@@ -17,6 +17,7 @@ global using SET.MAUI.Constants;
 global using SET.Core.Constants;
 global using SET.MAUI.Converters;
 global using SET.Core.Extensions;
+global using SET.Core.Helpers;
 global using SET.MAUI.Helpers;
 global using SET.MAUI.Messages;
 global using SET.MAUI.Resources.AppStrings;
