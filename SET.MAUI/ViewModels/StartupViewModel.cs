@@ -1,13 +1,19 @@
-﻿namespace SET.MAUI.ViewModels;
+﻿using Google.Apis.Util.Store;
+
+namespace SET.MAUI.ViewModels;
 
 public partial class StartupViewModel : BaseViewModel
 {
+    private readonly IGoogleAuthService m_googleAuthService;
+
     [ObservableProperty]
     private ObservableCollectionEx<AppFeature> m_appFeatures;
 
     public StartupViewModel( IServiceProvider serviceProvider )
         : base( serviceProvider )
     {
+        m_googleAuthService = serviceProvider.GetRequiredService<IGoogleAuthService>();
+
         m_appFeatures = new ObservableCollectionEx<AppFeature>
         {
             new() {  Title = LocStrings.TransformAreasOfLifeTitle, Description =  LocStrings.TransformAreasOfLifeDescription},
@@ -21,7 +27,14 @@ public partial class StartupViewModel : BaseViewModel
     [RelayCommand]
     public Task ContinueWithGoogleAsync()
     {
-        return DialogService.ShowAlertAsync( LocStrings.ComingSoonMessage, LocStrings.ComingSoon, LocStrings.OK );
+        return UiBusyFor( async () =>
+        {
+            string folder = Path.Combine( Environment.GetFolderPath( Environment.SpecialFolder.Personal ), "GoogleOAuthDataStore" );
+            IDataStore dataStore = new FileDataStore(folder);
+
+            await m_googleAuthService.AuthorizeAsync( new GoogleCodeReceiver(), dataStore );
+            await Navigation.GoToInitialViewAsync();
+        } );
     }
 
     [RelayCommand]

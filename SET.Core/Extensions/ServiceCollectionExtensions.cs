@@ -31,6 +31,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IChangePasswordService, ChangePasswordService>();
         services.AddSingleton<ISignupService, SignupService>();
         services.AddSingleton<IGoalService, GoalService>();
+        services.AddSingleton<IGoogleAuthService, GoogleAuthService>();
 
         return services;
     }

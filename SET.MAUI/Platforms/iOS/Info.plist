@@ -41,5 +41,18 @@
 	<string>Principles</string>
 	<key>CFBundleVersion</key>
 	<string>1.0.5</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>principles</string>
+		</dict>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.set.principles</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>
