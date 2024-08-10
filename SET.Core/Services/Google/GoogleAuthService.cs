@@ -1,4 +1,5 @@
 ﻿using Google.Apis.Auth.OAuth2;
+using Google.Apis.Util.Store;
 
 namespace SET.Core.Services;
 
@@ -7,17 +8,19 @@ public class GoogleAuthService : IGoogleAuthService
     private readonly IConfiguration m_configuration;
     private readonly IRequestProvider m_requestProvider;
     private readonly ISettingsService m_settingsService;
+    private readonly IUrlBuilder m_urlBuilder;
 
     public GoogleAuthService( IServiceProvider serviceProvider )
     {
         m_configuration = serviceProvider.GetRequiredService<IConfiguration>();
         m_requestProvider = serviceProvider.GetRequiredService<IRequestProvider>();
         m_settingsService = serviceProvider.GetRequiredService<ISettingsService>();
+        m_urlBuilder = serviceProvider.GetRequiredService<IUrlBuilder>();
     }
 
-    public async Task AuthorizeAsync( ICodeReceiver codeReceiver )
+    public async Task AuthorizeAsync( ICodeReceiver codeReceiver, IDataStore dataStore )
     {
-        string? clientId;
+        string? clientId = null;
 #if ANDROID
         clientId = m_configuration["Google:ClientIds:Android"];
 #elif IOS
@@ -40,15 +43,17 @@ public class GoogleAuthService : IGoogleAuthService
             ClientId = clientId,
             ClientSecret = ""
         };
+
         UserCredential credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
             secrets,
             requestedScopes,
             "user",
             CancellationToken.None,
-            codeReceiver: codeReceiver
+            dataStore,
+            codeReceiver
         ).DefaultConfigureAwait();
 
-        string url = "https://principles.top/api/auth/google";
+        string url = m_urlBuilder.GoogleAuth;
         GoogleAuthRequest request = new()
         {
             AccessToken = credential.Token.AccessToken,

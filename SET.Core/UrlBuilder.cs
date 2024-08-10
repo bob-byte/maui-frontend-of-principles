@@ -26,6 +26,7 @@ public class UrlBuilder : IUrlBuilder
     private string? m_changePassword;
     private string? m_codeGeneration;
     private string? m_goal;
+    private string? m_googleAuth;
 
     public string BaseUrl
     {
@@ -186,6 +187,15 @@ public class UrlBuilder : IUrlBuilder
         {
             m_logs ??= Combine( BaseApiUrl, "logs" );
             return m_logs;
+        }
+    }
+
+    public string GoogleAuth
+    {
+        get
+        {
+            m_googleAuth ??= Combine( BaseApiUrl, "account", "googleauthorization" );
+            return m_googleAuth;
         }
     }
 

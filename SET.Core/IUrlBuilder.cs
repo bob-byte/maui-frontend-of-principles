@@ -20,6 +20,7 @@ public interface IUrlBuilder
     string Account { get; }
     string Goal { get; }
     string Logs { get; }
+    string GoogleAuth { get; }
 
     string Combine( params string[] uri );
 }

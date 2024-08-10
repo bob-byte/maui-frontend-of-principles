@@ -1,4 +1,6 @@
-﻿namespace SET.MAUI.ViewModels;
+﻿using Google.Apis.Util.Store;
+
+namespace SET.MAUI.ViewModels;
 
 public partial class StartupViewModel : BaseViewModel
 {
@@ -27,7 +29,10 @@ public partial class StartupViewModel : BaseViewModel
     {
         return UiBusyFor( async () =>
         {
-            await m_googleAuthService.AuthorizeAsync( new GoogleCodeReceiver() );
+            string folder = Path.Combine( Environment.GetFolderPath( Environment.SpecialFolder.Personal ), "GoogleOAuthDataStore" );
+            IDataStore dataStore = new FileDataStore(folder);
+
+            await m_googleAuthService.AuthorizeAsync( new GoogleCodeReceiver(), dataStore );
             await Navigation.GoToInitialViewAsync();
         } );
     }
