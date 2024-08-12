@@ -4,13 +4,13 @@ public interface IServiceLocator
 {
     IServiceProvider ServiceProvider { get; }
 
-    T GetService<T>() where T : class;
+    T GetRequiredService<T>() where T : class;
 
-    object GetService( Type type );
+    object GetRequiredService( Type type );
 
-    T? GetServiceOrNull<T>() where T : class;
+    T? GetService<T>() where T : class;
 
-    object? GetServiceOrNull( Type type );
+    object? GetService( Type type );
 
     void RegisterSingleton<T>( T service ) where T : class;
 

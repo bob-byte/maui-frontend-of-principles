@@ -112,8 +112,9 @@ public class GoogleAuthService : IGoogleAuthService
 
     private string CodeVerifier()
     {
-        byte[] randomBytes = RandomNumberGenerator.GetBytes( 32 );
-        return Base64UrlEncode( randomBytes );
+        byte[] randomBytes = RandomNumberGenerator.GetBytes( count: 32 );
+        string result = Base64UrlEncode( randomBytes );
+        return result;
     }
 
     private string Base64UrlEncode( byte[] input )

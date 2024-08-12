@@ -1,11 +1,8 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.Content.PM;
-using Android.OS;
 
 namespace SET.MAUI;
-
-
 
 [Activity(Label = "@string/app_name", Exported = true, Theme = "@style/Maui.SplashTheme", MainLauncher = true, LaunchMode = LaunchMode.SingleTop, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density)]
 [IntentFilter( new[] { Intent.ActionView },
@@ -21,7 +18,7 @@ public class MainActivity : MauiAppCompatActivity
         string? rawUri = intent?.Data?.ToString();
         if (rawUri is not null)
         {
-            ILaunchUriHelper launchUriHelper = ServiceLocator.Current!.GetService<ILaunchUriHelper>();
+            ILaunchUriHelper launchUriHelper = ServiceLocator.Current!.GetRequiredService<ILaunchUriHelper>();
             launchUriHelper.TryHandle( new Uri( rawUri ) );
         }
     }
@@ -29,17 +26,15 @@ public class MainActivity : MauiAppCompatActivity
     protected override void OnResume()
     {
         base.OnResume();
-
         if(Intent is not null && ServiceLocator.Current is not null)
         {
-            ILaunchUriHelper launchUriHelper = ServiceLocator.Current.GetService<ILaunchUriHelper>();
+            WebAuthenticator.Default.OnResume( Intent );
 
             if(Intent.Data is null)
             {
+                ILaunchUriHelper launchUriHelper = ServiceLocator.Current.GetRequiredService<ILaunchUriHelper>();
                 launchUriHelper.Reset();
             }
-
-            WebAuthenticator.Default.OnResume( Intent );
         }
     }
 }

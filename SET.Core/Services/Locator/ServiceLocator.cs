@@ -18,9 +18,9 @@ public class ServiceLocator : IServiceLocator
 
     public IServiceProvider ServiceProvider { get; }
 
-    public T GetService<T>() where T : class
+    public T GetRequiredService<T>() where T : class
     {
-        T? result = GetServiceOrNull<T>();
+        T? result = GetService<T>();
         if (result == null)
         {
             throw new InvalidOperationException($"Service '{typeof(T).FullName}' not registered");
@@ -31,9 +31,9 @@ public class ServiceLocator : IServiceLocator
         }
     }
 
-    public object GetService(Type type)
+    public object GetRequiredService(Type type)
     {
-        object? result = GetServiceOrNull( type );
+        object? result = GetService( type );
         if (result == null)
         {
             throw new InvalidOperationException(message: $"Service '{type}' not registered");
@@ -42,7 +42,7 @@ public class ServiceLocator : IServiceLocator
         return result!;
     }
 
-    public object? GetServiceOrNull( Type type )
+    public object? GetService( Type type )
     {
         object? result = ServiceProvider.GetService( type );
         if (result == null)
@@ -53,7 +53,7 @@ public class ServiceLocator : IServiceLocator
         return result;
     }
 
-    public T? GetServiceOrNull<T>() where T : class
+    public T? GetService<T>() where T : class
     {
         object? result = ServiceProvider.GetService<T>();
         if (result == null)

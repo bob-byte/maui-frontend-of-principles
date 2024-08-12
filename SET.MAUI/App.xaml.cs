@@ -22,7 +22,7 @@ public partial class App : Application
     private void CurrentDomain_UnhandledException( object sender, UnhandledExceptionEventArgs e )
     {
         IServiceLocator serviceLocator = ServiceLocator.Current!;
-        ILoggingService loggingService = serviceLocator.GetService<ILoggingService>();
+        ILoggingService loggingService = serviceLocator.GetRequiredService<ILoggingService>();
 
         if (e?.ExceptionObject is Exception ex)
         {
@@ -31,8 +31,7 @@ public partial class App : Application
         else
         {
             string errorMsg = e?.ExceptionObject?.ToString() ?? string.Empty;
-            string logRecord = $"Sender of uncaught exception is: {sender?.ToString()}. Error msg:" +
-                errorMsg;
+            string logRecord = $"Sender of uncaught exception is: {sender?.ToString()}. Error msg: {errorMsg}";
 
             loggingService.LogFatal( logRecord );
         }

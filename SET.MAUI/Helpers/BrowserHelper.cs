@@ -11,8 +11,8 @@ public static class BrowserHelper
         }
         catch(Exception ex)
         {
-            IDialogService dialogService = ServiceLocator.Current!.GetService<IDialogService>();
-            ISettingsService settingsService = ServiceLocator.Current!.GetService<ISettingsService>();
+            IDialogService dialogService = ServiceLocator.Current!.GetRequiredService<IDialogService>();
+            ISettingsService settingsService = ServiceLocator.Current!.GetRequiredService<ISettingsService>();
             string msg = settingsService.IsDebug ? ex.ToString() : ex.Message;
 
             await dialogService.ShowErrorAsync( msg ).DefaultConfigureAwait();

@@ -18,9 +18,9 @@ public class LoggerToServer : ILogEventSink
         IServiceLocator serviceLocator = ServiceLocator.Current ??
             throw new InvalidOperationException( $"{typeof( IServiceLocator )} is not inited after app start" );
 
-        IUrlBuilder urlBuilder = serviceLocator.GetService<IUrlBuilder>();
-        ISettingsService settingsService = serviceLocator.GetService<ISettingsService>();
-        IRequestProvider requestProvider = serviceLocator.GetService<IRequestProvider>();
+        IUrlBuilder urlBuilder = serviceLocator.GetRequiredService<IUrlBuilder>();
+        ISettingsService settingsService = serviceLocator.GetRequiredService<ISettingsService>();
+        IRequestProvider requestProvider = serviceLocator.GetRequiredService<IRequestProvider>();
 
         SaveLogRequest request = m_funcToCreateRequest( logEvent, serviceLocator.ServiceProvider );
         string url = $"{urlBuilder.Logs}";

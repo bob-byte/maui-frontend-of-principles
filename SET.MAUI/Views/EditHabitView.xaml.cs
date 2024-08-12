@@ -288,6 +288,8 @@ public partial class EditHabitView : ContentPageBase
 
     async void SB_Save_Clicked( System.Object sender, System.EventArgs e )
     {
+        ME_NameOfHabit.Text = ME_NameOfHabit.Text.Trim();
+
         //NameOfHabit.Value is not updated in some devices
         ViewModel.NameOfHabit.Value = ME_NameOfHabit.Text;
 
@@ -538,11 +540,12 @@ public partial class EditHabitView : ContentPageBase
     private void OnME_GoalNameEndIconClicked( object sender, EventArgs e )
     {
         DXP_GoalAdd.IsOpen = true;
-
     }
 
     private async void Sb_SaveGoal_Clicked( object sender, EventArgs e )
     {
+        ME_EditedGoal.Text = ME_EditedGoal.Text.Trim();
+
         //EditedGoal.Name is not updated in some devices
         ViewModel.EditedGoal.Name = ME_EditedGoal.Text;
 
