@@ -197,6 +197,12 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
                 MainSlogan = userInfo.MainSlogan;
                 Mission = userInfo.Mission;
                 Gender = userInfo.Gender;
+
+                //Gender.Man is default value, so OnGenderChanged won't be called is Gender = Gender.Man
+                if (Gender == Gender.Man)
+                {
+                    CachingService.SetForever( CacheKeys.USER_GENDER, Gender.ToString() );
+                }
             }
             else
             {
