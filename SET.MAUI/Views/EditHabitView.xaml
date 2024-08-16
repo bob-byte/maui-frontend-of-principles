@@ -126,7 +126,6 @@
                                                    EndIconClicked="TE_AreasOfLife_EndIconClicked"
                                                    Tap="TE_AreasOfLife_Tap"
                                                    StartIcon="rule"
-                                                   TextHorizontalAlignment="Center"
                                                    IsStartIconVisible="True"
                                                    DisplayMember="Name"
                                                    SelectedItems="{Binding Habit.AreasOfLife,

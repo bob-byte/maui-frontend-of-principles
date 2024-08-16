@@ -156,12 +156,6 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
             ServiceOfHabit.Recompute( foundHabit );
         }
 
-        foreach (UserHabit habit in message.PrioterizedHabits)
-        {
-            foundHabit = UserHabits.First( h => h.Id == habit.Id );
-            foundHabit.Priority = habit.Priority;
-        }
-
         ServiceOfHabit.StoredUserHabits = UserHabits.OrderBy( h => h.Goal!.Id ).ThenBy( h => h.Id ).ToList();
         UserHabits = new ObservableCollectionEx<UserHabit>( ServiceOfHabit.StoredUserHabits );
     }

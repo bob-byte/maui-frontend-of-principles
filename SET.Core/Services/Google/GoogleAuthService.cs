@@ -119,9 +119,9 @@ public class GoogleAuthService : IGoogleAuthService
 
     private string Base64UrlEncode( byte[] input )
     {
-        string output = Convert.ToBase64String( input );
-        output = output.Replace( "+", "-" ).Replace( "/", "_" ).Replace( "=", "" );
-        return output;
+        string result = Convert.ToBase64String( input );
+        result = result.Replace( "+", "-" ).Replace( "/", "_" ).Replace( "=", "" );
+        return result;
     }
 
     private string CodeChallenge( string codeVerifier )
