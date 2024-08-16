@@ -50,4 +50,9 @@ public class ValidatableObject<T> : ObservableObject, IValidity
 
         return IsValid;
     }
+
+    public void ResetValidation()
+    {
+        IsValid = true;
+    }
 }

@@ -71,4 +71,9 @@ public class CachedValidatableObject : ObservableObject, IValidity
 
         return IsValid;
     }
+
+    public void ResetValidation()
+    {
+        IsValid = true;
+    }
 }

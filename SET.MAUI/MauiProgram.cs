@@ -29,12 +29,16 @@ public static class MauiProgram
         SetupSerilog();
 
         builder
-            .UseMauiApp<App>()
-            .UseMauiCommunityToolkit()
-            .UseMauiCommunityToolkitMarkup()
-            .UseDevExpress( useLocalization: false ) //register handlers for all DevExpress controls
-            .UseSkiaSharp()
-            .ConfigureFonts( fonts =>
+             .UseMauiApp<App>()
+             .UseDevExpress( useLocalization: false )  //register handlers for all DevExpress controls
+             .UseDevExpressEditors()
+             .UseDevExpressDataGrid()
+             .UseDevExpressControls()
+             .UseDevExpressCollectionView()
+             .UseMauiCommunityToolkit()
+             .UseMauiCommunityToolkitMarkup()
+             .UseSkiaSharp()
+             .ConfigureFonts( fonts =>
             {
                 fonts.AddFont( "FontAwesome6FreeBrands.otf", "FontAwesomeBrands" );
                 fonts.AddFont( "FontAwesome6FreeRegular.otf", "FontAwesomeRegular" );

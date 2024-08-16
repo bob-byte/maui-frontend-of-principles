@@ -93,7 +93,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         {
             copyOfHabits.Remove( Habit );
         }
-
+        
         bool canSaveHabit;
         if (IsNewHabit)
         {
@@ -465,6 +465,8 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         }
 
         NameOfHabit.Value = Habit!.Name ?? string.Empty;
+
+        NameOfHabit.ResetValidation();
     }
 
     public void UpdateFrequencyRepresentation(FrequencyOfHabit? frequency, PeriodOfHabit periodOfHabit)
