@@ -402,11 +402,11 @@
   <data name="RecommendedHabitsByAi" xml:space="preserve">
     <value>Рекомендовані Звички</value>
   </data>
-  <data name="ConfirmMessageOnRecommededHabitsView" xml:space="preserve">
-    <value>Ви впевнені, що хочете завантажити звички, на основі вибраних сфер звички, цілі, місії та основного гасла?</value>
+	<data name="ConfirmMessageOnRecommededHabitsView" xml:space="preserve">
+    <value>Ви впевнені, що хочете завантажити звички, на основі вибраних сфер звички, цілі, гендеру, місії та основного гасла?</value>
   </data>
-  <data name="ConfirmTitleOnRecommendedHabitsView" xml:space="preserve">
-    <value>На основі сфер, цілі, місії та гасла</value>
+	<data name="ConfirmTitleOnRecommendedHabitsView" xml:space="preserve">
+    <value>На основі сфер, цілі, гендеру, місії та гасла</value>
   </data>
   <data name="DescriptionOfAiLampTap" xml:space="preserve">
     <value>Торкніться ШІ-лампи, щоб переглянути рекомендовані звички.</value>

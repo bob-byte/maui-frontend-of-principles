@@ -403,10 +403,10 @@
     <value>Recommended habits</value>
   </data>
   <data name="ConfirmMessageOnRecommededHabitsView" xml:space="preserve">
-    <value>Are you sure you want to load recommended habits based on your chosen areas, goal, mission and main slogan?</value>
+    <value>Are you sure you want to load recommended habits based on your chosen areas, goal, gender, mission and main slogan?</value>
   </data>
   <data name="ConfirmTitleOnRecommendedHabitsView" xml:space="preserve">
-    <value>Based on areas, goal, mission and slogan</value>
+    <value>Based on areas, goal, gender, mission and slogan</value>
   </data>
   <data name="DescriptionOfAiLampTap" xml:space="preserve">
     <value>Tap the AI-lamp to get recommended habits.</value>
