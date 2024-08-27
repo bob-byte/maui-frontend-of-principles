@@ -11,7 +11,6 @@ public class SimpleSettingsService : ISettingsService
     public SimpleSettingsService()
     {
         AuthAccessToken = "";
-        UserId = "";
     }
 
     public bool IsDebug
@@ -29,8 +28,6 @@ public class SimpleSettingsService : ISettingsService
     }
 
     public string AuthAccessToken { get; private set; }
-
-    public string UserId { get; set; }
 
     public Task<string> GetAuthAccessTokenAsync()
     {

@@ -31,10 +31,4 @@ public class SettingsService : ISettingsService
         await SecureStorage.SetAsync( "access_token", value );
         AuthAccessToken = value;
     }
-
-    public string UserId
-    {
-        get => Preferences.Get( key: "user_id", defaultValue: "0" )!;
-        set => Preferences.Set( key: "user_id", value );
-    }
 }

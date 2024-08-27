@@ -107,7 +107,6 @@ public class GoogleAuthService : IGoogleAuthService
         GoogleAuthResponse response = await m_requestProvider.PostAsync<GoogleAuthRequest, GoogleAuthResponse>( url, request ).DefaultConfigureAwait();
 
         await m_settingsService.SetAuthAccessTokenAsync( response.Token ).DefaultConfigureAwait();
-        m_settingsService.UserId = response.UserId.ToString();
     }
 
     private string CodeVerifier()

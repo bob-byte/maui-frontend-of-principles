@@ -88,8 +88,6 @@ public partial class UserHabit : ObservableObject
         m_computedProgresses = new ListOfProgressOfHabit( this );
     }
 
-    public long UserId { get; set; }
-
     public override string ToString()
     {
         return Name ?? "NULL";
