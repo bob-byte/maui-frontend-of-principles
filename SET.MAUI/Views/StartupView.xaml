@@ -34,6 +34,7 @@
             <CarouselView ItemsSource="{Binding AppFeatures}"
                           HeightRequest="160"
                           IndicatorView="IV_AppFeatures"
+                          Loop="False"
                           HorizontalScrollBarVisibility="Never">
                 <CarouselView.ItemTemplate>
                     <DataTemplate x:DataType="m:AppFeature">
