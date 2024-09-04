@@ -810,4 +810,13 @@ By using the App, you acknowledge that you have read, understood, and agree to b
   <data name="ComingSoonMessage" xml:space="preserve">
     <value>New features and improvements are on the way!</value>
   </data>
+  <data name="AppUpdateAvailable" xml:space="preserve">
+    <value>Update Available</value>
+  </data>
+  <data name="AppUpdateButton" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="AppUpdateCloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
 </root>

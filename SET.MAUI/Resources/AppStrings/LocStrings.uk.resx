@@ -813,4 +813,13 @@
   <data name="ComingSoonMessage" xml:space="preserve">
     <value>Нові функції та покращення вже на підході!</value>
   </data>
+  <data name="AppUpdateAvailable" xml:space="preserve">
+    <value>Доступне оновлення</value>
+  </data>
+	<data name="AppUpdateButton" xml:space="preserve">
+    <value>Оновити</value>
+  </data>
+	<data name="AppUpdateCloseButton" xml:space="preserve">
+    <value>Закрити</value>
+  </data>
 </root>

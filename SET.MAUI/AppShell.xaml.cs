@@ -5,10 +5,10 @@ public partial class AppShell : Shell
     private readonly INavigationService m_navigationService;
     private readonly ISettingsService m_settingsService;
 
-    public AppShell( INavigationService navigationService, ISettingsService settingsService )
+    public AppShell( IServiceProvider serviceProvider )
     {
-        m_navigationService = navigationService;
-        m_settingsService = settingsService;
+        m_navigationService = serviceProvider.GetRequiredService<INavigationService>();
+        m_settingsService = serviceProvider.GetRequiredService<ISettingsService>();
         InitRouting();
         InitializeComponent();
     }
@@ -16,7 +16,7 @@ public partial class AppShell : Shell
     protected override void OnHandlerChanged()
     {
         base.OnHandlerChanged();
-        
+
         if (Handler is not null)
         {
             //we don't await execution because otherwise helper view will be shown for 1 second

@@ -21,6 +21,7 @@ public interface IUrlBuilder
     string Goal { get; }
     string Logs { get; }
     string GoogleAuth { get; }
+    string VersionCheck { get; }
 
     string Combine( params string[] uri );
 }

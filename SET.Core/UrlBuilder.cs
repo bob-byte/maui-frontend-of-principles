@@ -27,6 +27,7 @@ public class UrlBuilder : IUrlBuilder
     private string? m_codeGeneration;
     private string? m_goal;
     private string? m_googleAuth;
+    private string? m_versionCheck;
 
     public string BaseUrl
     {
@@ -132,6 +133,15 @@ public class UrlBuilder : IUrlBuilder
         {
             m_account ??= Combine( BaseApiUrl, "account" );
             return m_account;
+        }
+    }
+
+    public string VersionCheck
+    {
+        get
+        {
+            m_versionCheck ??= Combine( BaseApiUrl, "version", "frontendlatest" );
+            return m_versionCheck;
         }
     }
 
