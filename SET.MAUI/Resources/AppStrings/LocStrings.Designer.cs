@@ -2049,6 +2049,15 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You do not have a password because you signed up with Google. You need to change your password or use Google to sign in..
+        /// </summary>
+        internal static string YouDontHavePassword {
+            get {
+                return ResourceManager.GetString("YouDontHavePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your Main Slogan.
         /// </summary>
         internal static string YourMainSlogan {
