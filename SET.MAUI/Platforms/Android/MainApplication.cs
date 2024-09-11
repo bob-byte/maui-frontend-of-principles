@@ -12,6 +12,7 @@ namespace SET.MAUI
         }
         protected override MauiApp CreateMauiApp()
         {
+            DependencyService.RegisterSingleton<IDeviceOrientation>(new DeviceOrientationForAndroid());
             return MauiProgram.CreateMauiApp();
         }
     }

@@ -2,8 +2,13 @@ namespace SET.MAUI.Views;
 
 public class ContentPageBase : ContentPage
 {
+    private readonly ISettingsService m_settingsService;
+    private readonly IDeviceOrientation m_deviceOrientationService;
     public ContentPageBase()
     {
+        m_settingsService = ServiceLocator.Current!.GetRequiredService<ISettingsService>();
+        m_deviceOrientationService = DependencyService.Get<IDeviceOrientation>();
+
         NavigationPage.SetBackButtonTitle( this, value: string.Empty );
         SizeChanged += OnSizeChanged;
     }
@@ -16,6 +21,15 @@ public class ContentPageBase : ContentPage
     {
         PageWidth = Width;
         PageHeight = Height;
+
+        if (m_settingsService.NormalPageWidth == 0)
+        {
+            DeviceOrientationType orientation = m_deviceOrientationService.GetOrientation();
+            if (orientation == DeviceOrientationType.Portrait)
+            {
+                m_settingsService.NormalPageWidth = PageWidth;
+            }
+        }
     }
 
     protected override async void OnAppearing()

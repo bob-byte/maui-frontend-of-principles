@@ -7,6 +7,6 @@ using System.Threading.Tasks;
 namespace SET.Core.Models;
 public class AppVersionInfo
 {
-    public string RelevantVersion { get; set; }
+    public string AppVersion { get; set; }
     public string VersionDescription { get; set; }
 }

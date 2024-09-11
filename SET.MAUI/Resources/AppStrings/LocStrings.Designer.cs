@@ -97,7 +97,7 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update.
+        ///   Looks up a localized string similar to Go to App Store.
         /// </summary>
         internal static string AppUpdateButton {
             get {
@@ -453,6 +453,15 @@ namespace SET.MAUI.Resources.AppStrings {
         internal static string DescriptionOfCannotAddNewHabit {
             get {
                 return ResourceManager.GetString("DescriptionOfCannotAddNewHabit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do not remind me of this update again.
+        /// </summary>
+        internal static string DontShowUpdateCheckBoxText {
+            get {
+                return ResourceManager.GetString("DontShowUpdateCheckBoxText", resourceCulture);
             }
         }
         

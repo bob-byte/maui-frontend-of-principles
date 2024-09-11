@@ -195,6 +195,9 @@
 	  <MauiXaml Condition=" '$(EnableDefaultXamlItems)' == 'true' " Update="Views\PrivacyPolicyView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\UpdatePopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 	<ItemGroup>
 	  <EmbeddedResource Condition=" '$(EnableDefaultEmbeddedResourceItems)' == 'true' " Update="Resources\AppStrings\LocStrings.resx">
@@ -216,6 +219,8 @@
 		<EmbeddedResource Include="appsettings.json" />
 	</ItemGroup>
 	<ItemGroup>
+	  <None Remove="Resources\Images\appstoreicon.svg" />
+	  <None Remove="Resources\Images\close.svg" />
 	  <None Remove="Validations\Rules\" />
 	</ItemGroup>
 	<ItemGroup>

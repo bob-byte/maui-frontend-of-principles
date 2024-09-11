@@ -9,6 +9,7 @@ public class AppDelegate : MauiUIApplicationDelegate
 {
     protected override MauiApp CreateMauiApp()
     {
+        DependencyService.RegisterSingleton<IDeviceOrientation>( new DeviceOrientationForIos() );
         return MauiProgram.CreateMauiApp();
     }
 

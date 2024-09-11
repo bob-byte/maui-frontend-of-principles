@@ -814,9 +814,12 @@ By using the App, you acknowledge that you have read, understood, and agree to b
     <value>Update Available</value>
   </data>
   <data name="AppUpdateButton" xml:space="preserve">
-    <value>Update</value>
+    <value>Go to App Store</value>
   </data>
   <data name="AppUpdateCloseButton" xml:space="preserve">
     <value>Close</value>
+  </data>
+  <data name="DontShowUpdateCheckBoxText" xml:space="preserve">
+    <value>Do not remind me of this update again</value>
   </data>
 </root>

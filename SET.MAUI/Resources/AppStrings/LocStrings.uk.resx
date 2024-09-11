@@ -817,9 +817,12 @@
     <value>Доступне оновлення</value>
   </data>
 	<data name="AppUpdateButton" xml:space="preserve">
-    <value>Оновити</value>
+    <value>Перейти в App Store</value>
   </data>
 	<data name="AppUpdateCloseButton" xml:space="preserve">
     <value>Закрити</value>
+  </data>
+  <data name="DontShowUpdateCheckBoxText" xml:space="preserve">
+    <value>Не нагадувати більше про це оновлення</value>
   </data>
 </root>

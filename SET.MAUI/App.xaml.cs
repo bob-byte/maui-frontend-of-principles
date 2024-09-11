@@ -1,5 +1,4 @@
-﻿using Microsoft.Maui;
-using Microsoft.Maui.Controls;
+﻿using CommunityToolkit.Maui.Views;
 
 using Application = Microsoft.Maui.Controls.Application;
 
@@ -7,44 +6,27 @@ namespace SET.MAUI;
 
 public partial class App : Application
 {
-    private readonly IVersionCheckerService m_versionChekerService;
-    private readonly IDialogService m_dialogService;
+    private readonly UpdatePopupViewModel m_updatePopupViewModel;
     public App( IServiceLocator serviceLocator, IServiceProvider serviceProvider)
     {
         ServiceLocator.GetCurrentLocator = () => serviceLocator;
 
         AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
-        m_versionChekerService = serviceProvider.GetRequiredService<IVersionCheckerService>();
-        m_dialogService = serviceProvider.GetRequiredService<IDialogService>();
+        m_updatePopupViewModel = new UpdatePopupViewModel( serviceProvider );
 
         UserAppTheme = AppTheme.Light;
         InitializeComponent();
         MainPage = new AppShell( serviceProvider );
     }
-    protected override async void OnStart()
+    protected async override void OnStart( )
     {
-        await VersionCompareAsync();
-    }
+        bool shouldShowPopup = await m_updatePopupViewModel.ShouldShowPopup();
 
-    private async Task VersionCompareAsync()
-    {
-        string language = CultureInfo.CurrentUICulture.Name;
-        string currentVersion = VersionTracking.CurrentVersion;
-        AppVersionInfo appVersionInfo = await m_versionChekerService.GetAppVersionAsync( language );
-        if (currentVersion != appVersionInfo.RelevantVersion)
+        if (shouldShowPopup)
         {
-            bool shouldUpdate = await m_dialogService.ShowAlertWithTwoBtnsAsync(
-                appVersionInfo.VersionDescription,
-                LocStrings.AppUpdateAvailable,
-                LocStrings.AppUpdateButton,
-                LocStrings.AppUpdateCloseButton
-            );
-
-            if (shouldUpdate)
-            {
-                await Launcher.OpenAsync( new Uri( "https://testflight.apple.com/join/3oXW7gxy" ) );
-            }
+            var popup = new UpdatePopup( m_updatePopupViewModel );
+            Current.MainPage.ShowPopup( popup );
         }
     }
 
