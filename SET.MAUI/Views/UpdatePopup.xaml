@@ -40,7 +40,7 @@
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout Spacing="10"
-                                       HorizontalOptions="Center">
+                                       HorizontalOptions="End">
                     <dxco:SimpleButton x:Name="SB_CancelAppUpdate"
                                        Text="{x:Static loc:LocStrings.AppUpdateCloseButton}"
                                        Command="{Binding CancelUpdateCommand}"

@@ -132,13 +132,24 @@
                                        ClearIconVisibility="Never"
                                        Margin="10"
                                        TextFontSize="16" />
-                    <dxco:SimpleButton x:Name="SB_Save"
-                                       Style="{StaticResource PrimaryButton}"
-                                       Text="{Binding LocSave}"
-                                       HorizontalOptions="End"
-                                       FontSize="16"
-                                       Margin="0,0,5,5"
-                                       Clicked="SB_Save_Clicked" />
+                    <HorizontalStackLayout HorizontalOptions="End">
+                        <dxco:SimpleButton x:Name="SB_Cancel"
+                                           BackgroundColor="{StaticResource CancelButtonColor}"
+                                           Text="{x:Static loc:LocStrings.Cancel}"
+                                           FontSize="16"
+                                           Margin="0,0,5,5"
+                                           IconHorizontalPosition="Left"
+                                           Icon="close"
+                                           Clicked="SB_Save_Clicked" />
+                        <dxco:SimpleButton x:Name="SB_Save"
+                                           Style="{StaticResource PrimaryButton}"
+                                           Text="{Binding LocSave}"
+                                           FontSize="16"
+                                           Margin="0,0,5,5"
+                                           IconHorizontalPosition="Left"
+                                           Icon="save1"
+                                           Clicked="SB_Save_Clicked" />
+                    </HorizontalStackLayout>
                 </VerticalStackLayout>
             </dxco:DXPopup>
 
