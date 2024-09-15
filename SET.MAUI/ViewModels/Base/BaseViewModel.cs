@@ -299,6 +299,10 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
                         await DialogService.ShowErrorAsync( errorMsg );
                     }
                 }
+                else if (extendedEx.HttpCode == HttpStatusCode.InternalServerError)
+                {
+                    errorMsg = LocStrings.InternalServerError;
+                }
                 else
                 {
                     LoggingService.LogCriticalError( ex );

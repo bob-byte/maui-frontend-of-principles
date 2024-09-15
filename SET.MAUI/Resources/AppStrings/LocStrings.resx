@@ -811,6 +811,9 @@ By using the App, you acknowledge that you have read, understood, and agree to b
     <value>New features and improvements are on the way!</value>
   </data>
   <data name="YouDontHavePassword" xml:space="preserve">
-    <value>You do not have a password because you signed up with Google. You need to change your password or use Google to sign in.</value>
+    <value>You do not have a password because you signed up with Google. You need to use Google to sign in or change your password using "Forget password?" option.</value>
+  </data>
+  <data name="InternalServerError" xml:space="preserve">
+    <value>Internal server error. We will try to fix it as soon as possible!</value>
   </data>
 </root>

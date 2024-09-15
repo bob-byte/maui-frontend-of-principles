@@ -796,6 +796,15 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Internal server error. We will try to fix it as soon as possible!.
+        /// </summary>
+        internal static string InternalServerError {
+            get {
+                return ResourceManager.GetString("InternalServerError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Is not found.
         /// </summary>
         internal static string IsNotFound {
@@ -2049,7 +2058,7 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You do not have a password because you signed up with Google. You need to change your password or use Google to sign in..
+        ///   Looks up a localized string similar to You do not have a password because you signed up with Google. You need to use Google to sign in or change your password using &quot;Forget password?&quot; option..
         /// </summary>
         internal static string YouDontHavePassword {
             get {
