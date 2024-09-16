@@ -138,9 +138,7 @@
                                            Text="{x:Static loc:LocStrings.Cancel}"
                                            FontSize="16"
                                            Margin="0,0,5,5"
-                                           IconHorizontalPosition="Left"
-                                           Icon="close"
-                                           Clicked="SB_Save_Clicked" />
+                                           Clicked="SB_Cancel_Clicked" />
                         <dxco:SimpleButton x:Name="SB_Save"
                                            Style="{StaticResource PrimaryButton}"
                                            Text="{Binding LocSave}"
@@ -148,7 +146,7 @@
                                            Margin="0,0,5,5"
                                            IconHorizontalPosition="Left"
                                            Icon="check_second"
-                                           Clicked="SB_Save_Clicked" />
+                                           Clicked="SB_Cancel_Clicked" />
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
             </dxco:DXPopup>

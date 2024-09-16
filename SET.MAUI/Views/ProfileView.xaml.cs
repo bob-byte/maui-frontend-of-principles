@@ -72,4 +72,9 @@ public partial class ProfileView : ContentPageBase
 
         DXP_Prompt.IsOpen = false;
     }
+
+    private void SB_Cancel_Clicked( object sender, EventArgs e )
+    {
+        DXP_Prompt.IsOpen = false;
+    }
 }
