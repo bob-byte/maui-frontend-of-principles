@@ -21,7 +21,8 @@ public class SettingsService : ISettingsService
 
     public async Task<string> GetAuthAccessTokenAsync()
     {
-        string token = await SecureStorage.GetAsync( "access_token" ).DefaultConfigureAwait();
+        string? token = await SecureStorage.GetAsync( key: "access_token" ).DefaultConfigureAwait();
+
         AuthAccessToken = token ?? string.Empty;
         return AuthAccessToken;
     }

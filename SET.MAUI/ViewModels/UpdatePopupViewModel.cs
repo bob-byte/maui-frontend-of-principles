@@ -2,46 +2,84 @@
 
 public partial class UpdatePopupViewModel : BaseViewModel
 {
+    private const string KEY_TO_STORE_DONT_SHOW_AGAIN_FOR_SOME_VERSION = "DontShowUpdatePopupAgainForVersion";
+
     [ObservableProperty]
-    private string m_versionDescription;
-    [ObservableProperty]
-    private double m_pageWidth;
+    private string? m_versionDescription;
 
     [ObservableProperty]
     private bool m_dontShowAgain;
 
-    private readonly IVersionCheckerService m_versionChekerService;
-    private AppVersionInfo m_appVersionInfo;
+    private readonly IVersionCheckerService m_versionCheckerService;
+    private AppVersionInfo? m_appVersionInfo;
+
     public UpdatePopupViewModel( IServiceProvider serviceProvider )
         : base( serviceProvider )
     {
-        m_versionChekerService = serviceProvider.GetRequiredService<IVersionCheckerService>();
+        m_versionCheckerService = serviceProvider.GetRequiredService<IVersionCheckerService>();
     }
 
     public async Task<bool> ShouldShowPopup()
     {
-        string language = CultureInfo.CurrentUICulture.Name;
-        string currentVersion = VersionTracking.CurrentVersion;
-        m_appVersionInfo = await m_versionChekerService.GetAppVersionAsync( language );
-        string currentClientVersion = Preferences.Get( "DontShowPopupAgainForVersion", currentVersion );
-        VersionDescription = m_appVersionInfo.VersionDescription;
+        bool? result = null;
 
-        if (currentClientVersion != m_appVersionInfo.AppVersion)
+        try
         {
-            return true;
+            string language = CultureInfo.CurrentUICulture.Name;
+
+            m_appVersionInfo = await m_versionCheckerService.GetAppVersionAsync( language );
+            VersionDescription = m_appVersionInfo.VersionDescription;
+        }
+        catch
+        {
+            result = false;
         }
 
-        return currentVersion != m_appVersionInfo.AppVersion;
+        if (result is null)
+        {
+            Version currentVersion = AppInfo.Version;
+            Version newAvailableAppVersion = new( m_appVersionInfo!.AppVersion );
+
+            bool isAvailableNewerVersion = newAvailableAppVersion > currentVersion;
+
+            if (isAvailableNewerVersion)
+            {
+                string strVersionForWhichDontShowPopup = Preferences.Get( KEY_TO_STORE_DONT_SHOW_AGAIN_FOR_SOME_VERSION, defaultValue: string.Empty );
+                if (string.IsNullOrWhiteSpace( strVersionForWhichDontShowPopup ))
+                {
+                    result = true;
+                }
+                else
+                {
+                    Version versionForWhichDontShowPopup = new( strVersionForWhichDontShowPopup );
+                    result = versionForWhichDontShowPopup != newAvailableAppVersion;
+                }
+            }
+            else
+            {
+                result = false;
+            }
+        }
+
+        return result.Value;
     }
 
     [RelayCommand]
-    private async Task OpenAppStoreAsync()
+    private async Task OpenStoreAsync()
     {
         if (DontShowAgain)
         {
-            Preferences.Set( "DontShowPopupAgainForVersion", m_appVersionInfo.AppVersion );
+            Preferences.Set( KEY_TO_STORE_DONT_SHOW_AGAIN_FOR_SOME_VERSION, m_appVersionInfo!.AppVersion );
         }
-        await Launcher.OpenAsync( new Uri( "https://testflight.apple.com/join/3oXW7gxy" ) );
+
+        string url;
+#if IOS
+        url = "https://testflight.apple.com/join/3oXW7gxy";
+#else
+        url = "https://play.google.com/apps/internaltest/4701722005129923451";
+#endif
+
+        await BrowserHelper.OpenUrl( url ).DefaultConfigureAwait();
     }
 
     [RelayCommand]
@@ -49,7 +87,7 @@ public partial class UpdatePopupViewModel : BaseViewModel
     {
         if (DontShowAgain)
         {
-            Preferences.Set( "DontShowPopupAgainForVersion", m_appVersionInfo.AppVersion );
+            Preferences.Set( KEY_TO_STORE_DONT_SHOW_AGAIN_FOR_SOME_VERSION, m_appVersionInfo!.AppVersion );
         }
     }
 }

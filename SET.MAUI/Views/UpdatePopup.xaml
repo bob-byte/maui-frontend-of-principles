@@ -1,4 +1,4 @@
-<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                x:Class="SET.MAUI.Views.UpdatePopup"
                xmlns:loc="clr-namespace:SET.MAUI.Resources.AppStrings"
@@ -30,13 +30,34 @@
                 <Label Text="{Binding VersionDescription}"
                        HorizontalOptions="Start"
                        LineBreakMode="WordWrap"
+                       FontSize="15"
                        Margin="6,0,0,0" />
 
                 <HorizontalStackLayout HorizontalOptions="Start"
+                                       Spacing="5"
                                        Padding="0">
-                    <CheckBox IsChecked="{Binding DontShowAgain}" />
+                    <OnPlatform x:TypeArguments="View">
+                        <On Platform="iOS">
+                            <Switch IsToggled="{Binding DontShowAgain}"
+                                    OnColor="{StaticResource Primary}"
+                                    VerticalOptions="Center" />
+                        </On>
+                        <On Platform="Android">
+                            <CheckBox IsChecked="{Binding DontShowAgain}"
+                                      VerticalOptions="Center"/>
+                        </On>
+                    </OnPlatform>
                     <Label Text="{x:Static loc:LocStrings.DontShowUpdateCheckBoxText}"
-                           VerticalOptions="Center" />
+                           VerticalOptions="Center"
+                           LineBreakMode="TailTruncation"
+                           MaxLines="1"
+                           FontSize="15">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                  x:Name="TGR_ToggleDontShowAgain"
+                                                  Tapped="TGR_ToggleDontShowAgain_Tapped"/>
+                        </Label.GestureRecognizers>
+                    </Label>
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout Spacing="10"
@@ -45,20 +66,19 @@
                                        Text="{x:Static loc:LocStrings.AppUpdateCloseButton}"
                                        Command="{Binding CancelUpdateCommand}"
                                        Clicked="SB_CancelAppUpdate_Clicked"
-                                       BackgroundColor="{StaticResource CancelButtonColor}"
+                                       Icon="close"
                                        IconHorizontalPosition="Left"
-                                       Icon="close" />
-
+                                       BackgroundColor="{StaticResource CancelButtonColor}" />
                     <dxco:SimpleButton x:Name="SB_AppUpdate"
-                                       Text="{x:Static loc:LocStrings.AppUpdateButton}"
-                                       Command="{Binding OpenAppStoreCommand}"
+                                       Text="{OnPlatform iOS={x:Static loc:LocStrings.GoToAppStore},
+                                                         Android={x:Static loc:LocStrings.GoToGooglePlay}}"
+                                       Command="{Binding OpenStoreCommand}"
                                        Clicked="SB_AppUpdate_Clicked"
                                        BackgroundColor="{StaticResource Primary}"
+                                       Icon="{OnPlatform Android='google_play',
+                                                         iOS='app_store'}"
                                        IconHorizontalPosition="Left"
-                                       Icon="appstoreicon"
-                                       WidthRequest="175"
                                        HeightRequest="50"
-                                       Padding="10,0"
                                        TextColor="{StaticResource Background}" />
                 </HorizontalStackLayout>
             </VerticalStackLayout>

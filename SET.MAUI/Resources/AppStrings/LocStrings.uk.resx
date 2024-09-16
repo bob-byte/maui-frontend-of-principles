@@ -816,8 +816,11 @@
   <data name="AppUpdateAvailable" xml:space="preserve">
     <value>Доступне оновлення</value>
   </data>
-	<data name="AppUpdateButton" xml:space="preserve">
+  <data name="GoToAppStore" xml:space="preserve">
     <value>Перейти в App Store</value>
+  </data>
+  <data name="GoToGooglePlay" xml:space="preserve">
+    <value>Перейти в Google Play</value>
   </data>
 	<data name="AppUpdateCloseButton" xml:space="preserve">
     <value>Закрити</value>

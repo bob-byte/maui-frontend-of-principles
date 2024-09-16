@@ -1,20 +1,16 @@
-﻿[assembly: Microsoft.Maui.Controls.Dependency( typeof( IDeviceOrientation ) )]
+﻿
+namespace SET.MAUI;
 
-namespace SET.MAUI
+public class DeviceOrientationForIos : IDeviceOrientation
 {
-    public class DeviceOrientationForIos : IDeviceOrientation
+    public DeviceOrientationType GetOrientation()
     {
-        public DeviceOrientationType GetOrientation()
+        DisplayOrientation orientation = DeviceDisplay.Current.MainDisplayInfo.Orientation;
+        return orientation switch
         {
-            UIInterfaceOrientation orientation = UIApplication.SharedApplication.StatusBarOrientation;
-            return orientation switch
-            {
-                UIInterfaceOrientation.LandscapeLeft => DeviceOrientationType.Landscape,
-                UIInterfaceOrientation.LandscapeRight => DeviceOrientationType.Landscape,
-                UIInterfaceOrientation.Portrait => DeviceOrientationType.Portrait,
-                UIInterfaceOrientation.PortraitUpsideDown => DeviceOrientationType.Portrait,
-                _ => DeviceOrientationType.Undefined
-            };
-        }
+            DisplayOrientation.Landscape => DeviceOrientationType.Landscape,
+            DisplayOrientation.Portrait => DeviceOrientationType.Portrait,
+            _ => DeviceOrientationType.Undefined
+        };
     }
 }

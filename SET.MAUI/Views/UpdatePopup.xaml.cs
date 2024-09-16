@@ -9,10 +9,14 @@ public partial class UpdatePopup : Popup
     public UpdatePopup( UpdatePopupViewModel viewModel )
     {
         BindingContext = viewModel;
+        ViewModel = viewModel;
+
         m_settingsService = ServiceLocator.Current!.GetRequiredService<ISettingsService>();
         InitializeComponent();
         SetPopupWidth();
     }
+
+    public UpdatePopupViewModel ViewModel { get; }
 
     private void SetPopupWidth()
     {
@@ -37,5 +41,10 @@ public partial class UpdatePopup : Popup
     private void SB_CancelAppUpdate_Clicked( object sender, EventArgs e )
     {
         Close();
+    }
+
+    void TGR_ToggleDontShowAgain_Tapped( object sender, TappedEventArgs e )
+    {
+        ViewModel.DontShowAgain = !ViewModel.DontShowAgain;
     }
 }

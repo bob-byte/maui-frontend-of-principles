@@ -7,8 +7,10 @@ namespace SET.MAUI;
 public partial class App : Application
 {
     private readonly UpdatePopupViewModel m_updatePopupViewModel;
-    public App( IServiceLocator serviceLocator, IServiceProvider serviceProvider)
+
+    public App( IServiceProvider serviceProvider )
     {
+        IServiceLocator serviceLocator = serviceProvider.GetRequiredService<IServiceLocator>();
         ServiceLocator.GetCurrentLocator = () => serviceLocator;
 
         AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
@@ -19,6 +21,7 @@ public partial class App : Application
         InitializeComponent();
         MainPage = new AppShell( serviceProvider );
     }
+
     protected async override void OnStart( )
     {
         bool shouldShowPopup = await m_updatePopupViewModel.ShouldShowPopup();
@@ -26,7 +29,7 @@ public partial class App : Application
         if (shouldShowPopup)
         {
             var popup = new UpdatePopup( m_updatePopupViewModel );
-            Current.MainPage.ShowPopup( popup );
+            Current?.MainPage?.ShowPopup( popup );
         }
     }
 

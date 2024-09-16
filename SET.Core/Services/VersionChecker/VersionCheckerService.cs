@@ -15,9 +15,9 @@ public class VersionCheckerService : BaseRemoteService, IVersionCheckerService
     public async Task<AppVersionInfo> GetAppVersionAsync(string language )
     {
         string url = $"{UrlBuilder.VersionCheck}?language={language}";
-        AppVersionInfo appVertion = await RequestProvider.GetAsync<AppVersionInfo>(
+        AppVersionInfo appVersion = await RequestProvider.GetAsync<AppVersionInfo>(
             url
         ).DefaultConfigureAwait();
-        return appVertion;
+        return appVersion;
     }
 }

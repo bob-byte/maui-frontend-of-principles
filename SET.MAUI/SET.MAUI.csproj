@@ -15,8 +15,8 @@
 		<ApplicationId>com.set.principles</ApplicationId>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>1.1.7</ApplicationDisplayVersion>
-		<ApplicationVersion>15</ApplicationVersion>
+		<ApplicationDisplayVersion>1.1.8</ApplicationDisplayVersion>
+		<ApplicationVersion>17</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net8.0-android'">21.0</SupportedOSPlatformVersion>
@@ -217,14 +217,6 @@
 	</ItemGroup>
 	<ItemGroup>
 		<EmbeddedResource Include="appsettings.json" />
-	</ItemGroup>
-	<ItemGroup>
-	  <None Remove="Resources\Images\appstoreicon.svg" />
-	  <None Remove="Resources\Images\close.svg" />
-	  <None Remove="Validations\Rules\" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Validations\Rules\" />
 	</ItemGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
       <WarningLevel>4</WarningLevel>
