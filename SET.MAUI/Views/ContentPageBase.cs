@@ -30,6 +30,15 @@ public class ContentPageBase : ContentPage
                 m_settingsService.NormalPageWidth = PageWidth;
             }
         }
+
+        if (m_settingsService.NormalPageHeight == 0)
+        {
+            DeviceOrientationType orientation = m_deviceOrientationService.GetOrientation();
+            if (orientation == DeviceOrientationType.Portrait)
+            {
+                m_settingsService.NormalPageHeight = PageHeight;
+            }
+        }
     }
 
     protected override async void OnAppearing()

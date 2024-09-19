@@ -6,6 +6,7 @@ public interface ISettingsService
     string? AuthAccessToken { get; }
     string UserId { get; set; }
     double NormalPageWidth { get; set; }
+    double NormalPageHeight { get; set; }
 
     Task<string> GetAuthAccessTokenAsync();
     Task SetAuthAccessTokenAsync( string value );

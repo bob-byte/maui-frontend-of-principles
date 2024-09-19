@@ -5,13 +5,15 @@ namespace SET.MAUI.Views;
 public partial class ProfileView : ContentPageBase
 {
     private ProfileViewModel ViewModel { get; }
+    private readonly ISettingsService m_settingsService;
 
     public ProfileView(ProfileViewModel viewModel)
 	{
         ViewModel = viewModel;
         BindingContext = viewModel;
+        m_settingsService = ServiceLocator.Current!.GetRequiredService<ISettingsService>();
 
-		InitializeComponent();
+        InitializeComponent();
     }
 
     void TRG_UserName_Focused( object sender, FocusEventArgs e )
@@ -41,9 +43,9 @@ public partial class ProfileView : ContentPageBase
     {
         L_Prompt.Text = LocStrings.YourMission;
         ME_PromptResult.Text = ViewModel.Mission;
-        ME_PromptResult.HeightRequest = 285;
+        ME_PromptResult.HeightRequest = m_settingsService.NormalPageHeight * 0.25;
         ME_PromptResult.MaximumHeightRequest = 300;
-        ME_PromptResult.MaxLineCount = 12;
+        ME_PromptResult.MaxLineCount = 7;
         ME_Mision.Unfocus();
 
         DXP_Prompt.IsOpen = true;
