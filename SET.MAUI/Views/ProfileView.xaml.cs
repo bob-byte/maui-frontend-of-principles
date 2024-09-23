@@ -1,5 +1,7 @@
 using DevExpress.Maui.Editors;
 
+using Microsoft.Maui.Layouts;
+
 namespace SET.MAUI.Views;
 
 public partial class ProfileView : ContentPageBase
@@ -30,6 +32,7 @@ public partial class ProfileView : ContentPageBase
     void TGR_MainSlogan_Focused( object sender, FocusEventArgs e )
     {
         L_Prompt.Text = LocStrings.YourMainSlogan;
+        L_TipText.Text = LocStrings.MainSloganExplanation;
         ME_PromptResult.Text = ViewModel.MainSlogan;
         ME_PromptResult.HeightRequest = 140;
         ME_PromptResult.MaximumHeightRequest = 140;
@@ -42,8 +45,9 @@ public partial class ProfileView : ContentPageBase
     void TGR_Mission_Focused( object sender, FocusEventArgs e )
     {
         L_Prompt.Text = LocStrings.YourMission;
+        L_TipText.Text = LocStrings.MissionExplanation;
         ME_PromptResult.Text = ViewModel.Mission;
-        ME_PromptResult.HeightRequest = m_settingsService.NormalPageHeight * 0.25;
+        ME_PromptResult.HeightRequest = 170;
         ME_PromptResult.MaximumHeightRequest = 300;
         ME_PromptResult.MaxLineCount = 7;
         ME_Mision.Unfocus();
@@ -78,5 +82,15 @@ public partial class ProfileView : ContentPageBase
     private void SB_Cancel_Clicked( object sender, EventArgs e )
     {
         DXP_Prompt.IsOpen = false;
+    }
+
+    private void EI_Tip_Clicked( object sender, EventArgs e )
+    {
+        DXP_Tip.IsOpen = true;
+    }
+
+    private void B_Ok_Clicked( object sender, EventArgs e )
+    {
+        DXP_Tip.IsOpen = false;
     }
 }

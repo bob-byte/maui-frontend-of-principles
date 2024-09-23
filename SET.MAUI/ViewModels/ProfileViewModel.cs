@@ -113,4 +113,25 @@ public partial class ProfileViewModel : BaseViewModel
         await InitUserInfoAsync();
         ValidateUserName();
     }
+
+
+    [RelayCommand]
+    public Task ShowSnackbarForMainSlogan( VisualElement visualElement )
+    {
+        return visualElement.DisplaySnackbar(
+            LocStrings.MainSloganExplanation,
+            duration: TimeSpan.FromSeconds( 10 ),
+            visualOptions: SnackbarHelper.DefaultOptions()
+        );
+    }
+
+    [RelayCommand]
+    private Task ShowSnackbarForMission( VisualElement visualElement )
+    {
+        return visualElement.DisplaySnackbar(
+            LocStrings.MissionExplanation,
+            duration: TimeSpan.FromSeconds( 10 ),
+            visualOptions: SnackbarHelper.DefaultOptions()
+        );
+    }
 }
