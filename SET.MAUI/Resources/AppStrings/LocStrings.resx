@@ -816,4 +816,19 @@ By using the App, you acknowledge that you have read, understood, and agree to b
   <data name="InternalServerError" xml:space="preserve">
     <value>Internal server error. We will try to fix it as soon as possible!</value>
   </data>
+  <data name="AppUpdateAvailable" xml:space="preserve">
+    <value>Update Available</value>
+  </data>
+  <data name="GoToAppStore" xml:space="preserve">
+    <value>Go to App Store</value>
+  </data>
+  <data name="GoToGooglePlay" xml:space="preserve">
+    <value>Go to Google Play</value>
+  </data>
+  <data name="AppUpdateCloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="DontShowUpdateCheckBoxText" xml:space="preserve">
+    <value>Do not remind me of this update again</value>
+  </data>
 </root>

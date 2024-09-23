@@ -56,6 +56,8 @@
             <Color x:Key="LightPlaceholderColor">LightGray</Color>
             <Color x:Key="DarkPlaceholderColor">White</Color>
 
+            <Color x:Key="CancelButtonColor">#cecece</Color>
+
             <Color x:Key="NormalHeaderText">#55555c</Color>
             <Color x:Key="Error">#007BFF</Color>
             <Color x:Key="RedColor">#FF2400</Color>

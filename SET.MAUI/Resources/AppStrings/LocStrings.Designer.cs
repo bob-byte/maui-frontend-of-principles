@@ -85,6 +85,24 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update Available.
+        /// </summary>
+        internal static string AppUpdateAvailable {
+            get {
+                return ResourceManager.GetString("AppUpdateAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        internal static string AppUpdateCloseButton {
+            get {
+                return ResourceManager.GetString("AppUpdateCloseButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Areas of habit.
         /// </summary>
         internal static string AreasOfHabit {
@@ -427,6 +445,15 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do not remind me of this update again.
+        /// </summary>
+        internal static string DontShowUpdateCheckBoxText {
+            get {
+                return ResourceManager.GetString("DontShowUpdateCheckBoxText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
         internal static string Email {
@@ -648,6 +675,24 @@ namespace SET.MAUI.Resources.AppStrings {
         internal static string GoalLableRecommendation {
             get {
                 return ResourceManager.GetString("GoalLableRecommendation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go to App Store.
+        /// </summary>
+        internal static string GoToAppStore {
+            get {
+                return ResourceManager.GetString("GoToAppStore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go to Google Play.
+        /// </summary>
+        internal static string GoToGooglePlay {
+            get {
+                return ResourceManager.GetString("GoToGooglePlay", resourceCulture);
             }
         }
         

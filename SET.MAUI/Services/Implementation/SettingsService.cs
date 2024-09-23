@@ -21,7 +21,8 @@ public class SettingsService : ISettingsService
 
     public async Task<string> GetAuthAccessTokenAsync()
     {
-        string token = await SecureStorage.GetAsync( "access_token" ).DefaultConfigureAwait();
+        string? token = await SecureStorage.GetAsync( key: "access_token" ).DefaultConfigureAwait();
+
         AuthAccessToken = token ?? string.Empty;
         return AuthAccessToken;
     }
@@ -36,5 +37,10 @@ public class SettingsService : ISettingsService
     {
         get => Preferences.Get( key: "user_id", defaultValue: "0" )!;
         set => Preferences.Set( key: "user_id", value );
+    }
+    public double NormalPageWidth
+    {
+        get => Preferences.Get( key: "normal_page_width", defaultValue: 0.0 );
+        set => Preferences.Set( key: "normal_page_width", value );
     }
 }

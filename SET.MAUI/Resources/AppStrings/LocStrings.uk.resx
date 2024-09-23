@@ -819,4 +819,19 @@
   <data name="InternalServerError" xml:space="preserve">
     <value>Внутрішня помилка сервера. Ми постараємося виправити її якнайшвидше!</value>
   </data>
+  <data name="AppUpdateAvailable" xml:space="preserve">
+    <value>Доступне оновлення</value>
+  </data>
+  <data name="GoToAppStore" xml:space="preserve">
+    <value>Перейти в App Store</value>
+  </data>
+  <data name="GoToGooglePlay" xml:space="preserve">
+    <value>Перейти в Google Play</value>
+  </data>
+	<data name="AppUpdateCloseButton" xml:space="preserve">
+    <value>Закрити</value>
+  </data>
+  <data name="DontShowUpdateCheckBoxText" xml:space="preserve">
+    <value>Не нагадувати більше про це оновлення</value>
+  </data>
 </root>

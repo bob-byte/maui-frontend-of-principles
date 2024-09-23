@@ -82,7 +82,7 @@
                                            ReturnType="Done"
                                            ClearIconVisibility="Never" />
                         <dxe:MultilineEdit Text="{Binding Habit.Goal.Name}"
-                                           x:Name="ME_HabitGoal" 
+                                           x:Name="ME_HabitGoal"
                                            LabelText="{x:Static loc:LocStrings.Goal}"
                                            IsErrorIconVisible="False"
                                            StartIcon="goal"
@@ -92,7 +92,7 @@
                                            Tap="ME_HabitGoal_Tap"
                                            ClearIconVisibility="Auto"
                                            ClearIconCommand="{Binding ClearHabitGoalCommand}"
-                                           IsReadOnly="True"/>
+                                           IsReadOnly="True" />
                         <dxe:ChoiceChipGroup x:Name="CCG_Types"
                                              HorizontalOptions="Center"
                                              IsMultiline="False"
@@ -232,7 +232,7 @@
                                     </dxcv:DXCollectionView.ItemTemplate>
                                 </dxcv:DXCollectionView>
                                 <Label x:Name="L_GoalRecommendation"
-                                       Margin="0, 8, 0, 0"
+                                       Margin="0,8,0,0"
                                        Text="{x:Static loc:LocStrings.GoalLableRecommendation}"
                                        FontSize="16"
                                        FontFamily="MonaSansMedium"
@@ -287,15 +287,36 @@
                                                VerticalOptions="Start"
                                                Grid.ColumnSpan="2"
                                                Margin="0,8,0,0" />
-                                        <dxco:SimpleButton x:Name="SB_Save"
-                                                           Style="{StaticResource PrimaryButton}"
-                                                           Text="{Binding LocSave}"
-                                                           HorizontalOptions="End"
-                                                           FontSize="16"
-                                                           Grid.Row="3"
-                                                           Grid.ColumnSpan="2"
-                                                           Margin="0,10,0,0"
-                                                           Clicked="Sb_SaveGoal_Clicked" />
+
+                                        <Grid Grid.Row="3"
+                                              Grid.ColumnSpan="2"
+                                              HorizontalOptions="End"
+                                              ColumnSpacing="10">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <dxco:SimpleButton x:Name="SB_GoalAdd_Cancel"
+                                                               BackgroundColor="{StaticResource CancelButtonColor}"
+                                                               Text="{x:Static loc:LocStrings.Cancel}"
+                                                               FontSize="16"
+                                                               Margin="0,10,0,0"
+                                                               Icon="close"
+                                                               IconHorizontalPosition="Left"
+                                                               Clicked="SB_GoalAdd_Cancel_Clicked"
+                                                               Grid.Column="0" />
+
+                                            <dxco:SimpleButton x:Name="SB_Save"
+                                                               Style="{StaticResource PrimaryButton}"
+                                                               Text="{Binding LocSave}"
+                                                               FontSize="16"
+                                                               Margin="0,10,0,0"
+                                                               IconHorizontalPosition="Left"
+                                                               Icon="check_second"
+                                                               Clicked="Sb_SaveGoal_Clicked"
+                                                               Grid.Column="1" />
+                                        </Grid>
                                     </Grid>
                                 </dxco:DXPopup>
                             </Grid>
@@ -388,7 +409,7 @@
                                     <Grid x:Name="DXS_ErrorMessages"
                                           RowSpacing="7"
                                           VerticalOptions="Center"
-                                          Padding="0, 0, 8, 0" />
+                                          Padding="0,0,8,0" />
                                 </dx:DXStackLayout>
                                 <dxco:SimpleButton x:Name="SB_CloseErrorsPopup"
                                                    Clicked="SB_CloseErrorsPopup_Clicked"
@@ -494,13 +515,26 @@
                                                       BackgroundColor="{AppThemeBinding Light={StaticResource Background},
                                                                                         Dark={StaticResource DarkBackground}}" />
                                 </HorizontalStackLayout>
-                                <dxco:SimpleButton x:Name="SB_SaveFrequencyPopup"
-                                                   Clicked="SB_SaveFrequencyPopup_Clicked"
-                                                   Text="{Binding LocSave}"
-                                                   HorizontalOptions="End"
-                                                   FontSize="16"
-                                                   Margin="0,10,0,0"
-                                                   Style="{StaticResource PrimaryButton}" />
+                                <HorizontalStackLayout HorizontalOptions="End"
+                                                       Spacing="10"
+                                                       Padding="0,0,10,0">
+                                    <dxco:SimpleButton x:Name="SB_Frequency_Cancel"
+                                                       BackgroundColor="{StaticResource CancelButtonColor}"
+                                                       Text="{x:Static loc:LocStrings.Cancel}"
+                                                       FontSize="16"
+                                                       Margin="0,10,0,5"
+                                                       Icon="close"
+                                                       IconHorizontalPosition="Left"
+                                                       Clicked="SB_Frequency_Cancel_Clicked" />
+                                    <dxco:SimpleButton x:Name="SB_SaveFrequencyPopup"
+                                                       Clicked="SB_SaveFrequencyPopup_Clicked"
+                                                       Text="{Binding LocSave}"
+                                                       IconHorizontalPosition="Left"
+                                                       Icon="check_second"
+                                                       FontSize="16"
+                                                       Margin="0,10,0,5"
+                                                       Style="{StaticResource PrimaryButton}" />
+                                </HorizontalStackLayout>
                             </VerticalStackLayout>
                         </dxco:DXPopup>
 
@@ -603,7 +637,7 @@
                                            RepeatMode="Reverse"
                                            WidthRequest="300"
                                            HeightRequest="300"
-                                           IsAnimationEnabled="True"/>
+                                           IsAnimationEnabled="True" />
                     </VerticalStackLayout>
                 </ScrollView>
             </dxco:TabViewItem>

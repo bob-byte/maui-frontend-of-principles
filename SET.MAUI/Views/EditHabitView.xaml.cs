@@ -570,4 +570,14 @@ public partial class EditHabitView : ContentPageBase
             m_doExecuteReloadOfRecommendedHabits = true;
         }
     }
+
+    private void SB_GoalAdd_Cancel_Clicked( object sender, EventArgs e )
+    {
+        DXP_GoalAdd.IsOpen = false;
+    }
+
+    private void SB_Frequency_Cancel_Clicked( object sender, EventArgs e )
+    {
+        DXP_Frequency.IsOpen = false;
+    }
 }

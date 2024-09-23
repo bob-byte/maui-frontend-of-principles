@@ -32,6 +32,8 @@ public class SimpleSettingsService : ISettingsService
 
     public string UserId { get; set; }
 
+    public double NormalPageWidth { get; set; }
+
     public Task<string> GetAuthAccessTokenAsync()
     {
         return Task.FromResult(AuthAccessToken);

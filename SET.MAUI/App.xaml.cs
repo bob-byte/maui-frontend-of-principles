@@ -1,5 +1,4 @@
-﻿using Microsoft.Maui;
-using Microsoft.Maui.Controls;
+﻿using CommunityToolkit.Maui.Views;
 
 using Application = Microsoft.Maui.Controls.Application;
 
@@ -7,16 +6,31 @@ namespace SET.MAUI;
 
 public partial class App : Application
 {
-    public App( INavigationService navigationService, IServiceLocator serviceLocator, ISettingsService settingsService )
+    private readonly UpdatePopupViewModel m_updatePopupViewModel;
+
+    public App( IServiceProvider serviceProvider )
     {
+        IServiceLocator serviceLocator = serviceProvider.GetRequiredService<IServiceLocator>();
         ServiceLocator.GetCurrentLocator = () => serviceLocator;
 
         AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
+        m_updatePopupViewModel = new UpdatePopupViewModel( serviceProvider );
+
         UserAppTheme = AppTheme.Light;
         InitializeComponent();
+        MainPage = new AppShell( serviceProvider );
+    }
 
-        MainPage = new AppShell( navigationService, settingsService );
+    protected async override void OnStart( )
+    {
+        bool shouldShowPopup = await m_updatePopupViewModel.ShouldShowPopup();
+
+        if (shouldShowPopup)
+        {
+            var popup = new UpdatePopup( m_updatePopupViewModel );
+            Current?.MainPage?.ShowPopup( popup );
+        }
     }
 
     private void CurrentDomain_UnhandledException( object sender, UnhandledExceptionEventArgs e )
