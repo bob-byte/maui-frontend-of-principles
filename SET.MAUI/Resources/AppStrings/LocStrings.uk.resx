@@ -834,4 +834,7 @@
   <data name="DontShowUpdateCheckBoxText" xml:space="preserve">
     <value>Не нагадувати більше про це оновлення</value>
   </data>
+  <data name="HelperWarning" xml:space="preserve">
+    <value>Помічник може інколи помилятися</value>
+  </data>
 </root>
