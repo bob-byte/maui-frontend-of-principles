@@ -38,7 +38,6 @@ public partial class HelperViewModel : BaseViewModel
 
     public override async Task InitializeAsync( object? parameter = null )
     {
-        await InitUserInfoAsync();
         await base.InitializeAsync( parameter );
     }
 

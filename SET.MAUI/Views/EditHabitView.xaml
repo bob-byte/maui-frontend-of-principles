@@ -427,7 +427,7 @@
                                       MinimumWidthRequest="250"
                                       AllowShadow="True"
                                       CloseOnScrimTap="True">
-                            <VerticalStackLayout Margin="15"
+                            <VerticalStackLayout Margin="15, 15, 15, 10"
                                                  Spacing="0">
                                 <dxe:CheckEdit Label="{x:Static loc:LocStrings.EveryDay}"
                                                x:Name="CE_EveryDay"
@@ -517,12 +517,11 @@
                                 </HorizontalStackLayout>
                                 <HorizontalStackLayout HorizontalOptions="End"
                                                        Spacing="10"
-                                                       Padding="0,0,10,0">
+                                                       Margin="0,10,0,0">
                                     <dxco:SimpleButton x:Name="SB_Frequency_Cancel"
                                                        BackgroundColor="{StaticResource CancelButtonColor}"
                                                        Text="{x:Static loc:LocStrings.Cancel}"
                                                        FontSize="16"
-                                                       Margin="0,10,0,5"
                                                        Icon="close"
                                                        IconHorizontalPosition="Left"
                                                        Clicked="SB_Frequency_Cancel_Clicked" />
@@ -532,7 +531,6 @@
                                                        IconHorizontalPosition="Left"
                                                        Icon="check_second"
                                                        FontSize="16"
-                                                       Margin="0,10,0,5"
                                                        Style="{StaticResource PrimaryButton}" />
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>

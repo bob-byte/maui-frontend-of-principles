@@ -148,7 +148,7 @@
                                            Margin="0,0,5,5"
                                            IconHorizontalPosition="Left"
                                            Icon="check_second"
-                                           Clicked="SB_Cancel_Clicked" />
+                                           Clicked="SB_Save_Clicked" />
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
             </dxco:DXPopup>

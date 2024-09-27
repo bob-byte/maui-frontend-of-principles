@@ -52,7 +52,7 @@ public partial class UpdatePopupViewModel : BaseViewModel
                 else
                 {
                     Version versionForWhichDontShowPopup = new( strVersionForWhichDontShowPopup );
-                    result = versionForWhichDontShowPopup != newAvailableAppVersion;
+                    result = versionForWhichDontShowPopup < newAvailableAppVersion;
                 }
             }
             else
