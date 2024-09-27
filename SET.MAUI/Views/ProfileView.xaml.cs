@@ -1,19 +1,14 @@
-using DevExpress.Maui.Editors;
-
-using Microsoft.Maui.Layouts;
 
 namespace SET.MAUI.Views;
 
 public partial class ProfileView : ContentPageBase
 {
     private ProfileViewModel ViewModel { get; }
-    private readonly ISettingsService m_settingsService;
 
     public ProfileView(ProfileViewModel viewModel)
 	{
         ViewModel = viewModel;
         BindingContext = viewModel;
-        m_settingsService = ServiceLocator.Current!.GetRequiredService<ISettingsService>();
 
         InitializeComponent();
     }
@@ -24,6 +19,7 @@ public partial class ProfileView : ContentPageBase
         ME_PromptResult.Text = ViewModel.UserName.Value;
         ME_PromptResult.HeightRequest = -1;
         ME_PromptResult.MaxLineCount = 1;
+        ME_PromptResult.IsEndIconVisible = false;
         TE_UserName.Unfocus();
 
         DXP_Prompt.IsOpen = true;
@@ -37,6 +33,7 @@ public partial class ProfileView : ContentPageBase
         ME_PromptResult.HeightRequest = 140;
         ME_PromptResult.MaximumHeightRequest = 140;
         ME_PromptResult.MaxLineCount = 5;
+        ME_PromptResult.IsEndIconVisible = true;
         ME_MainSlogan.Unfocus();
 
         DXP_Prompt.IsOpen = true;
@@ -50,6 +47,7 @@ public partial class ProfileView : ContentPageBase
         ME_PromptResult.HeightRequest = 170;
         ME_PromptResult.MaximumHeightRequest = 300;
         ME_PromptResult.MaxLineCount = 7;
+        ME_PromptResult.IsEndIconVisible = true;
         ME_Mision.Unfocus();
 
         DXP_Prompt.IsOpen = true;
