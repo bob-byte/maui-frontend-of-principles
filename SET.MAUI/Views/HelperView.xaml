@@ -79,14 +79,17 @@
                    Grid.ColumnSpan="3" />
         </Grid>
         <Grid ColumnDefinitions="*, Auto"
+              RowDefinitions="Auto, Auto"
               ColumnSpacing="3"
               Padding="16,0"
-              Grid.Row="3">
+              Grid.Row="3"
+              VerticalOptions="CenterAndExpand">
             <Border BackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary},
                                                       Dark={StaticResource DarkPrimary}}"
                     HeightRequest="48"
                     StrokeShape="RoundRectangle 36,36,36,36"
-                    Grid.Column="0">
+                    Grid.Column="0"
+                    Grid.Row="0">
                 <Grid ColumnDefinitions="*, Auto">
                     <OnPlatform x:TypeArguments="View">
                         <On Platform="Android">
@@ -149,7 +152,8 @@
                               Style="{StaticResource PrimaryButton}"
                               BackgroundColor="{StaticResource LightPrimary}"
                               IconColor="#3F3F3F"
-                              Grid.Column="1" />
+                              Grid.Column="1"
+                              Grid.Row="0" />
 
             <dx:DXImage Source="stop_video"
                         HeightRequest="35"
@@ -159,11 +163,21 @@
                         IsVisible="{Binding IsBusy}"
                         TintColor="{AppThemeBinding Light={StaticResource QuinaryLight},
                                                     Dark={StaticResource QuinaryDark}}"
-                        Grid.Column="1">
+                        Grid.Column="1"
+                        Grid.Row="0">
                 <dx:DXImage.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding CancelAnswerGenerationCommand}" />
                 </dx:DXImage.GestureRecognizers>
             </dx:DXImage>
+
+            <Label Text="{x:Static loc:LocStrings.HelperWarning}"
+                   Grid.Row="1"
+                   Margin="0,10,0,0"
+                   HorizontalOptions="Center"
+                   VerticalOptions="CenterAndExpand"
+                   TextColor="White"
+                   HorizontalTextAlignment="Center"
+                   Grid.ColumnSpan="2" />
         </Grid>
     </Grid>
 </v:ContentPageBase>

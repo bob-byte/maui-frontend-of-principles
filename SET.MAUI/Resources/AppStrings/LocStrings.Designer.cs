@@ -778,6 +778,15 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Helper can sometimes be wrong.
+        /// </summary>
+        internal static string HelperWarning {
+            get {
+                return ResourceManager.GetString("HelperWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Household chores.
         /// </summary>
         internal static string HouseholdChores {
