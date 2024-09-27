@@ -142,15 +142,6 @@
                 </Grid>
             </Border>
 
-            <Label Text="{x:Static loc:LocStrings.HelperWarning}"
-                   Grid.Row="1"
-                   Margin="0,10,0,0"
-                   HorizontalOptions="Center"
-                   VerticalOptions="CenterAndExpand"
-                   TextColor="White"
-                   HorizontalTextAlignment="Center"
-                   Grid.ColumnSpan="2" />
-
             <dxc:SimpleButton Icon="send_message"
                               x:Name="SB_AskQuestion"
                               HeightRequest="48"
@@ -178,6 +169,15 @@
                     <TapGestureRecognizer Command="{Binding CancelAnswerGenerationCommand}" />
                 </dx:DXImage.GestureRecognizers>
             </dx:DXImage>
+
+            <Label Text="{x:Static loc:LocStrings.HelperWarning}"
+                   Grid.Row="1"
+                   Margin="0,10,0,0"
+                   HorizontalOptions="Center"
+                   VerticalOptions="CenterAndExpand"
+                   TextColor="White"
+                   HorizontalTextAlignment="Center"
+                   Grid.ColumnSpan="2" />
         </Grid>
     </Grid>
 </v:ContentPageBase>
