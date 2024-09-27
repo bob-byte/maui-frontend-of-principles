@@ -103,8 +103,9 @@
                                x:Name="ME_MainSlogan"
                                ClearIconVisibility="Never"
                                IsReadOnly="True"
-                               EndIcon="check_third"
+                               EndIcon="info"
                                EndIconColor="{StaticResource Primary}"
+                               EndIconCommand="{Binding ShowSnackbarForMainSloganCommand}"
                                Margin="0,2"
                                Focused="TGR_MainSlogan_Focused" />
 
@@ -113,8 +114,9 @@
                                x:Name="ME_Mision"
                                ClearIconVisibility="Never"
                                IsReadOnly="True"
-                               EndIcon="check_third"
+                               EndIcon="info"
                                EndIconColor="{StaticResource Primary}"
+                               EndIconCommand="{Binding ShowSnackbarForMissionCommand}"
                                Margin="0,2"
                                Focused="TGR_Mission_Focused" />
 
@@ -125,13 +127,19 @@
                           CloseOnScrimTap="True"
                           MinimumWidthRequest="300">
                 <VerticalStackLayout>
-                    <Label x:Name="L_Prompt"
-                           Style="{StaticResource CentralHeader}"
-                           Margin="0,10,0,0" />
+                    <HorizontalStackLayout HorizontalOptions="Center"
+                                           Spacing="5">
+                        <Label x:Name="L_Prompt"
+                               Style="{StaticResource CentralHeader}" />
+                    </HorizontalStackLayout>
                     <dxe:MultilineEdit x:Name="ME_PromptResult"
                                        ClearIconVisibility="Never"
                                        Margin="10"
-                                       TextFontSize="16" />
+                                       TextFontSize="16"
+                                       EndIcon="info"
+                                       EndIconClicked="EI_Tip_Clicked"
+                                       EndIconColor="{StaticResource Primary}"
+                                       IconVerticalAlignment="Center" />
                     <HorizontalStackLayout HorizontalOptions="End">
                         <dxco:SimpleButton x:Name="SB_Cancel"
                                            BackgroundColor="{StaticResource CancelButtonColor}"
@@ -151,6 +159,34 @@
                                            Clicked="SB_Save_Clicked" />
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
+            </dxco:DXPopup>
+
+
+            <dxco:DXPopup x:Name="DXP_Tip"
+                          AllowAnimation="True"
+                          AllowScrim="True"
+                          AllowShadow="True"
+                          CloseOnScrimTap="True"
+                          MinimumWidthRequest="200"
+                          VerticalOptions="End"
+                          VerticalAlignment="Bottom"
+                          CornerRadius="5"
+                          BackgroundColor="{StaticResource LightPrimary}">
+
+                <Grid ColumnDefinitions="85*, 15*">
+                    <Label x:Name="L_TipText"
+                           Padding="10"
+                           Grid.Column="0"
+                           VerticalOptions="Center"
+                           TextColor="Black" />
+                    <Button Text="{x:Static loc:LocStrings.OK}"
+                            BackgroundColor="Transparent"
+                            TextColor="White"
+                            Grid.Column="1"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center"
+                            Clicked="B_Ok_Clicked" />
+                </Grid>
             </dxco:DXPopup>
 
             <templates:DefaultActivityIndicator />

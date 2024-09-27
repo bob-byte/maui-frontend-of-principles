@@ -102,10 +102,10 @@
                           AllowLiveDataShaping="True"
                           CustomSort="DGV_Habits_SortByGoalName">
             <dxg:DataGridView.ColumnHeaderAppearance>
-                <dxg:ColumnHeaderAppearance BackgroundColor="#f7f2f7"/>
+                <dxg:ColumnHeaderAppearance BackgroundColor="#f7f2f7" />
             </dxg:DataGridView.ColumnHeaderAppearance>
             <dxg:DataGridView.GroupRowAppearance>
-                <dxg:GroupRowAppearance BackgroundColor="#f7f2f7"/>
+                <dxg:GroupRowAppearance BackgroundColor="#f7f2f7" />
             </dxg:DataGridView.GroupRowAppearance>
 
             <dxg:DataGridView.StartSwipeItems>
@@ -114,17 +114,21 @@
                                Caption="{x:Static loc:LocStrings.Delete}" />
             </dxg:DataGridView.StartSwipeItems>
 
+            <dxg:DataGridView.SwipeItemAppearance>
+                <dxg:SwipeItemAppearance Width="125" />
+            </dxg:DataGridView.SwipeItemAppearance>
+
             <dxg:DataGridView.Columns>
-                <!--{} in GroupCaptionDisplayFormat means display Goal.Name without a caption-->
+                <!--  {} in GroupCaptionDisplayFormat means display Goal.Name without a caption  -->
                 <dxg:TextColumn FieldName="Goal.Name"
                                 IsGrouped="True"
                                 GroupInterval="DisplayText"
-                                GroupCaptionDisplayFormat="{}{1}" 
+                                GroupCaptionDisplayFormat="{}{1}"
                                 SortMode="Custom">
                     <dxg:TextColumn.GroupCaptionTemplate>
                         <DataTemplate x:DataType="dxg:GroupRowData">
                             <Label Text="{Binding GroupValueText}"
-                                   FontSize="15"/>
+                                   FontSize="15" />
                         </DataTemplate>
                     </dxg:TextColumn.GroupCaptionTemplate>
                 </dxg:TextColumn>

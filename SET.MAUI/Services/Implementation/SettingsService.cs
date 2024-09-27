@@ -43,4 +43,10 @@ public class SettingsService : ISettingsService
         get => Preferences.Get( key: "normal_page_width", defaultValue: 0.0 );
         set => Preferences.Set( key: "normal_page_width", value );
     }
+
+    public double NormalPageHeight
+    {
+        get => Preferences.Get( key: "normal_page_height", defaultValue: 0.0 );
+        set => Preferences.Set( key: "normal_page_height", value );
+    }
 }
