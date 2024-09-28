@@ -834,4 +834,25 @@
   <data name="DontShowUpdateCheckBoxText" xml:space="preserve">
     <value>Не нагадувати більше про це оновлення</value>
   </data>
+  <data name="Reminder" xml:space="preserve">
+    <value>Нагадування</value>
+  </data>
+  <data name="ReminderTitle" xml:space="preserve">
+    <value>Загаловок</value>
+  </data>
+  <data name="ReminderDescription" xml:space="preserve">
+    <value>Опис</value>
+  </data>
+  <data name="ReminderTitleText" xml:space="preserve">
+    <value>Відзначити виконання звичок</value>
+  </data>
+  <data name="ReminderDescriptionText" xml:space="preserve">
+    <value>Час відзначити, які звички були виконані сьогодні й нагадати власні цілі</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Час</value>
+  </data>
+  <data name="Enable" xml:space="preserve">
+    <value>Ввімкнути</value>
+  </data>
 </root>

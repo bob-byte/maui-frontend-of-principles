@@ -1,6 +1,12 @@
 ﻿
 using DevExpress.Maui.DataGrid;
 
+using Plugin.LocalNotification;
+
+#if IOS
+using UserNotifications;
+#endif
+
 using SET.Core.Models;
 using SET.MAUI.Exceptions;
 
@@ -17,6 +23,18 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
 
     [ObservableProperty]
     private UserHabit? m_selectedHabit;
+
+    [ObservableProperty]
+    private string m_reminderTitle;
+
+    [ObservableProperty]
+    private string m_reminderDescription;
+
+    [ObservableProperty]
+    private DateTime m_reminderTime;
+
+    [ObservableProperty]
+    private bool m_isReminderEnabled;
 
     [ObservableProperty]
     private DateOnly m_startProgressInterval;
@@ -272,6 +290,65 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
             };
             await Navigation.NavigateToAsync<EditHabitViewModel>( routeParams );
         }
+    }
+
+    [RelayCommand]
+    private async Task AddReminder()
+    {
+        if (!IsReminderEnabled)
+        {
+            LocalNotificationCenter.Current.CancelAll();
+            return;
+        }
+#if ANDROID
+        if (AndroidX.Core.Content.ContextCompat.CheckSelfPermission(
+            Android.App.Application.Context,
+            Android.Manifest.Permission.PostNotifications ) != Android.Content.PM.Permission.Granted)
+        {
+            AndroidX.Core.App.ActivityCompat.RequestPermissions(
+                Platform.CurrentActivity,
+                new string[] { Android.Manifest.Permission.PostNotifications },
+                0 );
+        }
+#endif
+
+#if IOS
+    UNNotificationSettings status = await UNUserNotificationCenter.Current.GetNotificationSettingsAsync();
+    if (status.AuthorizationStatus != UNAuthorizationStatus.Authorized)
+    {
+        TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
+        
+        UNUserNotificationCenter.Current.RequestAuthorization(UNAuthorizationOptions.Alert |
+                                                            UNAuthorizationOptions.Badge |
+                                                            UNAuthorizationOptions.Sound,
+            (granted, error) =>
+            {
+                tcs.SetResult(granted);
+            });
+
+            bool isAuthorized = await tcs.Task;
+
+            if (!isAuthorized)
+            {
+                return;
+            }
+    }
+#endif
+
+
+        NotificationRequest notification = new NotificationRequest
+        {
+            NotificationId = (int)DateTime.UtcNow.Ticks,
+            Title = ReminderTitle,
+            Description = ReminderDescription,
+            Schedule =
+            {
+                NotifyTime = ReminderTime,
+                NotifyRepeatInterval = TimeSpan.FromHours(24)
+            }
+        };
+
+        await LocalNotificationCenter.Current.Show( notification );
     }
 
     [RelayCommand]

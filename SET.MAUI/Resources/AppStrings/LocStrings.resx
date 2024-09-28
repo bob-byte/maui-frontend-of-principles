@@ -831,4 +831,25 @@ By using the App, you acknowledge that you have read, understood, and agree to b
   <data name="DontShowUpdateCheckBoxText" xml:space="preserve">
     <value>Do not remind me of this update again</value>
   </data>
+  <data name="Reminder" xml:space="preserve">
+    <value>Reminder</value>
+  </data>
+  <data name="ReminderTitle" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="ReminderDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="ReminderTitleText" xml:space="preserve">
+    <value>Mark fulfillment of the habits</value>
+  </data>
+  <data name="ReminderDescriptionText" xml:space="preserve">
+    <value>Time to note which habits have been completed today and remind yourself of your goals</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="Enable" xml:space="preserve">
+    <value>Enable</value>
+  </data>
 </root>

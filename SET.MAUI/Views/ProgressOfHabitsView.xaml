@@ -6,6 +6,7 @@
                    xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
                    xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
                    xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+                   xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
                    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                    xmlns:vm="clr-namespace:SET.MAUI.ViewModels"
                    xmlns:v="clr-namespace:SET.MAUI.Views"
@@ -35,13 +36,28 @@
                    FontAttributes="Bold"
                    HeightRequest="50"
                    Grid.Column="2" />
+
+            <dx:DXImage Source="reminder"
+                        VerticalOptions="Center"
+                        HorizontalOptions="End"
+                        TintColor="{StaticResource TitleTextColor}"
+                        WidthRequest="35"
+                        HeightRequest="35"
+                        Grid.Column="5">
+                <dx:DXImage.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1"
+                                          Tapped="DXI_Reminder_Tapped" />
+                </dx:DXImage.GestureRecognizers>
+            </dx:DXImage>
+
+
             <dx:DXImage Source="plus"
                         IsVisible="{Binding SelectedHabit,
                                             Converter={StaticResource IsNull}}"
                         VerticalOptions="Center"
                         HorizontalOptions="End"
                         TintColor="{StaticResource TitleTextColor}"
-                        Margin="65,0,0,0"
+                        Margin="15,0,0,0"
                         WidthRequest="40"
                         HeightRequest="40"
                         Grid.Column="6">
@@ -102,10 +118,10 @@
                           AllowLiveDataShaping="True"
                           CustomSort="DGV_Habits_SortByGoalName">
             <dxg:DataGridView.ColumnHeaderAppearance>
-                <dxg:ColumnHeaderAppearance BackgroundColor="#f7f2f7"/>
+                <dxg:ColumnHeaderAppearance BackgroundColor="#f7f2f7" />
             </dxg:DataGridView.ColumnHeaderAppearance>
             <dxg:DataGridView.GroupRowAppearance>
-                <dxg:GroupRowAppearance BackgroundColor="#f7f2f7"/>
+                <dxg:GroupRowAppearance BackgroundColor="#f7f2f7" />
             </dxg:DataGridView.GroupRowAppearance>
 
             <dxg:DataGridView.StartSwipeItems>
@@ -115,16 +131,16 @@
             </dxg:DataGridView.StartSwipeItems>
 
             <dxg:DataGridView.Columns>
-                <!--{} in GroupCaptionDisplayFormat means display Goal.Name without a caption-->
+                <!--  {} in GroupCaptionDisplayFormat means display Goal.Name without a caption  -->
                 <dxg:TextColumn FieldName="Goal.Name"
                                 IsGrouped="True"
                                 GroupInterval="DisplayText"
-                                GroupCaptionDisplayFormat="{}{1}" 
+                                GroupCaptionDisplayFormat="{}{1}"
                                 SortMode="Custom">
                     <dxg:TextColumn.GroupCaptionTemplate>
                         <DataTemplate x:DataType="dxg:GroupRowData">
                             <Label Text="{Binding GroupValueText}"
-                                   FontSize="15"/>
+                                   FontSize="15" />
                         </DataTemplate>
                     </dxg:TextColumn.GroupCaptionTemplate>
                 </dxg:TextColumn>
@@ -164,5 +180,57 @@
                                                Dark={StaticResource DarkNormalText}}"
                    HorizontalTextAlignment="Center" />
         </dx:DXStackLayout>
+
+        <dxco:DXPopup x:Name="DXP_Reminder"
+                      AllowAnimation="True"
+                      AllowScrim="True"
+                      AllowShadow="True"
+                      CloseOnScrimTap="True"
+                      MinimumWidthRequest="300">
+            <VerticalStackLayout Spacing="6">
+                <Label Text="{x:Static loc:LocStrings.Reminder}"
+                       Style="{StaticResource CentralHeader}" />
+
+
+                <dxe:MultilineEdit Text="{Binding ReminderTitle}"
+                                   LabelText="{x:Static loc:LocStrings.ReminderTitle}"
+                                   MaxLineCount="2"
+                                   StartIcon="remindertitle"
+                                   ClearIconVisibility="Never"
+                                   MaximumWidthRequest="285" />
+
+                <dxe:MultilineEdit Text="{Binding ReminderDescription}"
+                                   LabelText="{x:Static loc:LocStrings.ReminderDescription}"
+                                   MaxLineCount="3"
+                                   StartIcon="reminderdescription"
+                                   ClearIconVisibility="Never"
+                                   MaximumWidthRequest="285" />
+
+                <dxe:TimeEdit LabelText="{x:Static loc:LocStrings.Time}"
+                              StartIcon="clock"
+                              Time="{Binding ReminderTime}"
+                              MaximumWidthRequest="285" />
+
+                <HorizontalStackLayout HorizontalOptions="Start">
+                    <Switch IsToggled="{Binding IsReminderEnabled}" />
+                    <Label Text="{x:Static loc:LocStrings.Enable}"
+                           VerticalOptions="Center"
+                           Margin="3,0,0,0"
+                           TextColor="{StaticResource LightNormalText}" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout HorizontalOptions="End"
+                                       Padding="0">
+                    <dxco:SimpleButton x:Name="SB_Save"
+                                       Style="{StaticResource PrimaryButton}"
+                                       Text="{Binding LocSave}"
+                                       FontSize="16"
+                                       Margin="0,0,5,5"
+                                       IconHorizontalPosition="Left"
+                                       Icon="check_second"
+                                       Command="{Binding AddReminderCommand}"
+                                       Clicked="SB_Save_Clicked" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+        </dxco:DXPopup>
     </Grid>
 </v:ContentPageBase>
