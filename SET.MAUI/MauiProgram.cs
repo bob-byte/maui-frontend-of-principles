@@ -141,12 +141,7 @@ public static class MauiProgram
         IDeviceInfo deviceInfo = DeviceInfo.Current;
         IAppInfo appInfo = AppInfo.Current;
 
-        ISettingsService settingsService = serviceProvider.GetRequiredService<ISettingsService>();
-
-        _ = long.TryParse( settingsService.UserId, out long userId );
-
         SaveLogRequest result = new(
-            UserId: userId,
             DeviceOs: $"{deviceInfo.Platform} {deviceInfo.VersionString}",
             DeviceModelName: $"{deviceInfo.Name} {deviceInfo.Model}",
             DeviceType: deviceInfo.DeviceType.ToString(),

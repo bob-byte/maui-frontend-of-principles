@@ -13,7 +13,7 @@ public class ServiceOfHabit : BaseRemoteService, IServiceOfHabit
 
     public async Task<List<UserHabit>> ActiveHabitsAsync( DateOnly startInterval, DateOnly endInterval )
     {
-        string url = $"{UrlBuilder.HabitsInProgress}/{SettingsService.UserId}";
+        string url = $"{UrlBuilder.HabitsInProgress}";
 
         TimeOnly zeroTime = TimeOnly.FromTimeSpan( TimeSpan.Zero );
         DateTime startIntervalAsDateTime = startInterval.ToDateTime( zeroTime );
@@ -140,7 +140,7 @@ public class ServiceOfHabit : BaseRemoteService, IServiceOfHabit
     {
         ArgumentNullException.ThrowIfNull(habit, nameof(habit));
 
-        string url = $"{UrlBuilder.Habits}/{habit.Id}?userId={SettingsService.UserId}";
+        string url = $"{UrlBuilder.Habits}/{habit.Id}";
         SaveHabitResponse result = await RequestProvider.PostAsync<EditUserHabitDto, SaveHabitResponse>( url, habit, SettingsService.AuthAccessToken );
     
         return result;
@@ -153,7 +153,7 @@ public class ServiceOfHabit : BaseRemoteService, IServiceOfHabit
             throw new ArgumentException( message: "is empty", nameof( habitsWithPriorities ) );
         }
 
-        string url = $"{UrlBuilder.HabitsPriorities}/{SettingsService.UserId}";
+        string url = $"{UrlBuilder.HabitsPriorities}";
         await RequestProvider.PutAsync( url, habitsWithPriorities.ToList(), SettingsService.AuthAccessToken );
     }
 

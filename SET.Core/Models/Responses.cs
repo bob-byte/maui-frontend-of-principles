@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 namespace SET.Core.Models;
 
 public record SignUpResponse( string Message, string Token );
-public record LoginResponse( string Message, string Token, long UserId );
-public record GoogleAuthResponse( string Message, string Token, long UserId );
+public record LoginResponse( string Message, string Token);
+public record GoogleAuthResponse( string Message, string Token);
 public record SaveMainSloganResponse( string Message );
 public record RecomendedHabitsResponse(List<RecommendedHabit> Habits);
 public record ResponseOfUpdateProgressPost( double PreviousPercentageAchieved, double PercentageAchived );

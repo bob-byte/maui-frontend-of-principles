@@ -19,10 +19,14 @@ public partial class App : Application
 
         UserAppTheme = AppTheme.Light;
         InitializeComponent();
-        MainPage = new AppShell( serviceProvider );
     }
 
-    protected async override void OnStart( )
+    protected override Window CreateWindow( IActivationState? activationState )
+    {
+        return new Window( new AppShell( ServiceLocator.Current!.ServiceProvider ) );
+    }
+
+    protected async override void OnStart()
     {
         bool shouldShowPopup = await m_updatePopupViewModel.ShouldShowPopup();
 

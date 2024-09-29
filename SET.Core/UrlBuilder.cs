@@ -33,7 +33,11 @@ public class UrlBuilder : IUrlBuilder
     {
         get
         {
-            m_baseUrl ??= "https://principles-server.ckwavh.easypanel.host/";
+//#if DEBUG
+            m_baseUrl ??= "https://principles-test-server.ckwavh.easypanel.host/";
+//#else
+//            m_baseUrl ??= "https://principles-server.ckwavh.easypanel.host/";
+//#endif
             return m_baseUrl;
         }
     }

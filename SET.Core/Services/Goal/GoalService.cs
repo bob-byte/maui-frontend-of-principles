@@ -20,7 +20,7 @@ public class GoalService : BaseRemoteService, IGoalService
         }
         else
         {
-            string url = $"{UrlBuilder.Goal}?userId={SettingsService.UserId}";
+            string url = $"{UrlBuilder.Goal}";
 
             result = await RequestProvider.GetAsync<ObservableCollectionEx<UserGoal>>( url, SettingsService.AuthAccessToken ).DefaultConfigureAwait();
 
@@ -39,7 +39,7 @@ public class GoalService : BaseRemoteService, IGoalService
 
     public Task<DtoWithId> SaveGoalAsync( UserGoal goal )
     {
-        string url = $"{UrlBuilder.Goal}/{goal.Id}?userId={SettingsService.UserId}";
+        string url = $"{UrlBuilder.Goal}/{goal.Id}";
         return RequestProvider.PostAsync<UserGoal, DtoWithId>( url, goal, SettingsService.AuthAccessToken );
     }
 

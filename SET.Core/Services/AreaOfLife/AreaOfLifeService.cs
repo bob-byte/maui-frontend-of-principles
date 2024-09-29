@@ -10,7 +10,7 @@ public class AreaOfLifeService : BaseRemoteService, IAreaOfLifeService
 
     public async Task<List<UserAreaOfLife>> UserAreasOfLife()
     {
-        string url = $"{UrlBuilder.AreasOfLife}?userId={SettingsService.UserId}";
+        string url = $"{UrlBuilder.AreasOfLife}";
         List<UserAreaOfLife> result = await RequestProvider.GetAsync<List<UserAreaOfLife>>( url, SettingsService.AuthAccessToken );
         return result;
     }

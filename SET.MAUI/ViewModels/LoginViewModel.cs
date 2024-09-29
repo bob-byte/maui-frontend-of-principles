@@ -68,7 +68,6 @@ public partial class LoginViewModel : BaseViewModel
                 catch
                 {
                     await SettingsService.SetAuthAccessTokenAsync(string.Empty);
-                    SettingsService.UserId = string.Empty;
                     throw;
                 }
             } );

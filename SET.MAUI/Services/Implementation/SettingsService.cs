@@ -33,11 +33,6 @@ public class SettingsService : ISettingsService
         AuthAccessToken = value;
     }
 
-    public string UserId
-    {
-        get => Preferences.Get( key: "user_id", defaultValue: "0" )!;
-        set => Preferences.Set( key: "user_id", value );
-    }
     public double NormalPageWidth
     {
         get => Preferences.Get( key: "normal_page_width", defaultValue: 0.0 );

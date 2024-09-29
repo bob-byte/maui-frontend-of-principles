@@ -26,9 +26,7 @@ public class LoginService : BaseRemoteService, ILoginService
             request
         ).DefaultConfigureAwait();
 
-        //TODO: Change type of SettingsService.UserId to long
         await SettingsService.SetAuthAccessTokenAsync( loginResponse.Token ).DefaultConfigureAwait();
-        SettingsService.UserId = loginResponse.UserId.ToString();
 
         return loginResponse;
     }
