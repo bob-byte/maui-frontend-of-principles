@@ -31,9 +31,9 @@ public partial class StartupViewModel : BaseViewModel
             await m_googleAuthService.AuthorizeAsync();
             await Navigation.GoToInitialViewAsync();
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            if (SettingsService.IsDebug)
+            if(ex is not TaskCanceledException)
             {
                 LoggingService.LogError( ex, ex.Message );
             }

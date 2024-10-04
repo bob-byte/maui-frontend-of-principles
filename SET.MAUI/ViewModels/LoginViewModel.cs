@@ -48,26 +48,16 @@ public partial class LoginViewModel : BaseViewModel
             {
                 try
                 {
-                    LoginResponse loginResponse = await LoginService.LoginAsync( Email.Value, Password.Value );
+                    await LoginService.LoginAsync( Email.Value, Password.Value );
+                    await Navigation.GoToInitialViewAsync();
 
-                    bool isLoggedIn = !string.IsNullOrWhiteSpace( loginResponse.Token );
-                    if (isLoggedIn)
-                    {
-                        await Navigation.GoToInitialViewAsync();
-
-                        Email = new ValidatableObject<string>();
-                        Password = new ValidatableObject<string>();
-                        AddValidations();
-                    }
-                    else
-                    {
-                        LoggingService.LogFatal( loginResponse.Message );
-                        await DialogService.ShowErrorAsync( loginResponse.Message );
-                    }
+                    Email = new ValidatableObject<string>();
+                    Password = new ValidatableObject<string>();
+                    AddValidations();
                 }
                 catch
                 {
-                    await SettingsService.SetAuthAccessTokenAsync(string.Empty);
+                    await SettingsService.SetAuthAccessTokenAsync( string.Empty );
                     throw;
                 }
             } );

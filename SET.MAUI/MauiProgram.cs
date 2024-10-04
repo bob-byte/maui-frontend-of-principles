@@ -136,6 +136,7 @@ public static class MauiProgram
             .CreateLogger();
     }
 
+#if !DEBUG
     private static SaveLogRequest CreateSaveLogRequest( LogEvent logEvent, IServiceProvider serviceProvider )
     {
         IDeviceInfo deviceInfo = DeviceInfo.Current;
@@ -153,6 +154,7 @@ public static class MauiProgram
         );
         return result;
     }
+#endif
 
     private static void AllowMultiLineTruncation()
     {

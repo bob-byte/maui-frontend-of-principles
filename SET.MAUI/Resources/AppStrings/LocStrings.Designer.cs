@@ -445,7 +445,7 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Do not remind me of this update again.
+        ///   Looks up a localized string similar to Don&apos;t remind me of it again.
         /// </summary>
         internal static string DontShowUpdateCheckBoxText {
             get {
@@ -1730,6 +1730,15 @@ namespace SET.MAUI.Resources.AppStrings {
         internal static string UnableToLoadData {
             get {
                 return ResourceManager.GetString("UnableToLoadData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        internal static string Update {
+            get {
+                return ResourceManager.GetString("Update", resourceCulture);
             }
         }
         

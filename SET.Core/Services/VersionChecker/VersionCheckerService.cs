@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace SET.Core.Services;
 public class VersionCheckerService : BaseRemoteService, IVersionCheckerService
 {
@@ -12,9 +7,9 @@ public class VersionCheckerService : BaseRemoteService, IVersionCheckerService
     {
         //do nothing
     }
-    public async Task<AppVersionInfo> GetAppVersionAsync(string language )
+    public async Task<AppVersionInfo> GetAppVersionAsync(string language)
     {
-        string url = $"{UrlBuilder.VersionCheck}?language={language}";
+        string url = $"{UrlBuilder.VersionCheck}?language={language}&osPlatform={DeviceInfo.Platform}";
         AppVersionInfo appVersion = await RequestProvider.GetAsync<AppVersionInfo>(
             url
         ).DefaultConfigureAwait();

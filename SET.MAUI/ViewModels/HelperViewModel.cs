@@ -128,4 +128,14 @@ public partial class HelperViewModel : BaseViewModel
     {
         m_cancellationSource = new CancellationTokenSource();
     }
+
+    [RelayCommand]
+    private Task ShowHelperInfoSnackbar(VisualElement visualElement)
+    {
+        return visualElement.DisplaySnackbar(
+            LocStrings.HelperWarning,
+            duration: TimeSpan.FromSeconds( 5 ),
+            visualOptions: SnackbarHelper.DefaultOptions()
+        );
+    }
 }

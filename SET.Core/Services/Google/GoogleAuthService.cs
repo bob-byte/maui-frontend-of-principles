@@ -9,7 +9,6 @@ public class GoogleAuthService : IGoogleAuthService
     private readonly IRequestProvider m_requestProvider;
     private readonly ISettingsService m_settingsService;
     private readonly IUrlBuilder m_urlBuilder;
-    private readonly ILaunchUriHelper m_launchUriHelper;
 
     public GoogleAuthService( IServiceProvider serviceProvider )
     {
@@ -17,7 +16,6 @@ public class GoogleAuthService : IGoogleAuthService
         m_requestProvider = serviceProvider.GetRequiredService<IRequestProvider>();
         m_settingsService = serviceProvider.GetRequiredService<ISettingsService>();
         m_urlBuilder = serviceProvider.GetRequiredService<IUrlBuilder>();
-        m_launchUriHelper = serviceProvider.GetRequiredService<ILaunchUriHelper>();
     }
 
     public async Task AuthorizeAsync()
@@ -55,23 +53,13 @@ public class GoogleAuthService : IGoogleAuthService
         string authUriStr = authUrlBuider.ToString();
         Uri authUri = new( authUriStr );
 
-        Task<WebAuthenticatorResult> authResultTask = WebAuthenticator.Default.AuthenticateAsync(
+        WebAuthenticatorResult authResult = await WebAuthenticator.Default.AuthenticateAsync(
             authUri,
             new Uri( callbackUriAsStr )
-        );
+        ).DefaultConfigureAwait();
 
-        string? code;
-        string? error;
-#if ANDROID
-        LaunchExternalOAuthResult launchExternalOAuthResult = await m_launchUriHelper.LaunchResult.DefaultConfigureAwait();
-        code = launchExternalOAuthResult.Code;
-        error = launchExternalOAuthResult.Error;
-        m_launchUriHelper.Reset();
-#else
-        WebAuthenticatorResult authResult = await authResultTask.DefaultConfigureAwait();
-        authResult.Properties.TryGetValue("code", out code);
-        authResult.Properties.TryGetValue("error", out error);
-#endif
+        authResult.Properties.TryGetValue("code", out string? code );
+        authResult.Properties.TryGetValue("error", out string? error );
 
         if (!string.IsNullOrWhiteSpace( error ) || string.IsNullOrWhiteSpace(code))
         {

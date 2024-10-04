@@ -25,21 +25,34 @@
     </v:ContentPageBase.Resources>
 
     <Shell.TitleView>
-        <HorizontalStackLayout HorizontalOptions="Start"
-                               BackgroundColor="{AppThemeBinding Light={StaticResource Primary},
-                                                                 Dark={StaticResource NavigationBarColorDark}}"
-                               Spacing="10"
-                               VerticalOptions="CenterAndExpand">
+        <Grid VerticalOptions="CenterAndExpand"
+              Margin="0,0,5,0"
+              ColumnDefinitions="Auto, Auto, *, Auto">
             <dx:DXImage Source="larger_help"
-                        TintColor="{StaticResource DarkIconColor}" />
+                        TintColor="{StaticResource DarkIconColor}"
+                        Grid.Column="0" />
             <Label Text="{Binding Title}"
                    TextColor="{StaticResource TitleTextColor}"
                    VerticalOptions="Center"
                    VerticalTextAlignment="Center"
                    FontSize="20"
                    FontFamily="MonaSansBold"
-                   FontAttributes="Bold" />
-        </HorizontalStackLayout>
+                   FontAttributes="Bold"
+                   Grid.Column="1" />
+            <dx:DXImage Source="info"
+                        TintColor="{StaticResource DarkIconColor}"
+                        HorizontalOptions="End"
+                        WidthRequest="40"
+                        HeightRequest="40"
+                        x:Name="DXI_Info"
+                        Grid.Column="3">
+                <dx:DXImage.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1"
+                                          Command="{Binding ShowHelperInfoSnackbarCommand}"
+                                          CommandParameter="{x:Reference L_ShortDescriptionOfAssistant}"/>
+                </dx:DXImage.GestureRecognizers>
+            </dx:DXImage>
+        </Grid>
     </Shell.TitleView>
     <Grid RowDefinitions="0, *, 16, Auto, 16"
           BackgroundColor="{StaticResource Primary}">
@@ -65,11 +78,13 @@
             <skia:SKLottieView IsAnimationEnabled="{Binding IsAnimationVisible}"
                                RepeatCount="-1"
                                Source="emptychat_light.json"
+                               x:Name="SKLV_Animation"
                                Grid.Row="1"
                                Grid.Column="1" />
             <Label Text="{x:Static loc:LocStrings.SelfDevelopmentAssistantShortDescription}"
+                   x:Name="L_ShortDescriptionOfAssistant"
                    FontFamily="MonaSansMedium"
-                   FontSize="14"
+                   FontSize="13"
                    TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
                                                Dark={StaticResource DarkNormalText}}"
                    LineBreakMode="WordWrap"
@@ -79,7 +94,7 @@
                    Grid.ColumnSpan="3" />
         </Grid>
         <Grid ColumnDefinitions="*, Auto"
-              RowDefinitions="Auto, Auto"
+              RowDefinitions="Auto"
               ColumnSpacing="3"
               Padding="16,0"
               Grid.Row="3"
@@ -169,15 +184,6 @@
                     <TapGestureRecognizer Command="{Binding CancelAnswerGenerationCommand}" />
                 </dx:DXImage.GestureRecognizers>
             </dx:DXImage>
-
-            <Label Text="{x:Static loc:LocStrings.HelperWarning}"
-                   Grid.Row="1"
-                   Margin="0,10,0,0"
-                   HorizontalOptions="Center"
-                   VerticalOptions="CenterAndExpand"
-                   TextColor="White"
-                   HorizontalTextAlignment="Center"
-                   Grid.ColumnSpan="2" />
         </Grid>
     </Grid>
 </v:ContentPageBase>

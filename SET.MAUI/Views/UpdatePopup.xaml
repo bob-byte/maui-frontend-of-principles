@@ -70,8 +70,7 @@
                                        IconHorizontalPosition="Left"
                                        BackgroundColor="{StaticResource CancelButtonColor}" />
                     <dxco:SimpleButton x:Name="SB_AppUpdate"
-                                       Text="{OnPlatform iOS={x:Static loc:LocStrings.GoToAppStore},
-                                                         Android={x:Static loc:LocStrings.GoToGooglePlay}}"
+                                       Text="{x:Static loc:LocStrings.Update}"
                                        Command="{Binding OpenStoreCommand}"
                                        Clicked="SB_AppUpdate_Clicked"
                                        BackgroundColor="{StaticResource Primary}"
