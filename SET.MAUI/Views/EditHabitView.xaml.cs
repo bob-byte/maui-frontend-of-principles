@@ -580,4 +580,39 @@ public partial class EditHabitView : ContentPageBase
     {
         DXP_Frequency.IsOpen = false;
     }
+
+    private void ME_HabitReminder_Tap( object sender, HandledEventArgs e )
+    {
+        DXP_Reminders.IsOpen = true;
+    }
+
+    private void ME_HabitReminder_IconClicked( System.Object sender, System.EventArgs e )
+    {
+        DXP_Reminders.IsOpen = true;
+    }
+
+    //private void ShowOrHideHabitReminders()
+    //{
+    //    if (ReminderBottomSheet.State == BottomSheetState.Hidden)
+    //    {
+    //        ReminderBottomSheet.State = BottomSheetState.HalfExpanded;
+    //        double bottomSheetHeight = PageHeight * ReminderBottomSheet.HalfExpandedRatio;
+    //        double rowSpacing = G_Reminder.RowSpacing * (G_Reminder.RowDefinitions.Count - 1);
+    //        double additionalSpacing = 15;
+    //        double height = bottomSheetHeight - rowSpacing - L_ReminderCenterHeader.HeightRequest - L_ReminderRecommendation.HeightRequest - additionalSpacing;
+
+    //        SKL_Reminders.HeightRequest = height;
+    //        SKL_Reminders.WidthRequest = PageWidth - (G_Reminder.Padding.Left + G_Reminder.Padding.Right);
+
+    //    }
+    //    else
+    //    {
+    //        ReminderBottomSheet.State = BottomSheetState.Hidden;
+    //    }
+    //}
+
+    private void OnAddReminderTap( object sender, TappedEventArgs e )
+    {
+        DXP_Reminders.IsOpen = true;
+    }
 }

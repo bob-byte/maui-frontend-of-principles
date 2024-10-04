@@ -855,4 +855,7 @@
   <data name="Enable" xml:space="preserve">
     <value>Ввімкнути</value>
   </data>
+  <data name="EmptyReminders" xml:space="preserve">
+    <value>У вас ще немає нагадувань про цю звичку</value>
+  </data>
 </root>

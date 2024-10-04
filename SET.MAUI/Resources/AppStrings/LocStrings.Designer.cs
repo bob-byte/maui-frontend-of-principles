@@ -502,6 +502,15 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You don&apos;t have any reminders for this habit yet.
+        /// </summary>
+        internal static string EmptyReminders {
+            get {
+                return ResourceManager.GetString("EmptyReminders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enable.
         /// </summary>
         internal static string Enable {

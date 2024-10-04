@@ -120,6 +120,16 @@
                                       EndIcon="dotshorizontal"
                                       EndIconClicked="FrequencyIcon_Clicked"
                                       Tap="TE_Frequency_Tap" />
+                        <dxe:MultilineEdit x:Name="ME_HabitReminder"
+                                           LabelText="{x:Static loc:LocStrings.Reminder}"
+                                           IsErrorIconVisible="False"
+                                           StartIcon="reminder"
+                                           StartIconClicked="ME_HabitReminder_IconClicked"
+                                           EndIcon="dotshorizontal"
+                                           EndIconClicked="ME_HabitReminder_IconClicked"
+                                           Tap="ME_HabitReminder_Tap"
+                                           ClearIconVisibility="Never"
+                                           IsReadOnly="True" />
                         <dxe:AutoCompleteTokenEdit LabelText="{x:Static loc:LocStrings.AreasOfHabit}"
                                                    EndIcon="dotshorizontal"
                                                    ItemsSource="{Binding AllUserAreasOfLife}"
@@ -150,6 +160,246 @@
                                            Style="{StaticResource PrimaryButton}"
                                            Clicked="SB_RecomendedHabit_Clicked"
                                            Margin="0,5,0,0" />
+
+                        <!--<dxco:BottomSheet x:Name="ReminderBottomSheet"
+                                          BackgroundColor="{AppThemeBinding Light={StaticResource Background},
+                                                                            Dark={StaticResource DarkBackground}}"
+                                          ShowGrabber="False"
+                                          AllowDismiss="True"
+                                          AllowedState="HalfExpanded"
+                                          HalfExpandedRatio="0.7">
+                            <Grid Padding="10,0,10,0"
+                                  x:Name="G_Reminder">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Label x:Name="L_ReminderCenterHeader"
+                                       Text="{x:Static loc:LocStrings.Reminder}"
+                                       Style="{StaticResource CentralHeader}"
+                                       VerticalOptions="Start"
+                                       Grid.Column="1"
+                                       Grid.Row="0"
+                                       HeightRequest="40" />
+
+                                <dx:DXImage Source="plus"
+                                            VerticalOptions="Start"
+                                            HorizontalOptions="End"
+                                            TintColor="{StaticResource LabelText}"
+                                            WidthRequest="40"
+                                            HeightRequest="40"
+                                            Grid.Column="2"
+                                            Grid.Row="0">
+                                    <dx:DXImage.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                              Tapped="OnAddReminderTap" />
+                                    </dx:DXImage.GestureRecognizers>
+                                </dx:DXImage>
+
+                                <skia:SKLottieView IsAnimationEnabled="True"
+                                                   x:Name="SKL_Reminders"
+                                                   RepeatCount="-1"
+                                                   Source="reminders.json"
+                                                   VerticalOptions="Start"
+                                                   Grid.Row="1"
+                                                   IsVisible="True" />
+
+
+                                <Label x:Name="L_ReminderRecommendation"
+                                       Margin="0,8,0,0"
+                                       Text="{x:Static loc:LocStrings.EmptyReminders}"
+                                       FontSize="16"
+                                       FontFamily="MonaSansMedium"
+                                       HorizontalTextAlignment="Center"
+                                       VerticalTextAlignment="Start"
+                                       Grid.Row="2"
+                                       VerticalOptions="Start"
+                                       HeightRequest="120" />-->
+
+
+                        <dxco:DXPopup x:Name="DXP_Reminders"
+                                      AllowAnimation="True"
+                                      AllowScrim="True"
+                                      AllowShadow="True"
+                                      CloseOnScrimTap="True"
+                                      MinimumWidthRequest="300">
+                            <VerticalStackLayout Spacing="6">
+                                <Label Text="{x:Static loc:LocStrings.Reminder}"
+                                       Style="{StaticResource CentralHeader}" />
+
+                                <dxe:MultilineEdit LabelText="{x:Static loc:LocStrings.ReminderTitle}"
+                                                   MaxLineCount="2"
+                                                   StartIcon="remindertitle"
+                                                   ClearIconVisibility="Never"
+                                                   MaximumWidthRequest="285">
+                                    <dxe:MultilineEdit.Style>
+                                        <Style TargetType="dxe:MultilineEdit">
+                                            <Setter Property="Text"
+                                                    Value="{Binding Mission}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Mission}"
+                                                             Value="">
+                                                    <Setter Property="Text"
+                                                            Value="{x:Static loc:LocStrings.ReminderTitle}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </dxe:MultilineEdit.Style>
+                                </dxe:MultilineEdit>
+
+                                <dxe:MultilineEdit Text="{Binding Habit.Name}"
+                                                   LabelText="{x:Static loc:LocStrings.ReminderDescription}"
+                                                   MaxLineCount="3"
+                                                   StartIcon="reminderdescription"
+                                                   ClearIconVisibility="Never"
+                                                   MaximumWidthRequest="285" />
+
+                                <dxe:TimeEdit LabelText="{x:Static loc:LocStrings.Time}"
+                                              StartIcon="clock"
+                                              Time="20:30"
+                                              MaximumWidthRequest="285" />
+
+                                <HorizontalStackLayout HorizontalOptions="Start">
+                                    <Switch />
+                                    <Label Text="{x:Static loc:LocStrings.Enable}"
+                                           VerticalOptions="Center"
+                                           Margin="3,0,0,0"
+                                           TextColor="{StaticResource LightNormalText}" />
+                                </HorizontalStackLayout>
+
+
+                                <HorizontalStackLayout HorizontalOptions="Center"
+                                                       Spacing="10">
+
+                                    <dx:DXToggleButton x:Name="TBtn_Monday"
+                                                       Content="Mon"
+                                                       IsChecked="False"
+                                                       WidthRequest="50"
+                                                       HeightRequest="50"
+                                                       FontSize="12"
+                                                       Padding="0"
+                                                       HorizontalContentAlignment="Center"
+                                                       VerticalContentAlignment="Center"
+                                                       CornerRadius="25"
+                                                       CheckedBackgroundColor="{StaticResource Primary}"
+                                                       BackgroundColor="{StaticResource LightPrimary}"
+                                                       CheckedPressedBackgroundColor="Transparent"
+                                                       PressedBackgroundColor="Transparent" />
+
+                                    <dx:DXToggleButton x:Name="TBtn_Tuesday"
+                                                       Content="Tue"
+                                                       IsChecked="False"
+                                                       WidthRequest="50"
+                                                       HeightRequest="50"
+                                                       FontSize="12"
+                                                       Padding="0"
+                                                       HorizontalContentAlignment="Center"
+                                                       VerticalContentAlignment="Center"
+                                                       CornerRadius="25"
+                                                       CheckedBackgroundColor="{StaticResource Primary}"
+                                                       BackgroundColor="{StaticResource LightPrimary}"
+                                                       CheckedPressedBackgroundColor="Transparent"
+                                                       PressedBackgroundColor="Transparent" />
+
+                                    <dx:DXToggleButton x:Name="TBtn_Wednesday"
+                                                       Content="Wed"
+                                                       IsChecked="False"
+                                                       WidthRequest="50"
+                                                       HeightRequest="50"
+                                                       FontSize="12"
+                                                       Padding="0"
+                                                       HorizontalContentAlignment="Center"
+                                                       VerticalContentAlignment="Center"
+                                                       CornerRadius="25"
+                                                       CheckedBackgroundColor="{StaticResource Primary}"
+                                                       BackgroundColor="{StaticResource LightPrimary}"
+                                                       CheckedPressedBackgroundColor="Transparent"
+                                                       PressedBackgroundColor="Transparent" />
+
+                                    <dx:DXToggleButton x:Name="TBtn_Thursday"
+                                                       Content="Thu"
+                                                       IsChecked="False"
+                                                       WidthRequest="50"
+                                                       HeightRequest="50"
+                                                       FontSize="12"
+                                                       Padding="0"
+                                                       HorizontalContentAlignment="Center"
+                                                       VerticalContentAlignment="Center"
+                                                       CornerRadius="25"
+                                                       CheckedBackgroundColor="{StaticResource Primary}"
+                                                       BackgroundColor="{StaticResource LightPrimary}"
+                                                       CheckedPressedBackgroundColor="Transparent"
+                                                       PressedBackgroundColor="Transparent" />
+                                </HorizontalStackLayout>
+
+
+                                <HorizontalStackLayout HorizontalOptions="Center"
+                                                       Spacing="10">
+
+                                    <dx:DXToggleButton x:Name="TBtn_Friday"
+                                                       Content="Fri"
+                                                       IsChecked="False"
+                                                       WidthRequest="50"
+                                                       HeightRequest="50"
+                                                       FontSize="12"
+                                                       Padding="0"
+                                                       HorizontalContentAlignment="Center"
+                                                       VerticalContentAlignment="Center"
+                                                       CornerRadius="25"
+                                                       CheckedBackgroundColor="{StaticResource Primary}"
+                                                       BackgroundColor="{StaticResource LightPrimary}"
+                                                       CheckedPressedBackgroundColor="Transparent"
+                                                       PressedBackgroundColor="Transparent" />
+
+                                    <dx:DXToggleButton x:Name="TBtn_Saturday"
+                                                       Content="Sat"
+                                                       IsChecked="False"
+                                                       WidthRequest="50"
+                                                       HeightRequest="50"
+                                                       FontSize="12"
+                                                       Padding="0"
+                                                       HorizontalContentAlignment="Center"
+                                                       VerticalContentAlignment="Center"
+                                                       CornerRadius="25"
+                                                       CheckedBackgroundColor="{StaticResource Primary}"
+                                                       BackgroundColor="{StaticResource LightPrimary}"
+                                                       CheckedPressedBackgroundColor="Transparent"
+                                                       PressedBackgroundColor="Transparent" />
+
+                                    <dx:DXToggleButton x:Name="TBtn_Sunday"
+                                                       Content="Sun"
+                                                       IsChecked="False"
+                                                       WidthRequest="50"
+                                                       HeightRequest="50"
+                                                       FontSize="12"
+                                                       Padding="0"
+                                                       HorizontalContentAlignment="Center"
+                                                       VerticalContentAlignment="Center"
+                                                       CornerRadius="25"
+                                                       CheckedBackgroundColor="{StaticResource Primary}"
+                                                       BackgroundColor="{StaticResource LightPrimary}"
+                                                       CheckedPressedBackgroundColor="Transparent"
+                                                       PressedBackgroundColor="Transparent" />
+                                </HorizontalStackLayout>
+
+
+
+                                <HorizontalStackLayout HorizontalOptions="End"
+                                                       Padding="0">
+                                    <dxco:SimpleButton x:Name="SB_ReminderSave"
+                                                       Style="{StaticResource PrimaryButton}"
+                                                       Text="{Binding LocSave}"
+                                                       FontSize="16"
+                                                       Margin="0,0,5,5"
+                                                       IconHorizontalPosition="Left"
+                                                       Icon="check_second" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </dxco:DXPopup>
+                        <!--</Grid>
+                        </dxco:BottomSheet>-->
+
                         <dxco:BottomSheet x:Name="GoalsBottomSheet"
                                           BackgroundColor="{AppThemeBinding Light={StaticResource Background},
                                                                             Dark={StaticResource DarkBackground}}"
