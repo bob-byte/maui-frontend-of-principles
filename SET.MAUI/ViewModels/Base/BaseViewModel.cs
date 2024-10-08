@@ -190,9 +190,8 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
             UserInfo userInfo;
             if (string.IsNullOrEmpty( UserName.Value ))
             {
-                string url = $"{UrlBuilder.Profile}/{SettingsService.UserId}";
+                string url = $"{UrlBuilder.Profile}";
                 userInfo = await RequestProvider.GetAsync<UserInfo>( url, SettingsService.AuthAccessToken );
-                userInfo.Id = long.Parse( SettingsService.UserId );
                 UserName.Value = userInfo.Name;
                 MainSlogan = userInfo.MainSlogan;
                 Mission = userInfo.Mission;
@@ -207,7 +206,6 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
             else
             {
                 userInfo = new UserInfo();
-                userInfo.Id = long.Parse( SettingsService.UserId );
 
                 MainSlogan = CachingService.StoredValue( CacheKeys.USER_MAIN_SLOGAN );
                 userInfo.MainSlogan = MainSlogan;
@@ -342,7 +340,6 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     protected async Task LogoutAsync()
     {
         await SettingsService.SetAuthAccessTokenAsync(string.Empty);
-        SettingsService.UserId = string.Empty;
 
         if (UserName != null)
         {

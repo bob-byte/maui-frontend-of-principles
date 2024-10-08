@@ -38,7 +38,6 @@ public partial class HelperViewModel : BaseViewModel
 
     public override async Task InitializeAsync( object? parameter = null )
     {
-        await InitUserInfoAsync();
         await base.InitializeAsync( parameter );
     }
 
@@ -128,5 +127,15 @@ public partial class HelperViewModel : BaseViewModel
     private void ResetCancellationOfAnswerGeneration()
     {
         m_cancellationSource = new CancellationTokenSource();
+    }
+
+    [RelayCommand]
+    private Task ShowHelperInfoSnackbar(VisualElement visualElement)
+    {
+        return visualElement.DisplaySnackbar(
+            LocStrings.HelperWarning,
+            duration: TimeSpan.FromSeconds( 5 ),
+            visualOptions: SnackbarHelper.DefaultOptions()
+        );
     }
 }

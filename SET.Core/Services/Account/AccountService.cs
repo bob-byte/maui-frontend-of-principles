@@ -13,7 +13,7 @@ public class AccountService : BaseRemoteService, IAccountService
 
     public async Task DeleteAccountAsync()
     {
-        string url = $"{UrlBuilder.Account}/{SettingsService.UserId}";
+        string url = $"{UrlBuilder.Account}";
         await RequestProvider.DeleteAsync(url, SettingsService.AuthAccessToken);
     }
 }

@@ -13,7 +13,7 @@ public class LoginService : BaseRemoteService, ILoginService
         m_configuration = serviceProvider.GetRequiredService<IConfiguration>();
     }
 
-    public async Task<LoginResponse> LoginAsync( string email, string password )
+    public async Task LoginAsync( string email, string password )
     {
         string firstKey = m_configuration["EncryptionSettings:FirstKey"]!;
         string secondKey = m_configuration["EncryptionSettings:SecondKey"]!;
@@ -26,10 +26,6 @@ public class LoginService : BaseRemoteService, ILoginService
             request
         ).DefaultConfigureAwait();
 
-        //TODO: Change type of SettingsService.UserId to long
         await SettingsService.SetAuthAccessTokenAsync( loginResponse.Token ).DefaultConfigureAwait();
-        SettingsService.UserId = loginResponse.UserId.ToString();
-
-        return loginResponse;
     }
 }

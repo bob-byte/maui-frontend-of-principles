@@ -73,26 +73,16 @@ public partial class SignupViewModel : BaseViewModel
             await UiBusyFor( async () =>
             {
                 await SignupService.SignupAsync( Name.Value, Email.Value, Password.Value, Gender, MainSlogan, Mission );
-                LoginResponse loginResponse = await LoginService.LoginAsync( Email.Value, Password.Value );
+                await LoginService.LoginAsync( Email.Value, Password.Value );
+                await Navigation.GoToInitialViewAsync();
 
-                bool isLoggedIn = !string.IsNullOrWhiteSpace( loginResponse.Token );
-                if (isLoggedIn)
-                {
-                    await Navigation.GoToInitialViewAsync();
+                Name = new ValidatableObject<string>();
+                Email = new ValidatableObject<string>();
+                Password = new ValidatableObject<string>();
+                AddValidators();
 
-                    Name = new ValidatableObject<string>();
-                    Email = new ValidatableObject<string>();
-                    Password = new ValidatableObject<string>();
-                    AddValidators();
-                    
-                    MainSlogan = "";
-                    Mission = "";
-                }
-                else
-                {
-                    LoggingService.LogFatal( loginResponse.Message );
-                    await DialogService.ShowErrorAsync( loginResponse.Message );
-                }
+                MainSlogan = "";
+                Mission = "";
             } );
         }
     }

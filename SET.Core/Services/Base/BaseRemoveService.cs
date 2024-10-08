@@ -17,7 +17,7 @@ public class BaseRemoteService
             valueFactory: () =>
             {
                 OpenAIClientOptions options = new( OpenAIClientOptions.ServiceVersion.V2023_09_01_Preview );
-                OpenAIClient client = new( openAIApiKey: "", options );
+                OpenAIClient client = new( "", options );
                 return client;
             },
             mode: LazyThreadSafetyMode.ExecutionAndPublication

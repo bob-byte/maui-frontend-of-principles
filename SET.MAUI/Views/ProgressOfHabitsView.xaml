@@ -130,6 +130,10 @@
                                Caption="{x:Static loc:LocStrings.Delete}" />
             </dxg:DataGridView.StartSwipeItems>
 
+            <dxg:DataGridView.SwipeItemAppearance>
+                <dxg:SwipeItemAppearance Width="125" />
+            </dxg:DataGridView.SwipeItemAppearance>
+
             <dxg:DataGridView.Columns>
                 <!--  {} in GroupCaptionDisplayFormat means display Goal.Name without a caption  -->
                 <dxg:TextColumn FieldName="Goal.Name"

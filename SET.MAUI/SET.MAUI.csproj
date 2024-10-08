@@ -15,8 +15,8 @@
 		<ApplicationId>com.set.principles</ApplicationId>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>1.1.8</ApplicationDisplayVersion>
-		<ApplicationVersion>17</ApplicationVersion>
+		<ApplicationDisplayVersion>1.1.10</ApplicationDisplayVersion>
+		<ApplicationVersion>22</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net8.0-android'">21.0</SupportedOSPlatformVersion>
@@ -40,6 +40,12 @@
 	  <CreatePackage>false</CreatePackage>
 	  <BuildIpa>true</BuildIpa>
 	</PropertyGroup>
+
+    <!--Comment it out when behavior of the published Android app doesn't work as expected-->
+	<!--<PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-android'">
+        <RunAOTCompilation>false</RunAOTCompilation>
+		<PublishTrimmed>false</PublishTrimmed>
+    </PropertyGroup>-->
 	
 	<!-- App Icon -->
 	<ItemGroup Condition="$(TargetFramework.Contains('-android'))">
@@ -61,7 +67,7 @@
 		<MauiImage Update="Resources\Images\edit.png" BaseSize="40, 40" />
 		<MauiImage Update="Resources\Images\delete.png" BaseSize="40, 40" />
 		<MauiImage Update="Resources\Images\logolargesize.png" BaseSize="200, 200" />
-		<MauiImage Update="Resources\Images\larger_help.png" BaseSize="30, 30" />
+		<MauiImage Update="Resources\Images\larger_help.png" BaseSize="40, 40" />
 		<MauiImage Include="Resources\Images\*jpg" BaseSize="23, 23" />
 
 		<!-- Custom Fonts -->

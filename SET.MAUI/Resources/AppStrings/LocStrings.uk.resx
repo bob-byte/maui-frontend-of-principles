@@ -424,7 +424,7 @@
     <value>Огляд</value>
   </data>
   <data name="SelfDevelopmentAssistantShortDescription" xml:space="preserve">
-    <value>Я асистент з саморозвитку. Ви можете звернутися до мене стосовно різноманітних питань. Наприклад, "Чи визначає моя ідентичність моє життя?"</value>
+    <value>Я асистент з саморозвитку. Ви можете звертатися до мене стосовно різних питань. Наприклад, "Чи визначає моя ідентичність моє життя?"</value>
   </data>
   <data name="ChatWithHelper" xml:space="preserve">
     <value>Чат з помічником</value>
@@ -828,11 +828,17 @@
   <data name="GoToGooglePlay" xml:space="preserve">
     <value>Перейти в Google Play</value>
   </data>
+  <data name="Update" xml:space="preserve">
+    <value>Оновити</value>
+  </data>
 	<data name="AppUpdateCloseButton" xml:space="preserve">
     <value>Закрити</value>
   </data>
   <data name="DontShowUpdateCheckBoxText" xml:space="preserve">
-    <value>Не нагадувати більше про це оновлення</value>
+    <value>Не нагадувати більше про це</value>
+  </data>
+  <data name="HelperWarning" xml:space="preserve">
+    <value>Помічник може інколи помилятись - перевіряйте важливу інформацію.</value>
   </data>
   <data name="Reminder" xml:space="preserve">
     <value>Нагадування</value>

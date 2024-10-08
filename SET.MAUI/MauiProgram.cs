@@ -136,17 +136,13 @@ public static class MauiProgram
             .CreateLogger();
     }
 
+#if !DEBUG
     private static SaveLogRequest CreateSaveLogRequest( LogEvent logEvent, IServiceProvider serviceProvider )
     {
         IDeviceInfo deviceInfo = DeviceInfo.Current;
         IAppInfo appInfo = AppInfo.Current;
 
-        ISettingsService settingsService = serviceProvider.GetRequiredService<ISettingsService>();
-
-        _ = long.TryParse( settingsService.UserId, out long userId );
-
         SaveLogRequest result = new(
-            UserId: userId,
             DeviceOs: $"{deviceInfo.Platform} {deviceInfo.VersionString}",
             DeviceModelName: $"{deviceInfo.Name} {deviceInfo.Model}",
             DeviceType: deviceInfo.DeviceType.ToString(),
@@ -158,6 +154,7 @@ public static class MauiProgram
         );
         return result;
     }
+#endif
 
     private static void AllowMultiLineTruncation()
     {

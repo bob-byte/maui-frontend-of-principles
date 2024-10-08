@@ -15,7 +15,7 @@ public partial class ProfileViewModel : BaseViewModel
         bool isSuccess = false;
         await UiBusyFor( async () =>
         {
-            string url = $"{UrlBuilder.UserName}/{SettingsService.UserId}";
+            string url = $"{UrlBuilder.UserName}";
             await RequestProvider.PutAsync( url, newValue, SettingsService.AuthAccessToken );
             isSuccess = true;
         } );
@@ -50,7 +50,7 @@ public partial class ProfileViewModel : BaseViewModel
         bool isSuccess = false;
         await UiBusyFor( async () =>
         {
-            string url = $"{UrlBuilder.UserMainSlogan}/{SettingsService.UserId}";
+            string url = $"{UrlBuilder.UserMainSlogan}";
             await RequestProvider.PutAsync( url, newValue, SettingsService.AuthAccessToken );
             isSuccess = true;
         } );
@@ -72,7 +72,7 @@ public partial class ProfileViewModel : BaseViewModel
         bool isSuccess = false;
         await UiBusyFor( async () =>
         {
-            string url = $"{UrlBuilder.UserMission}/{SettingsService.UserId}";
+            string url = $"{UrlBuilder.UserMission}";
             await RequestProvider.PutAsync( url, newValue, SettingsService.AuthAccessToken );
             isSuccess = true;
         } );
@@ -94,7 +94,6 @@ public partial class ProfileViewModel : BaseViewModel
         {
             Gender = Gender,
             Name = UserName.Value!,
-            Id = long.Parse( SettingsService.UserId ),
             MainSlogan = MainSlogan!,
             Mission = Mission!
         } );
@@ -112,5 +111,26 @@ public partial class ProfileViewModel : BaseViewModel
         await base.InitializeAsync( parameter );
         await InitUserInfoAsync();
         ValidateUserName();
+    }
+
+
+    [RelayCommand]
+    public Task ShowSnackbarForMainSlogan( VisualElement visualElement )
+    {
+        return visualElement.DisplaySnackbar(
+            LocStrings.MainSloganExplanation,
+            duration: TimeSpan.FromSeconds( 10 ),
+            visualOptions: SnackbarHelper.DefaultOptions()
+        );
+    }
+
+    [RelayCommand]
+    private Task ShowSnackbarForMission( VisualElement visualElement )
+    {
+        return visualElement.DisplaySnackbar(
+            LocStrings.MissionExplanation,
+            duration: TimeSpan.FromSeconds( 10 ),
+            visualOptions: SnackbarHelper.DefaultOptions()
+        );
     }
 }

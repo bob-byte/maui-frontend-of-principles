@@ -1,4 +1,3 @@
-using DevExpress.Maui.Editors;
 
 namespace SET.MAUI.Views;
 
@@ -11,7 +10,7 @@ public partial class ProfileView : ContentPageBase
         ViewModel = viewModel;
         BindingContext = viewModel;
 
-		InitializeComponent();
+        InitializeComponent();
     }
 
     void TRG_UserName_Focused( object sender, FocusEventArgs e )
@@ -20,6 +19,7 @@ public partial class ProfileView : ContentPageBase
         ME_PromptResult.Text = ViewModel.UserName.Value;
         ME_PromptResult.HeightRequest = -1;
         ME_PromptResult.MaxLineCount = 1;
+        ME_PromptResult.IsEndIconVisible = false;
         TE_UserName.Unfocus();
 
         DXP_Prompt.IsOpen = true;
@@ -28,10 +28,12 @@ public partial class ProfileView : ContentPageBase
     void TGR_MainSlogan_Focused( object sender, FocusEventArgs e )
     {
         L_Prompt.Text = LocStrings.YourMainSlogan;
+        L_TipText.Text = LocStrings.MainSloganExplanation;
         ME_PromptResult.Text = ViewModel.MainSlogan;
         ME_PromptResult.HeightRequest = 140;
         ME_PromptResult.MaximumHeightRequest = 140;
         ME_PromptResult.MaxLineCount = 5;
+        ME_PromptResult.IsEndIconVisible = true;
         ME_MainSlogan.Unfocus();
 
         DXP_Prompt.IsOpen = true;
@@ -40,10 +42,12 @@ public partial class ProfileView : ContentPageBase
     void TGR_Mission_Focused( object sender, FocusEventArgs e )
     {
         L_Prompt.Text = LocStrings.YourMission;
+        L_TipText.Text = LocStrings.MissionExplanation;
         ME_PromptResult.Text = ViewModel.Mission;
-        ME_PromptResult.HeightRequest = 285;
+        ME_PromptResult.HeightRequest = 170;
         ME_PromptResult.MaximumHeightRequest = 300;
-        ME_PromptResult.MaxLineCount = 12;
+        ME_PromptResult.MaxLineCount = 7;
+        ME_PromptResult.IsEndIconVisible = true;
         ME_Mision.Unfocus();
 
         DXP_Prompt.IsOpen = true;
@@ -76,5 +80,15 @@ public partial class ProfileView : ContentPageBase
     private void SB_Cancel_Clicked( object sender, EventArgs e )
     {
         DXP_Prompt.IsOpen = false;
+    }
+
+    private void EI_Tip_Clicked( object sender, EventArgs e )
+    {
+        DXP_Tip.IsOpen = true;
+    }
+
+    private void B_Ok_Clicked( object sender, EventArgs e )
+    {
+        DXP_Tip.IsOpen = false;
     }
 }
