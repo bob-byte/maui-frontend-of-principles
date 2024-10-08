@@ -104,7 +104,7 @@ csharp_preferred_modifier_order = public,private,protected,internal,static,exter
 
 # Code-block preferences
 csharp_prefer_braces = true:warning
-csharp_prefer_simple_using_statement = false
+csharp_prefer_simple_using_statement = false:suggestion
 
 # Expression-level preferences
 csharp_prefer_simple_default_expression = true
@@ -245,3 +245,12 @@ dotnet_naming_style.static_fields.required_prefix = s_
 dotnet_naming_style.static_fields.required_suffix = 
 dotnet_naming_style.static_fields.word_separator = 
 dotnet_naming_style.static_fields.capitalization = camel_case
+csharp_style_prefer_method_group_conversion = true:silent
+csharp_style_prefer_top_level_statements = true:silent
+csharp_style_prefer_primary_constructors = true:suggestion
+
+[*.{cs,vb}]
+dotnet_style_operator_placement_when_wrapping = beginning_of_line
+tab_width = 4
+indent_size = 4
+end_of_line = crlf

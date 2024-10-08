@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<v:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                   x:Class="Principles.Views.StartupView"
+                   xmlns:loc="clr-namespace:Principles.Resources.AppStrings"
+                   xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
+                   xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+                   xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+                   xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
+                   xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+                   xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+                   xmlns:v="clr-namespace:Principles.Views"
+                   xmlns:vm="clr-namespace:Principles.ViewModels"
+                   xmlns:m="clr-namespace:Principles.Core.Models;assembly=Principles.Core"
+                   xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+                   xmlns:templates="clr-namespace:Principles.Views.Templates"
+                   xmlns:controls="clr-namespace:Principles.Controls"
+                   x:DataType="vm:StartupViewModel"
+                   Shell.FlyoutBehavior="Disabled"
+                   Shell.NavBarIsVisible="False"
+                   Shell.TabBarIsVisible="False"
+                   BackgroundColor="#1C1C1C"
+                   ios:Page.UseSafeArea="True">
+    <Grid RowDefinitions="*, Auto"
+          BackgroundColor="{StaticResource LightPrimary}">
+        <VerticalStackLayout VerticalOptions="End"
+                             Spacing="0"
+                             Grid.Row="0">
+            <skia:SKLottieView IsAnimationEnabled="True"
+                               RepeatCount="-1"
+                               WidthRequest="200"
+                               HeightRequest="200"
+                               Source="blue_fire_loading.json" />
+            <CarouselView ItemsSource="{Binding AppFeatures}"
+                          HeightRequest="160"
+                          IndicatorView="IV_AppFeatures"
+                          Loop="False"
+                          HorizontalScrollBarVisibility="Never">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate x:DataType="m:AppFeature">
+                        <dx:DXStackLayout Padding="10,0,10,0">
+                            <Label Text="{Binding Title,
+                                                  Converter={StaticResource ToUpperCase}}"
+                                   FontSize="25"
+                                   FontAttributes="Bold"
+                                   TextColor="White"
+                                   HorizontalOptions="Center"
+                                   HorizontalTextAlignment="Center"
+                                   Margin="20,0,20,20"
+                                   LineBreakMode="TailTruncation"
+                                   MaxLines="2" />
+                            <Label Text="{Binding Description}"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   TextColor="#464646"
+                                   HorizontalOptions="Center"
+                                   HorizontalTextAlignment="Center"
+                                   LineBreakMode="TailTruncation"
+                                   MaxLines="6"
+                                   Margin="20,0,20,0"
+                                   WidthRequest="275"
+                                   HeightRequest="80" />
+                        </dx:DXStackLayout>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+            <IndicatorView x:Name="IV_AppFeatures"
+                           IndicatorColor="{StaticResource DarkGray}"
+                           SelectedIndicatorColor="White"
+                           HorizontalOptions="Center"
+                           Margin="0,0,0,20" />
+        </VerticalStackLayout>
+
+        <Border BackgroundColor="{StaticResource DarkGray}"
+                StrokeShape="RoundRectangle 30, 30, 0, 0"
+                StrokeThickness="0"
+                VerticalOptions="EndAndExpand"
+                Grid.Row="1">
+            <VerticalStackLayout VerticalOptions="Center"
+                                 Padding="5,10,5,0">
+                <dxco:SimpleButton Text="{x:Static loc:LocStrings.ContinueWithGoogle}"
+                                   Command="{Binding ContinueWithGoogleCommand}"
+                                   Background="{StaticResource Primary}"
+                                   DisabledBackgroundColor="{StaticResource Primary}"
+                                   Style="{StaticResource PrimaryButton}"
+                                   Icon="google"
+                                   BorderThickness="2"
+                                   Margin="0,10,0,0" />
+                <dxco:SimpleButton Text="{x:Static loc:LocStrings.SignUpWithEmail}"
+                                   Icon="email"
+                                   Style="{StaticResource PrimaryButton}"
+                                   Background="{StaticResource Primary}"
+                                   DisabledBackgroundColor="{StaticResource Primary}"
+                                   BorderThickness="2"
+                                   Margin="0,10,0,0"
+                                   Command="{Binding OpenSignUpViewCommand}" />
+                <dxco:SimpleButton Text="{x:Static loc:LocStrings.Login}"
+                                   Style="{StaticResource SecondaryButton}"
+                                   TextColor="{StaticResource Primary}"
+                                   BorderThickness="2"
+                                   BorderColor="{StaticResource SecondaryLight}"
+                                   PressedBorderColor="{StaticResource SecondaryLight}"
+                                   Margin="0,10,0,10"
+                                   IconColor="{StaticResource Primary}"
+                                   Command="{Binding OpenLoginViewCommand}" />
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</v:ContentPageBase>

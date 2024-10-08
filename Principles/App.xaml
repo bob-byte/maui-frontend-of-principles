@@ -1,0 +1,477 @@
+﻿<Application x:Class="Principles.App"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Principles"
+             xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:converters="clr-namespace:Principles.Converters;assembly=Principles"
+             xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+             xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+             xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
+             windows:Application.ImageDirectory="Assets">
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <Color x:Key="SecondaryLight">White</Color>
+            <Color x:Key="SecondaryDark">White</Color>
+            <Color x:Key="TertiaryLight">#F0F0F0</Color>
+            <Color x:Key="TertiaryDark">#FF7F7F</Color>
+            <Color x:Key="QuaternaryLight">#007BFF</Color>
+            <Color x:Key="QuaternaryDark">#007BFF</Color>
+            <Color x:Key="QuinaryDark">#64eecb</Color>
+            <Color x:Key="QuinaryLight">#64eecb</Color>
+            <Color x:Key="SextenaryLight">#39f67f</Color>
+            <Color x:Key="SextenaryDark">#39f67f</Color>
+
+            <Color x:Key="Primary">#007BFF</Color>
+            <Color x:Key="DarkPrimary">#1F1F1F</Color>
+
+            <Color x:Key="LightPrimary">#80BFFF</Color>
+            <Color x:Key="Accent">#009a49</Color>
+
+            <Color x:Key="Background">White</Color>
+            <Color x:Key="DarkBackground">Black</Color>
+
+            <Color x:Key="LabelText">Black</Color>
+            <Color x:Key="DarkLabelText">White</Color>
+
+            <Color x:Key="CardBackground">White</Color>
+            <Color x:Key="DarkCardBackground">#1C1C1E</Color>
+
+            <Color x:Key="BorderColor">#d9d4d4</Color>
+            <Color x:Key="DarkBorderColor">White</Color>
+
+            <Color x:Key="FocusedBorderColor">#007BFF</Color>
+            <Color x:Key="DarkFocusedBorderColor">#007BFF</Color>
+
+            <Color x:Key="CursorColor">#007BFF</Color>
+            <Color x:Key="DarkCursorColor">Black</Color>
+
+            <Color x:Key="IconColor">#1F1F1F</Color>
+            <Color x:Key="DarkIconColor">White</Color>
+
+            <Color x:Key="LightNormalText">#1C1C1C</Color>
+            <Color x:Key="DarkNormalText">White</Color>
+
+            <Color x:Key="LightPlaceholderColor">LightGray</Color>
+            <Color x:Key="DarkPlaceholderColor">White</Color>
+
+            <Color x:Key="CancelButtonColor">#cecece</Color>
+
+            <Color x:Key="NormalHeaderText">#55555c</Color>
+            <Color x:Key="Error">#007BFF</Color>
+            <Color x:Key="RedColor">#FF2400</Color>
+            <Color x:Key="TitleTextColor">White</Color>
+            <Color x:Key="LightEditControlBackColor">#F5F5F5</Color>
+            <Color x:Key="DarkEditControlBackColor">#d3d3d3</Color>
+            <Color x:Key="LightTitleBackgroundColor">#007BFF</Color>
+            <Color x:Key="DarkTitleBackgroundColor">#1C1C1C</Color>
+            <Color x:Key="ForegroundColor">White</Color>
+            <Color x:Key="NavigationBarColorLight">White</Color>
+            <Color x:Key="NavigationBarColorDark">#111111</Color>
+            <Color x:Key="OrangeColor">Orange</Color>
+            <Color x:Key="GrayColor">#d9d4d4</Color>
+
+            <Style TargetType="Page"
+                   ApplyToDerivedTypes="True">
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Light={StaticResource Background},
+                                                Dark={StaticResource DarkBackground}}" />
+            </Style>
+            <Style TargetType="NavigationPage">
+                <Setter Property="BarBackgroundColor"
+                        Value="{StaticResource Primary}" />
+                <Setter Property="BarTextColor"
+                        Value="White" />
+            </Style>
+            <Style x:Key="PrimaryButton"
+                   TargetType="dxco:SimpleButton">
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Light={StaticResource Primary},
+                                                Dark={StaticResource DarkPrimary}}" />
+                <Setter Property="TextColor"
+                        Value="White" />
+                <Setter Property="IconColor"
+                        Value="{AppThemeBinding Light={StaticResource DarkIconColor},
+                                                Dark={StaticResource IconColor}}" />
+                <Setter Property="BorderColor"
+                        Value="{StaticResource SecondaryLight}" />
+                <Setter Property="PressedBorderColor"
+                        Value="{StaticResource SecondaryLight}" />
+            </Style>
+            <Color x:Key="DarkGray">#18191A</Color>
+            <Style x:Key="SecondaryButton"
+                   TargetType="dxco:SimpleButton">
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Light={StaticResource DarkGray},
+                                                Dark={StaticResource Primary}}" />
+                <Setter Property="TextColor"
+                        Value="{AppThemeBinding Light={StaticResource Primary},
+                                                Dark={StaticResource DarkPrimary}}" />
+                <Setter Property="IconColor"
+                        Value="{AppThemeBinding Light={StaticResource DarkIconColor},
+                                                Dark={StaticResource IconColor}}" />
+                <Setter Property="BorderColor"
+                        Value="{StaticResource TitleTextColor}" />
+            </Style>
+            <Style x:Key="TitlePrimaryButton"
+                   TargetType="dxco:SimpleButton">
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Light={StaticResource Primary},
+                                                Dark={StaticResource DarkPrimary}}" />
+                <Setter Property="TextColor"
+                        Value="{StaticResource TitleTextColor}" />
+                <Setter Property="BorderColor"
+                        Value="{StaticResource TitleTextColor}" />
+                <Setter Property="PressedBorderColor"
+                        Value="Wheat" />
+            </Style>
+            <Style x:Key="ButtonOutline"
+                   TargetType="Button">
+                <Setter Property="BackgroundColor"
+                        Value="{StaticResource Primary}" />
+                <Setter Property="TextColor"
+                        Value="White" />
+            </Style>
+            <Style x:Key="ShellStyle"
+                   TargetType="Element">
+                <Setter Property="Shell.BackgroundColor"
+                        Value="{StaticResource Primary}" />
+                <Setter Property="Shell.TitleColor"
+                        Value="{StaticResource TitleTextColor}" />
+                <Setter Property="Shell.ForegroundColor"
+                        Value="{StaticResource TitleTextColor}" />
+                <Setter Property="Shell.TabBarBackgroundColor"
+                        Value="{StaticResource Background}" />
+                <Setter Property="Shell.TabBarForegroundColor"
+                        Value="{StaticResource Primary}" />
+                <Setter Property="Shell.TabBarTitleColor"
+                        Value="{StaticResource Primary}" />
+                <Setter Property="Shell.TabBarUnselectedColor"
+                        Value="{StaticResource LightNormalText}" />
+            </Style>
+            <Style x:Key="DefaultHorizonalSeparator"
+                   TargetType="BoxView">
+                <Setter Property="BackgroundColor"
+                        Value="{StaticResource Primary}" />
+                <Setter Property="HeightRequest"
+                        Value="2" />
+            </Style>
+
+            <Style TargetType="dxe:TextEdit"
+                   ApplyToDerivedTypes="True">
+                <Setter Property="FocusedBorderColor"
+                        Value="{StaticResource Primary}" />
+                <Setter Property="BorderColor"
+                        Value="{AppThemeBinding Light={StaticResource BorderColor},
+                                                Dark={StaticResource DarkBorderColor}}" />
+                <Setter Property="FocusedLabelColor"
+                        Value="{AppThemeBinding Light={StaticResource LabelText},
+                                                Dark={StaticResource DarkLabelText}}" />
+                <Setter Property="CursorColor"
+                        Value="{AppThemeBinding Light={StaticResource Primary},
+                                                Dark={StaticResource DarkPrimary}}" />
+                <Setter Property="TextColor"
+                        Value="{AppThemeBinding Light={StaticResource LightNormalText},
+                                                Dark={StaticResource DarkNormalText}}" />
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Light={StaticResource LightEditControlBackColor},
+                                                Dark={StaticResource DarkEditControlBackColor}}" />
+                <Setter Property="ErrorColor"
+                        Value="{StaticResource Error}" />
+            </Style>
+            <Style TargetType="dxe:PasswordEdit"
+                   ApplyToDerivedTypes="True">
+                <Setter Property="FocusedBorderColor"
+                        Value="{StaticResource Primary}" />
+                <Setter Property="BorderColor"
+                        Value="{AppThemeBinding Light={StaticResource BorderColor},
+                                                Dark={StaticResource DarkBorderColor}}" />
+                <Setter Property="FocusedLabelColor"
+                        Value="{AppThemeBinding Light={StaticResource LabelText},
+                                                Dark={StaticResource DarkLabelText}}" />
+                <Setter Property="CursorColor"
+                        Value="{AppThemeBinding Light={StaticResource Primary},
+                                                Dark={StaticResource DarkPrimary}}" />
+                <Setter Property="TextColor"
+                        Value="{AppThemeBinding Light={StaticResource LightNormalText},
+                                                Dark={StaticResource DarkNormalText}}" />
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Light={StaticResource LightEditControlBackColor},
+                                                Dark={StaticResource DarkEditControlBackColor}}" />
+                <Setter Property="ErrorColor"
+                        Value="{StaticResource Error}" />
+            </Style>
+            <Style TargetType="dxe:MultilineEdit"
+                   ApplyToDerivedTypes="True">
+                <Setter Property="FocusedBorderColor"
+                        Value="{StaticResource Primary}" />
+                <Setter Property="BorderColor"
+                        Value="{AppThemeBinding Light={StaticResource BorderColor},
+                                                Dark={StaticResource DarkBorderColor}}" />
+                <Setter Property="FocusedLabelColor"
+                        Value="{AppThemeBinding Light={StaticResource LabelText},
+                                                Dark={StaticResource DarkLabelText}}" />
+                <Setter Property="CursorColor"
+                        Value="{AppThemeBinding Light={StaticResource Primary},
+                                                Dark={StaticResource DarkPrimary}}" />
+                <Setter Property="TextColor"
+                        Value="{AppThemeBinding Light={StaticResource LightNormalText},
+                                                Dark={StaticResource DarkNormalText}}" />
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Light={StaticResource LightEditControlBackColor},
+                                                Dark={StaticResource DarkEditControlBackColor}}" />
+                <Setter Property="ErrorColor"
+                        Value="{StaticResource Error}" />
+            </Style>
+
+            <Style TargetType="dxe:TimeEdit"
+                   ApplyToDerivedTypes="True">
+                <Setter Property="FocusedBorderColor"
+                        Value="{StaticResource Primary}" />
+                <Setter Property="BorderColor"
+                        Value="{AppThemeBinding Light={StaticResource BorderColor},
+                                                Dark={StaticResource DarkBorderColor}}" />
+                <Setter Property="FocusedLabelColor"
+                        Value="{AppThemeBinding Light={StaticResource LabelText},
+                                                Dark={StaticResource DarkLabelText}}" />
+                <Setter Property="IsTimeIconVisible"
+                        Value="False" />
+                <Setter Property="CursorColor"
+                        Value="{AppThemeBinding Light={StaticResource Primary},
+                                                Dark={StaticResource DarkPrimary}}" />
+                <Setter Property="TextColor"
+                        Value="{AppThemeBinding Light={StaticResource LightNormalText},
+                                                Dark={StaticResource DarkNormalText}}" />
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Light={StaticResource LightEditControlBackColor},
+                                                Dark={StaticResource DarkEditControlBackColor}}" />
+                <Setter Property="ErrorColor"
+                        Value="{StaticResource Error}" />
+            </Style>
+
+            <Style TargetType="dxe:NumericEdit"
+                   ApplyToDerivedTypes="True">
+                <Setter Property="FocusedBorderColor"
+                        Value="{StaticResource Primary}" />
+                <Setter Property="BorderColor"
+                        Value="{AppThemeBinding Light={StaticResource BorderColor},
+                                                Dark={StaticResource DarkBorderColor}}" />
+                <Setter Property="FocusedLabelColor"
+                        Value="{AppThemeBinding Light={StaticResource LabelText},
+                                                Dark={StaticResource DarkLabelText}}" />
+                <Setter Property="IsUpDownIconVisible"
+                        Value="True" />
+                <Setter Property="CursorColor"
+                        Value="{AppThemeBinding Light={StaticResource Primary},
+                                                Dark={StaticResource DarkPrimary}}" />
+                <Setter Property="TextColor"
+                        Value="{AppThemeBinding Light={StaticResource LightNormalText},
+                                                Dark={StaticResource DarkNormalText}}" />
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Light={StaticResource LightEditControlBackColor},
+                                                Dark={StaticResource DarkEditControlBackColor}}" />
+                <Setter Property="ErrorColor"
+                        Value="{StaticResource Error}" />
+            </Style>
+            <Style TargetType="dxe:ChoiceChipGroup">
+                <Setter Property="ChipPressedBorderColor"
+                        Value="{StaticResource LightPrimary}" />
+                <Setter Property="ChipBorderColor"
+                        Value="{StaticResource BorderColor}" />
+            </Style>
+            <Style TargetType="dxe:Chip">
+                <Setter Property="IconColor"
+                        Value="{AppThemeBinding Light={StaticResource IconColor},
+                                                Dark={StaticResource DarkIconColor}}" />
+                <Setter Property="IsIconVisible"
+                        Value="True" />
+                <Setter Property="SelectedBackgroundColor"
+                        Value="{StaticResource LightPrimary}" />
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Light={StaticResource LightEditControlBackColor},
+                                                Dark={StaticResource DarkEditControlBackColor}}" />
+                <Setter Property="TextColor"
+                        Value="{AppThemeBinding Light={StaticResource LightNormalText},
+                                                Dark={StaticResource DarkNormalText}}" />
+                <Setter Property="PressedBackgroundColor"
+                        Value="{AppThemeBinding Light={StaticResource LightEditControlBackColor},
+                                                Dark={StaticResource DarkEditControlBackColor}}" />
+            </Style>
+
+            <Style TargetType="dxco:TabView">
+                <Setter Property="SelectedItemIndicatorColor"
+                        Value="{StaticResource Primary}" />
+                <Setter Property="SwipeEnabled"
+                        Value="True" />
+                <Setter Property="ItemHeaderWidth"
+                        Value="*" />
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Light={StaticResource Background},
+                                                Dark={StaticResource DarkBackground}}" />
+            </Style>
+
+            <Style TargetType="dxco:DXPopup">
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Light={StaticResource Background},
+                                                Dark={StaticResource DarkBackground}}" />
+            </Style>
+
+            <Style TargetType="dxe:TokenEdit">
+                <Setter Property="FocusedBorderColor"
+                        Value="{AppThemeBinding Light={StaticResource FocusedBorderColor},
+                                                Dark={StaticResource DarkFocusedBorderColor}}" />
+                <Setter Property="BorderColor"
+                        Value="{AppThemeBinding Light={StaticResource BorderColor},
+                                                Dark={StaticResource DarkBorderColor}}" />
+                <Setter Property="CursorColor"
+                        Value="{AppThemeBinding Light={StaticResource CursorColor},
+                                                Dark={StaticResource DarkCursorColor}}" />
+                <Setter Property="FocusedLabelColor"
+                        Value="{AppThemeBinding Light={StaticResource LabelText},
+                                                Dark={StaticResource DarkLabelText}}" />
+                <Setter Property="TextColor"
+                        Value="{AppThemeBinding Light={StaticResource LightNormalText},
+                                                Dark={StaticResource DarkNormalText}}" />
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Light={StaticResource LightEditControlBackColor},
+                                                Dark={StaticResource DarkEditControlBackColor}}" />
+                <Setter Property="ErrorColor"
+                        Value="{StaticResource Error}" />
+            </Style>
+
+            <Style TargetType="dxe:AutoCompleteTokenEdit">
+                <Setter Property="FocusedBorderColor"
+                        Value="{AppThemeBinding Light={StaticResource FocusedBorderColor},
+                                                Dark={StaticResource DarkFocusedBorderColor}}" />
+                <Setter Property="BorderColor"
+                        Value="{AppThemeBinding Light={StaticResource BorderColor},
+                                                Dark={StaticResource DarkBorderColor}}" />
+                <Setter Property="CursorColor"
+                        Value="{AppThemeBinding Light={StaticResource CursorColor},
+                                                Dark={StaticResource DarkCursorColor}}" />
+                <Setter Property="FocusedLabelColor"
+                        Value="{AppThemeBinding Light={StaticResource LabelText},
+                                                Dark={StaticResource DarkLabelText}}" />
+                <Setter Property="TextColor"
+                        Value="{AppThemeBinding Light={StaticResource LightNormalText},
+                                                Dark={StaticResource DarkNormalText}}" />
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Light={StaticResource LightEditControlBackColor},
+                                                Dark={StaticResource DarkEditControlBackColor}}" />
+                <Setter Property="DropDownBackgroundColor"
+                        Value="{AppThemeBinding Light={StaticResource Background},
+                                                Dark={StaticResource DarkBackground}}" />
+                <Setter Property="ErrorColor"
+                        Value="{StaticResource Error}" />
+            </Style>
+            <Style TargetType="dxcv:DXCollectionView">
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Light={StaticResource Background},
+                                                Dark={StaticResource DarkBackground}}" />
+            </Style>
+            <Style TargetType="dxco:BottomSheet">
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Light={StaticResource Background},
+                                                Dark={StaticResource DarkBackground}}" />
+            </Style>
+            <Style TargetType="dxe:CheckEdit">
+                <Setter Property="LabelColor"
+                        Value="{AppThemeBinding Light={StaticResource LightNormalText},
+                                                Dark={StaticResource DarkNormalText}}" />
+                <Setter Property="CheckedCheckBoxColor"
+                        Value="{StaticResource Primary}" />
+                <Setter Property="CheckBoxColor"
+                        Value="{AppThemeBinding Light={StaticResource BorderColor},
+                                                Dark={StaticResource DarkBorderColor}}" />
+                <Setter Property="LabelFontSize"
+                        Value="16" />
+            </Style>
+            <Style TargetType="dxe:ComboBoxEdit">
+                <Setter Property="FocusedBorderColor"
+                        Value="{StaticResource Primary}" />
+                <Setter Property="BorderColor"
+                        Value="{AppThemeBinding Light={StaticResource BorderColor},
+                                                Dark={StaticResource DarkBorderColor}}" />
+                <Setter Property="FocusedLabelColor"
+                        Value="{AppThemeBinding Light={StaticResource LabelText},
+                                                Dark={StaticResource DarkLabelText}}" />
+                <Setter Property="CursorColor"
+                        Value="{AppThemeBinding Light={StaticResource Primary},
+                                                Dark={StaticResource DarkPrimary}}" />
+                <Setter Property="TextColor"
+                        Value="{AppThemeBinding Light={StaticResource LightNormalText},
+                                                Dark={StaticResource DarkNormalText}}" />
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Light={StaticResource LightEditControlBackColor},
+                                                Dark={StaticResource DarkEditControlBackColor}}" />
+                <Setter Property="ErrorColor"
+                        Value="{StaticResource Error}" />
+                <Setter Property="TextFontSize"
+                        Value="16" />
+                <Setter Property="BorderThickness"
+                        Value="1" />
+                <Setter Property="DropDownBackgroundColor"
+                        Value="{AppThemeBinding Light={StaticResource Background},
+                                                Dark={StaticResource DarkBackground}}" />
+                <Setter Property="DropDownSelectedItemBackgroundColor"
+                        Value="{StaticResource LightPrimary}" />
+            </Style>
+
+            <Style TargetType="Label">
+                <Setter Property="TextColor"
+                        Value="{AppThemeBinding Light={StaticResource LightNormalText},
+                                                Dark={StaticResource DarkNormalText}}" />
+
+            </Style>
+            <Style TargetType="Entry">
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Light={StaticResource Background},
+                                                Dark={StaticResource DarkBackground}}" />
+                <Setter Property="TextColor"
+                        Value="{AppThemeBinding Light={StaticResource LightNormalText},
+                                                Dark={StaticResource DarkNormalText}}" />
+            </Style>
+            <Style TargetType="RadioButton">
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Light={StaticResource Background},
+                                                Dark={StaticResource DarkBackground}}" />
+                <Setter Property="TextColor"
+                        Value="{AppThemeBinding Light={StaticResource LightNormalText},
+                                                Dark={StaticResource DarkNormalText}}" />
+            </Style>
+
+            <Style x:Key="CentralHeader"
+                   TargetType="Label">
+                <Setter Property="HorizontalOptions"
+                        Value="CenterAndExpand" />
+                <Setter Property="HorizontalTextAlignment"
+                        Value="Center" />
+                <Setter Property="VerticalOptions"
+                        Value="Center" />
+                <Setter Property="VerticalTextAlignment"
+                        Value="Center" />
+                <Setter Property="FontSize"
+                        Value="22" />
+                <Setter Property="FontAttributes"
+                        Value="Bold" />
+                <Setter Property="LineBreakMode"
+                        Value="TailTruncation" />
+                <Setter Property="MaxLines"
+                        Value="4" />
+            </Style>
+
+            <!--  CONVERTERS  -->
+            <toolkit:IsNullConverter x:Key="IsNull" />
+            <toolkit:IsNotNullConverter x:Key="IsNotNull" />
+            <toolkit:InvertedBoolConverter x:Key="IsFalse" />
+            <toolkit:TextCaseConverter x:Key="ToUpperCase"
+                                       Type="Upper" />
+            <converters:FirstValidationErrorConverter x:Key="FirstValidationError" />
+            <converters:HexStringToColorConverter x:Key="FromHexToColor" />
+            <converters:IsZeroConverter x:Key="IsZero" />
+            <converters:IsMoreThanZeroConverter x:Key="IsMoreThanZero" />
+            <converters:GenderToUserIconConverter x:Key="GenderToIcon" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
