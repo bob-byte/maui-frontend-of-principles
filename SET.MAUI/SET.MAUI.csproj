@@ -42,10 +42,10 @@
 	</PropertyGroup>
 
     <!--Comment it out when behavior of the published Android app doesn't work as expected-->
-	<!--<PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-android'">
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-android'">
         <RunAOTCompilation>false</RunAOTCompilation>
 		<PublishTrimmed>false</PublishTrimmed>
-    </PropertyGroup>-->
+    </PropertyGroup>
 	
 	<!-- App Icon -->
 	<ItemGroup Condition="$(TargetFramework.Contains('-android'))">
@@ -104,6 +104,8 @@
 		<PackageReference Include="DevExpress.Maui.DataGrid" Version="23.2.6" />
 		<PackageReference Include="DevExpress.Maui.Editors" Version="23.2.6" />
 		<PackageReference Include="Azure.AI.OpenAI" Version="1.0.0-beta.9" />
+		<PackageReference Include="ArmDot.Client" Version="2024.8.0" />
+		<PackageReference Include="ArmDot.Engine.MSBuildTasks" Version="2024.8.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -228,4 +230,11 @@
       <WarningLevel>4</WarningLevel>
       <NoWarn>1701;1702;CS1573;CS1591;CS8632</NoWarn>
     </PropertyGroup>
+
+	<Target Name="Protect" AfterTargets="AfterCompile" BeforeTargets="BeforePublish" Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+        <ItemGroup>
+            <Assemblies Include="$(ProjectDir)$(IntermediateOutputPath)$(TargetFileName)" CreatePDB="true" />
+        </ItemGroup>
+        <ArmDot.Engine.MSBuildTasks.ObfuscateTask Inputs="@(Assemblies)" ReferencePaths="@(_ResolveAssemblyReferenceResolvedFiles-&gt;'%(RootDir)%(Directory)')" SkipAlreadyObfuscatedAssemblies="true" />
+    </Target>
 </Project>

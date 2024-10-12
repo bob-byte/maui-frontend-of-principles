@@ -10,6 +10,7 @@ using Microsoft.Maui;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using DevExpress.Maui.Editors.Internal;
 using System.Reflection;
+using ArmDot.Client;
 
 #if IOS
 using Microsoft.Maui.Platform;
@@ -17,6 +18,10 @@ using Microsoft.Maui.Platform;
 #if ANDROID
 using AndroidX.AppCompat.Widget;
 #endif
+
+[assembly: ObfuscateNames]
+[assembly: ObfuscateControlFlow]
+[assembly: HideStrings]
 
 namespace SET.MAUI;
 
