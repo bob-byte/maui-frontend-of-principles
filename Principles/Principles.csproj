@@ -217,7 +217,6 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\Principles.Core\Principles.Core.csproj" />
-	  <ProjectReference Include="..\SET.Core\Principles.Core.csproj" />
 	</ItemGroup>
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
 		<BundleResource Include="Platforms\iOS\PrivacyInfo.xcprivacy" LogicalName="PrivacyInfo.xcprivacy" />
