@@ -1,5 +1,5 @@
-﻿using System.Security.Cryptography;
-using System.Text;
+﻿using Google.Apis.Auth.OAuth2;
+using Google.Apis.Auth.OAuth2.Flows;
 
 namespace SET.Core.Services;
 
@@ -32,26 +32,26 @@ public class GoogleAuthService : IGoogleAuthService
             throw new InvalidOperationException( "Client secret is missing." );
         }
 
-        string codeVerifier = CodeVerifier();
-        string codeChallenge = CodeChallenge( codeVerifier );
-
         string callbackUriAsStr = new LaunchUriBuilder( LaunchType.OAuth2Redirect ).Build().AbsoluteUri;
+        Uri authUri;
+        ClientSecrets clientSecrets = new()
+        {
+            ClientId = clientId
+        };
 
-        StringBuilder authUrlBuider = new( value: "https://accounts.google.com/o/oauth2/v2/auth" );
-        authUrlBuider.Append( "?access_type=offline" );
-        authUrlBuider.Append( "&response_type=code" );
-        authUrlBuider.Append( $"&client_id={clientId}" );
-        authUrlBuider.Append( $"&redirect_uri={callbackUriAsStr}" );
-        authUrlBuider.Append( "&scope=openid%20profile%20email%20https://www.googleapis.com/auth/user.gender.read" );
-        authUrlBuider.Append( "&code_challenge_method=S256" );
-        authUrlBuider.Append( $"&code_challenge={codeChallenge}" );
-        authUrlBuider.Append( "&service=lso" );
-        authUrlBuider.Append( "&o2v=2" );
-        authUrlBuider.Append( "&ddm=0" );
-        authUrlBuider.Append( "&flowName=GeneralOAuthFlow" );
+        string[] requestedScopes = new[]
+        {
+            "https://www.googleapis.com/auth/userinfo.profile",
+            "https://www.googleapis.com/auth/userinfo.email",
+            "https://www.googleapis.com/auth/user.gender.read"
+        };
 
-        string authUriStr = authUrlBuider.ToString();
-        Uri authUri = new( authUriStr );
+        GoogleAuthorizationCodeFlow codeFlow = new( new GoogleAuthorizationCodeFlow.Initializer
+        {
+            ClientSecrets = clientSecrets,
+            Scopes = requestedScopes
+        } );
+        authUri = codeFlow.CreateAuthorizationCodeRequest( callbackUriAsStr ).Build();
 
         WebAuthenticatorResult authResult = await WebAuthenticator.Default.AuthenticateAsync(
             authUri,
@@ -77,8 +77,7 @@ public class GoogleAuthService : IGoogleAuthService
             { "code", code! },
             { "client_id", clientId },
             { "redirect_uri", callbackUriAsStr },
-            { "grant_type", "authorization_code" },
-            { "code_verifier", codeVerifier }
+            { "grant_type", "authorization_code" }
         };
 
         GetGoogleTokenInfoResponse getGoogleTokenResponse = await m_requestProvider.PostAsync<Dictionary<string, string>, GetGoogleTokenInfoResponse>(
@@ -95,28 +94,6 @@ public class GoogleAuthService : IGoogleAuthService
         GoogleAuthResponse response = await m_requestProvider.PostAsync<GoogleAuthRequest, GoogleAuthResponse>( url, request ).DefaultConfigureAwait();
 
         await m_settingsService.SetAuthAccessTokenAsync( response.Token ).DefaultConfigureAwait();
-    }
-
-    private string CodeVerifier()
-    {
-        byte[] randomBytes = RandomNumberGenerator.GetBytes( count: 32 );
-        string result = Base64UrlEncode( randomBytes );
-        return result;
-    }
-
-    private string Base64UrlEncode( byte[] input )
-    {
-        string result = Convert.ToBase64String( input );
-        result = result.Replace( "+", "-" ).Replace( "/", "_" ).Replace( "=", "" );
-        return result;
-    }
-
-    private string CodeChallenge( string codeVerifier )
-    {
-        using var sha256 = SHA256.Create();
-        byte[] hash = sha256.ComputeHash( Encoding.ASCII.GetBytes( codeVerifier ) );
-        string result = Base64UrlEncode( hash );
-        return result;
     }
 }
 

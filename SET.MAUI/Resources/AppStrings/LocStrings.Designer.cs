@@ -778,7 +778,7 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Helper can sometimes be wrong.
+        ///   Looks up a localized string similar to Helper can sometimes be wrong. Сheck important information!.
         /// </summary>
         internal static string HelperWarning {
             get {
@@ -1698,7 +1698,7 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Transform areas of life.
+        ///   Looks up a localized string similar to Improve lagging areas of life.
         /// </summary>
         internal static string TransformAreasOfLifeTitle {
             get {

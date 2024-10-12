@@ -504,7 +504,7 @@
                                                       ItemsSource="{Binding PeriodsOfHabit}"
                                                       SelectedItem="{Binding SelectedPeriodOfHabit}"
                                                       DisplayMember="Name"
-                                                      WidthRequest="100"
+                                                      WidthRequest="110"
                                                       HeightRequest="40.5"
                                                       BoxPadding="10, 7, 0, 10"
                                                       IsDropDownIconVisible="False"

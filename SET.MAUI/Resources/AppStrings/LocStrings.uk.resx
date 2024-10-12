@@ -775,7 +775,7 @@
     <value>Увійти</value>
   </data>
 	<data name="TransformAreasOfLifeTitle" xml:space="preserve">
-    <value>Трансформуй сфери життя</value>
+    <value>Покращ відстаючі сфери життя</value>
   </data>
 	<data name="TransformAreasOfLifeDescription" xml:space="preserve">
     <value>Встановлюй цілі правильно та будуй свої звички.</value>
@@ -838,6 +838,6 @@
     <value>Не нагадувати більше про це</value>
   </data>
   <data name="HelperWarning" xml:space="preserve">
-    <value>Помічник може інколи помилятись - перевіряйте важливу інформацію.</value>
+    <value>Помічник може інколи помилятись. Перевіряйте важливу інформацію!</value>
   </data>
 </root>

@@ -88,6 +88,7 @@
                    TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
                                                Dark={StaticResource DarkNormalText}}"
                    LineBreakMode="WordWrap"
+                   HeightRequest="70"
                    HorizontalTextAlignment="Center"
                    Padding="15,0,15,0"
                    Grid.Row="2"
