@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:drawables="clr-namespace:Principles.Drawables"
+             x:Class="Principles.Controls.CircularProgressBar"
+             x:Name="this">
+    <GraphicsView x:Name="GV_CircularProgressBar">
+        <GraphicsView.Drawable>
+            <drawables:CircularProgressBarDrawable Progress="{Binding Progress, Source={x:Reference this}, Mode=OneWay}"
+                                                   Size="{Binding Size, Source={x:Reference this}}"
+                                                   TextColor="{Binding TextColor, Source={x:Reference this}}"
+                                                   Thickness="{Binding Thickness, Source={x:Reference this}}"
+                                                   ProgressColor="{Binding ProgressColor, Source={x:Reference this}}"
+                                                   ProgressLeftColor="{Binding ProgressLeftColor, Source={x:Reference this}}" />
+        </GraphicsView.Drawable>
+    </GraphicsView>
+</ContentView>

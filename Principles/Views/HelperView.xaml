@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<v:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                   xmlns:loc="clr-namespace:Principles.Resources.AppStrings"
+                   xmlns:dxc="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+                   xmlns:v="clr-namespace:Principles.Views"
+                   xmlns:viewmodels="clr-namespace:Principles.ViewModels"
+                   xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
+                   xmlns:collectionview="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
+                   xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+                   xmlns:editors="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+                   xmlns:maui="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+                   xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+                   xmlns:templates="clr-namespace:Principles.Views.Templates"
+                   x:Class="Principles.Views.HelperView"
+                   x:DataType="viewmodels:HelperViewModel"
+                   ios:Page.UseSafeArea="False"
+                   x:Name="CPB_Helper"
+                   SizeChanged="CPB_Helper_SizeChanged">
+    <v:ContentPageBase.Resources>
+        <Color x:Key="NavigationBarColorLight">White</Color>
+        <Color x:Key="NavigationBarColorDark">#111111</Color>
+        <Color x:Key="SurfaceColorLight">#FAFAFA</Color>
+        <Color x:Key="SurfaceColorDark">#1D1E24</Color>
+    </v:ContentPageBase.Resources>
+
+    <Shell.TitleView>
+        <Grid VerticalOptions="CenterAndExpand"
+              Margin="0,0,5,0"
+              ColumnDefinitions="Auto, Auto, *, Auto">
+            <dx:DXImage Source="larger_help"
+                        TintColor="{StaticResource DarkIconColor}"
+                        Grid.Column="0" />
+            <Label Text="{Binding Title}"
+                   TextColor="{StaticResource TitleTextColor}"
+                   VerticalOptions="Center"
+                   VerticalTextAlignment="Center"
+                   FontSize="20"
+                   FontFamily="MonaSansBold"
+                   FontAttributes="Bold"
+                   Grid.Column="1" />
+            <dx:DXImage Source="info"
+                        TintColor="{StaticResource DarkIconColor}"
+                        HorizontalOptions="End"
+                        WidthRequest="40"
+                        HeightRequest="40"
+                        x:Name="DXI_Info"
+                        Grid.Column="3">
+                <dx:DXImage.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1"
+                                          Command="{Binding ShowHelperInfoSnackbarCommand}"
+                                          CommandParameter="{x:Reference L_ShortDescriptionOfAssistant}"/>
+                </dx:DXImage.GestureRecognizers>
+            </dx:DXImage>
+        </Grid>
+    </Shell.TitleView>
+    <Grid RowDefinitions="0, *, 16, Auto, 16"
+          BackgroundColor="{StaticResource Primary}">
+        <Border Grid.Row="1"
+                Padding="0,10,0,30"
+                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColorLight},
+                                                  Dark={StaticResource SurfaceColorDark}}"
+                StrokeShape="RoundRectangle 0, 0, 36, 36"
+                StrokeThickness="0">
+            <collectionview:DXCollectionView x:Name="DXC_DisplayMessages"
+                                             ItemsSource="{Binding DisplayMessages}"
+                                             ItemSpacing="20"
+                                             Orientation="Vertical"
+                                             IsScrollBarVisible="True"
+                                             IsPullToRefreshEnabled="False"
+                                             IsLoadMoreEnabled="False" />
+        </Border>
+
+        <Grid ColumnDefinitions="15*, 70*, 15*"
+              RowDefinitions="20*, 40*, Auto, 40*"
+              IsVisible="{Binding IsAnimationVisible}"
+              Grid.Row="1">
+            <skia:SKLottieView IsAnimationEnabled="{Binding IsAnimationVisible}"
+                               RepeatCount="-1"
+                               Source="emptychat_light.json"
+                               x:Name="SKLV_Animation"
+                               Grid.Row="1"
+                               Grid.Column="1" />
+            <Label Text="{x:Static loc:LocStrings.SelfDevelopmentAssistantShortDescription}"
+                   x:Name="L_ShortDescriptionOfAssistant"
+                   FontFamily="MonaSansMedium"
+                   FontSize="13"
+                   TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
+                                               Dark={StaticResource DarkNormalText}}"
+                   LineBreakMode="WordWrap"
+                   HeightRequest="70"
+                   HorizontalTextAlignment="Center"
+                   Padding="15,0,15,0"
+                   Grid.Row="2"
+                   Grid.ColumnSpan="3" />
+        </Grid>
+        <Grid ColumnDefinitions="*, Auto"
+              RowDefinitions="Auto"
+              ColumnSpacing="3"
+              Padding="16,0"
+              Grid.Row="3"
+              VerticalOptions="CenterAndExpand">
+            <Border BackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary},
+                                                      Dark={StaticResource DarkPrimary}}"
+                    HeightRequest="48"
+                    StrokeShape="RoundRectangle 36,36,36,36"
+                    Grid.Column="0"
+                    Grid.Row="0">
+                <Grid ColumnDefinitions="*, Auto">
+                    <OnPlatform x:TypeArguments="View">
+                        <On Platform="Android">
+                            <Entry Placeholder="{x:Static loc:LocStrings.EnterText}"
+                                   Completed="TE_Prompt_Completed"
+                                   x:Name="E_Prompt"
+                                   Text="{Binding Prompt}"
+                                   FontFamily="Roboto"
+                                   FontSize="13"
+                                   HeightRequest="48"
+                                   TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
+                                                               Dark={StaticResource DarkNormalText}}"
+                                   PlaceholderColor="#3F3F3F"
+                                   BackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary},
+                                                                     Dark={StaticResource DarkPrimary}}"
+                                   TranslationY="4"
+                                   ClearButtonVisibility="Never"
+                                   Margin="16,0,16,5"
+                                   RotationX="20" />
+                        </On>
+                        <On Platform="iOS">
+                            <editors:TextEdit PlaceholderText="{x:Static loc:LocStrings.EnterText}"
+                                              Completed="TE_Prompt_Completed"
+                                              x:Name="TE_Prompt"
+                                              Text="{Binding Prompt}"
+                                              TextFontFamily="Roboto"
+                                              TextFontSize="13"
+                                              HeightRequest="48"
+                                              BorderThickness="0"
+                                              FocusedBorderThickness="0"
+                                              DisabledBorderThickness="0"
+                                              TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
+                                                                          Dark={StaticResource DarkNormalText}}"
+                                              PlaceholderColor="#3F3F3F"
+                                              BackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary},
+                                                                                Dark={StaticResource DarkPrimary}}"
+                                              TranslationY="4"
+                                              ClearIconVisibility="Never"
+                                              Margin="16,0,16,5"
+                                              RotationX="20" />
+                        </On>
+                    </OnPlatform>
+                    <skia:SKLottieView IsVisible="{Binding IsBusy}"
+                                       RepeatCount="-1"
+                                       Source="loading.json"
+                                       HorizontalOptions="Center"
+                                       WidthRequest="48"
+                                       HeightRequest="48"
+                                       Grid.Column="1" />
+                </Grid>
+            </Border>
+
+            <dxc:SimpleButton Icon="send_message"
+                              x:Name="SB_AskQuestion"
+                              HeightRequest="48"
+                              WidthRequest="48"
+                              IsVisible="{Binding IsBusy,
+                                                  Converter={StaticResource IsFalse}}"
+                              Clicked="SB_AskQuestion_Clicked"
+                              Style="{StaticResource PrimaryButton}"
+                              BackgroundColor="{StaticResource LightPrimary}"
+                              IconColor="#3F3F3F"
+                              Grid.Column="1"
+                              Grid.Row="0" />
+
+            <dx:DXImage Source="stop_video"
+                        HeightRequest="35"
+                        WidthRequest="35"
+                        Margin="7"
+                        VerticalOptions="CenterAndExpand"
+                        IsVisible="{Binding IsBusy}"
+                        TintColor="{AppThemeBinding Light={StaticResource QuinaryLight},
+                                                    Dark={StaticResource QuinaryDark}}"
+                        Grid.Column="1"
+                        Grid.Row="0">
+                <dx:DXImage.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding CancelAnswerGenerationCommand}" />
+                </dx:DXImage.GestureRecognizers>
+            </dx:DXImage>
+        </Grid>
+    </Grid>
+</v:ContentPageBase>

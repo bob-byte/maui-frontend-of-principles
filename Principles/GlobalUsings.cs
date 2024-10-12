@@ -1,0 +1,33 @@
+﻿global using Microsoft.Maui;
+global using CommunityToolkit.Maui;
+global using CommunityToolkit.Maui.Core;
+global using CommunityToolkit.Maui.Alerts;
+global using CommunityToolkit.Mvvm.ComponentModel;
+global using CommunityToolkit.Mvvm.Input;
+global using CommunityToolkit.Maui.Markup;
+global using Principles.Core.Models;
+global using Principles.ViewModels;
+global using Principles.Views;
+global using Principles.Views.Templates;
+global using Principles.Validations;
+global using Principles.Core.Services;
+global using Principles.Core;
+global using Principles.Services;
+global using Principles.Constants;
+global using Principles.Core.Constants;
+global using Principles.Converters;
+global using Principles.Core.Extensions;
+global using Principles.Core.Helpers;
+global using Principles.Helpers;
+global using Principles.Messages;
+global using Principles.Resources.AppStrings;
+global using System.ComponentModel;
+global using System.Diagnostics;
+global using System.Globalization;
+global using System.Runtime.CompilerServices;
+global using System.Threading.Tasks;
+global using DevExpress.Maui;
+global using CommunityToolkit.Mvvm.Messaging;
+#if IOS
+global using UIKit;
+#endif
