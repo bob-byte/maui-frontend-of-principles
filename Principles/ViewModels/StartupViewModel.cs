@@ -24,6 +24,45 @@ public partial class StartupViewModel : BaseViewModel
     }
 
     [RelayCommand]
+    public async Task ContinueWithAppleAsync()
+    {
+        try
+        {
+            WebAuthenticatorResult result = null;
+
+            if (DeviceInfo.Platform == DevicePlatform.iOS && DeviceInfo.Version.Major >= 13)
+            {
+                // Make sure to enable Apple Sign In in both the
+                // entitlements and the provisioning profile.
+                var options = new AppleSignInAuthenticator.Options
+                {
+                    IncludeEmailScope = true,
+                    IncludeFullNameScope = true,
+                };
+                result = await AppleSignInAuthenticator.AuthenticateAsync( options );
+            }
+            else
+            {
+                Uri authUrl = new( uriString: "https://appleid.apple.com/auth/authorize" );
+                Uri callbackUrl = new LaunchUriBuilder( LaunchType.OAuth2Redirect ).Build();
+
+                result = await WebAuthenticator.AuthenticateAsync( authUrl, callbackUrl );
+            }
+
+            //TODO: send to server id token and access token and get from it JWT token
+            //TODO: call await m_settingsService.SetAuthAccessTokenAsync( response.Token ).DefaultConfigureAwait();
+            //TODO: go to initial view
+        }
+        catch (Exception ex)
+        {
+            if (ex is not TaskCanceledException)
+            {
+                LoggingService.LogError( ex, ex.Message );
+            }
+        }
+    }
+
+    [RelayCommand]
     public async Task ContinueWithGoogleAsync()
     {
         try
