@@ -7,6 +7,7 @@ namespace Principles;
 public partial class App : Application
 {
     private readonly UpdatePopupViewModel m_updatePopupViewModel;
+    private UpdatePopup? m_updatePopup;
 
     public App( IServiceProvider serviceProvider )
     {
@@ -28,12 +29,29 @@ public partial class App : Application
 
     protected async override void OnStart()
     {
+        base.OnStart();
+
         bool shouldShowPopup = await m_updatePopupViewModel.ShouldShowPopup();
 
         if (shouldShowPopup)
         {
-            var popup = new UpdatePopup( m_updatePopupViewModel );
-            Current?.MainPage?.ShowPopup( popup );
+            m_updatePopup ??= new UpdatePopup( m_updatePopupViewModel );
+            Current?.MainPage?.ShowPopup( m_updatePopup );
+        }
+    }
+
+    protected override async void OnResume()
+    {
+        base.OnResume();
+
+        m_updatePopupViewModel.ReferenceMessenger.Send( new TryAddNewDayInHabitListMessage() );
+
+        bool shouldShowPopup = (m_updatePopup is null || !m_updatePopup.IsShown) && ( await m_updatePopupViewModel.ShouldShowPopup());
+
+        if (shouldShowPopup)
+        {
+            m_updatePopup = new UpdatePopup( m_updatePopupViewModel );
+            Current?.MainPage?.ShowPopup( m_updatePopup );
         }
     }
 

@@ -29,6 +29,8 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
         AddFirstCol();
         AddColumns();
+
+        ViewModel.ReferenceMessenger.Register<TryAddNewDayInHabitListMessage>( this, ( sender, msg ) => OnNewDay( null ) );
     }
 
     ~ProgressOfHabitsView()
@@ -77,7 +79,18 @@ public partial class ProgressOfHabitsView : ContentPageBase
         int dayOfMonth = today.Day;
         string colCaption = $"{dayOfWeek}{Environment.NewLine}{dayOfMonth}";
 
-        bool isAlreadyAddedCol = DGV_Habits.Columns[1].Caption == colCaption || DGV_Habits.Columns[2].Caption == colCaption;
+        bool isAlreadyAddedCol;
+        try
+        {
+            //first column (with 0 index) is a grouping column (see ProgressOfHabitsView.xaml), second (with 1 index) column is name of habit
+            isAlreadyAddedCol = DGV_Habits.Columns[2].Caption == colCaption ||
+                DGV_Habits.Columns[3].Caption == colCaption;
+        }
+        catch
+        {
+            isAlreadyAddedCol = true;
+        }
+
         if (!isAlreadyAddedCol)
         {
             ViewModel.IsProgressesInitialized = false;
@@ -110,6 +123,10 @@ public partial class ProgressOfHabitsView : ContentPageBase
                 };
 
                 DGV_Habits.Columns.Insert( index: 1, templateColumn );
+
+                //sometimes there are bugs if we don't reload habit list
+                IEnumerable<UserHabit> habits = ViewModel.UserHabits.ToArray();
+                ViewModel.UserHabits.Reload( habits );
             } ).DefaultConfigureAwait();
 
             ViewModel.EndProgressInterval = today;

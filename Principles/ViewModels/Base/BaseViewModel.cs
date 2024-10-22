@@ -206,6 +206,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
             else
             {
                 userInfo = new UserInfo();
+                userInfo.Name = UserName.Value;
 
                 MainSlogan = CachingService.StoredValue( CacheKeys.USER_MAIN_SLOGAN );
                 userInfo.MainSlogan = MainSlogan;

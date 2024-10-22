@@ -1,6 +1,5 @@
 
 using System.Collections.Specialized;
-
 namespace Principles.Views;
 
 public partial class HelperView : ContentPageBase
@@ -56,6 +55,18 @@ public partial class HelperView : ContentPageBase
         if(CPB_Helper.Width != -1)
         {
             MessageDataTemplateSelector.PageWidth = CPB_Helper.Width;
+        }
+    }
+
+    void G_Title_SizeChanged( object sender, EventArgs e )
+    {
+        double titleWidth = G_Title.Width;
+        double helpIconWidth = DXI_Help.Width;
+        double infoIconWidth = DXI_Info.Width;
+        if (titleWidth != -1 && helpIconWidth != -1 && infoIconWidth != -1)
+        {
+            double titleLabelWidth = titleWidth - helpIconWidth - infoIconWidth - 5;
+            L_TitleText.WidthRequest = titleLabelWidth;
         }
     }
 }

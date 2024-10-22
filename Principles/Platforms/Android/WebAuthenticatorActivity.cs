@@ -11,5 +11,5 @@ namespace Principles;
 )]
 public class WebAuthenticatorActivity : WebAuthenticatorCallbackActivity
 {
-
+    
 }

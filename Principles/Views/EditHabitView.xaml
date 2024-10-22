@@ -194,7 +194,7 @@
                                                    IsVisible="{Binding UserGoals.Count,
                                                                        Converter={StaticResource IsZero}}" />
                                 <dxcv:DXCollectionView x:Name="DXCV_Goals"
-                                                       AllowDragDropItems="True"
+                                                       AllowDragDropItems="False"
                                                        ZIndex="100"
                                                        ItemsSource="{Binding UserGoals}"
                                                        Grid.Row="1"
@@ -205,10 +205,8 @@
                                         <DataTemplate x:DataType="m:UserGoal">
                                             <dx:DXStackLayout Orientation="Vertical">
                                                 <dxe:MultilineEdit Text="{Binding Name}"
-                                                                   MaxLineCount="1"
                                                                    TextFontAttributes="Bold"
                                                                    TextVerticalAlignment="Center"
-                                                                   HeightRequest="50"
                                                                    StartIcon="deletegoal"
                                                                    StartIconColor="{StaticResource LabelText}"
                                                                    EndIconColor="{StaticResource LabelText}"
@@ -451,7 +449,7 @@
                                                                       Android='3,5,0,5'}"
                                                   x:Name="TE_RepeatsOfSeveralDays"
                                                   Focused="RepeatsOfSeveralDays_Focused"
-                                                  HeightRequest="30"
+                                                  HeightRequest="{OnPlatform Android=33, iOS=30}"
                                                   BoxMinWidth="30"
                                                   BoxPadding="6,5,5,5"
                                                   ClearIconVisibility="Never"
@@ -483,7 +481,7 @@
                                                   Margin="{OnPlatform iOS='0, 0, 0, 15',
                                                                       Android='9, 8, 0, 5'}"
                                                   TextHorizontalAlignment="Center"
-                                                  HeightRequest="30"
+                                                  HeightRequest="{OnPlatform Android=33, iOS=30}"
                                                   BoxMinWidth="30"
                                                   BoxPadding="6,5,5,5"
                                                   ClearIconVisibility="Never"
@@ -544,10 +542,12 @@
                                           HalfExpandedRatio="0.6">
                             <Grid>
                                 <VerticalStackLayout Padding="0,7,0,15"
-                                                     Spacing="20"
-                                                     VerticalOptions="CenterAndExpand">
+                                                     Spacing="{OnPlatform Android=20}"
+                                                     IsVisible="{Binding IsRecommendedHabitsLoading, Converter={StaticResource IsFalse}}"
+                                                     VerticalOptions="Start">
                                     <Label Text="{x:Static loc:LocStrings.RecommendedHabitsByAi}"
-                                           Style="{StaticResource CentralHeader}" />
+                                           Style="{StaticResource CentralHeader}"
+                                           HeightRequest="{OnPlatform iOS=60}" />
 
                                     <dxcv:DXCollectionView ItemsSource="{Binding RecommendedHabits}"
                                                            x:Name="DXC_RecommendedHabits"
@@ -597,20 +597,23 @@
                                     </dxcv:DXCollectionView>
                                 </VerticalStackLayout>
 
-                                <VerticalStackLayout HorizontalOptions="Center"
-                                                     VerticalOptions="Center"
+                                <VerticalStackLayout Padding="0,7,0,0"
+                                                     HorizontalOptions="Center"
+                                                     VerticalOptions="{OnPlatform iOS=Center, Android=Start}"
+                                                     IsVisible="{Binding IsRecommendedHabitsLoading}"
                                                      Spacing="0">
-                                    <skia:SKLottieView IsVisible="{Binding IsRecommendedHabitsLoading}"
-                                                       RepeatCount="-1"
+                                    <Label Text="{x:Static loc:LocStrings.RecommendedHabitsByAi}"
+                                           Style="{StaticResource CentralHeader}"
+                                           HeightRequest="{OnPlatform iOS=60}" />
+                                    <skia:SKLottieView RepeatCount="-1"
                                                        Source="fire_loading.json"
+                                                       Margin="0, 40, 0, 0"
                                                        HorizontalOptions="Center"
                                                        WidthRequest="105"
                                                        HeightRequest="105" />
                                     <Label Text="{x:Static loc:LocStrings.Loading}"
-                                           IsVisible="{Binding IsRecommendedHabitsLoading}"
                                            HorizontalTextAlignment="Center" />
                                     <Label Text="{x:Static loc:LocStrings.IfYouDontWantToWaitYouCanChangeOtherFields}"
-                                           IsVisible="{Binding IsRecommendedHabitsLoading}"
                                            HorizontalTextAlignment="Center"
                                            WidthRequest="270"
                                            HeightRequest="100"

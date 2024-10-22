@@ -14,7 +14,22 @@ public partial class UpdatePopup : Popup
         m_settingsService = ServiceLocator.Current!.GetRequiredService<ISettingsService>();
         InitializeComponent();
         SetPopupWidth();
+
+        Opened += UpdatePopup_Opened;
+        Closed += UpdatePopup_Closed;
     }
+
+    private void UpdatePopup_Closed( object? sender, PopupClosedEventArgs e )
+    {
+        IsShown = false;
+    }
+
+    private void UpdatePopup_Opened( object? sender, PopupOpenedEventArgs e )
+    {
+        IsShown = true;
+    }
+
+    public bool IsShown { get; private set; }
 
     public UpdatePopupViewModel ViewModel { get; }
 

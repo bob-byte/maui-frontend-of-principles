@@ -72,9 +72,8 @@ public partial class ProfileView : ContentPageBase
         if (command.CanExecute( ME_PromptResult.Text ))
         {
             await command.ExecuteAsync( ME_PromptResult.Text );
+            DXP_Prompt.IsOpen = false;
         }
-
-        DXP_Prompt.IsOpen = false;
     }
 
     private void SB_Cancel_Clicked( object sender, EventArgs e )

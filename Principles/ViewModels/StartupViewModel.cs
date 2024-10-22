@@ -33,7 +33,10 @@ public partial class StartupViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            LoggingService.LogError( ex, ex.Message );
+            if (ex is not TaskCanceledException)
+            {
+                LoggingService.LogError( ex, ex.Message );
+            }
         }
     }
 

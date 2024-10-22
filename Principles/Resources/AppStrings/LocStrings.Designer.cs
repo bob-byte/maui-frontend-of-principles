@@ -202,7 +202,7 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chat With Helper.
+        ///   Looks up a localized string similar to Chat With AI-Helper.
         /// </summary>
         internal static string ChatWithHelper {
             get {
@@ -733,7 +733,7 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recommendation: specify the name of the habit and the time or place of its implementation. This will increase the probability of compliance. Example: I pray as soon as I wake up..
+        ///   Looks up a localized string similar to Specify a name of habit and time or place of its implementation. This will increase the probability of compliance. Example: I pray as soon as I wake up..
         /// </summary>
         internal static string HabitNameRecommendation {
             get {
@@ -760,7 +760,7 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Helper.
+        ///   Looks up a localized string similar to AI Helper.
         /// </summary>
         internal static string Helper {
             get {
@@ -778,7 +778,7 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Helper can sometimes be wrong. Сheck important information!.
+        ///   Looks up a localized string similar to AI Helper can sometimes be wrong. Сheck important information!.
         /// </summary>
         internal static string HelperWarning {
             get {
@@ -1428,7 +1428,7 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recommended habits.
+        ///   Looks up a localized string similar to Recommended habits by AI.
         /// </summary>
         internal static string RecommendedHabitsByAi {
             get {
@@ -1509,7 +1509,7 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to I am a self-development assistant. You can ask me different questions. For example, &quot;Does my identity determine my life?&quot;.
+        ///   Looks up a localized string similar to I am an AI self-development assistant. You can ask me different questions. For example, &quot;How does my personality affect my life?&quot;.
         /// </summary>
         internal static string SelfDevelopmentAssistantShortDescription {
             get {
@@ -1554,7 +1554,7 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to By clicking the &apos;Signing Up&apos; button, you agree to.
+        ///   Looks up a localized string similar to By clicking the &apos;Sign Up&apos; button, you agree to.
         /// </summary>
         internal static string SignUpAgreementText {
             get {

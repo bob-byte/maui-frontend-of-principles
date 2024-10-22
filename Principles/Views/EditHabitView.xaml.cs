@@ -408,7 +408,7 @@ public partial class EditHabitView : ContentPageBase
         double buttonWidth = G_SaveHabit.Width;
         if (titleWidth != -1 && buttonWidth != -1)
         {
-            double titleLabelWidth = titleWidth - buttonWidth - 10;
+            double titleLabelWidth = titleWidth - buttonWidth - 5;
             L_TitleText.WidthRequest = titleLabelWidth;
         }
     }
@@ -554,6 +554,12 @@ public partial class EditHabitView : ContentPageBase
         if (ViewModel.SaveGoalCommand.CanExecute( closePopup ))
         {
             await ViewModel.SaveGoalCommand.ExecuteAsync( closePopup );
+
+            UserGoal? habitGoal = ViewModel.Habit.Goal;
+            if (!m_doExecuteReloadOfRecommendedHabits && habitGoal is not null && habitGoal.Id != 0 && habitGoal.Id == ViewModel.EditedGoal.Id && habitGoal.Name != ViewModel.EditedGoal.Name)
+            {
+                m_doExecuteReloadOfRecommendedHabits = true;
+            }
         }
     }
 

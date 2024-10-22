@@ -65,7 +65,7 @@ public partial class UpdatePopupViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private async Task OpenStoreAsync()
+    private void OpenStore()
     {
         if (DontShowAgain)
         {
@@ -79,7 +79,7 @@ public partial class UpdatePopupViewModel : BaseViewModel
         url = "https://play.google.com/apps/internaltest/4701722005129923451";
 #endif
 
-        await BrowserHelper.OpenUrl( url ).DefaultConfigureAwait();
+        BrowserHelper.OpenUrl( url ).GetAwaiter();
     }
 
     [RelayCommand]

@@ -12,6 +12,8 @@ public partial class ProfileViewModel : BaseViewModel
     [RelayCommand(CanExecute = nameof(CanSaveUserName))]
     private async Task SaveUserNameAsync(string newValue)
     {
+        newValue ??= string.Empty;
+
         bool isSuccess = false;
         await UiBusyFor( async () =>
         {
@@ -33,9 +35,9 @@ public partial class ProfileViewModel : BaseViewModel
         }
     }
 
-    private bool CanSaveUserName()
+    private bool CanSaveUserName(string? newValue)
     {
-        return UserName.IsValid;
+        return !string.IsNullOrWhiteSpace( newValue );
     }
 
     [RelayCommand]

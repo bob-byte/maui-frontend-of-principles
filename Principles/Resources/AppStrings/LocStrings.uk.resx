@@ -385,7 +385,7 @@
     <value>Спочатку виправте помилки</value>
   </data>
   <data name="Helper" xml:space="preserve">
-    <value>Помічник</value>
+    <value>ШІ-Помічник</value>
   </data>
   <data name="HelperName" xml:space="preserve">
     <value>Помічник SET</value>
@@ -400,7 +400,7 @@
     <value>Щось пішло не так</value>
   </data>
   <data name="RecommendedHabitsByAi" xml:space="preserve">
-    <value>Рекомендовані Звички</value>
+    <value>Рекомендовані звички штучним інтелектом</value>
   </data>
   <data name="ConfirmMessageOnRecommededHabitsView" xml:space="preserve">
     <value>Ви впевнені, що хочете завантажити звички, на основі вибраних сфер звички, цілі, місії та основного гасла?</value>
@@ -424,10 +424,10 @@
     <value>Огляд</value>
   </data>
   <data name="SelfDevelopmentAssistantShortDescription" xml:space="preserve">
-    <value>Я асистент з саморозвитку. Ви можете звертатися до мене стосовно різних питань. Наприклад, "Чи визначає моя ідентичність моє життя?"</value>
+    <value>Я - ШІ-асистент зі саморозвитку. Ви можете звертатися до мене стосовно різних питань. Наприклад, "Як моя особистість впливає на моє життя?"</value>
   </data>
   <data name="ChatWithHelper" xml:space="preserve">
-    <value>Чат з помічником</value>
+    <value>Чат з ШІ-Помічником</value>
   </data>
   <data name="Mission" xml:space="preserve">
     <value>Місія</value>
@@ -467,6 +467,9 @@
   </data>
   <data name="Mentality" xml:space="preserve">
     <value>Ментальність</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>Інша</value>
   </data>
   <data name="Loading" xml:space="preserve">
     <value>Завантаження...</value>
@@ -640,7 +643,7 @@
     <value>Політикою Конфіденційності</value>
   </data>
   <data name="SignUpAgreementText" xml:space="preserve">
-    <value>Натискаючи кнопку 'Реєстрація', ви погоджуєтесь з</value>
+    <value>Натискаючи кнопку 'Зареєструватись', ви погоджуєтесь з</value>
   </data>
   <data name="ContactEmail" xml:space="preserve">
     <value>Написати до app@principles.top</value>
@@ -757,7 +760,7 @@
     <value>Приклади цілей спрямованих на вашу ідентичність: бути олімпійським чемпіоном, бути впевненим в собі, бути вільним від куріння.</value>
   </data>
   <data name="HabitNameRecommendation" xml:space="preserve">
-    <value>Рекомендація: вкажіть назву звички та час або місце її виконання. Це збільшить ймовірність її дотримання. Приклад: я молюсь, як тільки прокинусь.</value>
+    <value>Вкажіть назву звички та час або місце її виконання. Це збільшить ймовірність її дотримання. Приклад: я молюсь, як тільки прокинусь.</value>
   </data>
   <data name="UnableToLoadData" xml:space="preserve">
     <value>Не вдалось завантажити дані.</value>
@@ -838,6 +841,6 @@
     <value>Не нагадувати більше про це</value>
   </data>
   <data name="HelperWarning" xml:space="preserve">
-    <value>Помічник може інколи помилятись. Перевіряйте важливу інформацію!</value>
+    <value>ШІ-помічник може інколи помилятись. Перевіряйте важливу інформацію!</value>
   </data>
 </root>

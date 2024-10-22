@@ -522,7 +522,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         );
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanSaveGoal))]
     private async Task SaveGoalAsync(Action afterAction)
     {
         bool isNewGoal = EditedGoal.Id == 0;
@@ -553,6 +553,11 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
 
             afterAction();
         } );
+    }
+
+    private bool CanSaveGoal()
+    {
+        return !string.IsNullOrWhiteSpace( EditedGoal.Name );
     }
 
     [RelayCommand]

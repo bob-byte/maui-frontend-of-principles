@@ -72,7 +72,7 @@ public class AiChatService : BaseRemoteService, IAiChatService
         string userName = m_cachingService.StoredValue( CacheKeys.USER_NAME );
         if (!string.IsNullOrWhiteSpace( userName ))
         {
-            systemMessageBuilder.Append( $"{newLine}User name is \"{userName}\"." );
+            systemMessageBuilder.Append( $"{newLine}User name is \"{userName}\". You should use his/her name frequently." );
         }
 
         string userMission = m_cachingService.StoredValue( CacheKeys.USER_MISSION );

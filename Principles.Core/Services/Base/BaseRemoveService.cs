@@ -5,7 +5,7 @@ namespace Principles.Core.Services;
 public class BaseRemoteService
 {
     private readonly Lazy<OpenAIClient> m_lazyOpenAiClient;
-    protected const string DEFAULT_AI_DEPLOYMENT_NAME = "gpt-3.5-turbo";
+    protected const string DEFAULT_AI_DEPLOYMENT_NAME = "gpt-4o-mini";
 
     public BaseRemoteService( IServiceProvider serviceProvider )
     {

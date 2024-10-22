@@ -53,6 +53,7 @@
                                                       Converter={StaticResource FirstValidationError}}"
                                   TextChangedCommand="{Binding ValidatePasswordCommand}"
                                   ReserveBottomTextLine="True" />
+
                 <dxco:SimpleButton Text="{x:Static loc:LocStrings.Login}"
                                    Command="{Binding LoginCommand}"
                                    Style="{StaticResource PrimaryButton}"
@@ -81,6 +82,8 @@
                         </Label.GestureRecognizers>
                     </Label>
                     <Label Text="{x:Static loc:LocStrings.LoginAgreementText}"
+                           MaxLines="1"
+                           LineBreakMode="TailTruncation"
                            TextColor="Gray"
                            FontSize="12"
                            FontFamily="MonaSansMedium"
