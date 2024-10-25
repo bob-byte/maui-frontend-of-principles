@@ -15,6 +15,6 @@ public class EditUserHabitDto
     public int Priority { get; set; }
     public int Complexity { get; set; }
     public string? ColorName { get; set; }
-
+    public ICollection<UserHabitReminder>? Reminders { get; set; }
     public List<UserHabitWithPriority>? PrioritizedHabits { get; set; }
 }

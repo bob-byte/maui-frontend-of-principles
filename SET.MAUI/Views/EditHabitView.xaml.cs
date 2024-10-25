@@ -615,4 +615,26 @@ public partial class EditHabitView : ContentPageBase
     {
         DXP_Reminders.IsOpen = true;
     }
+
+    private void ME_HabitReminder_Focused( object sender, FocusEventArgs e )
+    {
+        if (ViewModel.IsNewHabit)
+        {
+            ViewModel.EditedReminder = new EditedUserHabitReminder();
+            if (ViewModel.Mission == null)
+            {
+                ME_ReminderTitle.Text = LocStrings.BecomeTruePersonalityTitle;
+            }
+            else
+            {
+                ME_ReminderTitle.Text = ViewModel.Mission;
+            }
+            ME_ReminderDescription.Text = ViewModel.NameOfHabit.Value;
+        }
+    }
+
+    private void SB_ReminderSave_Clicked( object sender, EventArgs e )
+    {
+        DXP_Reminders.IsOpen = false;
+    }
 }

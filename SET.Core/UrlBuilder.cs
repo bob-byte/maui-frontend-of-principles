@@ -28,6 +28,7 @@ public class UrlBuilder : IUrlBuilder
     private string? m_goal;
     private string? m_googleAuth;
     private string? m_versionCheck;
+    private string? m_generalReminder;
 
     public string BaseUrl
     {
@@ -182,6 +183,15 @@ public class UrlBuilder : IUrlBuilder
         {
             m_userMission ??= Combine( BaseApiUrl, "profile", "mission" );
             return m_userMission;
+        }
+    }
+
+    public string GeneralReminder
+    {
+        get
+        {
+            m_generalReminder ??= Combine( BaseApiUrl, "profile", "generalreminder" );
+            return m_generalReminder;
         }
     }
 

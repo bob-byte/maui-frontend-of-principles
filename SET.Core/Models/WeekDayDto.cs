@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SET.Core.Models;
-public class SaveHabitResponse
+public class WeekDayDto
 {
     public long Id { get; set; }
-    public long FrequencyId { get; set; }
-    public List<long> ReminderIds { get; set;}
+    public DayOfWeek Type { get; set; }
+    public long UserNotificationRequestId { get; set; }
 }

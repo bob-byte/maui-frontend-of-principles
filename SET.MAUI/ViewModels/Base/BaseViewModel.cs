@@ -19,6 +19,9 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     private string? m_mission;
 
     [ObservableProperty]
+    private Reminder m_reminder;
+
+    [ObservableProperty]
     private ImageSource? m_userIcon;
 
     [ObservableProperty]

@@ -122,6 +122,7 @@
                                       Tap="TE_Frequency_Tap" />
                         <dxe:MultilineEdit x:Name="ME_HabitReminder"
                                            LabelText="{x:Static loc:LocStrings.Reminder}"
+                                           Text="{Binding Path=EditedReminder, Converter={StaticResource ReminderValueToString}, Mode=OneWay}"
                                            IsErrorIconVisible="False"
                                            StartIcon="reminder"
                                            StartIconClicked="ME_HabitReminder_IconClicked"
@@ -129,7 +130,8 @@
                                            EndIconClicked="ME_HabitReminder_IconClicked"
                                            Tap="ME_HabitReminder_Tap"
                                            ClearIconVisibility="Never"
-                                           IsReadOnly="True" />
+                                           IsReadOnly="True"
+                                           Focused="ME_HabitReminder_Focused"/>
                         <dxe:AutoCompleteTokenEdit LabelText="{x:Static loc:LocStrings.AreasOfHabit}"
                                                    EndIcon="dotshorizontal"
                                                    ItemsSource="{Binding AllUserAreasOfLife}"
@@ -228,27 +230,16 @@
                                 <Label Text="{x:Static loc:LocStrings.Reminder}"
                                        Style="{StaticResource CentralHeader}" />
 
-                                <dxe:MultilineEdit LabelText="{x:Static loc:LocStrings.ReminderTitle}"
+                                <dxe:MultilineEdit x:Name="ME_ReminderTitle"
+                                                   Text="{Binding EditedReminder.Title}"
+                                                   LabelText="{x:Static loc:LocStrings.ReminderTitle}"
                                                    MaxLineCount="2"
                                                    StartIcon="remindertitle"
                                                    ClearIconVisibility="Never"
-                                                   MaximumWidthRequest="285">
-                                    <dxe:MultilineEdit.Style>
-                                        <Style TargetType="dxe:MultilineEdit">
-                                            <Setter Property="Text"
-                                                    Value="{Binding Mission}" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Mission}"
-                                                             Value="">
-                                                    <Setter Property="Text"
-                                                            Value="{x:Static loc:LocStrings.ReminderTitle}" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </dxe:MultilineEdit.Style>
-                                </dxe:MultilineEdit>
+                                                   MaximumWidthRequest="285" />
 
-                                <dxe:MultilineEdit Text="{Binding Habit.Name}"
+                                <dxe:MultilineEdit x:Name="ME_ReminderDescription"
+                                                   Text="{Binding EditedReminder.Description}"
                                                    LabelText="{x:Static loc:LocStrings.ReminderDescription}"
                                                    MaxLineCount="3"
                                                    StartIcon="reminderdescription"
@@ -257,11 +248,11 @@
 
                                 <dxe:TimeEdit LabelText="{x:Static loc:LocStrings.Time}"
                                               StartIcon="clock"
-                                              Time="20:30"
+                                              Time="{Binding EditedReminder.Time}"
                                               MaximumWidthRequest="285" />
 
                                 <HorizontalStackLayout HorizontalOptions="Start">
-                                    <Switch />
+                                    <Switch IsToggled="{Binding EditedReminder.IsEnabled}" />
                                     <Label Text="{x:Static loc:LocStrings.Enable}"
                                            VerticalOptions="Center"
                                            Margin="3,0,0,0"
@@ -273,8 +264,8 @@
                                                        Spacing="10">
 
                                     <dx:DXToggleButton x:Name="TBtn_Monday"
-                                                       Content="Mon"
-                                                       IsChecked="False"
+                                                       Content="{x:Static loc:LocStrings.Monday}"
+                                                       IsChecked="{Binding isDayChecked[0]}"
                                                        WidthRequest="50"
                                                        HeightRequest="50"
                                                        FontSize="12"
@@ -288,8 +279,8 @@
                                                        PressedBackgroundColor="Transparent" />
 
                                     <dx:DXToggleButton x:Name="TBtn_Tuesday"
-                                                       Content="Tue"
-                                                       IsChecked="False"
+                                                       Content="{x:Static loc:LocStrings.Tuesday}"
+                                                       IsChecked="{Binding isDayChecked[1]}"
                                                        WidthRequest="50"
                                                        HeightRequest="50"
                                                        FontSize="12"
@@ -303,8 +294,8 @@
                                                        PressedBackgroundColor="Transparent" />
 
                                     <dx:DXToggleButton x:Name="TBtn_Wednesday"
-                                                       Content="Wed"
-                                                       IsChecked="False"
+                                                       Content="{x:Static loc:LocStrings.Wednesday}"
+                                                       IsChecked="{Binding isDayChecked[2]}"
                                                        WidthRequest="50"
                                                        HeightRequest="50"
                                                        FontSize="12"
@@ -318,8 +309,8 @@
                                                        PressedBackgroundColor="Transparent" />
 
                                     <dx:DXToggleButton x:Name="TBtn_Thursday"
-                                                       Content="Thu"
-                                                       IsChecked="False"
+                                                       Content="{x:Static loc:LocStrings.Thursday}"
+                                                       IsChecked="{Binding isDayChecked[3]}"
                                                        WidthRequest="50"
                                                        HeightRequest="50"
                                                        FontSize="12"
@@ -338,8 +329,8 @@
                                                        Spacing="10">
 
                                     <dx:DXToggleButton x:Name="TBtn_Friday"
-                                                       Content="Fri"
-                                                       IsChecked="False"
+                                                       Content="{x:Static loc:LocStrings.Friday}"
+                                                       IsChecked="{Binding isDayChecked[4]}"
                                                        WidthRequest="50"
                                                        HeightRequest="50"
                                                        FontSize="12"
@@ -353,8 +344,8 @@
                                                        PressedBackgroundColor="Transparent" />
 
                                     <dx:DXToggleButton x:Name="TBtn_Saturday"
-                                                       Content="Sat"
-                                                       IsChecked="False"
+                                                       Content="{x:Static loc:LocStrings.Saturday}"
+                                                       IsChecked="{Binding isDayChecked[5]}"
                                                        WidthRequest="50"
                                                        HeightRequest="50"
                                                        FontSize="12"
@@ -368,8 +359,8 @@
                                                        PressedBackgroundColor="Transparent" />
 
                                     <dx:DXToggleButton x:Name="TBtn_Sunday"
-                                                       Content="Sun"
-                                                       IsChecked="False"
+                                                       Content="{x:Static loc:LocStrings.Sunday}"
+                                                       IsChecked="{Binding isDayChecked[6]}"
                                                        WidthRequest="50"
                                                        HeightRequest="50"
                                                        FontSize="12"
@@ -393,7 +384,9 @@
                                                        FontSize="16"
                                                        Margin="0,0,5,5"
                                                        IconHorizontalPosition="Left"
-                                                       Icon="check_second" />
+                                                       Icon="check_second"
+                                                       Command="{Binding AddReminderCommand}"
+                                                       Clicked="SB_ReminderSave_Clicked" />
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>
                         </dxco:DXPopup>
@@ -677,7 +670,7 @@
                                       MinimumWidthRequest="325"
                                       AllowShadow="True"
                                       CloseOnScrimTap="True">
-                            <VerticalStackLayout Margin="15, 15, 15, 10"
+                            <VerticalStackLayout Margin="15,15,15,10"
                                                  Spacing="0">
                                 <dxe:CheckEdit Label="{x:Static loc:LocStrings.EveryDay}"
                                                x:Name="CE_EveryDay"

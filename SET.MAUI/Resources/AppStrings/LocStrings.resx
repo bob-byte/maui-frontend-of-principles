@@ -861,4 +861,26 @@ By using the App, you acknowledge that you have read, understood, and agree to b
   <data name="EmptyReminders" xml:space="preserve">
     <value>You don't have any reminders for this habit yet</value>
   </data>
+	<data name="Monday" xml:space="preserve">
+    <value>Mon</value>
+</data>
+	<data name="Tuesday" xml:space="preserve">
+    <value>Tue</value>
+</data>
+	<data name="Wednesday" xml:space="preserve">
+    <value>Wed</value>
+</data>
+	<data name="Thursday" xml:space="preserve">
+    <value>Thu</value>
+</data>
+	<data name="Friday" xml:space="preserve">
+    <value>Fri</value>
+</data>
+	<data name="Saturday" xml:space="preserve">
+    <value>Sat</value>
+</data>
+	<data name="Sunday" xml:space="preserve">
+    <value>Sun</value>
+</data>
+	
 </root>

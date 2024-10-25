@@ -25,6 +25,10 @@ public partial class UserHabit : ObservableObject
     private string? m_description;
     [ObservableProperty]
     private UserGoal? m_goal;
+
+    [ObservableProperty]
+    private ObservableCollectionEx<UserHabitReminder>? m_reminders;
+
     [ObservableProperty]
     private string? m_question;
     [ObservableProperty]

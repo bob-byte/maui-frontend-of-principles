@@ -648,6 +648,15 @@ namespace SET.MAUI.Resources.AppStrings {
         /// <summary>
         ///   Looks up a localized string similar to Fri.
         /// </summary>
+        internal static string Friday {
+            get {
+                return ResourceManager.GetString("Friday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fri.
+        /// </summary>
         internal static string FridayShort {
             get {
                 return ResourceManager.GetString("FridayShort", resourceCulture);
@@ -799,7 +808,7 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Helper can sometimes be wrong.
+        ///   Looks up a localized string similar to Helper can sometimes be wrong. Сheck important information!.
         /// </summary>
         internal static string HelperWarning {
             get {
@@ -1065,6 +1074,15 @@ namespace SET.MAUI.Resources.AppStrings {
         internal static string MissionExplanation {
             get {
                 return ResourceManager.GetString("MissionExplanation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mon.
+        /// </summary>
+        internal static string Monday {
+            get {
+                return ResourceManager.GetString("Monday", resourceCulture);
             }
         }
         
@@ -1550,6 +1568,15 @@ namespace SET.MAUI.Resources.AppStrings {
         /// <summary>
         ///   Looks up a localized string similar to Sat.
         /// </summary>
+        internal static string Saturday {
+            get {
+                return ResourceManager.GetString("Saturday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sat.
+        /// </summary>
         internal static string SaturdayShort {
             get {
                 return ResourceManager.GetString("SaturdayShort", resourceCulture);
@@ -1667,6 +1694,15 @@ namespace SET.MAUI.Resources.AppStrings {
         /// <summary>
         ///   Looks up a localized string similar to Sun.
         /// </summary>
+        internal static string Sunday {
+            get {
+                return ResourceManager.GetString("Sunday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sun.
+        /// </summary>
         internal static string SundayShort {
             get {
                 return ResourceManager.GetString("SundayShort", resourceCulture);
@@ -1697,6 +1733,15 @@ namespace SET.MAUI.Resources.AppStrings {
         internal static string TheUser {
             get {
                 return ResourceManager.GetString("TheUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thu.
+        /// </summary>
+        internal static string Thursday {
+            get {
+                return ResourceManager.GetString("Thursday", resourceCulture);
             }
         }
         
@@ -1769,6 +1814,15 @@ namespace SET.MAUI.Resources.AppStrings {
         internal static string TransformAreasOfLifeTitle {
             get {
                 return ResourceManager.GetString("TransformAreasOfLifeTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tue.
+        /// </summary>
+        internal static string Tuesday {
+            get {
+                return ResourceManager.GetString("Tuesday", resourceCulture);
             }
         }
         
@@ -2093,6 +2147,15 @@ namespace SET.MAUI.Resources.AppStrings {
         internal static string Visualization {
             get {
                 return ResourceManager.GetString("Visualization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wed.
+        /// </summary>
+        internal static string Wednesday {
+            get {
+                return ResourceManager.GetString("Wednesday", resourceCulture);
             }
         }
         

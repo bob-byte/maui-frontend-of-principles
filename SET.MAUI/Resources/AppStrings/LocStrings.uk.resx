@@ -864,4 +864,25 @@
   <data name="EmptyReminders" xml:space="preserve">
     <value>У вас ще немає нагадувань про цю звичку</value>
   </data>
+	<data name="Monday" xml:space="preserve">
+    <value>Пн</value>
+</data>
+	<data name="Tuesday" xml:space="preserve">
+    <value>Вт</value>
+</data>
+	<data name="Wednesday" xml:space="preserve">
+    <value>Ср</value>
+</data>
+	<data name="Thursday" xml:space="preserve">
+    <value>Чт</value>
+</data>
+	<data name="Friday" xml:space="preserve">
+    <value>Пт</value>
+</data>
+	<data name="Saturday" xml:space="preserve">
+    <value>Сб</value>
+</data>
+	<data name="Sunday" xml:space="preserve">
+    <value>Нд</value>
+</data>
 </root>
