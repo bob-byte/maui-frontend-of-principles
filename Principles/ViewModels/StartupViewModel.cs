@@ -4,6 +4,7 @@ namespace Principles.ViewModels;
 public partial class StartupViewModel : BaseViewModel
 {
     private readonly IGoogleAuthService m_googleAuthService;
+    private readonly ISettingsService m_settingsService;
 
     [ObservableProperty]
     private ObservableCollectionEx<AppFeature> m_appFeatures;
@@ -12,6 +13,7 @@ public partial class StartupViewModel : BaseViewModel
         : base( serviceProvider )
     {
         m_googleAuthService = serviceProvider.GetRequiredService<IGoogleAuthService>();
+        m_settingsService = serviceProvider.GetRequiredService<ISettingsService>();
 
         m_appFeatures = new ObservableCollectionEx<AppFeature>
         {
@@ -44,14 +46,21 @@ public partial class StartupViewModel : BaseViewModel
             else
             {
                 Uri authUrl = new( uriString: "https://appleid.apple.com/auth/authorize" );
-                Uri callbackUrl = new LaunchUriBuilder( LaunchType.OAuth2Redirect ).Build();
+                Uri callbackUrl = new Uri( "https://api/account/auth/apple" );
 
                 result = await WebAuthenticator.AuthenticateAsync( authUrl, callbackUrl );
             }
-
-            //TODO: send to server id token and access token and get from it JWT token
-            //TODO: call await m_settingsService.SetAuthAccessTokenAsync( response.Token ).DefaultConfigureAwait();
-            //TODO: go to initial view
+            if (result != null)
+            {
+                var appToken = result?.Properties.GetValueOrDefault("app_token");
+                await m_settingsService.SetAuthAccessTokenAsync(appToken);
+                
+                await Navigation.GoToInitialViewAsync();
+            }
+            else
+            {
+                throw new Exception( "Authentication failed: No result returned." );
+            }
         }
         catch (Exception ex)
         {
