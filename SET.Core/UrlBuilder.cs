@@ -190,7 +190,7 @@ public class UrlBuilder : IUrlBuilder
     {
         get
         {
-            m_generalReminder ??= Combine( BaseApiUrl, "profile", "generalreminder" );
+            m_generalReminder ??= Combine( BaseApiUrl, "profile", "habitsreportreminder" );
             return m_generalReminder;
         }
     }

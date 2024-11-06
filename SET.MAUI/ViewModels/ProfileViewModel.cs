@@ -88,23 +88,6 @@ public partial class ProfileViewModel : BaseViewModel
         }
     }
 
-    [RelayCommand]
-    private async Task SaveGeneralReminder(Reminder reminder )
-    {
-        bool isSuccess = false;
-        await UiBusyFor( async () =>
-        {
-            string url = $"{UrlBuilder.GeneralReminder}";
-            await RequestProvider.PutAsync( url, reminder, SettingsService.AuthAccessToken );
-            isSuccess = true;
-        } );
-
-        if(isSuccess)
-        {
-            Reminder = reminder;
-        }
-    }
-
     private void NotifyUserInfoChanged()
     {
         UserInfoChangedMessage msg = new( new UserInfo

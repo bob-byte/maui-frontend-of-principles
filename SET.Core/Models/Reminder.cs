@@ -3,8 +3,13 @@ namespace SET.Core.Models
 {
     public class Reminder
     {
-        public DateTime? Time { get; set; }
-        public IList<DateOnly>? DaysOfWeek { get; set; }
+        public long Id { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public TimeOnly Time { get; set; }
+        public bool IsEnabled { get; set; }
+        public long UserId { get; set; }
+        public int UserNotificationRequestId { get; set; }
     }
 }
 

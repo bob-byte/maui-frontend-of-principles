@@ -46,7 +46,8 @@
                         Grid.Column="5">
                 <dx:DXImage.GestureRecognizers>
                     <TapGestureRecognizer NumberOfTapsRequired="1"
-                                          Tapped="DXI_Reminder_Tapped" />
+                                          Tapped="DXI_Reminder_Tapped"
+                                         Command="{Binding SetGeneralReminderCommand}" />
                 </dx:DXImage.GestureRecognizers>
             </dx:DXImage>
 
@@ -196,14 +197,14 @@
                        Style="{StaticResource CentralHeader}" />
 
 
-                <dxe:MultilineEdit Text="{Binding ReminderTitle}"
+                <dxe:MultilineEdit Text="{Binding GeneralReminder.Title}"
                                    LabelText="{x:Static loc:LocStrings.ReminderTitle}"
                                    MaxLineCount="2"
                                    StartIcon="remindertitle"
                                    ClearIconVisibility="Never"
                                    MaximumWidthRequest="285" />
 
-                <dxe:MultilineEdit Text="{Binding ReminderDescription}"
+                <dxe:MultilineEdit Text="{Binding GeneralReminder.Description}"
                                    LabelText="{x:Static loc:LocStrings.ReminderDescription}"
                                    MaxLineCount="3"
                                    StartIcon="reminderdescription"
@@ -212,11 +213,11 @@
 
                 <dxe:TimeEdit LabelText="{x:Static loc:LocStrings.Time}"
                               StartIcon="clock"
-                              Time="{Binding ReminderTime}"
+                              Time="{Binding GeneralReminder.Time}"
                               MaximumWidthRequest="285" />
 
                 <HorizontalStackLayout HorizontalOptions="Start">
-                    <Switch IsToggled="{Binding IsReminderEnabled}" />
+                    <Switch IsToggled="{Binding GeneralReminder.IsEnabled}" />
                     <Label Text="{x:Static loc:LocStrings.Enable}"
                            VerticalOptions="Center"
                            Margin="3,0,0,0"

@@ -25,19 +25,10 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     private UserHabit? m_selectedHabit;
 
     [ObservableProperty]
-    private string m_reminderTitle;
-
-    [ObservableProperty]
-    private string m_reminderDescription;
-
-    [ObservableProperty]
-    private DateTime m_reminderTime;
-
-    [ObservableProperty]
-    private bool m_isReminderEnabled;
-
-    [ObservableProperty]
     private DateOnly m_startProgressInterval;
+
+    [ObservableProperty]
+    private EditedGeneralReminder m_generalReminder;
 
     [ObservableProperty]
     private DateOnly m_endProgressInterval;
@@ -293,11 +284,48 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     }
 
     [RelayCommand]
+    private async Task SetGeneralReminder()
+    {
+        await InitUserInfoAsync();
+
+        if (Reminder == null)
+        {
+            Reminder = new Reminder
+            {
+                UserNotificationRequestId = 0,
+                Title = LocStrings.ReminderTitleText,
+                Description = LocStrings.ReminderDescriptionText,
+                IsEnabled = true,
+                Time = new TimeOnly( 20, 30 )
+            };
+
+            GeneralReminder = new EditedGeneralReminder
+            {
+                UserNotificationRequestId = Reminder.UserNotificationRequestId,
+                Title = Reminder.Title,
+                Description = Reminder.Description,
+                IsEnabled = Reminder.IsEnabled,
+                Time = new DateTime( DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, Reminder.Time.Hour, Reminder.Time.Minute, 0 )
+            };
+        }
+        else
+        {
+            GeneralReminder.Title = Reminder.Title;
+            GeneralReminder.Description = Reminder.Description;
+            GeneralReminder.IsEnabled = Reminder.IsEnabled;
+
+            GeneralReminder.Time = new DateTime( DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, Reminder.Time.Hour, Reminder.Time.Minute, 0 );
+        }
+
+        OnPropertyChanged( nameof( GeneralReminder ) );
+    }
+
+    [RelayCommand]
     private async Task AddReminder()
     {
-        if (!IsReminderEnabled)
+        if (!Reminder.IsEnabled)
         {
-            LocalNotificationCenter.Current.CancelAll();
+            LocalNotificationCenter.Current.Cancel(Reminder.UserNotificationRequestId);
             return;
         }
 #if ANDROID
@@ -313,42 +341,63 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
 #endif
 
 #if IOS
-    UNNotificationSettings status = await UNUserNotificationCenter.Current.GetNotificationSettingsAsync();
-    if (status.AuthorizationStatus != UNAuthorizationStatus.Authorized)
-    {
-        TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
-        
-        UNUserNotificationCenter.Current.RequestAuthorization(UNAuthorizationOptions.Alert |
-                                                            UNAuthorizationOptions.Badge |
-                                                            UNAuthorizationOptions.Sound,
-            (granted, error) =>
+            UNNotificationSettings status = await UNUserNotificationCenter.Current.GetNotificationSettingsAsync();
+            if (status.AuthorizationStatus != UNAuthorizationStatus.Authorized)
             {
-                tcs.SetResult(granted);
-            });
+                TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
 
-            bool isAuthorized = await tcs.Task;
+                UNUserNotificationCenter.Current.RequestAuthorization( UNAuthorizationOptions.Alert |
+                                                                    UNAuthorizationOptions.Badge |
+                                                                    UNAuthorizationOptions.Sound,
+                    ( granted, error ) =>
+                    {
+                        tcs.SetResult( granted );
+                    } );
 
-            if (!isAuthorized)
-            {
-                return;
+                bool isAuthorized = await tcs.Task;
+
+                if (!isAuthorized)
+                {
+                    return;
+                }
             }
-    }
 #endif
-
+        if (Reminder.UserNotificationRequestId == 0)
+        {
+            Reminder.UserNotificationRequestId = new Random().Next( 1, int.MaxValue );
+        }
 
         NotificationRequest notification = new NotificationRequest
         {
-            NotificationId = (int)DateTime.UtcNow.Ticks,
-            Title = ReminderTitle,
-            Description = ReminderDescription,
+            NotificationId = Reminder.UserNotificationRequestId,
+            Title = Reminder.Title,
+            Description = Reminder.Description,
             Schedule =
             {
-                NotifyTime = ReminderTime,
+                NotifyTime = DateTime.Today.Add(Reminder.Time.ToTimeSpan()),
                 NotifyRepeatInterval = TimeSpan.FromHours(24)
             }
         };
 
         await LocalNotificationCenter.Current.Show( notification );
+        await SaveGeneralReminder( Reminder );
+    }
+
+    [RelayCommand]
+    private async Task SaveGeneralReminder( Reminder reminder )
+    {
+        bool isSuccess = false;
+        await UiBusyFor( async () =>
+        {
+            string url = $"{UrlBuilder.GeneralReminder}";
+            await RequestProvider.PutAsync( url, reminder, SettingsService.AuthAccessToken );
+            isSuccess = true;
+        } );
+
+        if (isSuccess)
+        {
+            Reminder = reminder;
+        }
     }
 
     [RelayCommand]

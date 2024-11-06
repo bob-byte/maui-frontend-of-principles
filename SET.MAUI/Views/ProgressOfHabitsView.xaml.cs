@@ -272,30 +272,10 @@ public partial class ProgressOfHabitsView : ContentPageBase
     private void DXI_Reminder_Tapped( object sender, TappedEventArgs e )
     {
         DXP_Reminder.IsOpen = true;
-
-        if (m_isReminderOpenForTheFirstTime)
-        {
-            ViewModel.ReminderTitle = LocStrings.ReminderTitleText;
-            ViewModel.ReminderDescription = LocStrings.ReminderDescriptionText;
-            ViewModel.ReminderTime = new DateTime( DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 20, 30, 0 );
-
-            Preferences.Set( "IsReminderOpenForTheFirstTime", false );
-        }
-        else
-        {
-            ViewModel.ReminderTitle = Preferences.Get( "ReminderTitle", string.Empty );
-            ViewModel.ReminderDescription = Preferences.Get( "ReminderDescription", string.Empty );
-            DateTime.TryParse( Preferences.Get( "ReminderTime", DateTime.Now.ToString( "o" ) ), out DateTime reminderTime );
-            ViewModel.ReminderTime = reminderTime;
-        }
     }
 
     private void SB_Save_Clicked( object sender, EventArgs e )
     {
         DXP_Reminder.IsOpen = false;
-
-        Preferences.Set( "ReminderTitle", ViewModel.ReminderTitle );
-        Preferences.Set( "ReminderDescription", ViewModel.ReminderDescription );
-        Preferences.Set( "ReminderTime", ViewModel.ReminderTime.ToString( "o" ) );
     }
 }
