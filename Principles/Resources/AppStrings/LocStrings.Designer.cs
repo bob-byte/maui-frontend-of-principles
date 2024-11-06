@@ -1183,6 +1183,15 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Other.
+        /// </summary>
+        internal static string Other {
+            get {
+                return ResourceManager.GetString("Other", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Other Sex.
         /// </summary>
         internal static string OtherSex {
@@ -1653,7 +1662,7 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to times per.
+        ///   Looks up a localized string similar to time(-s) per.
         /// </summary>
         internal static string timesPer {
             get {

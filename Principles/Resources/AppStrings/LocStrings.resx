@@ -295,7 +295,7 @@
     <value>days</value>
   </data>
   <data name="timesPer" xml:space="preserve">
-    <value>times per</value>
+    <value>time(-s) per</value>
   </data>
   <data name="Week" xml:space="preserve">
     <value>Week</value>
@@ -839,5 +839,8 @@ By using the App, you acknowledge that you have read, understood, and agree to b
   </data>
   <data name="HelperWarning" xml:space="preserve">
     <value>AI Helper can sometimes be wrong. Сheck important information!</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
   </data>
 </root>
