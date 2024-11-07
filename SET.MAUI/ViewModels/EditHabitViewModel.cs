@@ -46,7 +46,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
 
     [ObservableProperty]
     private bool m_isRecommendedHabitsLoading;
-
+    
     public EditHabitViewModel( IServiceProvider serviceProvider )
         : base(serviceProvider)
     {
@@ -163,15 +163,13 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
             {
                 dto.PrioritizedHabits.Add( new UserHabitWithPriority { Id = habit.Id, Priority = habit.Priority } );
             }
-
+            
             if (UserHabits.Count == 1)
             {
                 await UiBusyFor( async () =>
                 {
                     SaveHabitResponse response = await ServiceOfHabit.UpdateHabitAsync( dto );
-                    Habit.Id = response.Id;
-                    Habit.Frequency!.Id = response.FrequencyId;
-                    Habit.Reminders[0].Id = response.ReminderIds[0];  
+                    await HandleHabitSaveAsync( response );
                     ReferenceMessenger.Send( new HabitSavedMessage( Habit, copyOfHabits ) );
                     await Navigation.GoBackAsync();
                 } );
@@ -181,12 +179,38 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
                 await UiBusyFor( async () =>
                 {
                     SaveHabitResponse response = await ServiceOfHabit.UpdateHabitAsync( dto );
-                    Habit.Id = response.Id;
-                    Habit.Frequency!.Id = response.FrequencyId;
-                    Habit.Reminders[0].Id = response.ReminderIds[0];
+                    await HandleHabitSaveAsync( response );
                     await Navigation.GoBackAsync();
                     ReferenceMessenger.Send( new HabitSavedMessage( Habit, copyOfHabits ) );
                 } );
+            }
+        }
+    }
+
+    private async Task HandleHabitSaveAsync(SaveHabitResponse response)
+    {
+        Habit.Id = response.Id;
+        Habit.Frequency!.Id = response.FrequencyId;
+
+        if (response.ReminderIds is not null && Habit.Reminders?.Any() == true)
+        {
+            await GetAccessToSendNotificationsAsync();
+            
+            for (int numReminder = 0; numReminder < response.ReminderIds.Count; numReminder++)
+            {
+                SaveHabitResponse.Reminder dtoOfReminder = response.ReminderIds[numReminder];
+                UserHabitReminder habitReminder = Habit.Reminders[numReminder];
+                habitReminder.Id = dtoOfReminder.Id;
+                            
+                for (int numWeekDay = 0; numWeekDay < dtoOfReminder.DaysOfWeek?.Count; numWeekDay++)
+                {
+                    SaveHabitResponse.WeekDay dtoOfWeekDay = dtoOfReminder.DaysOfWeek[numWeekDay];
+                    WeekDay weekDay =  Habit.Reminders[numReminder].DaysOfWeek[numWeekDay];
+                    weekDay.Id = dtoOfWeekDay.Id;
+                    weekDay.UserNotificationRequestId = dtoOfWeekDay.NotificationRequestId;
+                                
+                    await AddNotificationToDeviceAsync( habitReminder, weekDay );
+                }
             }
         }
     }
@@ -260,6 +284,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
     public override async Task InitializeAsync( object? parameter = null )
     {
         await InitUserInfoAsync();
+        
         RecommendedHabits = new ObservableCollectionEx<RecommendedHabit>();
         Habit.Reminder ??= new Reminder();
         Habit.Frequency ??= new FrequencyOfHabit();
@@ -316,7 +341,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
                         isDayChecked[i] = false;
                     }
 
-                    foreach (WeekDayDto day in reminder.DaysOfWeek)
+                    foreach (WeekDay day in reminder.DaysOfWeek)
                     {
                         int dayIndex = (int)day.Type;
                         if (dayIndex >= 0 && dayIndex < isDayChecked.Count)
@@ -325,7 +350,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
                         }
                     }
 
-                    EditedReminder.DaysOfWeek = reminder.DaysOfWeek.Select( d => new WeekDayDto
+                    EditedReminder.DaysOfWeek = reminder.DaysOfWeek.Select( d => new WeekDay
                     {
                         Id = d.Id,
                         Type = d.Type,
@@ -741,83 +766,24 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
     }
 
     [RelayCommand]
-    private async Task AddReminder()
+    private async Task AddReminderAsync()
     {
-        if (!EditedReminder.IsEnabled)
-        {
-            if (EditedReminder.DaysOfWeek != null && EditedReminder.DaysOfWeek.Count > 0)
-            {
-                foreach (WeekDayDto day in EditedReminder.DaysOfWeek)
-                {
-                    if (day.UserNotificationRequestId > 0)
-                    {
-                        LocalNotificationCenter.Current.Cancel( (int)day.UserNotificationRequestId );
-                    }
-                }
-            }
-            return;
-        }
+        await GetAccessToSendNotificationsAsync();
 
-        #region AccessToNotification
-#if ANDROID
-    if (AndroidX.Core.Content.ContextCompat.CheckSelfPermission(
-        Android.App.Application.Context,
-        Android.Manifest.Permission.PostNotifications) != Android.Content.PM.Permission.Granted)
-    {
-        AndroidX.Core.App.ActivityCompat.RequestPermissions(
-            Platform.CurrentActivity,
-            new string[] { Android.Manifest.Permission.PostNotifications },
-            0);
-    }
-#endif
-
-#if IOS
-        UNNotificationSettings status = await UNUserNotificationCenter.Current.GetNotificationSettingsAsync();
-        if (status.AuthorizationStatus != UNAuthorizationStatus.Authorized)
-        {
-            TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
-
-            UNUserNotificationCenter.Current.RequestAuthorization( UNAuthorizationOptions.Alert |
-                                                                    UNAuthorizationOptions.Badge |
-                                                                    UNAuthorizationOptions.Sound,
-                ( granted, error ) =>
-                {
-                    tcs.SetResult( granted );
-                } );
-
-            bool isAuthorized = await tcs.Task;
-
-            if (!isAuthorized)
-            {
-                return;
-            }
-        }
-#endif
-        #endregion
-
-        var reminder = new UserHabitReminder
+        UserHabitReminder reminder = new()
         {
             Title = EditedReminder.Title,
             Description = EditedReminder.Description,
             Time = TimeOnly.FromDateTime( EditedReminder.Time ),
             IsEnabled = EditedReminder.IsEnabled,
-            DaysOfWeek = GetSelectedDaysIndexes().Select( index => new WeekDayDto
+            DaysOfWeek = GetSelectedDaysIndexes().Select( index => new WeekDay
             {
                 Type = (DayOfWeek)index,
                 UserNotificationRequestId = 0
             } ).ToList()
         };
 
-        foreach (var dayOfWeekDto in EditedReminder.DaysOfWeek)
-        {
-            if (dayOfWeekDto.UserNotificationRequestId > 0)
-            {
-                LocalNotificationCenter.Current.Cancel( (int)dayOfWeekDto.UserNotificationRequestId );
-            }
-        }
-
         Habit.Reminders ??= new ObservableCollectionEx<UserHabitReminder>();
-        bool isNewReminder = Habit.Reminders.Count == 0;
 
         if (Habit.Reminders.Count == 1)
         {
@@ -828,17 +794,27 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         {
             Habit.Reminders.Add( reminder );
         }
+        
+        OnPropertyChanged( nameof( EditedReminder ) );
+    }
 
-        DateTime currentDate = DateTime.Now;
-        TimeSpan currentTime = currentDate.TimeOfDay;
+    private Task GetAccessToSendNotificationsAsync()
+    {
+        //TODO: it should support all Android versions which our app supports
+        return LocalNotificationCenter.Current.RequestNotificationPermission();
+    }
 
-        foreach (var dayOfWeekDto in reminder.DaysOfWeek)
+    private async Task AddNotificationToDeviceAsync( UserHabitReminder reminder, WeekDay weekDay )
+    {
+        if (reminder.IsEnabled)
         {
-            int dayOfWeek = (int)dayOfWeekDto.Type;
+            DateTime currentDate = DateTime.Now;
+            TimeSpan currentTime = currentDate.TimeOfDay;
+            int numDay = (int)weekDay.Type;
             int currentDayOfWeek = (int)currentDate.DayOfWeek;
             currentDayOfWeek = (currentDayOfWeek + 6) % 7;
 
-            int daysUntilNextReminder = (dayOfWeek - currentDayOfWeek + 7) % 7;
+            int daysUntilNextReminder = (numDay - currentDayOfWeek + 7) % 7;
 
             if (daysUntilNextReminder == 0 && reminder.Time.ToTimeSpan() < currentTime)
             {
@@ -849,29 +825,24 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
                 .AddDays( daysUntilNextReminder )
                 .Add( reminder.Time.ToTimeSpan() );
 
-            NotificationRequest notification = new NotificationRequest
+            NotificationRequest notification = new()
             {
+                NotificationId = weekDay.UserNotificationRequestId,
                 Title = reminder.Title,
                 Description = reminder.Description,
                 Schedule = new NotificationRequestSchedule
                 {
-                    NotifyTime = notifyDateTime,
-                    RepeatType = NotificationRepeat.Weekly
+                    NotifyTime = notifyDateTime, RepeatType = NotificationRepeat.Weekly
                 }
             };
 
-            if (dayOfWeekDto.UserNotificationRequestId > 0)
-            {
-                notification.NotificationId = (int)dayOfWeekDto.UserNotificationRequestId;
-            }
-            else
-            {
-                notification.NotificationId = (int)DateTime.Now.Ticks & 0xFFFF;
-                await LocalNotificationCenter.Current.Show( notification );
-                dayOfWeekDto.UserNotificationRequestId = notification.NotificationId;
-            }
+            await LocalNotificationCenter.Current.Show( notification );
         }
-        OnPropertyChanged( nameof( EditedReminder ) );
+        else if(IsNewHabit)
+        {
+            //TODO: test how it works for new habit
+            LocalNotificationCenter.Current.Cancel( weekDay.UserNotificationRequestId );
+        }
     }
 
 

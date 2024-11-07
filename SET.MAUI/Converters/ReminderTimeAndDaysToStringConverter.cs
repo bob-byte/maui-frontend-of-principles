@@ -19,7 +19,7 @@ public class ReminderTimeAndDaysToStringConverter : BaseConverterOneWay<EditedUs
             return DefaultConvertReturnValue;
 
         DateTime time = reminder.Time;
-        IList<WeekDayDto> daysOfWeek = reminder.DaysOfWeek;
+        IList<WeekDay> daysOfWeek = reminder.DaysOfWeek;
 
         if (daysOfWeek == null || daysOfWeek.Count == 0)
         {

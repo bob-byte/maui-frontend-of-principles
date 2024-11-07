@@ -1,4 +1,6 @@
-﻿using SET.MAUI.Exceptions;
+﻿using Plugin.LocalNotification;
+
+using SET.MAUI.Exceptions;
 
 using System.Net;
 using System.Net.Sockets;
@@ -199,7 +201,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
                 MainSlogan = userInfo.MainSlogan;
                 Mission = userInfo.Mission;
                 Gender = userInfo.Gender;
-                Reminder = userInfo.Reminder;
+                Reminder = userInfo.HabitReportsReminder ?? new Reminder();
 
                 //Gender.Man is default value, so OnGenderChanged won't be called is Gender = Gender.Man
                 if (Gender == Gender.Man)
@@ -216,6 +218,34 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
 
                 Mission = CachingService.StoredValue( CacheKeys.USER_MISSION );
                 userInfo.Mission = Mission;
+
+                bool isParsed = int.TryParse( CachingService.StoredValue( CacheKeys.USER_HABITS_REPORT_REMINDER ),
+                    out int notificationId );
+                if (isParsed)
+                {
+                    IList<NotificationRequest> notificationList =
+                        await LocalNotificationCenter.Current.GetPendingNotificationList();
+                    NotificationRequest? notificationHabitsReport = notificationList.FirstOrDefault( x => x.NotificationId == notificationId );
+                    if (notificationHabitsReport is not null)
+                    {
+                        Reminder habitReportReminder = new()
+                        {
+                            Description = notificationHabitsReport.Description,
+                            Title = notificationHabitsReport.Title,
+                            IsEnabled = true
+                        };
+
+                        if (notificationHabitsReport.Schedule.NotifyTime != null)
+                        {
+                            habitReportReminder.Time =
+                                TimeOnly.FromDateTime( notificationHabitsReport.Schedule.NotifyTime.Value );
+                        }
+                    }
+                    else
+                    {
+                        //TODO: get habit info from server
+                    }
+                }
 
                 //if gender is not parsed then it will set zero value
                 _ = Enum.TryParse( CachingService.StoredValue( CacheKeys.USER_GENDER ), out Gender gender );

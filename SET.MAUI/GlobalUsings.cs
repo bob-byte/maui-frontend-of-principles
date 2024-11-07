@@ -22,7 +22,6 @@ global using SET.MAUI.Helpers;
 global using SET.MAUI.Messages;
 global using SET.MAUI.Resources.AppStrings;
 global using System.ComponentModel;
-global using System.Diagnostics;
 global using System.Globalization;
 global using System.Runtime.CompilerServices;
 global using System.Threading.Tasks;

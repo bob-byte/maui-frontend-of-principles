@@ -13,5 +13,5 @@ public record UserInfo
     public string MainSlogan { get; set; }
     public string Mission { get; set; }
     public Gender Gender { get; set; }
-    public Reminder Reminder { get; set; }
+    public Reminder? HabitReportsReminder { get; set; }
 }

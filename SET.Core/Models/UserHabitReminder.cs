@@ -13,5 +13,5 @@ public class UserHabitReminder
     public TimeOnly Time { get; set; }
     public bool IsEnabled { get; set; }
     public long UserHabitId { get; set; }
-    public IList<WeekDayDto> DaysOfWeek { get; set; }
+    public IList<WeekDay> DaysOfWeek { get; set; }
 }
