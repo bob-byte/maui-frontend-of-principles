@@ -2,6 +2,8 @@
 using DevExpress.Maui.Controls;
 using DevExpress.Maui.Editors;
 
+using Plugin.LocalNotification;
+
 
 namespace SET.MAUI.Views;
 
@@ -583,7 +585,18 @@ public partial class EditHabitView : ContentPageBase
 
     private void ME_HabitReminder_Tap( object sender, HandledEventArgs e )
     {
-        DXP_Reminders.IsOpen = true;
+        if (LocalNotificationCenter.Current.IsSupported)
+        {
+            DXP_Reminders.IsOpen = true;
+        }
+        else
+        {
+             Snackbar.Make(
+                LocStrings.DeviceDoesNotSupportNotifications,
+                visualOptions: SnackbarHelper.DefaultOptions()
+            ).Show();
+            DXP_Reminders.IsOpen = false;
+        }
     }
 
     private void ME_HabitReminder_IconClicked( System.Object sender, System.EventArgs e )
@@ -634,6 +647,11 @@ public partial class EditHabitView : ContentPageBase
     }
 
     private void SB_ReminderSave_Clicked( object sender, EventArgs e )
+    {
+        DXP_Reminders.IsOpen = false;
+    }
+
+    private void SB_Reminder_Cancel_Clicked( object sender, EventArgs e )
     {
         DXP_Reminders.IsOpen = false;
     }

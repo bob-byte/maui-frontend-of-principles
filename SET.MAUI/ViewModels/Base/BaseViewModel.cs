@@ -228,16 +228,13 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
                     NotificationRequest? notificationHabitsReport = notificationList.FirstOrDefault( x => x.NotificationId == notificationId );
                     if (notificationHabitsReport is not null)
                     {
-                        Reminder habitReportReminder = new()
-                        {
-                            Description = notificationHabitsReport.Description,
-                            Title = notificationHabitsReport.Title,
-                            IsEnabled = true
-                        };
+                        Reminder.Description = notificationHabitsReport.Description;
+                        Reminder.Title = notificationHabitsReport.Title;
+                        Reminder.IsEnabled = true;
 
                         if (notificationHabitsReport.Schedule.NotifyTime != null)
                         {
-                            habitReportReminder.Time =
+                            Reminder.Time =
                                 TimeOnly.FromDateTime( notificationHabitsReport.Schedule.NotifyTime.Value );
                         }
                     }

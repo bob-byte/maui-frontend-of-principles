@@ -882,5 +882,7 @@ By using the App, you acknowledge that you have read, understood, and agree to b
 	<data name="Sunday" xml:space="preserve">
     <value>Sun</value>
 </data>
-	
+<data name="DeviceDoesNotSupportNotifications" xml:space="preserve">
+    <value>Oops.. Your device does not support notifications.</value>
+</data>
 </root>

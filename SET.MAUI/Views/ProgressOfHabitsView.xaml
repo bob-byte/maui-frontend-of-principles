@@ -47,7 +47,7 @@
                 <dx:DXImage.GestureRecognizers>
                     <TapGestureRecognizer NumberOfTapsRequired="1"
                                           Tapped="DXI_Reminder_Tapped"
-                                         Command="{Binding SetGeneralReminderCommand}" />
+                                          Command="{Binding SetGeneralReminderCommand}" />
                 </dx:DXImage.GestureRecognizers>
             </dx:DXImage>
 
@@ -225,6 +225,14 @@
                 </HorizontalStackLayout>
                 <HorizontalStackLayout HorizontalOptions="End"
                                        Padding="0">
+                    <dxco:SimpleButton x:Name="SB_GeneralReminder_Cancel"
+                                       BackgroundColor="{StaticResource CancelButtonColor}"
+                                       Text="{x:Static loc:LocStrings.Cancel}"
+                                       FontSize="16"
+                                       Margin="0,0,5,5"
+                                       Icon="close"
+                                       IconHorizontalPosition="Left"
+                                       Clicked="SB_GeneralReminder_Cancel_Clicked" />
                     <dxco:SimpleButton x:Name="SB_Save"
                                        Style="{StaticResource PrimaryButton}"
                                        Text="{Binding LocSave}"

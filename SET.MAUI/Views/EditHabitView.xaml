@@ -122,7 +122,9 @@
                                       Tap="TE_Frequency_Tap" />
                         <dxe:MultilineEdit x:Name="ME_HabitReminder"
                                            LabelText="{x:Static loc:LocStrings.Reminder}"
-                                           Text="{Binding Path=EditedReminder, Converter={StaticResource ReminderValueToString}, Mode=OneWay}"
+                                           Text="{Binding Path=EditedReminder,
+                                                          Converter={StaticResource ReminderValueToString},
+                                                          Mode=OneWay}"
                                            IsErrorIconVisible="False"
                                            StartIcon="reminder"
                                            StartIconClicked="ME_HabitReminder_IconClicked"
@@ -131,7 +133,7 @@
                                            Tap="ME_HabitReminder_Tap"
                                            ClearIconVisibility="Never"
                                            IsReadOnly="True"
-                                           Focused="ME_HabitReminder_Focused"/>
+                                           Focused="ME_HabitReminder_Focused" />
                         <dxe:AutoCompleteTokenEdit LabelText="{x:Static loc:LocStrings.AreasOfHabit}"
                                                    EndIcon="dotshorizontal"
                                                    ItemsSource="{Binding AllUserAreasOfLife}"
@@ -378,6 +380,14 @@
 
                                 <HorizontalStackLayout HorizontalOptions="End"
                                                        Padding="0">
+                                    <dxco:SimpleButton x:Name="SB_Reminder_Cancel"
+                                                       BackgroundColor="{StaticResource CancelButtonColor}"
+                                                       Text="{x:Static loc:LocStrings.Cancel}"
+                                                       FontSize="16"
+                                                       Margin="0,0,5,5"
+                                                       Icon="close"
+                                                       IconHorizontalPosition="Left"
+                                                       Clicked="SB_Reminder_Cancel_Clicked" />
                                     <dxco:SimpleButton x:Name="SB_ReminderSave"
                                                        Style="{StaticResource PrimaryButton}"
                                                        Text="{Binding LocSave}"

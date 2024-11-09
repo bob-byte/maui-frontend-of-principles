@@ -288,16 +288,13 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     {
         await InitUserInfoAsync();
 
-        if (Reminder == null)
+        if (Reminder.Id == 0)
         {
-            Reminder = new Reminder
-            {
-                UserNotificationRequestId = 0,
-                Title = LocStrings.ReminderTitleText,
-                Description = LocStrings.ReminderDescriptionText,
-                IsEnabled = true,
-                Time = new TimeOnly( 20, 30 )
-            };
+            Reminder.UserNotificationRequestId = 0;
+            Reminder.Title = LocStrings.ReminderTitleText;
+            Reminder.Description = LocStrings.ReminderDescriptionText;
+            Reminder.IsEnabled = true;
+            Reminder.Time = new TimeOnly( 20, 30 );
 
             GeneralReminder = new EditedGeneralReminder
             {
@@ -321,47 +318,16 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private async Task AddReminder()
+    private async Task AddReminderAsync()
     {
+        await GetAccessToSendNotificationsAsync();
+
         if (!Reminder.IsEnabled)
         {
             LocalNotificationCenter.Current.Cancel(Reminder.UserNotificationRequestId);
             return;
         }
-#if ANDROID
-        if (AndroidX.Core.Content.ContextCompat.CheckSelfPermission(
-            Android.App.Application.Context,
-            Android.Manifest.Permission.PostNotifications ) != Android.Content.PM.Permission.Granted)
-        {
-            AndroidX.Core.App.ActivityCompat.RequestPermissions(
-                Platform.CurrentActivity,
-                new string[] { Android.Manifest.Permission.PostNotifications },
-                0 );
-        }
-#endif
 
-#if IOS
-            UNNotificationSettings status = await UNUserNotificationCenter.Current.GetNotificationSettingsAsync();
-            if (status.AuthorizationStatus != UNAuthorizationStatus.Authorized)
-            {
-                TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
-
-                UNUserNotificationCenter.Current.RequestAuthorization( UNAuthorizationOptions.Alert |
-                                                                    UNAuthorizationOptions.Badge |
-                                                                    UNAuthorizationOptions.Sound,
-                    ( granted, error ) =>
-                    {
-                        tcs.SetResult( granted );
-                    } );
-
-                bool isAuthorized = await tcs.Task;
-
-                if (!isAuthorized)
-                {
-                    return;
-                }
-            }
-#endif
         if (Reminder.UserNotificationRequestId == 0)
         {
             Reminder.UserNotificationRequestId = new Random().Next( 1, int.MaxValue );
@@ -381,6 +347,12 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
 
         await LocalNotificationCenter.Current.Show( notification );
         await SaveGeneralReminder( Reminder );
+    }
+
+    private Task GetAccessToSendNotificationsAsync()
+    {
+        //TODO: it should support all Android versions which our app supports
+        return LocalNotificationCenter.Current.RequestNotificationPermission();
     }
 
     [RelayCommand]

@@ -1,5 +1,7 @@
 using CommunityToolkit.Maui.Behaviors;
 using DevExpress.Maui.DataGrid;
+using Plugin.LocalNotification;
+
 using SET.MAUI.Controls;
 using System.Windows.Input;
 
@@ -271,10 +273,26 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
     private void DXI_Reminder_Tapped( object sender, TappedEventArgs e )
     {
-        DXP_Reminder.IsOpen = true;
+        if (LocalNotificationCenter.Current.IsSupported)
+        {
+            DXP_Reminder.IsOpen = true;
+        }
+        else
+        {
+            Snackbar.Make(
+                LocStrings.DeviceDoesNotSupportNotifications,
+                visualOptions: SnackbarHelper.DefaultOptions()
+            ).Show();
+            DXP_Reminder.IsOpen = false;
+        }
     }
 
     private void SB_Save_Clicked( object sender, EventArgs e )
+    {
+        DXP_Reminder.IsOpen = false;
+    }
+
+    private void SB_GeneralReminder_Cancel_Clicked( object sender, EventArgs e )
     {
         DXP_Reminder.IsOpen = false;
     }

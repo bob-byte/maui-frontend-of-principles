@@ -448,6 +448,15 @@ namespace SET.MAUI.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Oops.. Your device does not support notifications..
+        /// </summary>
+        internal static string DeviceDoesNotSupportNotifications {
+            get {
+                return ResourceManager.GetString("DeviceDoesNotSupportNotifications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Don&apos;t remind me of it again.
         /// </summary>
         internal static string DontShowUpdateCheckBoxText {
