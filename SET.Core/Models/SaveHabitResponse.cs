@@ -22,5 +22,6 @@ public class SaveHabitResponse
     {
         public long Id { get; set; }
         public int NotificationRequestId { get; set; }
+        public DayOfWeek Type { get; set; }
     }
 }

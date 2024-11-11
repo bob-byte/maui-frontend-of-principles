@@ -30,7 +30,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
     private string m_frequencyRepresentation;
 
     [ObservableProperty]
-    private EditedUserHabitReminder m_editedReminder;
+    private EditedUserHabitReminder? m_editedReminder;
 
     [ObservableProperty]
     private ObservableCollectionEx<RecommendedHabit> m_recommendedHabits;
@@ -89,9 +89,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
     public UserAreaOfLife AllAreasOfLifeAsOneItem { get; }
 
     public List<PeriodOfHabit> PeriodsOfHabit { get; }
-
-    private List<WeekDay> inactiveDaysToDelete = new List<WeekDay>();
-
+    
     public IAiRecommenderOfHabitsService AiRecommenderOfHabits { get; }
     public IGoalService GoalService { get; set; }
 
@@ -203,12 +201,12 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
                 SaveHabitResponse.Reminder dtoOfReminder = response.ReminderIds[numReminder];
                 UserHabitReminder habitReminder = Habit.Reminders[numReminder];
                 habitReminder.Id = dtoOfReminder.Id;
-
+                
                 List<DayOfWeek> activeDaysInEditedReminder = EditedReminder.DaysOfWeek
                     .Select( d => d.Type )
                     .ToList();
 
-                inactiveDaysToDelete.Clear();
+                List<WeekDay> inactiveDaysToDelete = [];
 
                 foreach (WeekDay existingDay in habitReminder.DaysOfWeek)
                 {
@@ -221,26 +219,25 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
                 for (int numWeekDay = 0; numWeekDay < dtoOfReminder.DaysOfWeek?.Count; numWeekDay++)
                 {
                     SaveHabitResponse.WeekDay dtoOfWeekDay = dtoOfReminder.DaysOfWeek[numWeekDay];
-                    WeekDay weekDay = Habit.Reminders[numReminder].DaysOfWeek[numWeekDay];
+                    WeekDay? weekDay = habitReminder.DaysOfWeek.First( d => d.Type == dtoOfWeekDay.Type );
                     weekDay.Id = dtoOfWeekDay.Id;
                     weekDay.UserNotificationRequestId = dtoOfWeekDay.NotificationRequestId;
 
                     await AddNotificationToDeviceAsync( habitReminder, weekDay );
                 }
-
-                await RemoveInactiveNotificationsAsync( inactiveDaysToDelete );
+                
+                RemoveInactiveNotifications( inactiveDaysToDelete );
             }
         }
     }
 
-    private async Task RemoveInactiveNotificationsAsync( List<WeekDay> inactiveDays )
+    private void RemoveInactiveNotifications( List<WeekDay> inactiveDays )
     {
         foreach (WeekDay day in inactiveDays)
         {
             LocalNotificationCenter.Current.Cancel( day.UserNotificationRequestId );
         }
     }
-
 
     public bool CanSave()
     {
@@ -792,8 +789,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         NameOfHabit?.Validate();
     }
 
-    [RelayCommand]
-    private async Task AddReminderAsync()
+    public async Task AddReminderAsync()
     {
         await GetAccessToSendNotificationsAsync();
 
@@ -809,7 +805,8 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
                 UserNotificationRequestId = 0
             } ).ToList()
         };
-
+        
+        EditedReminder.Title = reminder.Title;
         Habit.Reminders ??= new ObservableCollectionEx<UserHabitReminder>();
 
         if (Habit.Reminders.Count == 1)
@@ -825,7 +822,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         OnPropertyChanged( nameof( EditedReminder ) );
     }
 
-    private Task GetAccessToSendNotificationsAsync()
+    public Task GetAccessToSendNotificationsAsync()
     {
         //TODO: it should support all Android versions which our app supports
         return LocalNotificationCenter.Current.RequestNotificationPermission();

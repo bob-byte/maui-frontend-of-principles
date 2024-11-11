@@ -601,7 +601,7 @@ public partial class EditHabitView : ContentPageBase
 
     private void ME_HabitReminder_IconClicked( System.Object sender, System.EventArgs e )
     {
-        DXP_Reminders.IsOpen = true;
+        OpenReminderPopup();
     }
 
     //private void ShowOrHideHabitReminders()
@@ -626,28 +626,92 @@ public partial class EditHabitView : ContentPageBase
 
     private void OnAddReminderTap( object sender, TappedEventArgs e )
     {
+        OpenReminderPopup();
+    }
+
+    private void OpenReminderPopup()
+    {
+        if (ViewModel.IsNewHabit || ViewModel.Habit.Reminders is null || !ViewModel.Habit.Reminders.Any())
+        {
+            ViewModel.EditedReminder ??= new EditedUserHabitReminder();
+            
+            EditedUserHabitReminder reminder = ViewModel.EditedReminder;
+            if (string.IsNullOrWhiteSpace( reminder.Title ))
+            {
+                if (ViewModel.Habit.Goal is not null)
+                {
+                    ME_ReminderTitle.Text = ViewModel.Habit.Goal.Name;
+                }
+                else
+                {
+                    string mission = ViewModel.CachingService.StoredValue( CacheKeys.USER_MISSION );
+                    ME_ReminderTitle.Text = string.IsNullOrWhiteSpace( mission ) ? LocStrings.BecomeTruePersonalityTitle : mission;
+                }
+            }
+
+            if (string.IsNullOrWhiteSpace( reminder.Description ))
+            {
+                ME_ReminderDescription.Text = ViewModel.NameOfHabit.Value;
+            }
+
+            S_IsReminderEnabled.IsToggled = true;
+        }
+        else
+        {
+            UserHabitReminder reminder = ViewModel.Habit.Reminders[0];
+            ME_ReminderTitle.Text = reminder.Title;
+            ME_ReminderDescription.Text = reminder.Description;
+            S_IsReminderEnabled.IsToggled = reminder.IsEnabled;
+            TE_ReminderTime.Time = DateTime.Today.Add(reminder.Time.ToTimeSpan());
+        }
+
         DXP_Reminders.IsOpen = true;
     }
 
-    private void ME_HabitReminder_Focused( object sender, FocusEventArgs e )
+    private async void SB_ReminderSave_Clicked( object sender, EventArgs e )
     {
-        if (ViewModel.IsNewHabit)
-        {
-            ViewModel.EditedReminder = new EditedUserHabitReminder();
-            if (ViewModel.Mission == null)
-            {
-                ME_ReminderTitle.Text = LocStrings.BecomeTruePersonalityTitle;
-            }
-            else
-            {
-                ME_ReminderTitle.Text = ViewModel.Mission;
-            }
-            ME_ReminderDescription.Text = ViewModel.NameOfHabit.Value;
-        }
-    }
+        await ViewModel.GetAccessToSendNotificationsAsync();
+        
+        EditedUserHabitReminder? reminder = ViewModel.EditedReminder;
+        reminder.Title = ME_ReminderTitle.Text;
+        reminder.Description = ME_ReminderDescription.Text;
+        reminder.IsEnabled = S_IsReminderEnabled.IsToggled;
+        reminder.Time = TE_ReminderTime.Time!.Value;
 
-    private void SB_ReminderSave_Clicked( object sender, EventArgs e )
-    {
+        if (reminder.DaysOfWeek is null || !reminder.DaysOfWeek.Any())
+        {
+            reminder.DaysOfWeek = ViewModel.GetSelectedDaysIndexes().Select( index => new WeekDay
+            {
+                Type = (DayOfWeek)index, UserNotificationRequestId = 0
+            } ).ToList();
+        }
+        else
+        {
+            List<WeekDay> selectedDaysOfWeek = ViewModel.GetSelectedDaysIndexes().Select( index => new WeekDay
+            {
+                Type = (DayOfWeek)index
+            } ).ToList();
+            
+            List<WeekDay> reminderDaysOfWeek = reminder.DaysOfWeek.ToList();
+            foreach (WeekDay weekDay in selectedDaysOfWeek)
+            {
+                if (!reminderDaysOfWeek.Any( d => d.Type == weekDay.Type ))
+                {
+                    reminder.DaysOfWeek.Add( weekDay );
+                }
+            }
+            
+            foreach (WeekDay weekDay in reminderDaysOfWeek)
+            {
+                if (!selectedDaysOfWeek.Any( d => d.Type == weekDay.Type ))
+                {
+                    reminder.DaysOfWeek.Remove( weekDay );
+                }
+            }
+        }
+        
+        OnPropertyChanged( nameof( ViewModel.EditedReminder ) );
+        
         DXP_Reminders.IsOpen = false;
     }
 
