@@ -272,7 +272,7 @@
                                                        CornerRadius="25"
                                                        FontSize="12"
                                                        HeightRequest="50"
-                                                       IsChecked="{Binding isDayChecked[0]}"
+                                                       IsChecked="{Binding isDayChecked[1]}"
                                                        PressedBackgroundColor="Transparent"
                                                        WidthRequest="50" />
 
@@ -287,7 +287,7 @@
                                                        CornerRadius="25"
                                                        FontSize="12"
                                                        HeightRequest="50"
-                                                       IsChecked="{Binding isDayChecked[1]}"
+                                                       IsChecked="{Binding isDayChecked[2]}"
                                                        PressedBackgroundColor="Transparent"
                                                        WidthRequest="50" />
 
@@ -302,7 +302,7 @@
                                                        CornerRadius="25"
                                                        FontSize="12"
                                                        HeightRequest="50"
-                                                       IsChecked="{Binding isDayChecked[2]}"
+                                                       IsChecked="{Binding isDayChecked[3]}"
                                                        PressedBackgroundColor="Transparent"
                                                        WidthRequest="50" />
 
@@ -317,7 +317,7 @@
                                                        CornerRadius="25"
                                                        FontSize="12"
                                                        HeightRequest="50"
-                                                       IsChecked="{Binding isDayChecked[3]}"
+                                                       IsChecked="{Binding isDayChecked[4]}"
                                                        PressedBackgroundColor="Transparent"
                                                        WidthRequest="50" />
                                 </HorizontalStackLayout>
@@ -337,7 +337,7 @@
                                                        CornerRadius="25"
                                                        FontSize="12"
                                                        HeightRequest="50"
-                                                       IsChecked="{Binding isDayChecked[4]}"
+                                                       IsChecked="{Binding isDayChecked[5]}"
                                                        PressedBackgroundColor="Transparent"
                                                        WidthRequest="50" />
 
@@ -352,7 +352,7 @@
                                                        CornerRadius="25"
                                                        FontSize="12"
                                                        HeightRequest="50"
-                                                       IsChecked="{Binding isDayChecked[5]}"
+                                                       IsChecked="{Binding isDayChecked[6]}"
                                                        PressedBackgroundColor="Transparent"
                                                        WidthRequest="50" />
 
@@ -367,7 +367,7 @@
                                                        CornerRadius="25"
                                                        FontSize="12"
                                                        HeightRequest="50"
-                                                       IsChecked="{Binding isDayChecked[6]}"
+                                                       IsChecked="{Binding isDayChecked[0]}"
                                                        PressedBackgroundColor="Transparent"
                                                        WidthRequest="50" />
                                 </HorizontalStackLayout>

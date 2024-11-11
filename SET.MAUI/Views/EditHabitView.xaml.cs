@@ -587,7 +587,7 @@ public partial class EditHabitView : ContentPageBase
     {
         if (LocalNotificationCenter.Current.IsSupported)
         {
-            DXP_Reminders.IsOpen = true;
+            OpenReminderPopup();
         }
         else
         {
@@ -638,7 +638,7 @@ public partial class EditHabitView : ContentPageBase
             EditedUserHabitReminder reminder = ViewModel.EditedReminder;
             if (string.IsNullOrWhiteSpace( reminder.Title ))
             {
-                if (ViewModel.Habit.Goal is not null)
+                if (ViewModel.Habit.Goal.Name is not null)
                 {
                     ME_ReminderTitle.Text = ViewModel.Habit.Goal.Name;
                 }
@@ -671,7 +671,12 @@ public partial class EditHabitView : ContentPageBase
     private async void SB_ReminderSave_Clicked( object sender, EventArgs e )
     {
         await ViewModel.GetAccessToSendNotificationsAsync();
-        
+
+        if (ViewModel.EditedReminder == null)
+        {
+            ViewModel.EditedReminder = new EditedUserHabitReminder();
+        }
+
         EditedUserHabitReminder? reminder = ViewModel.EditedReminder;
         reminder.Title = ME_ReminderTitle.Text;
         reminder.Description = ME_ReminderDescription.Text;
@@ -709,9 +714,11 @@ public partial class EditHabitView : ContentPageBase
                 }
             }
         }
-        
+
+        ViewModel.EditedReminder = null;
+        ViewModel.EditedReminder = reminder;
         OnPropertyChanged( nameof( ViewModel.EditedReminder ) );
-        
+
         DXP_Reminders.IsOpen = false;
     }
 
