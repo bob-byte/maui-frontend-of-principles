@@ -46,7 +46,7 @@ public partial class StartupViewModel : BaseViewModel
             else
             {
                 Uri authUrl = new( uriString: "https://appleid.apple.com/auth/authorize" );
-                Uri callbackUrl = new Uri( "https://api/account/auth/apple" );
+                Uri callbackUrl = new Uri( "https://principles.top/api/auth/Apple" );
 
                 result = await WebAuthenticator.AuthenticateAsync( authUrl, callbackUrl );
             }
