@@ -292,7 +292,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
         DXP_Reminder.IsOpen = false;
     }
 
-    private void SB_GeneralReminder_Cancel_Clicked( object sender, EventArgs e )
+    private void SB_ReminderReport_Cancel_Clicked( object sender, EventArgs e )
     {
         DXP_Reminder.IsOpen = false;
     }

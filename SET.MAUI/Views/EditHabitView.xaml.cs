@@ -634,7 +634,7 @@ public partial class EditHabitView : ContentPageBase
         if (ViewModel.IsNewHabit || ViewModel.Habit.Reminders is null || !ViewModel.Habit.Reminders.Any())
         {
             ViewModel.EditedReminder ??= new EditedUserHabitReminder();
-            
+
             EditedUserHabitReminder reminder = ViewModel.EditedReminder;
             if (string.IsNullOrWhiteSpace( reminder.Title ))
             {
@@ -655,6 +655,7 @@ public partial class EditHabitView : ContentPageBase
             }
 
             S_IsReminderEnabled.IsToggled = true;
+            TE_ReminderTime.Time = DateTime.Today.AddHours( 20 ).AddMinutes( 30 );
         }
         else
         {
@@ -715,9 +716,8 @@ public partial class EditHabitView : ContentPageBase
             }
         }
 
-        ViewModel.EditedReminder = null;
-        ViewModel.EditedReminder = reminder;
-        OnPropertyChanged( nameof( ViewModel.EditedReminder ) );
+        ViewModel.NotifyPropertyChanged( nameof( ViewModel.EditedReminder ) );
+        await ViewModel.AddReminderAsync();
 
         DXP_Reminders.IsOpen = false;
     }

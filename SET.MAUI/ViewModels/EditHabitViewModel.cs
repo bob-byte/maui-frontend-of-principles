@@ -201,20 +201,6 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
                 SaveHabitResponse.Reminder dtoOfReminder = response.ReminderIds[numReminder];
                 UserHabitReminder habitReminder = Habit.Reminders[numReminder];
                 habitReminder.Id = dtoOfReminder.Id;
-                
-                List<DayOfWeek> activeDaysInEditedReminder = EditedReminder.DaysOfWeek
-                    .Select( d => d.Type )
-                    .ToList();
-
-                List<WeekDay> inactiveDaysToDelete = [];
-
-                foreach (WeekDay existingDay in habitReminder.DaysOfWeek)
-                {
-                    if (!activeDaysInEditedReminder.Contains( existingDay.Type ))
-                    {
-                        inactiveDaysToDelete.Add( existingDay );
-                    }
-                }
 
                 for (int numWeekDay = 0; numWeekDay < dtoOfReminder.DaysOfWeek?.Count; numWeekDay++)
                 {
@@ -225,8 +211,6 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
 
                     await AddNotificationToDeviceAsync( habitReminder, weekDay );
                 }
-                
-                RemoveInactiveNotifications( inactiveDaysToDelete );
             }
         }
     }
@@ -310,7 +294,6 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         await InitUserInfoAsync();
         
         RecommendedHabits = new ObservableCollectionEx<RecommendedHabit>();
-        Habit.Reminder ??= new Reminder();
         Habit.Frequency ??= new FrequencyOfHabit();
 
         if (IsNewHabit)
@@ -319,6 +302,8 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
             Habit.Type = TypeOfHabit.IntegrallyWise;
             Habit.AreasOfLife = new ObservableCollectionEx<UserAreaOfLife>();
             Habit.Complexity = 5;
+            EditedReminder = new EditedUserHabitReminder();
+            ResetDaysOfWeek();
 
             if (!UserHabits.Contains( Habit ))
             {
@@ -818,7 +803,30 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         {
             Habit.Reminders.Add( reminder );
         }
-        
+
+
+        List<DayOfWeek> activeDaysInEditedReminder = EditedReminder.DaysOfWeek
+            .Select( d => d.Type )
+            .ToList();
+
+        List<WeekDay> inactiveDaysToDelete = [];
+
+        UserHabitReminder? reminderInDb = Habit.Reminders.FirstOrDefault( r => r.Id == reminder.Id );
+
+        if (reminderInDb != null)
+        {
+            List<WeekDay> daysInDataBase = reminderInDb.DaysOfWeek.ToList();
+
+            foreach (WeekDay existingDay in daysInDataBase)
+            {
+                if (!activeDaysInEditedReminder.Contains( existingDay.Type ))
+                {
+                    inactiveDaysToDelete.Add( existingDay );
+                }
+            }
+        }
+
+        RemoveInactiveNotifications( inactiveDaysToDelete );
         OnPropertyChanged( nameof( EditedReminder ) );
     }
 
@@ -834,15 +842,16 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         {
             DateTime currentDate = DateTime.Now;
             TimeSpan currentTime = currentDate.TimeOfDay;
-            int numDay = (int)weekDay.Type;
-            int currentDayOfWeek = (int)currentDate.DayOfWeek;
-            currentDayOfWeek = (currentDayOfWeek + 6) % 7;
 
-            int daysUntilNextReminder = (numDay - currentDayOfWeek + 7) % 7;
+            int reminderDayIndex = (int)weekDay.Type;
+
+            int currentDayIndex = (int)currentDate.DayOfWeek;
+
+            int daysUntilNextReminder = (reminderDayIndex - currentDayIndex + 7) % 7;
 
             if (daysUntilNextReminder == 0 && reminder.Time.ToTimeSpan() < currentTime)
             {
-                daysUntilNextReminder += 7;
+                daysUntilNextReminder = 7;
             }
 
             DateTime notifyDateTime = currentDate.Date
@@ -856,13 +865,14 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
                 Description = reminder.Description,
                 Schedule = new NotificationRequestSchedule
                 {
-                    NotifyTime = notifyDateTime, RepeatType = NotificationRepeat.Weekly
+                    NotifyTime = notifyDateTime,
+                    RepeatType = NotificationRepeat.Weekly
                 }
             };
 
             await LocalNotificationCenter.Current.Show( notification );
         }
-        else if(!IsNewHabit)
+        else if (!IsNewHabit)
         {
             //TODO: test how it works for new habit
             LocalNotificationCenter.Current.Cancel( weekDay.UserNotificationRequestId );
@@ -883,5 +893,21 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         }
 
         return selectedDaysIndexes;
+    }
+
+    public void NotifyPropertyChanged( string propertyName )
+    {
+        OnPropertyChanged( propertyName );
+    }
+    public void ResetDaysOfWeek()
+    {
+        isDayChecked.Clear();
+        isDayChecked.Add( true ); // Monday
+        isDayChecked.Add( true ); // Tuesday
+        isDayChecked.Add( true ); // Wednesday
+        isDayChecked.Add( true ); // Thursday
+        isDayChecked.Add( true ); // Friday
+        isDayChecked.Add( true ); // Saturday
+        isDayChecked.Add( true ); // Sunday
     }
 }

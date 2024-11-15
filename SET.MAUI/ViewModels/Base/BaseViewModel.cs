@@ -21,9 +21,6 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     private string? m_mission;
 
     [ObservableProperty]
-    private Reminder m_reminder;
-
-    [ObservableProperty]
     private ImageSource? m_userIcon;
 
     [ObservableProperty]
@@ -201,7 +198,6 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
                 MainSlogan = userInfo.MainSlogan;
                 Mission = userInfo.Mission;
                 Gender = userInfo.Gender;
-                Reminder = userInfo.HabitReportsReminder ?? new Reminder();
 
                 //Gender.Man is default value, so OnGenderChanged won't be called is Gender = Gender.Man
                 if (Gender == Gender.Man)
@@ -218,31 +214,6 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
 
                 Mission = CachingService.StoredValue( CacheKeys.USER_MISSION );
                 userInfo.Mission = Mission;
-
-                bool isParsed = int.TryParse( CachingService.StoredValue( CacheKeys.USER_HABITS_REPORT_REMINDER ),
-                    out int notificationId );
-                if (isParsed)
-                {
-                    IList<NotificationRequest> notificationList =
-                        await LocalNotificationCenter.Current.GetPendingNotificationList();
-                    NotificationRequest? notificationHabitsReport = notificationList.FirstOrDefault( x => x.NotificationId == notificationId );
-                    if (notificationHabitsReport is not null)
-                    {
-                        Reminder.Description = notificationHabitsReport.Description;
-                        Reminder.Title = notificationHabitsReport.Title;
-                        Reminder.IsEnabled = true;
-
-                        if (notificationHabitsReport.Schedule.NotifyTime != null)
-                        {
-                            Reminder.Time =
-                                TimeOnly.FromDateTime( notificationHabitsReport.Schedule.NotifyTime.Value );
-                        }
-                    }
-                    else
-                    {
-                        //TODO: get habit info from server
-                    }
-                }
 
                 //if gender is not parsed then it will set zero value
                 _ = Enum.TryParse( CachingService.StoredValue( CacheKeys.USER_GENDER ), out Gender gender );

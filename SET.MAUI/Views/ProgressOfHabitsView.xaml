@@ -47,7 +47,7 @@
                 <dx:DXImage.GestureRecognizers>
                     <TapGestureRecognizer NumberOfTapsRequired="1"
                                           Tapped="DXI_Reminder_Tapped"
-                                          Command="{Binding SetGeneralReminderCommand}" />
+                                          Command="{Binding SetReminderReportCommand}" />
                 </dx:DXImage.GestureRecognizers>
             </dx:DXImage>
 
@@ -197,14 +197,14 @@
                        Style="{StaticResource CentralHeader}" />
 
 
-                <dxe:MultilineEdit Text="{Binding GeneralReminder.Title}"
+                <dxe:MultilineEdit Text="{Binding ReminderReport.Title}"
                                    LabelText="{x:Static loc:LocStrings.ReminderTitle}"
                                    MaxLineCount="2"
                                    StartIcon="remindertitle"
                                    ClearIconVisibility="Never"
                                    MaximumWidthRequest="285" />
 
-                <dxe:MultilineEdit Text="{Binding GeneralReminder.Description}"
+                <dxe:MultilineEdit Text="{Binding ReminderReport.Description}"
                                    LabelText="{x:Static loc:LocStrings.ReminderDescription}"
                                    MaxLineCount="3"
                                    StartIcon="reminderdescription"
@@ -213,11 +213,11 @@
 
                 <dxe:TimeEdit LabelText="{x:Static loc:LocStrings.Time}"
                               StartIcon="clock"
-                              Time="{Binding GeneralReminder.Time}"
+                              Time="{Binding ReminderReport.Time}"
                               MaximumWidthRequest="285" />
 
                 <HorizontalStackLayout HorizontalOptions="Start">
-                    <Switch IsToggled="{Binding GeneralReminder.IsEnabled}" />
+                    <Switch IsToggled="{Binding ReminderReport.IsEnabled}" />
                     <Label Text="{x:Static loc:LocStrings.Enable}"
                            VerticalOptions="Center"
                            Margin="3,0,0,0"
@@ -225,14 +225,14 @@
                 </HorizontalStackLayout>
                 <HorizontalStackLayout HorizontalOptions="End"
                                        Padding="0">
-                    <dxco:SimpleButton x:Name="SB_GeneralReminder_Cancel"
+                    <dxco:SimpleButton x:Name="SB_ReminderReport_Cancel"
                                        BackgroundColor="{StaticResource CancelButtonColor}"
                                        Text="{x:Static loc:LocStrings.Cancel}"
                                        FontSize="16"
                                        Margin="0,0,5,5"
                                        Icon="close"
                                        IconHorizontalPosition="Left"
-                                       Clicked="SB_GeneralReminder_Cancel_Clicked" />
+                                       Clicked="SB_ReminderReport_Cancel_Clicked" />
                     <dxco:SimpleButton x:Name="SB_Save"
                                        Style="{StaticResource PrimaryButton}"
                                        Text="{Binding LocSave}"

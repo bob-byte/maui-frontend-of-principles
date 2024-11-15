@@ -28,7 +28,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     private DateOnly m_startProgressInterval;
 
     [ObservableProperty]
-    private EditedGeneralReminder m_generalReminder;
+    private EditedReminderReport m_reminderReport;
 
     [ObservableProperty]
     private DateOnly m_endProgressInterval;
@@ -46,7 +46,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
         }
     }
 
-    public ProgressOfHabitsViewModel( IServiceProvider serviceProvider, IProgressOfHabitService progressOfHabitService )
+    public ProgressOfHabitsViewModel( IServiceProvider serviceProvider, IProgressOfHabitService progressOfHabitService, IReminderService reminderService )
         : base( serviceProvider )
     {
         m_initLocker = new SemaphoreSlim( initialCount: 1, maxCount: 1 );
@@ -54,7 +54,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
         Title = LocStrings.ProgressOfHabits;
         ReferenceMessenger.Register<HabitSavedMessage>( this, HandleHabitSave );
         ProgressOfHabitService = progressOfHabitService;
-
+        ReminderService = reminderService;
         EndProgressInterval = DateOnly.FromDateTime( DateTime.Today );
         StartProgressInterval = EndProgressInterval.AddDays( -HabitConstants.AVERAGE_NUMBER_OF_DAYS_TO_AUTOMATE_HABIT + 1 );
         m_isBusyForChangeCompleted = new ConcurrentDictionary<UserHabit, SemaphoreSlim>();
@@ -107,7 +107,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     }
     
     public IProgressOfHabitService ProgressOfHabitService { get; }
-
+    public IReminderService ReminderService { get; }
     internal DataGridView? DataGridViewWithHabits { get; set; }
 
     internal bool IsProgressesInitialized { get; set; }
@@ -284,37 +284,39 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private async Task SetGeneralReminder()
+    private async Task SetReminderReport()
     {
-        await InitUserInfoAsync();
+        Reminder reminder = await ReminderService.HabitsReportReminderAsync();
 
-        if (Reminder.Id == 0)
+        if (reminder.Id == 0)
         {
-            Reminder.UserNotificationRequestId = 0;
-            Reminder.Title = LocStrings.ReminderTitleText;
-            Reminder.Description = LocStrings.ReminderDescriptionText;
-            Reminder.IsEnabled = true;
-            Reminder.Time = new TimeOnly( 20, 30 );
+            reminder.UserNotificationRequestId = 0;
+            reminder.Title = LocStrings.ReminderTitleText;
+            reminder.Description = LocStrings.ReminderDescriptionText;
+            reminder.IsEnabled = true;
+            reminder.Time = new TimeOnly( 20, 30 );
 
-            GeneralReminder = new EditedGeneralReminder
+            ReminderReport = new EditedReminderReport
             {
-                UserNotificationRequestId = Reminder.UserNotificationRequestId,
-                Title = Reminder.Title,
-                Description = Reminder.Description,
-                IsEnabled = Reminder.IsEnabled,
-                Time = new DateTime( DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, Reminder.Time.Hour, Reminder.Time.Minute, 0 )
+                UserNotificationRequestId = reminder.UserNotificationRequestId,
+                Title = reminder.Title,
+                Description = reminder.Description,
+                IsEnabled = reminder.IsEnabled,
+                Time = new DateTime( DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, reminder.Time.Hour, reminder.Time.Minute, 0 )
             };
         }
         else
         {
-            GeneralReminder.Title = Reminder.Title;
-            GeneralReminder.Description = Reminder.Description;
-            GeneralReminder.IsEnabled = Reminder.IsEnabled;
+            ReminderReport = new EditedReminderReport();
+            ReminderReport.Id = reminder.Id;
+            ReminderReport.Title = reminder.Title;
+            ReminderReport.Description = reminder.Description;
+            ReminderReport.IsEnabled = reminder.IsEnabled;
 
-            GeneralReminder.Time = new DateTime( DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, Reminder.Time.Hour, Reminder.Time.Minute, 0 );
+            ReminderReport.Time = new DateTime( DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, reminder.Time.Hour, reminder.Time.Minute, 0 );
         }
 
-        OnPropertyChanged( nameof( GeneralReminder ) );
+        OnPropertyChanged( nameof( ReminderReport ) );
     }
 
     [RelayCommand]
@@ -322,54 +324,42 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     {
         await GetAccessToSendNotificationsAsync();
 
-        if (!Reminder.IsEnabled)
+        if (!ReminderReport.IsEnabled)
         {
-            LocalNotificationCenter.Current.Cancel(Reminder.UserNotificationRequestId);
+            LocalNotificationCenter.Current.Cancel( ReminderReport.UserNotificationRequestId );
             return;
         }
 
-        if (Reminder.UserNotificationRequestId == 0)
+        Reminder reminder = new Reminder
         {
-            Reminder.UserNotificationRequestId = new Random().Next( 1, int.MaxValue );
-        }
+            Id = ReminderReport.Id,
+            Title = ReminderReport.Title,
+            Description = ReminderReport.Description,
+            Time = new TimeOnly( ReminderReport.Time.Hour, ReminderReport.Time.Minute ),
+            IsEnabled = ReminderReport.IsEnabled,
+            UserNotificationRequestId = ReminderReport.UserNotificationRequestId
+        };
 
         NotificationRequest notification = new NotificationRequest
         {
-            NotificationId = Reminder.UserNotificationRequestId,
-            Title = Reminder.Title,
-            Description = Reminder.Description,
+            NotificationId = reminder.UserNotificationRequestId,
+            Title = reminder.Title,
+            Description = reminder.Description,
             Schedule =
             {
-                NotifyTime = DateTime.Today.Add(Reminder.Time.ToTimeSpan()),
+                NotifyTime = DateTime.Today.Add(reminder.Time.ToTimeSpan()),
                 NotifyRepeatInterval = TimeSpan.FromHours(24)
             }
         };
 
         await LocalNotificationCenter.Current.Show( notification );
-        await SaveGeneralReminder( Reminder );
+        await ReminderService.SaveHabitsReportReminderAsync( reminder );
     }
 
     private Task GetAccessToSendNotificationsAsync()
     {
         //TODO: it should support all Android versions which our app supports
         return LocalNotificationCenter.Current.RequestNotificationPermission();
-    }
-
-    [RelayCommand]
-    private async Task SaveGeneralReminder( Reminder reminder )
-    {
-        bool isSuccess = false;
-        await UiBusyFor( async () =>
-        {
-            string url = $"{UrlBuilder.GeneralReminder}";
-            await RequestProvider.PutAsync( url, reminder, SettingsService.AuthAccessToken );
-            isSuccess = true;
-        } );
-
-        if (isSuccess)
-        {
-            Reminder = reminder;
-        }
     }
 
     [RelayCommand]

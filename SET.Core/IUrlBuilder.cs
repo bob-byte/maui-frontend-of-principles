@@ -22,7 +22,8 @@ public interface IUrlBuilder
     string Logs { get; }
     string GoogleAuth { get; }
     string VersionCheck { get; }
-    string GeneralReminder { get; }
+    string HabitsReportReminder { get; }
+    string AllReminders { get; }
 
     string Combine( params string[] uri );
 }

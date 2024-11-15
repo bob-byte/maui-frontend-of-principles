@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SET.Core.Models;
-public class EditedGeneralReminder
+public class EditedReminderReport
 {
     public long Id { get; set; }
     public string Title { get; set; }

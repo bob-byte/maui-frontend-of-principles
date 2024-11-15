@@ -1,5 +1,7 @@
 ﻿using Microsoft.Maui.Controls;
 
+using Plugin.LocalNotification;
+
 using System;
 using System.Net.Mime;
 using System.Text;
@@ -15,6 +17,7 @@ public partial class LoginViewModel : BaseViewModel
         m_email = new ValidatableObject<string>();
         m_password = new ValidatableObject<string>();
         LoginService = serviceProvider.GetRequiredService<ILoginService>();
+        ReminderService = serviceProvider.GetRequiredService<IReminderService>();
         AddValidations();
 
         Title = LocStrings.Login;
@@ -30,6 +33,7 @@ public partial class LoginViewModel : BaseViewModel
         Email.IsValid && Password.IsValid;
 
     public ILoginService LoginService { get; }
+    public IReminderService ReminderService { get; }
 
     public override Task InitializeAsync( object? parameter = null )
     {
@@ -50,6 +54,62 @@ public partial class LoginViewModel : BaseViewModel
                 {
                     await LoginService.LoginAsync( Email.Value, Password.Value );
                     await Navigation.GoToInitialViewAsync();
+
+                    AllRemindersResponse remindersResponse = await ReminderService.LoadAllRemindersAsync();
+
+                    foreach (Reminder? reminder in remindersResponse.RemindersReport.Where( r => r.IsEnabled ))
+                    {
+                        NotificationRequest notification = new NotificationRequest
+                        {
+                            NotificationId = reminder.UserNotificationRequestId,
+                            Title = reminder.Title,
+                            Description = reminder.Description,
+                            Schedule = new NotificationRequestSchedule
+                            {
+                                NotifyTime = DateTime.Today.Add( reminder.Time.ToTimeSpan() ),
+                                RepeatType = NotificationRepeat.Daily
+                            }
+                        };
+
+                        await LocalNotificationCenter.Current.Show( notification );
+                    }
+
+                    foreach (UserHabitReminder? userHabitReminder in remindersResponse.UserHabitReminders.Where( r => r.IsEnabled ))
+                    {
+                        foreach (WeekDay weekDay in userHabitReminder.DaysOfWeek)
+                        {
+                            DateTime currentDate = DateTime.Now;
+                            TimeSpan currentTime = currentDate.TimeOfDay;
+
+                            int reminderDayIndex = (int)weekDay.Type;
+                            int currentDayIndex = (int)currentDate.DayOfWeek;
+
+                            int daysUntilNextReminder = (reminderDayIndex - currentDayIndex + 7) % 7;
+
+                            if (daysUntilNextReminder == 0 && userHabitReminder.Time.ToTimeSpan() < currentTime)
+                            {
+                                daysUntilNextReminder = 7;
+                            }
+
+                            DateTime notifyDateTime = currentDate.Date
+                                .AddDays( daysUntilNextReminder )
+                                .Add( userHabitReminder.Time.ToTimeSpan() );
+
+                            NotificationRequest notification = new NotificationRequest
+                            {
+                                NotificationId = weekDay.UserNotificationRequestId,
+                                Title = userHabitReminder.Title,
+                                Description = userHabitReminder.Description,
+                                Schedule = new NotificationRequestSchedule
+                                {
+                                    NotifyTime = notifyDateTime,
+                                    RepeatType = NotificationRepeat.Weekly
+                                }
+                            };
+
+                            await LocalNotificationCenter.Current.Show( notification );
+                        }
+                    }
 
                     Email = new ValidatableObject<string>();
                     Password = new ValidatableObject<string>();

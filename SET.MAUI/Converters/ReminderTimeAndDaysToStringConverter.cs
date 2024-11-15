@@ -8,6 +8,11 @@ public class ReminderTimeAndDaysToStringConverter : BaseConverterOneWay<EditedUs
 {
     public override string DefaultConvertReturnValue { get; set; } = string.Empty;
 
+    private static readonly string[] DaysOfWeekNames =
+    {
+        LocStrings.Sunday, LocStrings.Monday, LocStrings.Tuesday, LocStrings.Wednesday, LocStrings.Thursday, LocStrings.Friday, LocStrings.Saturday
+    };
+
     public override string ConvertFrom( EditedUserHabitReminder reminder, CultureInfo? culture )
     {
         if (reminder == null)
@@ -33,12 +38,18 @@ public class ReminderTimeAndDaysToStringConverter : BaseConverterOneWay<EditedUs
         }
         else
         {
-            for (int i = 0; i < daysOfWeek.Count; i++)
+            IOrderedEnumerable<WeekDay> sortedDays = daysOfWeek.OrderBy( day => day.Type == 0 ? 7 : (int)day.Type );
+
+            foreach (WeekDay day in sortedDays)
             {
-                if (i > 0)
+                if (result.Length > time.ToString( "H:mm", culture ).Length + 1)
                     result.Append( ", " );
 
-                result.Append( daysOfWeek[i].Type.ToString() );
+                int dayIndex = (int)day.Type;
+                if (dayIndex >= 0 && dayIndex < DaysOfWeekNames.Length)
+                {
+                    result.Append( DaysOfWeekNames[dayIndex] );
+                }
             }
         }
 
