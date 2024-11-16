@@ -17,10 +17,10 @@ public class ReminderService : BaseRemoteService, IReminderService
         return await RequestProvider.GetAsync<Reminder>( url, SettingsService.AuthAccessToken );
     }
 
-    public Task<DtoWithId> SaveHabitsReportReminderAsync( Reminder reminder )
+    public Task<SaveHabitsReportReminderResponse> SaveHabitsReportReminderAsync( Reminder reminder )
     {
         string url = $"{UrlBuilder.HabitsReportReminder}/{reminder.Id}";
-        return RequestProvider.PostAsync<Reminder, DtoWithId>( url, reminder, SettingsService.AuthAccessToken );
+        return RequestProvider.PostAsync<Reminder, SaveHabitsReportReminderResponse>( url, reminder, SettingsService.AuthAccessToken );
     }
 
     public async Task<AllRemindersResponse> LoadAllRemindersAsync()

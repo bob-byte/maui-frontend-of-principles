@@ -54,7 +54,6 @@ public partial class SettingsViewModel : BaseViewModel
         bool doLogout = await DialogService.ShowConfirmAsync( msg: LocStrings.MessageInLogoutConfirm, title: $"{LocStrings.LogoutQuestion}" );
         if (doLogout)
         {
-            LocalNotificationCenter.Current.CancelAll();
             await base.LogoutAsync().DefaultConfigureAwait();
         }
     }

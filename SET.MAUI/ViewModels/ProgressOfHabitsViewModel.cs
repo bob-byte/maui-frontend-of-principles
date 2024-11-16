@@ -312,6 +312,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
             ReminderReport.Title = reminder.Title;
             ReminderReport.Description = reminder.Description;
             ReminderReport.IsEnabled = reminder.IsEnabled;
+            ReminderReport.UserNotificationRequestId = reminder.UserNotificationRequestId;
 
             ReminderReport.Time = new DateTime( DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, reminder.Time.Hour, reminder.Time.Minute, 0 );
         }
@@ -324,23 +325,29 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     {
         await GetAccessToSendNotificationsAsync();
 
-        if (!ReminderReport.IsEnabled)
+        if (!ReminderReport.IsEnabled && ReminderReport.UserNotificationRequestId != 0)
         {
             LocalNotificationCenter.Current.Cancel( ReminderReport.UserNotificationRequestId );
             return;
         }
 
-        Reminder reminder = new Reminder
+        Reminder reminder = new()
         {
             Id = ReminderReport.Id,
             Title = ReminderReport.Title,
             Description = ReminderReport.Description,
             Time = new TimeOnly( ReminderReport.Time.Hour, ReminderReport.Time.Minute ),
-            IsEnabled = ReminderReport.IsEnabled,
-            UserNotificationRequestId = ReminderReport.UserNotificationRequestId
+            IsEnabled = ReminderReport.IsEnabled
         };
 
-        NotificationRequest notification = new NotificationRequest
+        SaveHabitsReportReminderResponse response = await ReminderService.SaveHabitsReportReminderAsync( reminder );
+        ReminderReport.Id = response.Id;
+        reminder.Id = response.Id;
+        
+        ReminderReport.UserNotificationRequestId = response.UserNotificationRequestId;
+        reminder.UserNotificationRequestId = response.UserNotificationRequestId;
+        
+        NotificationRequest notification = new()
         {
             NotificationId = reminder.UserNotificationRequestId,
             Title = reminder.Title,
@@ -351,9 +358,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
                 NotifyRepeatInterval = TimeSpan.FromHours(24)
             }
         };
-
         await LocalNotificationCenter.Current.Show( notification );
-        await ReminderService.SaveHabitsReportReminderAsync( reminder );
     }
 
     private Task GetAccessToSendNotificationsAsync()

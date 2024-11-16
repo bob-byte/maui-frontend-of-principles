@@ -8,6 +8,6 @@ namespace SET.Core.Services;
 public interface IReminderService
 {
     Task<Reminder> HabitsReportReminderAsync();
-    Task<DtoWithId> SaveHabitsReportReminderAsync( Reminder reminder );
+    Task<SaveHabitsReportReminderResponse> SaveHabitsReportReminderAsync( Reminder reminder );
     Task<AllRemindersResponse> LoadAllRemindersAsync();
 }

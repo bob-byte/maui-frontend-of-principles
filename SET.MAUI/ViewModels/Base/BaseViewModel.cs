@@ -342,7 +342,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     protected async Task LogoutAsync()
     {
         await SettingsService.SetAuthAccessTokenAsync(string.Empty);
-
+        
         if (LocalNotificationCenter.Current.IsSupported)
         {
             LocalNotificationCenter.Current.CancelAll();
