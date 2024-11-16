@@ -1,3 +1,5 @@
+using ArmDot.Client;
+
 using CommunityToolkit.Maui.Behaviors;
 using DevExpress.Maui.DataGrid;
 using SET.MAUI.Controls;
@@ -257,6 +259,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
         }
     }
 
+    [ObfuscateNames(Enable = false)]
     private void DGV_Habits_SortByGoalName( object sender, CustomSortEventArgs e )
     {
         if (e.Column.FieldName == "Goal.Name")
