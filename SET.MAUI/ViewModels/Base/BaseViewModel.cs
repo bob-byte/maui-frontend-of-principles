@@ -343,6 +343,11 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     {
         await SettingsService.SetAuthAccessTokenAsync(string.Empty);
 
+        if (LocalNotificationCenter.Current.IsSupported)
+        {
+            LocalNotificationCenter.Current.CancelAll();
+        }
+
         if (UserName != null)
         {
             UserName.Value = string.Empty;

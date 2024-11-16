@@ -195,7 +195,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
 
         if (response.ReminderIds is not null && Habit.Reminders?.Any() == true)
         {
-            await GetAccessToSendNotificationsAsync();
+            await RequestAccessToSendNotificationsAsync();
 
             for (int numReminder = 0; numReminder < response.ReminderIds.Count; numReminder++)
             {
@@ -373,6 +373,8 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
                         UserNotificationRequestId = d.UserNotificationRequestId
                     } ).ToList();
                 }
+                
+                OnPropertyChanged( new PropertyChangedEventArgs( nameof(EditedReminder) ) );
             }
 
             Habit.AreasOfLife ??= new ObservableCollectionEx<UserAreaOfLife>();
@@ -783,7 +785,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
 
     public async Task AddReminderAsync()
     {
-        await GetAccessToSendNotificationsAsync();
+        await RequestAccessToSendNotificationsAsync();
 
         UserHabitReminder reminder = new()
         {
@@ -834,9 +836,8 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         OnPropertyChanged( nameof( EditedReminder ) );
     }
 
-    public Task GetAccessToSendNotificationsAsync()
+    public Task RequestAccessToSendNotificationsAsync()
     {
-        //TODO: it should support all Android versions which our app supports
         return LocalNotificationCenter.Current.RequestNotificationPermission();
     }
 

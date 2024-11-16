@@ -631,6 +631,17 @@ public partial class EditHabitView : ContentPageBase
 
     private void OpenReminderPopup()
     {
+        if (!LocalNotificationCenter.Current.IsSupported)
+        {
+            Snackbar.Make(
+                LocStrings.DeviceDoesNotSupportNotifications,
+                visualOptions: SnackbarHelper.DefaultOptions()
+            ).Show();
+            DXP_Reminders.IsOpen = false;
+
+            return;
+        }
+        
         if (ViewModel.IsNewHabit || ViewModel.Habit.Reminders is null || !ViewModel.Habit.Reminders.Any())
         {
             ViewModel.EditedReminder ??= new EditedUserHabitReminder();
@@ -671,7 +682,7 @@ public partial class EditHabitView : ContentPageBase
 
     private async void SB_ReminderSave_Clicked( object sender, EventArgs e )
     {
-        await ViewModel.GetAccessToSendNotificationsAsync();
+        await ViewModel.RequestAccessToSendNotificationsAsync();
 
         if (ViewModel.EditedReminder == null)
         {

@@ -162,71 +162,14 @@
                                            Clicked="SB_RecomendedHabit_Clicked"
                                            IsVisible="{Binding IsNewHabit}"
                                            Style="{StaticResource PrimaryButton}" />
-
-                        <!--<dxco:BottomSheet x:Name="ReminderBottomSheet"
-                                          BackgroundColor="{AppThemeBinding Light={StaticResource Background},
-                                                                            Dark={StaticResource DarkBackground}}"
-                                          ShowGrabber="False"
-                                          AllowDismiss="True"
-                                          AllowedState="HalfExpanded"
-                                          HalfExpandedRatio="0.7">
-                            <Grid Padding="10,0,10,0"
-                                  x:Name="G_Reminder">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <Label x:Name="L_ReminderCenterHeader"
-                                       Text="{x:Static loc:LocStrings.Reminder}"
-                                       Style="{StaticResource CentralHeader}"
-                                       VerticalOptions="Start"
-                                       Grid.Column="1"
-                                       Grid.Row="0"
-                                       HeightRequest="40" />
-
-                                <dx:DXImage Source="plus"
-                                            VerticalOptions="Start"
-                                            HorizontalOptions="End"
-                                            TintColor="{StaticResource LabelText}"
-                                            WidthRequest="40"
-                                            HeightRequest="40"
-                                            Grid.Column="2"
-                                            Grid.Row="0">
-                                    <dx:DXImage.GestureRecognizers>
-                                        <TapGestureRecognizer NumberOfTapsRequired="1"
-                                                              Tapped="OnAddReminderTap" />
-                                    </dx:DXImage.GestureRecognizers>
-                                </dx:DXImage>
-
-                                <skia:SKLottieView IsAnimationEnabled="True"
-                                                   x:Name="SKL_Reminders"
-                                                   RepeatCount="-1"
-                                                   Source="reminders.json"
-                                                   VerticalOptions="Start"
-                                                   Grid.Row="1"
-                                                   IsVisible="True" />
-
-
-                                <Label x:Name="L_ReminderRecommendation"
-                                       Margin="0,8,0,0"
-                                       Text="{x:Static loc:LocStrings.EmptyReminders}"
-                                       FontSize="16"
-                                       FontFamily="MonaSansMedium"
-                                       HorizontalTextAlignment="Center"
-                                       VerticalTextAlignment="Start"
-                                       Grid.Row="2"
-                                       VerticalOptions="Start"
-                                       HeightRequest="120" />-->
-
-
                         <dxco:DXPopup x:Name="DXP_Reminders"
                                       AllowAnimation="True"
                                       AllowScrim="True"
                                       AllowShadow="True"
                                       CloseOnScrimTap="True"
                                       MinimumWidthRequest="300">
-                            <VerticalStackLayout Spacing="6">
+                            <VerticalStackLayout Margin="7,10,7,0"
+                                                 Spacing="6">
                                 <Label Text="{x:Static loc:LocStrings.Reminder}"
                                        Style="{StaticResource CentralHeader}" />
 
