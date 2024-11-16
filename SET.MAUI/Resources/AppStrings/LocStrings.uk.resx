@@ -885,7 +885,7 @@
 	<data name="Sunday" xml:space="preserve">
     <value>Нд</value>
 </data>
-<data name="DeviceDoesNotSupportNotifications" xml:space="preserve">
-    <value>Отакої.. Схоже твій пристрій не сумісний з нагадуваннями.</value>
-</data>
+  <data name="DeviceDoesNotSupportNotifications" xml:space="preserve">
+    <value>Отакої.. Схоже, що ваша операційна система не підтримує сповіщення. Будь ласка, спробуйте оновити її.</value>
+  </data>
 </root>
