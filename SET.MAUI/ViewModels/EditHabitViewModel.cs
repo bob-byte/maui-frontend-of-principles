@@ -877,7 +877,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
 
             await LocalNotificationCenter.Current.Show( notification );
         }
-        else if (!IsNewHabit)
+        else if (!IsNewHabit && weekDay.UserNotificationRequestId != 0)
         {
             //TODO: test how it works for new habit
             LocalNotificationCenter.Current.Cancel( weekDay.UserNotificationRequestId );

@@ -12,7 +12,6 @@ namespace SET.MAUI.Views;
 public partial class ProgressOfHabitsView : ContentPageBase
 {
     private Timer? m_newDayEventTimer;
-    private bool m_isReminderOpenForTheFirstTime;
 
 #if IOS
     private TimeZoneChangeObserver? m_timeZoneChangeObserver;
@@ -26,7 +25,6 @@ public partial class ProgressOfHabitsView : ContentPageBase
         ViewModel = viewModel;
 
         InitializeComponent();
-        m_isReminderOpenForTheFirstTime = Preferences.Get( "IsReminderOpenForTheFirstTime", true );
 
         ViewModel.DataGridViewWithHabits = DGV_Habits;
         ViewModel.PropertyChanged += ViewModel_PropertyChanged;

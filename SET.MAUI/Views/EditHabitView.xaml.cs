@@ -666,7 +666,7 @@ public partial class EditHabitView : ContentPageBase
             }
 
             S_IsReminderEnabled.IsToggled = true;
-            TE_ReminderTime.Time = DateTime.Today.AddHours( 20 ).AddMinutes( 30 );
+            TE_ReminderTime.Time = DateTime.Today.AddHours( 8 ).AddMinutes( 00 );
         }
         else
         {

@@ -286,7 +286,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     [RelayCommand]
     private async Task SetReminderReport()
     {
-        Reminder reminder = await ReminderService.HabitsReportReminderAsync();
+        Reminder reminder = await ReminderService.HabitsReportReminderAsync() ?? new Reminder();
 
         if (reminder.Id == 0)
         {
@@ -355,7 +355,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
             Schedule =
             {
                 NotifyTime = DateTime.Today.Add(reminder.Time.ToTimeSpan()),
-                NotifyRepeatInterval = TimeSpan.FromHours(24)
+                RepeatType = NotificationRepeat.Daily
             }
         };
         await LocalNotificationCenter.Current.Show( notification );
