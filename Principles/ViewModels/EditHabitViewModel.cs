@@ -93,16 +93,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
 
     public ObservableCollectionEx<UserAreaOfLife> AllUserAreasOfLife { get; set; }
 
-    public ObservableCollectionEx<bool> IsDayChecked { get; } =
-    [
-        true, // Sunday
-        true, // Monday
-        true, // Tuesday
-        true, // Wednesday
-        true, // Thursday
-        true, // Friday
-        true
-    ];
+    public ObservableCollectionEx<bool> IsDayChecked { get; private set; } = new();
     
     [RelayCommand(CanExecute = nameof( CanSave ) )]
     private async Task SaveAsync()
@@ -295,6 +286,17 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
 
     public override async Task InitializeAsync( object? parameter = null )
     {
+        IsDayChecked =
+        [
+            true, // Sunday
+            true, // Monday
+            true, // Tuesday
+            true, // Wednesday
+            true, // Thursday
+            true, // Friday
+            true, // Saturday
+        ];
+        
         RecommendedHabits = new ObservableCollectionEx<RecommendedHabit>();
         Habit.Frequency ??= new FrequencyOfHabit();
 
@@ -559,12 +561,16 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
     {
         string isRequired = LocStrings.isRequired;
 
-        if (NameOfHabit == null)
+        if (NameOfHabit is null)
         {
             NameOfHabit = new ValidatableObject<string>();
 
             IValidationRule<string> rule = new IsNotNullOrWhiteSpaceRule( $"{LocStrings.TabData}. {LocStrings.FieldName} {isRequired}." );
             NameOfHabit.Validations.Add( rule );
+        }
+        else
+        { 
+            NameOfHabit.SetIsValid();
         }
 
         NameOfHabit.Value = Habit!.Name ?? string.Empty;

@@ -71,4 +71,10 @@ public class CachedValidatableObject : ObservableObject, IValidity
 
         return IsValid;
     }
+    
+    public void SetIsValid()
+    {
+        IsValid = true;
+        Errors = Enumerable.Empty<string>();
+    }
 }

@@ -50,4 +50,10 @@ public class ValidatableObject<T> : ObservableObject, IValidity
 
         return IsValid;
     }
+
+    public void SetIsValid()
+    {
+        IsValid = true;
+        Errors = Enumerable.Empty<string>();
+    }
 }

@@ -3,4 +3,5 @@
 public interface IValidity
 {
     bool IsValid { get; }
+    void SetIsValid();
 }
