@@ -15,6 +15,34 @@
                    x:Name="CPB_EditHabit"
                    x:DataType="vm:EditHabitViewModel"
                    Shell.TabBarIsVisible="False">
+    <v:ContentPageBase.Resources>
+        <Style x:Key="WeekDayButton"
+               TargetType="dx:DXToggleButton">
+            <Setter Property="Padding"
+                    Value="0" />
+            <Setter Property="HorizontalContentAlignment"
+                    Value="Center" />
+            <Setter Property="VerticalContentAlignment"
+                    Value="Center" />
+            <Setter Property="BackgroundColor"
+                    Value="{StaticResource LightPrimary}" />
+            <Setter Property="CheckedBackgroundColor"
+                    Value="{StaticResource Primary}" />
+            <Setter Property="PressedBackgroundColor"
+                    Value="Transparent" />
+            <Setter Property="CheckedPressedBackgroundColor"
+                    Value="Transparent" />
+            <Setter Property="CornerRadius"
+                    Value="25" />
+            <Setter Property="FontSize"
+                    Value="12" />
+            <Setter Property="HeightRequest"
+                    Value="50" />
+            <Setter Property="WidthRequest"
+                    Value="50" />
+        </Style>
+    </v:ContentPageBase.Resources>
+
     <Shell.BackButtonBehavior>
         <BackButtonBehavior Command="{Binding BackCommand}" />
     </Shell.BackButtonBehavior>
@@ -205,64 +233,24 @@
                                                        Spacing="10">
 
                                     <dx:DXToggleButton x:Name="TBtn_Monday"
-                                                       Padding="0"
-                                                       HorizontalContentAlignment="Center"
-                                                       VerticalContentAlignment="Center"
-                                                       BackgroundColor="{StaticResource LightPrimary}"
-                                                       CheckedBackgroundColor="{StaticResource Primary}"
-                                                       CheckedPressedBackgroundColor="Transparent"
                                                        Content="{x:Static loc:LocStrings.Monday}"
-                                                       CornerRadius="25"
-                                                       FontSize="12"
-                                                       HeightRequest="50"
                                                        IsChecked="{Binding isDayChecked[1]}"
-                                                       PressedBackgroundColor="Transparent"
-                                                       WidthRequest="50" />
+                                                       Style="{StaticResource WeekDayButton}" />
 
                                     <dx:DXToggleButton x:Name="TBtn_Tuesday"
-                                                       Padding="0"
-                                                       HorizontalContentAlignment="Center"
-                                                       VerticalContentAlignment="Center"
-                                                       BackgroundColor="{StaticResource LightPrimary}"
-                                                       CheckedBackgroundColor="{StaticResource Primary}"
-                                                       CheckedPressedBackgroundColor="Transparent"
                                                        Content="{x:Static loc:LocStrings.Tuesday}"
-                                                       CornerRadius="25"
-                                                       FontSize="12"
-                                                       HeightRequest="50"
                                                        IsChecked="{Binding isDayChecked[2]}"
-                                                       PressedBackgroundColor="Transparent"
-                                                       WidthRequest="50" />
+                                                       Style="{StaticResource WeekDayButton}" />
 
                                     <dx:DXToggleButton x:Name="TBtn_Wednesday"
-                                                       Padding="0"
-                                                       HorizontalContentAlignment="Center"
-                                                       VerticalContentAlignment="Center"
-                                                       BackgroundColor="{StaticResource LightPrimary}"
-                                                       CheckedBackgroundColor="{StaticResource Primary}"
-                                                       CheckedPressedBackgroundColor="Transparent"
                                                        Content="{x:Static loc:LocStrings.Wednesday}"
-                                                       CornerRadius="25"
-                                                       FontSize="12"
-                                                       HeightRequest="50"
                                                        IsChecked="{Binding isDayChecked[3]}"
-                                                       PressedBackgroundColor="Transparent"
-                                                       WidthRequest="50" />
+                                                       Style="{StaticResource WeekDayButton}" />
 
                                     <dx:DXToggleButton x:Name="TBtn_Thursday"
-                                                       Padding="0"
-                                                       HorizontalContentAlignment="Center"
-                                                       VerticalContentAlignment="Center"
-                                                       BackgroundColor="{StaticResource LightPrimary}"
-                                                       CheckedBackgroundColor="{StaticResource Primary}"
-                                                       CheckedPressedBackgroundColor="Transparent"
                                                        Content="{x:Static loc:LocStrings.Thursday}"
-                                                       CornerRadius="25"
-                                                       FontSize="12"
-                                                       HeightRequest="50"
                                                        IsChecked="{Binding isDayChecked[4]}"
-                                                       PressedBackgroundColor="Transparent"
-                                                       WidthRequest="50" />
+                                                       Style="{StaticResource WeekDayButton}" />
                                 </HorizontalStackLayout>
 
 
@@ -270,52 +258,20 @@
                                                        Spacing="10">
 
                                     <dx:DXToggleButton x:Name="TBtn_Friday"
-                                                       Padding="0"
-                                                       HorizontalContentAlignment="Center"
-                                                       VerticalContentAlignment="Center"
-                                                       BackgroundColor="{StaticResource LightPrimary}"
-                                                       CheckedBackgroundColor="{StaticResource Primary}"
-                                                       CheckedPressedBackgroundColor="Transparent"
                                                        Content="{x:Static loc:LocStrings.Friday}"
-                                                       CornerRadius="25"
-                                                       FontSize="12"
-                                                       HeightRequest="50"
                                                        IsChecked="{Binding isDayChecked[5]}"
-                                                       PressedBackgroundColor="Transparent"
-                                                       WidthRequest="50" />
+                                                       Style="{StaticResource WeekDayButton}" />
 
                                     <dx:DXToggleButton x:Name="TBtn_Saturday"
-                                                       Padding="0"
-                                                       HorizontalContentAlignment="Center"
-                                                       VerticalContentAlignment="Center"
-                                                       BackgroundColor="{StaticResource LightPrimary}"
-                                                       CheckedBackgroundColor="{StaticResource Primary}"
-                                                       CheckedPressedBackgroundColor="Transparent"
                                                        Content="{x:Static loc:LocStrings.Saturday}"
-                                                       CornerRadius="25"
-                                                       FontSize="12"
-                                                       HeightRequest="50"
                                                        IsChecked="{Binding isDayChecked[6]}"
-                                                       PressedBackgroundColor="Transparent"
-                                                       WidthRequest="50" />
+                                                       Style="{StaticResource WeekDayButton}" />
 
                                     <dx:DXToggleButton x:Name="TBtn_Sunday"
-                                                       Padding="0"
-                                                       HorizontalContentAlignment="Center"
-                                                       VerticalContentAlignment="Center"
-                                                       BackgroundColor="{StaticResource LightPrimary}"
-                                                       CheckedBackgroundColor="{StaticResource Primary}"
-                                                       CheckedPressedBackgroundColor="Transparent"
                                                        Content="{x:Static loc:LocStrings.Sunday}"
-                                                       CornerRadius="25"
-                                                       FontSize="12"
-                                                       HeightRequest="50"
                                                        IsChecked="{Binding isDayChecked[0]}"
-                                                       PressedBackgroundColor="Transparent"
-                                                       WidthRequest="50" />
+                                                       Style="{StaticResource WeekDayButton}" />
                                 </HorizontalStackLayout>
-
-
 
                                 <HorizontalStackLayout Padding="0"
                                                        HorizontalOptions="End">
