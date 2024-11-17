@@ -1,5 +1,6 @@
 using CommunityToolkit.Maui.Behaviors;
 using DevExpress.Maui.DataGrid;
+using Plugin.LocalNotification;
 using Principles.Controls;
 using System.Windows.Input;
 
@@ -29,7 +30,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
         AddFirstCol();
         AddColumns();
-
+        
         ViewModel.ReferenceMessenger.Register<TryAddNewDayInHabitListMessage>( this, ( sender, msg ) => OnNewDay( null ) );
     }
 
@@ -79,18 +80,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
         int dayOfMonth = today.Day;
         string colCaption = $"{dayOfWeek}{Environment.NewLine}{dayOfMonth}";
 
-        bool isAlreadyAddedCol;
-        try
-        {
-            //first column (with 0 index) is a grouping column (see ProgressOfHabitsView.xaml), second (with 1 index) column is name of habit
-            isAlreadyAddedCol = DGV_Habits.Columns[2].Caption == colCaption ||
-                DGV_Habits.Columns[3].Caption == colCaption;
-        }
-        catch
-        {
-            isAlreadyAddedCol = true;
-        }
-
+        bool isAlreadyAddedCol = DGV_Habits.Columns[1].Caption == colCaption || DGV_Habits.Columns[2].Caption == colCaption;
         if (!isAlreadyAddedCol)
         {
             ViewModel.IsProgressesInitialized = false;
@@ -123,10 +113,6 @@ public partial class ProgressOfHabitsView : ContentPageBase
                 };
 
                 DGV_Habits.Columns.Insert( index: 1, templateColumn );
-
-                //sometimes there are bugs if we don't reload habit list
-                IEnumerable<UserHabit> habits = ViewModel.UserHabits.ToArray();
-                ViewModel.UserHabits.Reload( habits );
             } ).DefaultConfigureAwait();
 
             ViewModel.EndProgressInterval = today;
@@ -282,5 +268,31 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
             e.Result = goalNameToCompare == LocStrings.NoGoalSpecified ? 1 : 0;
         }
+    }
+
+    private void DXI_Reminder_Tapped( object sender, TappedEventArgs e )
+    {
+        if (LocalNotificationCenter.Current.IsSupported)
+        {
+            DXP_Reminder.IsOpen = true;
+        }
+        else
+        {
+            Snackbar.Make(
+                LocStrings.DeviceDoesNotSupportNotifications,
+                visualOptions: SnackbarHelper.DefaultOptions()
+            ).Show();
+            DXP_Reminder.IsOpen = false;
+        }
+    }
+
+    private void SB_Save_Clicked( object sender, EventArgs e )
+    {
+        DXP_Reminder.IsOpen = false;
+    }
+
+    private void SB_ReminderReport_Cancel_Clicked( object sender, EventArgs e )
+    {
+        DXP_Reminder.IsOpen = false;
     }
 }

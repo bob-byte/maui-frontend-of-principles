@@ -843,4 +843,58 @@
   <data name="HelperWarning" xml:space="preserve">
     <value>ШІ-помічник може інколи помилятись. Перевіряйте важливу інформацію!</value>
   </data>
+  <data name="Reminder" xml:space="preserve">
+    <value>Нагадування</value>
+  </data>
+  <data name="ReminderTitle" xml:space="preserve">
+    <value>Загаловок</value>
+  </data>
+  <data name="ReminderDescription" xml:space="preserve">
+    <value>Опис</value>
+  </data>
+  <data name="ReminderTitleText" xml:space="preserve">
+    <value>Відзначити виконання звичок</value>
+  </data>
+  <data name="ReminderDescriptionText" xml:space="preserve">
+    <value>Час відзначити, які звички були виконані сьогодні й нагадати власні цілі</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Час</value>
+  </data>
+  <data name="Enable" xml:space="preserve">
+    <value>Увімкнути</value>
+  </data>
+  <data name="EmptyReminders" xml:space="preserve">
+    <value>У вас ще немає нагадувань про цю звичку</value>
+  </data>
+	<data name="Monday" xml:space="preserve">
+    <value>Пн</value>
+</data>
+	<data name="Tuesday" xml:space="preserve">
+    <value>Вт</value>
+</data>
+	<data name="Wednesday" xml:space="preserve">
+    <value>Ср</value>
+</data>
+	<data name="Thursday" xml:space="preserve">
+    <value>Чт</value>
+</data>
+	<data name="Friday" xml:space="preserve">
+    <value>Пт</value>
+</data>
+	<data name="Saturday" xml:space="preserve">
+    <value>Сб</value>
+</data>
+	<data name="Sunday" xml:space="preserve">
+    <value>Нд</value>
+</data>
+  <data name="DeviceDoesNotSupportNotifications" xml:space="preserve">
+    <value>Отакої.. Схоже, що ваша операційна система не підтримує сповіщення. Будь ласка, спробуйте оновити її.</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Заголовок</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Опис</value>
+  </data>
 </root>

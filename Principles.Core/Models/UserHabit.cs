@@ -25,6 +25,10 @@ public partial class UserHabit : ObservableObject
     private string? m_description;
     [ObservableProperty]
     private UserGoal? m_goal;
+
+    [ObservableProperty]
+    private ObservableCollectionEx<UserHabitReminder>? m_reminders;
+
     [ObservableProperty]
     private string? m_question;
     [ObservableProperty]
@@ -76,9 +80,7 @@ public partial class UserHabit : ObservableObject
 
     [ObservableProperty]
     private bool m_canHasSubhabits;
-
-    [ObservableProperty]
-    private Reminder? m_reminder;
+    
     [ObservableProperty]
     private int m_complexity;
 

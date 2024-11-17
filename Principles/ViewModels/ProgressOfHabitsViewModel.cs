@@ -1,8 +1,9 @@
-﻿
+
 using DevExpress.Maui.DataGrid;
 
 using Principles.Core.Models;
 using Principles.Exceptions;
+using Plugin.LocalNotification;
 
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
@@ -25,6 +26,9 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     private DateOnly m_endProgressInterval;
 
     [ObservableProperty]
+    private EditedReminderReport m_reminderReport;
+
+    [ObservableProperty]
     private ObservableCollectionEx<UserHabit> m_userHabits;
 
     private readonly SemaphoreSlim m_initLocker;
@@ -37,14 +41,15 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
         }
     }
 
-    public ProgressOfHabitsViewModel( IServiceProvider serviceProvider, IProgressOfHabitService progressOfHabitService )
+    public ProgressOfHabitsViewModel( IServiceProvider serviceProvider )
         : base( serviceProvider )
     {
         m_initLocker = new SemaphoreSlim( initialCount: 1, maxCount: 1 );
 
         Title = LocStrings.ProgressOfHabits;
         ReferenceMessenger.Register<HabitSavedMessage>( this, HandleHabitSave );
-        ProgressOfHabitService = progressOfHabitService;
+        ProgressOfHabitService = serviceProvider.GetRequiredService<IProgressOfHabitService>();
+        ReminderService = serviceProvider.GetRequiredService<IReminderService>();
 
         EndProgressInterval = DateOnly.FromDateTime( DateTime.Today );
         StartProgressInterval = EndProgressInterval.AddDays( -HabitConstants.AVERAGE_NUMBER_OF_DAYS_TO_AUTOMATE_HABIT + 1 );
@@ -98,6 +103,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     }
     
     public IProgressOfHabitService ProgressOfHabitService { get; }
+    public IReminderService ReminderService { get; }
 
     internal DataGridView? DataGridViewWithHabits { get; set; }
 
@@ -317,5 +323,90 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
         {
             SelectedHabit = null;
         }
+    }
+
+    [RelayCommand]
+    private async Task SetReminderReport()
+    {
+        Reminder reminder = await ReminderService.HabitsReportReminderAsync() ?? new Reminder();
+
+        if (reminder.Id == 0)
+        {
+            reminder.UserNotificationRequestId = 0;
+            reminder.Title = LocStrings.ReminderTitleText;
+            reminder.Description = LocStrings.ReminderDescriptionText;
+            reminder.IsEnabled = true;
+            reminder.Time = new TimeOnly( 20, 30 );
+
+            ReminderReport = new EditedReminderReport
+            {
+                UserNotificationRequestId = reminder.UserNotificationRequestId,
+                Title = reminder.Title,
+                Description = reminder.Description,
+                IsEnabled = reminder.IsEnabled,
+                Time = new DateTime( DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, reminder.Time.Hour, reminder.Time.Minute, 0 )
+            };
+        }
+        else
+        {
+            ReminderReport = new EditedReminderReport();
+            ReminderReport.Id = reminder.Id;
+            ReminderReport.Title = reminder.Title;
+            ReminderReport.Description = reminder.Description;
+            ReminderReport.IsEnabled = reminder.IsEnabled;
+            ReminderReport.UserNotificationRequestId = reminder.UserNotificationRequestId;
+
+            ReminderReport.Time = new DateTime( DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, reminder.Time.Hour, reminder.Time.Minute, 0 );
+        }
+
+        OnPropertyChanged( nameof( ReminderReport ) );
+    }
+
+    [RelayCommand]
+    private async Task AddReminderAsync()
+    {
+        await GetAccessToSendNotificationsAsync();
+
+        if (!ReminderReport.IsEnabled && ReminderReport.UserNotificationRequestId != 0)
+        {
+            LocalNotificationCenter.Current.Cancel( ReminderReport.UserNotificationRequestId );
+            return;
+        }
+
+        Reminder reminder = new()
+        {
+            Id = ReminderReport.Id,
+            Title = ReminderReport.Title,
+            Description = ReminderReport.Description,
+            Time = new TimeOnly( ReminderReport.Time.Hour, ReminderReport.Time.Minute ),
+            IsEnabled = ReminderReport.IsEnabled
+        };
+
+        SaveHabitsReportReminderResponse response = await ReminderService.SaveHabitsReportReminderAsync( reminder );
+        ReminderReport.Id = response.Id;
+        reminder.Id = response.Id;
+        
+        ReminderReport.UserNotificationRequestId = response.UserNotificationRequestId;
+        reminder.UserNotificationRequestId = response.UserNotificationRequestId;
+        
+        NotificationRequest notification = new()
+        {
+            NotificationId = reminder.UserNotificationRequestId,
+            Title = reminder.Title,
+            Description = reminder.Description,
+            Schedule =
+            {
+                NotifyTime = DateTime.Today.Add(reminder.Time.ToTimeSpan()),
+                RepeatType = NotificationRepeat.Daily
+            }
+        };
+        
+        await LocalNotificationCenter.Current.Show( notification );
+    }
+
+    private Task GetAccessToSendNotificationsAsync()
+    {
+        //TODO: it should support all Android versions which our app supports
+        return LocalNotificationCenter.Current.RequestNotificationPermission();
     }
 }

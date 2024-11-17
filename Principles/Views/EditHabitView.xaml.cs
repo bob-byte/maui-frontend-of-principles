@@ -2,6 +2,7 @@
 using DevExpress.Maui.Controls;
 using DevExpress.Maui.Editors;
 
+using Plugin.LocalNotification;
 
 namespace Principles.Views;
 
@@ -408,7 +409,7 @@ public partial class EditHabitView : ContentPageBase
         double buttonWidth = G_SaveHabit.Width;
         if (titleWidth != -1 && buttonWidth != -1)
         {
-            double titleLabelWidth = titleWidth - buttonWidth - 5;
+            double titleLabelWidth = titleWidth - buttonWidth - 10;
             L_TitleText.WidthRequest = titleLabelWidth;
         }
     }
@@ -554,7 +555,7 @@ public partial class EditHabitView : ContentPageBase
         if (ViewModel.SaveGoalCommand.CanExecute( closePopup ))
         {
             await ViewModel.SaveGoalCommand.ExecuteAsync( closePopup );
-
+            
             UserGoal? habitGoal = ViewModel.Habit.Goal;
             if (!m_doExecuteReloadOfRecommendedHabits && habitGoal is not null && habitGoal.Id != 0 && habitGoal.Id == ViewModel.EditedGoal.Id && habitGoal.Name != ViewModel.EditedGoal.Name)
             {
@@ -585,5 +586,155 @@ public partial class EditHabitView : ContentPageBase
     private void SB_Frequency_Cancel_Clicked( object sender, EventArgs e )
     {
         DXP_Frequency.IsOpen = false;
+    }
+
+    private void ME_HabitReminder_Tap( object sender, HandledEventArgs e )
+    {
+        if (LocalNotificationCenter.Current.IsSupported)
+        {
+            OpenReminderPopup();
+        }
+        else
+        {
+            Snackbar.Make(
+                LocStrings.DeviceDoesNotSupportNotifications,
+                visualOptions: SnackbarHelper.DefaultOptions()
+            ).Show();
+            DXP_Reminders.IsOpen = false;
+        }
+    }
+
+    private void ME_HabitReminder_IconClicked( System.Object sender, System.EventArgs e )
+    {
+        OpenReminderPopup();
+    }
+
+    //private void ShowOrHideHabitReminders()
+    //{
+    //    if (ReminderBottomSheet.State == BottomSheetState.Hidden)
+    //    {
+    //        ReminderBottomSheet.State = BottomSheetState.HalfExpanded;
+    //        double bottomSheetHeight = PageHeight * ReminderBottomSheet.HalfExpandedRatio;
+    //        double rowSpacing = G_Reminder.RowSpacing * (G_Reminder.RowDefinitions.Count - 1);
+    //        double additionalSpacing = 15;
+    //        double height = bottomSheetHeight - rowSpacing - L_ReminderCenterHeader.HeightRequest - L_ReminderRecommendation.HeightRequest - additionalSpacing;
+
+    //        SKL_Reminders.HeightRequest = height;
+    //        SKL_Reminders.WidthRequest = PageWidth - (G_Reminder.Padding.Left + G_Reminder.Padding.Right);
+
+    //    }
+    //    else
+    //    {
+    //        ReminderBottomSheet.State = BottomSheetState.Hidden;
+    //    }
+    //}
+
+    private void OpenReminderPopup()
+    {
+        if (!LocalNotificationCenter.Current.IsSupported)
+        {
+            Snackbar.Make(
+                LocStrings.DeviceDoesNotSupportNotifications,
+                visualOptions: SnackbarHelper.DefaultOptions()
+            ).Show();
+            DXP_Reminders.IsOpen = false;
+
+            return;
+        }
+        
+        if (ViewModel.IsNewHabit || ViewModel.Habit.Reminders is null || !ViewModel.Habit.Reminders.Any())
+        {
+            ViewModel.EditedReminder ??= new EditedUserHabitReminder();
+
+            EditedUserHabitReminder reminder = ViewModel.EditedReminder;
+            if (string.IsNullOrWhiteSpace( reminder.Title ))
+            {
+                if (ViewModel.Habit.Goal.Name is not null)
+                {
+                    ME_ReminderTitle.Text = ViewModel.Habit.Goal.Name;
+                }
+                else
+                {
+                    string mission = ViewModel.CachingService.StoredValue( CacheKeys.USER_MISSION );
+                    ME_ReminderTitle.Text = string.IsNullOrWhiteSpace( mission ) ? LocStrings.BecomeTruePersonalityTitle : mission;
+                }
+            }
+
+            if (string.IsNullOrWhiteSpace( reminder.Description ))
+            {
+                ME_ReminderDescription.Text = ViewModel.NameOfHabit.Value;
+            }
+
+            S_IsReminderEnabled.IsToggled = true;
+            TE_ReminderTime.Time = DateTime.Today.AddHours( 8 ).AddMinutes( 00 );
+        }
+        else
+        {
+            UserHabitReminder reminder = ViewModel.Habit.Reminders[0];
+            ME_ReminderTitle.Text = reminder.Title;
+            ME_ReminderDescription.Text = reminder.Description;
+            S_IsReminderEnabled.IsToggled = reminder.IsEnabled;
+            TE_ReminderTime.Time = DateTime.Today.Add(reminder.Time.ToTimeSpan());
+        }
+
+        DXP_Reminders.IsOpen = true;
+    }
+
+    private async void SB_ReminderSave_Clicked( object sender, EventArgs e )
+    {
+        await ViewModel.RequestAccessToSendNotificationsAsync();
+
+        if (ViewModel.EditedReminder == null)
+        {
+            ViewModel.EditedReminder = new EditedUserHabitReminder();
+        }
+
+        EditedUserHabitReminder? reminder = ViewModel.EditedReminder;
+        reminder.Title = ME_ReminderTitle.Text;
+        reminder.Description = ME_ReminderDescription.Text;
+        reminder.IsEnabled = S_IsReminderEnabled.IsToggled;
+        reminder.Time = TE_ReminderTime.Time!.Value;
+
+        if (reminder.DaysOfWeek is null || !reminder.DaysOfWeek.Any())
+        {
+            reminder.DaysOfWeek = ViewModel.GetSelectedDaysIndexes().Select( index => new WeekDay
+            {
+                Type = (DayOfWeek)index, UserNotificationRequestId = 0
+            } ).ToList();
+        }
+        else
+        {
+            List<WeekDay> selectedDaysOfWeek = ViewModel.GetSelectedDaysIndexes().Select( index => new WeekDay
+            {
+                Type = (DayOfWeek)index
+            } ).ToList();
+            
+            List<WeekDay> reminderDaysOfWeek = reminder.DaysOfWeek.ToList();
+            foreach (WeekDay weekDay in selectedDaysOfWeek)
+            {
+                if (!reminderDaysOfWeek.Any( d => d.Type == weekDay.Type ))
+                {
+                    reminder.DaysOfWeek.Add( weekDay );
+                }
+            }
+            
+            foreach (WeekDay weekDay in reminderDaysOfWeek)
+            {
+                if (!selectedDaysOfWeek.Any( d => d.Type == weekDay.Type ))
+                {
+                    reminder.DaysOfWeek.Remove( weekDay );
+                }
+            }
+        }
+
+        ViewModel.NotifyPropertyChanged( nameof( ViewModel.EditedReminder ) );
+        await ViewModel.AddReminderAsync();
+
+        DXP_Reminders.IsOpen = false;
+    }
+
+    private void SB_Reminder_Cancel_Clicked( object sender, EventArgs e )
+    {
+        DXP_Reminders.IsOpen = false;
     }
 }

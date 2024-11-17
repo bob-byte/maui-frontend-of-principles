@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+
 namespace Principles.Core.Constants;
 
 public static class CacheKeys
@@ -7,5 +8,5 @@ public static class CacheKeys
     public const string USER_MAIN_SLOGAN = "UserMainSlogan";
     public const string USER_NAME = "UserName";
     public const string USER_GENDER = "UserGender";
+    public const string USER_HABITS_REPORT_REMINDER = "HabitsReportReminder";
 }
-

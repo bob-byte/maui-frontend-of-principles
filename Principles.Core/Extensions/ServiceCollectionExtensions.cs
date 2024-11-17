@@ -1,4 +1,4 @@
-﻿using System.Net.Http.Headers;
+using System.Net.Http.Headers;
 using System.Net.Mime;
 
 namespace Principles.Core.Extensions;
@@ -33,6 +33,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IGoalService, GoalService>();
         services.AddSingleton<IGoogleAuthService, GoogleAuthService>();
         services.AddSingleton<IVersionCheckerService, VersionCheckerService>();
+        services.AddSingleton<IReminderService, ReminderService>();
 
         return services;
     }

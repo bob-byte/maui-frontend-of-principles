@@ -6,6 +6,7 @@
                    xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
                    xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
                    xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+                   xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
                    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                    xmlns:vm="clr-namespace:Principles.ViewModels"
                    xmlns:v="clr-namespace:Principles.Views"
@@ -35,13 +36,29 @@
                    FontAttributes="Bold"
                    HeightRequest="50"
                    Grid.Column="2" />
+
+            <dx:DXImage Source="reminder"
+                        VerticalOptions="Center"
+                        HorizontalOptions="End"
+                        TintColor="{StaticResource TitleTextColor}"
+                        WidthRequest="35"
+                        HeightRequest="35"
+                        Grid.Column="5">
+                <dx:DXImage.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1"
+                                          Tapped="DXI_Reminder_Tapped"
+                                          Command="{Binding SetReminderReportCommand}" />
+                </dx:DXImage.GestureRecognizers>
+            </dx:DXImage>
+
+
             <dx:DXImage Source="plus"
                         IsVisible="{Binding SelectedHabit,
                                             Converter={StaticResource IsNull}}"
                         VerticalOptions="Center"
                         HorizontalOptions="End"
                         TintColor="{StaticResource TitleTextColor}"
-                        Margin="65,0,0,0"
+                        Margin="15,0,0,0"
                         WidthRequest="40"
                         HeightRequest="40"
                         Grid.Column="6">
@@ -168,5 +185,65 @@
                                                Dark={StaticResource DarkNormalText}}"
                    HorizontalTextAlignment="Center" />
         </dx:DXStackLayout>
+
+        <dxco:DXPopup x:Name="DXP_Reminder"
+                      AllowAnimation="True"
+                      AllowScrim="True"
+                      AllowShadow="True"
+                      CloseOnScrimTap="True"
+                      MinimumWidthRequest="300">
+            <VerticalStackLayout Spacing="6">
+                <Label Text="{x:Static loc:LocStrings.Reminder}"
+                       Style="{StaticResource CentralHeader}" />
+
+
+                <dxe:MultilineEdit Text="{Binding ReminderReport.Title}"
+                                   LabelText="{x:Static loc:LocStrings.ReminderTitle}"
+                                   MaxLineCount="2"
+                                   StartIcon="remindertitle"
+                                   ClearIconVisibility="Never"
+                                   MaximumWidthRequest="285" />
+
+                <dxe:MultilineEdit Text="{Binding ReminderReport.Description}"
+                                   LabelText="{x:Static loc:LocStrings.ReminderDescription}"
+                                   MaxLineCount="3"
+                                   StartIcon="reminderdescription"
+                                   ClearIconVisibility="Never"
+                                   MaximumWidthRequest="285" />
+
+                <dxe:TimeEdit LabelText="{x:Static loc:LocStrings.Time}"
+                              StartIcon="clock"
+                              Time="{Binding ReminderReport.Time}"
+                              MaximumWidthRequest="285" />
+
+                <HorizontalStackLayout HorizontalOptions="Start">
+                    <Switch IsToggled="{Binding ReminderReport.IsEnabled}" />
+                    <Label Text="{x:Static loc:LocStrings.Enable}"
+                           VerticalOptions="Center"
+                           Margin="3,0,0,0"
+                           TextColor="{StaticResource LightNormalText}" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout HorizontalOptions="End"
+                                       Padding="0">
+                    <dxco:SimpleButton x:Name="SB_ReminderReport_Cancel"
+                                       BackgroundColor="{StaticResource CancelButtonColor}"
+                                       Text="{x:Static loc:LocStrings.Cancel}"
+                                       FontSize="16"
+                                       Margin="0,0,5,5"
+                                       Icon="close"
+                                       IconHorizontalPosition="Left"
+                                       Clicked="SB_ReminderReport_Cancel_Clicked" />
+                    <dxco:SimpleButton x:Name="SB_Save"
+                                       Style="{StaticResource PrimaryButton}"
+                                       Text="{Binding LocSave}"
+                                       FontSize="16"
+                                       Margin="0,0,5,5"
+                                       IconHorizontalPosition="Left"
+                                       Icon="check_second"
+                                       Command="{Binding AddReminderCommand}"
+                                       Clicked="SB_Save_Clicked" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+        </dxco:DXPopup>
     </Grid>
 </v:ContentPageBase>
