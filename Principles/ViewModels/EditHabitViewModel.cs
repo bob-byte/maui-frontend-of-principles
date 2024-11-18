@@ -374,9 +374,8 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
                     } ).ToList();
                 }
                 
-                OnPropertyChanged( new PropertyChangedEventArgs( nameof(EditedReminder) ) );
             }
-
+            
             Habit.AreasOfLife ??= new ObservableCollectionEx<UserAreaOfLife>();
             List<UserAreaOfLife> habitAreas = new( Habit.AreasOfLife.Count );
 
@@ -407,6 +406,9 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
                 UserHabits[index] = Habit;
             }
         }
+            
+        OnPropertyChanged( nameof( EditedReminder ) );
+        OnPropertyChanged( nameof( IsDayChecked ) );
 
         InitValidations();
 
