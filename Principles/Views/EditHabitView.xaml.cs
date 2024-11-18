@@ -682,8 +682,6 @@ public partial class EditHabitView : ContentPageBase
 
     private async void SB_ReminderSave_Clicked( object sender, EventArgs e )
     {
-        await ViewModel.RequestAccessToSendNotificationsAsync();
-
         if (ViewModel.EditedReminder == null)
         {
             ViewModel.EditedReminder = new EditedUserHabitReminder();
@@ -699,7 +697,7 @@ public partial class EditHabitView : ContentPageBase
         {
             reminder.DaysOfWeek = ViewModel.GetSelectedDaysIndexes().Select( index => new WeekDay
             {
-                Type = (DayOfWeek)index, UserNotificationRequestId = 0
+                Type = (DayOfWeek)index
             } ).ToList();
         }
         else
@@ -712,7 +710,7 @@ public partial class EditHabitView : ContentPageBase
             List<WeekDay> reminderDaysOfWeek = reminder.DaysOfWeek.ToList();
             foreach (WeekDay weekDay in selectedDaysOfWeek)
             {
-                if (!reminderDaysOfWeek.Any( d => d.Type == weekDay.Type ))
+                if (reminderDaysOfWeek.All( d => d.Type != weekDay.Type ))
                 {
                     reminder.DaysOfWeek.Add( weekDay );
                 }
@@ -720,14 +718,18 @@ public partial class EditHabitView : ContentPageBase
             
             foreach (WeekDay weekDay in reminderDaysOfWeek)
             {
-                if (!selectedDaysOfWeek.Any( d => d.Type == weekDay.Type ))
+                if (selectedDaysOfWeek.All( d => d.Type != weekDay.Type ))
                 {
                     reminder.DaysOfWeek.Remove( weekDay );
+
+                    if (weekDay.UserNotificationRequestId != 0 && ViewModel.InactiveDaysToDelete.All(d => d.UserNotificationRequestId != weekDay.UserNotificationRequestId))
+                    {
+                        ViewModel.InactiveDaysToDelete.Add( weekDay );
+                    }
                 }
             }
         }
 
-        ViewModel.NotifyPropertyChanged( nameof( ViewModel.EditedReminder ) );
         await ViewModel.AddReminderAsync();
 
         DXP_Reminders.IsOpen = false;

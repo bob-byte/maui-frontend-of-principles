@@ -10,6 +10,8 @@ namespace Principles.Views;
 
 public partial class ProgressOfHabitsView : ContentPageBase
 {
+    private readonly SemaphoreSlim m_lockerOfAddingNewDayColumn = new ( initialCount: 1, maxCount: 1 );
+    
     private Timer? m_newDayEventTimer;
 
 #if IOS
@@ -31,7 +33,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
         AddFirstCol();
         AddColumns();
         
-        ViewModel.ReferenceMessenger.Register<TryAddNewDayInHabitListMessage>( this, ( sender, msg ) => OnNewDay( null ) );
+        ViewModel.ReferenceMessenger.Register<TryAddNewDayInHabitListMessage>( this, ( sender, msg ) => TryAddNewDayColumn( null ) );
     }
 
     ~ProgressOfHabitsView()
@@ -52,7 +54,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
         {
             TimeSpan timeUntilMidnight = TimeUntilMidnight();
             TimeSpan period = TimeSpan.FromHours( 24 );
-            m_newDayEventTimer = new Timer( OnNewDay, state: null, dueTime: timeUntilMidnight, period );
+            m_newDayEventTimer = new Timer( TryAddNewDayColumn, state: null, dueTime: timeUntilMidnight, period );
 
 #if IOS
             m_timeZoneChangeObserver = new TimeZoneChangeObserver();
@@ -70,53 +72,62 @@ public partial class ProgressOfHabitsView : ContentPageBase
 #endif
         }
     }
-
-    private async void OnNewDay( object? state )
+    
+    private async void TryAddNewDayColumn( object? state )
     {
-        DateTime todayAsDatetime = DateTime.Today;
-        DateOnly today = DateOnly.FromDateTime( todayAsDatetime );
+        await m_lockerOfAddingNewDayColumn.WaitAsync();
 
-        string dayOfWeek = LocStrings.ResourceManager.GetString( name: $"{today.DayOfWeek}Short" )!.ToUpperInvariant();
-        int dayOfMonth = today.Day;
-        string colCaption = $"{dayOfWeek}{Environment.NewLine}{dayOfMonth}";
-
-        bool isAlreadyAddedCol = DGV_Habits.Columns[1].Caption == colCaption || DGV_Habits.Columns[2].Caption == colCaption;
-        if (!isAlreadyAddedCol)
+        try
         {
-            ViewModel.IsProgressesInitialized = false;
+            DateTime todayAsDatetime = DateTime.Today;
+            DateOnly today = DateOnly.FromDateTime( todayAsDatetime );
 
-            await MainThread.InvokeOnMainThreadAsync( () =>
+            string dayOfWeek =
+                LocStrings.ResourceManager.GetString( name: $"{today.DayOfWeek}Short" )!.ToUpperInvariant();
+            int dayOfMonth = today.Day;
+            string colCaption = $"{dayOfWeek}{Environment.NewLine}{dayOfMonth}";
+
+            bool isAlreadyAddedCol = DGV_Habits.Columns[2].Caption.Equals( colCaption, StringComparison.OrdinalIgnoreCase )  ||
+                                     DGV_Habits.Columns[3].Caption.Equals( colCaption, StringComparison.OrdinalIgnoreCase );
+            if (!isAlreadyAddedCol)
             {
-                foreach (UserHabit habit in ViewModel.UserHabits)
+                ViewModel.IsProgressesInitialized = false;
+
+                await MainThread.InvokeOnMainThreadAsync( () =>
                 {
-                    habit.Progresses!.Insert( index: 0, new ProgressOfHabit
+                    foreach (UserHabit habit in ViewModel.UserHabits)
                     {
-                        Id = 0,
-                        Date = today,
-                        Habit = habit,
-                        Value = ProgressValue.UNKNOWN
-                    } );
+                        habit.Progresses!.Insert( index: 0,
+                            new ProgressOfHabit
+                            {
+                                Id = 0, Date = today, Habit = habit, Value = ProgressValue.UNKNOWN
+                            } );
 
-                    ViewModel.ServiceOfHabit.Recompute( habit );
-                }
+                        ViewModel.ServiceOfHabit.Recompute( habit );
+                    }
 
-                TemplateColumn templateColumn = new()
-                {
-                    Caption = colCaption,
-                    HeaderFontSize = 9,
-                    Width = new GridLength( 55 ),
-                    HeaderCaptionLineBreakMode = LineBreakMode.WordWrap,
-                    VerticalContentAlignment = TextAlignment.Center,
-                    HorizontalContentAlignment = TextAlignment.Center,
-                    HorizontalHeaderAlignment = TextAlignment.Center,
-                    DisplayTemplate = new HabitWithProgressTemplateSelector( ViewModel, today )
-                };
+                    TemplateColumn templateColumn = new()
+                    {
+                        Caption = colCaption,
+                        HeaderFontSize = 9,
+                        Width = new GridLength( 55 ),
+                        HeaderCaptionLineBreakMode = LineBreakMode.WordWrap,
+                        VerticalContentAlignment = TextAlignment.Center,
+                        HorizontalContentAlignment = TextAlignment.Center,
+                        HorizontalHeaderAlignment = TextAlignment.Center,
+                        DisplayTemplate = new HabitWithProgressTemplateSelector( ViewModel, today )
+                    };
 
-                DGV_Habits.Columns.Insert( index: 1, templateColumn );
-            } ).DefaultConfigureAwait();
+                    DGV_Habits.Columns.Insert( index: 1, templateColumn );
+                } ).DefaultConfigureAwait();
 
-            ViewModel.EndProgressInterval = today;
-            ViewModel.IsProgressesInitialized = true;
+                ViewModel.EndProgressInterval = today;
+                ViewModel.IsProgressesInitialized = true;
+            }
+        }
+        finally
+        {
+            m_lockerOfAddingNewDayColumn.Release();
         }
     }
 
@@ -286,9 +297,13 @@ public partial class ProgressOfHabitsView : ContentPageBase
         }
     }
 
-    private void SB_Save_Clicked( object sender, EventArgs e )
+    private async void SB_Save_Clicked( object sender, EventArgs e )
     {
-        DXP_Reminder.IsOpen = false;
+        if (ViewModel.AddHabitCommand.CanExecute( null ))
+        {
+            await ViewModel.AddHabitCommand.ExecuteAsync( null );
+            DXP_Reminder.IsOpen = false;
+        }
     }
 
     private void SB_ReminderReport_Cancel_Clicked( object sender, EventArgs e )

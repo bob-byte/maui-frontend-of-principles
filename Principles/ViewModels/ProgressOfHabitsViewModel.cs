@@ -382,26 +382,29 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
             IsEnabled = ReminderReport.IsEnabled
         };
 
-        SaveHabitsReportReminderResponse response = await ReminderService.SaveHabitsReportReminderAsync( reminder );
-        ReminderReport.Id = response.Id;
-        reminder.Id = response.Id;
-        
-        ReminderReport.UserNotificationRequestId = response.UserNotificationRequestId;
-        reminder.UserNotificationRequestId = response.UserNotificationRequestId;
-        
-        NotificationRequest notification = new()
+        await UiBusyFor( async () =>
         {
-            NotificationId = reminder.UserNotificationRequestId,
-            Title = reminder.Title,
-            Description = reminder.Description,
-            Schedule =
-            {
-                NotifyTime = DateTime.Today.Add(reminder.Time.ToTimeSpan()),
-                RepeatType = NotificationRepeat.Daily
-            }
-        };
+            SaveHabitsReportReminderResponse response = await ReminderService.SaveHabitsReportReminderAsync( reminder );
+            ReminderReport.Id = response.Id;
+            reminder.Id = response.Id;
         
-        await LocalNotificationCenter.Current.Show( notification );
+            ReminderReport.UserNotificationRequestId = response.UserNotificationRequestId;
+            reminder.UserNotificationRequestId = response.UserNotificationRequestId;
+        
+            NotificationRequest notification = new()
+            {
+                NotificationId = reminder.UserNotificationRequestId,
+                Title = reminder.Title,
+                Description = reminder.Description,
+                Schedule =
+                {
+                    NotifyTime = DateTime.Today.Add(reminder.Time.ToTimeSpan()),
+                    RepeatType = NotificationRepeat.Daily
+                }
+            };
+        
+            await LocalNotificationCenter.Current.Show( notification );
+        } );
     }
 
     private Task GetAccessToSendNotificationsAsync()

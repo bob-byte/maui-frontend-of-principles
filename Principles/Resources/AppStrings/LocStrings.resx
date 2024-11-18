@@ -385,7 +385,7 @@
     <value>Fix the errors first</value>
   </data>
   <data name="Helper" xml:space="preserve">
-    <value>AI Helper</value>
+    <value>AI-Helper</value>
   </data>
   <data name="HelperName" xml:space="preserve">
     <value>Helper SET</value>
@@ -838,7 +838,7 @@ By using the App, you acknowledge that you have read, understood, and agree to b
     <value>Don't remind me of it again</value>
   </data>
   <data name="HelperWarning" xml:space="preserve">
-    <value>AI Helper can sometimes be wrong. Сheck important information!</value>
+    <value>AI-Helper can sometimes be wrong. Сheck important information!</value>
   </data>
   <data name="Add" xml:space="preserve">
     <value>Add</value>

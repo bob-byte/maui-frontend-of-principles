@@ -23,20 +23,30 @@
 		<ApplicationTitle>Principles</ApplicationTitle>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
-	  <NoWarn>1701;1702;8632</NoWarn>
-	  <CreatePackage>false</CreatePackage>
-	  <CodesignProvision>Automatic</CodesignProvision>
-	  <CodesignKey>iPhone Developer</CodesignKey>
-	  <CodesignEntitlements>Platforms\iOS\Entitlements.plist</CodesignEntitlements>
-	  <BuildIpa>true</BuildIpa>
+	<PropertyGroup>
+		<NullabilityInfoContextSupport>true</NullabilityInfoContextSupport>
 	</PropertyGroup>
+	
+	<PropertyGroup>
+		<MtouchNoSymbolStrip Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">True</MtouchNoSymbolStrip>
+	</PropertyGroup>
+
+<!--	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">-->
+<!--	  <NoWarn>1701;1702;8632</NoWarn>-->
+<!--	  <CreatePackage>false</CreatePackage>-->
+<!--	  <CodesignProvision>Automatic</CodesignProvision>-->
+<!--	  <CodesignKey>iPhone Developer</CodesignKey>-->
+<!--	  <CodesignEntitlements>Platforms\iOS\Entitlements.plist</CodesignEntitlements>-->
+<!--	  <BuildIpa>true</BuildIpa>-->
+<!--	</PropertyGroup>-->
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
 	  <NoWarn>1701;1702;8632</NoWarn>
+	  <ArchiveOnBuild>true</ArchiveOnBuild>
+	  <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
 	  <CodesignEntitlements>Platforms\iOS\Entitlements.plist</CodesignEntitlements>
-	  <CodesignKey>iPhone Distribution</CodesignKey>
-	  <CodesignProvision>Automatic</CodesignProvision>
+	  <CodesignKey>iPhone Distribution: Bohdan Bats (CHVN5SL89P)</CodesignKey>
+	  <CodesignProvision>PRINCIPLES</CodesignProvision>
 	  <CreatePackage>false</CreatePackage>
 	  <BuildIpa>true</BuildIpa>
 	</PropertyGroup>
@@ -63,7 +73,10 @@
 		<MauiImage Include="Resources\Images\*svg" BaseSize="23, 23" />
 		<MauiImage Include="Resources\Images\*png" BaseSize="23, 23" />
 		<MauiImage Update="Resources\Images\settings.svg" BaseSize="40, 40" />
-		<MauiImage Update="Resources\Images\plus.png" BaseSize="40, 40" />
+		<MauiImage Update="Resources\Images\plus.svg" BaseSize="40, 40" />
+		<MauiImage Update="Resources\Images\reminder_first.svg" BaseSize="40, 40" />
+		<MauiImage Update="Resources\Images\reminder_second.svg" BaseSize="60, 60" />
+		<MauiImage Update="Resources\Images\reminder_third.svg" BaseSize="40, 40" />
 		<MauiImage Update="Resources\Images\edit.png" BaseSize="40, 40" />
 		<MauiImage Update="Resources\Images\delete.png" BaseSize="40, 40" />
 		<MauiImage Update="Resources\Images\logolargesize.png" BaseSize="200, 200" />
@@ -90,12 +103,13 @@
 		<PackageReference Include="CommunityToolkit.MVVM" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
 		<PackageReference Include="Plugin.LocalNotification" Version="11.1.0" />
+		<PackageReference Include="runtime.unix.System.Private.Uri" Version="4.3.2" />
 		<PackageReference Include="Serilog" Version="3.1.1" />
 		<PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
 		<PackageReference Include="Serilog.Sinks.Xamarin" Version="1.0.0" />
 		<PackageReference Include="System.Net.Http" Version="4.3.4" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.40" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.40" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.100" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.100" />
 		<PackageReference Include="CommunityToolkit.Maui.Markup" Version="4.0.0" />
 		<PackageReference Include="Polly.Extensions" Version="8.4.0" />
 		<PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="2.0.0" />
@@ -105,6 +119,8 @@
 		<PackageReference Include="DevExpress.Maui.DataGrid" Version="23.2.6" />
 		<PackageReference Include="DevExpress.Maui.Editors" Version="23.2.6" />
 		<PackageReference Include="Azure.AI.OpenAI" Version="1.0.0-beta.9" />
+		<PackageReference Include="System.Private.Uri" Version="4.3.2" />
+		<PackageReference Include="System.Text.Json" Version="8.0.5" />
 	</ItemGroup>
 
 	<ItemGroup>

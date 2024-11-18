@@ -7,10 +7,12 @@ namespace Principles.ViewModels;
 
 public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
 {
-    private readonly List<WeekDay> m_inactiveDaysToDelete = [];
     
     [ObservableProperty]
     private UserHabit m_habit;
+
+    [ObservableProperty]
+    private ObservableCollectionEx<bool> m_isDayChecked = new();
 
     [ObservableProperty]
     private ValidatableObject<string> m_nameOfHabit;
@@ -82,6 +84,8 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
             UserHabits?.Clear();
             UserGoals?.Clear();
         } );
+        
+        InactiveDaysToDelete = new List<WeekDay>();
     }
 
     public UserAreaOfLife AllAreasOfLifeAsOneItem { get; }
@@ -92,8 +96,8 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
     public IGoalService GoalService { get; set; }
 
     public ObservableCollectionEx<UserAreaOfLife> AllUserAreasOfLife { get; set; }
-
-    public ObservableCollectionEx<bool> IsDayChecked { get; private set; } = new();
+    
+    public List<WeekDay> InactiveDaysToDelete { get; }
     
     [RelayCommand(CanExecute = nameof( CanSave ) )]
     private async Task SaveAsync()
@@ -198,11 +202,10 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
                 UserHabitReminder habitReminder = Habit.Reminders[numReminder];
                 habitReminder.Id = dtoOfReminder.Id;
 
-                if (m_inactiveDaysToDelete != null)
+                if (InactiveDaysToDelete.Count > 0)
                 {
-                    RemoveInactiveNotifications( m_inactiveDaysToDelete );
+                    RemoveInactiveNotifications( InactiveDaysToDelete );
                 }
-
 
                 for (int numWeekDay = 0; numWeekDay < dtoOfReminder.DaysOfWeek?.Count; numWeekDay++)
                 {
@@ -795,18 +798,13 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
 
         UserHabitReminder reminder = new()
         {
-            Title = EditedReminder.Title,
-            Description = EditedReminder.Description,
+            Title = EditedReminder.Title.Clone() as string,
+            Description = EditedReminder.Description.Clone() as string,
             Time = TimeOnly.FromDateTime( EditedReminder.Time ),
             IsEnabled = EditedReminder.IsEnabled,
-            DaysOfWeek = GetSelectedDaysIndexes().Select( index => new WeekDay
-            {
-                Type = (DayOfWeek)index,
-                UserNotificationRequestId = 0
-            } ).ToList()
+            DaysOfWeek = new List<WeekDay>(EditedReminder.DaysOfWeek)
         };
         
-        EditedReminder.Title = reminder.Title;
         Habit.Reminders ??= new ObservableCollectionEx<UserHabitReminder>();
 
         if (Habit.Reminders.Count == 1)
@@ -818,27 +816,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         {
             Habit.Reminders.Add( reminder );
         }
-
-
-        List<DayOfWeek> activeDaysInEditedReminder = EditedReminder.DaysOfWeek
-            .Select( d => d.Type )
-            .ToList();
-
-        UserHabitReminder? reminderInDb = Habit.Reminders.FirstOrDefault( r => r.Id == reminder.Id );
-
-        if (reminderInDb != null)
-        {
-            List<WeekDay> daysInDataBase = reminderInDb.DaysOfWeek.ToList();
-
-            foreach (WeekDay existingDay in daysInDataBase)
-            {
-                if (!activeDaysInEditedReminder.Contains( existingDay.Type ))
-                {
-                    m_inactiveDaysToDelete.Add( existingDay );
-                }
-            }
-        }
-
+        
         OnPropertyChanged( nameof( EditedReminder ) );
     }
 

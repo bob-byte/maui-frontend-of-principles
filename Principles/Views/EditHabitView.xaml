@@ -454,7 +454,7 @@
                                                        IconHorizontalPosition="Left" />
                                     <dxco:SimpleButton x:Name="SB_ReminderSave"
                                                        Text="{Binding LocSave}"
-                                                       Margin="0,0,5,5"
+                                                       Margin="0,0,0,5"
                                                        Clicked="SB_ReminderSave_Clicked"
                                                        FontSize="16"
                                                        Icon="check_second"
