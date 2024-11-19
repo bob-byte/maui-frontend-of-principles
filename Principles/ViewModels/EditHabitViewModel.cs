@@ -334,15 +334,12 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
             {
                 Habit.Complexity = 5;
             }
+            
+            EditedReminder = new EditedUserHabitReminder();
 
             if (Habit.Reminders != null && Habit.Reminders.Count > 0)
             {
                 UserHabitReminder reminder = Habit.Reminders.First();
-
-                if (EditedReminder == null)
-                {
-                    EditedReminder = new EditedUserHabitReminder();
-                }
 
                 EditedReminder.Title = reminder.Title;
                 EditedReminder.Description = reminder.Description;

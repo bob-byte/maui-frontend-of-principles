@@ -363,7 +363,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private async Task AddReminderAsync()
+    private async Task SaveHabitsReportReminderAsync()
     {
         await GetAccessToSendNotificationsAsync();
 

@@ -36,11 +36,11 @@
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/appicon.appiconset</string>
 	<key>MinimumOSVersion</key>
-	<string>14.2</string>
+	<string>15.4</string>
 	<key>CFBundleDisplayName</key>
 	<string>Principles</string>
 	<key>CFBundleVersion</key>
-	<string>1.0.10</string>
+	<string>2.0.0</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

@@ -299,9 +299,9 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
     private async void SB_Save_Clicked( object sender, EventArgs e )
     {
-        if (ViewModel.AddHabitCommand.CanExecute( null ))
+        if (ViewModel.SaveHabitsReportReminderCommand.CanExecute( null ))
         {
-            await ViewModel.AddHabitCommand.ExecuteAsync( null );
+            await ViewModel.SaveHabitsReportReminderCommand.ExecuteAsync( null );
             DXP_Reminder.IsOpen = false;
         }
     }
