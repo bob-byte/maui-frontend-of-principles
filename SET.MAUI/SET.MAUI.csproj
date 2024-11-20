@@ -230,10 +230,10 @@
       <NoWarn>1701;1702;CS1573;CS1591;CS8632</NoWarn>
     </PropertyGroup>
 
-	<Target Name="Protect" AfterTargets="AfterCompile" BeforeTargets="BeforePublish" Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-        <ItemGroup>
-            <Assemblies Include="$(ProjectDir)$(IntermediateOutputPath)$(TargetFileName)" CreatePDB="true" />
-        </ItemGroup>
-        <ArmDot.Engine.MSBuildTasks.ObfuscateTask Inputs="@(Assemblies)" ReferencePaths="@(_ResolveAssemblyReferenceResolvedFiles-&gt;'%(RootDir)%(Directory)')" SkipAlreadyObfuscatedAssemblies="true" />
-    </Target>
+	<Target Name="Protect" AfterTargets="AfterCompile" BeforeTargets="BeforePublish" Condition="'$(TargetFramework)' == 'net8.0-android'">
+		<ItemGroup>
+			<Assemblies Include="$(ProjectDir)$(IntermediateOutputPath)$(TargetFileName)" CreatePDB="true" />
+		</ItemGroup>
+        <ArmDot.Engine.MSBuildTasks.ObfuscateTask Inputs="@(Assemblies)" ReferencePaths="@(_ResolveAssemblyReferenceResolvedFiles-&gt;'%(RootDir)%(Directory)')" MapFile="armdot-map" SkipAlreadyObfuscatedAssemblies="true" />
+	</Target>
 </Project>
