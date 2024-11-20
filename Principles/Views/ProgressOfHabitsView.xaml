@@ -47,8 +47,7 @@
                         WidthRequest="50"
                         Grid.Column="5">
                 <dx:DXImage.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding SetReminderReportCommand}"
-                                          NumberOfTapsRequired="1"
+                    <TapGestureRecognizer NumberOfTapsRequired="1"
                                           Tapped="DXI_Reminder_Tapped" />
                 </dx:DXImage.GestureRecognizers>
             </dx:DXImage>

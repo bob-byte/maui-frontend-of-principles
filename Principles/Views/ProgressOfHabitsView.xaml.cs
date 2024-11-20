@@ -281,28 +281,34 @@ public partial class ProgressOfHabitsView : ContentPageBase
         }
     }
 
-    private void DXI_Reminder_Tapped( object sender, TappedEventArgs e )
+    private async void DXI_Reminder_Tapped( object sender, TappedEventArgs e )
     {
         if (LocalNotificationCenter.Current.IsSupported)
         {
-            DXP_Reminder.IsOpen = true;
+            Action openPopup = () => DXP_Reminder.IsOpen = true;
+            if (ViewModel.LoadHabitReportReminderCommand.CanExecute( openPopup ))
+            {
+                await ViewModel.LoadHabitReportReminderCommand.ExecuteAsync( openPopup ).DefaultConfigureAwait();
+            }
         }
         else
         {
+            DXP_Reminder.IsOpen = false;
+            
             Snackbar.Make(
                 LocStrings.DeviceDoesNotSupportNotifications,
                 visualOptions: SnackbarHelper.DefaultOptions()
-            ).Show();
-            DXP_Reminder.IsOpen = false;
+            ).Show().GetAwaiter();
         }
     }
 
     private async void SB_Save_Clicked( object sender, EventArgs e )
     {
-        if (ViewModel.SaveHabitsReportReminderCommand.CanExecute( null ))
+        Action closePopup = () => DXP_Reminder.IsOpen = false;
+        
+        if (ViewModel.SaveHabitsReportReminderCommand.CanExecute( closePopup ))
         {
-            await ViewModel.SaveHabitsReportReminderCommand.ExecuteAsync( null );
-            DXP_Reminder.IsOpen = false;
+            await ViewModel.SaveHabitsReportReminderCommand.ExecuteAsync( closePopup ).DefaultConfigureAwait();
         }
     }
 

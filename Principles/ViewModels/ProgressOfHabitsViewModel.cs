@@ -326,44 +326,48 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private async Task SetReminderReport()
+    private async Task LoadHabitReportReminderAsync(Action openPopup)
     {
-        Reminder reminder = await ReminderService.HabitsReportReminderAsync() ?? new Reminder();
-
-        if (reminder.Id == 0)
+        await UiBusyFor(async () =>
         {
-            reminder.UserNotificationRequestId = 0;
-            reminder.Title = LocStrings.ReminderTitleText;
-            reminder.Description = LocStrings.ReminderDescriptionText;
-            reminder.IsEnabled = true;
-            reminder.Time = new TimeOnly( 20, 30 );
-
-            ReminderReport = new EditedReminderReport
+            Reminder reminder = await ReminderService.HabitsReportReminderAsync() ?? new Reminder();
+            openPopup();
+            
+            if (reminder.Id == 0)
             {
-                UserNotificationRequestId = reminder.UserNotificationRequestId,
-                Title = reminder.Title,
-                Description = reminder.Description,
-                IsEnabled = reminder.IsEnabled,
-                Time = new DateTime( DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, reminder.Time.Hour, reminder.Time.Minute, 0 )
-            };
-        }
-        else
-        {
-            ReminderReport = new EditedReminderReport();
-            ReminderReport.Id = reminder.Id;
-            ReminderReport.Title = reminder.Title;
-            ReminderReport.Description = reminder.Description;
-            ReminderReport.IsEnabled = reminder.IsEnabled;
-            ReminderReport.UserNotificationRequestId = reminder.UserNotificationRequestId;
+                reminder.UserNotificationRequestId = 0;
+                reminder.Title = LocStrings.ReminderTitleText;
+                reminder.Description = LocStrings.ReminderDescriptionText;
+                reminder.IsEnabled = true;
+                reminder.Time = new TimeOnly( 20, 30 );
 
-            ReminderReport.Time = new DateTime( DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, reminder.Time.Hour, reminder.Time.Minute, 0 );
-        }
+                ReminderReport = new EditedReminderReport
+                {
+                    UserNotificationRequestId = reminder.UserNotificationRequestId,
+                    Title = reminder.Title,
+                    Description = reminder.Description,
+                    IsEnabled = reminder.IsEnabled,
+                    Time = new DateTime( DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, reminder.Time.Hour, reminder.Time.Minute, 0 )
+                };
+            }
+            else
+            {
+                ReminderReport = new EditedReminderReport();
+                ReminderReport.Id = reminder.Id;
+                ReminderReport.Title = reminder.Title;
+                ReminderReport.Description = reminder.Description;
+                ReminderReport.IsEnabled = reminder.IsEnabled;
+                ReminderReport.UserNotificationRequestId = reminder.UserNotificationRequestId;
 
-        OnPropertyChanged( nameof( ReminderReport ) );
+                ReminderReport.Time = new DateTime( DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, reminder.Time.Hour, reminder.Time.Minute, 0 );
+            }
+
+            OnPropertyChanged( nameof( ReminderReport ) );
+        });
     }
 
     [RelayCommand]
-    private async Task SaveHabitsReportReminderAsync()
+    private async Task SaveHabitsReportReminderAsync(Action closePopup)
     {
         await GetAccessToSendNotificationsAsync();
 
@@ -404,6 +408,8 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
             };
         
             await LocalNotificationCenter.Current.Show( notification );
+
+            closePopup();
         } );
     }
 
