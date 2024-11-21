@@ -7,6 +7,6 @@ using System.Threading.Tasks;
 namespace Principles.Core.Models;
 public class AllRemindersResponse
 {
-    public List<Reminder> RemindersReport { get; set; }
+    public List<Reminder> GeneralReminders { get; set; }
     public List<UserHabitReminder> UserHabitReminders { get; set; }
 }

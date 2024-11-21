@@ -8,6 +8,7 @@ namespace Principles.Views;
 
 public partial class EditHabitView : ContentPageBase
 {
+    private readonly ILockDeviceOrientation m_deviceOrientationService;
     private bool m_doExecuteReloadOfRecommendedHabits;
 
     public EditHabitView( EditHabitViewModel viewModel )
@@ -18,9 +19,22 @@ public partial class EditHabitView : ContentPageBase
         ViewModel = viewModel;
         ViewModel.PropertyChanged += ViewModel_HabitPropertyChanged;
 
+        m_deviceOrientationService = DependencyService.Get<ILockDeviceOrientation>();
+
         InitializeComponent();
     }
 
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        m_deviceOrientationService.LockOrientation( DeviceOrientation.Portrait );
+    }
+
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        m_deviceOrientationService.UnlockOrientation();
+    }
     private void ViewModel_HabitPropertyChanged( object? sender, PropertyChangedEventArgs e )
     {
         UserHabit habit = ViewModel.Habit;
@@ -458,6 +472,10 @@ public partial class EditHabitView : ContentPageBase
         {
             enteredText.Text = enteredText.Text.Substring( startIndex: 0, length: 2 );
         }
+        else if (enteredText?.Text == "0")
+        {
+            enteredText.Text = "1";
+        }
     }
 
     private void TE_RepeatsOfSeveralTimesPerPeriod_TextChanged( object sender, EventArgs e )
@@ -467,6 +485,10 @@ public partial class EditHabitView : ContentPageBase
         if (enteredText?.Text?.Length > 2)
         {
             enteredText.Text = enteredText.Text.Substring( startIndex: 0, length: 2 );
+        }
+        else if(enteredText?.Text == "0")
+        {
+            enteredText.Text = "1";
         }
     }
 

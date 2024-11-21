@@ -19,10 +19,4 @@ public class ReminderService : BaseRemoteService, IReminderService
         string url = $"{UrlBuilder.HabitsReportReminder}/{reminder.Id}";
         return RequestProvider.PostAsync<Reminder, SaveHabitsReportReminderResponse>( url, reminder, SettingsService.AuthAccessToken );
     }
-
-    public async Task<AllRemindersResponse> LoadAllRemindersAsync()
-    {
-        string url = $"{UrlBuilder.AllReminders}";
-        return await RequestProvider.GetAsync<AllRemindersResponse>( url, SettingsService.AuthAccessToken );
-    }
 }

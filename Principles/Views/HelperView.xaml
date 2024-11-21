@@ -56,7 +56,7 @@
                 <dx:DXImage.GestureRecognizers>
                     <TapGestureRecognizer NumberOfTapsRequired="1"
                                           Command="{Binding ShowHelperInfoSnackbarCommand}"
-                                          CommandParameter="{x:Reference L_ShortDescriptionOfAssistant}"/>
+                                          CommandParameter="{x:Reference L_ShortDescriptionOfAssistant}" />
                 </dx:DXImage.GestureRecognizers>
             </dx:DXImage>
         </Grid>
@@ -128,10 +128,9 @@
                                    PlaceholderColor="#3F3F3F"
                                    BackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary},
                                                                      Dark={StaticResource DarkPrimary}}"
-                                   TranslationY="4"
                                    ClearButtonVisibility="Never"
-                                   Margin="16,0,16,5"
-                                   RotationX="20" />
+                                   Margin="16,5,16,5"
+                                   FontAttributes="Italic" />
                         </On>
                         <On Platform="iOS">
                             <editors:TextEdit PlaceholderText="{x:Static loc:LocStrings.EnterText}"
@@ -159,16 +158,20 @@
                                        RepeatCount="-1"
                                        Source="loading.json"
                                        HorizontalOptions="Center"
-                                       WidthRequest="{OnPlatform iOS=52, Android=48}"
-                                       HeightRequest="{OnPlatform iOS=52, Android=48}"
+                                       WidthRequest="{OnPlatform iOS=52,
+                                                                 Android=48}"
+                                       HeightRequest="{OnPlatform iOS=52,
+                                                                  Android=48}"
                                        Grid.Column="1" />
                 </Grid>
             </Border>
 
             <dxc:SimpleButton Icon="send_message"
                               x:Name="SB_AskQuestion"
-                              HeightRequest="{OnPlatform iOS=52, Android=48}"
-                              WidthRequest="{OnPlatform iOS=52, Android=48}"
+                              HeightRequest="{OnPlatform iOS=52,
+                                                         Android=48}"
+                              WidthRequest="{OnPlatform iOS=52,
+                                                        Android=48}"
                               IsVisible="{Binding IsBusy,
                                                   Converter={StaticResource IsFalse}}"
                               Clicked="SB_AskQuestion_Clicked"

@@ -2,6 +2,8 @@
 
 using ObjCRuntime;
 
+using Principles.Platforms.iOS;
+
 namespace Principles;
 
 [Register("AppDelegate")]
@@ -10,6 +12,7 @@ public class AppDelegate : MauiUIApplicationDelegate
     protected override MauiApp CreateMauiApp()
     {
         DependencyService.RegisterSingleton<IDeviceOrientation>( new DeviceOrientationForIos() );
+        DependencyService.RegisterSingleton<ILockDeviceOrientation>( new LockDeviceOrientationForIos() );
 
         return MauiProgram.CreateMauiApp();
     }

@@ -37,14 +37,14 @@
                    VerticalTextAlignment="Center"
                    Grid.Column="2" />
 
-            <dx:DXImage HeightRequest="50"
+            <dx:DXImage HeightRequest="45"
                         HorizontalOptions="End"
                         IsVisible="{Binding SelectedHabit,
                                             Converter={StaticResource IsNull}}"
                         Source="reminder_third"
                         TintColor="{StaticResource TitleTextColor}"
                         VerticalOptions="Center"
-                        WidthRequest="50"
+                        WidthRequest="45"
                         Grid.Column="5">
                 <dx:DXImage.GestureRecognizers>
                     <TapGestureRecognizer NumberOfTapsRequired="1"
@@ -54,14 +54,14 @@
 
 
             <dx:DXImage Margin="15,0,0,0"
-                        HeightRequest="40"
+                        HeightRequest="35"
                         HorizontalOptions="End"
                         IsVisible="{Binding SelectedHabit,
                                             Converter={StaticResource IsNull}}"
                         Source="plus"
                         TintColor="{StaticResource TitleTextColor}"
                         VerticalOptions="Center"
-                        WidthRequest="40"
+                        WidthRequest="35"
                         Grid.Column="6">
                 <dx:DXImage.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding AddHabitCommand}"

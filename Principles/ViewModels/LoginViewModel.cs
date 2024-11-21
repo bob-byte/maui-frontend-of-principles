@@ -53,16 +53,15 @@ public partial class LoginViewModel : BaseViewModel
                 {
                     await LoginService.LoginAsync( Email.Value, Password.Value );
 
-                    AllRemindersResponse remindersResponse = await ReminderService.LoadAllRemindersAsync();
+                    AllRemindersResponse remindersResponse = await LoadAllRemindersAsync();
 
-                    //TODO: rename RemindersReport to GeneralReminders
-                    if (remindersResponse.RemindersReport?.Any() == true ||
+                    if (remindersResponse.GeneralReminders?.Any() == true ||
                         remindersResponse.UserHabitReminders?.Any() == true)
                     {
                         await LocalNotificationCenter.Current.RequestNotificationPermission();
                     }
                     
-                    foreach (Reminder? reminder in remindersResponse.RemindersReport.Where( r => r.IsEnabled ))
+                    foreach (Reminder? reminder in remindersResponse.GeneralReminders.Where( r => r.IsEnabled ))
                     {
                         NotificationRequest notification = new NotificationRequest
                         {

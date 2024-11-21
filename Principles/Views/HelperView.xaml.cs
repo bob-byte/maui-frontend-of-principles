@@ -4,15 +4,30 @@ namespace Principles.Views;
 
 public partial class HelperView : ContentPageBase
 {
-	public HelperView(HelperViewModel viewModel)
+    private readonly ILockDeviceOrientation m_deviceOrientationService;
+    public HelperView(HelperViewModel viewModel)
 	{
 		BindingContext = viewModel;
 		ViewModel = viewModel;
 
-		InitializeComponent();
+        m_deviceOrientationService = DependencyService.Get<ILockDeviceOrientation>();
+
+        InitializeComponent();
 
         ViewModel.DisplayMessages.CollectionChanged += DisplayMessages_CollectionChanged;
         DXC_DisplayMessages.ItemTemplate = new MessageDataTemplateSelector( ViewModel );
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        m_deviceOrientationService.LockOrientation( DeviceOrientation.Portrait );
+    }
+
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        m_deviceOrientationService.UnlockOrientation();
     }
 
     private HelperViewModel ViewModel { get; }
