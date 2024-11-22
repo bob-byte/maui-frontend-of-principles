@@ -62,17 +62,24 @@ public static class MauiProgram
 
         var assembly = Assembly.GetExecutingAssembly();
 
-        //TODO: replace appsettings.json and implementation of the config to SET.Core project
-        using Stream? stream = assembly.GetManifestResourceStream( $"{assembly.GetName().Name}.appsettings.json" );
-
-        if(stream is not null)
+        try
         {
-            IConfigurationRoot configuration = new ConfigurationBuilder()
-                .AddJsonStream( stream )
-                .Build();
+            //TODO: replace appsettings.json and implementation of the config to SET.Core project
+            using Stream? stream = assembly.GetManifestResourceStream( $"{assembly.GetName().Name}.appsettings.json" );
 
-            builder.Configuration.AddConfiguration( configuration );
-            builder.Services.AddSingleton<IConfiguration>( configuration );
+            if (stream is not null)
+            {
+                IConfigurationRoot configuration = new ConfigurationBuilder()
+                    .AddJsonStream( stream )
+                    .Build();
+
+                builder.Configuration.AddConfiguration( configuration );
+                builder.Services.AddSingleton<IConfiguration>( configuration );
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine( $"Failed to load {assembly.GetName().Name}.appsettings.json: {Environment.NewLine}{ex}" );
         }
 
         AllowMultiLineTruncation();

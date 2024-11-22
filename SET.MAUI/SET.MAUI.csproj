@@ -104,8 +104,8 @@
 		<PackageReference Include="DevExpress.Maui.DataGrid" Version="23.2.6" />
 		<PackageReference Include="DevExpress.Maui.Editors" Version="23.2.6" />
 		<PackageReference Include="Azure.AI.OpenAI" Version="1.0.0-beta.9" />
-		<PackageReference Include="ArmDot.Client" Version="2024.8.0" />
-		<PackageReference Include="ArmDot.Engine.MSBuildTasks" Version="2024.8.0" />
+		<PackageReference Include="ArmDot.Client" Version="2024.9.0" />
+		<PackageReference Include="ArmDot.Engine.MSBuildTasks" Version="2024.9.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -230,10 +230,16 @@
       <NoWarn>1701;1702;CS1573;CS1591;CS8632</NoWarn>
     </PropertyGroup>
 
-	<Target Name="Protect" AfterTargets="AfterCompile" BeforeTargets="BeforePublish" Condition="'$(TargetFramework)' == 'net8.0-android'">
+	<Target Name="Protect" 
+			AfterTargets="AfterCompile" 
+			BeforeTargets="BeforePublish">
 		<ItemGroup>
-			<Assemblies Include="$(ProjectDir)$(IntermediateOutputPath)$(TargetFileName)" CreatePDB="true" />
+			<Assemblies Include="$(ProjectDir)$(IntermediateOutputPath)$(TargetFileName)" />
 		</ItemGroup>
-        <ArmDot.Engine.MSBuildTasks.ObfuscateTask Inputs="@(Assemblies)" ReferencePaths="@(_ResolveAssemblyReferenceResolvedFiles-&gt;'%(RootDir)%(Directory)')" MapFile="armdot-map" SkipAlreadyObfuscatedAssemblies="true" />
+		<ArmDot.Engine.MSBuildTasks.ObfuscateTask
+				Inputs="@(Assemblies)"
+				ReferencePaths="@(_ResolveAssemblyReferenceResolvedFiles->'%(RootDir)%(Directory)')"
+				SkipAlreadyObfuscatedAssemblies="true"
+				LicenseFile="/Users/set/Desktop/SubconsciousET/Licenses/ArmDotLicense" />
 	</Target>
 </Project>
