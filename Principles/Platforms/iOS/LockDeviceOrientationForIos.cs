@@ -12,16 +12,23 @@ namespace Principles.Platforms.iOS
     {
         public void LockOrientation( DeviceOrientation orientation )
         {
-            UIInterfaceOrientation uiOrientation = orientation == DeviceOrientation.Portrait
-                ? UIInterfaceOrientation.Portrait
-                : UIInterfaceOrientation.LandscapeLeft;
-
-            UIDevice.CurrentDevice.SetValueForKey( new NSNumber( (int)uiOrientation ), new NSString( "orientation" ) );
+            UIInterfaceOrientation orientationMask = orientation switch
+            {
+                DeviceOrientation.Portrait => UIInterfaceOrientation.Portrait,
+                DeviceOrientation.Landscape => UIInterfaceOrientation.LandscapeLeft,
+                _ => UIInterfaceOrientation.Unknown
+            };
+            
+            //TODO: fix it, because it doesn't work
+            UIDevice.CurrentDevice.SetValueForKey(
+                NSNumber.FromNInt((int)(orientationMask)),
+                new NSString("orientation")
+            );
         }
 
         public void UnlockOrientation()
         {
-            UIDevice.CurrentDevice.SetValueForKey( new NSNumber( (int)UIInterfaceOrientation.Unknown ), new NSString( "orientation" ) );
+            UIDevice.CurrentDevice.SetValueForKey( NSNumber.FromNInt((int)(UIInterfaceOrientation.Unknown)), new NSString( "orientation" ) );
         }
     }
 }

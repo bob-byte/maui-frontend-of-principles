@@ -1574,5 +1574,17 @@ namespace Principles.Resources.AppStrings {
                 return ResourceManager.GetString("Description", resourceCulture);
             }
         }
+        
+        internal static string AfterLoginWhenUserAccountHaveReminders {
+            get {
+                return ResourceManager.GetString("AfterLoginWhenUserAccountHaveReminders", resourceCulture);
+            }
+        }
+        
+        internal static string RestoreReminders {
+            get {
+                return ResourceManager.GetString("RestoreReminders", resourceCulture);
+            }
+        }
     }
 }

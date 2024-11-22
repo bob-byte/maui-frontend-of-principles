@@ -897,4 +897,10 @@
   <data name="Description" xml:space="preserve">
     <value>Опис</value>
   </data>
+  <data name="AfterLoginWhenUserAccountHaveReminders" xml:space="preserve">
+    <value>У вашого акаунта є мотивуючі нагадування. Вони можуть бути відновленні на вашому пристрої.</value>
+  </data>
+  <data name="RestoreReminders" xml:space="preserve">
+    <value>Відновлення нагадувань</value>
+  </data>
 </root>

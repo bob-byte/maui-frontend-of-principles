@@ -28,6 +28,7 @@ global using System.Runtime.CompilerServices;
 global using System.Threading.Tasks;
 global using DevExpress.Maui;
 global using CommunityToolkit.Mvvm.Messaging;
+global using Plugin.LocalNotification;
 #if IOS
 global using UIKit;
 #endif

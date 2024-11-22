@@ -897,4 +897,10 @@ By using the App, you acknowledge that you have read, understood, and agree to b
   <data name="Description" xml:space="preserve">
     <value>Description</value>
   </data>
+  <data name="AfterLoginWhenUserAccountHaveReminders" xml:space="preserve">
+    <value>Your account has motivating reminders. They can be restore on your device.</value>
+  </data>
+  <data name="RestoreReminders" xml:space="preserve">
+    <value>Restore reminders</value>
+  </data>
 </root>

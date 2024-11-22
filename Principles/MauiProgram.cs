@@ -81,6 +81,7 @@ public static class MauiProgram
         services.AddSingleton<INavigationService, MauiNavigationService>();
         services.AddSingleton<IDialogService, DialogService>();
         services.AddSingleton<ILaunchUriHelper, LaunchUriHelper>();
+        services.AddSingleton<IReminderService, ReminderService>();
 
         return services;
     }

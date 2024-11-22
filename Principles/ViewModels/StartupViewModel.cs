@@ -1,11 +1,10 @@
 ﻿
-using Plugin.LocalNotification;
-
 namespace Principles.ViewModels;
 
 public partial class StartupViewModel : BaseViewModel
 {
     private readonly IGoogleAuthService m_googleAuthService;
+    private readonly IReminderService m_reminderService;
 
     [ObservableProperty]
     private ObservableCollectionEx<AppFeature> m_appFeatures;
@@ -14,6 +13,7 @@ public partial class StartupViewModel : BaseViewModel
         : base( serviceProvider )
     {
         m_googleAuthService = serviceProvider.GetRequiredService<IGoogleAuthService>();
+        m_reminderService = serviceProvider.GetRequiredService<IReminderService>();
 
         m_appFeatures = new ObservableCollectionEx<AppFeature>
         {
@@ -31,69 +31,8 @@ public partial class StartupViewModel : BaseViewModel
         try
         {
             await m_googleAuthService.AuthorizeAsync();
-            AllRemindersResponse remindersResponse = await LoadAllRemindersAsync();
-
-            if (remindersResponse.GeneralReminders?.Any() == true ||
-                remindersResponse.UserHabitReminders?.Any() == true)
-            {
-                await LocalNotificationCenter.Current.RequestNotificationPermission();
-            }
-
-            foreach (Reminder? reminder in remindersResponse.GeneralReminders.Where( r => r.IsEnabled ))
-            {
-                NotificationRequest notification = new NotificationRequest
-                {
-                    NotificationId = reminder.UserNotificationRequestId,
-                    Title = reminder.Title,
-                    Description = reminder.Description,
-                    Schedule = new NotificationRequestSchedule
-                    {
-                        NotifyTime = DateTime.Today.Add( reminder.Time.ToTimeSpan() ),
-                        RepeatType = NotificationRepeat.Daily
-                    }
-                };
-
-                await LocalNotificationCenter.Current.Show( notification );
-            }
-
-            foreach (UserHabitReminder? userHabitReminder in remindersResponse.UserHabitReminders.Where( r => r.IsEnabled ))
-            {
-                foreach (WeekDay weekDay in userHabitReminder.DaysOfWeek)
-                {
-                    DateTime currentDate = DateTime.Now;
-                    TimeSpan currentTime = currentDate.TimeOfDay;
-
-                    int reminderDayIndex = (int)weekDay.Type;
-                    int currentDayIndex = (int)currentDate.DayOfWeek;
-
-                    int daysUntilNextReminder = (reminderDayIndex - currentDayIndex + 7) % 7;
-
-                    if (daysUntilNextReminder == 0 && userHabitReminder.Time.ToTimeSpan() < currentTime)
-                    {
-                        daysUntilNextReminder = 7;
-                    }
-
-                    DateTime notifyDateTime = currentDate.Date
-                        .AddDays( daysUntilNextReminder )
-                        .Add( userHabitReminder.Time.ToTimeSpan() );
-
-                    NotificationRequest notification = new NotificationRequest
-                    {
-                        NotificationId = weekDay.UserNotificationRequestId,
-                        Title = userHabitReminder.Title,
-                        Description = userHabitReminder.Description,
-                        Schedule = new NotificationRequestSchedule
-                        {
-                            NotifyTime = notifyDateTime,
-                            RepeatType = NotificationRepeat.Weekly
-                        }
-                    };
-
-                    await LocalNotificationCenter.Current.Show( notification );
-                }
-
-                await Navigation.GoToInitialViewAsync();
-            }
+            await m_reminderService.TryToRecoverAllUserRemindersAsync();
+            await Navigation.GoToInitialViewAsync();
         }
         catch (Exception ex)
         {

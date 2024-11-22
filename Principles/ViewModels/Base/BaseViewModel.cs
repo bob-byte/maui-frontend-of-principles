@@ -227,12 +227,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         }
         
     }
-
-    public async Task<AllRemindersResponse> LoadAllRemindersAsync()
-    {
-        string url = $"{UrlBuilder.AllReminders}";
-        return await RequestProvider.GetAsync<AllRemindersResponse>( url, SettingsService.AuthAccessToken );
-    }
+    
 
     private void AddValidators()
     {
