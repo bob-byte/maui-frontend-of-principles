@@ -99,6 +99,12 @@
     </PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="Platforms\Android\Resources\values-ru\colors.xml" />
+	  <None Remove="Platforms\Android\Resources\values-ru\Strings.xml" />
+	  <None Remove="Platforms\Android\Resources\values-ru\styles.xml" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="9.0.0" />
 		<PackageReference Include="CommunityToolkit.MVVM" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
