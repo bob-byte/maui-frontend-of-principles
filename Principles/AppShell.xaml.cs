@@ -31,8 +31,6 @@ public partial class AppShell : Shell
         RegisterRoute( typeof( LoginView ) );
         RegisterRoute( typeof( EditHabitView ) );
         RegisterRoute( typeof( SettingsView ) );
-        RegisterRoute( typeof( UserAgreementView ) );
-        RegisterRoute( typeof( PrivacyPolicyView ) );
         RegisterRoute( typeof( ForgetPasswordView ) );
     }
 

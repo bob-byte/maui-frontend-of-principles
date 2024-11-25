@@ -95,8 +95,6 @@ public static class MauiProgram
         services.AddSingleton<ProgressOfHabitsViewModel>();
         services.AddSingleton<EditHabitViewModel>();
         services.AddSingleton<ProfileViewModel>();
-        services.AddSingleton<UserAgreementViewModel>();
-        services.AddSingleton<PrivacyPolicyViewModel>();
         services.AddSingleton<ForgetPasswordViewModel>();
         services.AddSingleton<StartupViewModel>();
 
@@ -112,8 +110,6 @@ public static class MauiProgram
         services.AddTransient<EditHabitView>();
         services.AddTransient<HelperView>();
         services.AddTransient<ProfileView>();
-        services.AddTransient<UserAgreementView>();
-        services.AddTransient<PrivacyPolicyView>();
         services.AddTransient<ForgetPasswordView>();
         services.AddTransient<StartupView>();
 
