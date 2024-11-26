@@ -193,8 +193,8 @@
     <value>Без исключений</value>
   </data>
 	<data name="IntegrallyWise" xml:space="preserve">
-    <value>Целомудрая</value>
-  </data>
+		<value>Гибкая</value>
+	</data>
 	<data name="Frequency" xml:space="preserve">
     <value>Частота</value>
   </data>
@@ -349,11 +349,11 @@
     <value>Осмотр</value>
   </data>
 	<data name="SelfDevelopmentAssistantShortDescription" xml:space="preserve">
-    <value>Я ассистент по саморазвитию. Вы можете обратиться ко мне по различным вопросам. Например, "Что такое атомная привычка?"</value>
-  </data>
+		<value>Я - ИИ-ассистент по саморазвитию. Вы можете обратиться ко мне по различным вопросам. Например, «Как моя личность влияет на мою жизнь?»</value>
+	</data>
 	<data name="ChatWithHelper" xml:space="preserve">
-    <value>Чат с помощником</value>
-  </data>
+		<value>Чат с ИИ-помощником</value>
+	</data>
 	<data name="Mission" xml:space="preserve">
     <value>Миссия</value>
   </data>
@@ -400,8 +400,8 @@
     <value>Загрузка содержания...</value>
   </data>
 	<data name="HabitCollectionIsEmptyDescription" xml:space="preserve">
-    <value>У вас еще нет атомных привычек</value>
-  </data>
+		<value>У вас еще нет привычек</value>
+	</data>
 	<data name="Appearance" xml:space="preserve">
     <value>Тема приложения</value>
   </data>
@@ -708,4 +708,7 @@
 	<data name="RestoreReminders" xml:space="preserve">
     <value>Восстановление напоминаний</value>
   </data>
+	<data name="HabitGoal" xml:space="preserve">
+		<value>Цель привычки</value>
+	</data>
 </root>

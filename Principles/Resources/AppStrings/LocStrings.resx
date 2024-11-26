@@ -789,4 +789,7 @@
   <data name="RestoreReminders" xml:space="preserve">
     <value>Restore reminders</value>
   </data>
+  <data name="HabitGoal" xml:space="preserve">
+    <value>Habit goal</value>
+  </data>
 </root>
