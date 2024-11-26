@@ -140,6 +140,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
         return result;
     }
 
+#if ANDROID31_0_OR_GREATER || IOS16_0_OR_GREATER
     void SwipeItem_Tap( System.Object sender, DevExpress.Maui.DataGrid.SwipeItemTapEventArgs e )
     {
         ICommand command = ViewModel.DeleteHabitCommand;
@@ -148,6 +149,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
             command.Execute( e.Item );
         }
     }
+#endif
 
     private void AddColumns()
     {
@@ -259,6 +261,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
         DGV_Habits.Columns.Add( habitNameCol );
     }
 
+#if ANDROID31_0_OR_GREATER || IOS16_0_OR_GREATER
     private void SwipeItem_Invoked(object sender, EventArgs e )
     {
         ICommand command = ViewModel.DeleteHabitCommand;
@@ -270,6 +273,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
             command.Execute( cellData.Item );
         }
     }
+#endif
 
     private void DGV_Habits_SortByGoalName( object sender, CustomSortEventArgs e )
     {
