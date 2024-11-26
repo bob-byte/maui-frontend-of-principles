@@ -19,10 +19,6 @@ using Microsoft.Maui.Platform;
 using AndroidX.AppCompat.Widget;
 #endif
 
-[assembly: ObfuscateControlFlow]
-[assembly: HideStrings]
-[assembly: VirtualizeCode]
-
 namespace SET.MAUI;
 
 public static class MauiProgram
