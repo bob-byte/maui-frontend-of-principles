@@ -295,7 +295,7 @@
     <value>Атомные привычки</value>
   </data>
 	<data name="Principles" xml:space="preserve">
-    <value>Принципы</value>
+    <value>Principles</value>
   </data>
 	<data name="DeleteAccount" xml:space="preserve">
     <value>Удалить аккаунт</value>
@@ -310,7 +310,7 @@
     <value>Вначале исправьте ошибки</value>
   </data>
 	<data name="Helper" xml:space="preserve">
-    <value>Помощник</value>
+    <value>ИИ-Помощник</value>
   </data>
 	<data name="HelperName" xml:space="preserve">
     <value>Помощник SET</value>
