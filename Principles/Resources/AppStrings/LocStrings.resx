@@ -729,9 +729,6 @@
   <data name="Add" xml:space="preserve">
     <value>Add</value>
   </data>
-  <data name="Reminder" xml:space="preserve">
-    <value>Reminder</value>
-  </data>
   <data name="ReminderTitle" xml:space="preserve">
     <value>Title</value>
   </data>

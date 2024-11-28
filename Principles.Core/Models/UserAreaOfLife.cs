@@ -6,25 +6,13 @@ using System.Threading.Tasks;
 
 namespace Principles.Core.Models;
 
-public partial class UserAreaOfLife : ObservableObject
+public partial class UserAreaOfLife
 {
-    [ObservableProperty]
-    private long m_id;
-    [ObservableProperty]
-    private string? m_name;
+    public long Id { get; set; }
+    public string? Name { get; set; }
 
     public override string ToString()
     {
         return Name;
-    }
-
-    public override bool Equals( object? obj )
-    {
-        return obj is UserAreaOfLife area && area.m_id == m_id;
-    }
-
-    public override int GetHashCode()
-    {
-        return m_id.GetHashCode();
     }
 }

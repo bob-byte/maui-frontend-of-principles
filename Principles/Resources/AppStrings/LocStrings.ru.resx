@@ -648,9 +648,6 @@
 	<data name="HelperWarning" xml:space="preserve">
     <value>ИИ-помощник может иногда ошибаться. Проверяйте важную информацию!</value>
   </data>
-	<data name="Reminder" xml:space="preserve">
-    <value>Напоминание</value>
-  </data>
 	<data name="ReminderTitle" xml:space="preserve">
     <value>Заголовок</value>
   </data>
@@ -710,5 +707,8 @@
   </data>
 	<data name="HabitGoal" xml:space="preserve">
 		<value>Цель привычки</value>
+	</data>
+	<data name="Add" xml:space="preserve">
+		<value>Добавить</value>
 	</data>
 </root>

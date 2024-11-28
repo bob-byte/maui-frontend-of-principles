@@ -125,6 +125,8 @@ public partial class ProfileViewModel : BaseViewModel
             visualOptions: SnackbarHelper.DefaultOptions()
         );
     }
+    
+    
 
     [RelayCommand]
     private Task ShowSnackbarForMission( VisualElement visualElement )

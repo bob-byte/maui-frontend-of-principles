@@ -20,15 +20,15 @@ namespace Principles.Platforms.iOS
             };
             
             //TODO: fix it, because it doesn't work
-            UIDevice.CurrentDevice.SetValueForKey(
-                NSNumber.FromNInt((int)(orientationMask)),
-                new NSString("orientation")
-            );
+            // UIDevice.CurrentDevice.SetValueForKey(
+            //     NSNumber.FromNInt((int)(orientationMask)),
+            //     new NSString("orientation")
+            // );
         }
 
         public void UnlockOrientation()
         {
-            UIDevice.CurrentDevice.SetValueForKey( NSNumber.FromNInt((int)(UIInterfaceOrientation.Unknown)), new NSString( "orientation" ) );
+            // UIDevice.CurrentDevice.SetValueForKey( NSNumber.FromNInt((int)(UIInterfaceOrientation.Unknown)), new NSString( "orientation" ) );
         }
     }
 }

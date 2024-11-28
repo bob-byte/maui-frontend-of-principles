@@ -172,7 +172,7 @@ public class ServiceOfHabit : BaseRemoteService, IServiceOfHabit
         List<UserHabit> activeHabits = allHabits.
             Where( h => h.PercentageAchieved < 0.4 && h.Status == StatusOfHabit.InProgress ).
             ToList();
-        if (activeHabits.Count > 2)
+        if (activeHabits.Count >= 2)
         {
             result = false;
         }

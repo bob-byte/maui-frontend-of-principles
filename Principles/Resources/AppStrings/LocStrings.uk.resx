@@ -729,9 +729,6 @@
   <data name="HelperWarning" xml:space="preserve">
     <value>ШІ-помічник може інколи помилятись. Перевіряйте важливу інформацію!</value>
   </data>
-  <data name="Reminder" xml:space="preserve">
-    <value>Нагадування</value>
-  </data>
   <data name="ReminderTitle" xml:space="preserve">
     <value>Загаловок</value>
   </data>
