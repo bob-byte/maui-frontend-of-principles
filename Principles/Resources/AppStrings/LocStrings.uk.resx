@@ -771,6 +771,9 @@
   <data name="ContinueWithGoogle" xml:space="preserve">
     <value>Продовжити через Google</value>
   </data>
+  <data name="ContinueWithApple" xml:space="preserve">
+    <value>Продовжити через Apple</value>
+  </data>
   <data name="SignUpWithEmail" xml:space="preserve">
     <value>Зареєструватись</value>
   </data>

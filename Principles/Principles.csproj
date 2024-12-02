@@ -86,6 +86,10 @@
     </PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\apple.svg" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="9.0.0" />
 		<PackageReference Include="CommunityToolkit.MVVM" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />

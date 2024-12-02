@@ -6,6 +6,10 @@ public partial class StartupViewModel : BaseViewModel
     private readonly IGoogleAuthService m_googleAuthService;
     private readonly ISettingsService m_settingsService;
 
+    private readonly string _authUrl = "https://appleid.apple.com/auth/authorize";
+    private readonly string _clientId = "com.set.principles.auth";
+    private readonly string _redirectUri = "https://principles.top/api/auth/apple";
+
     [ObservableProperty]
     private ObservableCollectionEx<AppFeature> m_appFeatures;
 
@@ -45,16 +49,28 @@ public partial class StartupViewModel : BaseViewModel
             }
             else
             {
-                Uri authUrl = new( uriString: "https://appleid.apple.com/auth/authorize" );
-                Uri callbackUrl = new Uri( "https://principles.top/api/auth/Apple" );
+                string encodedResponseType = Uri.EscapeDataString( "code id_token" );
+                string encodedScope = Uri.EscapeDataString( "openid name email" );
+                string responseMode = Uri.EscapeDataString( "form_post" );
+
+                Uri authUrl = new Uri(
+                    $"{_authUrl}?client_id={_clientId}" +
+                    $"&redirect_uri={_redirectUri}" +
+                    $"&response_type={encodedResponseType}" +
+                    $"&scope={encodedScope}" +
+                    $"&response_mode={responseMode}"
+                );
+
+                Uri callbackUrl = new Uri( _redirectUri );
 
                 result = await WebAuthenticator.AuthenticateAsync( authUrl, callbackUrl );
             }
+
             if (result != null)
             {
-                var appToken = result?.Properties.GetValueOrDefault("app_token");
-                await m_settingsService.SetAuthAccessTokenAsync(appToken);
-                
+                var appToken = result?.Properties.GetValueOrDefault( "app_token" );
+                await m_settingsService.SetAuthAccessTokenAsync( appToken );
+
                 await Navigation.GoToInitialViewAsync();
             }
             else
