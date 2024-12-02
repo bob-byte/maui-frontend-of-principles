@@ -119,15 +119,19 @@
 		<PackageReference Include="CommunityToolkit.Maui.Markup" Version="4.0.0" />
 		<PackageReference Include="Polly.Extensions" Version="8.4.0" />
 		<PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="2.0.0" />
-		<PackageReference Include="DevExpress.Maui.Core" Version="23.2.6" />
-		<PackageReference Include="DevExpress.Maui.CollectionView" Version="23.2.6" />
-		<PackageReference Include="DevExpress.Maui.Controls" Version="23.2.6" />
-		<PackageReference Include="DevExpress.Maui.DataGrid" Version="23.2.6" />
-		<PackageReference Include="DevExpress.Maui.Editors" Version="23.2.6" />
+		<PackageReference Include="DevExpress.Maui.Core" Version="24.1.7" />
+		<PackageReference Include="DevExpress.Maui.CollectionView" Version="24.1.7" />
+		<PackageReference Include="DevExpress.Maui.Controls" Version="24.1.7" />
+		<PackageReference Include="DevExpress.Maui.DataGrid" Version="24.1.7" />
+		<PackageReference Include="DevExpress.Maui.Editors" Version="24.1.7" />
 		<PackageReference Include="Azure.AI.OpenAI" Version="1.0.0-beta.9" />
 		<PackageReference Include="System.Private.Uri" Version="4.3.2" />
 		<PackageReference Include="System.Text.Json" Version="8.0.5" />
 	</ItemGroup>
+	
+<!--	<ItemGroup Condition="$(TargetFramework.Contains('-android'))">-->
+<!--		<PackageReference Include="Xamarin.AndroidX.Collection.Jvm" Version="1.4.0.4" />-->
+<!--	</ItemGroup>-->
 
 	<ItemGroup>
 		<Compile Update="App.xaml.cs">

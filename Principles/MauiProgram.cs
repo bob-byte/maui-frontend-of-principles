@@ -30,9 +30,14 @@ public static class MauiProgram
 
         builder
             .UseMauiApp<App>()
+            .UseDevExpressControls()
+            .UseDevExpressEditors()
+            .UseDevExpressCollectionView()
+            .UseDevExpressDataGrid()
+            .UseDevExpress( useLocalization: false ) //register handlers for all DevExpress controls
+            .UseLocalNotification()
             .UseMauiCommunityToolkit()
             .UseMauiCommunityToolkitMarkup()
-            .UseDevExpress( useLocalization: false ) //register handlers for all DevExpress controls
             .UseSkiaSharp()
             .ConfigureFonts( fonts =>
             {
