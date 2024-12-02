@@ -789,4 +789,7 @@
   <data name="HabitGoal" xml:space="preserve">
     <value>Habit goal</value>
   </data>
+  <data name="ChooseHabitGoal" xml:space="preserve">
+    <value>Choose a Habit Goal</value>
+  </data>
 </root>

@@ -403,7 +403,12 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
                 Schedule =
                 {
                     NotifyTime = DateTime.Today.Add(reminder.Time.ToTimeSpan()),
+#if ANDROID
+                    NotifyRepeatInterval = TimeSpan.FromHours( 24 ),
+                    RepeatType = NotificationRepeat.TimeInterval
+#else
                     RepeatType = NotificationRepeat.Daily
+#endif
                 }
             };
         

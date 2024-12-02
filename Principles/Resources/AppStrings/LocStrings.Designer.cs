@@ -1388,5 +1388,11 @@ namespace Principles.Resources.AppStrings {
                 return ResourceManager.GetString("HabitGoal", resourceCulture);
             }
         }
+        
+        internal static string ChooseHabitGoal {
+            get {
+                return ResourceManager.GetString("ChooseHabitGoal", resourceCulture);
+            }
+        }
     }
 }

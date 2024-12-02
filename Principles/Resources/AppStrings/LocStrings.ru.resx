@@ -711,4 +711,7 @@
 	<data name="Add" xml:space="preserve">
 		<value>Добавить</value>
 	</data>
+	<data name="ChooseHabitGoal" xml:space="preserve">
+		<value>Выберите Цель Привычки</value>
+	</data>
 </root>

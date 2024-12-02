@@ -55,7 +55,12 @@ public class ReminderService : BaseRemoteService, IReminderService
                         Schedule = new NotificationRequestSchedule
                         {
                             NotifyTime = DateTime.Today.Add( reminder.Time.ToTimeSpan() ),
+#if ANDROID
+                            NotifyRepeatInterval = TimeSpan.FromHours( 24 ),
+                            RepeatType = NotificationRepeat.TimeInterval
+#else
                             RepeatType = NotificationRepeat.Daily
+#endif                        
                         }
                     };
 
@@ -94,7 +99,13 @@ public class ReminderService : BaseRemoteService, IReminderService
                             Description = userHabitReminder.Description,
                             Schedule = new NotificationRequestSchedule
                             {
-                                NotifyTime = notifyDateTime, RepeatType = NotificationRepeat.Weekly
+                                NotifyTime = notifyDateTime, 
+#if ANDROID
+                                NotifyRepeatInterval = TimeSpan.FromDays( 7 ),
+                                RepeatType = NotificationRepeat.TimeInterval
+#else
+                                RepeatType = NotificationRepeat.Weekly
+#endif
                             }
                         };
 

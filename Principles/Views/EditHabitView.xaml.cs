@@ -282,9 +282,9 @@ public partial class EditHabitView : ContentPageBase
         {
             TE_AreasOfLife.IsDropDownOpen = !TE_AreasOfLife.IsDropDownOpen;
         }
-        catch
+        catch(Exception ex)
         {
-            //do nothing
+            ViewModel.LoggingService.LogError( ex, ex.Message );
         }
     }
 

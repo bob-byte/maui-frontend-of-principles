@@ -117,7 +117,7 @@
                                            EndIconClicked="ME_HabitGoal_IconClicked"
                                            IsErrorIconVisible="False"
                                            IsReadOnly="True"
-                                           LabelText="{x:Static loc:LocStrings.Goal}"
+                                           LabelText="{x:Static loc:LocStrings.HabitGoal}"
                                            StartIcon="goal"
                                            StartIconClicked="ME_HabitGoal_IconClicked"
                                            Tap="ME_HabitGoal_Tap" />
@@ -205,7 +205,7 @@
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <Label x:Name="L_GoalSelectionCenterHeader"
-                                       Text="{x:Static loc:LocStrings.ChooseGoal}"
+                                       Text="{x:Static loc:LocStrings.ChooseHabitGoal}"
                                        HeightRequest="40"
                                        Style="{StaticResource CentralHeader}"
                                        VerticalOptions="Start"

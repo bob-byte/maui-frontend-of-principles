@@ -854,7 +854,12 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
                 Schedule = new NotificationRequestSchedule
                 {
                     NotifyTime = notifyDateTime,
+#if ANDROID
+                    NotifyRepeatInterval = TimeSpan.FromDays( 7 ),
+                    RepeatType = NotificationRepeat.TimeInterval
+#else
                     RepeatType = NotificationRepeat.Weekly
+#endif
                 }
             };
 
