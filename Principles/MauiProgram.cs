@@ -9,6 +9,7 @@ using DevExpress.Maui.Editors;
 using Microsoft.Maui;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using DevExpress.Maui.Editors.Internal;
+
 using System.Reflection;
 
 #if IOS
@@ -39,6 +40,10 @@ public static class MauiProgram
             .UseMauiCommunityToolkit()
             .UseMauiCommunityToolkitMarkup()
             .UseSkiaSharp()
+            .ConfigureEssentials(essentials =>
+            {
+                essentials.UseVersionTracking();
+            })
             .ConfigureFonts( fonts =>
             {
                 fonts.AddFont( "FontAwesome6FreeBrands.otf", "FontAwesomeBrands" );

@@ -10,7 +10,7 @@ namespace Principles.Views;
 
 public partial class ProgressOfHabitsView : ContentPageBase
 {
-    private readonly SemaphoreSlim m_lockerOfAddingNewDayColumn = new ( initialCount: 1, maxCount: 1 );
+    private static readonly SemaphoreSlim s_lockerOfAddingNewDayColumn = new ( initialCount: 1, maxCount: 1 );
     
     private Timer? m_newDayEventTimer;
 
@@ -75,7 +75,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
     
     private async void TryAddNewDayColumn( object? state )
     {
-        await m_lockerOfAddingNewDayColumn.WaitAsync();
+        await s_lockerOfAddingNewDayColumn.WaitAsync();
 
         try
         {
@@ -87,9 +87,12 @@ public partial class ProgressOfHabitsView : ContentPageBase
             int dayOfMonth = today.Day;
             string colCaption = $"{dayOfWeek}{Environment.NewLine}{dayOfMonth}";
 
-            bool isAlreadyAddedCol = DGV_Habits.Columns[2].Caption.Equals( colCaption, StringComparison.OrdinalIgnoreCase )  ||
-                                     DGV_Habits.Columns[3].Caption.Equals( colCaption, StringComparison.OrdinalIgnoreCase );
-            if (!isAlreadyAddedCol)
+            bool isAlreadyAddedCol = DGV_Habits.Columns[1].Caption.Equals( colCaption, StringComparison.CurrentCultureIgnoreCase )  ||
+                                     DGV_Habits.Columns[2].Caption.Equals( colCaption, StringComparison.CurrentCultureIgnoreCase ) ||
+                                     DGV_Habits.Columns[3].Caption.Equals( colCaption, StringComparison.CurrentCultureIgnoreCase ) ||
+                                     (ViewModel.UserHabits?.Count > 0 && ViewModel.UserHabits[0].Progresses!.Any(p => p.Date == today) );
+            
+            if (!isAlreadyAddedCol && ViewModel.UserHabits is not null)
             {
                 ViewModel.IsProgressesInitialized = false;
 
@@ -105,7 +108,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
                         ViewModel.ServiceOfHabit.Recompute( habit );
                     }
-
+                    
                     TemplateColumn templateColumn = new()
                     {
                         Caption = colCaption,
@@ -127,7 +130,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
         }
         finally
         {
-            m_lockerOfAddingNewDayColumn.Release();
+            s_lockerOfAddingNewDayColumn.Release();
         }
     }
 

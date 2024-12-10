@@ -25,6 +25,11 @@ public class ReminderService : BaseRemoteService, IReminderService
 
     public async Task TryToRecoverAllUserRemindersAsync()
     {
+        if (!LocalNotificationCenter.Current.IsSupported)
+        {
+            return;
+        }
+        
         AllRemindersResponse remindersResponse = await LoadAllRemindersAsync();
 
         if (remindersResponse.GeneralReminders?.Any(r => r.IsEnabled ) == true ||

@@ -7,12 +7,18 @@ namespace Principles;
 public partial class App : Application
 {
     private readonly UpdatePopupViewModel m_updatePopupViewModel;
-    private UpdatePopup? m_updatePopup;
+    private readonly ISettingsService m_settingsService;
+    private readonly ILoggingService m_loggingService;
 
+    private UpdatePopup? m_updatePopup;
+    
     public App( IServiceProvider serviceProvider )
     {
         IServiceLocator serviceLocator = serviceProvider.GetRequiredService<IServiceLocator>();
         ServiceLocator.GetCurrentLocator = () => serviceLocator;
+        
+        m_settingsService = serviceProvider.GetRequiredService<ISettingsService>();
+        m_loggingService = serviceProvider.GetRequiredService<ILoggingService>();
 
         AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
@@ -30,6 +36,23 @@ public partial class App : Application
     protected async override void OnStart()
     {
         base.OnStart();
+
+        if (VersionTracking.IsFirstLaunchEver)
+        {
+            try
+            {
+                string token = await m_settingsService.GetAuthAccessTokenAsync();
+                if (!string.IsNullOrWhiteSpace( token ))
+                {
+                    IReminderService reminderService = ServiceLocator.Current!.GetRequiredService<IReminderService>();
+                    await reminderService.TryToRecoverAllUserRemindersAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                m_loggingService.LogError( ex, ex.Message );
+            }
+        }
 
         bool shouldShowPopup = await m_updatePopupViewModel.ShouldShowPopup();
 
@@ -51,7 +74,7 @@ public partial class App : Application
         if (shouldShowPopup)
         {
             m_updatePopup = new UpdatePopup( m_updatePopupViewModel );
-            Current?.MainPage?.ShowPopup( m_updatePopup );
+            Shell.Current.ShowPopup( m_updatePopup );
         }
     }
 

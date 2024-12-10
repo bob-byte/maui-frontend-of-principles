@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net8.0-android;net8.0-ios</TargetFrameworks>
+		<TargetFrameworks>net9.0-android;net9.0-ios</TargetFrameworks>
         
 		<OutputType>Exe</OutputType>
 		<UseMaui>true</UseMaui>
@@ -15,11 +15,11 @@
 		<ApplicationId>com.set.principles</ApplicationId>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>2.0.3</ApplicationDisplayVersion>
-		<ApplicationVersion>30</ApplicationVersion>
+		<ApplicationDisplayVersion>2.0.4</ApplicationDisplayVersion>
+		<ApplicationVersion>31</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net8.0-android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net9.0-android'">21.0</SupportedOSPlatformVersion>
 		<ApplicationTitle>Principles</ApplicationTitle>
 	</PropertyGroup>
 
@@ -27,11 +27,11 @@
 		<NullabilityInfoContextSupport>true</NullabilityInfoContextSupport>
 	</PropertyGroup>
 	
-	<PropertyGroup>
-		<MtouchNoSymbolStrip Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">True</MtouchNoSymbolStrip>
-	</PropertyGroup>
+<!--	<PropertyGroup>-->
+<!--		<MtouchNoSymbolStrip Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">True</MtouchNoSymbolStrip>-->
+<!--	</PropertyGroup>-->
 
-<!--	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">-->
+<!--	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios|AnyCPU'">-->
 <!--	  <NoWarn>1701;1702;8632</NoWarn>-->
 <!--	  <CreatePackage>false</CreatePackage>-->
 <!--	  <CodesignProvision>Automatic</CodesignProvision>-->
@@ -40,7 +40,7 @@
 <!--	  <BuildIpa>true</BuildIpa>-->
 <!--	</PropertyGroup>-->
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-ios|AnyCPU'">
 	  <NoWarn>1701;1702;8632</NoWarn>
 	  <ArchiveOnBuild>true</ArchiveOnBuild>
 	  <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
@@ -52,7 +52,7 @@
 	</PropertyGroup>
 
     <!--Comment it out when behavior of the published Android app doesn't work as expected-->
-	<!--<PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-android'">
+	<!--<PropertyGroup Condition="'$(TargetFramework)' == 'net9.0-android'">
         <RunAOTCompilation>false</RunAOTCompilation>
 		<PublishTrimmed>false</PublishTrimmed>
     </PropertyGroup>-->
@@ -109,13 +109,13 @@
 		<PackageReference Include="CommunityToolkit.MVVM" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
 		<PackageReference Include="Plugin.LocalNotification" Version="11.1.4" />
-		<PackageReference Include="runtime.unix.System.Private.Uri" Version="4.3.2" />
+<!--		<PackageReference Include="runtime.unix.System.Private.Uri" Version="4.3.2" />-->
 		<PackageReference Include="Serilog" Version="3.1.1" />
 		<PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
 		<PackageReference Include="Serilog.Sinks.Xamarin" Version="1.0.0" />
 		<PackageReference Include="System.Net.Http" Version="4.3.4" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.100" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.100" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.12" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.12" />
 		<PackageReference Include="CommunityToolkit.Maui.Markup" Version="4.0.0" />
 		<PackageReference Include="Polly.Extensions" Version="8.4.0" />
 		<PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="2.0.0" />

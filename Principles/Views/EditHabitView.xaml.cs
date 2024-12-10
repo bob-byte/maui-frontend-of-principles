@@ -263,20 +263,13 @@ public partial class EditHabitView : ContentPageBase
 
     void TE_AreasOfLife_SelectionChanged( object sender, EventArgs e )
     {
+        TE_AreasOfLife.Text = string.Empty;
         TE_AreasOfLife.IsLabelFloating = TE_AreasOfLife.SelectedItems?.Count == 0;
 
         m_doExecuteReloadOfRecommendedHabits = true;
     }
 
-    void TE_AreasOfLife_TextChanged( object sender, AutoCompleteEditTextChangedEventArgs e )
-    {
-        if (e.Reason == AutoCompleteEditTextChangeReason.UserInput && !string.IsNullOrEmpty( TE_AreasOfLife.Text ))
-        {
-            TE_AreasOfLife.Text = string.Empty;
-        }
-    }
-
-    void TE_AreasOfLife_Tap( object sender, HandledEventArgs e )
+    private void TE_AreasOfLife_Tap( object sender, HandledEventArgs e )
     {
         try
         {
@@ -424,7 +417,11 @@ public partial class EditHabitView : ContentPageBase
         if (titleWidth != -1 && buttonWidth != -1)
         {
             double titleLabelWidth = titleWidth - buttonWidth - 10;
+#if ANDROID
             L_TitleText.WidthRequest = titleLabelWidth;
+#else
+            L_TitleText.MaximumWidthRequest = titleLabelWidth;
+#endif
         }
     }
 
@@ -631,6 +628,7 @@ public partial class EditHabitView : ContentPageBase
         OpenReminderPopup();
     }
 
+    //it will be used when we support several reminders per one habit
     //private void ShowOrHideHabitReminders()
     //{
     //    if (ReminderBottomSheet.State == BottomSheetState.Hidden)
@@ -688,7 +686,8 @@ public partial class EditHabitView : ContentPageBase
             }
 
             S_IsReminderEnabled.IsToggled = true;
-            TE_ReminderTime.Time = DateTime.Today.AddHours( 8 ).AddMinutes( 00 );
+            TE_ReminderTime.TimeSpan = TimeSpan.FromHours( 8 );
+            
         }
         else
         {
@@ -696,7 +695,7 @@ public partial class EditHabitView : ContentPageBase
             ME_ReminderTitle.Text = reminder.Title;
             ME_ReminderDescription.Text = reminder.Description;
             S_IsReminderEnabled.IsToggled = reminder.IsEnabled;
-            TE_ReminderTime.Time = DateTime.Today.Add(reminder.Time.ToTimeSpan());
+            TE_ReminderTime.TimeSpan = reminder.Time.ToTimeSpan();
         }
 
         DXP_Reminders.IsOpen = true;
@@ -760,5 +759,15 @@ public partial class EditHabitView : ContentPageBase
     private void SB_Reminder_Cancel_Clicked( object sender, EventArgs e )
     {
         DXP_Reminders.IsOpen = false;
+    }
+
+    private void AISP_AreasRequested( object? sender, ItemsRequestEventArgs e )
+    {
+        e.Request = () =>
+        {
+            return string.IsNullOrWhiteSpace( e.Text ) ? 
+                ViewModel.AllUserAreasOfLife : 
+                ViewModel.AllUserAreasOfLife.Where( a => a.Name!.StartsWith( e.Text, StringComparison.CurrentCultureIgnoreCase ) ).ToList();
+        };
     }
 }

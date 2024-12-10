@@ -1,74 +1,77 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<v:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<v:ContentPageBase x:Class="Principles.Views.StartupView"
+                   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                   x:Class="Principles.Views.StartupView"
-                   xmlns:loc="clr-namespace:Principles.Resources.AppStrings"
+                   xmlns:controls="clr-namespace:Principles.Controls"
                    xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
                    xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
-                   xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
                    xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
+                   xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+                   xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+                   xmlns:loc="clr-namespace:Principles.Resources.AppStrings"
+                   xmlns:m="clr-namespace:Principles.Core.Models;assembly=Principles.Core"
                    xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+                   xmlns:templates="clr-namespace:Principles.Views.Templates"
                    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                    xmlns:v="clr-namespace:Principles.Views"
                    xmlns:vm="clr-namespace:Principles.ViewModels"
-                   xmlns:m="clr-namespace:Principles.Core.Models;assembly=Principles.Core"
-                   xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
-                   xmlns:templates="clr-namespace:Principles.Views.Templates"
-                   xmlns:controls="clr-namespace:Principles.Controls"
+                   ios:Page.UseSafeArea="True"
                    x:DataType="vm:StartupViewModel"
+                   BackgroundColor="#1C1C1C"
                    Shell.FlyoutBehavior="Disabled"
                    Shell.NavBarIsVisible="False"
-                   Shell.TabBarIsVisible="False"
-                   BackgroundColor="#1C1C1C"
-                   ios:Page.UseSafeArea="True">
-    <Grid RowDefinitions="*, Auto"
-          BackgroundColor="{StaticResource LightPrimary}">
-        <VerticalStackLayout VerticalOptions="End"
-                             Spacing="0"
+                   Shell.TabBarIsVisible="False">
+    <Grid BackgroundColor="{StaticResource LightPrimary}"
+          RowDefinitions="*, Auto">
+        <VerticalStackLayout Spacing="0"
+                             VerticalOptions="End"
                              Grid.Row="0">
-            <skia:SKLottieView IsAnimationEnabled="True"
-                               RepeatCount="-1"
+            <skia:SKLottieView Source="fire_loading.json"
                                WidthRequest="200"
                                HeightRequest="200"
-                               Source="fire_loading.json" />
-            <CarouselView ItemsSource="{Binding AppFeatures}"
+                               IsAnimationEnabled="True"
+                               RepeatCount="-1" />
+            <CarouselView x:Name="CV_Features"
+                          ItemsSource="{Binding AppFeatures}"
                           HeightRequest="160"
+                          HorizontalScrollBarVisibility="Never"
                           IndicatorView="IV_AppFeatures"
-                          Loop="False"
-                          HorizontalScrollBarVisibility="Never">
+                          Loop="False">
                 <CarouselView.ItemTemplate>
                     <DataTemplate x:DataType="m:AppFeature">
                         <dx:DXStackLayout Padding="10,0,10,0">
                             <Label Text="{Binding Title,
                                                   Converter={StaticResource ToUpperCase}}"
-                                   FontSize="25"
+                                   HeightRequest="65"
+                                   Margin="20,0,20,0"
                                    FontAttributes="Bold"
-                                   TextColor="White"
+                                   FontSize="25"
                                    HorizontalOptions="Center"
                                    HorizontalTextAlignment="Center"
-                                   Margin="20,0,20,20"
                                    LineBreakMode="TailTruncation"
-                                   MaxLines="2" />
+                                   MaxLines="3"
+                                   SizeChanged="VisualElement_OnSizeChanged"
+                                   TextColor="White" />
                             <Label Text="{Binding Description}"
-                                   FontSize="16"
+                                   WidthRequest="275"
+                                   HeightRequest="80"
+                                   Margin="20,0,20,0"
                                    FontAttributes="Bold"
-                                   TextColor="#464646"
+                                   FontSize="16"
                                    HorizontalOptions="Center"
                                    HorizontalTextAlignment="Center"
                                    LineBreakMode="TailTruncation"
                                    MaxLines="6"
-                                   Margin="20,0,20,0"
-                                   WidthRequest="275"
-                                   HeightRequest="80" />
+                                   TextColor="#464646" />
                         </dx:DXStackLayout>
                     </DataTemplate>
                 </CarouselView.ItemTemplate>
             </CarouselView>
             <IndicatorView x:Name="IV_AppFeatures"
-                           IndicatorColor="{StaticResource DarkGray}"
-                           SelectedIndicatorColor="White"
+                           Margin="0,0,0,20"
                            HorizontalOptions="Center"
-                           Margin="0,0,0,20" />
+                           IndicatorColor="{StaticResource DarkGray}"
+                           SelectedIndicatorColor="White" />
         </VerticalStackLayout>
 
         <Border BackgroundColor="{StaticResource DarkGray}"
@@ -76,33 +79,33 @@
                 StrokeThickness="0"
                 VerticalOptions="EndAndExpand"
                 Grid.Row="1">
-            <VerticalStackLayout VerticalOptions="Center"
-                                 Padding="5,10,5,0">
+            <VerticalStackLayout Padding="5,10,5,0"
+                                 VerticalOptions="Center">
                 <dxco:SimpleButton Text="{x:Static loc:LocStrings.ContinueWithGoogle}"
-                           Command="{Binding ContinueWithGoogleCommand}"
-                           Background="{StaticResource Primary}"
-                           DisabledBackgroundColor="{StaticResource Primary}"
-                           Style="{StaticResource PrimaryButton}"
-                           Icon="google"
-                           BorderThickness="2"
-                           Margin="0,10,0,0" />
-                <dxco:SimpleButton Text="{x:Static loc:LocStrings.SignUpWithEmail}"
-                                   Icon="email"
+                                   Command="{Binding ContinueWithGoogleCommand}"
                                    Style="{StaticResource PrimaryButton}"
-                                   Background="{StaticResource Primary}"
-                                   DisabledBackgroundColor="{StaticResource Primary}"
-                                   BorderThickness="2"
+                                   Icon="google"
                                    Margin="0,10,0,0"
-                                   Command="{Binding OpenSignUpViewCommand}" />
-                <dxco:SimpleButton Text="{x:Static loc:LocStrings.Login}"
-                                   Style="{StaticResource SecondaryButton}"
-                                   TextColor="{StaticResource Primary}"
+                                   Background="{StaticResource Primary}"
                                    BorderThickness="2"
-                                   BorderColor="{StaticResource SecondaryLight}"
-                                   PressedBorderColor="{StaticResource SecondaryLight}"
+                                   DisabledBackgroundColor="{StaticResource Primary}" />
+                <dxco:SimpleButton Text="{x:Static loc:LocStrings.SignUpWithEmail}"
+                                   Command="{Binding OpenSignUpViewCommand}"
+                                   Style="{StaticResource PrimaryButton}"
+                                   Icon="email"
+                                   Margin="0,10,0,0"
+                                   Background="{StaticResource Primary}"
+                                   BorderThickness="2"
+                                   DisabledBackgroundColor="{StaticResource Primary}" />
+                <dxco:SimpleButton Text="{x:Static loc:LocStrings.Login}"
+                                   Command="{Binding OpenLoginViewCommand}"
+                                   Style="{StaticResource SecondaryButton}"
                                    Margin="0,10,0,10"
+                                   BorderColor="{StaticResource SecondaryLight}"
+                                   BorderThickness="2"
                                    IconColor="{StaticResource Primary}"
-                                   Command="{Binding OpenLoginViewCommand}" />
+                                   PressedBorderColor="{StaticResource SecondaryLight}"
+                                   TextColor="{StaticResource Primary}" />
             </VerticalStackLayout>
         </Border>
     </Grid>

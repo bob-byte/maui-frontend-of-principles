@@ -5,6 +5,7 @@ namespace Principles.Views;
 public partial class HelperView : ContentPageBase
 {
     private readonly ILockDeviceOrientation m_deviceOrientationService;
+    
     public HelperView(HelperViewModel viewModel)
 	{
 		BindingContext = viewModel;

@@ -347,7 +347,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
                     Title = reminder.Title,
                     Description = reminder.Description,
                     IsEnabled = reminder.IsEnabled,
-                    Time = new DateTime( DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, reminder.Time.Hour, reminder.Time.Minute, 0 )
+                    Time = reminder.Time.ToTimeSpan()
                 };
             }
             else
@@ -359,7 +359,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
                 ReminderReport.IsEnabled = reminder.IsEnabled;
                 ReminderReport.UserNotificationRequestId = reminder.UserNotificationRequestId;
 
-                ReminderReport.Time = new DateTime( DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, reminder.Time.Hour, reminder.Time.Minute, 0 );
+                ReminderReport.Time = reminder.Time.ToTimeSpan();
             }
 
             OnPropertyChanged( nameof( ReminderReport ) );
@@ -382,7 +382,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
             Id = ReminderReport.Id,
             Title = ReminderReport.Title,
             Description = ReminderReport.Description,
-            Time = new TimeOnly( ReminderReport.Time.Hour, ReminderReport.Time.Minute ),
+            Time = new TimeOnly( ReminderReport.Time.Hours, ReminderReport.Time.Minutes ),
             IsEnabled = ReminderReport.IsEnabled
         };
 
