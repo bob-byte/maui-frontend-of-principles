@@ -1,4 +1,6 @@
 
+using Plugin.LocalNotification.AndroidOption;
+
 namespace Principles.Services;
 
 public class ReminderService : BaseRemoteService, IReminderService
@@ -27,6 +29,11 @@ public class ReminderService : BaseRemoteService, IReminderService
     {
         if (!LocalNotificationCenter.Current.IsSupported)
         {
+            await m_dialogService.ShowAlertAsync( 
+                LocStrings.DeviceDoesNotSupportNotifications, 
+                LocStrings.Error,
+                LocStrings.OK 
+            ).DefaultConfigureAwait();
             return;
         }
         
@@ -52,24 +59,13 @@ public class ReminderService : BaseRemoteService, IReminderService
             {
                 foreach (Reminder? reminder in remindersResponse.GeneralReminders.Where( r => r.IsEnabled ))
                 {
-                    NotificationRequest notification = new()
-                    {
-                        NotificationId = reminder.UserNotificationRequestId,
-                        Title = reminder.Title,
-                        Description = reminder.Description,
-                        Schedule = new NotificationRequestSchedule
-                        {
-                            NotifyTime = DateTime.Today.Add( reminder.Time.ToTimeSpan() ),
-#if ANDROID
-                            NotifyRepeatInterval = TimeSpan.FromHours( 24 ),
-                            RepeatType = NotificationRepeat.TimeInterval
-#else
-                            RepeatType = NotificationRepeat.Daily
-#endif                        
-                        }
-                    };
-
-                    await LocalNotificationCenter.Current.Show( notification );
+                    await AddAsync( 
+                        reminder.UserNotificationRequestId, 
+                        reminder.Title, 
+                        reminder.Description, 
+                        DateTime.Today.Add( reminder.Time.ToTimeSpan() ), 
+                        ReminderRepeat.Daily 
+                    );
                 }
             }
 
@@ -96,29 +92,46 @@ public class ReminderService : BaseRemoteService, IReminderService
                         DateTime notifyDateTime = currentDate.Date
                             .AddDays( daysUntilNextReminder )
                             .Add( userHabitReminder.Time.ToTimeSpan() );
-
-                        NotificationRequest notification = new()
-                        {
-                            NotificationId = weekDay.UserNotificationRequestId,
-                            Title = userHabitReminder.Title,
-                            Description = userHabitReminder.Description,
-                            Schedule = new NotificationRequestSchedule
-                            {
-                                NotifyTime = notifyDateTime, 
-#if ANDROID
-                                NotifyRepeatInterval = TimeSpan.FromDays( 7 ),
-                                RepeatType = NotificationRepeat.TimeInterval
-#else
-                                RepeatType = NotificationRepeat.Weekly
-#endif
-                            }
-                        };
-
-                        await LocalNotificationCenter.Current.Show( notification );
+                        
+                        await AddAsync( 
+                            weekDay.UserNotificationRequestId, 
+                            userHabitReminder.Title, 
+                            userHabitReminder.Description, 
+                            notifyDateTime, 
+                            ReminderRepeat.Weekly 
+                        );
                     }
                 }
             }
         }
+    }
+
+    public async Task AddAsync( int id, string title, string description, DateTime notifyTime, ReminderRepeat repeatType )
+    {
+        NotificationRepeat notificationRepeat = repeatType switch
+        {
+            ReminderRepeat.Weekly => NotificationRepeat.Weekly,
+            _ => NotificationRepeat.Daily
+        };
+        
+        NotificationRequest notification = new()
+        {
+            NotificationId = id,
+            Title = title,
+            Description = description,
+            Schedule = new NotificationRequestSchedule
+            {
+                NotifyTime = notifyTime, 
+                RepeatType = notificationRepeat
+            },
+            Android = new AndroidOptions()
+            {
+                IconLargeName = new AndroidIcon("logolargesize"),
+                IconSmallName = new AndroidIcon("logolargesize"),
+            }
+        };
+
+        await LocalNotificationCenter.Current.Show( notification );
     }
 
     private async Task<AllRemindersResponse> LoadAllRemindersAsync()

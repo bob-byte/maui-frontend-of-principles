@@ -686,8 +686,9 @@ public partial class EditHabitView : ContentPageBase
             }
 
             S_IsReminderEnabled.IsToggled = true;
-            TE_ReminderTime.TimeSpan = TimeSpan.FromHours( 8 );
             
+            TimeSpan? time = TimeSpan.FromHours( 8 );
+            TE_ReminderTime.TimeSpan = time;
         }
         else
         {
@@ -695,7 +696,9 @@ public partial class EditHabitView : ContentPageBase
             ME_ReminderTitle.Text = reminder.Title;
             ME_ReminderDescription.Text = reminder.Description;
             S_IsReminderEnabled.IsToggled = reminder.IsEnabled;
-            TE_ReminderTime.TimeSpan = reminder.Time.ToTimeSpan();
+
+            TimeSpan? time = reminder.Time.ToTimeSpan();
+            TE_ReminderTime.TimeSpan = time;
         }
 
         DXP_Reminders.IsOpen = true;

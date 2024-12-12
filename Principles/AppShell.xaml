@@ -1,31 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<Shell x:Class="Principles.AppShell"
+       xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-       x:Class="Principles.AppShell"
-       Title="AppShell"
-       Style="{StaticResource ShellStyle}"
+       xmlns:app="clr-namespace:Principles"
        xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
        xmlns:loc="clr-namespace:Principles.Resources.AppStrings"
-       ios:Page.UseSafeArea="true"
        xmlns:local="clr-namespace:Principles.Views"
-       xmlns:app="clr-namespace:Principles">
+       x:Name="Principles"
+       Title="AppShell"
+       Style="{StaticResource ShellStyle}"
+       ios:Page.UseSafeArea="true">
     <TabBar Route="main">
-        <ShellContent ContentTemplate="{DataTemplate local:HelperView}"
-                      Title="{x:Static loc:LocStrings.Helper}"
-                      Route="helper"
-                      Icon="helper" />
+        <ShellContent Title="{x:Static loc:LocStrings.Helper}"
+                      Icon="helper"
+                      ContentTemplate="{DataTemplate local:HelperView}"
+                      Route="helper" />
 
-        <ShellContent ContentTemplate="{DataTemplate local:ProgressOfHabitsView}"
-                      Title="{x:Static loc:LocStrings.Progress}"
-                      Route="progressofhabits"
-                      Icon="boost"/>
+        <ShellContent Title="{x:Static loc:LocStrings.Progress}"
+                      Icon="boost"
+                      ContentTemplate="{DataTemplate local:ProgressOfHabitsView}"
+                      Route="progressofhabits" />
 
-        <ShellContent ContentTemplate="{DataTemplate local:ProfileView}"
-                      Title="{x:Static loc:LocStrings.Profile}"
-                      Route="profile"
-                      Icon="profile" />
+        <ShellContent Title="{x:Static loc:LocStrings.Profile}"
+                      Icon="profile"
+                      ContentTemplate="{DataTemplate local:ProfileView}"
+                      Route="profile" />
     </TabBar>
-    
+
     <FlyoutItem Route="startup">
         <ShellContent ContentTemplate="{DataTemplate local:StartupView}" />
     </FlyoutItem>

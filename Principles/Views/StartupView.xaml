@@ -42,15 +42,16 @@
                         <dx:DXStackLayout Padding="10,0,10,0">
                             <Label Text="{Binding Title,
                                                   Converter={StaticResource ToUpperCase}}"
-                                   HeightRequest="65"
-                                   Margin="20,0,20,0"
+                                   HeightRequest="{OnPlatform iOS=65}"
+                                   Margin="{OnPlatform iOS='20,0,20,0',
+                                                       Android='20,0,20,20'}"
                                    FontAttributes="Bold"
                                    FontSize="25"
                                    HorizontalOptions="Center"
                                    HorizontalTextAlignment="Center"
                                    LineBreakMode="TailTruncation"
                                    MaxLines="3"
-                                   SizeChanged="VisualElement_OnSizeChanged"
+                                   SizeChanged="L_FeatureTile_OnSizeChanged"
                                    TextColor="White" />
                             <Label Text="{Binding Description}"
                                    WidthRequest="275"

@@ -382,7 +382,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
             Id = ReminderReport.Id,
             Title = ReminderReport.Title,
             Description = ReminderReport.Description,
-            Time = new TimeOnly( ReminderReport.Time.Hours, ReminderReport.Time.Minutes ),
+            Time = new TimeOnly( ReminderReport.Time!.Value.Hours, ReminderReport.Time.Value.Minutes ),
             IsEnabled = ReminderReport.IsEnabled
         };
 
@@ -394,25 +394,15 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
         
             ReminderReport.UserNotificationRequestId = response.UserNotificationRequestId;
             reminder.UserNotificationRequestId = response.UserNotificationRequestId;
-        
-            NotificationRequest notification = new()
-            {
-                NotificationId = reminder.UserNotificationRequestId,
-                Title = reminder.Title,
-                Description = reminder.Description,
-                Schedule =
-                {
-                    NotifyTime = DateTime.Today.Add(reminder.Time.ToTimeSpan()),
-#if ANDROID
-                    NotifyRepeatInterval = TimeSpan.FromHours( 24 ),
-                    RepeatType = NotificationRepeat.TimeInterval
-#else
-                    RepeatType = NotificationRepeat.Daily
-#endif
-                }
-            };
-        
-            await LocalNotificationCenter.Current.Show( notification );
+
+            DateTime notifyTime = DateTime.Today.Add( reminder.Time.ToTimeSpan() );
+            await ReminderService.AddAsync(
+                reminder.UserNotificationRequestId,
+                reminder.Title,
+                reminder.Description,
+                notifyTime,
+                ReminderRepeat.Daily
+            );
 
             closePopup();
         } );

@@ -72,6 +72,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
 
         AiRecommenderOfHabits = serviceProvider.GetRequiredService<IAiRecommenderOfHabitsService>();
         GoalService = serviceProvider.GetRequiredService<IGoalService>();
+        ReminderService = serviceProvider.GetRequiredService<IReminderService>();
 
         AllUserAreasOfLife = new ObservableCollectionEx<UserAreaOfLife>();
 
@@ -93,7 +94,8 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
     public List<PeriodOfHabit> PeriodsOfHabit { get; }
 
     public IAiRecommenderOfHabitsService AiRecommenderOfHabits { get; }
-    public IGoalService GoalService { get; set; }
+    public IGoalService GoalService { get; }
+    public IReminderService ReminderService { get; }
 
     public ObservableCollectionEx<UserAreaOfLife> AllUserAreasOfLife { get; set; }
     
@@ -845,25 +847,14 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
             DateTime notifyDateTime = currentDate.Date
                 .AddDays( daysUntilNextReminder )
                 .Add( reminder.Time.ToTimeSpan() );
-
-            NotificationRequest notification = new()
-            {
-                NotificationId = weekDay.UserNotificationRequestId,
-                Title = reminder.Title,
-                Description = reminder.Description,
-                Schedule = new NotificationRequestSchedule
-                {
-                    NotifyTime = notifyDateTime,
-#if ANDROID
-                    NotifyRepeatInterval = TimeSpan.FromDays( 7 ),
-                    RepeatType = NotificationRepeat.TimeInterval
-#else
-                    RepeatType = NotificationRepeat.Weekly
-#endif
-                }
-            };
-
-            await LocalNotificationCenter.Current.Show( notification );
+            
+            await ReminderService.AddAsync( 
+                weekDay.UserNotificationRequestId, 
+                reminder.Title, 
+                reminder.Description, 
+                notifyDateTime, 
+                ReminderRepeat.Weekly 
+            );
         }
         else if (!IsNewHabit && weekDay.UserNotificationRequestId != 0)
         {
