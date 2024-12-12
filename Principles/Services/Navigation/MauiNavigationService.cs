@@ -11,12 +11,10 @@ namespace Principles.Core.Services;
 
 public class MauiNavigationService : INavigationService
 {
-    private readonly IConfiguration m_config;
     private readonly ISettingsService m_settingsService;
 
-    public MauiNavigationService(IConfiguration config, IUrlBuilder urlBuilder, ISettingsService settingsService)
+    public MauiNavigationService(IUrlBuilder urlBuilder, ISettingsService settingsService)
     {
-        m_config = config;
         UrlBuilder = urlBuilder;
         m_settingsService = settingsService;
     }

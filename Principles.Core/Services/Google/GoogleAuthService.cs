@@ -5,14 +5,12 @@ namespace Principles.Core.Services;
 
 public class GoogleAuthService : IGoogleAuthService
 {
-    private readonly IConfiguration m_configuration;
     private readonly IRequestProvider m_requestProvider;
     private readonly ISettingsService m_settingsService;
     private readonly IUrlBuilder m_urlBuilder;
 
     public GoogleAuthService( IServiceProvider serviceProvider )
     {
-        m_configuration = serviceProvider.GetRequiredService<IConfiguration>();
         m_requestProvider = serviceProvider.GetRequiredService<IRequestProvider>();
         m_settingsService = serviceProvider.GetRequiredService<ISettingsService>();
         m_urlBuilder = serviceProvider.GetRequiredService<IUrlBuilder>();
@@ -22,9 +20,9 @@ public class GoogleAuthService : IGoogleAuthService
     {
         string? clientId = null;
 #if ANDROID
-        clientId = m_configuration["Google:ClientIds:Android"];
+        clientId = "40949920786-030cht7nm5a2q2hi4jgm7leldfcc6miu.apps.googleusercontent.com";
 #elif IOS
-        clientId = m_configuration["Google:ClientIds:IOS"];
+        clientId = "40949920786-ufvoeeof4s82011n4got9udapd6pm35e.apps.googleusercontent.com";
 #endif
 
         if (string.IsNullOrEmpty( clientId ))
@@ -71,7 +69,7 @@ public class GoogleAuthService : IGoogleAuthService
             throw new InvalidOperationException( error );
         }
 
-        string tokenUrl = "https://oauth2.googleapis.com/token";
+        const string TOKEN_URL = "https://oauth2.googleapis.com/token";
         var tokenRequestParams = new Dictionary<string, string>
         {
             { "code", code! },
@@ -82,7 +80,7 @@ public class GoogleAuthService : IGoogleAuthService
         };
 
         GetGoogleTokenInfoResponse getGoogleTokenResponse = await m_requestProvider.PostAsync<Dictionary<string, string>, GetGoogleTokenInfoResponse>(
-            tokenUrl,
+            TOKEN_URL,
             tokenRequestParams
         ).DefaultConfigureAwait();
 

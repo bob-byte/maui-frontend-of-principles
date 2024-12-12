@@ -3,18 +3,16 @@ namespace Principles.Core.Services;
 
 public class SignupService : BaseRemoteService, ISignupService
 {
-    private readonly IConfiguration m_configuration;
-
     public SignupService( IServiceProvider serviceProvider )
         : base( serviceProvider )
     {
-        m_configuration = serviceProvider.GetRequiredService<IConfiguration>();
+        
     }
 
     public Task SignupAsync( string name, string email, string password, Gender gender, string mainSlogan, string mission )
     {
-        string firstKey = m_configuration["EncryptionSettings:FirstKey"]!;
-        string secondKey = m_configuration["EncryptionSettings:SecondKey"]!;
+        string firstKey = "yX7g53NL7X)xjV7#6DP+ipK5n)@9)_r!";
+        string secondKey = "M%m5Vy9R(_k74t^M";
 
         string encryptedPassword = PasswordChanger.EncryptNewPassword( password, firstKey, secondKey );
         int genderId = (int)gender;

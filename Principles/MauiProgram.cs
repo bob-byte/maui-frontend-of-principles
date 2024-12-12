@@ -64,22 +64,7 @@ public static class MauiProgram
             .RegisterMauiServices()
             .RegisterViewModels()
             .RegisterViews();
-
-        var assembly = Assembly.GetExecutingAssembly();
-
-        //TODO: replace appsettings.json and implementation of the config to Principles.Core project
-        using Stream? stream = assembly.GetManifestResourceStream( $"{assembly.GetName().Name}.appsettings.json" );
-
-        if(stream is not null)
-        {
-            IConfigurationRoot configuration = new ConfigurationBuilder()
-                .AddJsonStream( stream )
-                .Build();
-
-            builder.Configuration.AddConfiguration( configuration );
-            builder.Services.AddSingleton<IConfiguration>( configuration );
-        }
-
+        
         AllowMultiLineTruncation();
 
         return builder.Build();
