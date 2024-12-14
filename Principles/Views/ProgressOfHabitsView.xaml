@@ -126,12 +126,6 @@
                 <dxg:GroupRowAppearance BackgroundColor="#f7f2f7" />
             </dxg:DataGridView.GroupRowAppearance>
 
-            <dxg:DataGridView.StartSwipeItems>
-                <dxg:SwipeItem Caption="{x:Static loc:LocStrings.Delete}"
-                               Command="{Binding DeleteHabitCommand}"
-                               BackgroundColor="{StaticResource RedColor}" />
-            </dxg:DataGridView.StartSwipeItems>
-
             <dxg:DataGridView.SwipeItemAppearance>
                 <dxg:SwipeItemAppearance Width="125" />
             </dxg:DataGridView.SwipeItemAppearance>
