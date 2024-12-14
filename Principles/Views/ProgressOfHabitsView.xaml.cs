@@ -5,6 +5,7 @@ using Principles.Controls;
 using System.Windows.Input;
 
 using Application = Microsoft.Maui.Controls.Application;
+using SwipeItem = DevExpress.Maui.DataGrid.SwipeItem;
 
 namespace Principles.Views;
 
@@ -26,6 +27,16 @@ public partial class ProgressOfHabitsView : ContentPageBase
         ViewModel = viewModel;
 
         InitializeComponent();
+        
+#if ANDROID31_0_OR_GREATER || IOS16_0_OR_GREATER
+        SwipeItem swipeForDeletion = new SwipeItem()
+        {
+            BackgroundColor = Shell.Current.Resources["RedColor"] as Color, 
+            Caption = LocStrings.Delete
+        };
+        swipeForDeletion.SetBinding( SwipeItem.CommandProperty, new Binding(nameof(ProgressOfHabitsViewModel.DeleteHabitCommand)) );
+        DGV_Habits.StartSwipeItems.Add( swipeForDeletion );
+#endif
 
         ViewModel.DataGridViewWithHabits = DGV_Habits;
         ViewModel.PropertyChanged += ViewModel_PropertyChanged;

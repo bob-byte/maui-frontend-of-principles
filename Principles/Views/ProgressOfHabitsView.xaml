@@ -22,30 +22,29 @@
         <Grid Margin="0,0,5,0"
               ColumnDefinitions="Auto, 0, Auto, *, Auto, 10, Auto"
               VerticalOptions="CenterAndExpand">
-            <dx:DXImage HeightRequest="35"
-                        Source="fire_seventh"
+            <dx:DXImage Source="fire_seventh"
+                        Grid.Column="0"
+                        HeightRequest="35"
                         TintColor="{StaticResource DarkIconColor}"
-                        WidthRequest="35"
-                        Grid.Column="0" />
+                        WidthRequest="35" />
             <Label Text="{x:Static loc:LocStrings.MyHabits}"
                    FontAttributes="Bold"
                    FontSize="20"
+                   Grid.Column="2"
                    HeightRequest="50"
                    HorizontalOptions="Start"
                    TextColor="{StaticResource TitleTextColor}"
                    VerticalOptions="Center"
-                   VerticalTextAlignment="Center"
-                   Grid.Column="2" />
+                   VerticalTextAlignment="Center" />
 
-            <dx:DXImage HeightRequest="45"
+            <dx:DXImage Source="reminder_third"
+                        Grid.Column="5"
+                        HeightRequest="45"
                         HorizontalOptions="End"
-                        IsVisible="{Binding SelectedHabit,
-                                            Converter={StaticResource IsNull}}"
-                        Source="reminder_third"
+                        IsVisible="{Binding SelectedHabit, Converter={StaticResource IsNull}}"
                         TintColor="{StaticResource TitleTextColor}"
                         VerticalOptions="Center"
-                        WidthRequest="45"
-                        Grid.Column="5">
+                        WidthRequest="45">
                 <dx:DXImage.GestureRecognizers>
                     <TapGestureRecognizer NumberOfTapsRequired="1"
                                           Tapped="DXI_Reminder_Tapped" />
@@ -53,47 +52,44 @@
             </dx:DXImage>
 
 
-            <dx:DXImage Margin="15,0,0,0"
+            <dx:DXImage Source="plus"
+                        Margin="15,0,0,0"
+                        Grid.Column="6"
                         HeightRequest="35"
                         HorizontalOptions="End"
-                        IsVisible="{Binding SelectedHabit,
-                                            Converter={StaticResource IsNull}}"
-                        Source="plus"
+                        IsVisible="{Binding SelectedHabit, Converter={StaticResource IsNull}}"
                         TintColor="{StaticResource TitleTextColor}"
                         VerticalOptions="Center"
-                        WidthRequest="35"
-                        Grid.Column="6">
+                        WidthRequest="35">
                 <dx:DXImage.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding AddHabitCommand}"
                                           NumberOfTapsRequired="1" />
                 </dx:DXImage.GestureRecognizers>
             </dx:DXImage>
-            <dx:DXImage Margin="35,0,0,0"
+            <dx:DXImage Source="edit"
+                        Margin="35,0,0,0"
+                        Grid.Column="4"
                         HeightRequest="30"
                         HorizontalOptions="End"
-                        IsVisible="{Binding SelectedHabit,
-                                            Converter={StaticResource IsNotNull}}"
-                        Source="edit"
+                        IsVisible="{Binding SelectedHabit, Converter={StaticResource IsNotNull}}"
                         TintColor="{StaticResource TitleTextColor}"
                         VerticalOptions="Center"
-                        WidthRequest="40"
-                        Grid.Column="4">
+                        WidthRequest="40">
                 <dx:DXImage.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding EditHabitCommand}"
                                           CommandParameter="{Binding SelectedHabit}"
                                           NumberOfTapsRequired="1" />
                 </dx:DXImage.GestureRecognizers>
             </dx:DXImage>
-            <dx:DXImage Margin="3,0,0,0"
+            <dx:DXImage Source="delete"
+                        Margin="3,0,0,0"
+                        Grid.Column="6"
                         HeightRequest="30"
                         HorizontalOptions="End"
-                        IsVisible="{Binding SelectedHabit,
-                                            Converter={StaticResource IsNotNull}}"
-                        Source="delete"
+                        IsVisible="{Binding SelectedHabit, Converter={StaticResource IsNotNull}}"
                         TintColor="{StaticResource TitleTextColor}"
                         VerticalOptions="Center"
-                        WidthRequest="40"
-                        Grid.Column="6">
+                        WidthRequest="40">
                 <dx:DXImage.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding DeleteHabitCommand}"
                                           CommandParameter="{Binding SelectedHabit}"
@@ -105,6 +101,7 @@
 
     <Grid BackgroundColor="{StaticResource Background}">
         <dxg:DataGridView x:Name="DGV_Habits"
+                          ItemsSource="{Binding UserHabits}"
                           AllowDragDropRows="False"
                           AllowInitiallySelectedRow="False"
                           AllowLiveDataShaping="True"
@@ -115,7 +112,6 @@
                           FullSwipeMode="Start"
                           IsHorizontalScrollBarVisible="False"
                           IsLoadMoreEnabled="False"
-                          ItemsSource="{Binding UserHabits}"
                           RowLongPressCommand="{OnPlatform iOS={Binding SelectRowCommand}}"
                           SelectedItem="{Binding SelectedHabit}"
                           VerticalLineThickness="0">
@@ -125,12 +121,6 @@
             <dxg:DataGridView.GroupRowAppearance>
                 <dxg:GroupRowAppearance BackgroundColor="#f7f2f7" />
             </dxg:DataGridView.GroupRowAppearance>
-
-            <dxg:DataGridView.StartSwipeItems>
-                <dxg:SwipeItem BackgroundColor="{StaticResource RedColor}"
-                               Caption="{x:Static loc:LocStrings.Delete}"
-                               Command="{Binding DeleteHabitCommand}" />
-            </dxg:DataGridView.StartSwipeItems>
 
             <dxg:DataGridView.SwipeItemAppearance>
                 <dxg:SwipeItemAppearance Width="125" />
@@ -158,17 +148,16 @@
             </dxg:DataGridView.CellAppearance>
         </dxg:DataGridView>
 
-        <dx:DXStackLayout HorizontalOptions="CenterAndExpand"
-                          IsVisible="{Binding UserHabits.Count,
-                                              Converter={StaticResource IsZero}}"
+        <dx:DXStackLayout Orientation="Vertical"
+                          HorizontalOptions="CenterAndExpand"
+                          IsVisible="{Binding UserHabits.Count, Converter={StaticResource IsZero}}"
                           ItemSpacing="10"
-                          Orientation="Vertical"
                           VerticalOptions="Start">
-            <skia:SKLottieView Margin="0,150,0,0"
+            <skia:SKLottieView Source="checks.json"
+                               Margin="0,150,0,0"
                                HeightRequest="250"
                                IsAnimationEnabled="True"
                                RepeatCount="-1"
-                               Source="checks.json"
                                WidthRequest="300" />
             <Label Text="{x:Static loc:LocStrings.LoadingContent}"
                    FontFamily="MonaSansMedium"
@@ -181,8 +170,7 @@
                    FontFamily="MonaSansMedium"
                    FontSize="14"
                    HorizontalTextAlignment="Center"
-                   IsVisible="{Binding IsBusy,
-                                       Converter={StaticResource IsFalse}}"
+                   IsVisible="{Binding IsBusy, Converter={StaticResource IsFalse}}"
                    TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
                                                Dark={StaticResource DarkNormalText}}" />
         </dx:DXStackLayout>
@@ -227,20 +215,20 @@
                                            HorizontalOptions="End">
                         <dxco:SimpleButton x:Name="SB_ReminderReport_Cancel"
                                            Text="{x:Static loc:LocStrings.Cancel}"
+                                           Icon="close"
                                            Margin="0,0,5,5"
                                            BackgroundColor="{StaticResource CancelButtonColor}"
                                            Clicked="SB_ReminderReport_Cancel_Clicked"
                                            FontSize="16"
-                                           Icon="close"
                                            IconHorizontalPosition="Left" />
                         <dxco:SimpleButton x:Name="SB_Save"
                                            Text="{Binding LocSave}"
+                                           Style="{StaticResource PrimaryButton}"
+                                           Icon="check_second"
                                            Margin="0,0,0,5"
                                            Clicked="SB_Save_Clicked"
                                            FontSize="16"
-                                           Icon="check_second"
-                                           IconHorizontalPosition="Left"
-                                           Style="{StaticResource PrimaryButton}" />
+                                           IconHorizontalPosition="Left" />
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
             </dxco:DXPopup.Content>
