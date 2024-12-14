@@ -29,9 +29,9 @@ public partial class ProgressOfHabitsView : ContentPageBase
         InitializeComponent();
         
 #if ANDROID31_0_OR_GREATER || IOS16_0_OR_GREATER
-        SwipeItem swipeForDeletion = new SwipeItem()
+        SwipeItem swipeForDeletion = new()
         {
-            BackgroundColor = Shell.Current.Resources["RedColor"] as Color, 
+            BackgroundColor = Application.Current!.Resources["RedColor"] as Color, 
             Caption = LocStrings.Delete
         };
         swipeForDeletion.SetBinding( SwipeItem.CommandProperty, new Binding(nameof(ProgressOfHabitsViewModel.DeleteHabitCommand)) );
