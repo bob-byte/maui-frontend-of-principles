@@ -3,6 +3,9 @@ using Plugin.LocalNotification;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 
+using PropertyChangingEventArgs = Microsoft.Maui.Controls.PropertyChangingEventArgs;
+using PropertyChangingEventHandler = System.ComponentModel.PropertyChangingEventHandler;
+
 namespace Principles.ViewModels;
 
 public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
@@ -569,6 +572,9 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         {
             NameOfHabit = new ValidatableObject<string>();
 
+            NameOfHabit.PropertyChanging += NameOfHabitOnPropertyChanging;
+            NameOfHabit.PropertyChanged += NameOfHabitOnPropertyChanged;
+            
             IValidationRule<string> rule = new IsNotNullOrWhiteSpaceRule( $"{LocStrings.TabData}. {LocStrings.FieldName} {isRequired}." );
             NameOfHabit.Validations.Add( rule );
         }
@@ -578,6 +584,28 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         }
 
         NameOfHabit.Value = Habit!.Name ?? string.Empty;
+    }
+
+    private void NameOfHabitOnPropertyChanging( object? sender, System.ComponentModel.PropertyChangingEventArgs e )
+    {
+        if (e.PropertyName == nameof(ValidatableObject<string>.Value) && Habit!.Reminders?.Any() == true)
+        {
+            foreach (UserHabitReminder reminder in Habit.Reminders.Where( r => r.Description == NameOfHabit.Value ))
+            {
+                reminder.Description = "";
+            }
+        }
+    }
+
+    private void NameOfHabitOnPropertyChanged( object? sender, PropertyChangedEventArgs e )
+    {
+        if (e.PropertyName == nameof(ValidatableObject<string>.Value) && Habit!.Reminders?.Any() == true)
+        {
+            foreach (UserHabitReminder reminder in Habit.Reminders.Where( r => r.Description == "" ))
+            {
+                reminder.Description = NameOfHabit.Value;
+            }
+        }
     }
 
     public void UpdateFrequencyRepresentation(FrequencyOfHabit? frequency, PeriodOfHabit periodOfHabit)

@@ -187,6 +187,13 @@ public class RequestProvider : IRequestProvider
         return response;
     }
 
+    public async Task<TResult?> DeleteAsync<TResult>( string uri, string token = "" )
+    {
+        HttpResponseMessage response = await DeleteAsync( uri, token ).DefaultConfigureAwait();
+        TResult? result = await response.Content.ReadFromJsonAsync<TResult>().DefaultConfigureAwait();
+        return result;
+    }
+
     private HttpClient GetOrCreateHttpClient( string token = "" )
     {
         HttpClient httpClient = m_httpClient.Value;

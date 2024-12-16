@@ -294,7 +294,15 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
             {
                 await UiBusyFor( async () =>
                 {
-                    await ServiceOfHabit.DeleteAsync( habit.Id );
+                    HabitDeletionResponse? response = await ServiceOfHabit.DeleteAsync( habit.Id );
+                    
+                    if (response != null)
+                    {
+                        foreach (HabitDeletionResponse.NotificationRequest notification in response.DeletedNotifications)
+                        {
+                            LocalNotificationCenter.Current.Cancel( notification.Id );
+                        }
+                    }
 
                     UserHabits.Remove( habit );
                     ServiceOfHabit.StoredUserHabits?.Remove( habit );
@@ -303,7 +311,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
 
                     if (habit.Id == SelectedHabit?.Id)
                     {
-                        SelectedHabit = DataGridViewWithHabits!.SelectedRowHandle >= 0
+                        SelectedHabit = DataGridViewWithHabits!.SelectedRowHandle >= 0 && UserHabits.Count > DataGridViewWithHabits.SelectedRowHandle
                             ? UserHabits[DataGridViewWithHabits.SelectedRowHandle]
                             : null;
                     }

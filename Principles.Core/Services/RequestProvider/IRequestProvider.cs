@@ -12,4 +12,5 @@ public interface IRequestProvider
     Task<TResult> PutAsync<TResult>( string uri, string data, string token = "", string header = "" );
     Task<TResponse> PutAsync<TRequest, TResponse>( string uri, TRequest data, string token = "", string header = "" );
     Task<HttpResponseMessage> DeleteAsync( string uri, string token = "" );
+    Task<TResult?> DeleteAsync<TResult>( string uri, string token = "" );
 }

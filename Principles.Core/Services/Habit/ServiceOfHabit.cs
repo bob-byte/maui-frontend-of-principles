@@ -187,9 +187,9 @@ public class ServiceOfHabit : BaseRemoteService, IServiceOfHabit
         return progress.Value is not ProgressValue.YES_AUTO and ProgressValue.YES_MANUAL;
     }
 
-    public async Task DeleteAsync(long id )
+    public Task<HabitDeletionResponse?> DeleteAsync(long id )
     {
         string url = $"{UrlBuilder.Habits}/{id}";
-        await RequestProvider.DeleteAsync( url, SettingsService.AuthAccessToken );
+        return RequestProvider.DeleteAsync<HabitDeletionResponse>( url, SettingsService.AuthAccessToken );
     }
 }

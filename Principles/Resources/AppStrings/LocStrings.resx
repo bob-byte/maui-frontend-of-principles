@@ -792,4 +792,10 @@
   <data name="ChooseHabitGoal" xml:space="preserve">
     <value>Choose a Habit Goal</value>
   </data>
+  <data name="IsMaxValue" xml:space="preserve">
+    <value>is the maximum value</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
 </root>

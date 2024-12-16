@@ -148,7 +148,7 @@
     <value>Мої Звички</value>
   </data>
   <data name="OK" xml:space="preserve">
-    <value>OK</value>
+    <value>ОК</value>
   </data>
   <data name="OtherSex" xml:space="preserve">
     <value>Інша стать</value>
@@ -791,5 +791,11 @@
   </data>
   <data name="ChooseHabitGoal" xml:space="preserve">
     <value>Оберіть Ціль Звички</value>
+  </data>
+  <data name="IsMaxValue" xml:space="preserve">
+    <value>є максимальним значенням</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Змінити</value>
   </data>
 </root>

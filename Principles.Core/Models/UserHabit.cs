@@ -51,9 +51,6 @@ public partial class UserHabit : ObservableObject
     /// </summary>
     [ObservableProperty]
     private int m_followedCount;
-    
-    public double? PreviousPercentageAchieved { get; set; }
-    public int? CountOfFollowedPerSpecificInterval { get; set; }
 
     [ObservableProperty]
     private ObservableCollectionEx<ProgressOfHabit>? m_progresses;

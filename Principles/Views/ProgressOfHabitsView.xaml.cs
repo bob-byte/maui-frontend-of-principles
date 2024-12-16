@@ -36,6 +36,14 @@ public partial class ProgressOfHabitsView : ContentPageBase
         };
         swipeForDeletion.SetBinding( SwipeItem.CommandProperty, new Binding(nameof(ProgressOfHabitsViewModel.DeleteHabitCommand)) );
         DGV_Habits.StartSwipeItems.Add( swipeForDeletion );
+        
+        SwipeItem editOnSwipe = new()
+        {
+            BackgroundColor = Application.Current!.Resources["Primary"] as Color, 
+            Caption = LocStrings.Edit
+        };
+        editOnSwipe.SetBinding( SwipeItem.CommandProperty, new Binding(nameof(ProgressOfHabitsViewModel.EditHabitCommand)) );
+        DGV_Habits.StartSwipeItems.Add( editOnSwipe );
 #endif
 
         ViewModel.DataGridViewWithHabits = DGV_Habits;

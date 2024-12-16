@@ -1394,5 +1394,17 @@ namespace Principles.Resources.AppStrings {
                 return ResourceManager.GetString("ChooseHabitGoal", resourceCulture);
             }
         }
+        
+        internal static string IsMaxValue {
+            get {
+                return ResourceManager.GetString("IsMaxValue", resourceCulture);
+            }
+        }
+        
+        internal static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
     }
 }

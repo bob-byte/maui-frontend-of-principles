@@ -70,8 +70,8 @@
     <value>Мои привычки</value>
   </data>
 	<data name="OK" xml:space="preserve">
-    <value>OK</value>
-  </data>
+		<value>ОК</value>
+	</data>
 	<data name="OtherSex" xml:space="preserve">
     <value>Другой пол</value>
   </data>
@@ -713,5 +713,11 @@
 	</data>
 	<data name="ChooseHabitGoal" xml:space="preserve">
 		<value>Выберите Цель Привычки</value>
+	</data>
+	<data name="Other" xml:space="preserve">
+		<value>Другая</value>
+	</data>
+	<data name="Edit" xml:space="preserve">
+		<value>Изменить</value>
 	</data>
 </root>

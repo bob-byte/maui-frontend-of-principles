@@ -662,7 +662,7 @@ public partial class EditHabitView : ContentPageBase
             return;
         }
         
-        if (ViewModel.IsNewHabit || ViewModel.Habit.Reminders is null || !ViewModel.Habit.Reminders.Any())
+        if (ViewModel.Habit.Reminders is null || !ViewModel.Habit.Reminders.Any())
         {
             ViewModel.EditedReminder ??= new EditedUserHabitReminder();
 

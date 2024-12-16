@@ -10,7 +10,7 @@ public interface IServiceOfHabit
     Task UpdatePrioritiesAsync( IEnumerable<UserHabitWithPriority> habitsWithPriorities );
     void ResetPriorities( IEnumerable<UserHabit> habits );
     bool CanAddNewHabit( UserHabit newHabit, IEnumerable<UserHabit> allHabits );
-    Task DeleteAsync( long id );
+    Task<HabitDeletionResponse?> DeleteAsync( long id );
 
     void Recompute( UserHabit habit );
     double RecomputedScoreAchieved( UserHabit habit, DateOnly from, DateOnly to );
