@@ -611,7 +611,7 @@ public partial class EditHabitView : ContentPageBase
     {
         if (LocalNotificationCenter.Current.IsSupported)
         {
-            OpenReminderPopup();
+            OpenReminderBottomSheet();
         }
         else
         {
@@ -619,13 +619,13 @@ public partial class EditHabitView : ContentPageBase
                 LocStrings.DeviceDoesNotSupportNotifications,
                 visualOptions: SnackbarHelper.DefaultOptions()
             ).Show();
-            DXP_Reminders.IsOpen = false;
+            ReminderBottomSheet.State = BottomSheetState.Hidden;
         }
     }
 
     private void ME_HabitReminder_IconClicked( System.Object sender, System.EventArgs e )
     {
-        OpenReminderPopup();
+        OpenReminderBottomSheet();
     }
 
     //it will be used when we support several reminders per one habit
@@ -649,7 +649,7 @@ public partial class EditHabitView : ContentPageBase
     //    }
     //}
 
-    private void OpenReminderPopup()
+    private void OpenReminderBottomSheet()
     {
         if (!LocalNotificationCenter.Current.IsSupported)
         {
@@ -657,7 +657,7 @@ public partial class EditHabitView : ContentPageBase
                 LocStrings.DeviceDoesNotSupportNotifications,
                 visualOptions: SnackbarHelper.DefaultOptions()
             ).Show();
-            DXP_Reminders.IsOpen = false;
+            ReminderBottomSheet.State = BottomSheetState.Hidden;
 
             return;
         }
@@ -701,7 +701,7 @@ public partial class EditHabitView : ContentPageBase
             TE_ReminderTime.TimeSpan = time;
         }
 
-        DXP_Reminders.IsOpen = true;
+        ReminderBottomSheet.State = BottomSheetState.HalfExpanded;
     }
 
     private async void SB_ReminderSave_Clicked( object sender, EventArgs e )
@@ -756,12 +756,12 @@ public partial class EditHabitView : ContentPageBase
 
         await ViewModel.AddReminderAsync();
 
-        DXP_Reminders.IsOpen = false;
+        ReminderBottomSheet.State = BottomSheetState.Hidden;
     }
 
     private void SB_Reminder_Cancel_Clicked( object sender, EventArgs e )
     {
-        DXP_Reminders.IsOpen = false;
+        ReminderBottomSheet.State = BottomSheetState.Hidden;
     }
 
     private void AISP_AreasRequested( object? sender, ItemsRequestEventArgs e )
