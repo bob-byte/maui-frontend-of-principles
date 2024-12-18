@@ -366,10 +366,9 @@
                         </dxco:BottomSheet>
                         <dxco:BottomSheet x:Name="ReminderBottomSheet"
                                           AllowDismiss="True"
-                                          AllowedState="HalfExpanded"
                                           BackgroundColor="{AppThemeBinding Light={StaticResource Background},
                                                                             Dark={StaticResource DarkBackground}}"
-                                          HalfExpandedRatio="0.65"
+                                          HalfExpandedRatio="0.60"
                                           ShowGrabber="False">
                             <ScrollView>
                                 <VerticalStackLayout Margin="20,0,20,0"
@@ -395,7 +394,8 @@
                                                       StartIcon="clock" />
 
                                         <HorizontalStackLayout HorizontalOptions="Start">
-                                            <Switch x:Name="S_IsReminderEnabled" />
+                                            <Switch x:Name="S_IsReminderEnabled"
+                                                    Margin="{OnPlatform iOS='0,5,0,0'}" />
                                             <Label Text="{x:Static loc:LocStrings.Enable}"
                                                    Margin="3,0,0,0"
                                                    TextColor="{StaticResource LightNormalText}"
@@ -409,37 +409,37 @@
                                                                    IsChecked="{Binding IsDayChecked[1]}"
                                                                    Content="{x:Static loc:LocStrings.MondayShort}"
                                                                    Style="{StaticResource WeekDayButton}"
-                                                                   WidthRequest="65"
-                                                                   HeightRequest="65"
+                                                                   WidthRequest="50"
+                                                                   HeightRequest="50"
                                                                    CornerRadius="60"
-                                                                   FontSize="18" />
+                                                                   FontSize="15" />
 
                                                 <dx:DXToggleButton x:Name="TBtn_Tuesday"
                                                                    IsChecked="{Binding IsDayChecked[2]}"
                                                                    Content="{x:Static loc:LocStrings.TuesdayShort}"
                                                                    Style="{StaticResource WeekDayButton}"
-                                                                   WidthRequest="65"
-                                                                   HeightRequest="65"
+                                                                   WidthRequest="50"
+                                                                   HeightRequest="50"
                                                                    CornerRadius="60"
-                                                                   FontSize="18" />
+                                                                   FontSize="15" />
 
                                                 <dx:DXToggleButton x:Name="TBtn_Wednesday"
                                                                    IsChecked="{Binding IsDayChecked[3]}"
                                                                    Content="{x:Static loc:LocStrings.WednesdayShort}"
                                                                    Style="{StaticResource WeekDayButton}"
-                                                                   WidthRequest="65"
-                                                                   HeightRequest="65"
+                                                                   WidthRequest="50"
+                                                                   HeightRequest="50"
                                                                    CornerRadius="60"
-                                                                   FontSize="18" />
+                                                                   FontSize="15" />
 
                                                 <dx:DXToggleButton x:Name="TBtn_Thursday"
                                                                    IsChecked="{Binding IsDayChecked[4]}"
                                                                    Content="{x:Static loc:LocStrings.ThursdayShort}"
                                                                    Style="{StaticResource WeekDayButton}"
-                                                                   WidthRequest="65"
-                                                                   HeightRequest="65"
+                                                                   WidthRequest="50"
+                                                                   HeightRequest="50"
                                                                    CornerRadius="60"
-                                                                   FontSize="18" />
+                                                                   FontSize="15" />
                                             </HorizontalStackLayout>
 
                                             <HorizontalStackLayout HorizontalOptions="Center"
@@ -448,28 +448,28 @@
                                                                    IsChecked="{Binding IsDayChecked[5]}"
                                                                    Content="{x:Static loc:LocStrings.FridayShort}"
                                                                    Style="{StaticResource WeekDayButton}"
-                                                                   WidthRequest="65"
-                                                                   HeightRequest="65"
+                                                                   WidthRequest="50"
+                                                                   HeightRequest="50"
                                                                    CornerRadius="60"
-                                                                   FontSize="18" />
+                                                                   FontSize="15" />
 
                                                 <dx:DXToggleButton x:Name="TBtn_Saturday"
                                                                    IsChecked="{Binding IsDayChecked[6]}"
                                                                    Content="{x:Static loc:LocStrings.SaturdayShort}"
                                                                    Style="{StaticResource WeekDayButton}"
-                                                                   WidthRequest="65"
-                                                                   HeightRequest="65"
+                                                                   WidthRequest="50"
+                                                                   HeightRequest="50"
                                                                    CornerRadius="60"
-                                                                   FontSize="18" />
+                                                                   FontSize="15" />
 
                                                 <dx:DXToggleButton x:Name="TBtn_Sunday"
                                                                    IsChecked="{Binding IsDayChecked[0]}"
                                                                    Content="{x:Static loc:LocStrings.SundayShort}"
                                                                    Style="{StaticResource WeekDayButton}"
-                                                                   WidthRequest="65"
-                                                                   HeightRequest="65"
+                                                                   WidthRequest="50"
+                                                                   HeightRequest="50"
                                                                    CornerRadius="60"
-                                                                   FontSize="18" />
+                                                                   FontSize="15" />
                                             </HorizontalStackLayout>
                                         </VerticalStackLayout>
                                     </VerticalStackLayout>
@@ -485,7 +485,7 @@
                                                            FontSize="20"
                                                            HorizontalOptions="FillAndExpand"
                                                            VerticalOptions="Center"
-                                                           HeightRequest="60"
+                                                           HeightRequest="50"
                                                            Grid.Column="0" />
 
                                         <dxco:SimpleButton Text="{Binding LocSave}"
@@ -496,7 +496,7 @@
                                                            FontSize="20"
                                                            HorizontalOptions="FillAndExpand"
                                                            VerticalOptions="Center"
-                                                           HeightRequest="60"
+                                                           HeightRequest="50"
                                                            Grid.Column="1" />
                                     </Grid>
 
