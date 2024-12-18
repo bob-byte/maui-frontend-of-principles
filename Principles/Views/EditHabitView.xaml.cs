@@ -768,9 +768,9 @@ public partial class EditHabitView : ContentPageBase
     {
         e.Request = () =>
         {
-            return string.IsNullOrWhiteSpace( e.Text ) ? 
+            return string.IsNullOrWhiteSpace( TE_AreasOfLife.Text ) ? 
                 ViewModel.AllUserAreasOfLife : 
-                ViewModel.AllUserAreasOfLife.Where( a => a.Name!.StartsWith( e.Text, StringComparison.CurrentCultureIgnoreCase ) ).ToList();
+                ViewModel.AllUserAreasOfLife.Where( a => a.Name!.StartsWith( TE_AreasOfLife.Text, StringComparison.CurrentCultureIgnoreCase ) ).ToList();
         };
     }
 }

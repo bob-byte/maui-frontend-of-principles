@@ -227,19 +227,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
                     Spacing = 4
                 };
 
-#if ANDROID
-                TouchBehavior touchBehavior = new()
-                {
-                    LongPressCommand = ViewModel.SelectRowCommand,
-                    Command = ViewModel.EditHabitCommand
-                };
-                touchBehavior.Bind( TouchBehavior.LongPressCommandParameterProperty, "Item" );
-                touchBehavior.Bind( TouchBehavior.CommandParameterProperty, "Item" );
-
-                stack.Behaviors.Add( touchBehavior );
-#else
                 stack.BindTapGesture( "EditHabitCommand", commandSource: ViewModel, parameterPath: "Item", numberOfTapsRequired: 1 );
-#endif
 
                 CircularProgressBar progressBar = new();
                 IValueConverter progressConverter = new ProgressOfHabitToInt32Converter( ViewModel.ProgressOfHabitService );

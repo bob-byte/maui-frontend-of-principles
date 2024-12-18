@@ -36,23 +36,12 @@ public class HabitWithProgressTemplateSelector : DataTemplateSelector
                 converter: new ProgressToImgConverter()
             );
 
-#if ANDROID
-            TouchBehavior touchBehavior = new()
-            {
-                LongPressCommand = m_progressOfHabitsViewModel.SelectRowCommand,
-                Command = m_progressOfHabitsViewModel.ChangeValueOfProgressOfHabitCommand
-            };
-            touchBehavior.Bind( TouchBehavior.LongPressCommandParameterProperty, "Item" );
-            touchBehavior.Bind( TouchBehavior.CommandParameterProperty, $"Item.Progresses[{progressIndex}]" );
-            contentView.Behaviors.Add( touchBehavior );
-#else
             contentView.BindTapGesture(
                 commandPath: "ChangeValueOfProgressOfHabitCommand",
                 commandSource: m_progressOfHabitsViewModel,
                 parameterPath: $"Item.Progresses[{progressIndex}]",
                 numberOfTapsRequired: 1
             );
-#endif
 
             return contentView;
         } );
