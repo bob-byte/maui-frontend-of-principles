@@ -10,7 +10,7 @@ namespace Principles.ViewModels;
 
 public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
 {
-    
+    public bool IsHabitExist => !IsNewHabit;
     [ObservableProperty]
     private UserHabit m_habit;
 
@@ -88,7 +88,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
             UserHabits?.Clear();
             UserGoals?.Clear();
         } );
-        
+
         InactiveDaysToDelete = new List<WeekDay>();
     }
 
@@ -725,6 +725,40 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
                     ClearHabitGoalCommand.Execute( null );
                 }
             } );
+        }
+    }
+
+    [RelayCommand]
+    private async Task DeleteHabitAsync( object? obj )
+    {
+        if (obj is UserHabit habit)
+        {
+            bool doDelete = await DialogService.ShowConfirmAsync(
+                LocStrings.MessageInDeleteHabitConfirm,
+                LocStrings.DeleteHabitQuestion
+            );
+
+            if (doDelete)
+            {
+                await UiBusyFor( async () =>
+                {
+                    HabitDeletionResponse? response = await ServiceOfHabit.DeleteAsync( habit.Id );
+
+                    if (response != null)
+                    {
+                        foreach (HabitDeletionResponse.NotificationRequest notification in response.DeletedNotifications)
+                        {
+                            LocalNotificationCenter.Current.Cancel( notification.Id );
+                        }
+                    }
+
+                    UserHabits.Remove( habit );
+                    ServiceOfHabit.StoredUserHabits?.Remove( habit );
+                    ReferenceMessenger.Send( new HabitsDeletedMessege( habit ) );
+                    await Navigation.GoBackAsync();
+
+                } ).DefaultConfigureAwait();
+            }
         }
     }
 

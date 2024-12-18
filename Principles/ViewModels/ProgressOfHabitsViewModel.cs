@@ -100,8 +100,24 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
 
             UserHabits.Reload( UserHabits.ToArray() );
         } );
+
+        ReferenceMessenger.Register<HabitsDeletedMessege>( this, ( sender, msg ) =>
+        {
+            UserHabit habit = msg.Value;
+
+            UserHabit? habitToRemove = UserHabits.FirstOrDefault( h => h.Id == habit.Id );
+            if (habitToRemove != null)
+            {
+                UserHabits.Remove( habitToRemove );
+                ServiceOfHabit.StoredUserHabits?.Remove( habitToRemove );
+                SelectedHabit = null;
+
+                m_isBusyForChangeCompleted.TryRemove( habitToRemove, out SemaphoreSlim? locker );
+                locker?.Dispose();
+            }
+        } );
     }
-    
+
     public IProgressOfHabitService ProgressOfHabitService { get; }
     public IReminderService ReminderService { get; }
 

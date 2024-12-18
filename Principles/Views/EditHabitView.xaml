@@ -195,6 +195,16 @@
                                            Style="{StaticResource PrimaryButton}"
                                            IsVisible="{Binding IsNewHabit}"
                                            Margin="0,5,0,0" />
+
+                        <dxco:SimpleButton Text="{x:Static loc:LocStrings.Delete}"
+                                           BackgroundColor="{StaticResource DarkBackground}"
+                                           TextColor="{StaticResource DarkLabelText}"
+                                           Style="{StaticResource PrimaryButton}"
+                                           IsVisible="{Binding IsHabitExist}"
+                                           Command="{Binding DeleteHabitCommand}"
+                                           CommandParameter="{Binding Habit}"
+                                           Margin="0,5,0,0" />
+
                         <dxco:BottomSheet x:Name="GoalsBottomSheet"
                                           AllowDismiss="True"
                                           AllowedState="HalfExpanded"
