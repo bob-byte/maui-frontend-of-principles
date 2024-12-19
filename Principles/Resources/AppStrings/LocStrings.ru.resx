@@ -720,4 +720,7 @@
 	<data name="Edit" xml:space="preserve">
 		<value>Изменить</value>
 	</data>
+	<data name="DeleteTheHabit" xml:space="preserve">
+		<value>Удалить привычку</value>
+	</data>
 </root>

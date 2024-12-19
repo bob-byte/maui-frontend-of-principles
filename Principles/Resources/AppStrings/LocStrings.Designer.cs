@@ -1406,5 +1406,11 @@ namespace Principles.Resources.AppStrings {
                 return ResourceManager.GetString("Edit", resourceCulture);
             }
         }
+        
+        internal static string DeleteTheHabit {
+            get {
+                return ResourceManager.GetString("DeleteTheHabit", resourceCulture);
+            }
+        }
     }
 }

@@ -22,7 +22,7 @@
     "ItemsSource",
     "Delegate, SetDelegate",
     "Source",
-    "Command, DoubleClick, Clicked",
+    "Command, CommandParameter, DoubleClick, Clicked",
     "Role",
     "XamlStyle, Style",
     "If, Show, Hide, IsVisible, Disabled, Required",
