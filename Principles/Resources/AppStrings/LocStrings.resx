@@ -798,4 +798,7 @@
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="DeleteTheHabit" xml:space="preserve">
+    <value>Delete the habit</value>
+  </data>
 </root>

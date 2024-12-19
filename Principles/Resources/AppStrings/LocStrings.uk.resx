@@ -798,4 +798,7 @@
   <data name="Edit" xml:space="preserve">
     <value>Змінити</value>
   </data>
+  <data name="DeleteTheHabit" xml:space="preserve">
+    <value>Видалити звичку</value>
+  </data>
 </root>

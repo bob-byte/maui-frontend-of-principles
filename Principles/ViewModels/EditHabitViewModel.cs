@@ -10,7 +10,6 @@ namespace Principles.ViewModels;
 
 public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
 {
-    public bool IsHabitExist => !IsNewHabit;
     [ObservableProperty]
     private UserHabit m_habit;
 
@@ -753,9 +752,9 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
                     }
 
                     UserHabits.Remove( habit );
-                    ServiceOfHabit.StoredUserHabits?.Remove( habit );
-                    ReferenceMessenger.Send( new HabitsDeletedMessege( habit ) );
+                    
                     await Navigation.GoBackAsync();
+                    ReferenceMessenger.Send( new HabitsDeletedMessege( habit ) );
 
                 } ).DefaultConfigureAwait();
             }

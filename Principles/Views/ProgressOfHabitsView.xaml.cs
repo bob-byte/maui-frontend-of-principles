@@ -39,7 +39,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
         
         SwipeItem editOnSwipe = new()
         {
-            BackgroundColor = Application.Current!.Resources["Primary"] as Color, 
+            BackgroundColor = Application.Current!.Resources["LightPrimary"] as Color, 
             Caption = LocStrings.Edit
         };
         editOnSwipe.SetBinding( SwipeItem.CommandProperty, new Binding(nameof(ProgressOfHabitsViewModel.EditHabitCommand)) );
