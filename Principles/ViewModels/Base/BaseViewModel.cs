@@ -311,8 +311,14 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
             }
             else if (ex is ServiceAuthenticationException)
             {
-                LoggingService.LogCriticalError( ex );
+                await SettingsService.SetAuthAccessTokenAsync( "" );
+                
                 errorMsg = LocStrings.YouAreNotAuthorized;
+                await DialogService.ShowErrorAsync( errorMsg );
+
+                await LogoutAsync();
+                
+                showPopupWithRetry = false;
             }
             else if (ex is TaskCanceledException or TimeoutException)
             {
@@ -325,7 +331,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
             else
             {
                 LoggingService.LogError( ex, ex.Message );
-                errorMsg = ex.ToString();
+                errorMsg = SettingsService.IsDebug ? ex.ToString() : ex.Message;
             }
         }
 

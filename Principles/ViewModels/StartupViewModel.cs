@@ -1,9 +1,10 @@
-﻿
+
 namespace Principles.ViewModels;
 
 public partial class StartupViewModel : BaseViewModel
 {
     private readonly IGoogleAuthService m_googleAuthService;
+    private readonly IAppleAuthService m_appleAuthService;
     private readonly IReminderService m_reminderService;
 
     [ObservableProperty]
@@ -14,6 +15,7 @@ public partial class StartupViewModel : BaseViewModel
     {
         m_googleAuthService = serviceProvider.GetRequiredService<IGoogleAuthService>();
         m_reminderService = serviceProvider.GetRequiredService<IReminderService>();
+        m_appleAuthService = serviceProvider.GetRequiredService<IAppleAuthService>();
 
         m_appFeatures = new ObservableCollectionEx<AppFeature>
         {
@@ -31,6 +33,24 @@ public partial class StartupViewModel : BaseViewModel
         try
         {
             await m_googleAuthService.AuthorizeAsync();
+            await m_reminderService.TryToRecoverAllUserRemindersAsync();
+            await Navigation.GoToInitialViewAsync();
+        }
+        catch (Exception ex)
+        {
+            if (ex is not TaskCanceledException)
+            {
+                LoggingService.LogError( ex, ex.Message );
+            }
+        }
+    }
+
+    [RelayCommand]
+    public async Task ContinueWithAppleAsync()
+    {
+        try
+        {
+            await m_appleAuthService.AuthorizeAsync();
             await m_reminderService.TryToRecoverAllUserRemindersAsync();
             await Navigation.GoToInitialViewAsync();
         }

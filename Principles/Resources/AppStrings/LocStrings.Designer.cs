@@ -1119,6 +1119,12 @@ namespace Principles.Resources.AppStrings {
             }
         }
         
+        internal static string ContinueWithApple {
+            get {
+                return ResourceManager.GetString("ContinueWithApple", resourceCulture);
+            }
+        }
+        
         internal static string SignUpWithEmail {
             get {
                 return ResourceManager.GetString("SignUpWithEmail", resourceCulture);

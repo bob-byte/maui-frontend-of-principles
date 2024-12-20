@@ -27,10 +27,10 @@
                              VerticalOptions="End"
                              Grid.Row="0">
             <skia:SKLottieView Source="fire_loading.json"
-                               WidthRequest="200"
                                HeightRequest="200"
                                IsAnimationEnabled="True"
-                               RepeatCount="-1" />
+                               RepeatCount="-1"
+                               WidthRequest="200" />
             <CarouselView x:Name="CV_Features"
                           ItemsSource="{Binding AppFeatures}"
                           HeightRequest="160"
@@ -40,13 +40,12 @@
                 <CarouselView.ItemTemplate>
                     <DataTemplate x:DataType="m:AppFeature">
                         <dx:DXStackLayout Padding="10,0,10,0">
-                            <Label Text="{Binding Title,
-                                                  Converter={StaticResource ToUpperCase}}"
-                                   HeightRequest="{OnPlatform iOS=65}"
+                            <Label Text="{Binding Title, Converter={StaticResource ToUpperCase}}"
                                    Margin="{OnPlatform iOS='20,0,20,0',
                                                        Android='20,0,20,20'}"
                                    FontAttributes="Bold"
                                    FontSize="25"
+                                   HeightRequest="{OnPlatform iOS=65}"
                                    HorizontalOptions="Center"
                                    HorizontalTextAlignment="Center"
                                    LineBreakMode="TailTruncation"
@@ -54,16 +53,16 @@
                                    SizeChanged="L_FeatureTile_OnSizeChanged"
                                    TextColor="White" />
                             <Label Text="{Binding Description}"
-                                   WidthRequest="275"
-                                   HeightRequest="80"
                                    Margin="20,0,20,0"
                                    FontAttributes="Bold"
                                    FontSize="16"
+                                   HeightRequest="80"
                                    HorizontalOptions="Center"
                                    HorizontalTextAlignment="Center"
                                    LineBreakMode="TailTruncation"
                                    MaxLines="6"
-                                   TextColor="#464646" />
+                                   TextColor="#464646"
+                                   WidthRequest="275" />
                         </dx:DXStackLayout>
                     </DataTemplate>
                 </CarouselView.ItemTemplate>
@@ -90,6 +89,19 @@
                                    Background="{StaticResource Primary}"
                                    BorderThickness="2"
                                    DisabledBackgroundColor="{StaticResource Primary}" />
+                <OnPlatform x:TypeArguments="View">
+                    <On Platform="iOS">
+                        <dxco:SimpleButton Text="{x:Static loc:LocStrings.ContinueWithApple}"
+                                           Command="{Binding ContinueWithAppleCommand}"
+                                           Style="{StaticResource PrimaryButton}"
+                                           Icon="apple"
+                                           Margin="0,10,0,0"
+                                           Background="{StaticResource Primary}"
+                                           BorderThickness="2"
+                                           DisabledBackgroundColor="{StaticResource Primary}"
+                                           IsVisible="True" />
+                    </On>
+                </OnPlatform>
                 <dxco:SimpleButton Text="{x:Static loc:LocStrings.SignUpWithEmail}"
                                    Command="{Binding OpenSignUpViewCommand}"
                                    Style="{StaticResource PrimaryButton}"

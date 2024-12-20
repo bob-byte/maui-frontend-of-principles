@@ -723,4 +723,7 @@
 	<data name="DeleteTheHabit" xml:space="preserve">
 		<value>Удалить привычку</value>
 	</data>
+	<data name="ContinueWithApple" xml:space="preserve">
+		<value>Продолжить через Apple</value>
+	</data>
 </root>

@@ -30,6 +30,7 @@ public class UrlBuilder : IUrlBuilder
     private string? m_versionCheck;
     private string? m_habitsReportReminder;
     private string? m_allReminders;
+    private string? m_appleAuth;
 
     public string BaseUrl
     {
@@ -226,6 +227,15 @@ public class UrlBuilder : IUrlBuilder
         {
             m_googleAuth ??= Combine( BaseApiUrl, "account", "googleauthorization" );
             return m_googleAuth;
+        }
+    }
+
+    public string AppleAuth
+    {
+        get
+        {
+            m_appleAuth ??= Combine( BaseApiUrl, "account", "appleauthorization" );
+            return m_appleAuth;
         }
     }
 

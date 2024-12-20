@@ -33,6 +33,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IGoalService, GoalService>();
         services.AddSingleton<IGoogleAuthService, GoogleAuthService>();
         services.AddSingleton<IVersionCheckerService, VersionCheckerService>();
+        services.AddSingleton<IAppleAuthService, AppleAuthService>();
 
         return services;
     }

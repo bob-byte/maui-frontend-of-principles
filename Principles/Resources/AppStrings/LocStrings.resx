@@ -654,6 +654,9 @@
   <data name="ContinueWithGoogle" xml:space="preserve">
     <value>Continue with Google</value>
   </data>
+  <data name="ContinueWithApple" xml:space="preserve">
+    <value>Continue with Apple</value>
+  </data>
   <data name="SignUpWithEmail" xml:space="preserve">
     <value>Sign up with email</value>
   </data>

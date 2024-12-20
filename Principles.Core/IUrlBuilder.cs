@@ -24,6 +24,7 @@ public interface IUrlBuilder
     string VersionCheck { get; }
     string HabitsReportReminder { get; }
     string AllReminders { get; }
+    string AppleAuth { get; }
 
     string Combine( params string[] uri );
 }
