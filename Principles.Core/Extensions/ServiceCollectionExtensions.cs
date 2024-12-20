@@ -1,3 +1,5 @@
+using Principles.Core.Services.AiKey;
+
 using System.Net.Http.Headers;
 using System.Net.Mime;
 
@@ -34,6 +36,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IGoogleAuthService, GoogleAuthService>();
         services.AddSingleton<IVersionCheckerService, VersionCheckerService>();
         services.AddSingleton<IAppleAuthService, AppleAuthService>();
+        services.AddSingleton<IApiKeyService, ApiKeyService>();
 
         return services;
     }

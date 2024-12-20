@@ -31,6 +31,7 @@ public class UrlBuilder : IUrlBuilder
     private string? m_habitsReportReminder;
     private string? m_allReminders;
     private string? m_appleAuth;
+    private string? m_apiKey;
 
     public string BaseUrl
     {
@@ -128,6 +129,15 @@ public class UrlBuilder : IUrlBuilder
         {
             m_codeGeneration ??= Combine( BaseApiUrl, "account", "code" );
             return m_codeGeneration;
+        }
+    }
+
+    public string ApiKey
+    {
+        get
+        {
+            m_apiKey ??= Combine( BaseApiUrl, "account", "apikey" );
+            return m_apiKey;
         }
     }
     public string Account

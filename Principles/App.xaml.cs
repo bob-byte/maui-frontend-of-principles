@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Maui.Views;
 
+using Principles.Core.Services.AiKey;
+
 using Application = Microsoft.Maui.Controls.Application;
 
 namespace Principles;
@@ -9,6 +11,7 @@ public partial class App : Application
     private readonly UpdatePopupViewModel m_updatePopupViewModel;
     private readonly ISettingsService m_settingsService;
     private readonly ILoggingService m_loggingService;
+    private readonly IApiKeyService m_apiKeyService;
 
     private UpdatePopup? m_updatePopup;
     
@@ -19,6 +22,7 @@ public partial class App : Application
         
         m_settingsService = serviceProvider.GetRequiredService<ISettingsService>();
         m_loggingService = serviceProvider.GetRequiredService<ILoggingService>();
+        m_apiKeyService = serviceProvider.GetRequiredService<IApiKeyService>();
 
         AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
@@ -54,6 +58,18 @@ public partial class App : Application
             }
         }
 
+        if (VersionTracking.IsFirstLaunchForCurrentBuild || VersionTracking.IsFirstLaunchForCurrentVersion) 
+        {
+            string token = await m_settingsService.GetAuthAccessTokenAsync();
+            if (!string.IsNullOrWhiteSpace( token ))
+            {
+                string apiKey = await m_apiKeyService.GetApiKeyAsync();
+                if (!string.IsNullOrEmpty( apiKey ))
+                {
+                    await SecureStorage.SetAsync( CacheKeys.API_KEY, apiKey );
+                }
+            }
+        }
         bool shouldShowPopup = await m_updatePopupViewModel.ShouldShowPopup();
 
         if (shouldShowPopup)
