@@ -689,6 +689,34 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
                         Habit.Goal.Name = EditedGoal.Name;
                     }
                 }
+
+
+                // Store the old goal name before saving changes
+                string? oldGoalName = null;
+                if (!isNewGoal)
+                {
+                    UserGoal? existingGoal = UserGoals?.FirstOrDefault( g => g.Id == EditedGoal.Id );
+                    if (existingGoal != null)
+                    {
+                        oldGoalName = existingGoal.Name;
+                    }
+                }
+
+                // Get all notifications and update the relevant ones
+                IList<NotificationRequest> notifications = await LocalNotificationCenter.Current.GetPendingNotificationList();
+                if (!string.IsNullOrEmpty( oldGoalName ))
+                {
+                    foreach (UserHabitReminder? reminder in Habit.Reminders.Where( r => r.Title == oldGoalName ))
+                    {
+                        reminder.Title = EditedGoal.Name;
+                    }
+
+                    foreach (NotificationRequest? notification in notifications.Where( n => n.Title == oldGoalName ))
+                    {
+                        notification.Title = EditedGoal.Name;
+                        await LocalNotificationCenter.Current.Show( notification );
+                    }
+                }
             }
 
             afterAction();
