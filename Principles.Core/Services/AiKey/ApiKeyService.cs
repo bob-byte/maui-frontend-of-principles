@@ -22,6 +22,7 @@ public class ApiKeyService : IApiKeyService
     {
         string url = $"{m_urlBuilder.ApiKey}";
         ApiKeyResponse response = await m_requestProvider.GetAsync<ApiKeyResponse>( url, m_settingsService.AuthAccessToken ).DefaultConfigureAwait();
-        return response?.Value ?? string.Empty;
+   
+        return DecryptTextHelper.DecryptText( response.Value, "FirstKey", "SecondKey" );
     }
 }
