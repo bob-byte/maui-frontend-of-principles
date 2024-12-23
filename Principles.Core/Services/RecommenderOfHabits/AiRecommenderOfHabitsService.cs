@@ -120,7 +120,10 @@ public class AiRecommenderOfHabitsService : BaseRemoteService, IAiRecommenderOfH
         };
 
         ChatCompletionsOptions chatResponseOptions = new( DEFAULT_AI_DEPLOYMENT_NAME, chatMessages );
-        Response<ChatCompletions> response = await AiClient.GetChatCompletionsAsync( chatResponseOptions ).DefaultConfigureAwait();
+
+        OpenAIClient aiClient = await LazyAiClient;
+        
+        Response<ChatCompletions> response = await aiClient.GetChatCompletionsAsync( chatResponseOptions ).DefaultConfigureAwait();
         if (response != null && response.Value.Choices.Count > 0)
         {
             string responseContent = response.Value.Choices[0].Message.Content;

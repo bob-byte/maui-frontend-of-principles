@@ -42,7 +42,8 @@ public class AiChatService : BaseRemoteService, IAiChatService
             ChoiceCount = choiceCount
         };
 
-        StreamingResponse<StreamingChatCompletionsUpdate> result = await AiClient.GetChatCompletionsStreamingAsync( options, cancellationToken ).DefaultConfigureAwait();
+        OpenAIClient aiClient = await LazyAiClient;
+        StreamingResponse<StreamingChatCompletionsUpdate> result = await aiClient.GetChatCompletionsStreamingAsync( options, cancellationToken ).DefaultConfigureAwait();
         return result;
     }
 

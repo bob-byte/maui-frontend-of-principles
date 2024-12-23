@@ -19,12 +19,12 @@ public partial class App : Application
     {
         IServiceLocator serviceLocator = serviceProvider.GetRequiredService<IServiceLocator>();
         ServiceLocator.GetCurrentLocator = () => serviceLocator;
+
+        AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
         
         m_settingsService = serviceProvider.GetRequiredService<ISettingsService>();
         m_loggingService = serviceProvider.GetRequiredService<ILoggingService>();
         m_apiKeyService = serviceProvider.GetRequiredService<IApiKeyService>();
-
-        AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
         m_updatePopupViewModel = new UpdatePopupViewModel( serviceProvider );
 
@@ -60,22 +60,32 @@ public partial class App : Application
 
         if (VersionTracking.IsFirstLaunchForCurrentBuild || VersionTracking.IsFirstLaunchForCurrentVersion) 
         {
+            await SecureStorage.SetAsync( CacheKeys.API_KEY, string.Empty );
+            
             string token = await m_settingsService.GetAuthAccessTokenAsync();
             if (!string.IsNullOrWhiteSpace( token ))
             {
-                string apiKey = await m_apiKeyService.GetApiKeyAsync();
-                if (!string.IsNullOrEmpty( apiKey ))
+                try
                 {
-                    await SecureStorage.SetAsync( CacheKeys.API_KEY, apiKey );
+                    string apiKey = await m_apiKeyService.GetApiKeyAsync();
+                    if (!string.IsNullOrWhiteSpace( apiKey ))
+                    {
+                        await SecureStorage.SetAsync( CacheKeys.API_KEY, apiKey );
+                    }
+                }
+                catch
+                {
+                    //do nothing
                 }
             }
         }
+        
         bool shouldShowPopup = await m_updatePopupViewModel.ShouldShowPopup();
 
         if (shouldShowPopup)
         {
             m_updatePopup ??= new UpdatePopup( m_updatePopupViewModel );
-            Current?.MainPage?.ShowPopup( m_updatePopup );
+            Windows[0].Page!.ShowPopup( m_updatePopup );
         }
     }
 
@@ -90,7 +100,7 @@ public partial class App : Application
         if (shouldShowPopup)
         {
             m_updatePopup = new UpdatePopup( m_updatePopupViewModel );
-            Shell.Current.ShowPopup( m_updatePopup );
+            Windows[0].Page!.ShowPopup( m_updatePopup );
         }
     }
 
