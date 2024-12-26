@@ -38,14 +38,10 @@ public partial class UpdatePopup : Popup
         if( m_settingsService.NormalPageWidth == 0 || m_settingsService.NormalPageWidth > 350) 
         {
             G_Popup.WidthRequest = 350;
-
-            SB_AppUpdate.WidthRequest = 170;
         }
         else
         {
             G_Popup.WidthRequest = m_settingsService.NormalPageWidth - 10;
-
-            SB_AppUpdate.WidthRequest = 150;
         }
     }
     private void SB_AppUpdate_Clicked( object sender, EventArgs e )

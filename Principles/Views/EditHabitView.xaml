@@ -374,109 +374,146 @@
                                 </dxco:DXPopup>
                             </Grid>
                         </dxco:BottomSheet>
-                        <dxco:DXPopup x:Name="DXP_Reminders"
-                                      AllowAnimation="True"
-                                      AllowScrim="True"
-                                      AllowShadow="True"
-                                      CloseOnScrimTap="True"
-                                      MinimumWidthRequest="300">
-                            <VerticalStackLayout Margin="7,10,7,0"
-                                                 Spacing="6">
-                                <Label Text="{x:Static loc:LocStrings.Reminder}"
-                                       Style="{StaticResource CentralHeader}" />
+                        <dxco:BottomSheet x:Name="BS_EditReminder"
+                                          AllowDismiss="True"
+                                          BackgroundColor="{AppThemeBinding Light={StaticResource Background},
+                                                                            Dark={StaticResource DarkBackground}}"
+                                          ShowGrabber="False">
+                            <ScrollView>
+                                <VerticalStackLayout Margin="20,0,20,0"
+                                                     Spacing="6">
+                                    <Label Text="{x:Static loc:LocStrings.Reminder}"
+                                           Style="{StaticResource CentralHeader}" />
 
-                                <dxe:MultilineEdit x:Name="ME_ReminderTitle"
-                                                   LabelText="{x:Static loc:LocStrings.Title}"
-                                                   ClearIconVisibility="Never"
-                                                   MaxLineCount="2"
-                                                   MaximumWidthRequest="285"
-                                                   StartIcon="remindertitle" />
+                                    <VerticalStackLayout>
+                                        <dxe:MultilineEdit x:Name="ME_ReminderTitle"
+                                                           LabelText="{x:Static loc:LocStrings.Title}"
+                                                           ClearIconVisibility="Never"
+                                                           ReturnType="Done"
+                                                           StartIcon="remindertitle" />
 
-                                <dxe:MultilineEdit x:Name="ME_ReminderDescription"
-                                                   LabelText="{x:Static loc:LocStrings.Description}"
-                                                   ClearIconVisibility="Never"
-                                                   MaxLineCount="3"
-                                                   MaximumWidthRequest="285"
-                                                   StartIcon="reminderdescription" />
+                                        <dxe:MultilineEdit x:Name="ME_ReminderDescription"
+                                                           LabelText="{x:Static loc:LocStrings.Description}"
+                                                           ClearIconVisibility="Never"
+                                                           ReturnType="Done"
+                                                           StartIcon="reminderdescription" />
 
-                                <dxe:TimeEdit x:Name="TE_ReminderTime"
-                                              LabelText="{x:Static loc:LocStrings.Time}"
-                                              MaximumWidthRequest="285"
-                                              StartIcon="clock" />
+                                        <dxe:TimeEdit x:Name="TE_ReminderTime"
+                                                      LabelText="{x:Static loc:LocStrings.Time}"
+                                                      ReturnType="Done"
+                                                      StartIcon="clock" />
 
-                                <HorizontalStackLayout HorizontalOptions="Start">
-                                    <Switch x:Name="S_IsReminderEnabled" />
-                                    <Label Text="{x:Static loc:LocStrings.Enable}"
-                                           Margin="3,0,0,0"
-                                           TextColor="{StaticResource LightNormalText}"
-                                           VerticalOptions="Center" />
-                                </HorizontalStackLayout>
+                                        <HorizontalStackLayout HorizontalOptions="Start">
+                                            <Switch x:Name="S_IsReminderEnabled"
+                                                    Margin="{OnPlatform iOS='0,5,0,0'}" />
+                                            <Label Text="{x:Static loc:LocStrings.Enable}"
+                                                   Margin="3,0,0,0"
+                                                   TextColor="{StaticResource LightNormalText}"
+                                                   VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                        <VerticalStackLayout HorizontalOptions="Center"
+                                                             Spacing="10">
+                                            <HorizontalStackLayout HorizontalOptions="Center"
+                                                                   Spacing="10">
+                                                <dx:DXToggleButton x:Name="TBtn_Monday"
+                                                                   IsChecked="{Binding IsDayChecked[1]}"
+                                                                   Content="{x:Static loc:LocStrings.MondayShort}"
+                                                                   Style="{StaticResource WeekDayButton}"
+                                                                   WidthRequest="50"
+                                                                   HeightRequest="50"
+                                                                   CornerRadius="60"
+                                                                   FontSize="15" />
 
+                                                <dx:DXToggleButton x:Name="TBtn_Tuesday"
+                                                                   IsChecked="{Binding IsDayChecked[2]}"
+                                                                   Content="{x:Static loc:LocStrings.TuesdayShort}"
+                                                                   Style="{StaticResource WeekDayButton}"
+                                                                   WidthRequest="50"
+                                                                   HeightRequest="50"
+                                                                   CornerRadius="60"
+                                                                   FontSize="15" />
 
-                                <HorizontalStackLayout HorizontalOptions="Center"
-                                                       Spacing="10">
-                                    <dx:DXToggleButton x:Name="TBtn_Monday"
-                                                       IsChecked="{Binding IsDayChecked[1]}"
-                                                       Content="{x:Static loc:LocStrings.MondayShort}"
-                                                       Style="{StaticResource WeekDayButton}" />
+                                                <dx:DXToggleButton x:Name="TBtn_Wednesday"
+                                                                   IsChecked="{Binding IsDayChecked[3]}"
+                                                                   Content="{x:Static loc:LocStrings.WednesdayShort}"
+                                                                   Style="{StaticResource WeekDayButton}"
+                                                                   WidthRequest="50"
+                                                                   HeightRequest="50"
+                                                                   CornerRadius="60"
+                                                                   FontSize="15" />
 
-                                    <dx:DXToggleButton x:Name="TBtn_Tuesday"
-                                                       IsChecked="{Binding IsDayChecked[2]}"
-                                                       Content="{x:Static loc:LocStrings.TuesdayShort}"
-                                                       Style="{StaticResource WeekDayButton}" />
+                                                <dx:DXToggleButton x:Name="TBtn_Thursday"
+                                                                   IsChecked="{Binding IsDayChecked[4]}"
+                                                                   Content="{x:Static loc:LocStrings.ThursdayShort}"
+                                                                   Style="{StaticResource WeekDayButton}"
+                                                                   WidthRequest="50"
+                                                                   HeightRequest="50"
+                                                                   CornerRadius="60"
+                                                                   FontSize="15" />
+                                            </HorizontalStackLayout>
 
-                                    <dx:DXToggleButton x:Name="TBtn_Wednesday"
-                                                       IsChecked="{Binding IsDayChecked[3]}"
-                                                       Content="{x:Static loc:LocStrings.WednesdayShort}"
-                                                       Style="{StaticResource WeekDayButton}" />
+                                            <HorizontalStackLayout HorizontalOptions="Center"
+                                                                   Spacing="10">
+                                                <dx:DXToggleButton x:Name="TBtn_Friday"
+                                                                   IsChecked="{Binding IsDayChecked[5]}"
+                                                                   Content="{x:Static loc:LocStrings.FridayShort}"
+                                                                   Style="{StaticResource WeekDayButton}"
+                                                                   WidthRequest="50"
+                                                                   HeightRequest="50"
+                                                                   CornerRadius="60"
+                                                                   FontSize="15" />
 
-                                    <dx:DXToggleButton x:Name="TBtn_Thursday"
-                                                       IsChecked="{Binding IsDayChecked[4]}"
-                                                       Content="{x:Static loc:LocStrings.ThursdayShort}"
-                                                       Style="{StaticResource WeekDayButton}" />
-                                </HorizontalStackLayout>
+                                                <dx:DXToggleButton x:Name="TBtn_Saturday"
+                                                                   IsChecked="{Binding IsDayChecked[6]}"
+                                                                   Content="{x:Static loc:LocStrings.SaturdayShort}"
+                                                                   Style="{StaticResource WeekDayButton}"
+                                                                   WidthRequest="50"
+                                                                   HeightRequest="50"
+                                                                   CornerRadius="60"
+                                                                   FontSize="15" />
 
+                                                <dx:DXToggleButton x:Name="TBtn_Sunday"
+                                                                   IsChecked="{Binding IsDayChecked[0]}"
+                                                                   Content="{x:Static loc:LocStrings.SundayShort}"
+                                                                   Style="{StaticResource WeekDayButton}"
+                                                                   WidthRequest="50"
+                                                                   HeightRequest="50"
+                                                                   CornerRadius="60"
+                                                                   FontSize="15" />
+                                            </HorizontalStackLayout>
+                                        </VerticalStackLayout>
+                                    </VerticalStackLayout>
+                                    <Grid Margin="0,10,0,0"
+                                          ColumnDefinitions="*,*"
+                                          ColumnSpacing="15"
+                                          HorizontalOptions="FillAndExpand">
+                                        <dxco:SimpleButton Text="{x:Static loc:LocStrings.Cancel}"
+                                                           Clicked="SB_Reminder_Cancel_Clicked"
+                                                           Icon="close"
+                                                           IconHorizontalPosition="Left"
+                                                           HeightRequest="50"
+                                                           BackgroundColor="{StaticResource CancelButtonColor}"
+                                                           FontSize="20"
+                                                           HorizontalOptions="FillAndExpand"
+                                                           VerticalOptions="Center"
+                                                           Grid.Column="0" />
 
-                                <HorizontalStackLayout HorizontalOptions="Center"
-                                                       Spacing="10">
+                                        <dxco:SimpleButton Text="{Binding LocSave}"
+                                                           Clicked="SB_ReminderSave_Clicked"
+                                                           Style="{StaticResource PrimaryButton}"
+                                                           Icon="check_second"
+                                                           IconHorizontalPosition="Left"
+                                                           HeightRequest="50"
+                                                           FontSize="20"
+                                                           HorizontalOptions="FillAndExpand"
+                                                           VerticalOptions="Center"
+                                                           Grid.Column="1" />
+                                    </Grid>
 
-                                    <dx:DXToggleButton x:Name="TBtn_Friday"
-                                                       IsChecked="{Binding IsDayChecked[5]}"
-                                                       Content="{x:Static loc:LocStrings.FridayShort}"
-                                                       Style="{StaticResource WeekDayButton}" />
+                                </VerticalStackLayout>
+                            </ScrollView>
+                        </dxco:BottomSheet>
 
-                                    <dx:DXToggleButton x:Name="TBtn_Saturday"
-                                                       IsChecked="{Binding IsDayChecked[6]}"
-                                                       Content="{x:Static loc:LocStrings.SaturdayShort}"
-                                                       Style="{StaticResource WeekDayButton}" />
-
-                                    <dx:DXToggleButton x:Name="TBtn_Sunday"
-                                                       IsChecked="{Binding IsDayChecked[0]}"
-                                                       Content="{x:Static loc:LocStrings.SundayShort}"
-                                                       Style="{StaticResource WeekDayButton}" />
-                                </HorizontalStackLayout>
-
-                                <HorizontalStackLayout Padding="0"
-                                                       HorizontalOptions="End">
-                                    <dxco:SimpleButton x:Name="SB_Reminder_Cancel"
-                                                       Text="{x:Static loc:LocStrings.Cancel}"
-                                                       Clicked="SB_Reminder_Cancel_Clicked"
-                                                       Icon="close"
-                                                       IconHorizontalPosition="Left"
-                                                       Margin="0,0,5,5"
-                                                       BackgroundColor="{StaticResource CancelButtonColor}"
-                                                       FontSize="16" />
-                                    <dxco:SimpleButton x:Name="SB_ReminderSave"
-                                                       Text="{Binding LocSave}"
-                                                       Clicked="SB_ReminderSave_Clicked"
-                                                       Style="{StaticResource PrimaryButton}"
-                                                       Icon="check_second"
-                                                       IconHorizontalPosition="Left"
-                                                       Margin="0,0,0,5"
-                                                       FontSize="16" />
-                                </HorizontalStackLayout>
-                            </VerticalStackLayout>
-                        </dxco:DXPopup>
                         <dxco:BottomSheet x:Name="BS_AllHabits">
                             <Grid Padding="0,7,0,15"
                                   RowDefinitions="Auto, Auto"

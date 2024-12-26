@@ -1,67 +1,59 @@
-﻿<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<toolkit:Popup x:Class="Principles.Views.UpdatePopup"
+               xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-               x:Class="Principles.Views.UpdatePopup"
-               xmlns:loc="clr-namespace:Principles.Resources.AppStrings"
+               xmlns:controls="clr-namespace:Principles.Controls"
                xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
                xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
-               xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
                xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
+               xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+               xmlns:loc="clr-namespace:Principles.Resources.AppStrings"
+               xmlns:m="clr-namespace:Principles.Core.Models;assembly=Principles.Core"
                xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+               xmlns:templates="clr-namespace:Principles.Views.Templates"
                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                xmlns:v="clr-namespace:Principles.Views"
                xmlns:vm="clr-namespace:Principles.ViewModels"
-               xmlns:m="clr-namespace:Principles.Core.Models;assembly=Principles.Core"
-               xmlns:templates="clr-namespace:Principles.Views.Templates"
-               xmlns:controls="clr-namespace:Principles.Controls"
                x:DataType="vm:UpdatePopupViewModel"
                Color="Transparent">
 
     <Grid x:Name="G_Popup">
-        <Frame CornerRadius="20"
+        <Frame Padding="10"
                BackgroundColor="White"
-               HasShadow="True"
-               Padding="10">
+               CornerRadius="20"
+               HasShadow="True">
             <VerticalStackLayout Spacing="15">
                 <Label Text="{x:Static loc:LocStrings.AppUpdateAvailable}"
                        FontAttributes="Bold"
-                       HorizontalOptions="Center"
-                       FontSize="18" />
+                       FontSize="18"
+                       HorizontalOptions="Center" />
 
                 <Label Text="{Binding VersionDescription}"
-                       HorizontalOptions="Start"
-                       LineBreakMode="WordWrap"
+                       Margin="6,0,0,0"
                        FontSize="15"
-                       Margin="6,0,0,0" />
+                       HorizontalOptions="Start"
+                       LineBreakMode="WordWrap" />
 
-                <HorizontalStackLayout HorizontalOptions="Start"
-                                       Spacing="5"
-                                       Padding="0">
-                    <OnPlatform x:TypeArguments="View">
-                        <On Platform="iOS">
-                            <Switch IsToggled="{Binding DontShowAgain}"
-                                    OnColor="{StaticResource Primary}"
-                                    VerticalOptions="Center" />
-                        </On>
-                        <On Platform="Android">
-                            <CheckBox IsChecked="{Binding DontShowAgain}"
-                                      VerticalOptions="Center" />
-                        </On>
-                    </OnPlatform>
+                <HorizontalStackLayout Padding="0"
+                                       HorizontalOptions="Start"
+                                       Spacing="5">
+                    <Switch IsToggled="{Binding DontShowAgain}"
+                            OnColor="{StaticResource Primary}"
+                            VerticalOptions="Center" />
                     <Label Text="{x:Static loc:LocStrings.DontShowUpdateCheckBoxText}"
-                           VerticalOptions="Center"
+                           FontSize="15"
                            LineBreakMode="TailTruncation"
                            MaxLines="1"
-                           FontSize="15">
+                           VerticalOptions="Center">
                         <Label.GestureRecognizers>
-                            <TapGestureRecognizer NumberOfTapsRequired="1"
-                                                  x:Name="TGR_ToggleDontShowAgain"
+                            <TapGestureRecognizer x:Name="TGR_ToggleDontShowAgain"
+                                                  NumberOfTapsRequired="1"
                                                   Tapped="TGR_ToggleDontShowAgain_Tapped" />
                         </Label.GestureRecognizers>
                     </Label>
                 </HorizontalStackLayout>
 
-                <HorizontalStackLayout Spacing="10"
-                                       HorizontalOptions="End">
+                <HorizontalStackLayout HorizontalOptions="End"
+                                       Spacing="10">
                     <dxco:SimpleButton x:Name="SB_CancelAppUpdate"
                                        Text="{x:Static loc:LocStrings.AppUpdateCloseButton}"
                                        Command="{Binding CancelUpdateCommand}"
@@ -73,11 +65,11 @@
                                        Text="{x:Static loc:LocStrings.Update}"
                                        Command="{Binding OpenStoreCommand}"
                                        Clicked="SB_AppUpdate_Clicked"
-                                       BackgroundColor="{StaticResource Primary}"
                                        Icon="{OnPlatform Android='google_play',
                                                          iOS='app_store'}"
                                        IconHorizontalPosition="Left"
                                        HeightRequest="50"
+                                       BackgroundColor="{StaticResource Primary}"
                                        TextColor="{StaticResource Background}" />
                 </HorizontalStackLayout>
             </VerticalStackLayout>

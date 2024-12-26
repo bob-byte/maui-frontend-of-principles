@@ -191,16 +191,19 @@
                                        LabelText="{x:Static loc:LocStrings.ReminderTitle}"
                                        MaxLineCount="2"
                                        MaximumWidthRequest="285"
+                                       ReturnType="Done"
                                        StartIcon="remindertitle" />
                     <dxe:MultilineEdit Text="{Binding ReminderReport.Description}"
                                        ClearIconVisibility="Never"
                                        LabelText="{x:Static loc:LocStrings.ReminderDescription}"
                                        MaxLineCount="3"
                                        MaximumWidthRequest="285"
+                                       ReturnType="Done"
                                        StartIcon="reminderdescription" />
 
                     <dxe:TimeEdit LabelText="{x:Static loc:LocStrings.Time}"
                                   MaximumWidthRequest="285"
+                                  ReturnType="Done"
                                   StartIcon="clock"
                                   TimeSpan="{Binding ReminderReport.Time}" />
 
