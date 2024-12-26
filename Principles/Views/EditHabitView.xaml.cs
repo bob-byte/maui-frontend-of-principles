@@ -22,6 +22,18 @@ public partial class EditHabitView : ContentPageBase
         m_deviceOrientationService = DependencyService.Get<ILockDeviceOrientation>();
 
         InitializeComponent();
+
+        if (ViewModel.SettingsService.NormalPageHeight == 0)
+        {
+            BS_EditReminder.HalfExpandedRatio = 0.7;
+        }
+        else
+        {
+            //bottom_sheet_height = full_height * HalfExpandedRatio
+            //HalfExpandedRatio = bottom_sheet_height / full_height
+            double heightOfReminderBottomSheet = 500;
+            BS_EditReminder.HalfExpandedRatio = heightOfReminderBottomSheet / ViewModel.SettingsService.NormalPageHeight;
+        }
     }
 
     protected override void OnAppearing()
@@ -619,7 +631,7 @@ public partial class EditHabitView : ContentPageBase
                 LocStrings.DeviceDoesNotSupportNotifications,
                 visualOptions: SnackbarHelper.DefaultOptions()
             ).Show();
-            ReminderBottomSheet.State = BottomSheetState.Hidden;
+            BS_EditReminder.State = BottomSheetState.Hidden;
         }
     }
 
@@ -631,10 +643,10 @@ public partial class EditHabitView : ContentPageBase
     //it will be used when we support several reminders per one habit
     //private void ShowOrHideHabitReminders()
     //{
-    //    if (ReminderBottomSheet.State == BottomSheetState.Hidden)
+    //    if (BS_EditReminder.State == BottomSheetState.Hidden)
     //    {
-    //        ReminderBottomSheet.State = BottomSheetState.HalfExpanded;
-    //        double bottomSheetHeight = PageHeight * ReminderBottomSheet.HalfExpandedRatio;
+    //        BS_EditReminder.State = BottomSheetState.HalfExpanded;
+    //        double bottomSheetHeight = PageHeight * BS_EditReminder.HalfExpandedRatio;
     //        double rowSpacing = G_Reminder.RowSpacing * (G_Reminder.RowDefinitions.Count - 1);
     //        double additionalSpacing = 15;
     //        double height = bottomSheetHeight - rowSpacing - L_ReminderCenterHeader.HeightRequest - L_ReminderRecommendation.HeightRequest - additionalSpacing;
@@ -645,7 +657,7 @@ public partial class EditHabitView : ContentPageBase
     //    }
     //    else
     //    {
-    //        ReminderBottomSheet.State = BottomSheetState.Hidden;
+    //        BS_EditReminder.State = BottomSheetState.Hidden;
     //    }
     //}
 
@@ -657,7 +669,7 @@ public partial class EditHabitView : ContentPageBase
                 LocStrings.DeviceDoesNotSupportNotifications,
                 visualOptions: SnackbarHelper.DefaultOptions()
             ).Show();
-            ReminderBottomSheet.State = BottomSheetState.Hidden;
+            BS_EditReminder.State = BottomSheetState.Hidden;
 
             return;
         }
@@ -701,7 +713,7 @@ public partial class EditHabitView : ContentPageBase
             TE_ReminderTime.TimeSpan = time;
         }
 
-        ReminderBottomSheet.State = BottomSheetState.HalfExpanded;
+        BS_EditReminder.State = BottomSheetState.HalfExpanded;
     }
 
     private async void SB_ReminderSave_Clicked( object sender, EventArgs e )
@@ -756,12 +768,12 @@ public partial class EditHabitView : ContentPageBase
 
         await ViewModel.AddReminderAsync();
 
-        ReminderBottomSheet.State = BottomSheetState.Hidden;
+        BS_EditReminder.State = BottomSheetState.Hidden;
     }
 
     private void SB_Reminder_Cancel_Clicked( object sender, EventArgs e )
     {
-        ReminderBottomSheet.State = BottomSheetState.Hidden;
+        BS_EditReminder.State = BottomSheetState.Hidden;
     }
 
     private void AISP_AreasRequested( object? sender, ItemsRequestEventArgs e )

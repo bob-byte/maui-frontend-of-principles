@@ -14,7 +14,6 @@ using System.Reflection;
 
 #if IOS
 using Microsoft.Maui.Platform;
-using Principles.Platforms.iOS.Handlers;
 #endif
 #if ANDROID
 using AndroidX.AppCompat.Widget;
@@ -66,11 +65,6 @@ public static class MauiProgram
             .RegisterViewModels()
             .RegisterViews();
 
-#if IOS
-        TimePickerHandler.Mapper.AppendToMapping(
-            nameof(TimeEdit),
-            TimeEditHandlerMapper.AddDoneButton);
-#endif
         var assembly = Assembly.GetExecutingAssembly();
 
         //TODO: replace appsettings.json and implementation of the config to Principles.Core project
