@@ -134,7 +134,7 @@ public partial class HelperViewModel : BaseViewModel
     {
         return visualElement.DisplaySnackbar(
             LocStrings.HelperWarning,
-            duration: TimeSpan.FromSeconds( 5 ),
+            duration: TimeSpan.FromSeconds( 12 ),
             visualOptions: SnackbarHelper.DefaultOptions()
         );
     }
