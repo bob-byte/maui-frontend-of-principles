@@ -804,4 +804,7 @@
   <data name="DeleteTheHabit" xml:space="preserve">
     <value>Delete the habit</value>
   </data>
+  <data name="SmthWentWrong" xml:space="preserve">
+    <value>Something went wrong. You can write to support: app@principles.top</value>
+  </data>
 </root>

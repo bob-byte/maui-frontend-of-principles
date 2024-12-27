@@ -726,4 +726,7 @@
 	<data name="ContinueWithApple" xml:space="preserve">
 		<value>Продолжить через Apple</value>
 	</data>
+	<data name="SmthWentWrong" xml:space="preserve">
+		<value>Что-то пошло не так. Можете обратиться сюда: app@principles.top</value>
+	</data>
 </root>

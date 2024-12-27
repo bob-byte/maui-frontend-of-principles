@@ -804,4 +804,7 @@
   <data name="DeleteTheHabit" xml:space="preserve">
     <value>Видалити звичку</value>
   </data>
+  <data name="SmthWentWrong" xml:space="preserve">
+    <value>Щось пішло не так. Можете звернутись сюди: app@principles.top</value>
+  </data>
 </root>
