@@ -40,7 +40,7 @@ public partial class App : Application
     protected async override void OnStart()
     {
         base.OnStart();
-
+        
         if (VersionTracking.IsFirstLaunchEver)
         {
             try
@@ -58,7 +58,7 @@ public partial class App : Application
             }
         }
 
-        if (VersionTracking.IsFirstLaunchForCurrentBuild || VersionTracking.IsFirstLaunchForCurrentVersion) 
+        if (VersionTracking.IsFirstLaunchEver || VersionTracking.IsFirstLaunchForCurrentBuild || VersionTracking.IsFirstLaunchForCurrentVersion) 
         {
             await SecureStorage.SetAsync( CacheKeys.API_KEY, string.Empty );
             
@@ -67,11 +67,7 @@ public partial class App : Application
             {
                 try
                 {
-                    string apiKey = await m_apiKeyService.GetApiKeyAsync();
-                    if (!string.IsNullOrWhiteSpace( apiKey ))
-                    {
-                        await SecureStorage.SetAsync( CacheKeys.API_KEY, apiKey );
-                    }
+                    await m_apiKeyService.RestoreApiKeyAsync();
                 }
                 catch
                 {
@@ -92,7 +88,7 @@ public partial class App : Application
     protected override async void OnResume()
     {
         base.OnResume();
-
+        
         m_updatePopupViewModel.ReferenceMessenger.Send( new TryAddNewDayInHabitListMessage() );
 
         bool shouldShowPopup = (m_updatePopup is null || !m_updatePopup.IsShown) && ( await m_updatePopupViewModel.ShouldShowPopup());

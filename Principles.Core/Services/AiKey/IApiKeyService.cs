@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 namespace Principles.Core.Services.AiKey;
 public interface IApiKeyService
 {
-    Task<string> GetApiKeyAsync();
+    Task<string> RestoreApiKeyAsync();
 }

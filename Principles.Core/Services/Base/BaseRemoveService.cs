@@ -19,14 +19,8 @@ public class BaseRemoteService
     protected static AsyncLazy<OpenAIClient> LazyAiClient { get; } = new(
         async () =>
         {
-            string? apiKey = await SecureStorage.GetAsync( CacheKeys.API_KEY ).DefaultConfigureAwait();
-            if (string.IsNullOrWhiteSpace( apiKey )) 
-            {
-                IApiKeyService apiKeyService = ServiceLocator.Current!.GetRequiredService<IApiKeyService>();
-                apiKey = await apiKeyService.GetApiKeyAsync().DefaultConfigureAwait();
-                
-                await SecureStorage.SetAsync( CacheKeys.API_KEY, apiKey ).DefaultConfigureAwait();
-            }
+            IApiKeyService apiKeyService = ServiceLocator.Current!.GetRequiredService<IApiKeyService>();
+            string apiKey = await apiKeyService.RestoreApiKeyAsync().DefaultConfigureAwait();
 
             OpenAIClientOptions options = new( OpenAIClientOptions.ServiceVersion.V2023_09_01_Preview );
             OpenAIClient client = new( apiKey, options );
