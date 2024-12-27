@@ -655,11 +655,11 @@
     <value>Описание</value>
   </data>
 	<data name="ReminderTitleText" xml:space="preserve">
-    <value>Отметить выполнение привычек</value>
-  </data>
+		<value>Напомните сегодняшние привычки</value>
+	</data>
 	<data name="ReminderDescriptionText" xml:space="preserve">
-    <value>Время отметить, какие привычки были выполнены сегодня и напомнить собственные цели</value>
-  </data>
+		<value>время отметить, какие привычки были выполнены вчера, и напомнить о своих привычках и целях</value>
+	</data>
 	<data name="Time" xml:space="preserve">
     <value>Время</value>
   </data>

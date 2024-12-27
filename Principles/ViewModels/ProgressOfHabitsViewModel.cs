@@ -361,9 +361,9 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
             {
                 reminder.UserNotificationRequestId = 0;
                 reminder.Title = LocStrings.ReminderTitleText;
-                reminder.Description = LocStrings.ReminderDescriptionText;
+                reminder.Description = string.IsNullOrWhiteSpace( UserName?.Value ) ? LocStrings.ReminderDescriptionText : $"{UserName.Value}, {LocStrings.ReminderDescriptionText}";
                 reminder.IsEnabled = true;
-                reminder.Time = new TimeOnly( 20, 30 );
+                reminder.Time = new TimeOnly( 7, 0 );
 
                 ReminderReport = new EditedReminderReport
                 {

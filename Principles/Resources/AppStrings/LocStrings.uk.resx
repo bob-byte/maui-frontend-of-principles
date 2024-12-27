@@ -739,10 +739,10 @@
     <value>Опис</value>
   </data>
   <data name="ReminderTitleText" xml:space="preserve">
-    <value>Відзначити виконання звичок</value>
+    <value>Нагадайте сьогоднішні звички</value>
   </data>
   <data name="ReminderDescriptionText" xml:space="preserve">
-    <value>Час відзначити, які звички були виконані сьогодні й нагадати власні цілі</value>
+    <value>час відзначити, які звички було виконано вчора, і нагадати про свої звички та цілі</value>
   </data>
   <data name="Time" xml:space="preserve">
     <value>Час</value>

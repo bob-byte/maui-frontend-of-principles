@@ -739,10 +739,10 @@
     <value>Description</value>
   </data>
   <data name="ReminderTitleText" xml:space="preserve">
-    <value>Mark fulfillment of the habits</value>
+    <value>Remember today's habits</value>
   </data>
   <data name="ReminderDescriptionText" xml:space="preserve">
-    <value>Time to note which habits have been completed today and remind yourself of your goals</value>
+    <value>time to note what habits were accomplished yesterday and remind yourself of habits and goals</value>
   </data>
   <data name="Time" xml:space="preserve">
     <value>Time</value>
