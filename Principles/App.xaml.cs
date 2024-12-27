@@ -67,11 +67,7 @@ public partial class App : Application
             {
                 try
                 {
-                    string apiKey = await m_apiKeyService.GetApiKeyAsync();
-                    if (!string.IsNullOrWhiteSpace( apiKey ))
-                    {
-                        await SecureStorage.SetAsync( CacheKeys.API_KEY, apiKey );
-                    }
+                    await m_apiKeyService.RestoreApiKeyAsync();
                 }
                 catch
                 {
