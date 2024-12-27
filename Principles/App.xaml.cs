@@ -41,6 +41,8 @@ public partial class App : Application
     {
         base.OnStart();
         
+        m_loggingService.LogInfo( "App starting..." );
+        
         if (VersionTracking.IsFirstLaunchEver)
         {
             try
@@ -88,6 +90,8 @@ public partial class App : Application
     protected override async void OnResume()
     {
         base.OnResume();
+        
+        m_loggingService.LogInfo( "App resuming..." );
         
         m_updatePopupViewModel.ReferenceMessenger.Send( new TryAddNewDayInHabitListMessage() );
 
