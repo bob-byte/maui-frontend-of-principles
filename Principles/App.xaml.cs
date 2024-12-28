@@ -11,7 +11,6 @@ public partial class App : Application
     private readonly UpdatePopupViewModel m_updatePopupViewModel;
     private readonly ISettingsService m_settingsService;
     private readonly ILoggingService m_loggingService;
-    private readonly IApiKeyService m_apiKeyService;
 
     private UpdatePopup? m_updatePopup;
     
@@ -24,7 +23,6 @@ public partial class App : Application
         
         m_settingsService = serviceProvider.GetRequiredService<ISettingsService>();
         m_loggingService = serviceProvider.GetRequiredService<ILoggingService>();
-        m_apiKeyService = serviceProvider.GetRequiredService<IApiKeyService>();
 
         m_updatePopupViewModel = new UpdatePopupViewModel( serviceProvider );
 
@@ -40,6 +38,11 @@ public partial class App : Application
     protected async override void OnStart()
     {
         base.OnStart();
+
+        if (VersionTracking.IsFirstLaunchEver || VersionTracking.IsFirstLaunchForCurrentBuild || VersionTracking.IsFirstLaunchForCurrentVersion) 
+        {
+            await SecureStorage.SetAsync( CacheKeys.API_KEY, string.Empty );
+        }
         
         m_loggingService.LogInfo( "App starting..." );
         
@@ -59,49 +62,36 @@ public partial class App : Application
                 m_loggingService.LogError( ex, ex.Message );
             }
         }
-
-        if (VersionTracking.IsFirstLaunchEver || VersionTracking.IsFirstLaunchForCurrentBuild || VersionTracking.IsFirstLaunchForCurrentVersion) 
-        {
-            await SecureStorage.SetAsync( CacheKeys.API_KEY, string.Empty );
-            
-            string token = await m_settingsService.GetAuthAccessTokenAsync();
-            if (!string.IsNullOrWhiteSpace( token ))
-            {
-                try
-                {
-                    await m_apiKeyService.RestoreApiKeyAsync();
-                }
-                catch
-                {
-                    //do nothing
-                }
-            }
-        }
         
-        bool shouldShowPopup = await m_updatePopupViewModel.ShouldShowPopup();
-
-        if (shouldShowPopup)
-        {
-            m_updatePopup ??= new UpdatePopup( m_updatePopupViewModel );
-            Windows[0].Page!.ShowPopup( m_updatePopup );
-        }
+        // bool shouldShowPopup = await m_updatePopupViewModel.ShouldShowPopup();
+        //
+        // if (shouldShowPopup)
+        // {
+        //     m_updatePopup ??= new UpdatePopup( m_updatePopupViewModel );
+        //     Windows[0].Page!.ShowPopup( m_updatePopup );
+        // }
     }
 
     protected override async void OnResume()
     {
         base.OnResume();
         
+        if (VersionTracking.IsFirstLaunchEver || VersionTracking.IsFirstLaunchForCurrentBuild || VersionTracking.IsFirstLaunchForCurrentVersion) 
+        {
+            await SecureStorage.SetAsync( CacheKeys.API_KEY, string.Empty );
+        }
+        
         m_loggingService.LogInfo( "App resuming..." );
         
         m_updatePopupViewModel.ReferenceMessenger.Send( new TryAddNewDayInHabitListMessage() );
 
-        bool shouldShowPopup = (m_updatePopup is null || !m_updatePopup.IsShown) && ( await m_updatePopupViewModel.ShouldShowPopup());
-
-        if (shouldShowPopup)
-        {
-            m_updatePopup = new UpdatePopup( m_updatePopupViewModel );
-            Windows[0].Page!.ShowPopup( m_updatePopup );
-        }
+        // bool shouldShowPopup = (m_updatePopup is null || !m_updatePopup.IsShown) && ( await m_updatePopupViewModel.ShouldShowPopup());
+        //
+        // if (shouldShowPopup)
+        // {
+        //     m_updatePopup = new UpdatePopup( m_updatePopupViewModel );
+        //     Windows[0].Page!.ShowPopup( m_updatePopup );
+        // }
     }
 
     private void CurrentDomain_UnhandledException( object sender, UnhandledExceptionEventArgs e )
