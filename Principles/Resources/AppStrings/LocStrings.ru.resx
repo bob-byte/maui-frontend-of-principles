@@ -556,8 +556,8 @@
     <value>Быть</value>
   </data>
 	<data name="GoalLableRecommendation" xml:space="preserve">
-    <value>Рекомендация: «Выберите цель, которая основана на вашей личности, потому что она определяет вашу жизнь».</value>
-  </data>
+		<value>Рекомендация: выберите конкретную цель или ту, которая ориентирована на вашу идентичность, поскольку она определяет вашу жизнь.</value>
+	</data>
 	<data name="UpdateGoal" xml:space="preserve">
     <value>Обновите выбранную цель</value>
   </data>

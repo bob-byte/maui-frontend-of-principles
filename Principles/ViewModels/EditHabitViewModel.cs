@@ -678,43 +678,44 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
             }
             else
             {
-                UserGoal foundGoalInCollection = UserGoals!.First( g => g.Id == EditedGoal.Id );
-                if (foundGoalInCollection.Name != EditedGoal.Name)
-                {
-                    foundGoalInCollection.Name = EditedGoal.Name;
-                    ReferenceMessenger.Send( new ChangedGoalMessage( EditedGoal ) );
-
-                    if (Habit.Goal?.Id == EditedGoal.Id)
-                    {
-                        Habit.Goal.Name = EditedGoal.Name;
-                    }
-                }
-
-
-                // Store the old goal name before saving changes
+                // Store the old goal name before local saving changes
                 string? oldGoalName = null;
-                if (!isNewGoal)
+                UserGoal? foundGoalInCollection = UserGoals!.FirstOrDefault( g => g.Id == EditedGoal.Id );
+                if (foundGoalInCollection != null)
                 {
-                    UserGoal? existingGoal = UserGoals?.FirstOrDefault( g => g.Id == EditedGoal.Id );
-                    if (existingGoal != null)
-                    {
-                        oldGoalName = existingGoal.Name;
-                    }
-                }
+                    oldGoalName = foundGoalInCollection.Name;
 
-                // Get all notifications and update the relevant ones
-                IList<NotificationRequest> notifications = await LocalNotificationCenter.Current.GetPendingNotificationList();
-                if (!string.IsNullOrEmpty( oldGoalName ))
-                {
-                    foreach (UserHabitReminder? reminder in Habit.Reminders.Where( r => r.Title == oldGoalName ))
+                    if (oldGoalName != EditedGoal.Name)
                     {
-                        reminder.Title = EditedGoal.Name;
-                    }
+                        foundGoalInCollection.Name = EditedGoal.Name;
+                        ReferenceMessenger.Send( new ChangedGoalMessage( EditedGoal ) );
 
-                    foreach (NotificationRequest? notification in notifications.Where( n => n.Title == oldGoalName ))
-                    {
-                        notification.Title = EditedGoal.Name;
-                        await LocalNotificationCenter.Current.Show( notification );
+                        if (Habit.Goal?.Id == EditedGoal.Id)
+                        {
+                            Habit.Goal.Name = EditedGoal.Name;
+                        }
+
+                        // Get all notifications and update the relevant ones
+                        IList<NotificationRequest> notifications =
+                            await LocalNotificationCenter.Current.GetPendingNotificationList();
+                        if (!string.IsNullOrWhiteSpace( oldGoalName ))
+                        {
+                            if (Habit.Reminders is not null)
+                            {
+                                foreach (UserHabitReminder reminder in
+                                             Habit.Reminders.Where( r => r.Title == oldGoalName ))
+                                {
+                                    reminder.Title = EditedGoal.Name!;
+                                }
+                            }
+
+                            foreach (NotificationRequest? notification in notifications.Where( n =>
+                                         n.Title == oldGoalName ))
+                            {
+                                notification.Title = EditedGoal.Name!;
+                                await LocalNotificationCenter.Current.Show( notification );
+                            }
+                        }
                     }
                 }
             }

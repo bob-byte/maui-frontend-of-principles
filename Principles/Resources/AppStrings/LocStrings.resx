@@ -634,7 +634,7 @@
     <value>Be</value>
   </data>
   <data name="GoalLableRecommendation" xml:space="preserve">
-    <value>Recommendation: "Choose a goal that is based on your identity because it defines your life".</value>
+    <value>Recommendation: "Choose a goal that is concrete or based on your identity because it defines your life".</value>
   </data>
   <data name="UpdateGoal" xml:space="preserve">
     <value>Update chosen goal</value>
