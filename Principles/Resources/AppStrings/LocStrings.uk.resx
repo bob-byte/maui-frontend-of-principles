@@ -637,7 +637,7 @@
     <value>Бути</value>
   </data>
   <data name="GoalLableRecommendation" xml:space="preserve">
-    <value>Рекомендація: виберіть ціль, яка орієнтована на вашу ідентичність, оскільки вона визначає ваше життя.</value>
+    <value>Рекомендація: виберіть конкретну ціль або ту, яка орієнтована на вашу ідентичність, оскільки вона визначає ваше життя.</value>
   </data>
   <data name="UpdateGoal" xml:space="preserve">
     <value>Оновіть вибрану ціль</value>
