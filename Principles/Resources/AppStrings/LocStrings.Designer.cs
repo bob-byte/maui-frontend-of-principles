@@ -1424,5 +1424,11 @@ namespace Principles.Resources.AppStrings {
                 return ResourceManager.GetString("SmthWentWrong", resourceCulture);
             }
         }
+        
+        internal static string AppleAuthIsNotSupportedForCurrentDevice {
+            get {
+                return ResourceManager.GetString("AppleAuthIsNotSupportedForCurrentDevice", resourceCulture);
+            }
+        }
     }
 }

@@ -729,4 +729,7 @@
 	<data name="SmthWentWrong" xml:space="preserve">
 		<value>Что-то пошло не так. Можете обратиться сюда: app@principles.top</value>
 	</data>
+	<data name="AppleAuthIsNotSupportedForCurrentDevice" xml:space="preserve">
+		<value>В настоящее время Apple-аутентификация поддерживается только на iOS 13.0 или более поздней версии</value>
+	</data>
 </root>

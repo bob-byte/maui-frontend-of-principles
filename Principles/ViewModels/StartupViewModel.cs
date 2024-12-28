@@ -50,13 +50,21 @@ public partial class StartupViewModel : BaseViewModel
     {
         try
         {
-            await m_appleAuthService.AuthorizeAsync();
-            await m_reminderService.TryToRecoverAllUserRemindersAsync();
-            await Navigation.GoToInitialViewAsync();
+            if (DeviceInfo.Platform == DevicePlatform.iOS && DeviceInfo.Version.Major >= 13)
+            {
+                await m_appleAuthService.AuthorizeAsync();
+                await m_reminderService.TryToRecoverAllUserRemindersAsync();
+                await Navigation.GoToInitialViewAsync();
+            }
+            else
+            {
+                throw new NotSupportedException( message: LocStrings.AppleAuthIsNotSupportedForCurrentDevice );
+            }
         }
         catch (Exception ex)
         {
-            if (ex is not TaskCanceledException)
+            bool isCancelledByUser = ex is TaskCanceledException || ex.Message.Contains( "error 1001" );
+            if (!isCancelledByUser)
             {
                 LoggingService.LogError( ex, ex.Message );
             }

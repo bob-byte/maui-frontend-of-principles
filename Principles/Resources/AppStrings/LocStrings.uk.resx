@@ -807,4 +807,7 @@
   <data name="SmthWentWrong" xml:space="preserve">
     <value>Щось пішло не так. Можете звернутись сюди: app@principles.top</value>
   </data>
+  <data name="AppleAuthIsNotSupportedForCurrentDevice" xml:space="preserve">
+    <value>Наразі Apple-автентифікація підтримується тільки на iOS 13.0 або новішої версії</value>
+  </data>
 </root>

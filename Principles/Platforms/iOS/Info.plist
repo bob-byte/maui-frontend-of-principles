@@ -58,18 +58,14 @@
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>UIBackgroundModes</key>
-    <array>
-        <string>fetch</string>
-        <string>remote-notification</string>
-    </array>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
 	<key>com.apple.developer.applesignin</key>
-    <array>
-        <string>Default</string>
-    </array>
-    <key>NSUserTrackingUsageDescription</key>
-    <string>This app uses Sign in with Apple for authentication purposes.</string>
-	<key>NSAppleIDUsageDescription</key>
-    <string>We use your Apple ID to authenticate your account.</string>
+	<array>
+		<string>Default</string>
+	</array>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>The app should not request your location. Write to app@principles.top if you encounter a request for your location.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
