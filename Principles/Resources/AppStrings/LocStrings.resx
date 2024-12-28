@@ -727,7 +727,7 @@
     <value>Don't remind me of it again</value>
   </data>
   <data name="HelperWarning" xml:space="preserve">
-    <value>The AI assistant also knows your habits, goals, mission, gender, and slogan. So you can ask anything about them. For example, “What should I set as my next goal?” Note that it can sometimes make mistakes. Check important information!</value>
+    <value>The AI-assistant knows your habits, goals, mission, gender, and slogan. So you can ask anything about them. For example, “What should I set as my next goal?” Note that it can sometimes make mistakes. Check important information!</value>
   </data>
   <data name="Add" xml:space="preserve">
     <value>Add</value>

@@ -128,10 +128,15 @@ public class ReminderService : BaseRemoteService, IReminderService
             {
                 IconLargeName = new AndroidIcon("logolargesize"),
                 IconSmallName = new AndroidIcon("logolargesize"),
-            }
+            },
         };
-
-        await LocalNotificationCenter.Current.Show( notification );
+        
+#if IOS
+        LocalNotificationCenter.Current.Cancel( id );
+        await LocalNotificationCenter.Current.Show( notification ).DefaultConfigureAwait();
+#else
+        await LocalNotificationCenter.Current.Show( notification ).DefaultConfigureAwait();
+#endif
     }
 
     private async Task<AllRemindersResponse> LoadAllRemindersAsync()
