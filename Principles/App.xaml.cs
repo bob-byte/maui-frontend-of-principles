@@ -63,13 +63,13 @@ public partial class App : Application
             }
         }
         
-        // bool shouldShowPopup = await m_updatePopupViewModel.ShouldShowPopup();
-        //
-        // if (shouldShowPopup)
-        // {
-        //     m_updatePopup ??= new UpdatePopup( m_updatePopupViewModel );
-        //     Windows[0].Page!.ShowPopup( m_updatePopup );
-        // }
+        bool shouldShowPopup = await m_updatePopupViewModel.ShouldShowPopup();
+        
+        if (shouldShowPopup)
+        {
+            m_updatePopup ??= new UpdatePopup( m_updatePopupViewModel );
+            Windows[0].Page!.ShowPopup( m_updatePopup );
+        }
     }
 
     protected override async void OnResume()
@@ -85,13 +85,13 @@ public partial class App : Application
         
         m_updatePopupViewModel.ReferenceMessenger.Send( new TryAddNewDayInHabitListMessage() );
 
-        // bool shouldShowPopup = (m_updatePopup is null || !m_updatePopup.IsShown) && ( await m_updatePopupViewModel.ShouldShowPopup());
-        //
-        // if (shouldShowPopup)
-        // {
-        //     m_updatePopup = new UpdatePopup( m_updatePopupViewModel );
-        //     Windows[0].Page!.ShowPopup( m_updatePopup );
-        // }
+        bool shouldShowPopup = (m_updatePopup is null || !m_updatePopup.IsShown) && ( await m_updatePopupViewModel.ShouldShowPopup());
+        
+        if (shouldShowPopup)
+        {
+            m_updatePopup = new UpdatePopup( m_updatePopupViewModel );
+            Windows[0].Page!.ShowPopup( m_updatePopup );
+        }
     }
 
     private void CurrentDomain_UnhandledException( object sender, UnhandledExceptionEventArgs e )

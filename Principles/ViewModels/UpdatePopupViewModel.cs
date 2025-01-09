@@ -74,9 +74,15 @@ public partial class UpdatePopupViewModel : BaseViewModel
 
         string url;
 #if IOS
-        url = "https://testflight.apple.com/join/3oXW7gxy";
+        string appIdInAppStore = "6503646940";
+        string appStoreUrl = $"https://apps.apple.com/app/id{appIdInAppStore}";
+        
+        url = appStoreUrl;
 #else
-        url = "https://play.google.com/apps/internaltest/4701722005129923451";
+        string packageName = "com.set.principles";
+        string googlePlayUrl = $"https://play.google.com/store/apps/details?id={packageName}";
+
+        url = googlePlayUrl;
 #endif
 
         BrowserHelper.OpenUrl( url ).GetAwaiter();
