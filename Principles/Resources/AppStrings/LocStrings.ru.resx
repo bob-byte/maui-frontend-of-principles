@@ -52,7 +52,7 @@
     <value>Ошибка</value>
   </data>
 	<data name="Login" xml:space="preserve">
-    <value>Логин</value>
+    <value>Войти</value>
   </data>
 	<data name="Logout" xml:space="preserve">
     <value>Выход</value>
@@ -214,13 +214,13 @@
     <value>Каждый</value>
   </data>
 	<data name="days" xml:space="preserve">
-    <value>Дня(-ей)</value>
+    <value>день</value>
   </data>
 	<data name="timesPer" xml:space="preserve">
     <value>раз на</value>
   </data>
 	<data name="Week" xml:space="preserve">
-    <value>Неделя</value>
+    <value>Неделю</value>
   </data>
 	<data name="Month" xml:space="preserve">
     <value>Месяц</value>
@@ -406,10 +406,10 @@
     <value>Тема приложения</value>
   </data>
 	<data name="DescriptionOfCannotAddNewHabit" xml:space="preserve">
-    <value>Создайте эту привычку после того как автоматизируете другие или создайте такую, которая является менее сложной и имеет меньшую частоту (при условии, что у вас не слишком много привычек в обработке). Это поможет вам не перегореть и придерживаться текущих привычек.</value>
+    <value>Совет: "создайте эту привычку после того, как автоматизируете другие". Это поможет вам избежать выгорания и придерживаться других привычек.</value>
   </data>
 	<data name="TitleOfCannotAddNewHabit" xml:space="preserve">
-    <value>Добавление такой привычки навредит вам</value>
+    <value>Добавление может быть избыточным.</value>
   </data>
 	<data name="AddItAnyway" xml:space="preserve">
     <value>Добавить все равно</value>
@@ -436,19 +436,19 @@
     <value>Пользовательское Соглашение</value>
   </data>
 	<data name="LoginAgreementText" xml:space="preserve">
-    <value>Нажимая кнопку 'Войти', вы соглашаетесь с тем, что</value>
+    <value>Нажимая кнопку 'Войти', вы соглашаетесь с</value>
   </data>
 	<data name="LoginSignUpAgreementСonnectingText" xml:space="preserve">
     <value>и</value>
   </data>
 	<data name="UserAgreementStrInLoginAndSignupViews" xml:space="preserve">
-    <value>Пользовательское Соглашение</value>
-  </data>
+		<value>Пользовательским соглашением</value>
+	</data>
 	<data name="PrivacyPolicyStrInLoginAndSignupViews" xml:space="preserve">
-    <value>Политика Конфиденциальности</value>
-  </data>
+		<value>Политикой Конфиденциальности</value>
+	</data>
 	<data name="SignUpAgreementText" xml:space="preserve">
-    <value>Нажимая на кнопку 'Зарегистрироваться', вы соглашаетесь с тем, что</value>
+    <value>Нажимая на кнопку 'Зарегистрироваться', вы соглашаетесь с</value>
   </data>
 	<data name="ContactEmail" xml:space="preserve">
     <value>Отправить письмо на app@principles.top</value>
