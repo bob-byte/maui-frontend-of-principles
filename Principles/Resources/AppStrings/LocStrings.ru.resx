@@ -442,11 +442,11 @@
     <value>и</value>
   </data>
 	<data name="UserAgreementStrInLoginAndSignupViews" xml:space="preserve">
-    <value>Пользовательское Соглашение</value>
-  </data>
+		<value>Пользовательским соглашением</value>
+	</data>
 	<data name="PrivacyPolicyStrInLoginAndSignupViews" xml:space="preserve">
-    <value>Политика Конфиденциальности</value>
-  </data>
+		<value>Политикой Конфиденциальности</value>
+	</data>
 	<data name="SignUpAgreementText" xml:space="preserve">
     <value>Нажимая на кнопку 'Зарегистрироваться', вы соглашаетесь с</value>
   </data>
