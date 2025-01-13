@@ -493,7 +493,7 @@
                                                            IconHorizontalPosition="Left"
                                                            HeightRequest="50"
                                                            BackgroundColor="{StaticResource CancelButtonColor}"
-                                                           FontSize="20"
+                                                           FontSize="16"
                                                            HorizontalOptions="FillAndExpand"
                                                            VerticalOptions="Center"
                                                            Grid.Column="0" />
@@ -504,7 +504,7 @@
                                                            Icon="check_second"
                                                            IconHorizontalPosition="Left"
                                                            HeightRequest="50"
-                                                           FontSize="20"
+                                                           FontSize="16"
                                                            HorizontalOptions="FillAndExpand"
                                                            VerticalOptions="Center"
                                                            Grid.Column="1" />
