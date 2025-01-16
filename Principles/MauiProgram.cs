@@ -58,6 +58,7 @@ public static class MauiProgram
                 fonts.AddFont( "roboto-bold.ttf", "Roboto-Bold" );
                 fonts.AddFont( "univia-pro-regular.ttf", "Univia-Pro" );
                 fonts.AddFont( "univia-pro-medium.ttf", "Univia-Pro Medium" );
+                fonts.AddFont( "CambriaFont.ttf", "Cambria" );
             } )
             .Services
             .RegisterAppCore()

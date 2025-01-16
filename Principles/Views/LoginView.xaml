@@ -25,7 +25,7 @@
                 <Label Text="{Binding AppName,
                                       Converter={StaticResource ToUpperCase}}"
                        FontAttributes="Bold"
-                       FontFamily="Roboto"
+                       FontFamily="Cambria"
                        FontSize="30"
                        HorizontalOptions="Center"
                        TextColor="{StaticResource Primary}" />
