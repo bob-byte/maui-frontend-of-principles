@@ -12,7 +12,10 @@ namespace Principles.Views;
 public partial class ProgressOfHabitsView : ContentPageBase
 {
     private static readonly SemaphoreSlim s_lockerOfAddingNewDayColumn = new ( initialCount: 1, maxCount: 1 );
-    
+#if IOS
+    private DateTime m_lastUpdatedDate = DateTime.Today;
+#endif
+
     private Timer? m_newDayEventTimer;
 
 #if IOS
@@ -51,7 +54,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
         AddFirstCol();
         AddColumns();
-        
+
         ViewModel.ReferenceMessenger.Register<TryAddNewDayInHabitListMessage>( this, ( sender, msg ) => TryAddNewDayColumn( null ) );
     }
 
@@ -187,6 +190,19 @@ public partial class ProgressOfHabitsView : ContentPageBase
             int dayOfMonth = day.Day;
             string colCaption = $"{dayOfWeek}{Environment.NewLine}{dayOfMonth}";
 
+#if IOS
+            if (DateTime.Today > m_lastUpdatedDate)
+            {
+                DGV_Habits.Columns.Clear();
+
+                AddGroupingColumn();
+                AddFirstCol();
+                AddColumns();
+
+                m_lastUpdatedDate = DateTime.Today;
+            }
+#endif
+
             TemplateColumn templateColumn = new()
             {
                 Caption = colCaption,
@@ -203,10 +219,29 @@ public partial class ProgressOfHabitsView : ContentPageBase
         }
     }
 
-    private void UnderlineDataGridRow(object sender, TappedEventArgs eventArgs)
+#if IOS
+    private void AddGroupingColumn()
     {
+        TextColumn goalColumn = new TextColumn
+        {
+            FieldName = "Goal.Name",
+            IsGrouped = true
+        };
 
+        goalColumn.GroupCaptionTemplate = new DataTemplate( () =>
+        {
+            Label label = new Label
+            {
+                FontSize = 15,
+                TextColor = Colors.Black
+            };
+            label.SetBinding( Label.TextProperty, new Binding( "GroupValueText" ) );
+            return label;
+        } );
+
+        DGV_Habits.Columns.Add( goalColumn );
     }
+#endif
 
     private void AddFirstCol()
     {
