@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.set.principles" android:versionName="2.0.7" android:versionCode="38">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.set.principles" android:versionName="2.0.9" android:versionCode="40">
 	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="35" />
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />

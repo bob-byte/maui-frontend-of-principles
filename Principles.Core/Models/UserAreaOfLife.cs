@@ -15,4 +15,15 @@ public partial class UserAreaOfLife
     {
         return Name;
     }
+
+    public override int GetHashCode()
+    {
+        return Id.GetHashCode();
+    }
+
+    public override bool Equals( object? obj )
+    {
+        var areaOfLife = obj as UserAreaOfLife;
+        return areaOfLife is not null && areaOfLife.Id == Id;
+    }
 }
