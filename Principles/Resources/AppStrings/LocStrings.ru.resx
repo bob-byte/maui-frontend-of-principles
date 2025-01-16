@@ -732,4 +732,7 @@
 	<data name="AppleAuthIsNotSupportedForCurrentDevice" xml:space="preserve">
 		<value>В настоящее время Apple-аутентификация поддерживается только на iOS 13.0 или более поздней версии</value>
 	</data>
+	<data name="JoinOurTelegram" xml:space="preserve">
+		<value>Присоединяйтесь к нашему Telegram-каналу</value>
+	</data>
 </root>
