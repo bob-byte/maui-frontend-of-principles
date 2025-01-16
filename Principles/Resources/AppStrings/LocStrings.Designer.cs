@@ -1430,5 +1430,11 @@ namespace Principles.Resources.AppStrings {
                 return ResourceManager.GetString("AppleAuthIsNotSupportedForCurrentDevice", resourceCulture);
             }
         }
+        
+        internal static string JoinOurTelegram {
+            get {
+                return ResourceManager.GetString("JoinOurTelegram", resourceCulture);
+            }
+        }
     }
 }

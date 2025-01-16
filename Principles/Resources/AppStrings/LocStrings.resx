@@ -529,7 +529,7 @@
     <value>By clicking the 'Sign Up' button, you agree to</value>
   </data>
   <data name="ContactEmail" xml:space="preserve">
-    <value>Send an email to app@principles.top</value>
+    <value>Send an email to us</value>
   </data>
   <data name="MsgWhenCannotOpenAppToSendEmail" xml:space="preserve">
     <value>Cannot open app to send an email. Maybe this program is not installed.</value>
@@ -809,5 +809,8 @@
   </data>
   <data name="AppleAuthIsNotSupportedForCurrentDevice" xml:space="preserve">
     <value>Currently Apple authentication is only supported on iOS 13.0 or higher</value>
+  </data>
+  <data name="JoinOurTelegram" xml:space="preserve">
+    <value>Join our Telegram channel</value>
   </data>
 </root>

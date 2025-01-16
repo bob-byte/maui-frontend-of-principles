@@ -26,6 +26,12 @@ public partial class SettingsViewModel : BaseViewModel
     }
 
     [RelayCommand]
+    public Task ShowTelegramChannelAsync() 
+    {
+        return BrowserHelper.OpenUrl( "https://t.me/principles_app" );
+    }
+
+    [RelayCommand]
     public async Task OpenEmailAsync()
     {
         try
