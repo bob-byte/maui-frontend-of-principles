@@ -19,12 +19,13 @@
             <VerticalStackLayout Padding="15,0,15,0"
                                  VerticalOptions="Center">
                 <Image Source="logolargesize"
-                       HeightRequest="200"
-                       WidthRequest="200" />
-                <Label Text="{Binding AppName, Converter={StaticResource ToUpperCase}}"
+                       WidthRequest="200"
+                       HeightRequest="200" />
+                <Label Text="{Binding AppName,
+                                      Converter={StaticResource ToUpperCase}}"
                        FontAttributes="Bold"
-                       FontFamily="Cambria"
-                       FontSize="30"
+                       FontFamily="CambriaBold"
+                       FontSize="35"
                        HorizontalOptions="Center"
                        TextColor="{StaticResource Primary}" />
                 <dxco:SimpleButton x:Name="SB_TelegramChannel"

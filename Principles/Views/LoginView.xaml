@@ -25,8 +25,8 @@
                 <Label Text="{Binding AppName,
                                       Converter={StaticResource ToUpperCase}}"
                        FontAttributes="Bold"
-                       FontFamily="Cambria"
-                       FontSize="30"
+                       FontFamily="CambriaBold"
+                       FontSize="35"
                        HorizontalOptions="Center"
                        TextColor="{StaticResource Primary}" />
                 <dxe:TextEdit LabelText="{x:Static loc:LocStrings.Email}"
