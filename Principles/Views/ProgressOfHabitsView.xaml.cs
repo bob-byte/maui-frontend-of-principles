@@ -1,4 +1,6 @@
 using CommunityToolkit.Maui.Behaviors;
+
+using DevExpress.Maui.Core;
 using DevExpress.Maui.DataGrid;
 using Plugin.LocalNotification;
 using Principles.Controls;
@@ -12,9 +14,6 @@ namespace Principles.Views;
 public partial class ProgressOfHabitsView : ContentPageBase
 {
     private static readonly SemaphoreSlim s_lockerOfAddingNewDayColumn = new ( initialCount: 1, maxCount: 1 );
-#if IOS
-    private DateTime m_lastUpdatedDate = DateTime.Today;
-#endif
 
     private Timer? m_newDayEventTimer;
 
@@ -131,6 +130,13 @@ public partial class ProgressOfHabitsView : ContentPageBase
                         ViewModel.ServiceOfHabit.Recompute( habit );
                     }
                     
+#if IOS
+                    DGV_Habits.Columns.Clear();
+
+                    AddGroupingColumn();
+                    AddFirstCol();
+                    AddColumns();
+#else
                     TemplateColumn templateColumn = new()
                     {
                         Caption = colCaption,
@@ -144,6 +150,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
                     };
 
                     DGV_Habits.Columns.Insert( index: 1, templateColumn );
+#endif
                 } ).DefaultConfigureAwait();
 
                 ViewModel.EndProgressInterval = today;
@@ -186,28 +193,16 @@ public partial class ProgressOfHabitsView : ContentPageBase
              endTime <= day;
              day = day.Subtract( oneDay ), columnIndex++)
         {
-            string dayOfWeek = LocStrings.ResourceManager.GetString( name: $"{day.DayOfWeek}Short" )!.ToUpperInvariant();
+            string dayOfWeek =
+                LocStrings.ResourceManager.GetString( name: $"{day.DayOfWeek}Short" )!.ToUpperInvariant();
             int dayOfMonth = day.Day;
             string colCaption = $"{dayOfWeek}{Environment.NewLine}{dayOfMonth}";
-
-#if IOS
-            if (DateTime.Today > m_lastUpdatedDate)
-            {
-                DGV_Habits.Columns.Clear();
-
-                AddGroupingColumn();
-                AddFirstCol();
-                AddColumns();
-
-                m_lastUpdatedDate = DateTime.Today;
-            }
-#endif
 
             TemplateColumn templateColumn = new()
             {
                 Caption = colCaption,
                 HeaderFontSize = 9,
-                Width = new GridLength(55),
+                Width = new GridLength( 55 ),
                 HeaderCaptionLineBreakMode = LineBreakMode.WordWrap,
                 VerticalContentAlignment = TextAlignment.Center,
                 HorizontalContentAlignment = TextAlignment.Center,
@@ -222,22 +217,23 @@ public partial class ProgressOfHabitsView : ContentPageBase
 #if IOS
     private void AddGroupingColumn()
     {
-        TextColumn goalColumn = new TextColumn
+        TextColumn goalColumn = new()
         {
             FieldName = "Goal.Name",
-            IsGrouped = true
-        };
-
-        goalColumn.GroupCaptionTemplate = new DataTemplate( () =>
-        {
-            Label label = new Label
+            IsGrouped = true,
+            SortMode = DataSortMode.Custom,
+            GroupInterval = DataGroupInterval.DisplayText,
+            GroupCaptionTemplate = new DataTemplate( () =>
             {
-                FontSize = 15,
-                TextColor = Colors.Black
-            };
-            label.SetBinding( Label.TextProperty, new Binding( "GroupValueText" ) );
-            return label;
-        } );
+                Label label = new()
+                {
+                    FontSize = 15,
+                    TextColor = Colors.Black
+                };
+                label.SetBinding( Label.TextProperty, new Binding( path: "GroupValueText" ) );
+                return label;
+            } )
+        };
 
         DGV_Habits.Columns.Add( goalColumn );
     }
