@@ -35,7 +35,8 @@
                         SizeChanged="G_Title_SizeChanged"
                         x:Name="DXI_Help"
                         Grid.Column="0" />
-            <Label Text="{Binding Title}"
+            <Label Text="{Binding LocalizationResourceManager[ChatWithHelper],
+                                  Mode=OneWay}"
                    TextColor="{StaticResource TitleTextColor}"
                    VerticalOptions="Center"
                    VerticalTextAlignment="Center"
@@ -88,7 +89,8 @@
                                x:Name="SKLV_Animation"
                                Grid.Row="1"
                                Grid.Column="1" />
-            <Label Text="{x:Static loc:LocStrings.SelfDevelopmentAssistantShortDescription}"
+            <Label Text="{Binding LocalizationResourceManager[SelfDevelopmentAssistantShortDescription],
+                                  Mode=OneWay}"
                    x:Name="L_ShortDescriptionOfAssistant"
                    FontFamily="MonaSansMedium"
                    FontSize="13"
@@ -116,7 +118,8 @@
                 <Grid ColumnDefinitions="*, Auto">
                     <OnPlatform x:TypeArguments="View">
                         <On Platform="Android">
-                            <Entry Placeholder="{x:Static loc:LocStrings.EnterText}"
+                            <Entry Placeholder="{Binding LocalizationResourceManager[EnterText],
+                                                         Mode=OneWay}"
                                    Completed="TE_Prompt_Completed"
                                    x:Name="E_Prompt"
                                    Text="{Binding Prompt}"
@@ -133,7 +136,8 @@
                                    FontAttributes="Italic" />
                         </On>
                         <On Platform="iOS">
-                            <editors:TextEdit PlaceholderText="{x:Static loc:LocStrings.EnterText}"
+                            <editors:TextEdit PlaceholderText="{Binding LocalizationResourceManager[EnterText],
+                                                                        Mode=OneWay}"
                                               Completed="TE_Prompt_Completed"
                                               x:Name="TE_Prompt"
                                               Text="{Binding Prompt}"

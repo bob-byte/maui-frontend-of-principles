@@ -22,7 +22,8 @@
                CornerRadius="20"
                HasShadow="True">
             <VerticalStackLayout Spacing="15">
-                <Label Text="{x:Static loc:LocStrings.AppUpdateAvailable}"
+                <Label Text="{Binding LocalizationResourceManager[AppUpdateAvailable],
+                                      Mode=OneWay}"
                        FontAttributes="Bold"
                        FontSize="18"
                        HorizontalOptions="Center" />
@@ -39,7 +40,8 @@
                     <Switch IsToggled="{Binding DontShowAgain}"
                             OnColor="{StaticResource Primary}"
                             VerticalOptions="Center" />
-                    <Label Text="{x:Static loc:LocStrings.DontShowUpdateCheckBoxText}"
+                    <Label Text="{Binding LocalizationResourceManager[DontShowUpdateCheckBoxText],
+                                          Mode=OneWay}"
                            FontSize="15"
                            LineBreakMode="TailTruncation"
                            MaxLines="1"
@@ -55,14 +57,16 @@
                 <HorizontalStackLayout HorizontalOptions="End"
                                        Spacing="10">
                     <dxco:SimpleButton x:Name="SB_CancelAppUpdate"
-                                       Text="{x:Static loc:LocStrings.AppUpdateCloseButton}"
+                                       Text="{Binding LocalizationResourceManager[AppUpdateCloseButton],
+                                                      Mode=OneWay}"
                                        Command="{Binding CancelUpdateCommand}"
                                        Clicked="SB_CancelAppUpdate_Clicked"
                                        Icon="close"
                                        IconHorizontalPosition="Left"
                                        BackgroundColor="{StaticResource CancelButtonColor}" />
                     <dxco:SimpleButton x:Name="SB_AppUpdate"
-                                       Text="{x:Static loc:LocStrings.Update}"
+                                       Text="{Binding LocalizationResourceManager[Update],
+                                                      Mode=OneWay}"
                                        Command="{Binding OpenStoreCommand}"
                                        Clicked="SB_AppUpdate_Clicked"
                                        Icon="{OnPlatform Android='google_play',

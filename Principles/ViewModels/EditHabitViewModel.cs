@@ -1,3 +1,5 @@
+using DevExpress.Maui.Core.Internal;
+
 using Plugin.LocalNotification;
 
 using System.Collections.ObjectModel;
@@ -10,6 +12,8 @@ namespace Principles.ViewModels;
 
 public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
 {
+    public LocalizationResourceManager LocalizationResourceManager
+        => LocalizationResourceManager.Instance;
     [ObservableProperty]
     private UserHabit m_habit;
 
@@ -86,6 +90,12 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
             AllUserAreasOfLife?.Clear();
             UserHabits?.Clear();
             UserGoals?.Clear();
+        } );
+
+        ReferenceMessenger.Register<NewCultureMessage>( this, ( sender, msg ) =>
+        {
+            AllAreasOfLifeAsOneItem.Name = LocStrings.AllAreasOfLife;
+            AllUserAreasOfLife.Reload( Habit.AreasOfLife!.ToList() );
         } );
 
         InactiveDaysToDelete = new List<WeekDay>();

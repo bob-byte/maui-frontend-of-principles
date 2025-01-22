@@ -15,6 +15,8 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     private bool m_isInitialized;
 
     private readonly ConcurrentDictionary<UserHabit, SemaphoreSlim> m_isBusyForChangeCompleted;
+    public LocalizationResourceManager LocalizationResourceManager
+        => LocalizationResourceManager.Instance;
 
     [ObservableProperty]
     private UserHabit? m_selectedHabit;
@@ -116,6 +118,20 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
                 locker?.Dispose();
             }
         } );
+
+        ReferenceMessenger.Register<NewCultureMessage>( this, ( sender, msg ) =>
+        {
+            UpdateLocalizedStrings();
+        } );
+    }
+
+    private void UpdateLocalizedStrings()
+    {
+        List<UserHabit> habits = UserHabits.Where( h => h.Goal.Id == 0 ).ToList();
+        foreach (UserHabit? habit in habits)
+        {
+            habit.Goal.Name = (string)LocalizationResourceManager.Instance["NoGoalSpecified"];
+        }
     }
 
     public IProgressOfHabitService ProgressOfHabitService { get; }

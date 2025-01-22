@@ -27,6 +27,11 @@ public partial class App : Application
         m_updatePopupViewModel = new UpdatePopupViewModel( serviceProvider );
 
         UserAppTheme = AppTheme.Light;
+
+        string savedLanguageCode = Preferences.Get( "AppLanguage", "en" );
+        CultureInfo currentCulture = new CultureInfo( savedLanguageCode );
+
+        LocalizationResourceManager.Instance.SetCulture( currentCulture );
         InitializeComponent();
     }
 

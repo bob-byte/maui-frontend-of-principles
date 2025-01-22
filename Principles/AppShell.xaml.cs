@@ -4,9 +4,12 @@ public partial class AppShell : Shell
 {
     private readonly INavigationService m_navigationService;
     private readonly ISettingsService m_settingsService;
+    public LocalizationResourceManager LocalizationResourceManager
+        => LocalizationResourceManager.Instance;
 
     public AppShell( IServiceProvider serviceProvider )
     {
+        BindingContext = this;
         m_navigationService = serviceProvider.GetRequiredService<INavigationService>();
         m_settingsService = serviceProvider.GetRequiredService<ISettingsService>();
         InitRouting();

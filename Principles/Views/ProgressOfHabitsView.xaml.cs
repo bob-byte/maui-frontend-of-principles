@@ -29,23 +29,9 @@ public partial class ProgressOfHabitsView : ContentPageBase
         ViewModel = viewModel;
 
         InitializeComponent();
-        
+
 #if ANDROID31_0_OR_GREATER || IOS16_0_OR_GREATER
-        SwipeItem swipeForDeletion = new()
-        {
-            BackgroundColor = Application.Current!.Resources["RedColor"] as Color, 
-            Caption = LocStrings.Delete
-        };
-        swipeForDeletion.SetBinding( SwipeItem.CommandProperty, new Binding(nameof(ProgressOfHabitsViewModel.DeleteHabitCommand)) );
-        DGV_Habits.StartSwipeItems.Add( swipeForDeletion );
-        
-        SwipeItem editOnSwipe = new()
-        {
-            BackgroundColor = Application.Current!.Resources["Primary"] as Color, 
-            Caption = LocStrings.Edit
-        };
-        editOnSwipe.SetBinding( SwipeItem.CommandProperty, new Binding(nameof(ProgressOfHabitsViewModel.EditHabitCommand)) );
-        DGV_Habits.StartSwipeItems.Add( editOnSwipe );
+        SwipeItemInitialize();
 #endif
 
         ViewModel.DataGridViewWithHabits = DGV_Habits;
@@ -55,8 +41,25 @@ public partial class ProgressOfHabitsView : ContentPageBase
         AddColumns();
 
         ViewModel.ReferenceMessenger.Register<TryAddNewDayInHabitListMessage>( this, ( sender, msg ) => TryAddNewDayColumn( null ) );
+        ViewModel.ReferenceMessenger.Register<NewCultureMessage>( this, ( sender, msg ) =>
+        {
+            UpdateLocalizedStrings();
+        } );
+
     }
 
+    private void UpdateLocalizedStrings()
+    {
+        DGV_Habits.Columns.Clear();
+
+        AddGroupingColumn();
+        AddFirstCol();
+        AddColumns();
+#if ANDROID31_0_OR_GREATER || IOS16_0_OR_GREATER
+        DGV_Habits.StartSwipeItems.Clear();
+        SwipeItemInitialize();
+#endif
+    }
     ~ProgressOfHabitsView()
     {
 #if IOS
@@ -214,7 +217,6 @@ public partial class ProgressOfHabitsView : ContentPageBase
         }
     }
 
-#if IOS
     private void AddGroupingColumn()
     {
         TextColumn goalColumn = new()
@@ -237,7 +239,6 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
         DGV_Habits.Columns.Add( goalColumn );
     }
-#endif
 
     private void AddFirstCol()
     {
@@ -301,6 +302,27 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
         DGV_Habits.Columns.Add( habitNameCol );
     }
+
+#if ANDROID31_0_OR_GREATER || IOS16_0_OR_GREATER
+    private void SwipeItemInitialize() 
+    {
+        SwipeItem swipeForDeletion = new()
+        {
+            BackgroundColor = Application.Current!.Resources["RedColor"] as Color,
+            Caption = (string)LocalizationResourceManager.Instance["Delete"]
+        };
+        swipeForDeletion.SetBinding( SwipeItem.CommandProperty, new Binding( nameof( ProgressOfHabitsViewModel.DeleteHabitCommand ) ) );
+        DGV_Habits.StartSwipeItems.Add( swipeForDeletion );
+
+        SwipeItem editOnSwipe = new()
+        {
+            BackgroundColor = Application.Current!.Resources["Primary"] as Color,
+            Caption = LocStrings.Edit
+        };
+        editOnSwipe.SetBinding( SwipeItem.CommandProperty, new Binding( nameof( ProgressOfHabitsViewModel.EditHabitCommand ) ) );
+        DGV_Habits.StartSwipeItems.Add( editOnSwipe );
+    }
+#endif
 
 #if ANDROID31_0_OR_GREATER || IOS16_0_OR_GREATER
     private void SwipeItem_Invoked(object sender, EventArgs e )

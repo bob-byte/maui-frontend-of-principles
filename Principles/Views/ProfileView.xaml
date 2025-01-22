@@ -17,7 +17,8 @@
         <Grid VerticalOptions="CenterAndExpand"
               Margin="0,0,5,0"
               ColumnDefinitions="Auto, *, Auto">
-            <Label Text="{Binding Title}"
+            <Label Text="{Binding LocalizationResourceManager[Profile],
+                                  Mode=OneWay}"
                    VerticalOptions="Center"
                    VerticalTextAlignment="Center"
                    HorizontalOptions="Start"
@@ -80,7 +81,8 @@
                 </Grid>
 
                 <dxe:TextEdit Text="{Binding UserName.Value}"
-                              LabelText="{x:Static loc:LocStrings.UserName}"
+                              LabelText="{Binding LocalizationResourceManager[UserName],
+                                                  Mode=OneWay}"
                               x:Name="TE_UserName"
                               ClearIconVisibility="Never"
                               IsReadOnly="True"
@@ -99,7 +101,8 @@
             </Grid>
 
             <dxe:MultilineEdit Text="{Binding MainSlogan}"
-                               LabelText="{x:Static loc:LocStrings.MainSlogan}"
+                               LabelText="{Binding LocalizationResourceManager[MainSlogan],
+                                                   Mode=OneWay}"
                                x:Name="ME_MainSlogan"
                                ClearIconVisibility="Never"
                                IsReadOnly="True"
@@ -110,7 +113,8 @@
                                Focused="TGR_MainSlogan_Focused" />
 
             <dxe:MultilineEdit Text="{Binding Mission}"
-                               LabelText="{x:Static loc:LocStrings.Mission}"
+                               LabelText="{Binding LocalizationResourceManager[Mission],
+                                                   Mode=OneWay}"
                                x:Name="ME_Mision"
                                ClearIconVisibility="Never"
                                IsReadOnly="True"
@@ -143,7 +147,8 @@
                     <HorizontalStackLayout HorizontalOptions="End">
                         <dxco:SimpleButton x:Name="SB_Cancel"
                                            BackgroundColor="{StaticResource CancelButtonColor}"
-                                           Text="{x:Static loc:LocStrings.Cancel}"
+                                           Text="{Binding LocalizationResourceManager[Cancel],
+                                                          Mode=OneWay}"
                                            FontSize="16"
                                            Margin="0,0,5,5"
                                            Icon="close"
@@ -151,7 +156,8 @@
                                            Clicked="SB_Cancel_Clicked" />
                         <dxco:SimpleButton x:Name="SB_Save"
                                            Style="{StaticResource PrimaryButton}"
-                                           Text="{Binding LocSave}"
+                                           Text="{Binding LocalizationResourceManager[Save],
+                                                          Mode=OneWay}"
                                            FontSize="16"
                                            Margin="0,0,5,5"
                                            IconHorizontalPosition="Left"
@@ -179,7 +185,8 @@
                            Grid.Column="0"
                            VerticalOptions="Center"
                            TextColor="Black" />
-                    <Button Text="{x:Static loc:LocStrings.OK}"
+                    <Button Text="{Binding LocalizationResourceManager[OK],
+                                           Mode=OneWay}"
                             BackgroundColor="Transparent"
                             TextColor="White"
                             Grid.Column="1"

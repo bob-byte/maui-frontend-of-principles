@@ -225,6 +225,29 @@
                         Value="{StaticResource Error}" />
             </Style>
 
+            <Style x:Key="RoundedMultilineEditStyle"
+                   TargetType="dxe:MultilineEdit"
+                   ApplyToDerivedTypes="True">
+                <Setter Property="BackgroundColor"
+                        Value="{StaticResource LightPrimary}" />
+                <Setter Property="BorderColor"
+                        Value="{StaticResource Primary}" />
+                <Setter Property="ClearIconVisibility"
+                        Value="Never" />
+                <Setter Property="CornerRadius"
+                        Value="20" />
+                <Setter Property="IsReadOnly"
+                        Value="True" />
+                <Setter Property="TextFontAttributes"
+                        Value="Bold" />
+                <Setter Property="TextVerticalAlignment"
+                        Value="Center" />
+                <Setter Property="EndIconColor"
+                        Value="{StaticResource LabelText}" />
+                <Setter Property="StartIconColor"
+                        Value="{StaticResource LabelText}" />
+            </Style>
+
             <Style TargetType="dxe:TimeEdit"
                    ApplyToDerivedTypes="True">
                 <Setter Property="FocusedBorderColor"

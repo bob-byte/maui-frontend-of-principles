@@ -813,4 +813,10 @@
   <data name="JoinOurTelegram" xml:space="preserve">
     <value>Join our Telegram channel</value>
   </data>
+  <data name="ChangeLanguage" xml:space="preserve">
+    <value>Change Language</value>
+  </data>
+  <data name="ChooseLanguage" xml:space="preserve">
+    <value>Choose language</value>
+  </data>
 </root>

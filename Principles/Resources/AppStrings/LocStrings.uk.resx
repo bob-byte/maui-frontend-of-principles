@@ -813,4 +813,10 @@
   <data name="JoinOurTelegram" xml:space="preserve">
     <value>Приєднуйтесь до нашого Telegram-каналу</value>
   </data>
+  <data name="ChangeLanguage" xml:space="preserve">
+    <value>Змінити мову</value>
+  </data>
+  <data name="ChooseLanguage" xml:space="preserve">
+    <value>Оберіть мову</value>
+  </data>
 </root>

@@ -15,7 +15,8 @@
                    xmlns:templates="clr-namespace:Principles.Views.Templates"
                    xmlns:controls="clr-namespace:Principles.Controls"
                    x:DataType="vm:BaseViewModel"
-                   Title="{x:Static loc:LocStrings.Profile}">
+                   Title="{Binding LocalizationResourceManager[Profile],
+                                   Mode=OneWay}">
     <VerticalStackLayout>
 
     </VerticalStackLayout>

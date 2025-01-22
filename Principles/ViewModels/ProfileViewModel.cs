@@ -2,10 +2,11 @@
 
 public partial class ProfileViewModel : BaseViewModel
 {
+    public LocalizationResourceManager LocalizationResourceManager
+        => LocalizationResourceManager.Instance;
     public ProfileViewModel( IServiceProvider serviceProvider )
         : base( serviceProvider )
     {
-        Title = LocStrings.Profile;
         ReferenceMessenger.Register<UserLoggedOutMessage>( this, ( sender, msg ) => DefaultHandleLogout( msg ) );
     }
 
