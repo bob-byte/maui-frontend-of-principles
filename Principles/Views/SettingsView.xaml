@@ -72,6 +72,7 @@
 
                 <dxco:BottomSheet x:Name="BS_ChangeLanguage"
                                   AllowDismiss="True"
+                                  AllowedState="HalfExpanded"
                                   BackgroundColor="{AppThemeBinding Light={StaticResource Background},
                                                                     Dark={StaticResource DarkBackground}}"
                                   ShowGrabber="False"

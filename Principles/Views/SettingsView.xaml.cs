@@ -20,6 +20,21 @@ public partial class SettingsView : ContentPageBase
             (ME_Ukrainian, "uk"),
             (ME_Russian, "ru")
         };
+       
+        CheckAndHideRussianLanguage();
+    }
+
+    private void CheckAndHideRussianLanguage()
+    {
+        TimeZoneInfo userTimeZone = TimeZoneInfo.Local;
+
+        (MultilineEdit Edit, string LanguageCode) russianME = m_multilineEdits.FirstOrDefault( x => x.LanguageCode == "ru" );
+
+        if (userTimeZone.BaseUtcOffset == TimeSpan.FromHours( 2 ) || userTimeZone.BaseUtcOffset == TimeSpan.FromHours( 3 ))
+        {
+            russianME.Edit.IsVisible = false;
+            BS_ChangeLanguage.HalfExpandedRatio = 0.35;
+        }
     }
 
     private void SB_ChangeLanguage_Clicked( object sender, EventArgs e )
