@@ -69,13 +69,17 @@
                                                   Dark={StaticResource SurfaceColorDark}}"
                 StrokeShape="RoundRectangle 0, 0, 36, 36"
                 StrokeThickness="0">
-            <collectionview:DXCollectionView x:Name="DXC_DisplayMessages"
-                                             ItemsSource="{Binding DisplayMessages}"
-                                             ItemSpacing="20"
-                                             Orientation="Vertical"
-                                             IsScrollBarVisible="True"
-                                             IsPullToRefreshEnabled="False"
-                                             IsLoadMoreEnabled="False" />
+            <ScrollView>
+                <CollectionView x:Name="DXC_DisplayMessages"
+                                ItemsSource="{Binding DisplayMessages}"
+                                RemainingItemsThreshold="-1"
+                                BackgroundColor="Transparent">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical"
+                                           ItemSpacing="20" />
+                    </CollectionView.ItemsLayout>
+                </CollectionView>
+            </ScrollView>
         </Border>
 
         <Grid ColumnDefinitions="15*, 70*, 15*"
@@ -104,74 +108,44 @@
         <Grid ColumnDefinitions="*, Auto"
               RowDefinitions="Auto"
               ColumnSpacing="3"
-              Padding="16,0"
+              Padding="5,0,5,0"
               Grid.Row="3"
               VerticalOptions="CenterAndExpand">
-            <Border BackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary},
-                                                      Dark={StaticResource DarkPrimary}}"
-                    HeightRequest="48"
-                    StrokeShape="RoundRectangle 36,36,36,36"
-                    Grid.Column="0"
-                    Grid.Row="0">
-                <Grid ColumnDefinitions="*, Auto">
-                    <OnPlatform x:TypeArguments="View">
-                        <On Platform="Android">
-                            <Entry Placeholder="{x:Static loc:LocStrings.EnterText}"
+            <editors:MultilineEdit x:Name="E_Prompt"
                                    Completed="TE_Prompt_Completed"
-                                   x:Name="E_Prompt"
                                    Text="{Binding Prompt}"
-                                   FontFamily="Roboto"
-                                   FontSize="13"
-                                   HeightRequest="48"
                                    TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
                                                                Dark={StaticResource DarkNormalText}}"
                                    PlaceholderColor="#3F3F3F"
+                                   PlaceholderText="{x:Static loc:LocStrings.EnterText}"
                                    BackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary},
                                                                      Dark={StaticResource DarkPrimary}}"
-                                   ClearButtonVisibility="Never"
-                                   Margin="16,5,16,5"
-                                   FontAttributes="Italic" />
-                        </On>
-                        <On Platform="iOS">
-                            <editors:TextEdit PlaceholderText="{x:Static loc:LocStrings.EnterText}"
-                                              Completed="TE_Prompt_Completed"
-                                              x:Name="TE_Prompt"
-                                              Text="{Binding Prompt}"
-                                              TextFontFamily="Roboto"
-                                              TextFontSize="13"
-                                              HeightRequest="52"
-                                              BorderThickness="0"
-                                              FocusedBorderThickness="0"
-                                              DisabledBorderThickness="0"
-                                              TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
-                                                                          Dark={StaticResource DarkNormalText}}"
-                                              PlaceholderColor="#3F3F3F"
-                                              BackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary},
-                                                                                Dark={StaticResource DarkPrimary}}"
-                                              TranslationY="4"
-                                              ClearIconVisibility="Never"
-                                              Margin="16,0,16,5"
-                                              RotationX="20" />
-                        </On>
-                    </OnPlatform>
-                    <skia:SKLottieView IsVisible="{Binding IsBusy}"
-                                       RepeatCount="-1"
-                                       Source="loading.json"
-                                       HorizontalOptions="Center"
-                                       WidthRequest="{OnPlatform iOS=52,
-                                                                 Android=48}"
-                                       HeightRequest="{OnPlatform iOS=52,
-                                                                  Android=48}"
-                                       Grid.Column="1" />
-                </Grid>
-            </Border>
+                                   BorderColor="{AppThemeBinding Light={StaticResource LightPrimary},
+                                                                 Dark={StaticResource DarkPrimary}}"
+                                   CornerRadius="25"
+                                   TextFontAttributes="Italic"
+                                   ReturnType="Done"
+                                   ClearIconVisibility="Never"
+                                   MaxLineCount="5"
+                                   Focused="E_Prompt_Focused"
+                                   Unfocused="E_Prompt_Unfocused" />
+            <skia:SKLottieView IsVisible="{Binding IsBusy}"
+                               RepeatCount="-1"
+                               Margin="0,0,10,0"
+                               Source="loading.json"
+                               HorizontalOptions="End"
+                               WidthRequest="{OnPlatform iOS=52,
+                                                         Android=52}"
+                               HeightRequest="{OnPlatform iOS=52,
+                                                          Android=52}"
+                               Grid.Column="0" />
 
             <dxc:SimpleButton Icon="send_message"
                               x:Name="SB_AskQuestion"
                               HeightRequest="{OnPlatform iOS=52,
-                                                         Android=48}"
+                                                         Android=55}"
                               WidthRequest="{OnPlatform iOS=52,
-                                                        Android=48}"
+                                                        Android=55}"
                               IsVisible="{Binding IsBusy,
                                                   Converter={StaticResource IsFalse}}"
                               Clicked="SB_AskQuestion_Clicked"

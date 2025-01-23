@@ -15,7 +15,7 @@
           Grid.Column="1">
         <BoxView Color="{AppThemeBinding Light={StaticResource LightPrimary},
                                          Dark={StaticResource LightPrimary}}"
-                 CornerRadius="16, 16, 16, 0" />
+                 CornerRadius="16, 0, 16, 16" />
         <dxe:MultilineEdit x:Name="ME_Question"
                            Text="{Binding Text}"
                            Margin="10,5"
@@ -37,11 +37,11 @@
 
     <Grid x:Name="G_UserIcon"
           HeightRequest="35"
-          VerticalOptions="End"
+          VerticalOptions="Start"
           WidthRequest="35"
           Grid.Column="3">
         <BoxView Color="{StaticResource LightPrimary}"
-                 CornerRadius="5, 5, 0, 5" />
+                 CornerRadius="0, 5, 5, 5" />
         <dx:DXImage HeightRequest="22"
                     Source="{Binding ViewModel.Gender,
                                      Converter={StaticResource GenderToIcon}}"
