@@ -30,16 +30,25 @@ public partial class SettingsView : ContentPageBase
 
         (MultilineEdit Edit, string LanguageCode) russianME = m_multilineEdits.FirstOrDefault( x => x.LanguageCode == "ru" );
 
-        if (userTimeZone.BaseUtcOffset == TimeSpan.FromHours( 2 ) || userTimeZone.BaseUtcOffset == TimeSpan.FromHours( 3 ))
+        if (userTimeZone.Id.Contains( "Europe/Kiev" ))
         {
-            russianME.Edit.IsVisible = false;
+            if (russianME.Edit != null)
+            {
+                russianME.Edit.IsVisible = false;
+            }
+
             BS_ChangeLanguage.HalfExpandedRatio = 0.35;
         }
     }
 
     private void SB_ChangeLanguage_Clicked( object sender, EventArgs e )
     {
-        string currentLanguage = Preferences.Get( "AppLanguage", "en" );
+        string currentLanguage = Preferences.Get( "AppLanguage", null )?.Split( '-' )[0];
+
+        if (!m_multilineEdits.Any( item => item.LanguageCode == currentLanguage ))
+        {
+            currentLanguage = "en";
+        }
 
         foreach ((MultilineEdit edit, string languageCode) in m_multilineEdits)
         {

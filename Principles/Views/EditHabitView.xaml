@@ -380,10 +380,9 @@
                         </dxco:BottomSheet>
                         <dxco:BottomSheet x:Name="BS_EditReminder"
                                           AllowDismiss="True"
-                                          AllowedState="HalfExpanded"
                                           BackgroundColor="{AppThemeBinding Light={StaticResource Background},
                                                                             Dark={StaticResource DarkBackground}}"
-                                          ShowGrabber="False">
+                                          ShowGrabber="True">
                             <ScrollView>
                                 <VerticalStackLayout Margin="20,0,20,0"
                                                      Spacing="6">
