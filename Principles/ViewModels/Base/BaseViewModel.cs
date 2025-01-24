@@ -287,6 +287,11 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
 
                         await LogoutAsync();
                     }
+                    else if (ex.Message == "PasswordIsIncorrect")
+                    {
+                        errorMsg = LocStrings.EmailOrPasswordIsIncorrect;
+                        await DialogService.ShowErrorAsync( errorMsg );
+                    }
                     else
                     {
                         errorMsg = LocStrings.ResourceManager.GetString( ex.Message ) ?? string.Empty;
