@@ -735,4 +735,7 @@
 	<data name="JoinOurTelegram" xml:space="preserve">
 		<value>Присоединяйтесь к нашему Telegram-каналу</value>
 	</data>
+	<data name="ErrorOccurred" xml:space="preserve">
+		<value>Произошла ошибка</value>
+    </data>
 </root>

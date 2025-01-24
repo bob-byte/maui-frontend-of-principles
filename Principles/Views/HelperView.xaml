@@ -112,6 +112,7 @@
               VerticalOptions="CenterAndExpand">
             <editors:MultilineEdit x:Name="E_Prompt"
                                    Completed="TE_Prompt_Completed"
+                                   BoxPadding="25,16,0,0"
                                    Text="{Binding Prompt}"
                                    TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
                                                                Dark={StaticResource DarkNormalText}}"

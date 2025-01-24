@@ -813,4 +813,7 @@
   <data name="JoinOurTelegram" xml:space="preserve">
     <value>Приєднуйтесь до нашого Telegram-каналу</value>
   </data>
+  <data name="ErrorOccurred" xml:space="preserve">
+    <value>Сталася помилка</value>
+  </data>
 </root>

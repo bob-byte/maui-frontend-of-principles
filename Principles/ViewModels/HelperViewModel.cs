@@ -65,7 +65,9 @@ public partial class HelperViewModel : BaseViewModel
         }
         else
         {
-            await UiBusyFor( async () =>
+            IsBusy = true;
+
+            try
             {
                 string promptCopy = Prompt;
                 Prompt = string.Empty;
@@ -79,32 +81,62 @@ public partial class HelperViewModel : BaseViewModel
                     ViewModel = this
                 };
                 DisplayMessages.Add( helperMsg );
-                CancellationToken cancellationToken = m_cancellationSource.Token;
 
-                try
+                bool doTryAgain;
+
+                do
                 {
-                    await foreach (StreamingChatCompletionsUpdate chatUpdate in await m_aiChatService.GetAnswerStreamAsync( promptCopy, choiceCount: 1, cancellationToken ))
+                    try
                     {
-                        if (!string.IsNullOrWhiteSpace( chatUpdate.ContentUpdate ))
-                        {
-                            helperMsg.Text += chatUpdate.
-                                ContentUpdate.
-                                Replace( "**", string.Empty );
+                        helperMsg.Text = string.Empty;
+                        CancellationToken cancellationToken = m_cancellationSource.Token;
 
-                            await Task.Delay( millisecondsDelay: 65 );
+                        try
+                        {
+                            await foreach (StreamingChatCompletionsUpdate chatUpdate in await m_aiChatService
+                                               .GetAnswerStreamAsync( promptCopy, choiceCount: 1, cancellationToken ))
+                            {
+                                if (!string.IsNullOrWhiteSpace( chatUpdate.ContentUpdate ))
+                                {
+                                    helperMsg.Text += chatUpdate.ContentUpdate.Replace( "**", string.Empty );
+
+                                    await Task.Delay( millisecondsDelay: 65 );
+                                }
+                            }
+                        }
+                        catch (TaskCanceledException) { }
+                        catch (OperationCanceledException) { }
+
+                        if (cancellationToken.IsCancellationRequested)
+                        {
+                            ResetCancellationOfAnswerGeneration();
+                        }
+
+                        m_aiChatService.AddChatAnswer( helperMsg.Text );
+                        doTryAgain = false;
+                    }
+                    catch (Exception ex)
+                    {
+                        doTryAgain = await DoRetryOperationOnErrorAsync( ex );
+                        if (!doTryAgain)
+                        {
+                            if (string.IsNullOrWhiteSpace( helperMsg.Text ))
+                            {
+                                helperMsg.Text = LocStrings.ErrorOccurred;
+                            }
+                            else
+                            {
+                                helperMsg.Text += Environment.NewLine + Environment.NewLine + LocStrings.ErrorOccurred;
+                            }
                         }
                     }
                 }
-                catch (TaskCanceledException) { }
-                catch (OperationCanceledException) { }
-
-                if (cancellationToken.IsCancellationRequested)
-                {
-                    ResetCancellationOfAnswerGeneration();
-                }
-
-                m_aiChatService.AddChatAnswer( helperMsg.Text );
-            } );
+                while (doTryAgain);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
     }
 
