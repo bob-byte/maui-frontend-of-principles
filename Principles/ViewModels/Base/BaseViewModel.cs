@@ -287,7 +287,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
 
                         await LogoutAsync();
                     }
-                    else if (ex.Message == "PasswordIsIncorrect")
+                    else if (ex.Message == "InvalidEmailOrPassword")
                     {
                         errorMsg = LocStrings.EmailOrPasswordIsIncorrect;
                         await DialogService.ShowErrorAsync( errorMsg );
