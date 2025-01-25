@@ -813,4 +813,10 @@
   <data name="JoinOurTelegram" xml:space="preserve">
     <value>Join our Telegram channel</value>
   </data>
+  <data name="TryAgain" xml:space="preserve">
+    <value>Try again in</value>
+  </data>
+  <data name="Seconds" xml:space="preserve">
+		<value>s</value>
+  </data>
 </root>

@@ -735,4 +735,10 @@
 	<data name="JoinOurTelegram" xml:space="preserve">
 		<value>Присоединяйтесь к нашему Telegram-каналу</value>
 	</data>
+	<data name="TryAgain" xml:space="preserve">
+		<value>Повторите попытку через</value>
+   </data>
+	<data name="Seconds" xml:space="preserve">
+		<value>c</value>
+   </data>
 </root>

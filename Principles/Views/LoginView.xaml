@@ -66,7 +66,13 @@
                                    TextColor="{AppThemeBinding Light={StaticResource Primary},
                                                                Dark={StaticResource DarkPrimary}}" />
 
-                <Grid Margin="0,25,0,0"
+                <Label Text="{Binding TimerMessage}"
+                       FontSize="14"
+                       HorizontalOptions="Center"
+                       TextColor="{StaticResource Error}"
+                       IsVisible="{Binding IsTimerVisible}"
+                       Padding="0,15,0,0" />
+                <Grid Margin="0,15,0,0"
                       RowDefinitions="Auto, Auto, Auto"
                       RowSpacing="5"
                       VerticalOptions="Start">

@@ -28,18 +28,29 @@ public partial class LoginViewModel : BaseViewModel
     [ObservableProperty]
     private ValidatableObject<string> m_password;
 
+    [ObservableProperty]
+    private bool m_isLoginEnable = true;
+
+    [ObservableProperty]
+    private int m_failedAttempts;
+
+    [ObservableProperty]
+    private bool m_isTimerVisible;
+
+    [ObservableProperty]
+    private string m_timerMessage;
     private bool IsEmailAndPasswordValid => 
         Email.IsValid && Password.IsValid;
 
     public ILoginService LoginService { get; }
     public IReminderService ReminderService { get; }
-    
+
     public override Task InitializeAsync( object? parameter = null )
     {
         return base.InitializeAsync( parameter );
     }
 
-    [RelayCommand]
+    [RelayCommand( CanExecute = nameof( CanLogin ) )]
     private async Task LoginAsync()
     {
         ValidateEmail();
@@ -54,7 +65,7 @@ public partial class LoginViewModel : BaseViewModel
                     await LoginService.LoginAsync( Email.Value, Password.Value );
                     await ReminderService.TryToRecoverAllUserRemindersAsync();
                     await Navigation.GoToInitialViewAsync();
-                    
+
                     Email = new ValidatableObject<string>();
                     Password = new ValidatableObject<string>();
                     AddValidations();
@@ -62,10 +73,53 @@ public partial class LoginViewModel : BaseViewModel
                 catch
                 {
                     await SettingsService.SetAuthAccessTokenAsync( string.Empty );
+                    FailedAttempts++;
+                    if (FailedAttempts == 3)
+                    {
+                        StartLockoutTimer();
+                    }
                     throw;
                 }
             } );
         }
+    }
+
+    private bool CanLogin()
+    {
+        return IsLoginEnable;
+    }
+
+    private void StartLockoutTimer()
+    {
+        IsLoginEnable = false;
+        IsTimerVisible = true;
+        TimerMessage = string.Empty;
+
+        int lockoutDuration = 120;
+        DateTime lockoutStartTime = DateTime.Now;
+
+        Application.Current.Dispatcher.StartTimer( TimeSpan.FromSeconds( 1 ), () =>
+        {
+            double elapsed = (DateTime.Now - lockoutStartTime).TotalSeconds;
+
+            int remainingTime = lockoutDuration - (int)elapsed;
+
+            if (remainingTime <= 0)
+            {
+                IsLoginEnable = true;
+                IsTimerVisible = false;
+                TimerMessage = string.Empty;
+                FailedAttempts = 0;
+                if (LoginCommand is IAsyncRelayCommand asyncRelayCommand)
+                {
+                    asyncRelayCommand.NotifyCanExecuteChanged();
+                }
+                return false;
+            }
+
+            TimerMessage = $"{LocStrings.TryAgain} {remainingTime} {LocStrings.Seconds}.";
+            return true;
+        } );
     }
 
     [RelayCommand]
