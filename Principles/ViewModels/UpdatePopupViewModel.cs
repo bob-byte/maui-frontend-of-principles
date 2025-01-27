@@ -2,8 +2,6 @@
 
 public partial class UpdatePopupViewModel : BaseViewModel
 {
-    public LocalizationResourceManager LocalizationResourceManager
-        => LocalizationResourceManager.Instance;
     private const string KEY_TO_STORE_DONT_SHOW_AGAIN_FOR_SOME_VERSION = "DontShowUpdatePopupAgainForVersion";
 
     [ObservableProperty]

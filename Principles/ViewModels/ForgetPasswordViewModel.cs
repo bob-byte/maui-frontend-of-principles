@@ -3,8 +3,6 @@ namespace Principles.ViewModels;
 
 public partial class ForgetPasswordViewModel : BaseViewModel
 {
-    public LocalizationResourceManager LocalizationResourceManager
-        => LocalizationResourceManager.Instance;
     [ObservableProperty]
     private bool m_isConfirmChangePasswordOpen;
 

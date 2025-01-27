@@ -12,8 +12,6 @@ namespace Principles.ViewModels;
 
 public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
 {
-    public LocalizationResourceManager LocalizationResourceManager
-        => LocalizationResourceManager.Instance;
     [ObservableProperty]
     private UserHabit m_habit;
 

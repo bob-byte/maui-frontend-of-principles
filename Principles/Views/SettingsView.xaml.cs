@@ -11,8 +11,9 @@ public partial class SettingsView : ContentPageBase
     public SettingsView( SettingsViewModel viewModel )
 	{
         BindingContext = viewModel;
+        ViewModel = viewModel;
 
-		InitializeComponent();
+        InitializeComponent();
 
         m_multilineEdits = new List<(MultilineEdit Edit, string LanguageCode)>
         {
@@ -24,6 +25,7 @@ public partial class SettingsView : ContentPageBase
         CheckAndHideRussianLanguage();
     }
 
+    private SettingsViewModel ViewModel {get;}
     private void CheckAndHideRussianLanguage()
     {
         TimeZoneInfo userTimeZone = TimeZoneInfo.Local;
@@ -76,6 +78,7 @@ public partial class SettingsView : ContentPageBase
 
     private void SB_SaveChangeLanguage_Clicked( object sender, EventArgs e )
     {
+        ViewModel.ChangeLanguage();
         BS_ChangeLanguage.State = BottomSheetState.Hidden;
     }
 

@@ -4,8 +4,6 @@ namespace Principles.ViewModels;
 
 public partial class SettingsViewModel : BaseViewModel
 {
-    public LocalizationResourceManager LocalizationResourceManager
-        => LocalizationResourceManager.Instance;
     public SettingsViewModel( IServiceProvider serviceProvider)
         : base(serviceProvider)
     {

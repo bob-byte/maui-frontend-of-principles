@@ -15,8 +15,6 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     private bool m_isInitialized;
 
     private readonly ConcurrentDictionary<UserHabit, SemaphoreSlim> m_isBusyForChangeCompleted;
-    public LocalizationResourceManager LocalizationResourceManager
-        => LocalizationResourceManager.Instance;
 
     [ObservableProperty]
     private UserHabit? m_selectedHabit;

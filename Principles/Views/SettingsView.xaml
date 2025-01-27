@@ -123,7 +123,6 @@
                                                IconHorizontalPosition="Left"
                                                FontSize="16"
                                                Grid.Column="1"
-                                               Command="{Binding ChangeLanguageCommand}"
                                                Clicked="SB_SaveChangeLanguage_Clicked" />
                         </Grid>
                     </VerticalStackLayout>

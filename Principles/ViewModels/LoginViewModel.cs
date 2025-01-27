@@ -9,9 +9,7 @@ namespace Principles.ViewModels;
 
 public partial class LoginViewModel : BaseViewModel
 {
-    public LocalizationResourceManager LocalizationResourceManager
-        => LocalizationResourceManager.Instance;
-    public LoginViewModel( IServiceProvider serviceProvider )
+   public LoginViewModel( IServiceProvider serviceProvider )
         : base( serviceProvider )
     {
         m_email = new ValidatableObject<string>();

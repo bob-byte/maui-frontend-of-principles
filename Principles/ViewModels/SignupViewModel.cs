@@ -3,8 +3,6 @@ namespace Principles.ViewModels;
 
 public partial class SignupViewModel : BaseViewModel
 {
-    public LocalizationResourceManager LocalizationResourceManager
-        => LocalizationResourceManager.Instance;
     [ObservableProperty]
     private ValidatableObject<string> m_name;
     [ObservableProperty]

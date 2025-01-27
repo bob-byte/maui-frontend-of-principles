@@ -4,8 +4,6 @@ namespace Principles.ViewModels;
 
 public partial class HelperViewModel : BaseViewModel
 {
-    public LocalizationResourceManager LocalizationResourceManager
-        => LocalizationResourceManager.Instance;
     private readonly IAiChatService m_aiChatService;
     [ObservableProperty]
     private string? m_prompt;

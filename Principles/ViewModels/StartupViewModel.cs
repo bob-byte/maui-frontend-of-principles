@@ -3,8 +3,6 @@ namespace Principles.ViewModels;
 
 public partial class StartupViewModel : BaseViewModel
 {
-    public LocalizationResourceManager LocalizationResourceManager
-        => LocalizationResourceManager.Instance;
     private readonly IGoogleAuthService m_googleAuthService;
     private readonly IAppleAuthService m_appleAuthService;
     private readonly IReminderService m_reminderService;
