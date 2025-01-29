@@ -34,6 +34,16 @@ public partial class EditHabitView : ContentPageBase
             double heightOfReminderBottomSheet = 500;
             BS_EditReminder.HalfExpandedRatio = heightOfReminderBottomSheet / ViewModel.SettingsService.NormalPageHeight;
         }
+
+        ME_HabitGoal.TextChanged += ME_HabitGoal_TextChanged;
+    }
+
+    private void ME_HabitGoal_TextChanged( object? sender, EventArgs e )
+    {
+        if (!string.IsNullOrWhiteSpace( ME_HabitGoal.Text ))
+        {
+            ME_HabitGoal.EndIcon = "cross";
+        }
     }
 
     protected override void OnAppearing()
@@ -526,7 +536,17 @@ public partial class EditHabitView : ContentPageBase
 
     private void ME_HabitGoal_IconClicked( System.Object sender, System.EventArgs e )
     {
-        ShowOrHideUserGoals();
+        if (!string.IsNullOrWhiteSpace( ME_HabitGoal.Text ))
+        {
+            ViewModel.Habit.Goal = null;
+            ME_HabitGoal.Text = string.Empty;
+            ME_HabitGoal.EndIcon = "dotshorizontal";
+            ME_HabitGoal.Unfocus();
+        }
+        else
+        {
+            ShowOrHideUserGoals();
+        }
     }
 
     private void ME_HabitGoal_Tap( object sender, HandledEventArgs e )
@@ -606,6 +626,7 @@ public partial class EditHabitView : ContentPageBase
             ViewModel.OnGoalNameTapped( goal! );
 
             m_doExecuteReloadOfRecommendedHabits = true;
+            ME_HabitGoal.EndIcon = "cross";
         }
     }
 
