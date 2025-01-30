@@ -583,8 +583,8 @@
     <value>Войти</value>
   </data>
 	<data name="TransformAreasOfLifeTitle" xml:space="preserve">
-    <value>Улучшить отстающие сферы жизни</value>
-  </data>
+		<value>Улучши отстающие сферы жизни</value>
+	</data>
 	<data name="TransformAreasOfLifeDescription" xml:space="preserve">
     <value>Устанавливай цели правильно и строи свои привычки.</value>
   </data>
