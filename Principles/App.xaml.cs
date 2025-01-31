@@ -38,6 +38,7 @@ public partial class App : Application
     protected async override void OnStart()
     {
         base.OnStart();
+        LocalNotificationCenter.Current.ClearAll();
 
         if (VersionTracking.IsFirstLaunchEver || VersionTracking.IsFirstLaunchForCurrentBuild || VersionTracking.IsFirstLaunchForCurrentVersion) 
         {
