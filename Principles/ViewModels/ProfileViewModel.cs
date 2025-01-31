@@ -81,8 +81,19 @@ public partial class ProfileViewModel : BaseViewModel
 
         if (isSuccess)
         {
+            string oldMission = CachingService.StoredValue( CacheKeys.USER_MISSION );
+
             Mission = newValue;
             CachingService.SetForever( CacheKeys.USER_MISSION, Mission );
+
+            IList<NotificationRequest> notifications =
+                await LocalNotificationCenter.Current.GetPendingNotificationList();
+
+            foreach (NotificationRequest? notification in notifications.Where( n => n.Title == oldMission ))
+            {
+                notification.Title = newValue;
+                await LocalNotificationCenter.Current.Show( notification );
+            }
 
             NotifyUserInfoChanged();
 
