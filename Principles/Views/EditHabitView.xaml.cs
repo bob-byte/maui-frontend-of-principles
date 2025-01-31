@@ -34,16 +34,6 @@ public partial class EditHabitView : ContentPageBase
             double heightOfReminderBottomSheet = 500;
             BS_EditReminder.HalfExpandedRatio = heightOfReminderBottomSheet / ViewModel.SettingsService.NormalPageHeight;
         }
-
-        ME_HabitGoal.TextChanged += ME_HabitGoal_TextChanged;
-    }
-
-    private void ME_HabitGoal_TextChanged( object? sender, EventArgs e )
-    {
-        if (!string.IsNullOrWhiteSpace( ME_HabitGoal.Text ))
-        {
-            ME_HabitGoal.EndIcon = "cross";
-        }
     }
 
     protected override void OnAppearing()
@@ -540,7 +530,7 @@ public partial class EditHabitView : ContentPageBase
         {
             ViewModel.Habit.Goal = null;
             ME_HabitGoal.Text = string.Empty;
-            ME_HabitGoal.EndIcon = "dotshorizontal";
+            ViewModel.IsGoalEmpty = true;
             ME_HabitGoal.Unfocus();
         }
         else
@@ -626,7 +616,7 @@ public partial class EditHabitView : ContentPageBase
             ViewModel.OnGoalNameTapped( goal! );
 
             m_doExecuteReloadOfRecommendedHabits = true;
-            ME_HabitGoal.EndIcon = "cross";
+            ViewModel.IsGoalEmpty = false;
         }
     }
 
