@@ -713,7 +713,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
                                          n.Title == oldGoalName ))
                             {
                                 notification.Title = EditedGoal.Name!;
-                                await LocalNotificationCenter.Current.Show( notification );
+                                await ReminderService.SaveAsync( notification );
                             }
                         }
                     }
@@ -938,7 +938,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
                 .AddDays( daysUntilNextReminder )
                 .Add( reminder.Time.ToTimeSpan() );
             
-            await ReminderService.AddAsync( 
+            await ReminderService.SaveAsync( 
                 weekDay.UserNotificationRequestId, 
                 reminder.Title, 
                 reminder.Description, 

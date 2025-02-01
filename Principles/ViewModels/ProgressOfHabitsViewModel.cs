@@ -420,7 +420,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
             reminder.UserNotificationRequestId = response.UserNotificationRequestId;
 
             DateTime notifyTime = DateTime.Today.Add( reminder.Time.ToTimeSpan() );
-            await ReminderService.AddAsync(
+            await ReminderService.SaveAsync(
                 reminder.UserNotificationRequestId,
                 reminder.Title,
                 reminder.Description,
