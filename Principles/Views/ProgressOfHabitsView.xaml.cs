@@ -151,7 +151,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
                     DGV_Habits.Columns.Insert( index: 1, templateColumn );
 #endif
-                } ).DefaultConfigureAwait();
+                } );
 
                 ViewModel.EndProgressInterval = today;
                 ViewModel.IsProgressesInitialized = true;
