@@ -1,4 +1,6 @@
 
+using System.Net;
+
 namespace Principles.ViewModels;
 
 public partial class StartupViewModel : BaseViewModel
@@ -38,10 +40,32 @@ public partial class StartupViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            if (ex is not TaskCanceledException)
-            {
-                LoggingService.LogError( ex, ex.Message );
-            }
+            await HandleExceptionWhenGoogleAuthAsync( ex ).DefaultConfigureAwait();
+        }
+    }
+
+    private async Task HandleExceptionWhenGoogleAuthAsync(Exception ex)
+    {
+        string? errorMsg = null;
+            
+        if (ex is TimeoutException || ex.InnerException is TimeoutException)
+        {
+            errorMsg = LocStrings.OperationTimeoutMessage;
+        }
+        else if (ex is HttpRequestException or AggregateException or WebException)
+        {
+            errorMsg = LocStrings.NoInternetConnection;
+        }
+        else if (ex is not TaskCanceledException)
+        {
+            errorMsg = LocStrings.SomethingWentWrongWhenUserAuthsUsingExternalService;
+        }
+            
+        bool doShowAlert = !string.IsNullOrWhiteSpace( errorMsg );
+        if (doShowAlert)
+        {
+            LoggingService.LogError( ex, ex.Message );
+            await DialogService.ShowErrorAsync( errorMsg! );
         }
     }
 
@@ -58,15 +82,41 @@ public partial class StartupViewModel : BaseViewModel
             }
             else
             {
-                throw new NotSupportedException( message: LocStrings.AppleAuthIsNotSupportedForCurrentDevice );
+                await DialogService.ShowErrorAsync( LocStrings.AppleAuthIsNotSupportedForCurrentDevice );
             }
         }
         catch (Exception ex)
         {
-            bool isCancelledByUser = ex is TaskCanceledException || ex.Message.Contains( "error 1001" );
-            if (!isCancelledByUser)
+            await HandleExceptionWhenAppleAuthAsync( ex ).DefaultConfigureAwait();
+        }
+    }
+
+    private async Task HandleExceptionWhenAppleAuthAsync( Exception ex )
+    {
+        bool isCancelledByUser = ex.Message.Contains( "1001" );
+        if (!isCancelledByUser)
+        {
+            LoggingService.LogError( ex, ex.Message );
+
+            string? errorMsg = null;
+                
+            if (ex is TimeoutException || ex.InnerException is TimeoutException)
             {
-                LoggingService.LogError( ex, ex.Message );
+                errorMsg = LocStrings.OperationTimeoutMessage;
+            }
+            else if (ex is HttpRequestException or AggregateException or WebException)
+            {
+                errorMsg = LocStrings.NoInternetConnection;
+            }
+            else if (ex is not TaskCanceledException)
+            {
+                errorMsg = LocStrings.SomethingWentWrongWhenUserAuthsUsingExternalService;
+            }
+                
+            bool doShowAlert = !string.IsNullOrWhiteSpace( errorMsg );
+            if (doShowAlert)
+            {
+                await DialogService.ShowErrorAsync( errorMsg! );
             }
         }
     }

@@ -397,7 +397,7 @@
     <value>Введіть текст...</value>
   </data>
   <data name="SomethingWentWrong" xml:space="preserve">
-    <value>Щось пішло не так</value>
+    <value>Щось пішло не так. Ми постараємось виправити цю помилку</value>
   </data>
   <data name="RecommendedHabitsByAi" xml:space="preserve">
     <value>Рекомендовані звички штучним інтелектом</value>
@@ -812,5 +812,17 @@
   </data>
   <data name="JoinOurTelegram" xml:space="preserve">
     <value>Приєднуйтесь до нашого Telegram-каналу</value>
+  </data>
+  <data name="TryAgain" xml:space="preserve">
+		<value>Повторіть спробу через</value>
+  </data>
+	<data name="SecondsInShort" xml:space="preserve">
+		<value>с</value>
+  </data>
+  <data name="SomethingWentWrongWhenUserAuthsUsingExternalService" xml:space="preserve">
+    <value>Щось пішло не так. Скористайтесь опцією "Зареєструватись" або "Вхід".</value>
+  </data>
+  <data name="InvalidEmailOrPassword" xml:space="preserve">
+    <value>Неправильна пошта або пароль.</value>
   </data>
 </root>
