@@ -2,11 +2,15 @@
 
 public partial class ProfileViewModel : BaseViewModel
 {
+    private readonly IReminderService m_reminderService;
+    
     public ProfileViewModel( IServiceProvider serviceProvider )
         : base( serviceProvider )
     {
         Title = LocStrings.Profile;
         ReferenceMessenger.Register<UserLoggedOutMessage>( this, ( sender, msg ) => DefaultHandleLogout( msg ) );
+        
+        m_reminderService = serviceProvider.GetRequiredService<IReminderService>();
     }
 
     [RelayCommand(CanExecute = nameof(CanSaveUserName))]
@@ -81,8 +85,19 @@ public partial class ProfileViewModel : BaseViewModel
 
         if (isSuccess)
         {
+            string oldMission = (string)Mission!.Clone();
+
             Mission = newValue;
             CachingService.SetForever( CacheKeys.USER_MISSION, Mission );
+
+            IList<NotificationRequest> notifications =
+                await LocalNotificationCenter.Current.GetPendingNotificationList();
+
+            foreach (NotificationRequest? notification in notifications.Where( n => n.Title == oldMission ))
+            {
+                notification.Title = newValue;
+                await m_reminderService.SaveAsync( notification );
+            }
 
             NotifyUserInfoChanged();
 
