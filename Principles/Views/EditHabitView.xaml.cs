@@ -539,10 +539,20 @@ public partial class EditHabitView : ContentPageBase
         if (GoalsBottomSheet.State == BottomSheetState.Hidden)
         {
             GoalsBottomSheet.State = BottomSheetState.HalfExpanded;
-
+            
             double heightOfReminderBottomSheet = 500;
-            GoalsBottomSheet.HalfExpandedRatio = heightOfReminderBottomSheet / ViewModel.SettingsService.NormalPageHeight;
 
+            if (ViewModel.SettingsService.NormalPageHeight == 0)
+            {
+                GoalsBottomSheet.HalfExpandedRatio = 0.7;
+            }
+            else
+            {
+                //bottom_sheet_height = full_height * HalfExpandedRatio
+                //HalfExpandedRatio = bottom_sheet_height / full_height
+                GoalsBottomSheet.HalfExpandedRatio = heightOfReminderBottomSheet / ViewModel.SettingsService.NormalPageHeight;
+            }
+            
             double rowSpacing = G_Goals.RowSpacing * (G_Goals.RowDefinitions.Count - 1);
             double additionalSpacing = 15;
             double height = heightOfReminderBottomSheet - rowSpacing - L_GoalSelectionCenterHeader.HeightRequest - L_GoalRecommendation.HeightRequest - additionalSpacing;
