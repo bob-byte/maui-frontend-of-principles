@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -21,9 +22,9 @@ public static class DecryptTextHelper
 
             ICryptoTransform decryptor = aesAlg.CreateDecryptor( aesAlg.Key, aesAlg.IV );
 
-            using (MemoryStream msDecrypt = new MemoryStream( Convert.FromBase64String( cipherText ) ))
-            using (CryptoStream csDecrypt = new CryptoStream( msDecrypt, decryptor, CryptoStreamMode.Read ))
-            using (StreamReader srDecrypt = new StreamReader( csDecrypt ))
+            using (MemoryStream msDecrypt = new( Convert.FromBase64String( cipherText ) ))
+            using (CryptoStream csDecrypt = new( msDecrypt, decryptor, CryptoStreamMode.Read ))
+            using (StreamReader srDecrypt = new( csDecrypt ))
             {
                 return srDecrypt.ReadToEnd();
             }

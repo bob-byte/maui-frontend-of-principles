@@ -1,4 +1,6 @@
-﻿namespace Principles.Core.Extensions;
+﻿using System.Collections.Generic;
+
+namespace Principles.Core.Extensions;
 
 public static class IEnumerableExtensions
 {

@@ -20,36 +20,30 @@
                                  Spacing="0"
                                  VerticalOptions="CenterAndExpand">
                 <Image Source="logolargesize"
-                       WidthRequest="200"
-                       HeightRequest="200" />
-                <Label Text="{Binding AppName,
-                                      Converter={StaticResource ToUpperCase}}"
-                       FontAttributes="Bold"
+                       HeightRequest="200"
+                       WidthRequest="200" />
+                <Label Text="{Binding AppName}"
                        FontFamily="CambriaBold"
                        FontSize="35"
                        HorizontalOptions="Center"
                        TextColor="{StaticResource Primary}" />
-                <dxe:TextEdit LabelText="{x:Static loc:LocStrings.Email}"
-                              Text="{Binding Email.Value}"
+                <dxe:TextEdit Text="{Binding Email.Value}"
                               Margin="0,10,0,0"
                               AutofillContentType="EmailAddress"
                               ClearIconVisibility="Never"
-                              ErrorText="{Binding Email.Errors,
-                                                  Converter={StaticResource FirstValidationError}}"
-                              HasError="{Binding Email.IsValid,
-                                                 Converter={StaticResource IsFalse}}"
+                              ErrorText="{Binding Email.Errors, Converter={StaticResource FirstValidationError}}"
+                              HasError="{Binding Email.IsValid, Converter={StaticResource IsFalse}}"
                               Keyboard="Email"
+                              LabelText="{x:Static loc:LocStrings.Email}"
                               ReserveBottomTextLine="True"
                               StartIcon="email"
                               TextChangedCommand="{Binding ValidateEmailCommand}" />
                 <dxe:PasswordEdit x:Name="PasswordEntry"
-                                  LabelText="{x:Static loc:LocStrings.Password}"
                                   Text="{Binding Password.Value}"
                                   AutofillContentType="Password"
-                                  ErrorText="{Binding Password.Errors,
-                                                      Converter={StaticResource FirstValidationError}}"
-                                  HasError="{Binding Password.IsValid,
-                                                     Converter={StaticResource IsFalse}}"
+                                  ErrorText="{Binding Password.Errors, Converter={StaticResource FirstValidationError}}"
+                                  HasError="{Binding Password.IsValid, Converter={StaticResource IsFalse}}"
+                                  LabelText="{x:Static loc:LocStrings.Password}"
                                   ReserveBottomTextLine="True"
                                   StartIcon="password"
                                   TextChangedCommand="{Binding ValidatePasswordCommand}" />
@@ -128,11 +122,11 @@
                 </Grid>
             </VerticalStackLayout>
         </ScrollView>
-        <ActivityIndicator IsVisible="{Binding IsBusy}"
-                           WidthRequest="100"
-                           HorizontalOptions="Center"
+        <ActivityIndicator HorizontalOptions="Center"
                            IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}"
                            VerticalOptions="Center"
+                           WidthRequest="100"
                            Color="{StaticResource Primary}" />
     </Grid>
 </v:ContentPageBase>

@@ -18,7 +18,6 @@ public partial class HelperView : ContentPageBase
         InitializeComponent();
 
         ViewModel.DisplayMessages.CollectionChanged += DisplayMessages_CollectionChanged;
-        DXC_DisplayMessages.ItemTemplate = new MessageDataTemplateSelector( ViewModel );
     }
 
     protected override void OnAppearing()
@@ -60,7 +59,10 @@ public partial class HelperView : ContentPageBase
     {
         KeyboardHelper.HideKeyboard();
         E_Prompt.Unfocus();
+        
+#if ANDROID
         Shell.SetTabBarIsVisible( this, true );
+#endif
 
         await AskQuestionAsync();
     }
@@ -100,11 +102,15 @@ public partial class HelperView : ContentPageBase
 
     private void E_Prompt_Focused( object sender, FocusEventArgs e )
     {
+#if ANDROID
         Shell.SetTabBarIsVisible( this, false );
+#endif
     }
 
     private void E_Prompt_Unfocused( object sender, FocusEventArgs e )
     {
+#if ANDROID
         Shell.SetTabBarIsVisible( this, true );
+#endif
     }
 }

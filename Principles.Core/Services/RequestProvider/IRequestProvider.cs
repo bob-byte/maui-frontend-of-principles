@@ -1,4 +1,7 @@
-﻿namespace Principles.Core.Services;
+﻿
+using System.Net.Http;
+
+namespace Principles.Core.Services;
 
 public interface IRequestProvider
 {

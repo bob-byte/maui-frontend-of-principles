@@ -1,4 +1,6 @@
-﻿namespace Principles.Core.Extensions;
+﻿using System;
+
+namespace Principles.Core.Extensions;
 
 public static class DateOnlyExtensions
 {

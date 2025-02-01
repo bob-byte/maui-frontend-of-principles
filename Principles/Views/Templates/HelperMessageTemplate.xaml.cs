@@ -8,10 +8,10 @@ public partial class HelperMessageTemplate : Grid
     private readonly DisplayMessage m_message;
     private readonly HelperViewModel m_viewModel;
 
-    public HelperMessageTemplate(DisplayMessage message, HelperViewModel viewModel, double pageWidth)
+    public HelperMessageTemplate(DisplayMessage message, double pageWidth)
     {
         m_message = message;
-        m_viewModel = viewModel;
+        m_viewModel = ServiceLocator.Current!.GetRequiredService<HelperViewModel>();
 
         InitializeComponent();
 
