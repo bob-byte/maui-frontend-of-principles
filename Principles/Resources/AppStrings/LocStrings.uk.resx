@@ -820,7 +820,7 @@
 		<value>с</value>
   </data>
   <data name="SomethingWentWrongWhenUserAuthsUsingExternalService" xml:space="preserve">
-    <value>Щось пішло не так. Скористайтесь опцією "Зареєструватись" або "Вхід"</value>
+    <value>Щось пішло не так. Скористайтесь опцією "Зареєструватись" або "Вхід".</value>
   </data>
     <data name="InvalidEmailOrPassword" xml:space="preserve">
     <value>Неправильна пошта або пароль.</value>

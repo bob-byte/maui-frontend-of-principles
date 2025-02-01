@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>LSRequiresIPhoneOS</key>
-	<true/>
+	<false />
 	<key>UIDeviceFamily</key>
 	<array>
 		<integer>1</integer>
@@ -70,5 +70,11 @@
 	<string>The app should not request your location. Write to app@principles.top if you encounter a request for your location.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>The app should not request your location. Write to app@principles.top if you encounter a request for your location.</string>
+	<key>NSUserAuthenticationAppleID</key>
+    <string>Required</string>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>https</string>
+    </array>
 </dict>
 </plist>

@@ -119,6 +119,8 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
                 await MainThread.InvokeOnMainThreadAsync( () =>
                 {
+                    ViewModel.EndProgressInterval = today;
+                    
                     foreach (UserHabit habit in ViewModel.UserHabits)
                     {
                         habit.Progresses!.Insert( index: 0,
@@ -153,7 +155,6 @@ public partial class ProgressOfHabitsView : ContentPageBase
 #endif
                 } );
 
-                ViewModel.EndProgressInterval = today;
                 ViewModel.IsProgressesInitialized = true;
             }
         }

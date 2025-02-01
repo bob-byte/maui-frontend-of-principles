@@ -19,8 +19,8 @@
             <VerticalStackLayout Padding="15,0,15,0"
                                  VerticalOptions="Center">
                 <Image Source="logolargesize"
-                       HeightRequest="200"
-                       WidthRequest="200" />
+                       WidthRequest="200"
+                       HeightRequest="200" />
                 <Label Text="{Binding AppName}"
                        FontFamily="CambriaBold"
                        FontSize="35"
@@ -30,30 +30,36 @@
                                    Text="{x:Static loc:LocStrings.JoinOurTelegram}"
                                    Command="{Binding ShowTelegramChannelCommand}"
                                    Style="{StaticResource PrimaryButton}"
-                                   Margin="0,5,0,0" />
+                                   Margin="0,5,0,0"
+                                   MaximumWidthRequest="700" />
                 <dxco:SimpleButton x:Name="SB_ContactInfo"
                                    Text="{x:Static loc:LocStrings.ContactEmail}"
                                    Command="{Binding OpenEmailCommand}"
                                    Style="{StaticResource PrimaryButton}"
-                                   Margin="0,15,0,0" />
+                                   Margin="0,15,0,0"
+                                   MaximumWidthRequest="700" />
                 <dxco:SimpleButton x:Name="SB_PrivacyPolicy"
                                    Text="{x:Static loc:LocStrings.PrivacyPolicy}"
                                    Command="{Binding ShowPrivacyPolicyCommand}"
                                    Style="{StaticResource PrimaryButton}"
-                                   Margin="0,15,0,0" />
+                                   Margin="0,15,0,0"
+                                   MaximumWidthRequest="700" />
                 <dxco:SimpleButton x:Name="SB_UserAgreement"
                                    Text="{x:Static loc:LocStrings.UserAgreement}"
                                    Command="{Binding ShowUserAgreementCommand}"
                                    Style="{StaticResource PrimaryButton}"
-                                   Margin="0,15,0,0" />
+                                   Margin="0,15,0,0"
+                                   MaximumWidthRequest="700" />
                 <dxco:SimpleButton Text="{x:Static loc:LocStrings.DeleteAccount}"
                                    Command="{Binding DeleteAccountCommand}"
                                    Style="{StaticResource SecondaryButton}"
-                                   Margin="0,15,0,0" />
+                                   Margin="0,15,0,0"
+                                   MaximumWidthRequest="700" />
                 <dxco:SimpleButton Text="{x:Static loc:LocStrings.Logout}"
                                    Command="{Binding LogoutCommand}"
                                    Style="{StaticResource SecondaryButton}"
-                                   Margin="0,15,0,0" />
+                                   Margin="0,15,0,0"
+                                   MaximumWidthRequest="700" />
             </VerticalStackLayout>
         </ScrollView>
 
