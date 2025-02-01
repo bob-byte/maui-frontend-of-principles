@@ -38,6 +38,8 @@ public partial class App : Application
     protected async override void OnStart()
     {
         base.OnStart();
+        
+        LocalNotificationCenter.Current.ClearAll();
 
         if (VersionTracking.IsFirstLaunchEver || VersionTracking.IsFirstLaunchForCurrentBuild || VersionTracking.IsFirstLaunchForCurrentVersion) 
         {
@@ -75,6 +77,8 @@ public partial class App : Application
     protected override async void OnResume()
     {
         base.OnResume();
+        
+        LocalNotificationCenter.Current.ClearAll();
         
         if (VersionTracking.IsFirstLaunchEver || VersionTracking.IsFirstLaunchForCurrentBuild || VersionTracking.IsFirstLaunchForCurrentVersion) 
         {
