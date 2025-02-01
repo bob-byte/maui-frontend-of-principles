@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Specialized;
+using System.Linq;
 
 namespace Principles.Core.Models
 {

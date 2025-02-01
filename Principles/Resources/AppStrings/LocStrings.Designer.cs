@@ -1437,27 +1437,9 @@ namespace Principles.Resources.AppStrings {
             }
         }
         
-        internal static string TryAgain {
+        internal static string ErrorOccurred {
             get {
-                return ResourceManager.GetString("TryAgain", resourceCulture);
-            }
-        }
-        
-        internal static string SecondsInShort {
-            get {
-                return ResourceManager.GetString("SecondsInShort", resourceCulture);
-            }
-        }
-        
-        internal static string SomethingWentWrongWhenUserAuthsUsingExternalService {
-            get {
-                return ResourceManager.GetString("SomethingWentWrongWhenUserAuthsUsingExternalService", resourceCulture);
-            }
-        }
-        
-        internal static string InvalidEmailOrPassword {
-            get {
-                return ResourceManager.GetString("InvalidEmailOrPassword", resourceCulture);
+                return ResourceManager.GetString("ErrorOccurred", resourceCulture);
             }
         }
     }

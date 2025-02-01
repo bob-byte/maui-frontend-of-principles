@@ -3,13 +3,11 @@ namespace Principles.Views.Templates;
 
 public class MessageDataTemplateSelector : DataTemplateSelector
 {
-    public MessageDataTemplateSelector( HelperViewModel viewModel )
+    public MessageDataTemplateSelector()
     {
-        ViewModel = viewModel;
+        //do nothing
     }
-
-    public HelperViewModel ViewModel { get; }
-
+    
     public static double PageWidth { get; set; }
 
     protected override DataTemplate OnSelectTemplate( object item, BindableObject container )
@@ -25,7 +23,7 @@ public class MessageDataTemplateSelector : DataTemplateSelector
         }
         else if (message.View == null)
         {
-            message.View = new HelperMessageTemplate( message, ViewModel, PageWidth );
+            message.View = new HelperMessageTemplate( message, PageWidth );
             message.DataTemplate = new DataTemplate( () => message.View );
         }
 

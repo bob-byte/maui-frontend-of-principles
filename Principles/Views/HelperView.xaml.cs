@@ -1,4 +1,6 @@
 
+using Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;
+
 using System.Collections.Specialized;
 namespace Principles.Views;
 
@@ -16,19 +18,26 @@ public partial class HelperView : ContentPageBase
         InitializeComponent();
 
         ViewModel.DisplayMessages.CollectionChanged += DisplayMessages_CollectionChanged;
-        DXC_DisplayMessages.ItemTemplate = new MessageDataTemplateSelector( ViewModel );
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
+#if ANDROID
         m_deviceOrientationService.LockOrientation( DeviceOrientation.Portrait );
+        Microsoft.Maui.Controls.Application.Current.On<Microsoft.Maui.Controls.PlatformConfiguration.Android>()
+            .UseWindowSoftInputModeAdjust( WindowSoftInputModeAdjust.Resize );
+#endif
     }
 
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
+#if ANDROID
         m_deviceOrientationService.UnlockOrientation();
+        Microsoft.Maui.Controls.Application.Current.On<Microsoft.Maui.Controls.PlatformConfiguration.Android>()
+           .UseWindowSoftInputModeAdjust( WindowSoftInputModeAdjust.Pan );
+#endif
     }
 
     private HelperViewModel ViewModel { get; }
@@ -49,6 +58,11 @@ public partial class HelperView : ContentPageBase
     async void SB_AskQuestion_Clicked( System.Object sender, System.EventArgs e )
     {
         KeyboardHelper.HideKeyboard();
+        E_Prompt.Unfocus();
+        
+#if ANDROID
+        Shell.SetTabBarIsVisible( this, true );
+#endif
 
         await AskQuestionAsync();
     }
@@ -84,5 +98,19 @@ public partial class HelperView : ContentPageBase
             double titleLabelWidth = titleWidth - helpIconWidth - infoIconWidth - 5;
             L_TitleText.WidthRequest = titleLabelWidth;
         }
+    }
+
+    private void E_Prompt_Focused( object sender, FocusEventArgs e )
+    {
+#if ANDROID
+        Shell.SetTabBarIsVisible( this, false );
+#endif
+    }
+
+    private void E_Prompt_Unfocused( object sender, FocusEventArgs e )
+    {
+#if ANDROID
+        Shell.SetTabBarIsVisible( this, true );
+#endif
     }
 }

@@ -502,7 +502,7 @@
     <value>You have sent the maximum number of messages in one chat</value>
   </data>
   <data name="PrivacyPolicy" xml:space="preserve">
-    <value>Privacy policy</value>
+    <value>Our privacy policy</value>
   </data>
   <data name="PrivacyPolicyTitle" xml:space="preserve">
     <value>Privacy Policy</value>
@@ -813,16 +813,19 @@
   <data name="JoinOurTelegram" xml:space="preserve">
     <value>Join our Telegram channel</value>
   </data>
-  <data name="TryAgain" xml:space="preserve">
+    <data name="TryAgain" xml:space="preserve">
     <value>Try again in</value>
   </data>
-  <data name="SecondsInShort" xml:space="preserve">
+    <data name="SecondsInShort" xml:space="preserve">
 		<value>s</value>
   </data>
-  <data name="SomethingWentWrongWhenUserAuthsUsingExternalService" xml:space="preserve">
+    <data name="SomethingWentWrongWhenUserAuthsUsingExternalService" xml:space="preserve">
     <value>Something went wrong. Please use the "Sign up with email" or "Log in" option.</value>
   </data>
-  <data name="InvalidEmailOrPassword" xml:space="preserve">
+    <data name="InvalidEmailOrPassword" xml:space="preserve">
     <value>Invalid email or password.</value>
+  </data>
+    <data name="ErrorOccurred" xml:space="preserve">
+    <value>An error occurred</value>
   </data>
 </root>

@@ -1,7 +1,13 @@
 ﻿using Azure.AI.OpenAI;
+using Azure.Core;
+using Azure.Core.Pipeline;
 
 using Principles.Core.Constants;
 using Principles.Core.Services.AiKey;
+
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Principles.Core.Services;
 
@@ -22,8 +28,10 @@ public class BaseRemoteService
             IApiKeyService apiKeyService = ServiceLocator.Current!.GetRequiredService<IApiKeyService>();
             string apiKey = await apiKeyService.RestoreApiKeyAsync().DefaultConfigureAwait();
 
-            OpenAIClientOptions options = new( OpenAIClientOptions.ServiceVersion.V2023_09_01_Preview );
-            OpenAIClient client = new( apiKey, options );
+            OpenAIClientOptions options = new(OpenAIClientOptions.ServiceVersion.V2023_09_01_Preview);
+            options.RetryPolicy = new RetryPolicy( maxRetries: 0 );
+
+            OpenAIClient client = new(apiKey, options);
             return client;
         },
         mode: LazyThreadSafetyMode.None
