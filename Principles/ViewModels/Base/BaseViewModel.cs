@@ -292,8 +292,8 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
                         errorMsg = LocStrings.ResourceManager.GetString( ex.Message ) ?? string.Empty;
                         if (string.IsNullOrWhiteSpace( errorMsg ))
                         {
-                            LoggingService.LogError( $"{ex.Message} error message is not in the {nameof( LocStrings )}" );
-                            errorMsg = ex.Message;
+                            LoggingService.LogError( ex.Message );
+                            errorMsg = LocStrings.SomethingWentWrong;
                         }
 
                         await DialogService.ShowErrorAsync( errorMsg );
@@ -315,7 +315,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
                 
                 errorMsg = LocStrings.YouAreNotAuthorized;
                 await DialogService.ShowErrorAsync( errorMsg );
-
+                
                 await LogoutAsync();
                 
                 showPopupWithRetry = false;
@@ -331,7 +331,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
             else
             {
                 LoggingService.LogError( ex, ex.Message );
-                errorMsg = SettingsService.IsDebug ? ex.ToString() : ex.Message;
+                errorMsg = SettingsService.IsDebug ? ex.ToString() : LocStrings.SomethingWentWrong;
             }
         }
 

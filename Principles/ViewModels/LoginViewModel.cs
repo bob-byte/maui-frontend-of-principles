@@ -1,5 +1,8 @@
 ﻿using Microsoft.Maui.Controls;
 using Plugin.LocalNotification;
+
+using Principles.Exceptions;
+
 using System;
 using System.Net.Mime;
 using System.Text;
@@ -45,11 +48,6 @@ public partial class LoginViewModel : BaseViewModel
     public ILoginService LoginService { get; }
     public IReminderService ReminderService { get; }
 
-    public override Task InitializeAsync( object? parameter = null )
-    {
-        return base.InitializeAsync( parameter );
-    }
-
     [RelayCommand( CanExecute = nameof( CanLogin ) )]
     private async Task LoginAsync()
     {
@@ -63,23 +61,38 @@ public partial class LoginViewModel : BaseViewModel
                 try
                 {
                     await LoginService.LoginAsync( Email.Value, Password.Value );
-                    await ReminderService.TryToRecoverAllUserRemindersAsync();
-                    await Navigation.GoToInitialViewAsync();
+                }
+                catch(ExtendedHttpRequestException ex)
+                {
+                    await SettingsService.SetAuthAccessTokenAsync( string.Empty );
+                    
+                    if (ex.Message == "InvalidEmailOrPassword")
+                    {
+                        FailedAttempts++;
+                        if (FailedAttempts >= 5)
+                        {
+                            StartLockoutTimer();
+                        }
+                    }
 
-                    Email = new ValidatableObject<string>();
-                    Password = new ValidatableObject<string>();
-                    AddValidations();
+                    throw;
+                }
+
+                try
+                {
+                    await ReminderService.TryToRecoverAllUserRemindersAsync();
                 }
                 catch
                 {
                     await SettingsService.SetAuthAccessTokenAsync( string.Empty );
-                    FailedAttempts++;
-                    if (FailedAttempts == 3)
-                    {
-                        StartLockoutTimer();
-                    }
                     throw;
                 }
+                
+                await Navigation.GoToInitialViewAsync();
+
+                Email = new ValidatableObject<string>();
+                Password = new ValidatableObject<string>();
+                AddValidations();
             } );
         }
     }
@@ -95,31 +108,44 @@ public partial class LoginViewModel : BaseViewModel
         IsTimerVisible = true;
         TimerMessage = string.Empty;
 
-        int lockoutDuration = 120;
+        int lockoutDuration = 30;
         DateTime lockoutStartTime = DateTime.Now;
 
-        Application.Current.Dispatcher.StartTimer( TimeSpan.FromSeconds( 1 ), () =>
-        {
-            double elapsed = (DateTime.Now - lockoutStartTime).TotalSeconds;
-
-            int remainingTime = lockoutDuration - (int)elapsed;
-
-            if (remainingTime <= 0)
+        Application.Current!.Dispatcher.StartTimer( 
+            interval: TimeSpan.FromSeconds( 1 ),
+            callback: () =>
             {
-                IsLoginEnable = true;
-                IsTimerVisible = false;
-                TimerMessage = string.Empty;
-                FailedAttempts = 0;
-                if (LoginCommand is IAsyncRelayCommand asyncRelayCommand)
-                {
-                    asyncRelayCommand.NotifyCanExecuteChanged();
-                }
-                return false;
-            }
+                double elapsed = (DateTime.Now - lockoutStartTime).TotalSeconds;
 
-            TimerMessage = $"{LocStrings.TryAgain} {remainingTime} {LocStrings.Seconds}.";
-            return true;
-        } );
+                int remainingTime = lockoutDuration - (int)elapsed;
+
+                bool continueTimer;
+
+                if (remainingTime <= 0)
+                {
+                    IsLoginEnable = true;
+                    IsTimerVisible = false;
+                    TimerMessage = string.Empty;
+                    
+                    //allow user to login one more time
+                    FailedAttempts--;
+                    
+                    if (LoginCommand is IAsyncRelayCommand asyncRelayCommand)
+                    {
+                        asyncRelayCommand.NotifyCanExecuteChanged();
+                    }
+
+                    continueTimer = false;
+                }
+                else
+                {
+                    TimerMessage = $"{LocStrings.TryAgain} {remainingTime} {LocStrings.Seconds}.";
+                    continueTimer = true;
+                }
+
+                return continueTimer;
+            } 
+        );
     }
 
     [RelayCommand]

@@ -397,7 +397,7 @@
     <value>Enter text...</value>
   </data>
   <data name="SomethingWentWrong" xml:space="preserve">
-    <value>Something went wrong</value>
+    <value>Something went wrong. We will try to fix this error</value>
   </data>
   <data name="RecommendedHabitsByAi" xml:space="preserve">
     <value>Recommended habits by AI</value>
@@ -818,5 +818,11 @@
   </data>
   <data name="Seconds" xml:space="preserve">
 		<value>s</value>
+  </data>
+  <data name="SomethingWentWrongWhenUserAuthsUsingExternalService" xml:space="preserve">
+    <value>Something went wrong. Please use the "Sign up with email" or "Log in" option.</value>
+  </data>
+  <data name="InvalidEmailOrPassword" xml:space="preserve">
+    <value>Invalid email or password.</value>
   </data>
 </root>

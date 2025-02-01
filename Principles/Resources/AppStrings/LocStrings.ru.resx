@@ -322,8 +322,8 @@
     <value>Введите текст...</value>
   </data>
 	<data name="SomethingWentWrong" xml:space="preserve">
-    <value>Что-то пошло не так</value>
-  </data>
+		<value>Что-то пошло не так. Мы постараемся исправить эту ошибку.</value>
+	</data>
 	<data name="RecommendedHabitsByAi" xml:space="preserve">
     <value>Привычки, рекомендованные ИИ</value>
   </data>
@@ -741,4 +741,10 @@
 	<data name="Seconds" xml:space="preserve">
 		<value>c</value>
    </data>
+	<data name="SomethingWentWrongWhenUserAuthsUsingExternalService" xml:space="preserve">
+		<value>Что-то пошло не так. Воспользуйтесь опцией "Зарегистрироваться" или "Войти".</value>
+	</data>
+	<data name="InvalidEmailOrPassword" xml:space="preserve">
+		<value>Неверная почта или пароль.</value>
+	</data>
 </root>
