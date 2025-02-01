@@ -14,6 +14,8 @@ public partial class SettingsView : ContentPageBase
         ViewModel = viewModel;
 
         InitializeComponent();
+        
+        
 
         m_multilineEdits = new List<(MultilineEdit Edit, string LanguageCode)>
         {
@@ -38,8 +40,25 @@ public partial class SettingsView : ContentPageBase
             {
                 russianME.Edit.IsVisible = false;
             }
-
-            BS_ChangeLanguage.HalfExpandedRatio = 0.35;
+        }
+        
+        if (ViewModel.SettingsService.NormalPageHeight == 0)
+        {
+            if (userTimeZone.Id.Contains( "Europe/Kiev" ))
+            {
+                BS_ChangeLanguage.HalfExpandedRatio = 0.35;
+            }
+            else
+            {
+                BS_ChangeLanguage.HalfExpandedRatio = 0.45;
+            }
+        }
+        else
+        {
+            //bottom_sheet_height = full_height * HalfExpandedRatio
+            //HalfExpandedRatio = bottom_sheet_height / full_height
+            double heightOfReminderBottomSheet = 280;
+            BS_ChangeLanguage.HalfExpandedRatio = heightOfReminderBottomSheet / ViewModel.SettingsService.NormalPageHeight;
         }
     }
 
