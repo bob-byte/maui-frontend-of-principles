@@ -9,7 +9,8 @@
                    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                    xmlns:v="clr-namespace:Principles.Views"
                    xmlns:vm="clr-namespace:Principles.ViewModels"
-                   Title="{x:Static loc:LocStrings.SigningUp}"
+                   Title="{Binding LocalizationResourceManager[SigningUp],
+                                   Mode=OneWay}"
                    x:DataType="vm:SignupViewModel"
                    Shell.FlyoutBehavior="Disabled"
                    Shell.NavBarIsVisible="True"
@@ -23,7 +24,8 @@
                                    HeightRequest="200"
                                    IsAnimationEnabled="True"
                                    RepeatCount="-1" />
-                <dxe:TextEdit LabelText="{x:Static loc:LocStrings.UserName}"
+                <dxe:TextEdit LabelText="{Binding LocalizationResourceManager[UserName],
+                                                  Mode=OneWay}"
                               Text="{Binding Name.Value}"
                               AutofillContentType="Username"
                               ClearIconVisibility="Never"
@@ -34,7 +36,8 @@
                               StartIcon="user"
                               TextChangedCommand="{Binding ValidateNameCommand}" />
                 <dxe:TextEdit x:Name="EmailTextEdit"
-                              LabelText="{x:Static loc:LocStrings.Email}"
+                              LabelText="{Binding LocalizationResourceManager[Email],
+                                                  Mode=OneWay}"
                               Text="{Binding Email.Value}"
                               Margin="0,5,0,0"
                               AutofillContentType="EmailAddress"
@@ -47,7 +50,8 @@
                               StartIcon="email"
                               TextChangedCommand="{Binding ValidateEmailCommand}" />
                 <dxe:PasswordEdit x:Name="PasswordTextEdit"
-                                  LabelText="{x:Static loc:LocStrings.Password}"
+                                  LabelText="{Binding LocalizationResourceManager[Password],
+                                                      Mode=OneWay}"
                                   Text="{Binding Password.Value}"
                                   Margin="0,5,0,0"
                                   AutofillContentType="Password"
@@ -67,19 +71,22 @@
                     <dxe:Chip Text="{x:Static loc:LocStrings.OtherSex}" />
                 </dxe:ChoiceChipGroup>
                 <dxe:MultilineEdit x:Name="ME_Mission"
-                                   LabelText="{x:Static loc:LocStrings.Mission}"
+                                   LabelText="{Binding LocalizationResourceManager[Mission],
+                                                       Mode=OneWay}"
                                    Text="{Binding Mission}"
                                    ClearIconVisibility="Never"
                                    EndIcon="info"
                                    EndIconCommand="{Binding ShowSnackbarForMissionCommand}"
                                    EndIconCommandParameter="{x:Reference ME_Mission}"
                                    IsLabelFloating="False"
-                                   PlaceholderText="{x:Static loc:LocStrings.OptionalPlaceholder}"
+                                   PlaceholderText="{Binding LocalizationResourceManager[OptionalPlaceholder],
+                                                             Mode=OneWay}"
                                    ReturnType="Done"
                                    StartIcon="mission" />
 
                 <dxe:MultilineEdit x:Name="ME_MainSlogan"
-                                   LabelText="{x:Static loc:LocStrings.MainSlogan}"
+                                   LabelText="{Binding LocalizationResourceManager[MainSlogan],
+                                                       Mode=OneWay}"
                                    Text="{Binding MainSlogan}"
                                    Margin="0,5,0,0"
                                    ClearIconVisibility="Never"
@@ -87,10 +94,12 @@
                                    EndIconCommand="{Binding ShowSnackbarForMainSloganCommand}"
                                    EndIconCommandParameter="{x:Reference ME_MainSlogan}"
                                    IsLabelFloating="False"
-                                   PlaceholderText="{x:Static loc:LocStrings.OptionalPlaceholder}"
+                                   PlaceholderText="{Binding LocalizationResourceManager[OptionalPlaceholder],
+                                                             Mode=OneWay}"
                                    ReturnType="Done"
                                    StartIcon="slogan" />
-                <dxco:SimpleButton Text="{x:Static loc:LocStrings.SignUp}"
+                <dxco:SimpleButton Text="{Binding LocalizationResourceManager[SignUp],
+                                                  Mode=OneWay}"
                                    Command="{Binding SignupCommand}"
                                    Style="{StaticResource PrimaryButton}"
                                    Margin="0,15,0,0" />
@@ -100,7 +109,8 @@
                       RowDefinitions="Auto, Auto"
                       RowSpacing="5"
                       VerticalOptions="Start">
-                    <Label Text="{x:Static loc:LocStrings.SignUpAgreementText}"
+                    <Label Text="{Binding LocalizationResourceManager[SignUpAgreementText],
+                                          Mode=OneWay}"
                            FontAttributes="Italic"
                            FontFamily="MonaSansMedium"
                            FontSize="11"
@@ -117,7 +127,8 @@
                            Grid.Row="1">
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="{x:Static loc:LocStrings.UserAgreementStrInLoginAndSignupViews}"
+                                <Span Text="{Binding LocalizationResourceManager[UserAgreementStrInLoginAndSignupViews],
+                                                     Mode=OneWay}"
                                       FontAttributes="Italic"
                                       FontFamily="MonaSansMedium"
                                       FontSize="11"
@@ -127,13 +138,15 @@
                                     </Span.GestureRecognizers>
                                 </Span>
                                 <Span Text=" " />
-                                <Span Text="{x:Static loc:LocStrings.LoginSignUpAgreementСonnectingText}"
+                                <Span Text="{Binding LocalizationResourceManager[LoginSignUpAgreementСonnectingText],
+                                                     Mode=OneWay}"
                                       FontAttributes="Italic"
                                       FontFamily="MonaSansMedium"
                                       FontSize="11"
                                       TextColor="Gray" />
                                 <Span Text=" " />
-                                <Span Text="{x:Static loc:LocStrings.PrivacyPolicyStrInLoginAndSignupViews}"
+                                <Span Text="{Binding LocalizationResourceManager[PrivacyPolicyStrInLoginAndSignupViews],
+                                                     Mode=OneWay}"
                                       FontAttributes="Italic"
                                       FontFamily="MonaSansMedium"
                                       FontSize="11"

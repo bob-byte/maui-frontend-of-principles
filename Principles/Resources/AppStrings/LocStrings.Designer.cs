@@ -1466,5 +1466,17 @@ namespace Principles.Resources.AppStrings {
                 return ResourceManager.GetString("ErrorOccurred", resourceCulture);
             }
         }
+        
+        internal static string ChangeLanguage {
+            get {
+                return ResourceManager.GetString("ChangeLanguage", resourceCulture);
+            }
+        }
+        
+        internal static string ChooseLanguage {
+            get {
+                return ResourceManager.GetString("ChooseLanguage", resourceCulture);
+            }
+        }
     }
 }

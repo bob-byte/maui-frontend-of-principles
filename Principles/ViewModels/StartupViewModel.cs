@@ -19,14 +19,34 @@ public partial class StartupViewModel : BaseViewModel
         m_reminderService = serviceProvider.GetRequiredService<IReminderService>();
         m_appleAuthService = serviceProvider.GetRequiredService<IAppleAuthService>();
 
-        m_appFeatures = new ObservableCollectionEx<AppFeature>
+        ReferenceMessenger.Register<NewCultureMessage>( this, ( sender, msg ) =>
         {
-            new() {  Title = LocStrings.TransformAreasOfLifeTitle, Description =  LocStrings.TransformAreasOfLifeDescription},
-            new() {  Title = LocStrings.ChatWithHelperTitle, Description = LocStrings.ChatWithHelperDescription },
-            new() {  Title = LocStrings.GroupHabitsByGoalsTitle, Description = LocStrings.GroupHabitsByGoalsDescription },
-            new() {  Title = LocStrings.GetRecommendationsByAITitle, Description = LocStrings.GetRecommendationsByAIDescription },
-            new() {  Title = LocStrings.BecomeTruePersonalityTitle, Description = LocStrings.BecomeTruePersonalityDescription }
-        };
+            UpdateAppFeatures();
+        } );
+
+        m_appFeatures = InitializeAppFeatures();
+    }
+
+    private ObservableCollectionEx<AppFeature> InitializeAppFeatures()
+    {
+        return new ObservableCollectionEx<AppFeature>
+    {
+        new() { Title = LocStrings.TransformAreasOfLifeTitle, Description = LocStrings.TransformAreasOfLifeDescription },
+        new() { Title = LocStrings.ChatWithHelperTitle, Description = LocStrings.ChatWithHelperDescription },
+        new() { Title = LocStrings.GroupHabitsByGoalsTitle, Description = LocStrings.GroupHabitsByGoalsDescription },
+        new() { Title = LocStrings.GetRecommendationsByAITitle, Description = LocStrings.GetRecommendationsByAIDescription },
+        new() { Title = LocStrings.BecomeTruePersonalityTitle, Description = LocStrings.BecomeTruePersonalityDescription }
+    };
+    }
+
+    private void UpdateAppFeatures()
+    {
+        m_appFeatures.Clear();
+        ObservableCollectionEx<AppFeature> updatedFeatures = InitializeAppFeatures();
+        foreach (AppFeature feature in updatedFeatures)
+        {
+            m_appFeatures.Add( feature );
+        }
     }
 
     [RelayCommand]

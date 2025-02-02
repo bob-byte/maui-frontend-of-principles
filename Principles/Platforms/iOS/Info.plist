@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>LSRequiresIPhoneOS</key>
-	<false />
+	<false/>
 	<key>UIDeviceFamily</key>
 	<array>
 		<integer>1</integer>
@@ -41,7 +41,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>Principles</string>
 	<key>CFBundleVersion</key>
-	<string>2.0.8</string>
+	<string>2.0.9</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -71,10 +71,10 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>The app should not request your location. Write to app@principles.top if you encounter a request for your location.</string>
 	<key>NSUserAuthenticationAppleID</key>
-    <string>Required</string>
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>https</string>
-    </array>
+	<string>Required</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>https</string>
+	</array>
 </dict>
 </plist>

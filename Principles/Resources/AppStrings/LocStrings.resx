@@ -825,7 +825,13 @@
     <data name="InvalidEmailOrPassword" xml:space="preserve">
     <value>Invalid email or password.</value>
   </data>
-    <data name="ErrorOccurred" xml:space="preserve">
+  <data name="ErrorOccurred" xml:space="preserve">
     <value>An error occurred</value>
+  </data>
+  <data name="ChangeLanguage" xml:space="preserve">
+    <value>Change language</value>
+  </data>
+  <data name="ChooseLanguage" xml:space="preserve">
+    <value>Choose language</value>
   </data>
 </root>

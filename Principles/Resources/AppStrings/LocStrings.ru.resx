@@ -750,4 +750,10 @@
     <data name="ErrorOccurred" xml:space="preserve">
 		<value>Произошла ошибка</value>
     </data>
+	<data name="ChangeLanguage" xml:space="preserve">
+		<value>Изменить язык</value>
+	</data>
+	<data name="ChooseLanguage" xml:space="preserve">
+		<value>Выберите язык</value>
+	</data>
 </root>

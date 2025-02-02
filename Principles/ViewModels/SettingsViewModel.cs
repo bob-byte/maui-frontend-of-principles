@@ -7,7 +7,6 @@ public partial class SettingsViewModel : BaseViewModel
     public SettingsViewModel( IServiceProvider serviceProvider)
         : base(serviceProvider)
     {
-        Title = LocStrings.Settings;
         AccountService = serviceProvider.GetRequiredService<IAccountService>();
     }
 
@@ -75,6 +74,19 @@ public partial class SettingsViewModel : BaseViewModel
 
                 await base.LogoutAsync().DefaultConfigureAwait();
             } );
+        }
+    }
+
+    [RelayCommand]
+    public void ChangeLanguage()
+    {
+        string selectedLanguageCode = Preferences.Get( "AppLanguage", null );
+
+        if (selectedLanguageCode != null)
+        {
+            CultureInfo newCulture = new CultureInfo( selectedLanguageCode );
+            LocalizationResourceManager.Instance.SetCulture( newCulture );
+            ReferenceMessenger.Send( new NewCultureMessage( newCulture ) );
         }
     }
 }

@@ -1,3 +1,5 @@
+using DevExpress.Maui.Core.Internal;
+
 using Plugin.LocalNotification;
 
 using System.Collections.ObjectModel;
@@ -86,6 +88,12 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
             AllUserAreasOfLife?.Clear();
             UserHabits?.Clear();
             UserGoals?.Clear();
+        } );
+
+        ReferenceMessenger.Register<NewCultureMessage>( this, ( sender, msg ) =>
+        {
+            AllAreasOfLifeAsOneItem.Name = LocStrings.AllAreasOfLife;
+            AllUserAreasOfLife.Reload( Habit.AreasOfLife!.ToList() );
         } );
 
         InactiveDaysToDelete = new List<WeekDay>();

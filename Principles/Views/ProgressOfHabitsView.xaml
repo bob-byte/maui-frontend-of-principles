@@ -27,7 +27,8 @@
                         HeightRequest="35"
                         TintColor="{StaticResource DarkIconColor}"
                         WidthRequest="35" />
-            <Label Text="{x:Static loc:LocStrings.MyHabits}"
+            <Label Text="{Binding LocalizationResourceManager[MyHabits],
+                                  Mode=OneWay}"
                    FontAttributes="Bold"
                    FontSize="20"
                    Grid.Column="2"
@@ -41,7 +42,8 @@
                         Grid.Column="5"
                         HeightRequest="45"
                         HorizontalOptions="End"
-                        IsVisible="{Binding SelectedHabit, Converter={StaticResource IsNull}}"
+                        IsVisible="{Binding SelectedHabit,
+                                            Converter={StaticResource IsNull}}"
                         TintColor="{StaticResource TitleTextColor}"
                         VerticalOptions="Center"
                         WidthRequest="45">
@@ -57,7 +59,8 @@
                         Grid.Column="6"
                         HeightRequest="35"
                         HorizontalOptions="End"
-                        IsVisible="{Binding SelectedHabit, Converter={StaticResource IsNull}}"
+                        IsVisible="{Binding SelectedHabit,
+                                            Converter={StaticResource IsNull}}"
                         TintColor="{StaticResource TitleTextColor}"
                         VerticalOptions="Center"
                         WidthRequest="35">
@@ -71,7 +74,8 @@
                         Grid.Column="4"
                         HeightRequest="30"
                         HorizontalOptions="End"
-                        IsVisible="{Binding SelectedHabit, Converter={StaticResource IsNotNull}}"
+                        IsVisible="{Binding SelectedHabit,
+                                            Converter={StaticResource IsNotNull}}"
                         TintColor="{StaticResource TitleTextColor}"
                         VerticalOptions="Center"
                         WidthRequest="40">
@@ -86,7 +90,8 @@
                         Grid.Column="6"
                         HeightRequest="30"
                         HorizontalOptions="End"
-                        IsVisible="{Binding SelectedHabit, Converter={StaticResource IsNotNull}}"
+                        IsVisible="{Binding SelectedHabit,
+                                            Converter={StaticResource IsNotNull}}"
                         TintColor="{StaticResource TitleTextColor}"
                         VerticalOptions="Center"
                         WidthRequest="40">
@@ -150,7 +155,8 @@
 
         <dx:DXStackLayout Orientation="Vertical"
                           HorizontalOptions="CenterAndExpand"
-                          IsVisible="{Binding UserHabits.Count, Converter={StaticResource IsZero}}"
+                          IsVisible="{Binding UserHabits.Count,
+                                              Converter={StaticResource IsZero}}"
                           ItemSpacing="10"
                           VerticalOptions="Start">
             <skia:SKLottieView Source="checks.json"
@@ -159,18 +165,21 @@
                                IsAnimationEnabled="True"
                                RepeatCount="-1"
                                WidthRequest="300" />
-            <Label Text="{x:Static loc:LocStrings.LoadingContent}"
+            <Label Text="{Binding LocalizationResourceManager[LoadingContent],
+                                  Mode=OneWay}"
                    FontFamily="MonaSansMedium"
                    FontSize="14"
                    HorizontalTextAlignment="Center"
                    IsVisible="{Binding IsBusy}"
                    TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
                                                Dark={StaticResource DarkNormalText}}" />
-            <Label Text="{x:Static loc:LocStrings.HabitCollectionIsEmptyDescription}"
+            <Label Text="{Binding LocalizationResourceManager[HabitCollectionIsEmptyDescription],
+                                  Mode=OneWay}"
                    FontFamily="MonaSansMedium"
                    FontSize="14"
                    HorizontalTextAlignment="Center"
-                   IsVisible="{Binding IsBusy, Converter={StaticResource IsFalse}}"
+                   IsVisible="{Binding IsBusy,
+                                       Converter={StaticResource IsFalse}}"
                    TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
                                                Dark={StaticResource DarkNormalText}}" />
         </dx:DXStackLayout>
@@ -184,24 +193,28 @@
             <dxco:DXPopup.Content>
                 <VerticalStackLayout Margin="7,10,7,0"
                                      Spacing="6">
-                    <Label Text="{x:Static loc:LocStrings.Reminder}"
+                    <Label Text="{Binding LocalizationResourceManager[Reminder],
+                                          Mode=OneWay}"
                            Style="{StaticResource CentralHeader}" />
                     <dxe:MultilineEdit Text="{Binding ReminderReport.Title}"
                                        ClearIconVisibility="Never"
-                                       LabelText="{x:Static loc:LocStrings.ReminderTitle}"
+                                       LabelText="{Binding LocalizationResourceManager[ReminderTitle],
+                                                           Mode=OneWay}"
                                        MaxLineCount="2"
                                        MaximumWidthRequest="285"
                                        ReturnType="Done"
                                        StartIcon="remindertitle" />
                     <dxe:MultilineEdit Text="{Binding ReminderReport.Description}"
                                        ClearIconVisibility="Never"
-                                       LabelText="{x:Static loc:LocStrings.ReminderDescription}"
+                                       LabelText="{Binding LocalizationResourceManager[ReminderDescription],
+                                                           Mode=OneWay}"
                                        MaxLineCount="3"
                                        MaximumWidthRequest="285"
                                        ReturnType="Done"
                                        StartIcon="reminderdescription" />
 
-                    <dxe:TimeEdit LabelText="{x:Static loc:LocStrings.Time}"
+                    <dxe:TimeEdit LabelText="{Binding LocalizationResourceManager[Time],
+                                                      Mode=OneWay}"
                                   MaximumWidthRequest="285"
                                   ReturnType="Done"
                                   StartIcon="clock"
@@ -209,7 +222,8 @@
 
                     <HorizontalStackLayout HorizontalOptions="Start">
                         <Switch IsToggled="{Binding ReminderReport.IsEnabled}" />
-                        <Label Text="{x:Static loc:LocStrings.Enable}"
+                        <Label Text="{Binding LocalizationResourceManager[Enable],
+                                              Mode=OneWay}"
                                Margin="3,0,0,0"
                                TextColor="{StaticResource LightNormalText}"
                                VerticalOptions="Center" />
@@ -217,7 +231,8 @@
                     <HorizontalStackLayout Padding="0"
                                            HorizontalOptions="End">
                         <dxco:SimpleButton x:Name="SB_ReminderReport_Cancel"
-                                           Text="{x:Static loc:LocStrings.Cancel}"
+                                           Text="{Binding LocalizationResourceManager[Cancel],
+                                                          Mode=OneWay}"
                                            Icon="close"
                                            Margin="0,0,5,5"
                                            BackgroundColor="{StaticResource CancelButtonColor}"
@@ -225,7 +240,8 @@
                                            FontSize="16"
                                            IconHorizontalPosition="Left" />
                         <dxco:SimpleButton x:Name="SB_Save"
-                                           Text="{Binding LocSave}"
+                                           Text="{Binding LocalizationResourceManager[Save],
+                                                          Mode=OneWay}"
                                            Style="{StaticResource PrimaryButton}"
                                            Icon="check_second"
                                            Margin="0,0,0,5"

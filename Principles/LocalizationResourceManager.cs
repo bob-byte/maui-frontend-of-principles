@@ -1,0 +1,31 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Principles
+{
+    public class LocalizationResourceManager : INotifyPropertyChanged
+    {
+        private LocalizationResourceManager() 
+        {
+            LocStrings.Culture = CultureInfo.CurrentCulture;
+        }
+
+        public static LocalizationResourceManager Instance { get; } = new();
+
+        public object this[string resourceKey]
+            => LocStrings.ResourceManager.GetObject(resourceKey, LocStrings.Culture) ?? Array.Empty<object>();
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        public void SetCulture(CultureInfo culture ) 
+        {
+            LocStrings.Culture = culture;
+            CultureInfo.CurrentCulture = culture;
+            CultureInfo.CurrentUICulture = culture;
+            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( null ) );
+        }
+    }
+}

@@ -38,6 +38,10 @@ public partial class SignupViewModel : BaseViewModel
 
         SignupService = serviceProvider.GetRequiredService<ISignupService>();
         LoginService = serviceProvider.GetRequiredService<ILoginService>();
+        ReferenceMessenger.Register<NewCultureMessage>( this, ( sender, msg ) =>
+        {
+            ResetValidation();
+        } );
     }
 
     public ISignupService SignupService { get; }
@@ -131,6 +135,14 @@ public partial class SignupViewModel : BaseViewModel
         Password.Validations.Add( new NewPasswordRule() );
         Email.Validations.Add( new IsNotNullOrWhiteSpaceRule { ValidationMessage = LocStrings.RequiredErrorText } );
         Email.Validations.Add( new EmailRule { ValidationMessage = LocStrings.EmailMustHaveCorrectValue } );
+    }
+
+    private void ResetValidation()
+    {
+        Email.Validations.Clear();
+        Password.Validations.Clear();
+        Name.Validations.Clear();
+        AddValidators();
     }
 
     [RelayCommand]

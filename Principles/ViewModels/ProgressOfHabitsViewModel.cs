@@ -116,6 +116,20 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
                 locker?.Dispose();
             }
         } );
+
+        ReferenceMessenger.Register<NewCultureMessage>( this, ( sender, msg ) =>
+        {
+            UpdateLocalizedStrings();
+        } );
+    }
+
+    private void UpdateLocalizedStrings()
+    {
+        List<UserHabit> habits = UserHabits.Where( h => h.Goal.Id == 0 ).ToList();
+        foreach (UserHabit? habit in habits)
+        {
+            habit.Goal.Name = (string)LocalizationResourceManager.Instance["NoGoalSpecified"];
+        }
     }
 
     public IProgressOfHabitService ProgressOfHabitService { get; }

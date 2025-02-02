@@ -90,7 +90,8 @@
                       SelectedItemHeaderTextColor="{StaticResource LightNormalText}"
                       SwipeEnabled="True">
             <dxco:TabViewItem HeaderIconPosition="{OnPlatform iOS='Right'}"
-                              HeaderText="{x:Static loc:LocStrings.Data}"
+                              HeaderText="{Binding LocalizationResourceManager[Data],
+                                                   Mode=OneWay}"
                               HeaderTextColor="{StaticResource LightPlaceholderColor}"
                               HeaderWidth="160"
                               SelectedHeaderTextColor="{StaticResource LightNormalText}">
@@ -98,7 +99,8 @@
                     <VerticalStackLayout Padding="10"
                                          Spacing="6">
                         <dxe:MultilineEdit x:Name="ME_NameOfHabit"
-                                           LabelText="{x:Static loc:LocStrings.Name}"
+                                           LabelText="{Binding LocalizationResourceManager[Name],
+                                                               Mode=OneWay}"
                                            Text="{Binding NameOfHabit.Value}"
                                            ClearIconVisibility="Never"
                                            EndIcon="info"
@@ -112,7 +114,8 @@
                                            StartIcon="fire_first"
                                            TextChangedCommand="{Binding ValidateHabitNameCommand}" />
                         <dxe:MultilineEdit x:Name="ME_HabitGoal"
-                                           LabelText="{x:Static loc:LocStrings.Goal}"
+                                           LabelText="{Binding LocalizationResourceManager[Goal],
+                                                               Mode=OneWay}"
                                            Text="{Binding Habit.Goal.Name}"
                                            ClearIconCommand="{Binding ClearHabitGoalCommand}"
                                            ClearIconVisibility="Auto"
@@ -124,7 +127,8 @@
                                            StartIconClicked="ME_HabitGoal_IconClicked"
                                            Tap="ME_HabitGoal_Tap" />
                         <dxe:AutoCompleteTokenEdit x:Name="TE_AreasOfLife"
-                                                   LabelText="{x:Static loc:LocStrings.AreasOfHabit}"
+                                                   LabelText="{Binding LocalizationResourceManager[AreasOfHabit],
+                                                                       Mode=OneWay}"
                                                    ItemsSource="{Binding AllUserAreasOfLife}"
                                                    AllowAnimation="True"
                                                    DisplayMember="Name"
@@ -170,7 +174,8 @@
                                       TapCommandParameter="{x:Reference C_WithoutExceptionsType}" />
                         </dxe:ChoiceChipGroup>
                         <dxe:TextEdit x:Name="TE_Frequency"
-                                      LabelText="{x:Static loc:LocStrings.Frequency}"
+                                      LabelText="{Binding LocalizationResourceManager[Frequency],
+                                                          Mode=OneWay}"
                                       Text="{Binding FrequencyRepresentation}"
                                       EndIcon="dotshorizontal"
                                       EndIconClicked="FrequencyIcon_Clicked"
@@ -179,7 +184,8 @@
                                       StartIconClicked="FrequencyIcon_Clicked"
                                       Tap="TE_Frequency_Tap" />
                         <dxe:MultilineEdit x:Name="ME_HabitReminder"
-                                           LabelText="{x:Static loc:LocStrings.Reminder}"
+                                           LabelText="{Binding LocalizationResourceManager[Reminder],
+                                                               Mode=OneWay}"
                                            Text="{Binding Path=EditedReminder,
                                                           Converter={StaticResource ReminderValueToString},
                                                           Mode=OneWay}"
@@ -191,13 +197,14 @@
                                            StartIcon="reminder"
                                            StartIconClicked="ME_HabitReminder_IconClicked"
                                            Tap="ME_HabitReminder_Tap" />
-                        <dxco:SimpleButton Text="{x:Static loc:LocStrings.RecommendedHabitsButton}"
+                        <dxco:SimpleButton Text="{Binding LocalizationResourceManager[RecommendedHabitsButton],
+                                                          Mode=OneWay}"
                                            Clicked="SB_RecomendedHabit_Clicked"
                                            Style="{StaticResource PrimaryButton}"
                                            IsVisible="{Binding IsNewHabit}"
                                            Margin="0,5,0,0" />
-
-                        <dxco:SimpleButton Text="{x:Static loc:LocStrings.DeleteTheHabit}"
+                        <dxco:SimpleButton Text="{Binding LocalizationResourceManager[DeleteTheHabit],
+                                                          Mode=OneWay}"
                                            Command="{Binding DeleteHabitCommand}"
                                            CommandParameter="{Binding Habit}"
                                            Style="{StaticResource SecondaryButton}"
@@ -220,7 +227,8 @@
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <Label x:Name="L_GoalSelectionCenterHeader"
-                                       Text="{x:Static loc:LocStrings.ChooseHabitGoal}"
+                                       Text="{Binding LocalizationResourceManager[ChooseHabitGoal],
+                                                      Mode=OneWay}"
                                        Style="{StaticResource CentralHeader}"
                                        HeightRequest="40"
                                        VerticalOptions="Start"
@@ -260,32 +268,25 @@
                                         <DataTemplate x:DataType="m:UserGoal">
                                             <dx:DXStackLayout Orientation="Vertical">
                                                 <dxe:MultilineEdit Text="{Binding Name}"
+                                                                   Style="{StaticResource RoundedMultilineEditStyle}"
                                                                    Margin="0,10,0,0"
-                                                                   BackgroundColor="{StaticResource LightPrimary}"
-                                                                   BorderColor="{StaticResource Primary}"
-                                                                   ClearIconVisibility="Never"
-                                                                   CornerRadius="20"
-                                                                   EndIcon="editgoal"
-                                                                   EndIconClicked="OnME_GoalNameEndIconClicked"
-                                                                   EndIconColor="{StaticResource LabelText}"
-                                                                   EndIconCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:EditHabitViewModel}},
-                                                                                            Path=OpenUpdateGoalPopupCommand}"
-                                                                   EndIconCommandParameter="{Binding .}"
-                                                                   IsReadOnly="True"
                                                                    StartIcon="deletegoal"
-                                                                   StartIconColor="{StaticResource LabelText}"
+                                                                   EndIcon="editgoal"
                                                                    StartIconCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:EditHabitViewModel}},
                                                                                               Path=DeleteGoalCommand}"
                                                                    StartIconCommandParameter="{Binding .}"
-                                                                   Tap="OnGoalNameTapped"
-                                                                   TextFontAttributes="Bold"
-                                                                   TextVerticalAlignment="Center" />
+                                                                   EndIconClicked="OnME_GoalNameEndIconClicked"
+                                                                   EndIconCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:EditHabitViewModel}},
+                                                                                            Path=OpenUpdateGoalPopupCommand}"
+                                                                   EndIconCommandParameter="{Binding .}"
+                                                                   Tap="OnGoalNameTapped" />
                                             </dx:DXStackLayout>
                                         </DataTemplate>
                                     </dxcv:DXCollectionView.ItemTemplate>
                                 </dxcv:DXCollectionView>
                                 <Label x:Name="L_GoalRecommendation"
-                                       Text="{x:Static loc:LocStrings.GoalLableRecommendation}"
+                                       Text="{Binding LocalizationResourceManager[GoalLableRecommendation],
+                                                      Mode=OneWay}"
                                        HeightRequest="120"
                                        Margin="0,8,0,0"
                                        FontFamily="MonaSansMedium"
@@ -314,7 +315,8 @@
                                             <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
 
-                                        <Label Text="{x:Static loc:LocStrings.Goal}"
+                                        <Label Text="{Binding LocalizationResourceManager[Goal],
+                                                              Mode=OneWay}"
                                                Style="{StaticResource CentralHeader}"
                                                Margin="0,0,0,15"
                                                HorizontalOptions="Center"
@@ -331,7 +333,8 @@
                                                            Grid.Row="1"
                                                            Grid.ColumnSpan="2" />
 
-                                        <Label Text="{x:Static loc:LocStrings.GoalExamples}"
+                                        <Label Text="{Binding LocalizationResourceManager[GoalExamples],
+                                                              Mode=OneWay}"
                                                Margin="0,8,0,0"
                                                FontFamily="MonaSansMedium"
                                                FontSize="14"
@@ -349,9 +352,9 @@
                                                 <ColumnDefinition Width="Auto" />
                                                 <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
-
                                             <dxco:SimpleButton x:Name="SB_GoalAdd_Cancel"
-                                                               Text="{x:Static loc:LocStrings.Cancel}"
+                                                               Text="{Binding LocalizationResourceManager[Cancel],
+                                                                              Mode=OneWay}"
                                                                Clicked="SB_GoalAdd_Cancel_Clicked"
                                                                Icon="close"
                                                                IconHorizontalPosition="Left"
@@ -361,7 +364,8 @@
                                                                Grid.Column="0" />
 
                                             <dxco:SimpleButton x:Name="SB_Save"
-                                                               Text="{Binding LocSave}"
+                                                               Text="{Binding LocalizationResourceManager[Save],
+                                                                              Mode=OneWay}"
                                                                Clicked="Sb_SaveGoal_Clicked"
                                                                Style="{StaticResource PrimaryButton}"
                                                                Icon="check_second"
@@ -378,35 +382,40 @@
                                           AllowDismiss="True"
                                           BackgroundColor="{AppThemeBinding Light={StaticResource Background},
                                                                             Dark={StaticResource DarkBackground}}"
-                                          ShowGrabber="False">
+                                          ShowGrabber="True">
                             <ScrollView>
                                 <VerticalStackLayout Margin="20,0,20,0"
                                                      Spacing="6">
-                                    <Label Text="{x:Static loc:LocStrings.Reminder}"
+                                    <Label Text="{Binding LocalizationResourceManager[Reminder],
+                                                          Mode=OneWay}"
                                            Style="{StaticResource CentralHeader}" />
 
                                     <VerticalStackLayout>
                                         <dxe:MultilineEdit x:Name="ME_ReminderTitle"
-                                                           LabelText="{x:Static loc:LocStrings.Title}"
+                                                           LabelText="{Binding LocalizationResourceManager[Title],
+                                                                               Mode=OneWay}"
                                                            ClearIconVisibility="Never"
                                                            ReturnType="Done"
                                                            StartIcon="remindertitle" />
 
                                         <dxe:MultilineEdit x:Name="ME_ReminderDescription"
-                                                           LabelText="{x:Static loc:LocStrings.Description}"
+                                                           LabelText="{Binding LocalizationResourceManager[Description],
+                                                                               Mode=OneWay}"
                                                            ClearIconVisibility="Never"
                                                            ReturnType="Done"
                                                            StartIcon="reminderdescription" />
 
                                         <dxe:TimeEdit x:Name="TE_ReminderTime"
-                                                      LabelText="{x:Static loc:LocStrings.Time}"
+                                                      LabelText="{Binding LocalizationResourceManager[Time],
+                                                                          Mode=OneWay}"
                                                       ReturnType="Done"
                                                       StartIcon="clock" />
 
                                         <HorizontalStackLayout HorizontalOptions="Start">
                                             <Switch x:Name="S_IsReminderEnabled"
                                                     Margin="{OnPlatform iOS='0,5,0,0'}" />
-                                            <Label Text="{x:Static loc:LocStrings.Enable}"
+                                            <Label Text="{Binding LocalizationResourceManager[Enable],
+                                                                  Mode=OneWay}"
                                                    Margin="3,0,0,0"
                                                    TextColor="{StaticResource LightNormalText}"
                                                    VerticalOptions="Center" />
@@ -417,7 +426,8 @@
                                                                    Spacing="10">
                                                 <dx:DXToggleButton x:Name="TBtn_Monday"
                                                                    IsChecked="{Binding IsDayChecked[1]}"
-                                                                   Content="{x:Static loc:LocStrings.MondayShort}"
+                                                                   Content="{Binding LocalizationResourceManager[MondayShort],
+                                                                                     Mode=OneWay}"
                                                                    Style="{StaticResource WeekDayButton}"
                                                                    WidthRequest="50"
                                                                    HeightRequest="50"
@@ -426,7 +436,8 @@
 
                                                 <dx:DXToggleButton x:Name="TBtn_Tuesday"
                                                                    IsChecked="{Binding IsDayChecked[2]}"
-                                                                   Content="{x:Static loc:LocStrings.TuesdayShort}"
+                                                                   Content="{Binding LocalizationResourceManager[TuesdayShort],
+                                                                                     Mode=OneWay}"
                                                                    Style="{StaticResource WeekDayButton}"
                                                                    WidthRequest="50"
                                                                    HeightRequest="50"
@@ -435,7 +446,8 @@
 
                                                 <dx:DXToggleButton x:Name="TBtn_Wednesday"
                                                                    IsChecked="{Binding IsDayChecked[3]}"
-                                                                   Content="{x:Static loc:LocStrings.WednesdayShort}"
+                                                                   Content="{Binding LocalizationResourceManager[WednesdayShort],
+                                                                                     Mode=OneWay}"
                                                                    Style="{StaticResource WeekDayButton}"
                                                                    WidthRequest="50"
                                                                    HeightRequest="50"
@@ -444,7 +456,8 @@
 
                                                 <dx:DXToggleButton x:Name="TBtn_Thursday"
                                                                    IsChecked="{Binding IsDayChecked[4]}"
-                                                                   Content="{x:Static loc:LocStrings.ThursdayShort}"
+                                                                   Content="{Binding LocalizationResourceManager[ThursdayShort],
+                                                                                     Mode=OneWay}"
                                                                    Style="{StaticResource WeekDayButton}"
                                                                    WidthRequest="50"
                                                                    HeightRequest="50"
@@ -456,7 +469,8 @@
                                                                    Spacing="10">
                                                 <dx:DXToggleButton x:Name="TBtn_Friday"
                                                                    IsChecked="{Binding IsDayChecked[5]}"
-                                                                   Content="{x:Static loc:LocStrings.FridayShort}"
+                                                                   Content="{Binding LocalizationResourceManager[FridayShort],
+                                                                                     Mode=OneWay}"
                                                                    Style="{StaticResource WeekDayButton}"
                                                                    WidthRequest="50"
                                                                    HeightRequest="50"
@@ -465,7 +479,8 @@
 
                                                 <dx:DXToggleButton x:Name="TBtn_Saturday"
                                                                    IsChecked="{Binding IsDayChecked[6]}"
-                                                                   Content="{x:Static loc:LocStrings.SaturdayShort}"
+                                                                   Content="{Binding LocalizationResourceManager[SaturdayShort],
+                                                                                     Mode=OneWay}"
                                                                    Style="{StaticResource WeekDayButton}"
                                                                    WidthRequest="50"
                                                                    HeightRequest="50"
@@ -474,7 +489,8 @@
 
                                                 <dx:DXToggleButton x:Name="TBtn_Sunday"
                                                                    IsChecked="{Binding IsDayChecked[0]}"
-                                                                   Content="{x:Static loc:LocStrings.SundayShort}"
+                                                                   Content="{Binding LocalizationResourceManager[SundayShort],
+                                                                                     Mode=OneWay}"
                                                                    Style="{StaticResource WeekDayButton}"
                                                                    WidthRequest="50"
                                                                    HeightRequest="50"
@@ -487,7 +503,8 @@
                                           ColumnDefinitions="*,*"
                                           ColumnSpacing="15"
                                           HorizontalOptions="FillAndExpand">
-                                        <dxco:SimpleButton Text="{x:Static loc:LocStrings.Cancel}"
+                                        <dxco:SimpleButton Text="{Binding LocalizationResourceManager[Cancel],
+                                                                          Mode=OneWay}"
                                                            Clicked="SB_Reminder_Cancel_Clicked"
                                                            Icon="close"
                                                            IconHorizontalPosition="Left"
@@ -498,7 +515,8 @@
                                                            VerticalOptions="Center"
                                                            Grid.Column="0" />
 
-                                        <dxco:SimpleButton Text="{Binding LocSave}"
+                                        <dxco:SimpleButton Text="{Binding LocalizationResourceManager[Save],
+                                                                          Mode=OneWay}"
                                                            Clicked="SB_ReminderSave_Clicked"
                                                            Style="{StaticResource PrimaryButton}"
                                                            Icon="check_second"
@@ -518,7 +536,8 @@
                             <Grid Padding="0,7,0,15"
                                   RowDefinitions="Auto, Auto"
                                   RowSpacing="20">
-                                <Label Text="{x:Static loc:LocStrings.SetPriorityByDragAndDrop}"
+                                <Label Text="{Binding LocalizationResourceManager[SetPriorityByDragAndDrop],
+                                                      Mode=OneWay}"
                                        Style="{StaticResource CentralHeader}"
                                        HorizontalOptions="CenterAndExpand"
                                        HorizontalTextAlignment="Center"
@@ -586,7 +605,8 @@
                                       CloseOnScrimTap="True"
                                       MinimumWidthRequest="230">
                             <dx:DXStackLayout Orientation="Vertical">
-                                <Label Text="{x:Static loc:LocStrings.FixErrorsFirst}"
+                                <Label Text="{Binding LocalizationResourceManager[FixErrorsFirst],
+                                                      Mode=OneWay}"
                                        Style="{StaticResource CentralHeader}"
                                        Margin="10,10,10,0" />
                                 <dx:DXStackLayout x:Name="HSL_ErrorMessages"
@@ -605,7 +625,8 @@
                                           VerticalOptions="Center" />
                                 </dx:DXStackLayout>
                                 <dxco:SimpleButton x:Name="SB_CloseErrorsPopup"
-                                                   Text="{x:Static loc:LocStrings.OK}"
+                                                   Text="{Binding LocalizationResourceManager[OK],
+                                                                  Mode=OneWay}"
                                                    Clicked="SB_CloseErrorsPopup_Clicked"
                                                    Style="{StaticResource PrimaryButton}"
                                                    Margin="0,5,5,5"
@@ -623,7 +644,8 @@
                             <VerticalStackLayout Margin="15,15,15,10"
                                                  Spacing="0">
                                 <dxe:CheckEdit x:Name="CE_EveryDay"
-                                               Label="{x:Static loc:LocStrings.EveryDay}"
+                                               Label="{Binding LocalizationResourceManager[EveryDay],
+                                                               Mode=OneWay}"
                                                CheckedChanged="OnCheckEditChangedInFrequencyPopup"
                                                CheckedCheckBoxImage="checkedcheckedit"
                                                DisabledCheckedCheckBoxColor="{StaticResource Primary}"
@@ -632,7 +654,8 @@
                                                UncheckedCheckBoxImage="uncheckedcheckedit" />
                                 <HorizontalStackLayout Margin="{OnPlatform iOS='0, 10, 0, 10', Android='0, 5, 0, 0'}">
                                     <dxe:CheckEdit x:Name="CE_EverySeveralDays"
-                                                   Label="{x:Static loc:LocStrings.Every}"
+                                                   Label="{Binding LocalizationResourceManager[Every],
+                                                                   Mode=OneWay}"
                                                    CheckedChanged="OnCheckEditChangedInFrequencyPopup"
                                                    CheckedCheckBoxImage="checkedcheckedit"
                                                    DisabledCheckedCheckBoxColor="{StaticResource Primary}"
@@ -653,7 +676,8 @@
                                                   Keyboard="Numeric"
                                                   TextChanged="TE_RepeatsOfSeveralDays_TextChanged"
                                                   TextHorizontalAlignment="Center" />
-                                    <Label Text="{x:Static loc:LocStrings.days}"
+                                    <Label Text="{Binding LocalizationResourceManager[days],
+                                                          Mode=OneWay}"
                                            Margin="{OnPlatform iOS='7, 6, 0, 0',
                                                                Android='3, 8, 0, 0'}"
                                            Focused="RepeatsOfSeveralDays_Focused"
@@ -687,7 +711,8 @@
                                                   Keyboard="Numeric"
                                                   TextChanged="TE_RepeatsOfSeveralTimesPerPeriod_TextChanged"
                                                   TextHorizontalAlignment="Center" />
-                                    <Label Text="{x:Static loc:LocStrings.timesPer}"
+                                    <Label Text="{Binding LocalizationResourceManager[timesPer],
+                                                          Mode=OneWay}"
                                            Margin="{OnPlatform iOS='7, 10, 0, 0',
                                                                Android='3, 10, 3, 0'}"
                                            FontSize="16">
@@ -714,14 +739,16 @@
                                                        HorizontalOptions="End"
                                                        Spacing="10">
                                     <dxco:SimpleButton x:Name="SB_Frequency_Cancel"
-                                                       Text="{x:Static loc:LocStrings.Cancel}"
+                                                       Text="{Binding LocalizationResourceManager[Cancel],
+                                                                      Mode=OneWay}"
                                                        Clicked="SB_Frequency_Cancel_Clicked"
                                                        Icon="close"
                                                        IconHorizontalPosition="Left"
                                                        BackgroundColor="{StaticResource CancelButtonColor}"
                                                        FontSize="16" />
                                     <dxco:SimpleButton x:Name="SB_SaveFrequencyPopup"
-                                                       Text="{Binding LocSave}"
+                                                       Text="{Binding LocalizationResourceManager[Save],
+                                                                      Mode=OneWay}"
                                                        Clicked="SB_SaveFrequencyPopup_Clicked"
                                                        Style="{StaticResource PrimaryButton}"
                                                        Icon="check_second"
@@ -741,7 +768,8 @@
                                 <VerticalStackLayout Padding="0,7,0,15"
                                                      Spacing="{OnPlatform Android=20}"
                                                      VerticalOptions="Start">
-                                    <Label Text="{x:Static loc:LocStrings.RecommendedHabitsByAi}"
+                                    <Label Text="{Binding LocalizationResourceManager[RecommendedHabitsByAi],
+                                                          Mode=OneWay}"
                                            Style="{StaticResource CentralHeader}"
                                            HeightRequest="{OnPlatform iOS=60}" />
 
@@ -756,9 +784,11 @@
                                                            Margin="0,40,0,0"
                                                            HorizontalOptions="Center"
                                                            RepeatCount="-1" />
-                                        <Label Text="{x:Static loc:LocStrings.Loading}"
+                                        <Label Text="{Binding LocalizationResourceManager[Loading],
+                                                              Mode=OneWay}"
                                                HorizontalTextAlignment="Center" />
-                                        <Label Text="{x:Static loc:LocStrings.IfYouDontWantToWaitYouCanChangeOtherFields}"
+                                        <Label Text="{Binding LocalizationResourceManager[IfYouDontWantToWaitYouCanChangeOtherFields],
+                                                              Mode=OneWay}"
                                                WidthRequest="270"
                                                HeightRequest="100"
                                                HorizontalTextAlignment="Center"
@@ -821,7 +851,8 @@
                 </ScrollView>
             </dxco:TabViewItem>
             <dxco:TabViewItem HeaderIconPosition="{OnPlatform iOS='Right'}"
-                              HeaderText="{x:Static loc:LocStrings.HowToKeep}"
+                              HeaderText="{Binding LocalizationResourceManager[HowToKeep],
+                                                   Mode=OneWay}"
                               HeaderTextColor="{StaticResource LightPlaceholderColor}"
                               HeaderWidth="160"
                               SelectedHeaderTextColor="{StaticResource LightNormalText}">

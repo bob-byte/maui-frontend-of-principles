@@ -828,4 +828,10 @@
     <data name="ErrorOccurred" xml:space="preserve">
     <value>Сталася помилка</value>
   </data>
+  <data name="ChangeLanguage" xml:space="preserve">
+    <value>Змінити мову</value>
+  </data>
+  <data name="ChooseLanguage" xml:space="preserve">
+    <value>Оберіть мову</value>
+  </data>
 </root>

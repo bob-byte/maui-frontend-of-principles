@@ -7,6 +7,8 @@ namespace Principles.ViewModels;
 
 public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
 {
+    public LocalizationResourceManager LocalizationResourceManager
+        => LocalizationResourceManager.Instance;
     private long m_isBusy;
 
     [ObservableProperty]

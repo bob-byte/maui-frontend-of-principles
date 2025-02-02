@@ -12,7 +12,7 @@ namespace Principles.ViewModels;
 
 public partial class LoginViewModel : BaseViewModel
 {
-    public LoginViewModel( IServiceProvider serviceProvider )
+   public LoginViewModel( IServiceProvider serviceProvider )
         : base( serviceProvider )
     {
         m_email = new ValidatableObject<string>();
@@ -21,8 +21,19 @@ public partial class LoginViewModel : BaseViewModel
         ReminderService = serviceProvider.GetRequiredService<IReminderService>();
         
         AddValidations();
+        ReferenceMessenger.Register<NewCultureMessage>( this, ( sender, msg ) =>
+        {
+            ResetValidation();
+        } );
 
         Title = LocStrings.Login;
+    }
+
+    private void ResetValidation()
+    {
+        Email.Validations.Clear();
+        Password.Validations.Clear();
+        AddValidations();
     }
 
     [ObservableProperty]
@@ -190,7 +201,7 @@ public partial class LoginViewModel : BaseViewModel
 
     private void AddValidations()
     {
-        Email.Validations.Add( new IsNotNullOrWhiteSpaceRule{ ValidationMessage = LocStrings.RequiredErrorText } );
+        Email.Validations.Add( new IsNotNullOrWhiteSpaceRule{ ValidationMessage = (string)LocalizationResourceManager.Instance["RequiredErrorText"] } );
         Email.Validations.Add( new EmailRule{ ValidationMessage = LocStrings.EmailMustHaveCorrectValue } );
 
         Password.Validations.Add( new IsNotNullOrWhiteSpaceRule{ ValidationMessage = LocStrings.RequiredErrorText } );
