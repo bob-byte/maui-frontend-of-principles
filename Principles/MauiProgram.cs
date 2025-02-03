@@ -11,6 +11,8 @@ using SkiaSharp.Views.Maui.Controls.Hosting;
 using DevExpress.Maui.Editors.Internal;
 
 using System.Reflection;
+using Maui.FixesAndWorkarounds;
+
 
 #if IOS
 using Microsoft.Maui.Platform;
@@ -40,6 +42,7 @@ public static class MauiProgram
             .UseMauiCommunityToolkit()
             .UseMauiCommunityToolkitMarkup()
             .UseSkiaSharp()
+            .ConfigureMauiWorkarounds()
             .ConfigureEssentials(essentials =>
             {
                 essentials.UseVersionTracking();
