@@ -116,8 +116,8 @@
                                            Text="{Binding Habit.Goal.Name}"
                                            ClearIconCommand="{Binding ClearHabitGoalCommand}"
                                            ClearIconVisibility="Auto"
-                                           EndIcon="{Binding IsGoalEmpty,
-                                                             Converter={StaticResource GoalEndIconSelector}}"
+                                           EndIcon="{Binding Habit.Goal,
+                                                             Converter={StaticResource GoalToEndIcon}}"
                                            EndIconClicked="ME_HabitGoal_IconClicked"
                                            IsErrorIconVisible="False"
                                            IsReadOnly="True"

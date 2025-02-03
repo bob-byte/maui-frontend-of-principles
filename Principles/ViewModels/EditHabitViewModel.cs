@@ -49,9 +49,6 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
     [ObservableProperty]
     private bool m_isRecommendedHabitsLoading;
 
-    [ObservableProperty]
-    private bool m_isGoalEmpty = true;
-
     public EditHabitViewModel( IServiceProvider serviceProvider )
         : base(serviceProvider)
     {

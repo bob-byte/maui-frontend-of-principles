@@ -7,12 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Principles.Converters;
-public class GoalEndIconConverter : BaseConverterOneWay<bool, ImageSource>
+public class GoalToEndIconConverter : BaseConverterOneWay<UserGoal, ImageSource>
 {
     public override ImageSource DefaultConvertReturnValue { get; set; } = ImageSource.FromFile( "dotshorizontal" );
 
-    public override ImageSource ConvertFrom( bool isGoalEmpty, CultureInfo? culture )
+    public override ImageSource ConvertFrom( UserGoal goal, CultureInfo? culture )
     {
-        return ImageSource.FromFile( isGoalEmpty ? "dotshorizontal" : "cross" );
+        return ImageSource.FromFile( string.IsNullOrEmpty( goal?.Name ) ? "dotshorizontal" : "cross" );
     }
 }

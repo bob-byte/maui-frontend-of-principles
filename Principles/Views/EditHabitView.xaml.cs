@@ -529,9 +529,7 @@ public partial class EditHabitView : ContentPageBase
         if (!string.IsNullOrWhiteSpace( ME_HabitGoal.Text ))
         {
             ViewModel.Habit.Goal = null;
-            ME_HabitGoal.Text = string.Empty;
-            ViewModel.IsGoalEmpty = true;
-            ME_HabitGoal.Unfocus();
+            OnPropertyChanged( nameof( ViewModel.Habit.Goal ) );
         }
         else
         {
@@ -616,7 +614,6 @@ public partial class EditHabitView : ContentPageBase
             ViewModel.OnGoalNameTapped( goal! );
 
             m_doExecuteReloadOfRecommendedHabits = true;
-            ViewModel.IsGoalEmpty = false;
         }
     }
 

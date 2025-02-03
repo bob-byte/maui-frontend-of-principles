@@ -477,7 +477,7 @@
             <converters:IsMoreThanZeroConverter x:Key="IsMoreThanZero" />
             <converters:GenderToUserIconConverter x:Key="GenderToIcon" />
             <converters:ReminderTimeAndDaysToStringConverter x:Key="ReminderValueToString" />
-            <converters:GoalEndIconConverter x:Key="GoalEndIconSelector" />
+            <converters:GoalToEndIconConverter x:Key="GoalToEndIcon" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>
