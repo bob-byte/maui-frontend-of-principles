@@ -42,7 +42,9 @@ public static class MauiProgram
             .UseMauiCommunityToolkit()
             .UseMauiCommunityToolkitMarkup()
             .UseSkiaSharp()
+#if IOS
             .ConfigureMauiWorkarounds()
+#endif
             .ConfigureEssentials(essentials =>
             {
                 essentials.UseVersionTracking();
