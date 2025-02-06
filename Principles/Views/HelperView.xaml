@@ -36,7 +36,6 @@
                         TintColor="{StaticResource DarkIconColor}"
                         Grid.Column="0" />
             <Label x:Name="L_TitleText"
-                   Text="{Binding Title}"
                    FontAttributes="Bold"
                    FontFamily="MonaSansBold"
                    FontSize="20"
@@ -93,8 +92,6 @@
                                Grid.Row="1"
                                Grid.Column="1" />
             <Label x:Name="L_ShortDescriptionOfAssistant"
-                   Text="{Binding LocalizationResourceManager[SelfDevelopmentAssistantShortDescription],
-                                  Mode=OneWay}"
                    HeightRequest="{OnPlatform iOS=90}"
                    Padding="15,0,15,0"
                    FontFamily="MonaSansMedium"
@@ -125,8 +122,6 @@
                                    Focused="E_Prompt_Focused"
                                    MaxLineCount="6"
                                    PlaceholderColor="#3F3F3F"
-                                   PlaceholderText="{Binding LocalizationResourceManager[EnterText],
-                                                             Mode=OneWay}"
                                    ReturnType="Done"
                                    TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
                                                                Dark={StaticResource DarkNormalText}}"

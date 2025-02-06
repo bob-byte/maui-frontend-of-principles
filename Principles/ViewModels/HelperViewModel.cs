@@ -19,7 +19,6 @@ public partial class HelperViewModel : BaseViewModel
     public HelperViewModel( IServiceProvider serviceProvider, IAiChatService aiChatService )
         : base( serviceProvider )
     {
-        Title = LocStrings.ChatWithHelper;
         IsAnimationVisible = true;
         m_displayMessages = new ObservableCollectionEx<DisplayMessage>();
         m_aiChatService = aiChatService;

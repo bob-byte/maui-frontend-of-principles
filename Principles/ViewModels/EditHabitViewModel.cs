@@ -90,10 +90,11 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
             UserGoals?.Clear();
         } );
 
-        ReferenceMessenger.Register<NewCultureMessage>( this, ( sender, msg ) =>
+        ReferenceMessenger.Register<NewCultureMessage>( this, async ( sender, msg ) =>
         {
             AllAreasOfLifeAsOneItem.Name = LocStrings.AllAreasOfLife;
-            AllUserAreasOfLife.Reload( Habit.AreasOfLife!.ToList() );
+            AllUserAreasOfLife?.Clear();
+            await ReloadAllAreasOfLife();
         } );
 
         InactiveDaysToDelete = new List<WeekDay>();
@@ -446,19 +447,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
 
         if (AllUserAreasOfLife.Count == 0)
         {
-            List<UserAreaOfLife> areasOfLife = await AreaOfLifeService.UserAreasOfLife();
-            foreach (UserAreaOfLife area in areasOfLife)
-            {
-                //localize names
-                string? locName = LocStrings.ResourceManager.GetString( area.Name! );
-                if (!string.IsNullOrWhiteSpace( locName ))
-                {
-                    area.Name = locName;
-                }
-            }
-            areasOfLife.Insert( index: 0, AllAreasOfLifeAsOneItem );
-
-            AllUserAreasOfLife.Reload( areasOfLife );
+            await ReloadAllAreasOfLife();
         }
         else
         {
@@ -471,6 +460,23 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         await base.InitializeAsync( parameter );
 
         IsLoadingHabitInfo = false;
+    }
+
+    private async Task ReloadAllAreasOfLife()
+    {
+        List<UserAreaOfLife> areasOfLife = await AreaOfLifeService.UserAreasOfLife();
+        foreach (UserAreaOfLife area in areasOfLife)
+        {
+            //localize names
+            string? locName = LocStrings.ResourceManager.GetString( area.Name! );
+            if (!string.IsNullOrWhiteSpace( locName ))
+            {
+                area.Name = locName;
+            }
+        }
+        areasOfLife.Insert( index: 0, AllAreasOfLifeAsOneItem );
+
+        AllUserAreasOfLife.Reload( areasOfLife );
     }
 
     private async void AreasOfLife_CollectionChanged( object? sender, NotifyCollectionChangedEventArgs e )
