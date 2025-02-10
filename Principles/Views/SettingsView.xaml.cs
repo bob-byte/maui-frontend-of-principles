@@ -8,7 +8,7 @@ namespace Principles.Views;
 public partial class SettingsView : ContentPageBase
 {
     private readonly ILockDeviceOrientation m_deviceOrientationService;
-    private readonly List<(MultilineEdit Edit, string LanguageCode)> m_multilineEdits;
+    private readonly List<(MultilineEdit Control, string LanguageCode)> m_multilineEdits;
     public SettingsView( SettingsViewModel viewModel )
 	{
         BindingContext = viewModel;
@@ -19,7 +19,7 @@ public partial class SettingsView : ContentPageBase
         LoadLocalizationData();
         m_deviceOrientationService = DependencyService.Get<ILockDeviceOrientation>();
 
-        m_multilineEdits = new List<(MultilineEdit Edit, string LanguageCode)>
+        m_multilineEdits = new List<(MultilineEdit Control, string LanguageCode)>
         {
             (ME_English, "en"),
             (ME_Ukrainian, "uk"),
@@ -64,23 +64,42 @@ public partial class SettingsView : ContentPageBase
     private void CheckAndHideRussianLanguage()
     {
         TimeZoneInfo userTimeZone = TimeZoneInfo.Local;
-
-        (MultilineEdit Edit, string LanguageCode) russianME = m_multilineEdits.FirstOrDefault( x => x.LanguageCode == "ru" );
-
-        if (userTimeZone.Id.Contains( "Europe/Kiev" ))
+        bool isKyivTimezone = userTimeZone.Id.Contains( "Europe/Kiev" );
+        
+        MultilineEdit russianME = ME_Russian;
+        
+        if (ViewModel.SettingsService.NormalPageHeight == 0)
         {
-            if (russianME.Edit != null)
+            double halfExpandedRatio;
+            if (isKyivTimezone)
             {
-                russianME.Edit.IsVisible = false;
-                BS_ChangeLanguage.HalfExpandedRatio = 0.35;
+                russianME.IsVisible = false;
+                halfExpandedRatio = 0.35;
             }
+            else
+            {
+                halfExpandedRatio = 0.45;
+            }
+            
+            BS_ChangeLanguage.HalfExpandedRatio = halfExpandedRatio;
         }
         else
         {
+            double heightOfBottomSheet;
+
+            if (isKyivTimezone)
+            {
+                russianME.IsVisible = false;
+                heightOfBottomSheet = 285;
+            }
+            else
+            {
+                heightOfBottomSheet = 365;
+            }
+            
             //bottom_sheet_height = full_height * HalfExpandedRatio
             //HalfExpandedRatio = bottom_sheet_height / full_height
-            double heightOfReminderBottomSheet = 365;
-            BS_ChangeLanguage.HalfExpandedRatio = heightOfReminderBottomSheet / ViewModel.SettingsService.NormalPageHeight;
+            BS_ChangeLanguage.HalfExpandedRatio = heightOfBottomSheet / ViewModel.SettingsService.NormalPageHeight;
         }
     }
 
@@ -97,7 +116,7 @@ public partial class SettingsView : ContentPageBase
         {
             edit.EndIcon = languageCode == currentLanguage ? "check" : string.Empty;
         }
-
+        
         BS_ChangeLanguage.State = BottomSheetState.HalfExpanded;
     }
 
@@ -108,19 +127,29 @@ public partial class SettingsView : ContentPageBase
             foreach ((MultilineEdit edit, string languageCode) in m_multilineEdits)
             {
                 edit.EndIcon = edit == selectedMultilineEdit ? "check" : string.Empty;
-
-                if (edit == selectedMultilineEdit)
-                {
-                    Preferences.Set( "AppLanguage", languageCode );
-                }
             }
         }
     }
 
-    private void SB_SaveChangeLanguage_Clicked( object sender, EventArgs e )
+    private async void SB_SaveChangeLanguage_Clicked( object sender, EventArgs e )
     {
-        ViewModel.ChangeLanguage();
-        BS_ChangeLanguage.State = BottomSheetState.Hidden;
+        (MultilineEdit Control, string LanguageCode) selectedLanguage =
+            m_multilineEdits.FirstOrDefault( m => m.Control.EndIcon?.ToString() is not null && m.Control.EndIcon.ToString()!.Contains( "check" ) );
+        if (selectedLanguage != default)
+        {
+            string codeOfSelectedLanguage = selectedLanguage.LanguageCode;
+            Preferences.Set( "AppLanguage", codeOfSelectedLanguage );
+            
+            if (ViewModel.ChangeLanguageCommand.CanExecute( codeOfSelectedLanguage ))
+            {
+                BS_ChangeLanguage.State = BottomSheetState.Hidden;
+
+                //wait until bottom sheet is hidden
+                await Task.Delay( 200 );
+
+                ViewModel.ChangeLanguageCommand.Execute( codeOfSelectedLanguage );
+            }
+        }
     }
 
     private void SB_ChangeLanguage_Cancel_Clicked( object sender, EventArgs e )

@@ -93,8 +93,16 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         ReferenceMessenger.Register<NewCultureMessage>( this, async ( sender, msg ) =>
         {
             AllAreasOfLifeAsOneItem.Name = LocStrings.AllAreasOfLife;
+            
             AllUserAreasOfLife?.Clear();
-            await ReloadAllAreasOfLife();
+            try
+            {
+                await ReloadAllAreasOfLife();
+            }
+            catch
+            {
+                //do nothing (maybe no internet connection)
+            }
         } );
 
         InactiveDaysToDelete = new List<WeekDay>();
