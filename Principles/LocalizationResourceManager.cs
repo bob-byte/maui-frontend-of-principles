@@ -15,8 +15,8 @@ namespace Principles
 
         public static LocalizationResourceManager Instance { get; } = new();
 
-        public object this[string resourceKey]
-            => LocStrings.ResourceManager.GetObject(resourceKey, LocStrings.Culture) ?? Array.Empty<object>();
+        public string this[string resourceKey]
+            => LocStrings.ResourceManager.GetString(resourceKey, LocStrings.Culture) ?? "";
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

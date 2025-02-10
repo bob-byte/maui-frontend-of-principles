@@ -34,13 +34,13 @@ public partial class SettingsView : ContentPageBase
 
         (MultilineEdit Edit, string LanguageCode) russianME = m_multilineEdits.FirstOrDefault( x => x.LanguageCode == "ru" );
 
-        // if (userTimeZone.Id.Contains( "Europe/Kiev" ))
-        // {
-        //     if (russianME.Edit != null)
-        //     {
-        //         russianME.Edit.IsVisible = false;
-        //     }
-        // }
+        if (userTimeZone.Id.Contains( "Europe/Kiev" ))
+        {
+            if (russianME.Edit != null)
+            {
+                russianME.Edit.IsVisible = false;
+            }
+        }
         
         if (ViewModel.SettingsService.NormalPageHeight == 0)
         {
@@ -57,7 +57,7 @@ public partial class SettingsView : ContentPageBase
         {
             //bottom_sheet_height = full_height * HalfExpandedRatio
             //HalfExpandedRatio = bottom_sheet_height / full_height
-            double heightOfReminderBottomSheet = 335;
+            double heightOfReminderBottomSheet = userTimeZone.Id.Contains( "Europe/Kiev" ) ? 280 : 340;
             BS_ChangeLanguage.HalfExpandedRatio = heightOfReminderBottomSheet / ViewModel.SettingsService.NormalPageHeight;
         }
     }
