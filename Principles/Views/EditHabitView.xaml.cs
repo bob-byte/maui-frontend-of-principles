@@ -1,5 +1,6 @@
 
 using DevExpress.Maui.Controls;
+using DevExpress.Maui.Core;
 using DevExpress.Maui.Editors;
 
 using Plugin.LocalNotification;
@@ -524,9 +525,19 @@ public partial class EditHabitView : ContentPageBase
         OpenFrequencyPopup();
     }
 
-    private void ME_HabitGoal_IconClicked( System.Object sender, System.EventArgs e )
+    private void ME_HabitGoal_IconClicked( object sender, System.EventArgs e )
     {
-        ShowOrHideUserGoals();
+        bool isEndIconClear = ViewModel.Habit.Goal is null || ViewModel.Habit.Goal.Id == 0;
+        if (isEndIconClear)
+        {
+            //end icon is "clear"
+            ViewModel.Habit.Goal = null;
+        }
+        else
+        {
+            //end icon is "dotshorizontal", so we just show bottom sheet
+            ShowOrHideUserGoals();
+        }
     }
 
     private void ME_HabitGoal_Tap( object sender, HandledEventArgs e )
@@ -797,5 +808,15 @@ public partial class EditHabitView : ContentPageBase
                 ViewModel.AllUserAreasOfLife : 
                 ViewModel.AllUserAreasOfLife.Where( a => a.Name!.StartsWith( TE_AreasOfLife.Text, StringComparison.CurrentCultureIgnoreCase ) ).ToList();
         };
+    }
+
+    private void GoalsBottomSheet_OnStateChanged( object? sender, ValueChangedEventArgs<BottomSheetState> e )
+    {
+#if IOS
+        if (e.NewValue == BottomSheetState.Hidden)
+        {
+            ME_HabitGoal.Unfocus();
+        }
+#endif
     }
 }
