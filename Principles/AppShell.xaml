@@ -11,20 +11,17 @@
        Style="{StaticResource ShellStyle}"
        ios:Page.UseSafeArea="true">
     <TabBar Route="main">
-        <ShellContent Title="{Binding LocalizationResourceManager[Helper],
-                                      Mode=OneWay}"
+        <ShellContent x:Name="SC_Helper"
                       Icon="helper"
                       ContentTemplate="{DataTemplate local:HelperView}"
                       Route="helper" />
 
-        <ShellContent Title="{Binding LocalizationResourceManager[Progress],
-                                      Mode=OneWay}"
+        <ShellContent x:Name="SC_Progress"
                       Icon="boost"
                       ContentTemplate="{DataTemplate local:ProgressOfHabitsView}"
                       Route="progressofhabits" />
 
-        <ShellContent Title="{Binding LocalizationResourceManager[Profile],
-                                      Mode=OneWay}"
+        <ShellContent x:Name="SC_Profile"
                       Icon="profile"
                       ContentTemplate="{DataTemplate local:ProfileView}"
                       Route="profile" />

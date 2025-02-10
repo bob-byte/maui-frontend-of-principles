@@ -82,8 +82,7 @@
                 Grid.Row="1">
             <VerticalStackLayout Padding="5,10,5,0"
                                  VerticalOptions="Center">
-                <dxco:SimpleButton Text="{Binding LocalizationResourceManager[ContinueWithGoogle],
-                                                  Mode=OneWay}"
+                <dxco:SimpleButton Text="{x:Static loc:LocStrings.ContinueWithGoogle}"
                                    Command="{Binding ContinueWithGoogleCommand}"
                                    Style="{StaticResource PrimaryButton}"
                                    Icon="google"
@@ -93,8 +92,7 @@
                                    DisabledBackgroundColor="{StaticResource Primary}" />
                 <OnPlatform x:TypeArguments="View">
                     <On Platform="iOS">
-                        <dxco:SimpleButton Text="{Binding LocalizationResourceManager[ContinueWithApple],
-                                                          Mode=OneWay}"
+                        <dxco:SimpleButton Text="{x:Static loc:LocStrings.ContinueWithApple}"
                                            Command="{Binding ContinueWithAppleCommand}"
                                            Style="{StaticResource PrimaryButton}"
                                            Icon="apple"
@@ -105,8 +103,7 @@
                                            IsVisible="True" />
                     </On>
                 </OnPlatform>
-                <dxco:SimpleButton Text="{Binding LocalizationResourceManager[SignUpWithEmail],
-                                                  Mode=OneWay}"
+                <dxco:SimpleButton Text="{x:Static loc:LocStrings.SignUpWithEmail}"
                                    Command="{Binding OpenSignUpViewCommand}"
                                    Style="{StaticResource PrimaryButton}"
                                    Icon="email"
@@ -114,8 +111,7 @@
                                    Background="{StaticResource Primary}"
                                    BorderThickness="2"
                                    DisabledBackgroundColor="{StaticResource Primary}" />
-                <dxco:SimpleButton Text="{Binding LocalizationResourceManager[Login],
-                                                  Mode=OneWay}"
+                <dxco:SimpleButton Text="{x:Static loc:LocStrings.Login}"
                                    Command="{Binding OpenLoginViewCommand}"
                                    Style="{StaticResource SecondaryButton}"
                                    Margin="0,10,0,10"

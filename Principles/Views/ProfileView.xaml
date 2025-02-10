@@ -17,8 +17,7 @@
         <Grid VerticalOptions="CenterAndExpand"
               Margin="0,0,5,0"
               ColumnDefinitions="Auto, *, Auto">
-            <Label Text="{Binding LocalizationResourceManager[Profile],
-                                  Mode=OneWay}"
+            <Label x:Name="L_Profile"
                    VerticalOptions="Center"
                    VerticalTextAlignment="Center"
                    HorizontalOptions="Start"
@@ -81,8 +80,6 @@
                 </Grid>
 
                 <dxe:TextEdit Text="{Binding UserName.Value}"
-                              LabelText="{Binding LocalizationResourceManager[UserName],
-                                                  Mode=OneWay}"
                               x:Name="TE_UserName"
                               ClearIconVisibility="Never"
                               IsReadOnly="True"
@@ -101,8 +98,6 @@
             </Grid>
 
             <dxe:MultilineEdit Text="{Binding MainSlogan}"
-                               LabelText="{Binding LocalizationResourceManager[MainSlogan],
-                                                   Mode=OneWay}"
                                x:Name="ME_MainSlogan"
                                ClearIconVisibility="Never"
                                IsReadOnly="True"
@@ -113,8 +108,6 @@
                                Focused="TGR_MainSlogan_Focused" />
 
             <dxe:MultilineEdit Text="{Binding Mission}"
-                               LabelText="{Binding LocalizationResourceManager[Mission],
-                                                   Mode=OneWay}"
                                x:Name="ME_Mision"
                                ClearIconVisibility="Never"
                                IsReadOnly="True"
@@ -147,8 +140,6 @@
                     <HorizontalStackLayout HorizontalOptions="End">
                         <dxco:SimpleButton x:Name="SB_Cancel"
                                            BackgroundColor="{StaticResource CancelButtonColor}"
-                                           Text="{Binding LocalizationResourceManager[Cancel],
-                                                          Mode=OneWay}"
                                            FontSize="16"
                                            Margin="0,0,5,5"
                                            Icon="close"
@@ -156,8 +147,6 @@
                                            Clicked="SB_Cancel_Clicked" />
                         <dxco:SimpleButton x:Name="SB_Save"
                                            Style="{StaticResource PrimaryButton}"
-                                           Text="{Binding LocalizationResourceManager[Save],
-                                                          Mode=OneWay}"
                                            FontSize="16"
                                            Margin="0,0,5,5"
                                            IconHorizontalPosition="Left"

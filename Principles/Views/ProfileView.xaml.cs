@@ -11,6 +11,22 @@ public partial class ProfileView : ContentPageBase
         BindingContext = viewModel;
 
         InitializeComponent();
+        LoadLocalizationData();
+
+        ViewModel.ReferenceMessenger.Register<NewCultureMessage>( this, ( sender, msg ) =>
+        {
+            LoadLocalizationData();
+        } );
+    }
+
+    private void LoadLocalizationData()
+    {
+        L_Profile.Text = LocStrings.Profile;
+        TE_UserName.LabelText = LocStrings.UserName;
+        ME_MainSlogan.LabelText = LocStrings.MainSlogan;
+        ME_Mision.LabelText = LocStrings.Mission;
+        SB_Cancel.Text = LocStrings.Cancel;
+        SB_Save.Text = LocStrings.Save;
     }
 
     void TRG_UserName_Focused( object sender, FocusEventArgs e )

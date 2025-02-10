@@ -10,13 +10,13 @@ namespace Principles
     {
         private LocalizationResourceManager() 
         {
-            LocStrings.Culture = CultureInfo.CurrentCulture;
+            LocStrings.Culture = CultureInfo.CurrentUICulture;
         }
 
         public static LocalizationResourceManager Instance { get; } = new();
 
-        public object this[string resourceKey]
-            => LocStrings.ResourceManager.GetObject(resourceKey, LocStrings.Culture) ?? Array.Empty<object>();
+        public string this[string resourceKey]
+            => LocStrings.ResourceManager.GetString( resourceKey );
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

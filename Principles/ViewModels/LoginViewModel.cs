@@ -25,8 +25,6 @@ public partial class LoginViewModel : BaseViewModel
         {
             ResetValidation();
         } );
-
-        Title = LocStrings.Login;
     }
 
     private void ResetValidation()

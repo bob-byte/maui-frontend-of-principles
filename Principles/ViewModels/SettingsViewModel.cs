@@ -78,13 +78,11 @@ public partial class SettingsViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    public void ChangeLanguage()
+    private void ChangeLanguage(string? selectedLanguageCode)
     {
-        string selectedLanguageCode = Preferences.Get( "AppLanguage", null );
-
-        if (selectedLanguageCode != null)
+        if (selectedLanguageCode is not null)
         {
-            CultureInfo newCulture = new CultureInfo( selectedLanguageCode );
+            CultureInfo newCulture = new( selectedLanguageCode );
             LocalizationResourceManager.Instance.SetCulture( newCulture );
             ReferenceMessenger.Send( new NewCultureMessage( newCulture ) );
         }

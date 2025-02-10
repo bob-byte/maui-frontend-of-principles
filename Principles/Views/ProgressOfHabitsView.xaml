@@ -27,8 +27,7 @@
                         HeightRequest="35"
                         TintColor="{StaticResource DarkIconColor}"
                         WidthRequest="35" />
-            <Label Text="{Binding LocalizationResourceManager[MyHabits],
-                                  Mode=OneWay}"
+            <Label x:Name="L_MyHabits"
                    FontAttributes="Bold"
                    FontSize="20"
                    Grid.Column="2"
@@ -165,16 +164,14 @@
                                IsAnimationEnabled="True"
                                RepeatCount="-1"
                                WidthRequest="300" />
-            <Label Text="{Binding LocalizationResourceManager[LoadingContent],
-                                  Mode=OneWay}"
+            <Label x:Name="L_LoadingContent"
                    FontFamily="MonaSansMedium"
                    FontSize="14"
                    HorizontalTextAlignment="Center"
                    IsVisible="{Binding IsBusy}"
                    TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
                                                Dark={StaticResource DarkNormalText}}" />
-            <Label Text="{Binding LocalizationResourceManager[HabitCollectionIsEmptyDescription],
-                                  Mode=OneWay}"
+            <Label x:Name="L_HabitCollectionIsEmptyDescription"
                    FontFamily="MonaSansMedium"
                    FontSize="14"
                    HorizontalTextAlignment="Center"
@@ -193,28 +190,24 @@
             <dxco:DXPopup.Content>
                 <VerticalStackLayout Margin="7,10,7,0"
                                      Spacing="6">
-                    <Label Text="{Binding LocalizationResourceManager[Reminder],
-                                          Mode=OneWay}"
+                    <Label x:Name="L_Reminder"
                            Style="{StaticResource CentralHeader}" />
-                    <dxe:MultilineEdit Text="{Binding ReminderReport.Title}"
+                    <dxe:MultilineEdit x:Name="ME_ReminderTitle"
+                                       Text="{Binding ReminderReport.Title}"
                                        ClearIconVisibility="Never"
-                                       LabelText="{Binding LocalizationResourceManager[ReminderTitle],
-                                                           Mode=OneWay}"
                                        MaxLineCount="2"
                                        MaximumWidthRequest="285"
                                        ReturnType="Done"
                                        StartIcon="remindertitle" />
-                    <dxe:MultilineEdit Text="{Binding ReminderReport.Description}"
+                    <dxe:MultilineEdit x:Name="ME_ReminderDescription"
+                                       Text="{Binding ReminderReport.Description}"
                                        ClearIconVisibility="Never"
-                                       LabelText="{Binding LocalizationResourceManager[ReminderDescription],
-                                                           Mode=OneWay}"
                                        MaxLineCount="3"
                                        MaximumWidthRequest="285"
                                        ReturnType="Done"
                                        StartIcon="reminderdescription" />
 
-                    <dxe:TimeEdit LabelText="{Binding LocalizationResourceManager[Time],
-                                                      Mode=OneWay}"
+                    <dxe:TimeEdit x:Name="TIE_Time"
                                   MaximumWidthRequest="285"
                                   ReturnType="Done"
                                   StartIcon="clock"
@@ -222,8 +215,7 @@
 
                     <HorizontalStackLayout HorizontalOptions="Start">
                         <Switch IsToggled="{Binding ReminderReport.IsEnabled}" />
-                        <Label Text="{Binding LocalizationResourceManager[Enable],
-                                              Mode=OneWay}"
+                        <Label x:Name="L_Enable"
                                Margin="3,0,0,0"
                                TextColor="{StaticResource LightNormalText}"
                                VerticalOptions="Center" />
@@ -231,8 +223,6 @@
                     <HorizontalStackLayout Padding="0"
                                            HorizontalOptions="End">
                         <dxco:SimpleButton x:Name="SB_ReminderReport_Cancel"
-                                           Text="{Binding LocalizationResourceManager[Cancel],
-                                                          Mode=OneWay}"
                                            Icon="close"
                                            Margin="0,0,5,5"
                                            BackgroundColor="{StaticResource CancelButtonColor}"
@@ -240,8 +230,6 @@
                                            FontSize="16"
                                            IconHorizontalPosition="Left" />
                         <dxco:SimpleButton x:Name="SB_Save"
-                                           Text="{Binding LocalizationResourceManager[Save],
-                                                          Mode=OneWay}"
                                            Style="{StaticResource PrimaryButton}"
                                            Icon="check_second"
                                            Margin="0,0,0,5"
