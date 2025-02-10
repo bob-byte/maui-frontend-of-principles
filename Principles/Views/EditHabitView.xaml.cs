@@ -527,16 +527,16 @@ public partial class EditHabitView : ContentPageBase
 
     private void ME_HabitGoal_IconClicked( object sender, System.EventArgs e )
     {
-        bool isEndIconClear = ViewModel.Habit.Goal is null || ViewModel.Habit.Goal.Id == 0;
-        if (isEndIconClear)
-        {
-            //end icon is "clear"
-            ViewModel.Habit.Goal = null;
-        }
-        else
+        bool isEndIconDotsHorizontal = ViewModel.Habit.Goal is null || ViewModel.Habit.Goal.Id == 0;
+        if (isEndIconDotsHorizontal)
         {
             //end icon is "dotshorizontal", so we just show bottom sheet
             ShowOrHideUserGoals();
+        }
+        else
+        {
+            //end icon is "clear"
+            ViewModel.Habit.Goal = null;
         }
     }
 
