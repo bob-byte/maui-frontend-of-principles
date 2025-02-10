@@ -748,7 +748,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
 
     private bool CanSaveGoal()
     {
-        return !string.IsNullOrWhiteSpace( EditedGoal.Name );
+        return !string.IsNullOrWhiteSpace( EditedGoal?.Name );
     }
 
     [RelayCommand]

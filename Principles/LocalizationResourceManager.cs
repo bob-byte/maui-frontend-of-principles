@@ -15,7 +15,7 @@ namespace Principles
 
         public static LocalizationResourceManager Instance { get; } = new();
 
-        public string this[string resourceKey]
+        public string? this[string resourceKey]
             => LocStrings.ResourceManager.GetString( resourceKey );
 
         public event PropertyChangedEventHandler? PropertyChanged;

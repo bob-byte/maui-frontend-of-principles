@@ -30,7 +30,7 @@ public class AppleAuthService : IAppleAuthService
             };
             WebAuthenticatorResult webAuthResult = await AppleSignInAuthenticator.AuthenticateAsync( options );
 
-            if (webAuthResult.IdToken is null)
+            if (string.IsNullOrWhiteSpace( webAuthResult.IdToken ))
             {
                 m_loggingService.LogError(
                     "Failed to authenticate using apple, because ID token could not be retrieved." );
