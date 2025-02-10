@@ -2,6 +2,7 @@
 <v:ContentPageBase x:Class="Principles.Views.EditHabitView"
                    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                   xmlns:converters="clr-namespace:Principles.Converters;assembly=Principles"
                    xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
                    xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
                    xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
@@ -16,6 +17,8 @@
                    x:DataType="vm:EditHabitViewModel"
                    Shell.TabBarIsVisible="False">
     <v:ContentPageBase.Resources>
+        <converters:ReminderTimeAndDaysToStringConverter x:Key="ReminderValueToString" />
+        <converters:GoalToEndIconConverter x:Key="GoalToEndIcon" />
         <Style x:Key="WeekDayButton"
                TargetType="dx:DXToggleButton">
             <Setter Property="Padding"
@@ -212,7 +215,8 @@
                                           BackgroundColor="{AppThemeBinding Light={StaticResource Background},
                                                                             Dark={StaticResource DarkBackground}}"
                                           HalfExpandedRatio="0.7"
-                                          ShowGrabber="False">
+                                          ShowGrabber="False"
+                                          StateChanged="GoalsBottomSheet_OnStateChanged">
                             <Grid x:Name="G_Goals"
                                   Padding="10,0,10,0">
                                 <Grid.RowDefinitions>

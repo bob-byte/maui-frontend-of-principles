@@ -1,5 +1,6 @@
 
 using DevExpress.Maui.Controls;
+using DevExpress.Maui.Core;
 using DevExpress.Maui.Editors;
 
 using Plugin.LocalNotification;
@@ -792,5 +793,15 @@ public partial class EditHabitView : ContentPageBase
                 ViewModel.AllUserAreasOfLife : 
                 ViewModel.AllUserAreasOfLife.Where( a => a.Name!.StartsWith( TE_AreasOfLife.Text, StringComparison.CurrentCultureIgnoreCase ) ).ToList();
         };
+    }
+
+    private void GoalsBottomSheet_OnStateChanged( object? sender, ValueChangedEventArgs<BottomSheetState> e )
+    {
+#if IOS
+        if (e.NewValue == BottomSheetState.Hidden)
+        {
+            ME_HabitGoal.Unfocus();
+        }
+#endif
     }
 }

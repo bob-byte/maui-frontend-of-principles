@@ -72,8 +72,8 @@
             <Color x:Key="OrangeColor">Orange</Color>
             <Color x:Key="GrayColor">#d9d4d4</Color>
 
-            <Style TargetType="Page"
-                   ApplyToDerivedTypes="True">
+            <Style ApplyToDerivedTypes="True"
+                   TargetType="Page">
                 <Setter Property="BackgroundColor"
                         Value="{AppThemeBinding Light={StaticResource Background},
                                                 Dark={StaticResource DarkBackground}}" />
@@ -158,8 +158,8 @@
                         Value="2" />
             </Style>
 
-            <Style TargetType="dxe:TextEdit"
-                   ApplyToDerivedTypes="True">
+            <Style ApplyToDerivedTypes="True"
+                   TargetType="dxe:TextEdit">
                 <Setter Property="FocusedBorderColor"
                         Value="{StaticResource Primary}" />
                 <Setter Property="BorderColor"
@@ -180,8 +180,8 @@
                 <Setter Property="ErrorColor"
                         Value="{StaticResource Error}" />
             </Style>
-            <Style TargetType="dxe:PasswordEdit"
-                   ApplyToDerivedTypes="True">
+            <Style ApplyToDerivedTypes="True"
+                   TargetType="dxe:PasswordEdit">
                 <Setter Property="FocusedBorderColor"
                         Value="{StaticResource Primary}" />
                 <Setter Property="BorderColor"
@@ -202,8 +202,8 @@
                 <Setter Property="ErrorColor"
                         Value="{StaticResource Error}" />
             </Style>
-            <Style TargetType="dxe:MultilineEdit"
-                   ApplyToDerivedTypes="True">
+            <Style ApplyToDerivedTypes="True"
+                   TargetType="dxe:MultilineEdit">
                 <Setter Property="FocusedBorderColor"
                         Value="{StaticResource Primary}" />
                 <Setter Property="BorderColor"
@@ -225,8 +225,8 @@
                         Value="{StaticResource Error}" />
             </Style>
 
-            <Style TargetType="dxe:TimeEdit"
-                   ApplyToDerivedTypes="True">
+            <Style ApplyToDerivedTypes="True"
+                   TargetType="dxe:TimeEdit">
                 <Setter Property="FocusedBorderColor"
                         Value="{StaticResource Primary}" />
                 <Setter Property="BorderColor"
@@ -250,8 +250,8 @@
                         Value="{StaticResource Error}" />
             </Style>
 
-            <Style TargetType="dxe:NumericEdit"
-                   ApplyToDerivedTypes="True">
+            <Style ApplyToDerivedTypes="True"
+                   TargetType="dxe:NumericEdit">
                 <Setter Property="FocusedBorderColor"
                         Value="{StaticResource Primary}" />
                 <Setter Property="BorderColor"
@@ -476,8 +476,6 @@
             <converters:IsZeroConverter x:Key="IsZero" />
             <converters:IsMoreThanZeroConverter x:Key="IsMoreThanZero" />
             <converters:GenderToUserIconConverter x:Key="GenderToIcon" />
-            <converters:ReminderTimeAndDaysToStringConverter x:Key="ReminderValueToString" />
-            <converters:GoalToEndIconConverter x:Key="GoalToEndIcon" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>
