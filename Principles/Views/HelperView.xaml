@@ -61,119 +61,121 @@
             </dx:DXImage>
         </Grid>
     </Shell.TitleView>
-    <Grid BackgroundColor="{StaticResource Primary}"
-          RowDefinitions="0, *, 16, Auto, 16">
-        <Border Padding="0,10,0,30"
-                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColorLight},
-                                                  Dark={StaticResource SurfaceColorDark}}"
-                StrokeShape="RoundRectangle 0, 0, 36, 36"
-                StrokeThickness="0"
-                Grid.Row="1">
-            <collectionview:DXCollectionView x:Name="DXC_DisplayMessages"
-                                             ItemsSource="{Binding DisplayMessages}"
-                                             Orientation="Vertical"
-                                             IsLoadMoreEnabled="False"
-                                             IsPullToRefreshEnabled="False"
-                                             IsScrollBarVisible="True"
-                                             ItemSpacing="20">
-                <collectionview:DXCollectionView.ItemTemplate>
-                    <templates:MessageDataTemplateSelector />
-                </collectionview:DXCollectionView.ItemTemplate>
-            </collectionview:DXCollectionView>
-        </Border>
+    <dx:SafeKeyboardAreaView>
+        <Grid BackgroundColor="{StaticResource Primary}"
+              RowDefinitions="0, *, 16, Auto, 16">
+            <Border Padding="0,10,0,30"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColorLight},
+                                                      Dark={StaticResource SurfaceColorDark}}"
+                    StrokeShape="RoundRectangle 0, 0, 36, 36"
+                    StrokeThickness="0"
+                    Grid.Row="1">
+                <collectionview:DXCollectionView x:Name="DXC_DisplayMessages"
+                                                 ItemsSource="{Binding DisplayMessages}"
+                                                 Orientation="Vertical"
+                                                 IsLoadMoreEnabled="False"
+                                                 IsPullToRefreshEnabled="False"
+                                                 IsScrollBarVisible="True"
+                                                 ItemSpacing="20">
+                    <collectionview:DXCollectionView.ItemTemplate>
+                        <templates:MessageDataTemplateSelector />
+                    </collectionview:DXCollectionView.ItemTemplate>
+                </collectionview:DXCollectionView>
+            </Border>
 
-        <Grid IsVisible="{Binding IsAnimationVisible}"
-              ColumnDefinitions="15*, 70*, 15*"
-              RowDefinitions="20*, 40*, Auto, 40*"
-              Grid.Row="1">
-            <skia:SKLottieView x:Name="SKLV_Animation"
-                               Source="emptychat_light.json"
-                               IsAnimationEnabled="{Binding IsAnimationVisible}"
-                               RepeatCount="-1"
-                               Grid.Row="1"
-                               Grid.Column="1" />
-            <Label x:Name="L_ShortDescriptionOfAssistant"
-                   Text="{Binding LocalizationResourceManager[SelfDevelopmentAssistantShortDescription],
-                                  Mode=OneWay}"
-                   HeightRequest="{OnPlatform iOS=90}"
-                   Padding="15,0,15,0"
-                   FontFamily="MonaSansMedium"
-                   FontSize="13"
-                   HorizontalTextAlignment="Center"
-                   LineBreakMode="WordWrap"
-                   TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
-                                               Dark={StaticResource DarkNormalText}}"
-                   Grid.Row="2"
-                   Grid.ColumnSpan="3" />
-        </Grid>
-        <Grid Padding="5,0,5,0"
-              ColumnDefinitions="*, Auto"
-              ColumnSpacing="3"
-              RowDefinitions="Auto"
-              VerticalOptions="CenterAndExpand"
-              Grid.Row="3">
-            <editors:MultilineEdit x:Name="E_Prompt"
-                                   Text="{Binding Prompt}"
-                                   BackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary},
+            <Grid IsVisible="{Binding IsAnimationVisible}"
+                  ColumnDefinitions="15*, 70*, 15*"
+                  RowDefinitions="20*, 40*, Auto, 40*"
+                  Grid.Row="1">
+                <skia:SKLottieView x:Name="SKLV_Animation"
+                                   Source="emptychat_light.json"
+                                   IsAnimationEnabled="{Binding IsAnimationVisible}"
+                                   RepeatCount="-1"
+                                   Grid.Row="1"
+                                   Grid.Column="1" />
+                <Label x:Name="L_ShortDescriptionOfAssistant"
+                       Text="{Binding LocalizationResourceManager[SelfDevelopmentAssistantShortDescription],
+                                      Mode=OneWay}"
+                       HeightRequest="{OnPlatform iOS=90}"
+                       Padding="15,0,15,0"
+                       FontFamily="MonaSansMedium"
+                       FontSize="13"
+                       HorizontalTextAlignment="Center"
+                       LineBreakMode="WordWrap"
+                       TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
+                                                   Dark={StaticResource DarkNormalText}}"
+                       Grid.Row="2"
+                       Grid.ColumnSpan="3" />
+            </Grid>
+            <Grid Padding="5,0,5,0"
+                  ColumnDefinitions="*, Auto"
+                  ColumnSpacing="3"
+                  RowDefinitions="Auto"
+                  VerticalOptions="CenterAndExpand"
+                  Grid.Row="3">
+                <editors:MultilineEdit x:Name="E_Prompt"
+                                       Text="{Binding Prompt}"
+                                       BackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary},
+                                                                         Dark={StaticResource DarkPrimary}}"
+                                       BorderColor="{AppThemeBinding Light={StaticResource LightPrimary},
                                                                      Dark={StaticResource DarkPrimary}}"
-                                   BorderColor="{AppThemeBinding Light={StaticResource LightPrimary},
-                                                                 Dark={StaticResource DarkPrimary}}"
-                                   BoxPadding="27,20,13,16"
-                                   ClearIconVisibility="Never"
-                                   Completed="TE_Prompt_Completed"
-                                   CornerRadius="30"
-                                   Focused="E_Prompt_Focused"
-                                   MaxLineCount="6"
-                                   PlaceholderColor="#3F3F3F"
-                                   PlaceholderText="{Binding LocalizationResourceManager[EnterText],
-                                                             Mode=OneWay}"
-                                   ReturnType="Done"
-                                   TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
-                                                               Dark={StaticResource DarkNormalText}}"
-                                   TextFontAttributes="Italic"
-                                   TextFontSize="13"
-                                   TextVerticalAlignment="Center"
-                                   Unfocused="E_Prompt_Unfocused" />
-            <skia:SKLottieView Source="loading.json"
-                               IsVisible="{Binding IsBusy}"
-                               WidthRequest="{OnPlatform iOS=52,
-                                                         Android=52}"
-                               HeightRequest="{OnPlatform iOS=52,
-                                                          Android=52}"
-                               Margin="0,0,6,0"
-                               HorizontalOptions="End"
-                               RepeatCount="-1"
-                               Grid.Column="0" />
+                                       BoxPadding="27,20,13,16"
+                                       ClearIconVisibility="Never"
+                                       Completed="TE_Prompt_Completed"
+                                       CornerRadius="30"
+                                       Focused="E_Prompt_Focused"
+                                       MaxLineCount="6"
+                                       PlaceholderColor="#3F3F3F"
+                                       PlaceholderText="{Binding LocalizationResourceManager[EnterText],
+                                                                 Mode=OneWay}"
+                                       ReturnType="Done"
+                                       TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
+                                                                   Dark={StaticResource DarkNormalText}}"
+                                       TextFontAttributes="Italic"
+                                       TextFontSize="13"
+                                       TextVerticalAlignment="Center"
+                                       Unfocused="E_Prompt_Unfocused" />
+                <skia:SKLottieView Source="loading.json"
+                                   IsVisible="{Binding IsBusy}"
+                                   WidthRequest="{OnPlatform iOS=52,
+                                                             Android=52}"
+                                   HeightRequest="{OnPlatform iOS=52,
+                                                              Android=52}"
+                                   Margin="0,0,6,0"
+                                   HorizontalOptions="End"
+                                   RepeatCount="-1"
+                                   Grid.Column="0" />
 
-            <dxc:SimpleButton x:Name="SB_AskQuestion"
-                              Clicked="SB_AskQuestion_Clicked"
-                              Style="{StaticResource PrimaryButton}"
-                              IsVisible="{Binding IsBusy,
-                                                  Converter={StaticResource IsFalse}}"
-                              Icon="send_message"
-                              WidthRequest="{OnPlatform iOS=52,
-                                                        Android=55}"
-                              HeightRequest="{OnPlatform iOS=52,
-                                                         Android=55}"
-                              BackgroundColor="{StaticResource LightPrimary}"
-                              IconColor="#3F3F3F"
-                              Grid.Row="0"
-                              Grid.Column="1" />
+                <dxc:SimpleButton x:Name="SB_AskQuestion"
+                                  Clicked="SB_AskQuestion_Clicked"
+                                  Style="{StaticResource PrimaryButton}"
+                                  IsVisible="{Binding IsBusy,
+                                                      Converter={StaticResource IsFalse}}"
+                                  Icon="send_message"
+                                  WidthRequest="{OnPlatform iOS=52,
+                                                            Android=55}"
+                                  HeightRequest="{OnPlatform iOS=52,
+                                                             Android=55}"
+                                  BackgroundColor="{StaticResource LightPrimary}"
+                                  IconColor="#3F3F3F"
+                                  Grid.Row="0"
+                                  Grid.Column="1" />
 
-            <dx:DXImage Source="stop_video"
-                        IsVisible="{Binding IsBusy}"
-                        WidthRequest="35"
-                        HeightRequest="35"
-                        Margin="7"
-                        TintColor="{AppThemeBinding Light={StaticResource QuinaryLight},
-                                                    Dark={StaticResource QuinaryDark}}"
-                        VerticalOptions="CenterAndExpand"
-                        Grid.Row="0"
-                        Grid.Column="1">
-                <dx:DXImage.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding CancelAnswerGenerationCommand}" />
-                </dx:DXImage.GestureRecognizers>
-            </dx:DXImage>
+                <dx:DXImage Source="stop_video"
+                            IsVisible="{Binding IsBusy}"
+                            WidthRequest="35"
+                            HeightRequest="35"
+                            Margin="7"
+                            TintColor="{AppThemeBinding Light={StaticResource QuinaryLight},
+                                                        Dark={StaticResource QuinaryDark}}"
+                            VerticalOptions="CenterAndExpand"
+                            Grid.Row="0"
+                            Grid.Column="1">
+                    <dx:DXImage.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding CancelAnswerGenerationCommand}" />
+                    </dx:DXImage.GestureRecognizers>
+                </dx:DXImage>
+            </Grid>
         </Grid>
-    </Grid>
+    </dx:SafeKeyboardAreaView>
 </v:ContentPageBase>
