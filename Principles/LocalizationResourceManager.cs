@@ -16,11 +16,11 @@ namespace Principles
         public static LocalizationResourceManager Instance { get; } = new();
 
         public string? this[string resourceKey]
-            => LocStrings.ResourceManager.GetString( resourceKey );
+            => LocStrings.ResourceManager.GetString( resourceKey, LocStrings.Culture );
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        public void SetCulture(CultureInfo culture ) 
+        public void SetCulture(CultureInfo culture) 
         {
             LocStrings.Culture = culture;
             CultureInfo.CurrentCulture = culture;

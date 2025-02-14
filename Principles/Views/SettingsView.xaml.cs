@@ -36,6 +36,7 @@ public partial class SettingsView : ContentPageBase
 
     private void LoadLocalizationData()
     {
+        Title = LocStrings.Settings;
         SB_TelegramChannel.Text = LocStrings.JoinOurTelegram;
         SB_ContactInfo.Text = LocStrings.ContactEmail;
         SB_PrivacyPolicy.Text = LocStrings.PrivacyPolicy;
@@ -90,7 +91,7 @@ public partial class SettingsView : ContentPageBase
             if (isKyivTimezone)
             {
                 russianME.IsVisible = false;
-                heightOfBottomSheet = 285;
+                heightOfBottomSheet = 300;
             }
             else
             {

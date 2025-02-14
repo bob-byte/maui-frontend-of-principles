@@ -69,7 +69,7 @@
                   VerticalOptions="CenterAndExpand"
                   Grid.Column="2">
                 <dxco:SimpleButton x:Name="SB_SaveHabit"
-                                   Text="{Binding LocalizationResourceManager[Save],
+                                   Text="{Binding LocManager[Save],
                                                   Converter={StaticResource ToUpperCase}}"
                                    Clicked="SB_Save_Clicked"
                                    Style="{StaticResource TitlePrimaryButton}"

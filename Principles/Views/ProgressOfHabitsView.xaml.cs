@@ -123,7 +123,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
             DateOnly today = DateOnly.FromDateTime( todayAsDatetime );
 
             string dayOfWeek =
-                LocStrings.ResourceManager.GetString( name: $"{today.DayOfWeek}Short" )!.ToUpperInvariant();
+                ViewModel.LocManager[$"{today.DayOfWeek}Short"]!.ToUpperInvariant();
             int dayOfMonth = today.Day;
             string colCaption = $"{dayOfWeek}{Environment.NewLine}{dayOfMonth}";
 
@@ -214,7 +214,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
              day = day.Subtract( oneDay ), columnIndex++)
         {
             string dayOfWeek =
-                LocStrings.ResourceManager.GetString( name: $"{day.DayOfWeek}Short" )!.ToUpperInvariant();
+                ViewModel.LocManager[$"{day.DayOfWeek}Short"]!.ToUpperInvariant();
             int dayOfMonth = day.Day;
             string colCaption = $"{dayOfWeek}{Environment.NewLine}{dayOfMonth}";
 

@@ -115,14 +115,15 @@
                                                                          Dark={StaticResource DarkPrimary}}"
                                        BorderColor="{AppThemeBinding Light={StaticResource LightPrimary},
                                                                      Dark={StaticResource DarkPrimary}}"
-                                       BoxPadding="27,20,13,16"
+                                       BoxPadding="{OnPlatform Android='27,20,13,16',
+                                                               iOS='27,23,13,16'}"
                                        ClearIconVisibility="Never"
                                        Completed="TE_Prompt_Completed"
                                        CornerRadius="30"
                                        Focused="E_Prompt_Focused"
                                        MaxLineCount="6"
                                        PlaceholderColor="#3F3F3F"
-                                       ReturnType="Done"
+                                       ReturnType="Default"
                                        TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
                                                                    Dark={StaticResource DarkNormalText}}"
                                        TextFontAttributes="Italic"

@@ -10,7 +10,7 @@ using PropertyChangingEventHandler = System.ComponentModel.PropertyChangingEvent
 
 namespace Principles.ViewModels;
 
-public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
+public partial class EditHabitViewModel : BaseViewModel
 {
     [ObservableProperty]
     private UserHabit m_habit;
@@ -50,6 +50,20 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
 
     [ObservableProperty]
     private bool m_isRecommendedHabitsLoading;
+    
+    [ObservableProperty]
+    private ObservableCollectionEx<PeriodOfHabit> m_periodsOfHabit;
+    
+    [ObservableProperty]
+    private ObservableCollectionEx<UserAreaOfLife> m_allUserAreasOfLife;
+    
+    public UserAreaOfLife AllAreasOfLifeAsOneItem { get; }
+
+    public IAiRecommenderOfHabitsService AiRecommenderOfHabits { get; }
+    public IGoalService GoalService { get; }
+    public IReminderService ReminderService { get; }
+    
+    public List<WeekDay> InactiveDaysToDelete { get; }
 
     public EditHabitViewModel( IServiceProvider serviceProvider )
         : base(serviceProvider)
@@ -60,19 +74,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
             Name = LocStrings.AllAreasOfLife
         };
 
-        PeriodsOfHabit = new List<PeriodOfHabit>
-        {
-            new PeriodOfHabit
-            {
-                Type = PeriodTypeOfHabit.Week,
-                Name = LocStrings.ResourceManager.GetString("Week")!.ToLower()
-            },
-            new PeriodOfHabit
-            {
-                Type = PeriodTypeOfHabit.Month,
-                Name = LocStrings.ResourceManager.GetString("Month")!.ToLower()
-            }
-        };
+        InitPeriodsOfHabit();
 
         AiRecommenderOfHabits = serviceProvider.GetRequiredService<IAiRecommenderOfHabitsService>();
         GoalService = serviceProvider.GetRequiredService<IGoalService>();
@@ -92,12 +94,13 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
 
         ReferenceMessenger.Register<NewCultureMessage>( this, async ( sender, msg ) =>
         {
-            AllAreasOfLifeAsOneItem.Name = LocStrings.AllAreasOfLife;
+            InitPeriodsOfHabit();
             
-            AllUserAreasOfLife?.Clear();
+            AllAreasOfLifeAsOneItem.Name = LocStrings.AllAreasOfLife;
+
             try
             {
-                await ReloadAllAreasOfLife();
+                await ReloadAllAreasOfLifeAsync();
             }
             catch
             {
@@ -108,17 +111,14 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         InactiveDaysToDelete = new List<WeekDay>();
     }
 
-    public UserAreaOfLife AllAreasOfLifeAsOneItem { get; }
-
-    public List<PeriodOfHabit> PeriodsOfHabit { get; }
-
-    public IAiRecommenderOfHabitsService AiRecommenderOfHabits { get; }
-    public IGoalService GoalService { get; }
-    public IReminderService ReminderService { get; }
-
-    public ObservableCollectionEx<UserAreaOfLife> AllUserAreasOfLife { get; set; }
-    
-    public List<WeekDay> InactiveDaysToDelete { get; }
+    private void InitPeriodsOfHabit()
+    {
+        PeriodsOfHabit =
+        [
+            new PeriodOfHabit { Type = PeriodTypeOfHabit.Week, Name = LocStrings.Week.ToLower() },
+            new PeriodOfHabit { Type = PeriodTypeOfHabit.Month, Name = LocStrings.Month.ToLower() }
+        ];
+    }
     
     [RelayCommand(CanExecute = nameof( CanSave ) )]
     private async Task SaveAsync()
@@ -400,7 +400,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
             foreach (UserAreaOfLife area in Habit.AreasOfLife!)
             {
                 //localize names
-                string? locName = LocStrings.ResourceManager.GetString( area.Name! );
+                string? locName = LocManager[area.Name!];
                 if (!string.IsNullOrWhiteSpace( locName ))
                 {
                     area.Name = locName;
@@ -455,7 +455,7 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
 
         if (AllUserAreasOfLife.Count == 0)
         {
-            await ReloadAllAreasOfLife();
+            await ReloadAllAreasOfLifeAsync();
         }
         else
         {
@@ -470,21 +470,28 @@ public partial class EditHabitViewModel : BaseViewModel, IQueryAttributable
         IsLoadingHabitInfo = false;
     }
 
-    private async Task ReloadAllAreasOfLife()
+    private async Task ReloadAllAreasOfLifeAsync()
     {
-        List<UserAreaOfLife> areasOfLife = await AreaOfLifeService.UserAreasOfLife();
-        foreach (UserAreaOfLife area in areasOfLife)
+        try
         {
-            //localize names
-            string? locName = LocStrings.ResourceManager.GetString( area.Name! );
-            if (!string.IsNullOrWhiteSpace( locName ))
+            List<UserAreaOfLife> areasOfLife = await AreaOfLifeService.UserAreasOfLife();
+            foreach (UserAreaOfLife area in areasOfLife)
             {
-                area.Name = locName;
+                //localize names
+                string? locName = LocManager[area.Name!];
+                if (!string.IsNullOrWhiteSpace( locName ))
+                {
+                    area.Name = locName;
+                }
             }
-        }
-        areasOfLife.Insert( index: 0, AllAreasOfLifeAsOneItem );
+            areasOfLife.Insert( index: 0, AllAreasOfLifeAsOneItem );
 
-        AllUserAreasOfLife.Reload( areasOfLife );
+            AllUserAreasOfLife = new ObservableCollectionEx<UserAreaOfLife>( areasOfLife );
+        }
+        catch
+        {
+            AllUserAreasOfLife.Clear();
+        }
     }
 
     private async void AreasOfLife_CollectionChanged( object? sender, NotifyCollectionChangedEventArgs e )

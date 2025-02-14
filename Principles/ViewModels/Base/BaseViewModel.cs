@@ -7,7 +7,7 @@ namespace Principles.ViewModels;
 
 public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
 {
-    public LocalizationResourceManager LocalizationResourceManager
+    public LocalizationResourceManager LocManager
         => LocalizationResourceManager.Instance;
     private long m_isBusy;
 
@@ -296,7 +296,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
                     }
                     else
                     {
-                        errorMsg = LocStrings.ResourceManager.GetString( ex.Message ) ?? string.Empty;
+                        errorMsg = LocManager[ex.Message] ?? string.Empty;
                         if (string.IsNullOrWhiteSpace( errorMsg ))
                         {
                             LoggingService.LogError( ex.Message );
