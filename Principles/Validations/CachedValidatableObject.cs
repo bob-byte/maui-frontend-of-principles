@@ -57,7 +57,7 @@ public class CachedValidatableObject : ObservableObject, IValidity
         m_errors = Enumerable.Empty<string>();
         m_cacheKey = cacheKey;
         m_cachingService = cachingService;
-        m_value = m_cachingService.StoredValue( m_cacheKey );
+        m_value = m_cachingService.GetStoredValue( m_cacheKey );
     }
 
     public bool Validate()

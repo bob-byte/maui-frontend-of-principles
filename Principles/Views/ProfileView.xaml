@@ -97,6 +97,15 @@
                               Focused="TRG_UserName_Focused" />
             </Grid>
 
+            <dxe:MultilineEdit Text="{Binding Email}"
+                               x:Name="ME_Email"
+                               ClearIconVisibility="Never"
+                               IsReadOnly="True"
+                               EndIcon="check_third"
+                               EndIconColor="{StaticResource Primary}"
+                               Margin="0,2"
+                               Focused="ME_Email_Focused" />
+
             <dxe:MultilineEdit Text="{Binding MainSlogan}"
                                x:Name="ME_MainSlogan"
                                ClearIconVisibility="Never"
@@ -183,6 +192,29 @@
                             VerticalOptions="Center"
                             Clicked="B_Ok_Clicked" />
                 </Grid>
+            </dxco:DXPopup>
+
+            <dxco:DXPopup x:Name="DXP_ChangeEmail"
+                          AllowAnimation="True"
+                          AllowScrim="True"
+                          AllowShadow="True"
+                          CloseOnScrimTap="True"
+                          MinimumWidthRequest="300">
+                <VerticalStackLayout>
+                    <Label x:Name="L_Email"
+                           Style="{StaticResource CentralHeader}" />
+                    <Label x:Name="L_CantEdit"
+                           VerticalOptions="Center"
+                           Margin="10,5,0,0"
+                           FontSize="20" />
+                    <dxco:SimpleButton x:Name="SB_ChangeEmail"
+                                       Style="{StaticResource PrimaryButton}"
+                                       FontSize="16"
+                                       Margin="0,0,10,10"
+                                       HorizontalOptions="End"
+                                       VerticalOptions="Center"
+                                       Clicked="SB_ChangeEmail_Clicked"/>
+                </VerticalStackLayout>
             </dxco:DXPopup>
 
             <templates:DefaultActivityIndicator />

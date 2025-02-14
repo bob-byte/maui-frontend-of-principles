@@ -22,11 +22,15 @@ public partial class ProfileView : ContentPageBase
     private void LoadLocalizationData()
     {
         L_Profile.Text = LocStrings.Profile;
+        L_Email.Text = LocStrings.Email;
         TE_UserName.LabelText = LocStrings.UserName;
         ME_MainSlogan.LabelText = LocStrings.MainSlogan;
         ME_Mision.LabelText = LocStrings.Mission;
+        ME_Email.LabelText = LocStrings.Email;
         SB_Cancel.Text = LocStrings.Cancel;
         SB_Save.Text = LocStrings.Save;
+        L_CantEdit.Text = LocStrings.FieldIsNotEditable;
+        SB_ChangeEmail.Text = LocStrings.OK;
     }
 
     void TRG_UserName_Focused( object sender, FocusEventArgs e )
@@ -105,5 +109,16 @@ public partial class ProfileView : ContentPageBase
     private void B_Ok_Clicked( object sender, EventArgs e )
     {
         DXP_Tip.IsOpen = false;
+    }
+
+    private void ME_Email_Focused( object sender, FocusEventArgs e )
+    {
+        ME_Email.Unfocus();
+        DXP_ChangeEmail.IsOpen = true;
+    }
+
+    private void SB_ChangeEmail_Clicked( object sender, EventArgs e )
+    {
+        DXP_ChangeEmail.IsOpen = false;
     }
 }

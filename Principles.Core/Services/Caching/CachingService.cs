@@ -4,7 +4,7 @@ namespace Principles.Core.Services;
 //TODO: use Redis DB to store data
 public class CachingService : ICachingService
 {
-    public string StoredValue( string key )
+    public string GetStoredValue( string key )
     {
         string result = Preferences.Get( key, defaultValue: string.Empty )!;
         return result;
