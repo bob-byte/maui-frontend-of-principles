@@ -236,27 +236,35 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         UserName.Validations.Add( new IsNotNullOrWhiteSpaceRule { ValidationMessage = LocStrings.RequiredErrorText } );
     }
 
-    protected virtual async Task UiBusyFor( Func<Task> unitOfWork, bool displayAlertOnException = true )
+    protected async Task UiBusyFor( Func<Task> unitOfWork )
     {
         IsBusy = true;
+        
+        await ExecuteWithRetryAsync( unitOfWork );
+        
+        IsBusy = false;
+    }
 
+    /// <summary>
+    /// Executes some async action while it won't be finished without exception or user cancel it execution after fail
+    /// </summary>
+    protected async Task ExecuteWithRetryAsync( Func<Task> action )
+    {
         bool doTryAgain;
 
         do
         {
             try
             {
-                await unitOfWork();
+                await action();
                 doTryAgain = false;
             }
             catch (Exception ex)
             {
-                doTryAgain = displayAlertOnException && await DoRetryOperationOnErrorAsync( ex );
+                doTryAgain = await DoRetryOperationOnErrorAsync( ex );
             }
         }
         while ( doTryAgain );
-
-        IsBusy = false;
     }
 
     protected async Task<bool> DoRetryOperationOnErrorAsync( Exception ex )

@@ -812,11 +812,9 @@ public partial class EditHabitView : ContentPageBase
 
     private void GoalsBottomSheet_OnStateChanged( object? sender, ValueChangedEventArgs<BottomSheetState> e )
     {
-#if IOS
         if (e.NewValue == BottomSheetState.Hidden)
         {
             ME_HabitGoal.Unfocus();
         }
-#endif
     }
 }

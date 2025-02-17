@@ -55,12 +55,22 @@ public partial class StartupViewModel : BaseViewModel
         try
         {
             await m_googleAuthService.AuthorizeAsync();
-            await m_reminderService.TryToRecoverAllUserRemindersAsync();
-            await Navigation.GoToInitialViewAsync();
         }
         catch (Exception ex)
         {
             await HandleExceptionWhenGoogleAuthAsync( ex ).DefaultConfigureAwait();
+            return;
+        }
+
+        await ExecuteWithRetryAsync( m_reminderService.TryToRecoverAllUserRemindersAsync );
+        
+        try
+        {
+            await Navigation.GoToInitialViewAsync();
+        }
+        catch(Exception ex)
+        {
+            LoggingService.LogError( ex, ex.Message );
         }
     }
 
@@ -79,12 +89,12 @@ public partial class StartupViewModel : BaseViewModel
         else if (ex is not TaskCanceledException)
         {
             errorMsg = LocStrings.SomethingWentWrongWhenUserAuthsUsingExternalService;
+            LoggingService.LogError( ex, ex.Message );
         }
-            
+        
         bool doShowAlert = !string.IsNullOrWhiteSpace( errorMsg );
         if (doShowAlert)
         {
-            LoggingService.LogError( ex, ex.Message );
             await DialogService.ShowErrorAsync( errorMsg! );
         }
     }
@@ -94,20 +104,23 @@ public partial class StartupViewModel : BaseViewModel
     {
         try
         {
-            if (DeviceInfo.Platform == DevicePlatform.iOS && DeviceInfo.Version.Major >= 13)
-            {
-                await m_appleAuthService.AuthorizeAsync();
-                await m_reminderService.TryToRecoverAllUserRemindersAsync();
-                await Navigation.GoToInitialViewAsync();
-            }
-            else
-            {
-                await DialogService.ShowErrorAsync( LocStrings.AppleAuthIsNotSupportedForCurrentDevice );
-            }
+            await m_appleAuthService.AuthorizeAsync();
         }
         catch (Exception ex)
         {
             await HandleExceptionWhenAppleAuthAsync( ex ).DefaultConfigureAwait();
+            return;
+        }
+
+        await ExecuteWithRetryAsync( m_reminderService.TryToRecoverAllUserRemindersAsync );
+
+        try
+        {
+            await Navigation.GoToInitialViewAsync();
+        }
+        catch(Exception ex)
+        {
+            LoggingService.LogError( ex, ex.Message );
         }
     }
 
@@ -116,8 +129,6 @@ public partial class StartupViewModel : BaseViewModel
         bool isCancelledByUser = ex.Message.Contains( "1001" );
         if (!isCancelledByUser)
         {
-            LoggingService.LogError( ex, ex.Message );
-
             string? errorMsg = null;
                 
             if (ex is TimeoutException || ex.InnerException is TimeoutException)
@@ -131,6 +142,7 @@ public partial class StartupViewModel : BaseViewModel
             else if (ex is not TaskCanceledException)
             {
                 errorMsg = LocStrings.SomethingWentWrongWhenUserAuthsUsingExternalService;
+                LoggingService.LogError( ex, ex.Message );
             }
                 
             bool doShowAlert = !string.IsNullOrWhiteSpace( errorMsg );

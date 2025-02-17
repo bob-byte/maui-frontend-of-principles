@@ -529,7 +529,7 @@ public partial class EditHabitViewModel : BaseViewModel
     private async Task ReloadRecommendedHabitsAsync( Action afterAction )
     {
         IsRecommendedHabitsLoading = true;
-
+        
         bool doTryAgain;
 
         do

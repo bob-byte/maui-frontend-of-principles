@@ -84,18 +84,21 @@ public partial class ProfileViewModel : BaseViewModel
 
         if (isSuccess)
         {
-            string oldMission = (string)Mission!.Clone();
+            string? oldMission = Mission is null ? null : (string)Mission!.Clone();
 
             Mission = newValue;
             CachingService.SetForever( CacheKeys.USER_MISSION, Mission );
 
-            IList<NotificationRequest> notifications =
-                await LocalNotificationCenter.Current.GetPendingNotificationList();
-
-            foreach (NotificationRequest? notification in notifications.Where( n => n.Title == oldMission ))
+            if (!string.IsNullOrWhiteSpace( oldMission ))
             {
-                notification.Title = newValue;
-                await m_reminderService.SaveAsync( notification );
+                IList<NotificationRequest> notifications =
+                    await LocalNotificationCenter.Current.GetPendingNotificationList();
+
+                foreach (NotificationRequest? notification in notifications.Where( n => n.Title == oldMission ))
+                {
+                    notification.Title = newValue;
+                    await m_reminderService.SaveAsync( notification );
+                }
             }
 
             NotifyUserInfoChanged();
