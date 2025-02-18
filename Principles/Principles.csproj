@@ -21,6 +21,7 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net9.0-android'">21.0</SupportedOSPlatformVersion>
 		<ApplicationTitle>Principles</ApplicationTitle>
+		<Configurations>Debug;Release;LocalDebug</Configurations>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -99,6 +100,7 @@
     </PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="appsettings.Development.json" />
 	  <None Remove="Platforms\Android\Resources\values-ru\colors.xml" />
 	  <None Remove="Platforms\Android\Resources\values-ru\Strings.xml" />
 	  <None Remove="Platforms\Android\Resources\values-ru\styles.xml" />
@@ -234,6 +236,11 @@
 	  <BundleResource Include="Platforms\iOS\Resources\loc\uk.lproj\InfoPlist.strings" />
 	</ItemGroup>
 	<ItemGroup>
+	  <EmbeddedResource Include="appsettings.Development.json">
+	    <DependentUpon>appsettings.json</DependentUpon>
+	  </EmbeddedResource>
+	</ItemGroup>
+	<ItemGroup>
 	  <ProjectReference Include="..\Principles.Core\Principles.Core.csproj" />
 	</ItemGroup>
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
@@ -243,6 +250,10 @@
 		<EmbeddedResource Include="appsettings.json" />
 	</ItemGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+      <WarningLevel>4</WarningLevel>
+      <NoWarn>1701;1702;CS1573;CS1591;CS8632</NoWarn>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LocalDebug|AnyCPU'">
       <WarningLevel>4</WarningLevel>
       <NoWarn>1701;1702;CS1573;CS1591;CS8632</NoWarn>
     </PropertyGroup>
