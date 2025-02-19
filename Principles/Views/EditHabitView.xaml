@@ -399,8 +399,8 @@
                                                       StartIcon="clock" />
 
                                         <HorizontalStackLayout HorizontalOptions="Start">
-                                            <Switch x:Name="S_IsReminderEnabled"
-                                                    Margin="{OnPlatform iOS='0,5,0,0'}" />
+                                            <dx:DXSwitch x:Name="S_IsReminderEnabled"
+                                                         Margin="{OnPlatform iOS='0,5,0,0'}" />
                                             <Label Text="{x:Static loc:LocStrings.Enable}"
                                                    Margin="3,0,0,0"
                                                    TextColor="{StaticResource LightNormalText}"

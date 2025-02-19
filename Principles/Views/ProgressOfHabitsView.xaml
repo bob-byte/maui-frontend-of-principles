@@ -214,7 +214,7 @@
                                   TimeSpan="{Binding ReminderReport.Time}" />
 
                     <HorizontalStackLayout HorizontalOptions="Start">
-                        <Switch IsToggled="{Binding ReminderReport.IsEnabled}" />
+                        <dx:DXSwitch IsChecked="{Binding ReminderReport.IsEnabled}" />
                         <Label x:Name="L_Enable"
                                Margin="3,0,0,0"
                                TextColor="{StaticResource LightNormalText}"

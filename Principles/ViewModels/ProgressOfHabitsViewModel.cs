@@ -412,6 +412,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
         if (!ReminderReport.IsEnabled && ReminderReport.UserNotificationRequestId != 0)
         {
             LocalNotificationCenter.Current.Cancel( ReminderReport.UserNotificationRequestId );
+            closePopup();
             return;
         }
 
