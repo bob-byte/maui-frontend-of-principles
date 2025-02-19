@@ -25,7 +25,7 @@ public partial class UpdatePopupViewModel : BaseViewModel
 
         try
         {
-            string language = CultureInfo.CurrentUICulture.Name;
+            string language = LocManager.CurrentCulture.Name;
 
             m_appVersionInfo = await m_versionCheckerService.GetAppVersionAsync( language );
             VersionDescription = m_appVersionInfo.VersionDescription;

@@ -14,6 +14,8 @@ namespace Principles
         }
 
         public static LocalizationResourceManager Instance { get; } = new();
+        
+        public CultureInfo CurrentCulture => LocStrings.Culture;
 
         public string? this[string resourceKey]
             => LocStrings.ResourceManager.GetString( resourceKey, LocStrings.Culture );
