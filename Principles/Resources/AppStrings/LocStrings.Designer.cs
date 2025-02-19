@@ -1478,5 +1478,11 @@ namespace Principles.Resources.AppStrings {
                 return ResourceManager.GetString("ChooseLanguage", resourceCulture);
             }
         }
+        
+        internal static string FieldIsNotEditable {
+            get {
+                return ResourceManager.GetString("FieldIsNotEditable", resourceCulture);
+            }
+        }
     }
 }

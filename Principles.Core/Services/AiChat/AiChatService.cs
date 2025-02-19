@@ -64,25 +64,25 @@ public class AiChatService : BaseRemoteService, IAiChatService
         systemMessageBuilder.Append( "You are a self-development assistant, but you can answer at any question. You have to support the user in their quest to become better and help them identify their habits. You should also provide information on how to better stick to them and become better every day in all areas of the user's life. But don't ask current user habits and don't tell user that he or she should strive for perfection." );
 
         string newLine = Environment.NewLine;
-        string userGender = m_cachingService.StoredValue( CacheKeys.USER_GENDER );
+        string userGender = m_cachingService.GetStoredValue( CacheKeys.USER_GENDER );
         if (!string.IsNullOrWhiteSpace( userGender ))
         {
             systemMessageBuilder.Append( $"{newLine}User gender is {userGender}." );
         }
 
-        string userName = m_cachingService.StoredValue( CacheKeys.USER_NAME );
+        string userName = m_cachingService.GetStoredValue( CacheKeys.USER_NAME );
         if (!string.IsNullOrWhiteSpace( userName ))
         {
             systemMessageBuilder.Append( $"{newLine}User name is \"{userName}\". You should use his/her name frequently." );
         }
 
-        string userMission = m_cachingService.StoredValue( CacheKeys.USER_MISSION );
+        string userMission = m_cachingService.GetStoredValue( CacheKeys.USER_MISSION );
         if (!string.IsNullOrWhiteSpace( userMission ))
         {
             systemMessageBuilder.Append( $"{newLine}User mission is \"{userMission}\"." );
         }
 
-        string userMainSlogan = m_cachingService.StoredValue( CacheKeys.USER_MAIN_SLOGAN );
+        string userMainSlogan = m_cachingService.GetStoredValue( CacheKeys.USER_MAIN_SLOGAN );
         if (!string.IsNullOrWhiteSpace( userMainSlogan ))
         {
             systemMessageBuilder.Append( $"{newLine}User main slogan is: \"{userMainSlogan}\"." );

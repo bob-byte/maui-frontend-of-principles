@@ -834,4 +834,7 @@
   <data name="ChooseLanguage" xml:space="preserve">
     <value>Оберіть мову</value>
   </data>
+  <data name="FieldIsNotEditable" xml:space="preserve">
+    <value>Це поле не доступне для редагування.</value>
+  </data>
 </root>

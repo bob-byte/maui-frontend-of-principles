@@ -21,6 +21,9 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     private string? m_mission;
 
     [ObservableProperty]
+    private string m_email;
+
+    [ObservableProperty]
     private ImageSource? m_userIcon;
 
     [ObservableProperty]
@@ -78,6 +81,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
                 Gender = newUserInfo.Gender;
                 Mission = newUserInfo.Mission;
                 MainSlogan = newUserInfo.MainSlogan;
+                Email = newUserInfo.Email;
             } );
         }
     }
@@ -140,6 +144,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
 
         MainSlogan = string.Empty;
         Mission = string.Empty;
+        Email = string.Empty;
         Gender = 0;
         UserIcon = null;
     }
@@ -187,37 +192,45 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     {
         if (IsLoggedIn)
         {
-            UserName.Value = CachingService.StoredValue( CacheKeys.USER_NAME );
+            Email = CachingService.GetStoredValue( CacheKeys.USER_EMAIL );
 
             UserInfo userInfo;
-            if (string.IsNullOrEmpty( UserName.Value ))
+            
+            //we use Email to check whether user info is stored, because it (email) was recently added
+            if (string.IsNullOrEmpty( Email ))
             {
                 string url = $"{UrlBuilder.Profile}";
                 userInfo = await RequestProvider.GetAsync<UserInfo>( url, SettingsService.AuthAccessToken );
                 UserName.Value = userInfo.Name;
                 MainSlogan = userInfo.MainSlogan;
                 Mission = userInfo.Mission;
+                Email = userInfo.Email;
                 Gender = userInfo.Gender;
-
+                
                 //Gender.Man is default value, so OnGenderChanged won't be called is Gender = Gender.Man
                 if (Gender == Gender.Man)
                 {
                     CachingService.SetForever( CacheKeys.USER_GENDER, Gender.ToString() );
                 }
+
+                CachingService.SetForever( CacheKeys.USER_EMAIL, Email );
             }
             else
             {
                 userInfo = new UserInfo();
+                userInfo.Email = Email;
+                
+                UserName.Value = CachingService.GetStoredValue( CacheKeys.USER_NAME );
                 userInfo.Name = UserName.Value;
 
-                MainSlogan = CachingService.StoredValue( CacheKeys.USER_MAIN_SLOGAN );
+                MainSlogan = CachingService.GetStoredValue( CacheKeys.USER_MAIN_SLOGAN );
                 userInfo.MainSlogan = MainSlogan;
 
-                Mission = CachingService.StoredValue( CacheKeys.USER_MISSION );
+                Mission = CachingService.GetStoredValue( CacheKeys.USER_MISSION );
                 userInfo.Mission = Mission;
 
                 //if gender is not parsed then it will set zero value
-                _ = Enum.TryParse( CachingService.StoredValue( CacheKeys.USER_GENDER ), out Gender gender );
+                _ = Enum.TryParse( CachingService.GetStoredValue( CacheKeys.USER_GENDER ), out Gender gender );
                 Gender = gender;
                 userInfo.Gender = Gender;
             }

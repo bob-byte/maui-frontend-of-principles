@@ -711,7 +711,7 @@ public partial class EditHabitView : ContentPageBase
                 }
                 else
                 {
-                    string mission = ViewModel.CachingService.StoredValue( CacheKeys.USER_MISSION );
+                    string mission = ViewModel.CachingService.GetStoredValue( CacheKeys.USER_MISSION );
                     ME_ReminderTitle.Text = string.IsNullOrWhiteSpace( mission ) ? LocStrings.BecomeTruePersonalityTitle : mission;
                 }
             }
