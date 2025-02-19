@@ -192,10 +192,12 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     {
         if (IsLoggedIn)
         {
-            UserName.Value = CachingService.GetStoredValue( CacheKeys.USER_NAME );
+            Email = CachingService.GetStoredValue( CacheKeys.USER_EMAIL );
 
             UserInfo userInfo;
-            if (string.IsNullOrEmpty( UserName.Value ))
+            
+            //we use Email to check whether user info is stored, because it (email) was recently added
+            if (string.IsNullOrEmpty( Email ))
             {
                 string url = $"{UrlBuilder.Profile}";
                 userInfo = await RequestProvider.GetAsync<UserInfo>( url, SettingsService.AuthAccessToken );
@@ -216,6 +218,9 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
             else
             {
                 userInfo = new UserInfo();
+                userInfo.Email = Email;
+                
+                UserName.Value = CachingService.GetStoredValue( CacheKeys.USER_NAME );
                 userInfo.Name = UserName.Value;
 
                 MainSlogan = CachingService.GetStoredValue( CacheKeys.USER_MAIN_SLOGAN );
@@ -223,9 +228,6 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
 
                 Mission = CachingService.GetStoredValue( CacheKeys.USER_MISSION );
                 userInfo.Mission = Mission;
-
-                Email = CachingService.GetStoredValue( CacheKeys.USER_EMAIL );
-                userInfo.Email = Email;
 
                 //if gender is not parsed then it will set zero value
                 _ = Enum.TryParse( CachingService.GetStoredValue( CacheKeys.USER_GENDER ), out Gender gender );

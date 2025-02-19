@@ -2,41 +2,41 @@
 <views:ContentPageBase x:Class="Principles.Views.ProfileView"
                        xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                       xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
-                       xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
                        xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
+                       xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
                        xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
-                       xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+                       xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
                        xmlns:loc="clr-namespace:Principles.Resources.AppStrings"
-                       xmlns:views="clr-namespace:Principles.Views"
-                       xmlns:vm="clr-namespace:Principles.ViewModels"
                        xmlns:models="clr-namespace:Principles.Core.Models;assembly=Principles.Core"
                        xmlns:templates="clr-namespace:Principles.Views.Templates"
+                       xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+                       xmlns:views="clr-namespace:Principles.Views"
+                       xmlns:vm="clr-namespace:Principles.ViewModels"
                        x:DataType="vm:ProfileViewModel">
     <Shell.TitleView>
-        <Grid VerticalOptions="CenterAndExpand"
-              Margin="0,0,5,0"
-              ColumnDefinitions="Auto, *, Auto">
+        <Grid Margin="0,0,5,0"
+              ColumnDefinitions="Auto, *, Auto"
+              VerticalOptions="CenterAndExpand">
             <Label x:Name="L_Profile"
-                   VerticalOptions="Center"
-                   VerticalTextAlignment="Center"
+                   HeightRequest="50"
+                   FontAttributes="Bold"
+                   FontSize="20"
                    HorizontalOptions="Start"
                    TextColor="{StaticResource TitleTextColor}"
-                   FontSize="20"
-                   FontAttributes="Bold"
-                   HeightRequest="50"
+                   VerticalOptions="Center"
+                   VerticalTextAlignment="Center"
                    Grid.Column="0" />
             <dx:DXImage Source="settings"
-                        VerticalOptions="Center"
-                        HorizontalOptions="End"
-                        TintColor="{StaticResource TitleTextColor}"
-                        Margin="65,0,0,0"
                         WidthRequest="40"
                         HeightRequest="40"
+                        Margin="65,0,0,0"
+                        HorizontalOptions="End"
+                        TintColor="{StaticResource TitleTextColor}"
+                        VerticalOptions="Center"
                         Grid.Column="2">
                 <dx:DXImage.GestureRecognizers>
-                    <TapGestureRecognizer NumberOfTapsRequired="1"
-                                          Command="{Binding GoToSettingsCommand}" />
+                    <TapGestureRecognizer Command="{Binding GoToSettingsCommand}"
+                                          NumberOfTapsRequired="1" />
                 </dx:DXImage.GestureRecognizers>
             </dx:DXImage>
         </Grid>
@@ -45,8 +45,8 @@
     <ScrollView>
         <VerticalStackLayout Padding="10,0,10,0">
 
-            <Grid ColumnSpacing="10"
-                  x:Name="G_UserIcon">
+            <Grid x:Name="G_UserIcon"
+                  ColumnSpacing="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50" />
                     <ColumnDefinition />
@@ -54,77 +54,77 @@
 
                 <Grid Margin="0,0,0,0"
                       Padding="0"
-                      RowSpacing="0"
                       ColumnSpacing="0"
+                      RowSpacing="0"
                       Grid.Column="0">
-                    <Frame BackgroundColor="{StaticResource DarkEditControlBackColor}"
+                    <Frame WidthRequest="48"
+                           HeightRequest="48"
                            Margin="0"
                            Padding="0"
-                           WidthRequest="48"
-                           HeightRequest="48"
-                           VerticalOptions="Center"
+                           BackgroundColor="{StaticResource DarkEditControlBackColor}"
+                           CornerRadius="24"
+                           HasShadow="False"
                            HorizontalOptions="Center"
                            IsClippedToBounds="True"
-                           HasShadow="False"
-                           CornerRadius="24">
+                           VerticalOptions="Center">
                         <Image Source="{Binding Gender, Converter={StaticResource GenderToIcon}}" />
                     </Frame>
 
-                    <Ellipse Fill="Transparent"
+                    <Ellipse WidthRequest="50"
+                             HeightRequest="50"
+                             Fill="Transparent"
+                             HorizontalOptions="Center"
                              Stroke="White"
                              StrokeThickness="2"
-                             WidthRequest="50"
-                             HeightRequest="50"
-                             HorizontalOptions="Center"
                              VerticalOptions="Center" />
                 </Grid>
 
-                <dxe:TextEdit Text="{Binding UserName.Value}"
-                              x:Name="TE_UserName"
+                <dxe:TextEdit x:Name="TE_UserName"
+                              Text="{Binding UserName.Value}"
+                              Margin="0,2"
                               ClearIconVisibility="Never"
-                              IsReadOnly="True"
                               EndIcon="check_third"
                               EndIconColor="{StaticResource Primary}"
-                              IsEndIconVisible="{Binding UserName.IsValid}"
                               ErrorColor="{StaticResource Error}"
-                              TextChangedCommand="{Binding ValidateUserNameCommand}"
-                              HasError="{Binding UserName.IsValid,
-                                                 Converter={StaticResource IsFalse}}"
                               ErrorText="{Binding UserName.Errors,
                                                   Converter={StaticResource FirstValidationError}}"
-                              Margin="0,2"
-                              Grid.Column="1"
-                              Focused="TRG_UserName_Focused" />
+                              Focused="TRG_UserName_Focused"
+                              HasError="{Binding UserName.IsValid,
+                                                 Converter={StaticResource IsFalse}}"
+                              IsEndIconVisible="{Binding UserName.IsValid}"
+                              IsReadOnly="True"
+                              TextChangedCommand="{Binding ValidateUserNameCommand}"
+                              Grid.Column="1" />
             </Grid>
 
-            <dxe:MultilineEdit Text="{Binding Email}"
-                               x:Name="ME_Email"
+            <dxe:MultilineEdit x:Name="ME_Email"
+                               Text="{Binding Email}"
+                               Margin="0,2"
                                ClearIconVisibility="Never"
-                               IsReadOnly="True"
                                EndIcon="check_third"
                                EndIconColor="{StaticResource Primary}"
-                               Margin="0,2"
-                               Focused="ME_Email_Focused" />
+                               Focused="ME_Email_Focused"
+                               IsReadOnly="True" />
 
-            <dxe:MultilineEdit Text="{Binding MainSlogan}"
-                               x:Name="ME_MainSlogan"
+            <dxe:MultilineEdit x:Name="ME_MainSlogan"
+                               Text="{Binding MainSlogan}"
+                               Margin="0,2"
                                ClearIconVisibility="Never"
-                               IsReadOnly="True"
                                EndIcon="info"
                                EndIconColor="{StaticResource Primary}"
                                EndIconCommand="{Binding ShowSnackbarForMainSloganCommand}"
-                               Margin="0,2"
-                               Focused="TGR_MainSlogan_Focused" />
+                               Focused="TGR_MainSlogan_Focused"
+                               IsReadOnly="True" />
 
-            <dxe:MultilineEdit Text="{Binding Mission}"
-                               x:Name="ME_Mision"
+            <dxe:MultilineEdit x:Name="ME_Mision"
+                               Text="{Binding Mission}"
+                               Margin="0,2"
                                ClearIconVisibility="Never"
-                               IsReadOnly="True"
                                EndIcon="info"
                                EndIconColor="{StaticResource Primary}"
                                EndIconCommand="{Binding ShowSnackbarForMissionCommand}"
-                               Margin="0,2"
-                               Focused="TGR_Mission_Focused" />
+                               Focused="TGR_Mission_Focused"
+                               IsReadOnly="True" />
 
             <dxco:DXPopup x:Name="DXP_Prompt"
                           AllowAnimation="True"
@@ -139,58 +139,58 @@
                                Style="{StaticResource CentralHeader}" />
                     </HorizontalStackLayout>
                     <dxe:MultilineEdit x:Name="ME_PromptResult"
-                                       ClearIconVisibility="Never"
                                        Margin="10"
-                                       TextFontSize="16"
+                                       ClearIconVisibility="Never"
                                        EndIcon="info"
                                        EndIconClicked="EI_Tip_Clicked"
                                        EndIconColor="{StaticResource Primary}"
-                                       IconVerticalAlignment="Center" />
+                                       IconVerticalAlignment="Center"
+                                       TextFontSize="16" />
                     <HorizontalStackLayout HorizontalOptions="End">
                         <dxco:SimpleButton x:Name="SB_Cancel"
-                                           BackgroundColor="{StaticResource CancelButtonColor}"
-                                           FontSize="16"
-                                           Margin="0,0,5,5"
+                                           Clicked="SB_Cancel_Clicked"
                                            Icon="close"
                                            IconHorizontalPosition="Left"
-                                           Clicked="SB_Cancel_Clicked" />
-                        <dxco:SimpleButton x:Name="SB_Save"
-                                           Style="{StaticResource PrimaryButton}"
-                                           FontSize="16"
                                            Margin="0,0,5,5"
-                                           IconHorizontalPosition="Left"
+                                           BackgroundColor="{StaticResource CancelButtonColor}"
+                                           FontSize="16" />
+                        <dxco:SimpleButton x:Name="SB_Save"
+                                           Clicked="SB_Save_Clicked"
+                                           Style="{StaticResource PrimaryButton}"
                                            Icon="check_second"
-                                           Clicked="SB_Save_Clicked" />
+                                           IconHorizontalPosition="Left"
+                                           Margin="0,0,5,5"
+                                           FontSize="16" />
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
             </dxco:DXPopup>
 
 
             <dxco:DXPopup x:Name="DXP_Tip"
+                          VerticalAlignment="Bottom"
                           AllowAnimation="True"
                           AllowScrim="True"
                           AllowShadow="True"
+                          BackgroundColor="{StaticResource LightPrimary}"
                           CloseOnScrimTap="True"
-                          MinimumWidthRequest="200"
-                          VerticalOptions="End"
-                          VerticalAlignment="Bottom"
                           CornerRadius="5"
-                          BackgroundColor="{StaticResource LightPrimary}">
+                          MinimumWidthRequest="200"
+                          VerticalOptions="End">
 
                 <Grid ColumnDefinitions="85*, 15*">
                     <Label x:Name="L_TipText"
                            Padding="10"
-                           Grid.Column="0"
+                           TextColor="Black"
                            VerticalOptions="Center"
-                           TextColor="Black" />
+                           Grid.Column="0" />
                     <Button Text="{Binding LocalizationResourceManager[OK],
                                            Mode=OneWay}"
+                            Clicked="B_Ok_Clicked"
                             BackgroundColor="Transparent"
-                            TextColor="White"
-                            Grid.Column="1"
                             HorizontalOptions="End"
+                            TextColor="White"
                             VerticalOptions="Center"
-                            Clicked="B_Ok_Clicked" />
+                            Grid.Column="1" />
                 </Grid>
             </dxco:DXPopup>
 
@@ -204,16 +204,16 @@
                     <Label x:Name="L_Email"
                            Style="{StaticResource CentralHeader}" />
                     <Label x:Name="L_CantEdit"
-                           VerticalOptions="Center"
-                           Margin="10,5,0,0"
-                           FontSize="20" />
+                           Margin="10,10,0,0"
+                           FontSize="20"
+                           VerticalOptions="Center" />
                     <dxco:SimpleButton x:Name="SB_ChangeEmail"
+                                       Clicked="SB_ChangeEmail_Clicked"
                                        Style="{StaticResource PrimaryButton}"
+                                       Margin="0,10,10,10"
                                        FontSize="16"
-                                       Margin="0,0,10,10"
                                        HorizontalOptions="End"
-                                       VerticalOptions="Center"
-                                       Clicked="SB_ChangeEmail_Clicked"/>
+                                       VerticalOptions="Center" />
                 </VerticalStackLayout>
             </dxco:DXPopup>
 
