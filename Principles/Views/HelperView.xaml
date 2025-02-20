@@ -60,8 +60,11 @@
         </Grid>
     </Shell.TitleView>
     <dx:SafeKeyboardAreaView>
-        <Grid BackgroundColor="{StaticResource Primary}"
-              RowDefinitions="0, *, 16, Auto, 16">
+
+        <Grid x:Name="G_AllHelperChat"
+              BackgroundColor="{StaticResource Primary}"
+              RowDefinitions="0, *, 16, Auto, 16"
+              SizeChanged="G_AllHelperChat_SizeChanged">
             <Border Padding="0,10,0,30"
                     BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColorLight},
                                                       Dark={StaticResource SurfaceColorDark}}"
@@ -119,7 +122,6 @@
                                                                iOS='27,23,13,16'}"
                                        ClearIconVisibility="Never"
                                        CornerRadius="30"
-                                       Focused="E_Prompt_Focused"
                                        MaxLineCount="6"
                                        PlaceholderColor="#3F3F3F"
                                        ReturnType="Default"
@@ -127,8 +129,7 @@
                                                                    Dark={StaticResource DarkNormalText}}"
                                        TextFontAttributes="Italic"
                                        TextFontSize="13"
-                                       TextVerticalAlignment="Center"
-                                       Unfocused="E_Prompt_Unfocused" />
+                                       TextVerticalAlignment="Center" />
                 <skia:SKLottieView Source="loading.json"
                                    Margin="0,0,6,0"
                                    Grid.Column="0"
@@ -149,7 +150,8 @@
                                   HeightRequest="{OnPlatform iOS=52,
                                                              Android=55}"
                                   IconColor="#3F3F3F"
-                                  IsVisible="{Binding IsBusy, Converter={StaticResource IsFalse}}"
+                                  IsVisible="{Binding IsBusy,
+                                                      Converter={StaticResource IsFalse}}"
                                   WidthRequest="{OnPlatform iOS=52,
                                                             Android=55}"
                                   Grid.Row="0" />

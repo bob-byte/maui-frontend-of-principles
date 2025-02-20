@@ -7,7 +7,10 @@ namespace Principles.Views;
 public partial class HelperView : ContentPageBase
 {
     private readonly ILockDeviceOrientation m_deviceOrientationService;
-    
+#if ANDROID
+    private double m_previousHeight = 0;
+#endif
+
     public HelperView(HelperViewModel viewModel)
 	{
 		BindingContext = viewModel;
@@ -38,8 +41,6 @@ public partial class HelperView : ContentPageBase
         base.OnAppearing();
 #if ANDROID
         m_deviceOrientationService.LockOrientation( DeviceOrientation.Portrait );
-        Microsoft.Maui.Controls.Application.Current.On<Microsoft.Maui.Controls.PlatformConfiguration.Android>()
-            .UseWindowSoftInputModeAdjust( WindowSoftInputModeAdjust.Resize );
 #endif
     }
 
@@ -48,8 +49,6 @@ public partial class HelperView : ContentPageBase
         base.OnDisappearing();
 #if ANDROID
         m_deviceOrientationService.UnlockOrientation();
-        Microsoft.Maui.Controls.Application.Current.On<Microsoft.Maui.Controls.PlatformConfiguration.Android>()
-           .UseWindowSoftInputModeAdjust( WindowSoftInputModeAdjust.Pan );
 #endif
     }
 
@@ -72,11 +71,6 @@ public partial class HelperView : ContentPageBase
     {
         KeyboardHelper.HideKeyboard();
         E_Prompt.Unfocus();
-        
-#if ANDROID
-        Shell.SetTabBarIsVisible( this, true );
-#endif
-
         await AskQuestionAsync();
     }
 
@@ -113,17 +107,27 @@ public partial class HelperView : ContentPageBase
         }
     }
 
-    private void E_Prompt_Focused( object sender, FocusEventArgs e )
-    {
 #if ANDROID
-        Shell.SetTabBarIsVisible( this, false );
-#endif
-    }
+    private void G_AllHelperChat_SizeChanged( object sender, EventArgs e )
+    {
+        if (sender is Grid grid)
+        {
+            double newHeight = grid.Height;
 
-    private void E_Prompt_Unfocused( object sender, FocusEventArgs e )
-    {
-#if ANDROID
-        Shell.SetTabBarIsVisible( this, true );
-#endif
+            if (m_previousHeight > 0)
+            {
+                if (newHeight > m_previousHeight)
+                {
+                    Shell.SetTabBarIsVisible( this, true );
+                }
+                else if (newHeight < m_previousHeight)
+                {
+                    Shell.SetTabBarIsVisible( this, false );
+                }
+            }
+
+            m_previousHeight = newHeight;
+        }
     }
+#endif
 }
