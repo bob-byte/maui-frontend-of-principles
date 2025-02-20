@@ -41,8 +41,7 @@
                         Grid.Column="5"
                         HeightRequest="45"
                         HorizontalOptions="End"
-                        IsVisible="{Binding SelectedHabit,
-                                            Converter={StaticResource IsNull}}"
+                        IsVisible="{Binding SelectedHabit, Converter={StaticResource IsNull}}"
                         TintColor="{StaticResource TitleTextColor}"
                         VerticalOptions="Center"
                         WidthRequest="45">
@@ -58,8 +57,7 @@
                         Grid.Column="6"
                         HeightRequest="35"
                         HorizontalOptions="End"
-                        IsVisible="{Binding SelectedHabit,
-                                            Converter={StaticResource IsNull}}"
+                        IsVisible="{Binding SelectedHabit, Converter={StaticResource IsNull}}"
                         TintColor="{StaticResource TitleTextColor}"
                         VerticalOptions="Center"
                         WidthRequest="35">
@@ -73,8 +71,7 @@
                         Grid.Column="4"
                         HeightRequest="30"
                         HorizontalOptions="End"
-                        IsVisible="{Binding SelectedHabit,
-                                            Converter={StaticResource IsNotNull}}"
+                        IsVisible="{Binding SelectedHabit, Converter={StaticResource IsNotNull}}"
                         TintColor="{StaticResource TitleTextColor}"
                         VerticalOptions="Center"
                         WidthRequest="40">
@@ -89,8 +86,7 @@
                         Grid.Column="6"
                         HeightRequest="30"
                         HorizontalOptions="End"
-                        IsVisible="{Binding SelectedHabit,
-                                            Converter={StaticResource IsNotNull}}"
+                        IsVisible="{Binding SelectedHabit, Converter={StaticResource IsNotNull}}"
                         TintColor="{StaticResource TitleTextColor}"
                         VerticalOptions="Center"
                         WidthRequest="40">
@@ -117,7 +113,9 @@
                           IsHorizontalScrollBarVisible="False"
                           IsLoadMoreEnabled="False"
                           RowLongPressCommand="{OnPlatform iOS={Binding SelectRowCommand}}"
-                          SelectedItem="{Binding SelectedHabit}"
+                          SelectedItem="{OnPlatform iOS={Binding SelectedHabit}}"
+                          SelectionMode="{OnPlatform iOS=Single,
+                                                     Android=None}"
                           VerticalLineThickness="0">
             <dxg:DataGridView.ColumnHeaderAppearance>
                 <dxg:ColumnHeaderAppearance BackgroundColor="#f7f2f7" />
@@ -154,8 +152,7 @@
 
         <dx:DXStackLayout Orientation="Vertical"
                           HorizontalOptions="CenterAndExpand"
-                          IsVisible="{Binding UserHabits.Count,
-                                              Converter={StaticResource IsZero}}"
+                          IsVisible="{Binding UserHabits.Count, Converter={StaticResource IsZero}}"
                           ItemSpacing="10"
                           VerticalOptions="Start">
             <skia:SKLottieView Source="checks.json"
@@ -175,8 +172,7 @@
                    FontFamily="MonaSansMedium"
                    FontSize="14"
                    HorizontalTextAlignment="Center"
-                   IsVisible="{Binding IsBusy,
-                                       Converter={StaticResource IsFalse}}"
+                   IsVisible="{Binding IsBusy, Converter={StaticResource IsFalse}}"
                    TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
                                                Dark={StaticResource DarkNormalText}}" />
         </dx:DXStackLayout>

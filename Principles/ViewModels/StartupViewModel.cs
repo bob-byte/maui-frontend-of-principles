@@ -88,7 +88,7 @@ public partial class StartupViewModel : BaseViewModel
         }
         else if (ex is not TaskCanceledException)
         {
-            errorMsg = LocStrings.SomethingWentWrongWhenUserAuthsUsingExternalService;
+            errorMsg = LocStrings.SomethingWentWrong;
             LoggingService.LogError( ex, ex.Message );
         }
         
@@ -141,7 +141,7 @@ public partial class StartupViewModel : BaseViewModel
             }
             else if (ex is not TaskCanceledException)
             {
-                errorMsg = LocStrings.SomethingWentWrongWhenUserAuthsUsingExternalService;
+                errorMsg = LocStrings.SomethingWentWrong;
                 LoggingService.LogError( ex, ex.Message );
             }
                 
