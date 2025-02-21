@@ -9,7 +9,12 @@
        x:Name="Principles"
        Title="AppShell"
        Style="{StaticResource ShellStyle}"
-       ios:Page.UseSafeArea="true">
+       ios:Page.UseSafeArea="true"
+       Shell.TabBarBackgroundColor="{StaticResource Primary}"
+       Shell.TabBarForegroundColor="{StaticResource SecondaryLight}"
+       Shell.TabBarTitleColor="{StaticResource SecondaryLight}"
+       Shell.TabBarUnselectedColor="{StaticResource GrayColor}">
+
     <TabBar Route="main">
         <ShellContent x:Name="SC_Helper"
                       Icon="helper"

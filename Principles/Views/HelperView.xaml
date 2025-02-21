@@ -149,7 +149,8 @@
                                   HeightRequest="{OnPlatform iOS=52,
                                                              Android=55}"
                                   IconColor="#3F3F3F"
-                                  IsVisible="{Binding IsBusy, Converter={StaticResource IsFalse}}"
+                                  IsVisible="{Binding IsBusy,
+                                                      Converter={StaticResource IsFalse}}"
                                   WidthRequest="{OnPlatform iOS=52,
                                                             Android=55}"
                                   Grid.Row="0" />
@@ -169,6 +170,11 @@
                     </dx:DXImage.GestureRecognizers>
                 </dx:DXImage>
             </Grid>
+            <BoxView BackgroundColor="{StaticResource LightPrimary}"
+                     HeightRequest="1"
+                     Grid.Row="4"
+                     HorizontalOptions="Fill"
+                     VerticalOptions="End" />
         </Grid>
     </dx:SafeKeyboardAreaView>
 </v:ContentPageBase>
