@@ -16,23 +16,10 @@ public partial class HelperView : ContentPageBase
         m_deviceOrientationService = DependencyService.Get<ILockDeviceOrientation>();
 
         InitializeComponent();
-        LoadLocalizationData();
-
-        ViewModel.ReferenceMessenger.Register<NewCultureMessage>( this, ( sender, msg ) =>
-        {
-            LoadLocalizationData();
-        } );
 
         ViewModel.DisplayMessages.CollectionChanged += DisplayMessages_CollectionChanged;
     }
 
-    private void LoadLocalizationData()
-    {
-        L_TitleText.Text = LocStrings.ChatWithHelper;
-        L_ShortDescriptionOfAssistant.Text = LocStrings.SelfDevelopmentAssistantShortDescription;
-        E_Prompt.PlaceholderText = LocStrings.EnterText;
-    }
-    
     protected override void OnAppearing()
     {
         base.OnAppearing();

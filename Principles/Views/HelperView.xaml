@@ -35,6 +35,7 @@
                         SizeChanged="G_Title_SizeChanged"
                         TintColor="{StaticResource DarkIconColor}" />
             <Label x:Name="L_TitleText"
+                   Text="{Binding LocManager[ChatWithHelper]}"
                    FontAttributes="Bold"
                    FontFamily="MonaSansBold"
                    FontSize="20"
@@ -92,6 +93,7 @@
                                    RepeatCount="-1"
                                    Grid.Row="1" />
                 <Label x:Name="L_ShortDescriptionOfAssistant"
+                       Text="{Binding LocManager[SelfDevelopmentAssistantShortDescription]}"
                        Padding="15,0,15,0"
                        FontFamily="MonaSansMedium"
                        FontSize="13"
@@ -111,6 +113,7 @@
                   Grid.Row="3">
                 <editors:MultilineEdit x:Name="E_Prompt"
                                        Text="{Binding Prompt}"
+                                       PlaceholderText="{Binding LocManager[EnterText]}"
                                        BackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary},
                                                                          Dark={StaticResource DarkPrimary}}"
                                        BorderColor="{AppThemeBinding Light={StaticResource LightPrimary},
@@ -149,7 +152,8 @@
                                   HeightRequest="{OnPlatform iOS=52,
                                                              Android=55}"
                                   IconColor="#3F3F3F"
-                                  IsVisible="{Binding IsBusy, Converter={StaticResource IsFalse}}"
+                                  IsVisible="{Binding IsBusy,
+                                                      Converter={StaticResource IsFalse}}"
                                   WidthRequest="{OnPlatform iOS=52,
                                                             Android=55}"
                                   Grid.Row="0" />

@@ -18,6 +18,7 @@
               ColumnDefinitions="Auto, *, Auto"
               VerticalOptions="CenterAndExpand">
             <Label x:Name="L_Profile"
+                   Text="{Binding LocManager[Profile]}"
                    FontAttributes="Bold"
                    FontSize="20"
                    Grid.Column="0"
@@ -81,15 +82,18 @@
 
                 <dxe:TextEdit x:Name="TE_UserName"
                               Text="{Binding UserName.Value}"
+                              LabelText="{Binding LocManager[UserName]}"
                               Margin="0,2"
                               ClearIconVisibility="Never"
                               EndIcon="check_third"
                               EndIconColor="{StaticResource Primary}"
                               ErrorColor="{StaticResource Error}"
-                              ErrorText="{Binding UserName.Errors, Converter={StaticResource FirstValidationError}}"
+                              ErrorText="{Binding UserName.Errors,
+                                                  Converter={StaticResource FirstValidationError}}"
                               Focused="TRG_UserName_Focused"
                               Grid.Column="1"
-                              HasError="{Binding UserName.IsValid, Converter={StaticResource IsFalse}}"
+                              HasError="{Binding UserName.IsValid,
+                                                 Converter={StaticResource IsFalse}}"
                               IsEndIconVisible="{Binding UserName.IsValid}"
                               IsReadOnly="True"
                               TextChangedCommand="{Binding ValidateUserNameCommand}" />
@@ -97,6 +101,7 @@
 
             <dxe:MultilineEdit x:Name="ME_Email"
                                Text="{Binding Email}"
+                               LabelText="{Binding LocManager[Email]}"
                                Margin="0,2"
                                ClearIconVisibility="Never"
                                EndIcon="check_third"
@@ -106,6 +111,7 @@
 
             <dxe:MultilineEdit x:Name="ME_MainSlogan"
                                Text="{Binding MainSlogan}"
+                               LabelText="{Binding LocManager[MainSlogan]}"
                                Margin="0,2"
                                ClearIconVisibility="Never"
                                EndIcon="info"
@@ -116,6 +122,7 @@
 
             <dxe:MultilineEdit x:Name="ME_Mision"
                                Text="{Binding Mission}"
+                               LabelText="{Binding LocManager[Mission]}"
                                Margin="0,2"
                                ClearIconVisibility="Never"
                                EndIcon="info"
@@ -146,6 +153,7 @@
                                        TextFontSize="16" />
                     <HorizontalStackLayout HorizontalOptions="End">
                         <dxco:SimpleButton x:Name="SB_Cancel"
+                                           Text="{Binding LocManager[Cancel]}"
                                            Icon="close"
                                            Margin="0,0,5,5"
                                            BackgroundColor="{StaticResource CancelButtonColor}"
@@ -154,6 +162,7 @@
                                            IconHorizontalPosition="Left" />
                         <dxco:SimpleButton x:Name="SB_Save"
                                            Style="{StaticResource PrimaryButton}"
+                                           Text="{Binding LocManager[Save]}"
                                            Icon="check_second"
                                            Margin="0,0,5,5"
                                            Clicked="SB_Save_Clicked"
@@ -181,7 +190,8 @@
                            Grid.Column="0"
                            TextColor="Black"
                            VerticalOptions="Center" />
-                    <Button Text="{Binding LocalizationResourceManager[OK], Mode=OneWay}"
+                    <Button Text="{Binding LocalizationResourceManager[OK],
+                                           Mode=OneWay}"
                             BackgroundColor="Transparent"
                             Clicked="B_Ok_Clicked"
                             Grid.Column="1"
@@ -199,12 +209,15 @@
                           MinimumWidthRequest="300">
                 <VerticalStackLayout>
                     <Label x:Name="L_Email"
+                           Text="{Binding LocManager[Email]}"
                            Style="{StaticResource CentralHeader}" />
                     <Label x:Name="L_CantEdit"
+                           Text="{Binding LocManager[FieldIsNotEditable]}"
                            Margin="10,10,0,0"
                            FontSize="20"
                            VerticalOptions="Center" />
                     <dxco:SimpleButton x:Name="SB_ChangeEmail"
+                                       Text="{Binding LocManager[OK]}"
                                        Style="{StaticResource PrimaryButton}"
                                        Margin="0,10,10,10"
                                        Clicked="SB_ChangeEmail_Clicked"

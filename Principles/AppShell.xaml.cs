@@ -5,7 +5,7 @@ public partial class AppShell : Shell
     private readonly INavigationService m_navigationService;
     private readonly ISettingsService m_settingsService;
     public WeakReferenceMessenger ReferenceMessenger { get; }
-    public LocalizationResourceManager LocalizationResourceManager
+    public LocalizationResourceManager LocManager
         => LocalizationResourceManager.Instance;
 
     public AppShell( IServiceProvider serviceProvider )
@@ -15,20 +15,7 @@ public partial class AppShell : Shell
         m_settingsService = serviceProvider.GetRequiredService<ISettingsService>();
         InitRouting();
         InitializeComponent();
-        LoadLocalizationData();
         ReferenceMessenger = WeakReferenceMessenger.Default;
-
-        ReferenceMessenger.Register<NewCultureMessage>( this, ( sender, msg ) =>
-        {
-            LoadLocalizationData();
-        } );
-    }
-
-    private void LoadLocalizationData()
-    {
-        SC_Helper.Title = LocStrings.Helper;
-        SC_Progress.Title = LocStrings.Progress;
-        SC_Profile.Title = LocStrings.Profile;
     }
 
     protected override void OnHandlerChanged()
