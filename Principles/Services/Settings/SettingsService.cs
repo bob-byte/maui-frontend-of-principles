@@ -16,12 +16,18 @@ public class SettingsService : ISettingsService
             return result;
         }
     }
+    private const string ACCESS_TOKEN_KEY =
+#if LOCAL_DEBUG
+    "local_access_token";
+#else
+    "access_token";
+#endif
 
     public string? AuthAccessToken { get; private set; }
 
     public async Task<string> GetAuthAccessTokenAsync()
     {
-        string? token = await SecureStorage.GetAsync( key: "access_token" ).DefaultConfigureAwait();
+        string? token = await SecureStorage.GetAsync( key: ACCESS_TOKEN_KEY ).DefaultConfigureAwait();
 
         AuthAccessToken = token ?? string.Empty;
         return AuthAccessToken;
@@ -29,7 +35,7 @@ public class SettingsService : ISettingsService
 
     public async Task SetAuthAccessTokenAsync( string value )
     {
-        await SecureStorage.SetAsync( "access_token", value );
+        await SecureStorage.SetAsync( ACCESS_TOKEN_KEY, value );
         AuthAccessToken = value;
     }
 
