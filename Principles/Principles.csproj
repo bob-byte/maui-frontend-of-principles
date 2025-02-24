@@ -257,4 +257,8 @@
       <WarningLevel>4</WarningLevel>
       <NoWarn>1701;1702;CS1573;CS1591;CS8632</NoWarn>
     </PropertyGroup>
+
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'LocalDebug|AnyCPU' ">
+		<DefineConstants>DEBUG;TRACE;LOCAL_DEBUG</DefineConstants>
+	</PropertyGroup>
 </Project>
