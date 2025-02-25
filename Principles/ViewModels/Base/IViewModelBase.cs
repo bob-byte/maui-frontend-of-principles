@@ -5,10 +5,12 @@ public interface IViewModelBase : IQueryAttributable
     public INavigationService Navigation { get; }
 
     public IAsyncRelayCommand InitializeAsyncCommand { get; }
+    public IAsyncRelayCommand OnDisappearingCommand { get; }
 
     public bool IsBusy { get; }
 
     public bool IsInitialized { get; }
 
     Task InitializeAsync(object? parameter = null);
+    Task OnDisappearingAsync( object? parameter = null );
 }

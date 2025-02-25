@@ -72,6 +72,8 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
             } );
         } );
 
+        OnDisappearingCommand = new AsyncRelayCommand( async () => await OnDisappearingAsync() );
+
         if (GetType() != typeof( ProfileViewModel ))
         {
             ReferenceMessenger.Register<UserInfoChangedMessage>( this, ( sender, msg ) =>
@@ -87,6 +89,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     }
 
     public IAsyncRelayCommand InitializeAsyncCommand { get; }
+    public IAsyncRelayCommand OnDisappearingCommand { get; }
 
     public bool IsLoggedIn
     {
@@ -184,6 +187,11 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     }
 
     public virtual Task InitializeAsync(object? parameter = null)
+    {
+        return Task.CompletedTask;
+    }
+
+    public virtual Task OnDisappearingAsync( object? parameter = null )
     {
         return Task.CompletedTask;
     }

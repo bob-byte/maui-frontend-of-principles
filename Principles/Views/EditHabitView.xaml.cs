@@ -243,7 +243,13 @@ public partial class EditHabitView : ContentPageBase
 
         if (!hasErrors)
         {
-            ViewModel.UpdateFrequencyRepresentation();
+            ViewModel.FrequencyInfo = new HabitFrequencyInfo
+            {
+                Frequency = ViewModel.Habit.Frequency,
+                Period = ViewModel.SelectedPeriodOfHabit
+            };
+
+            OnPropertyChanged( nameof( ViewModel.FrequencyInfo ) );
             DXP_Frequency.IsOpen = false;
         }
     }

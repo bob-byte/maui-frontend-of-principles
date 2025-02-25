@@ -1,0 +1,164 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Principles.ViewModels;
+public partial class EditHabitViewModel
+{
+    [RelayCommand( CanExecute = nameof( CanSave ) )]
+    private async Task SaveAsync()
+    {
+        List<UserHabit> copyOfHabits = new( UserHabits );
+        if (copyOfHabits.Any( h => h.Id == Habit.Id ))
+        {
+            copyOfHabits.Remove( Habit );
+        }
+
+        bool canSaveHabit;
+        if (IsNewHabit)
+        {
+            canSaveHabit = ServiceOfHabit.CanAddNewHabit( Habit, copyOfHabits );
+
+            if (!canSaveHabit)
+            {
+                canSaveHabit = await DialogService.ShowAlertWithTwoBtnsAsync(
+                    msg: LocStrings.DescriptionOfCannotAddNewHabit,
+                    title: LocStrings.TitleOfCannotAddNewHabit,
+                    accept: LocStrings.AddItAnyway,
+                    cancel: LocStrings.Cancel
+                );
+            }
+        }
+        else
+        {
+            canSaveHabit = true;
+        }
+
+        if (canSaveHabit)
+        {
+            Habit.Name = NameOfHabit.Value;
+            EditUserHabitDto dto = new()
+            {
+                AreasOfLife = Habit.AreasOfLife!.ToList(),//get copy, because it will be changed
+                ColorName = Habit.ColorName,
+                Description = Habit.Description,
+                Complexity = Habit.Complexity,
+                Frequency = Habit.Frequency,
+                Id = Habit.Id,
+                Name = Habit.Name,
+                Priority = Habit.Priority,
+                Question = Habit.Question,
+                Goal = Habit.Goal,
+                Status = Habit.Status,
+                Type = Habit.Type,
+                Reminders = Habit.Reminders,
+                PrioritizedHabits = new List<UserHabitWithPriority>()
+            };
+
+            dto.AreasOfLife!.Remove( AllAreasOfLifeAsOneItem );
+
+            copyOfHabits.Add( Habit );
+            foreach (UserHabit habit in copyOfHabits)
+            {
+                dto.PrioritizedHabits.Add( new UserHabitWithPriority { Id = habit.Id, Priority = habit.Priority } );
+            }
+
+            if (UserHabits.Count == 1)
+            {
+                await UiBusyFor( async () =>
+                {
+                    SaveHabitResponse response = await ServiceOfHabit.UpdateHabitAsync( dto );
+                    await HandleHabitSaveAsync( response );
+                    ReferenceMessenger.Send( new HabitSavedMessage( Habit, copyOfHabits ) );
+                    await Navigation.GoBackAsync();
+                } );
+            }
+            else
+            {
+                await UiBusyFor( async () =>
+                {
+                    SaveHabitResponse response = await ServiceOfHabit.UpdateHabitAsync( dto );
+                    await HandleHabitSaveAsync( response );
+                    await Navigation.GoBackAsync();
+                    ReferenceMessenger.Send( new HabitSavedMessage( Habit, copyOfHabits ) );
+                } );
+            }
+        }
+    }
+
+    public bool CanSave()
+    {
+        NameOfHabit.Validate();
+
+        return NameOfHabit.IsValid && !IsBusy && !IsLoadingHabitInfo;
+    }
+
+    private async Task HandleHabitSaveAsync( SaveHabitResponse response )
+    {
+        Habit.Id = response.Id;
+        Habit.Frequency!.Id = response.FrequencyId;
+
+        if (response.ReminderIds is not null && Habit.Reminders?.Any() == true)
+        {
+            await ReminderService.RequestAccessToSendNotificationsAsync();
+
+            for (int numReminder = 0; numReminder < response.ReminderIds.Count; numReminder++)
+            {
+                SaveHabitResponse.Reminder dtoOfReminder = response.ReminderIds[numReminder];
+                UserHabitReminder habitReminder = Habit.Reminders[numReminder];
+                habitReminder.Id = dtoOfReminder.Id;
+
+                if (InactiveDaysToDelete.Count > 0)
+                {
+                    RemoveInactiveNotifications( InactiveDaysToDelete );
+                }
+
+                for (int numWeekDay = 0; numWeekDay < dtoOfReminder.DaysOfWeek?.Count; numWeekDay++)
+                {
+                    SaveHabitResponse.WeekDay dtoOfWeekDay = dtoOfReminder.DaysOfWeek[numWeekDay];
+                    WeekDay? weekDay = habitReminder.DaysOfWeek.First( d => d.Type == dtoOfWeekDay.Type );
+                    weekDay.Id = dtoOfWeekDay.Id;
+                    weekDay.UserNotificationRequestId = dtoOfWeekDay.NotificationRequestId;
+
+                    await AddNotificationToDeviceAsync( habitReminder, weekDay );
+                }
+            }
+        }
+    }
+
+    [RelayCommand]
+    private async Task DeleteHabitAsync( object? obj )
+    {
+        if (obj is UserHabit habit)
+        {
+            bool doDelete = await DialogService.ShowConfirmAsync(
+                LocStrings.MessageInDeleteHabitConfirm,
+                LocStrings.DeleteHabitQuestion
+            );
+
+            if (doDelete)
+            {
+                await UiBusyFor( async () =>
+                {
+                    HabitDeletionResponse? response = await ServiceOfHabit.DeleteAsync( habit.Id );
+
+                    if (response != null)
+                    {
+                        foreach (HabitDeletionResponse.NotificationRequest notification in response.DeletedNotifications)
+                        {
+                            LocalNotificationCenter.Current.Cancel( notification.Id );
+                        }
+                    }
+
+                    UserHabits.Remove( habit );
+
+                    await Navigation.GoBackAsync();
+                    ReferenceMessenger.Send( new HabitsDeletedMessege( habit ) );
+
+                } ).DefaultConfigureAwait();
+            }
+        }
+    }
+}

@@ -175,7 +175,9 @@
                                           TapCommandParameter="{x:Reference C_WithoutExceptionsType}" />
                             </dxe:ChoiceChipGroup>
                             <dxe:TextEdit x:Name="TE_Frequency"
-                                          Text="{Binding FrequencyRepresentation}"
+                                          Text="{Binding FrequencyInfo,
+                                                         Converter={StaticResource FrequencyToString},
+                                                         Mode=OneWay}"
                                           EndIcon="dotshorizontal"
                                           EndIconClicked="FrequencyIcon_Clicked"
                                           IsReadOnly="True"

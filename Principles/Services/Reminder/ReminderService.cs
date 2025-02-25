@@ -25,6 +25,11 @@ public class ReminderService : BaseRemoteService, IReminderService
         return RequestProvider.PostAsync<Reminder, SaveHabitsReportReminderResponse>( url, reminder, SettingsService.AuthAccessToken );
     }
 
+    public Task RequestAccessToSendNotificationsAsync()
+    {
+        return LocalNotificationCenter.Current.RequestNotificationPermission();
+    }
+
     public async Task TryToRecoverAllUserRemindersAsync()
     {
         if (!LocalNotificationCenter.Current.IsSupported)

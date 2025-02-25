@@ -55,6 +55,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
         StartProgressInterval = EndProgressInterval.AddDays( -HabitConstants.AVERAGE_NUMBER_OF_DAYS_TO_AUTOMATE_HABIT + 1 );
         m_isBusyForChangeCompleted = new ConcurrentDictionary<UserHabit, SemaphoreSlim>();
         m_userHabits = new ObservableCollectionEx<UserHabit>();
+        ServiceOfHabit.StoredUserHabits = UserHabits;
 
         ReferenceMessenger.Register<UserLoggedOutMessage>( this, ( sender, msg ) =>
         {
@@ -192,8 +193,8 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
             ServiceOfHabit.Recompute( foundHabit );
         }
 
-        ServiceOfHabit.StoredUserHabits = UserHabits.OrderBy( h => h.Goal!.Id ).ThenBy( h => h.Id ).ToList();
         UserHabits = new ObservableCollectionEx<UserHabit>( ServiceOfHabit.StoredUserHabits );
+        ServiceOfHabit.StoredUserHabits = UserHabits;
     }
 
     public override async Task InitializeAsync( object? parameter = null )
@@ -225,8 +226,6 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
                     habits = habits.OrderBy( h => h.Goal!.Id ).ThenBy( h => h.Id ).ToList();
                     UserHabits.Reload( habits );
 
-                    ServiceOfHabit.StoredUserHabits = habits;
-                                        
                     IsProgressesInitialized = true;
                     m_isInitialized = true;
                 }
