@@ -3,6 +3,13 @@ namespace Principles.Services;
 
 public class SettingsService : ISettingsService
 {
+    private const string ACCESS_TOKEN_KEY =
+#if LOCAL_DEBUG
+        "local_access_token";
+#else
+        "access_token";
+#endif
+    
     public bool IsDebug
     {
         get
@@ -16,12 +23,6 @@ public class SettingsService : ISettingsService
             return result;
         }
     }
-    private const string ACCESS_TOKEN_KEY =
-#if LOCAL_DEBUG
-    "local_access_token";
-#else
-    "access_token";
-#endif
 
     public string? AuthAccessToken { get; private set; }
 
