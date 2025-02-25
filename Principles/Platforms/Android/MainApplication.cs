@@ -5,7 +5,11 @@ using Principles.Platforms.Android;
 
 namespace Principles;
 
+#if LOCALDEBUG
+[Application( UsesCleartextTraffic = true )]
+#else
 [Application]
+#endif
 public class MainApplication : MauiApplication
 {
     public MainApplication(IntPtr handle, JniHandleOwnership ownership)

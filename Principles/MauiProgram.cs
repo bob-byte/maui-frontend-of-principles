@@ -69,9 +69,14 @@ public static class MauiProgram
         var assembly = Assembly.GetExecutingAssembly();
 
         //TODO: replace appsettings.json and implementation of the config to Principles.Core project
-        using Stream? stream = assembly.GetManifestResourceStream( $"{assembly.GetName().Name}.appsettings.json" );
 
-        if(stream is not null)
+#if LOCALDEBUG
+        using Stream? stream = assembly.GetManifestResourceStream( $"{assembly.GetName().Name}.appsettings.Development.json" );
+#else
+        using Stream? stream = assembly.GetManifestResourceStream( $"{assembly.GetName().Name}.appsettings.json" );
+#endif
+
+        if (stream is not null)
         {
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .AddJsonStream( stream )

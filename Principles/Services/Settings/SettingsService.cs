@@ -3,12 +3,19 @@ namespace Principles.Services;
 
 public class SettingsService : ISettingsService
 {
+    private const string ACCESS_TOKEN_KEY =
+#if LOCALDEBUG
+        "local_access_token";
+#else
+        "access_token";
+#endif
+    
     public bool IsDebug
     {
         get
         {
             bool result;
-#if DEBUG
+#if DEBUG || LOCALDEBUG
             result = true;
 #else
             result = false;
@@ -21,7 +28,7 @@ public class SettingsService : ISettingsService
 
     public async Task<string> GetAuthAccessTokenAsync()
     {
-        string? token = await SecureStorage.GetAsync( key: "access_token" ).DefaultConfigureAwait();
+        string? token = await SecureStorage.GetAsync( key: ACCESS_TOKEN_KEY ).DefaultConfigureAwait();
 
         AuthAccessToken = token ?? string.Empty;
         return AuthAccessToken;
@@ -29,7 +36,7 @@ public class SettingsService : ISettingsService
 
     public async Task SetAuthAccessTokenAsync( string value )
     {
-        await SecureStorage.SetAsync( "access_token", value );
+        await SecureStorage.SetAsync( ACCESS_TOKEN_KEY, value );
         AuthAccessToken = value;
     }
 

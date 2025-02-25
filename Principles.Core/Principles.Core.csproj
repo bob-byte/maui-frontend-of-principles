@@ -9,17 +9,22 @@
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+		<Configurations>Debug;Release;LocalDebug</Configurations>
 	</PropertyGroup>
 
 	<PropertyGroup>
 		<NullabilityInfoContextSupport>true</NullabilityInfoContextSupport>
 	</PropertyGroup>
 
-<!--	<PropertyGroup>-->
-<!--		<MtouchNoSymbolStrip Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">True</MtouchNoSymbolStrip>-->
-<!--	</PropertyGroup>-->
+	<PropertyGroup>
+		<MtouchNoSymbolStrip Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">True</MtouchNoSymbolStrip>
+	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios|AnyCPU'">
+	  <CreatePackage>false</CreatePackage>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LocalDebug|net9.0-ios|AnyCPU'">
 	  <CreatePackage>false</CreatePackage>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-ios|AnyCPU'">
@@ -36,4 +41,10 @@
 		<PackageReference Include="Azure.AI.OpenAI" Version="1.0.0-beta.9" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.12" />
 	</ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LocalDebug|AnyCPU'">
+		<WarningLevel>4</WarningLevel>
+		<NoWarn>1701;1702;CS1573;CS1591;CS8632</NoWarn>
+		<DefineConstants>LOCALDEBUG;DEBUG;TRACE</DefineConstants>
+		<DebugSymbols>true</DebugSymbols>
+	</PropertyGroup>
 </Project>

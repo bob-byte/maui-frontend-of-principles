@@ -8,7 +8,6 @@ namespace Principles.Core.Models;
 
 public record UserInfo
 {
-    public long Id { get; set; }
     public string Name { get; set; }
     public string MainSlogan { get; set; }
     public string Mission { get; set; }

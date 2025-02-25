@@ -11,13 +11,36 @@ public static class ServiceCollectionExtensions
     {
         services.AddSingleton<ILoggingService, LoggingService>();
 
-        services.
-            AddHttpClient( nameof( RequestProvider ) ).
-            ConfigureHttpClient(httpClient =>
-            {
-                httpClient.Timeout = TimeSpan.FromSeconds( value: 30 );
-                httpClient.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( MediaTypeNames.Text.Plain ) );
-            } );
+#if LOCALDEBUG
+        services.AddHttpClient(nameof(RequestProvider))
+                .ConfigureHttpClient(httpClient =>
+                {
+                    httpClient.Timeout = TimeSpan.FromSeconds(30);
+                    httpClient.DefaultRequestHeaders.Accept.Add(
+                        new MediaTypeWithQualityHeaderValue(MediaTypeNames.Text.Plain));
+                })
+                .ConfigurePrimaryHttpMessageHandler(() =>
+                {
+                    var handler = new HttpClientHandler();
+                    handler.ServerCertificateCustomValidationCallback = ( message, cert, chain, errors ) =>
+                    {
+                        if (cert != null && cert.Issuer.Equals("CN=localhost"))
+                        {
+                            return true;
+                        }
+
+                        return errors == System.Net.Security.SslPolicyErrors.None;
+                    };
+                    return handler;
+                });
+#else
+        services.AddHttpClient( nameof( RequestProvider ) )
+                .ConfigureHttpClient( httpClient =>
+                {
+                    httpClient.Timeout = TimeSpan.FromSeconds( value: 30 );
+                    httpClient.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( MediaTypeNames.Text.Plain ) );
+                } );
+#endif
 
         services.AddSingleton<ICachingService, CachingService>();
         services.AddSingleton<IUrlBuilder, UrlBuilder>();

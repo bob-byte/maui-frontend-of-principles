@@ -37,7 +37,13 @@ public class UrlBuilder : IUrlBuilder
     {
         get
         {
+#if LOCALDEBUG && IOS
+            m_baseUrl ??= "https://localhost:6001/";
+#elif LOCALDEBUG
+            m_baseUrl ??= "https://10.0.2.2:6001/";
+#else
             m_baseUrl ??= "https://principles-server.ckwavh.easypanel.host/";
+#endif
             return m_baseUrl;
         }
     }

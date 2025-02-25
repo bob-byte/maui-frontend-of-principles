@@ -21,15 +21,16 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net9.0-android'">21.0</SupportedOSPlatformVersion>
 		<ApplicationTitle>Principles</ApplicationTitle>
+		<Configurations>Debug;Release;LocalDebug</Configurations>
 	</PropertyGroup>
 
 	<PropertyGroup>
 		<NullabilityInfoContextSupport>true</NullabilityInfoContextSupport>
 	</PropertyGroup>
 	
-<!--	<PropertyGroup>-->
-<!--		<MtouchNoSymbolStrip Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">True</MtouchNoSymbolStrip>-->
-<!--	</PropertyGroup>-->
+	<PropertyGroup>
+		<MtouchNoSymbolStrip Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">True</MtouchNoSymbolStrip>
+	</PropertyGroup>
 
 <!--	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios|AnyCPU'">-->
 <!--	  <NoWarn>1701;1702;8632</NoWarn>-->
@@ -99,6 +100,7 @@
     </PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="appsettings.Development.json" />
 	  <None Remove="Platforms\Android\Resources\values-ru\colors.xml" />
 	  <None Remove="Platforms\Android\Resources\values-ru\Strings.xml" />
 	  <None Remove="Platforms\Android\Resources\values-ru\styles.xml" />
@@ -117,7 +119,7 @@
 		<PackageReference Include="CommunityToolkit.Maui.Markup" Version="4.0.0" />
 		<PackageReference Include="Polly.Extensions" Version="8.4.0" />
 		<PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="2.0.0" />
-		<PackageReference Include="DevExpress.Maui.Core" Version="24.2.3" />
+<!--		<PackageReference Include="DevExpress.Maui.Core" Version="24.2.3" />-->
 		<PackageReference Include="DevExpress.Maui.CollectionView" Version="24.2.3" />
 		<PackageReference Include="DevExpress.Maui.Controls" Version="24.2.3" />
 		<PackageReference Include="DevExpress.Maui.DataGrid" Version="24.2.3" />
@@ -234,6 +236,11 @@
 	  <BundleResource Include="Platforms\iOS\Resources\loc\uk.lproj\InfoPlist.strings" />
 	</ItemGroup>
 	<ItemGroup>
+	  <EmbeddedResource Include="appsettings.Development.json">
+	    <DependentUpon>appsettings.json</DependentUpon>
+	  </EmbeddedResource>
+	</ItemGroup>
+	<ItemGroup>
 	  <ProjectReference Include="..\Principles.Core\Principles.Core.csproj" />
 	</ItemGroup>
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
@@ -245,5 +252,11 @@
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
       <WarningLevel>4</WarningLevel>
       <NoWarn>1701;1702;CS1573;CS1591;CS8632</NoWarn>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LocalDebug|AnyCPU'">
+      <WarningLevel>4</WarningLevel>
+      <NoWarn>1701;1702;CS1573;CS1591;CS8632</NoWarn>
+      <DefineConstants>LOCALDEBUG;DEBUG;TRACE</DefineConstants>
+      <DebugSymbols>true</DebugSymbols>
     </PropertyGroup>
 </Project>
