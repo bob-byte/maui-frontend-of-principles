@@ -19,8 +19,8 @@
                                  MaximumWidthRequest="500"
                                  VerticalOptions="Center">
                 <Image Source="logolargesize"
-                       WidthRequest="200"
-                       HeightRequest="200" />
+                       HeightRequest="200"
+                       WidthRequest="200" />
                 <Label Text="{Binding AppName}"
                        FontFamily="CambriaBold"
                        FontSize="40"
@@ -43,9 +43,9 @@
                                    Style="{StaticResource PrimaryButton}"
                                    Margin="0,15,0,0" />
                 <dxco:SimpleButton x:Name="SB_ChangeLanguage"
-                                   Clicked="SB_ChangeLanguage_Clicked"
                                    Style="{StaticResource PrimaryButton}"
-                                   Margin="0,15,0,0" />
+                                   Margin="0,15,0,0"
+                                   Clicked="SB_ChangeLanguage_Clicked" />
                 <dxco:SimpleButton x:Name="SB_DeleteAccount"
                                    Command="{Binding DeleteAccountCommand}"
                                    Style="{StaticResource SecondaryButton}"
@@ -93,19 +93,19 @@
                               ColumnSpacing="15"
                               HorizontalOptions="FillAndExpand">
                             <dxco:SimpleButton x:Name="SB_ChangeLanguage_Cancel"
-                                               Clicked="SB_ChangeLanguage_Cancel_Clicked"
                                                Icon="close"
-                                               IconHorizontalPosition="Left"
                                                BackgroundColor="{StaticResource CancelButtonColor}"
+                                               Clicked="SB_ChangeLanguage_Cancel_Clicked"
                                                FontSize="16"
-                                               Grid.Column="0" />
+                                               Grid.Column="0"
+                                               IconHorizontalPosition="Left" />
                             <dxco:SimpleButton x:Name="SB_SaveChangeLanguage"
-                                               Clicked="SB_SaveChangeLanguage_Clicked"
                                                Style="{StaticResource PrimaryButton}"
                                                Icon="check_second"
-                                               IconHorizontalPosition="Left"
+                                               Clicked="SB_SaveChangeLanguage_Clicked"
                                                FontSize="16"
-                                               Grid.Column="1" />
+                                               Grid.Column="1"
+                                               IconHorizontalPosition="Left" />
                         </Grid>
                     </VerticalStackLayout>
                 </dxco:BottomSheet>

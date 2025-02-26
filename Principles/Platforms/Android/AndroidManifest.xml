@@ -13,7 +13,7 @@
 	<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
 	<application
-        android:networkSecurityConfig="@xml/network_security_config">
+        android:networkSecurityConfig="@xml/network_security_config" android:allowBackup="true" android:label="Principles" android:icon="@mipmap/appicon">
 		<receiver android:name="com.set.principles.NotificationReceiver" android:exported="true" />
 		<service android:name="com.set.principles.NotificationService" android:exported="false" />
 	</application>
