@@ -7,9 +7,6 @@ namespace Principles.Views;
 public partial class HelperView : ContentPageBase
 {
     private readonly ILockDeviceOrientation m_deviceOrientationService;
-#if ANDROID
-    private double m_previousHeight = 0;
-#endif
 
     public HelperView(HelperViewModel viewModel)
 	{
@@ -26,6 +23,14 @@ public partial class HelperView : ContentPageBase
             LoadLocalizationData();
         } );
 
+#if IOS
+        View originalContent = Content;
+        DevExpress.Maui.Core.SafeKeyboardAreaView wrappedContent = new DevExpress.Maui.Core.SafeKeyboardAreaView
+        {
+            Content = originalContent
+        };
+        Content = wrappedContent;
+#endif
         ViewModel.DisplayMessages.CollectionChanged += DisplayMessages_CollectionChanged;
     }
 
@@ -41,6 +46,8 @@ public partial class HelperView : ContentPageBase
         base.OnAppearing();
 #if ANDROID
         m_deviceOrientationService.LockOrientation( DeviceOrientation.Portrait );
+        Microsoft.Maui.Controls.Application.Current.On<Microsoft.Maui.Controls.PlatformConfiguration.Android>()
+            .UseWindowSoftInputModeAdjust( WindowSoftInputModeAdjust.Resize );
 #endif
     }
 
@@ -49,6 +56,8 @@ public partial class HelperView : ContentPageBase
         base.OnDisappearing();
 #if ANDROID
         m_deviceOrientationService.UnlockOrientation();
+        Microsoft.Maui.Controls.Application.Current.On<Microsoft.Maui.Controls.PlatformConfiguration.Android>()
+           .UseWindowSoftInputModeAdjust( WindowSoftInputModeAdjust.Pan );
 #endif
     }
 
@@ -108,26 +117,25 @@ public partial class HelperView : ContentPageBase
     }
 
 #if ANDROID
-    private void G_AllHelperChat_SizeChanged( object sender, EventArgs e )
+    private void E_Prompt_Focused( object sender, FocusEventArgs e )
     {
-        if (sender is Grid grid)
+        Shell.SetTabBarIsVisible( this, false );
+    }
+
+    private void E_Prompt_Unfocused( object sender, FocusEventArgs e )
+    {
+        Shell.SetTabBarIsVisible( this, true );
+    }
+
+    protected override bool OnBackButtonPressed()
+    {
+        if (E_Prompt.IsFocused)
         {
-            double newHeight = grid.Height;
-
-            if (m_previousHeight > 0)
-            {
-                if (newHeight > m_previousHeight)
-                {
-                    Shell.SetTabBarIsVisible( this, true );
-                }
-                else if (newHeight < m_previousHeight)
-                {
-                    Shell.SetTabBarIsVisible( this, false );
-                }
-            }
-
-            m_previousHeight = newHeight;
+            E_Prompt.Unfocus();
+            Shell.SetTabBarIsVisible( this, true );
+            return true;
         }
+        return base.OnBackButtonPressed();
     }
 #endif
 }
