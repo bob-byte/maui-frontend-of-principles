@@ -50,6 +50,7 @@ public partial class AppShell : Shell
         RegisterRoute( typeof( EditHabitView ) );
         RegisterRoute( typeof( SettingsView ) );
         RegisterRoute( typeof( ForgetPasswordView ) );
+        RegisterRoute( typeof( ChangePasswordView ) );
     }
 
     private static void RegisterRoute( Type viewType )

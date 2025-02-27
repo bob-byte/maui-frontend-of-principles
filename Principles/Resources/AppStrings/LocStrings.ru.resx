@@ -511,7 +511,7 @@
     <value>Изменить пароль</value>
   </data>
 	<data name="ConfirmationPasswordChangeLabel" xml:space="preserve">
-    <value>Одноразовый код для подтверждения смены пароля был отправлен на вашу электронную почту</value>
+    <value>На вашу электронную почту отправлен код для подтверждения смены пароля</value>
   </data>
 	<data name="ConfirmPasswordChangeButton" xml:space="preserve">
     <value>Подтвердить</value>
@@ -759,4 +759,7 @@
 	<data name="FieldIsNotEditable" xml:space="preserve">
 		<value>Это поле недоступно для редактирования.</value>
     </data>
+	<data name="ChangePassword" xml:space="preserve">
+		<value>Сменить пароль</value>
+	</data>
 </root>

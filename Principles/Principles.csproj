@@ -137,6 +137,9 @@
 		<Compile Update="App.xaml.cs">
 		  <DependentUpon>App.xaml</DependentUpon>
 		</Compile>
+		<Compile Update="Views\ChangePasswordView.xaml.cs">
+		  <DependentUpon>ChangePasswordView.xaml</DependentUpon>
+		</Compile>
 		<Compile Update="Views\StartupView.xaml.cs">
 		  <DependentUpon>StartupView.xaml</DependentUpon>
 		</Compile>
@@ -179,6 +182,9 @@
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		</Compile>
+		<Compile Update="Views\ConfirmEmailPopup.xaml.cs">
+		  <DependentUpon>ConfirmEmailPopup.xaml</DependentUpon>
+		</Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -189,6 +195,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Controls\CircularProgressBar.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ChangePasswordView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\StartupView.xaml">
@@ -219,6 +228,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Templates\BaseTemplateView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ConfirmEmailPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\UpdatePopup.xaml">

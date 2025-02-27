@@ -589,7 +589,7 @@
     <value>Change password</value>
   </data>
   <data name="ConfirmationPasswordChangeLabel" xml:space="preserve">
-    <value>A one-time code to confirm the password change has been sent to your email</value>
+    <value>A confirmation code for password change has been sent to your email</value>
   </data>
   <data name="ConfirmPasswordChangeButton" xml:space="preserve">
     <value>Confirm</value>
@@ -836,5 +836,8 @@
   </data>
   <data name="FieldIsNotEditable" xml:space="preserve">
     <value>This field is not editable.</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Change password</value>
   </data>
 </root>

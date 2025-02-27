@@ -154,4 +154,15 @@ public partial class ProfileViewModel : BaseViewModel
             visualOptions: SnackbarHelper.DefaultOptions()
         );
     }
+
+    [RelayCommand]
+    private Task ShowChangePasswordAsync()
+    {
+        var parameters = new Dictionary<string, object>
+        {
+            { "Email", Email }
+        };
+
+        return Navigation.NavigateToAsync<ChangePasswordViewModel>( parameters );
+    }
 }
