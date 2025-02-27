@@ -50,14 +50,4 @@ public class ContentPageBase : ContentPage
             await viewModel.InitializeAsyncCommand.ExecuteAsync( parameter: null );
         }
     }
-    protected override async void OnDisappearing()
-    {
-        base.OnDisappearing();
-
-        if (BindingContext is IViewModelBase viewModel &&
-            viewModel.OnDisappearingCommand.CanExecute( parameter: null ))
-        {
-            await viewModel.OnDisappearingCommand.ExecuteAsync( parameter: null );
-        }
-    }
 }

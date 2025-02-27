@@ -87,7 +87,6 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     }
 
     public IAsyncRelayCommand InitializeAsyncCommand { get; }
-    public IAsyncRelayCommand OnDisappearingCommand { get; }
 
     public bool IsLoggedIn
     {
@@ -185,11 +184,6 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     }
 
     public virtual Task InitializeAsync(object? parameter = null)
-    {
-        return Task.CompletedTask;
-    }
-
-    public virtual Task OnDisappearingAsync( object? parameter = null )
     {
         return Task.CompletedTask;
     }

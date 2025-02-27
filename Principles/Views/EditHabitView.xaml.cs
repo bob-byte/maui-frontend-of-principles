@@ -47,7 +47,6 @@ public partial class EditHabitView : ContentPageBase
     {
         base.OnDisappearing();
         m_deviceOrientationService.UnlockOrientation();
-        ViewModel.Habit = new UserHabit();
     }
     private void ViewModel_HabitPropertyChanged( object? sender, PropertyChangedEventArgs e )
     {
