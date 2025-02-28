@@ -33,24 +33,11 @@
                        HorizontalOptions="Start"
                        LineBreakMode="WordWrap" />
 
-                <HorizontalStackLayout Padding="0"
-                                       HorizontalOptions="Start"
-                                       Spacing="5">
-                    <Switch IsToggled="{Binding DontShowAgain}"
-                            OnColor="{StaticResource Primary}"
-                            VerticalOptions="Center" />
-                    <Label Text="{x:Static loc:LocStrings.DontShowUpdateCheckBoxText}"
-                           FontSize="15"
-                           LineBreakMode="TailTruncation"
-                           MaxLines="1"
-                           VerticalOptions="Center">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer x:Name="TGR_ToggleDontShowAgain"
-                                                  NumberOfTapsRequired="1"
-                                                  Tapped="TGR_ToggleDontShowAgain_Tapped" />
-                        </Label.GestureRecognizers>
-                    </Label>
-                </HorizontalStackLayout>
+                <dx:DXSwitch IsChecked="{Binding DontShowAgain}"
+                             Content="{Binding LocalizationResourceManager[DontShowUpdateCheckBoxText],
+                                               Mode=OneWay}"
+                             TextLineBreakMode="TailTruncation"
+                             TextMaxLines="1" />
 
                 <HorizontalStackLayout HorizontalOptions="End"
                                        Spacing="10">

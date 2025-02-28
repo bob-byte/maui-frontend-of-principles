@@ -2,6 +2,7 @@
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:converters="clr-namespace:Principles.Converters;assembly=Principles"
+             xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
              xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
              xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
              xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
@@ -468,6 +469,37 @@
             <Style TargetType="Switch">
                 <Setter Property="OnColor"
                         Value="{StaticResource Primary}" />
+            </Style>
+
+            <Style TargetType="dx:DXSwitch">
+                <Setter Property="CheckedTrackColor"
+                        Value="{StaticResource Primary}" />
+                <Setter Property="CheckedTrackBorderColor"
+                        Value="Transparent" />
+                <Setter Property="TrackBorderColor"
+                        Value="Transparent" />
+                <Setter Property="TextColor"
+                        Value="{StaticResource LightNormalText}" />
+                <Setter Property="FontSize"
+                        Value="15" />
+                <Setter Property="SwitchIndent"
+                        Value="3" />
+                <Setter Property="SwitchPlacement"
+                        Value="Left" />
+                <Setter Property="AllowContentTap"
+                        Value="True" />
+                <Style.Triggers>
+                    <Trigger Property="IsChecked"
+                             Value="False"
+                             TargetType="dx:DXSwitch">
+                        <Setter Property="TrackColor"
+                                Value="#eeeeee" />
+                        <Setter Property="TrackBorderColor"
+                                Value="Transparent" />
+                        <Setter Property="ThumbColor"
+                                Value="White" />
+                    </Trigger>
+                </Style.Triggers>
             </Style>
 
             <Style x:Key="CentralHeader"

@@ -721,7 +721,7 @@ public partial class EditHabitView : ContentPageBase
                 ME_ReminderDescription.Text = ViewModel.NameOfHabit.Value;
             }
 
-            S_IsReminderEnabled.IsToggled = true;
+            DXS_IsReminderEnabled.IsChecked = true;
             
             TimeSpan? time = TimeSpan.FromHours( 8 );
             TE_ReminderTime.TimeSpan = time;
@@ -731,7 +731,7 @@ public partial class EditHabitView : ContentPageBase
             UserHabitReminder reminder = ViewModel.Habit.Reminders[0];
             ME_ReminderTitle.Text = reminder.Title;
             ME_ReminderDescription.Text = reminder.Description;
-            S_IsReminderEnabled.IsToggled = reminder.IsEnabled;
+            DXS_IsReminderEnabled.IsChecked = reminder.IsEnabled;
 
             TimeSpan? time = reminder.Time.ToTimeSpan();
             TE_ReminderTime.TimeSpan = time;
@@ -750,7 +750,7 @@ public partial class EditHabitView : ContentPageBase
         EditedUserHabitReminder? reminder = ViewModel.EditedReminder;
         reminder.Title = ME_ReminderTitle.Text;
         reminder.Description = ME_ReminderDescription.Text;
-        reminder.IsEnabled = S_IsReminderEnabled.IsToggled;
+        reminder.IsEnabled = DXS_IsReminderEnabled.IsChecked;
         reminder.Time = TE_ReminderTime.Time!.Value;
 
         if (reminder.DaysOfWeek is null || !reminder.DaysOfWeek.Any())
