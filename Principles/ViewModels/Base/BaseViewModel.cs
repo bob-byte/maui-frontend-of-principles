@@ -161,6 +161,18 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         }
     }
 
+    partial void OnEmailChanged( string value )
+    {
+        if (string.IsNullOrWhiteSpace( value ))
+        {
+            CachingService.Remove( CacheKeys.USER_EMAIL );
+        }
+        else
+        {
+            CachingService.SetForever( CacheKeys.USER_EMAIL, value );
+        }
+    }
+
     partial void OnMainSloganChanged( string? value )
     {
         if (string.IsNullOrWhiteSpace( value ))
@@ -188,7 +200,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         return Task.CompletedTask;
     }
 
-    protected virtual async Task InitUserInfoAsync()
+    protected async Task InitUserInfoAsync()
     {
         if (IsLoggedIn)
         {
@@ -217,9 +229,8 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
             }
             else
             {
-                userInfo = new UserInfo();
-                userInfo.Email = Email;
-                
+                userInfo = new UserInfo { Email = Email };
+
                 UserName.Value = CachingService.GetStoredValue( CacheKeys.USER_NAME );
                 userInfo.Name = UserName.Value;
 
@@ -391,6 +402,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         Mission = string.Empty;
         Gender = Gender.Man;
         UserIcon = null;
+        Email = string.Empty;
 
         ReferenceMessenger.Send( new UserLoggedOutMessage() );
 

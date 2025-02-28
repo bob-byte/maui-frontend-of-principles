@@ -128,7 +128,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
         List<UserHabit> habits = UserHabits.Where( h => h.Goal.Id == 0 ).ToList();
         foreach (UserHabit? habit in habits)
         {
-            habit.Goal.Name = (string)LocalizationResourceManager.Instance["NoGoalSpecified"];
+            habit.Goal.Name = LocStrings.NoGoalSpecified;
         }
     }
 

@@ -199,7 +199,7 @@ public partial class LoginViewModel : BaseViewModel
 
     private void AddValidations()
     {
-        Email.Validations.Add( new IsNotNullOrWhiteSpaceRule{ ValidationMessage = (string)LocalizationResourceManager.Instance["RequiredErrorText"] } );
+        Email.Validations.Add( new IsNotNullOrWhiteSpaceRule{ ValidationMessage = LocStrings.RequiredErrorText } );
         Email.Validations.Add( new EmailRule{ ValidationMessage = LocStrings.EmailMustHaveCorrectValue } );
 
         Password.Validations.Add( new IsNotNullOrWhiteSpaceRule{ ValidationMessage = LocStrings.RequiredErrorText } );

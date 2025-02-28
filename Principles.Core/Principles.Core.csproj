@@ -16,10 +16,6 @@
 		<NullabilityInfoContextSupport>true</NullabilityInfoContextSupport>
 	</PropertyGroup>
 
-	<PropertyGroup>
-		<MtouchNoSymbolStrip Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">True</MtouchNoSymbolStrip>
-	</PropertyGroup>
-
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios|AnyCPU'">
 	  <CreatePackage>false</CreatePackage>
 	</PropertyGroup>

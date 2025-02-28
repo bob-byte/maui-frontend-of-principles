@@ -34,7 +34,7 @@
                        LineBreakMode="WordWrap" />
 
                 <dx:DXSwitch IsChecked="{Binding DontShowAgain}"
-                             Content="{Binding LocalizationResourceManager[DontShowUpdateCheckBoxText],
+                             Content="{Binding LocManager[DontShowUpdateCheckBoxText],
                                                Mode=OneWay}"
                              TextLineBreakMode="TailTruncation"
                              TextMaxLines="1" />

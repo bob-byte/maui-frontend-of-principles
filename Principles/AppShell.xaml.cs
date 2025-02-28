@@ -5,8 +5,6 @@ public partial class AppShell : Shell
     private readonly INavigationService m_navigationService;
     private readonly ISettingsService m_settingsService;
     public WeakReferenceMessenger ReferenceMessenger { get; }
-    public LocalizationResourceManager LocalizationResourceManager
-        => LocalizationResourceManager.Instance;
 
     public AppShell( IServiceProvider serviceProvider )
     {

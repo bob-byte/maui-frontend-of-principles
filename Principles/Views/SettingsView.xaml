@@ -12,15 +12,16 @@
                    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                    xmlns:v="clr-namespace:Principles.Views"
                    xmlns:vm="clr-namespace:Principles.ViewModels"
-                   x:DataType="vm:SettingsViewModel">
+                   x:DataType="vm:SettingsViewModel"
+                   Shell.TabBarIsVisible="False">
     <Grid>
         <ScrollView>
             <VerticalStackLayout Padding="15,0,15,0"
                                  MaximumWidthRequest="500"
                                  VerticalOptions="Center">
                 <Image Source="logolargesize"
-                       HeightRequest="200"
-                       WidthRequest="200" />
+                       WidthRequest="200"
+                       HeightRequest="200" />
                 <Label Text="{Binding AppName}"
                        FontFamily="CambriaBold"
                        FontSize="40"
@@ -43,9 +44,9 @@
                                    Style="{StaticResource PrimaryButton}"
                                    Margin="0,15,0,0" />
                 <dxco:SimpleButton x:Name="SB_ChangeLanguage"
+                                   Clicked="SB_ChangeLanguage_Clicked"
                                    Style="{StaticResource PrimaryButton}"
-                                   Margin="0,15,0,0"
-                                   Clicked="SB_ChangeLanguage_Clicked" />
+                                   Margin="0,15,0,0" />
                 <dxco:SimpleButton x:Name="SB_DeleteAccount"
                                    Command="{Binding DeleteAccountCommand}"
                                    Style="{StaticResource SecondaryButton}"
@@ -93,19 +94,19 @@
                               ColumnSpacing="15"
                               HorizontalOptions="FillAndExpand">
                             <dxco:SimpleButton x:Name="SB_ChangeLanguage_Cancel"
-                                               Icon="close"
-                                               BackgroundColor="{StaticResource CancelButtonColor}"
                                                Clicked="SB_ChangeLanguage_Cancel_Clicked"
+                                               Icon="close"
+                                               IconHorizontalPosition="Left"
+                                               BackgroundColor="{StaticResource CancelButtonColor}"
                                                FontSize="16"
-                                               Grid.Column="0"
-                                               IconHorizontalPosition="Left" />
+                                               Grid.Column="0" />
                             <dxco:SimpleButton x:Name="SB_SaveChangeLanguage"
+                                               Clicked="SB_SaveChangeLanguage_Clicked"
                                                Style="{StaticResource PrimaryButton}"
                                                Icon="check_second"
-                                               Clicked="SB_SaveChangeLanguage_Clicked"
+                                               IconHorizontalPosition="Left"
                                                FontSize="16"
-                                               Grid.Column="1"
-                                               IconHorizontalPosition="Left" />
+                                               Grid.Column="1" />
                         </Grid>
                     </VerticalStackLayout>
                 </dxco:BottomSheet>
