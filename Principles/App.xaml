@@ -59,8 +59,6 @@
 
             <Color x:Key="CancelButtonColor">#cecece</Color>
 
-            <Color x:Key="TimeEditBackgroundColor">#eeeeee</Color>
-
             <Color x:Key="NormalHeaderText">#55555c</Color>
             <Color x:Key="Error">#007BFF</Color>
             <Color x:Key="RedColor">#FF2400</Color>
@@ -480,12 +478,22 @@
                         Value="Transparent" />
                 <Setter Property="TrackBorderColor"
                         Value="Transparent" />
+                <Setter Property="TextColor"
+                        Value="{StaticResource LightNormalText}" />
+                <Setter Property="FontSize"
+                        Value="15" />
+                <Setter Property="SwitchIndent"
+                        Value="3" />
+                <Setter Property="SwitchPlacement"
+                        Value="Left" />
+                <Setter Property="AllowContentTap"
+                        Value="True" />
                 <Style.Triggers>
-                    <Trigger TargetType="dx:DXSwitch"
-                             Property="IsChecked"
-                             Value="False">
+                    <Trigger Property="IsChecked"
+                             Value="False"
+                             TargetType="dx:DXSwitch">
                         <Setter Property="TrackColor"
-                                Value="{StaticResource TimeEditBackgroundColor}" />
+                                Value="#eeeeee" />
                         <Setter Property="TrackBorderColor"
                                 Value="Transparent" />
                         <Setter Property="ThumbColor"

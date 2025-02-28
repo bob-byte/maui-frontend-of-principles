@@ -59,7 +59,6 @@ public partial class ProgressOfHabitsView : ContentPageBase
         ME_ReminderTitle.LabelText = LocStrings.ReminderTitle;
         ME_ReminderDescription.LabelText = LocStrings.ReminderDescription;
         TIE_Time.LabelText = LocStrings.Time;
-        L_Enable.Text = LocStrings.Enable;
         SB_ReminderReport_Cancel.Text = LocStrings.Cancel;
         SB_Save.Text = LocStrings.Save;
     }
