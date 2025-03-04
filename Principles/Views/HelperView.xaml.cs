@@ -30,7 +30,6 @@ public partial class HelperView : ContentPageBase
     {
         L_TitleText.Text = LocStrings.ChatWithHelper;
         L_ShortDescriptionOfAssistant.Text = LocStrings.SelfDevelopmentAssistantShortDescription;
-        E_Prompt.PlaceholderText = LocStrings.EnterText;
     }
     
     protected override void OnAppearing()
@@ -125,5 +124,22 @@ public partial class HelperView : ContentPageBase
 #if ANDROID
         Shell.SetTabBarIsVisible( this, true );
 #endif
+    }
+
+    private void DXC_DisplayMessages_LongPress( object sender, DevExpress.Maui.CollectionView.CollectionViewGestureEventArgs e )
+    {
+        if (e.Item is DisplayMessage messageItem)
+        {
+            if (!string.IsNullOrEmpty( messageItem.Text ))
+            {
+                IAsyncRelayCommand<string> command = ViewModel.CopyTextCommand;
+                if (command != null && command.CanExecute( messageItem.Text ))
+                {
+                    command.Execute( messageItem.Text );
+                    DXP_Copy.IsOpen = true;
+                }
+            }
+        }
+
     }
 }

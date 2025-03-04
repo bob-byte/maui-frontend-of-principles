@@ -30,22 +30,15 @@
         <BoxView CornerRadius="0, 16, 16, 16"
                  Color="{AppThemeBinding Light={StaticResource TertiaryLight},
                                          Dark={StaticResource TertiaryDark}}" />
-        <dxe:MultilineEdit BackgroundColor="{AppThemeBinding Light={StaticResource TertiaryLight},
-                                                             Dark={StaticResource TertiaryDark}}"
-                           TextFontSize="18"
-                           TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
-                                                       Dark={StaticResource DarkNormalText}}"
-                           x:Name="ME_Answer"
-                           Text="{Binding Text}"
-                           TextFontFamily="Roboto"
-                           BorderThickness="0"
-                           ClearIconVisibility="Never"
-                           IsReadOnly="True"
-                           BoxPadding="5"
-                           Margin="10,5"
-                           VerticalOptions="Start"
-                           BoxMinHeight="10"
-                           MinimumHeightRequest="18"
-                           TextChanged="ME_Answer_TextChanged" />
+        <dx:DXContentPresenter BackgroundColor="{AppThemeBinding Light={StaticResource TertiaryLight},
+                                                                 Dark={StaticResource TertiaryDark}}"
+                               TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
+                                                           Dark={StaticResource DarkNormalText}}"
+                               x:Name="ME_Answer"
+                               Content="{Binding Text}"
+                               BorderThickness="0"
+                               Padding="5"
+                               Margin="10,5"
+                               VerticalOptions="Start" />
     </Grid>
 </Grid>

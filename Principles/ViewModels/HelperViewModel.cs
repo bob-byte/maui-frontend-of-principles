@@ -139,6 +139,16 @@ public partial class HelperViewModel : BaseViewModel
         }
     }
 
+    [RelayCommand]
+    private async Task CopyTextAsync( string message )
+    {
+        if (!string.IsNullOrEmpty( message ))
+        {
+            await Clipboard.SetTextAsync( message );
+        }
+
+    }
+
     private bool CanAskQuestion()
     {
         return !m_cancellationSource.IsCancellationRequested && !IsBusy;

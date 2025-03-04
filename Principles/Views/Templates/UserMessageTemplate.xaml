@@ -16,23 +16,17 @@
         <BoxView Color="{AppThemeBinding Light={StaticResource LightPrimary},
                                          Dark={StaticResource LightPrimary}}"
                  CornerRadius="16, 0, 16, 16" />
-        <dxe:MultilineEdit x:Name="ME_Question"
-                           Text="{Binding Text}"
-                           Margin="10,5"
-                           BackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary},
-                                                             Dark={StaticResource LightPrimary}}"
-                           BorderThickness="0"
-                           BoxMinHeight="10"
-                           BoxPadding="5"
-                           ClearIconVisibility="Never"
-                           IsReadOnly="True"
-                           MinimumHeightRequest="18"
-                           TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
-                                                       Dark={StaticResource DarkNormalText}}"
-                           TextFontFamily="MonaSansMedium"
-                           TextFontSize="18"
-                           TextVerticalAlignment="Center"
-                           VerticalOptions="Start" />
+        <dx:DXContentPresenter x:Name="ME_Question"
+                               Content="{Binding Text}"
+                               Margin="10,5"
+                               BackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary},
+                                                                 Dark={StaticResource LightPrimary}}"
+                               BorderThickness="0"
+                               MinimumHeightRequest="18"
+                               TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
+                                                           Dark={StaticResource DarkNormalText}}"
+                               TextVerticalAlignment="Center"
+                               VerticalOptions="Start" />
     </Grid>
 
     <Grid x:Name="G_UserIcon"
