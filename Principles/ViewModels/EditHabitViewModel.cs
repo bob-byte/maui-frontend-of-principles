@@ -97,6 +97,7 @@ public partial class EditHabitViewModel : BaseViewModel
             InitPeriodsOfHabit();
             
             AllAreasOfLifeAsOneItem.Name = LocStrings.AllAreasOfLife;
+            AiRecommenderOfHabits.RecreateSystemMessage();
 
             try
             {

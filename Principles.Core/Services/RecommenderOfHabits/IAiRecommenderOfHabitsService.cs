@@ -6,4 +6,5 @@ namespace Principles.Core.Services;
 public interface IAiRecommenderOfHabitsService
 {
     Task<List<RecommendedHabit>> RecommendedHabitsAsync( IEnumerable<UserHabit> currentHabits, IEnumerable<UserAreaOfLife> areasOfLifeOfNewHabit, Gender userGender, string? userMission, string? userMainSlogan, string? goal );
+    void RecreateSystemMessage();
 }

@@ -2,6 +2,7 @@
 using Azure;
 using System.Text;
 using Principles.Core.Constants;
+using OpenAI.Chat;
 
 namespace Principles.Core.Services;
 
@@ -22,10 +23,10 @@ public class AiChatService : BaseRemoteService, IAiChatService
         m_chatMessages = new List<ChatMessage>();
     }
 
-    public async Task<StreamingResponse<StreamingChatCompletionsUpdate>> GetAnswerStreamAsync( string prompt, int choiceCount, CancellationToken cancellationToken = default )
+    public async Task<ChatCompletion> GetAnswerStreamAsync( string prompt )
     {
         ChatMessage systemMsg = await SystemMessage().DefaultConfigureAwait();
-        if(m_chatMessages.Count == 0)
+        if (m_chatMessages.Count == 0)
         {
             m_chatMessages.Add( systemMsg );
         }
@@ -34,22 +35,17 @@ public class AiChatService : BaseRemoteService, IAiChatService
             m_chatMessages[0] = systemMsg;
         }
 
-        ChatMessage newMessage = new( ChatRole.User, prompt );
+        ChatMessage newMessage = ChatMessage.CreateUserMessage( prompt );
         m_chatMessages.Add( newMessage );
-
-        ChatCompletionsOptions options = new( DEFAULT_AI_DEPLOYMENT_NAME, m_chatMessages )
-        {
-            ChoiceCount = choiceCount
-        };
-
-        OpenAIClient aiClient = await LazyAiClient;
-        StreamingResponse<StreamingChatCompletionsUpdate> result = await aiClient.GetChatCompletionsStreamingAsync( options, cancellationToken ).DefaultConfigureAwait();
-        return result;
+        ChatClient client = await LazyAiClient;
+        ChatCompletion response = await client.CompleteChatAsync( m_chatMessages );
+        
+        return response;
     }
 
     public void AddChatAnswer( string answer )
     {
-        ChatMessage message = new( ChatRole.Assistant, answer );
+        ChatMessage message = ChatMessage.CreateAssistantMessage( answer );
         m_chatMessages.Add( message );
     }
 
@@ -117,10 +113,7 @@ public class AiChatService : BaseRemoteService, IAiChatService
 
         string systemText = systemMessageBuilder.ToString();
 
-        ChatMessage result = new(
-            role: ChatRole.System,
-            content: systemText
-        );
+        ChatMessage result = ChatMessage.CreateSystemMessage( systemText );
         return result;
     }
 }

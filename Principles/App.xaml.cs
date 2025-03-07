@@ -37,6 +37,7 @@ public partial class App : Application
 
         CultureInfo currentCulture = new CultureInfo( savedLanguageCode );
 
+        LocalizationResourceManager.Initialize( m_settingsService );
         LocalizationResourceManager.Instance.SetCulture( currentCulture );
         InitializeComponent();
     }

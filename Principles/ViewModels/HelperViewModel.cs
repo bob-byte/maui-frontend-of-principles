@@ -1,5 +1,10 @@
 ﻿using Azure.AI.OpenAI;
 
+using DevExpress.Data.Extensions;
+
+using OpenAI;
+using OpenAI.Chat;
+
 namespace Principles.ViewModels;
 
 public partial class HelperViewModel : BaseViewModel
@@ -92,15 +97,16 @@ public partial class HelperViewModel : BaseViewModel
 
                         try
                         {
-                            await foreach (StreamingChatCompletionsUpdate chatUpdate in await m_aiChatService
-                                               .GetAnswerStreamAsync( promptCopy, choiceCount: 1, cancellationToken ))
-                            {
-                                if (!string.IsNullOrWhiteSpace( chatUpdate.ContentUpdate ))
-                                {
-                                    helperMsg.Text += chatUpdate.ContentUpdate.Replace( "**", string.Empty );
+                            ChatCompletion chatResponse = await m_aiChatService.GetAnswerStreamAsync( promptCopy );
 
-                                    await Task.Delay( millisecondsDelay: 65 );
-                                }
+                            string fullResponse = chatResponse.Content[0].Text;
+
+                            string[] words = fullResponse.Split( ' ' );
+
+                            foreach (string word in words)
+                            {
+                                helperMsg.Text += word + " ";
+                                await Task.Delay( millisecondsDelay: 65 );
                             }
                         }
                         catch (TaskCanceledException) { }

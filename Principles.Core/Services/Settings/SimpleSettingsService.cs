@@ -32,6 +32,7 @@ public class SimpleSettingsService : ISettingsService
     public double NormalPageWidth { get; set; }
 
     public double NormalPageHeight { get; set; }
+    public string CurrentCulture { get; set; }
 
     public Task<string> GetAuthAccessTokenAsync()
     {
