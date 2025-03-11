@@ -287,13 +287,21 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     [RelayCommand]
     private async Task AddHabitAsync()
     {
-        Dictionary<string, object> routeParams = new()
+        if (ServiceOfHabit.CanAddNewHabit( UserHabits ) ||
+            await DialogService.ShowAlertWithTwoBtnsAsync(
+                msg: LocStrings.DescriptionOfCannotAddNewHabit,
+                title: LocStrings.TitleOfCannotAddNewHabit,
+                accept: LocStrings.AddItAnyway,
+                cancel: LocStrings.Cancel ))
         {
-            { "Id", default( long ) },
-            { "UserHabits", UserHabits }
-        };
+            Dictionary<string, object> routeParams = new()
+            {
+                { "Id", default( long ) },
+                { "UserHabits", UserHabits }
+            };
 
-        await Navigation.NavigateToAsync<EditHabitViewModel>( routeParams );
+            await Navigation.NavigateToAsync<EditHabitViewModel>( routeParams );
+        }
     }
 
     [RelayCommand]

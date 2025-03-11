@@ -9,7 +9,7 @@ public interface IServiceOfHabit
     Task<SaveHabitResponse> UpdateHabitAsync( EditUserHabitDto habit );
     Task UpdatePrioritiesAsync( IEnumerable<UserHabitWithPriority> habitsWithPriorities );
     void ResetPriorities( IEnumerable<UserHabit> habits );
-    bool CanAddNewHabit( UserHabit newHabit, IEnumerable<UserHabit> allHabits );
+    bool CanAddNewHabit( IEnumerable<UserHabit> allHabits );
     Task<HabitDeletionResponse?> DeleteAsync( long id );
 
     void Recompute( UserHabit habit );

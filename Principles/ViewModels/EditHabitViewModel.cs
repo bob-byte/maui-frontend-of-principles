@@ -129,75 +129,52 @@ public partial class EditHabitViewModel : BaseViewModel
             copyOfHabits.Remove( Habit );
         }
 
-        bool canSaveHabit;
-        if (IsNewHabit)
+        Habit.Name = NameOfHabit.Value;
+        EditUserHabitDto dto = new()
         {
-            canSaveHabit = ServiceOfHabit.CanAddNewHabit( Habit, copyOfHabits );
+            AreasOfLife = Habit.AreasOfLife!.ToList(),//get copy, because it will be changed
+            ColorName = Habit.ColorName,
+            Description = Habit.Description,
+            Complexity = Habit.Complexity,
+            Frequency = Habit.Frequency,
+            Id = Habit.Id,
+            Name = Habit.Name,
+            Priority = Habit.Priority,
+            Question = Habit.Question,
+            Goal = Habit.Goal,
+            Status = Habit.Status,
+            Type = Habit.Type,
+            Reminders = Habit.Reminders,
+            PrioritizedHabits = new List<UserHabitWithPriority>()
+        };
+            
+        dto.AreasOfLife!.Remove( AllAreasOfLifeAsOneItem );
 
-            if (!canSaveHabit)
+        copyOfHabits.Add( Habit );
+        foreach (UserHabit habit in copyOfHabits)
+        {
+            dto.PrioritizedHabits.Add( new UserHabitWithPriority { Id = habit.Id, Priority = habit.Priority } );
+        }
+
+        if (UserHabits.Count == 1)
+        {
+            await UiBusyFor( async () =>
             {
-                canSaveHabit = await DialogService.ShowAlertWithTwoBtnsAsync(
-                    msg: LocStrings.DescriptionOfCannotAddNewHabit,
-                    title: LocStrings.TitleOfCannotAddNewHabit,
-                    accept: LocStrings.AddItAnyway,
-                    cancel: LocStrings.Cancel
-                );
-            }
+                SaveHabitResponse response = await ServiceOfHabit.UpdateHabitAsync( dto );
+                await HandleHabitSaveAsync( response );
+                ReferenceMessenger.Send( new HabitSavedMessage( Habit, copyOfHabits ) );
+                await Navigation.GoBackAsync();
+            } );
         }
         else
         {
-            canSaveHabit = true;
-        }
-
-        if (canSaveHabit)
-        {
-            Habit.Name = NameOfHabit.Value;
-            EditUserHabitDto dto = new()
+            await UiBusyFor( async () =>
             {
-                AreasOfLife = Habit.AreasOfLife!.ToList(),//get copy, because it will be changed
-                ColorName = Habit.ColorName,
-                Description = Habit.Description,
-                Complexity = Habit.Complexity,
-                Frequency = Habit.Frequency,
-                Id = Habit.Id,
-                Name = Habit.Name,
-                Priority = Habit.Priority,
-                Question = Habit.Question,
-                Goal = Habit.Goal,
-                Status = Habit.Status,
-                Type = Habit.Type,
-                Reminders = Habit.Reminders,
-                PrioritizedHabits = new List<UserHabitWithPriority>()
-            };
-            
-            dto.AreasOfLife!.Remove( AllAreasOfLifeAsOneItem );
-
-            copyOfHabits.Add( Habit );
-            foreach (UserHabit habit in copyOfHabits)
-            {
-                dto.PrioritizedHabits.Add( new UserHabitWithPriority { Id = habit.Id, Priority = habit.Priority } );
-            }
-
-            if (UserHabits.Count == 1)
-            {
-                await UiBusyFor( async () =>
-                {
-                    SaveHabitResponse response = await ServiceOfHabit.UpdateHabitAsync( dto );
-                    await HandleHabitSaveAsync( response );
-                    ReferenceMessenger.Send( new HabitSavedMessage( Habit, copyOfHabits ) );
-                    await Navigation.GoBackAsync();
-                } );
-            }
-            else
-            {
-                await UiBusyFor( async () =>
-                {
-                    SaveHabitResponse response = await ServiceOfHabit.UpdateHabitAsync( dto );
-                    await HandleHabitSaveAsync( response );
-                    await Navigation.GoBackAsync();
-                    ReferenceMessenger.Send( new HabitSavedMessage( Habit, copyOfHabits ) );
-                } );
-            }
+                SaveHabitResponse response = await ServiceOfHabit.UpdateHabitAsync( dto );
+                await HandleHabitSaveAsync( response );
+                await Navigation.GoBackAsync();
+                ReferenceMessenger.Send( new HabitSavedMessage( Habit, copyOfHabits ) );
+            } );
         }
     }
 

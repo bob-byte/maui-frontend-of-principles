@@ -166,7 +166,7 @@ public class ServiceOfHabit : BaseRemoteService, IServiceOfHabit
         }
     }
 
-    public bool CanAddNewHabit( UserHabit newHabit, IEnumerable<UserHabit> allHabits )
+    public bool CanAddNewHabit( IEnumerable<UserHabit> allHabits )
     {
         bool? result = null;
         List<UserHabit> activeHabits = allHabits.
