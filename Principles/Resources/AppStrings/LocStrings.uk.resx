@@ -837,4 +837,40 @@
   <data name="FieldIsNotEditable" xml:space="preserve">
     <value>Це поле не доступне для редагування.</value>
   </data>
+	<data name="Archive" xml:space="preserve">
+    <value>Архів</value>
+    </data>
+   <data name="AddToArchive" xml:space="preserve">
+    <value>В архів</value>
+  </data>
+	<data name="ChooseAction" xml:space="preserve">
+    <value>Оберіть дію</value>
+  </data>
+	<data name="RemoveFromArchive" xml:space="preserve">
+    <value>Видалити з архіву</value>
+  </data>
+	<data name="DeleteArchivedHabitConfirmationText" xml:space="preserve">
+    <value>Ви в процесі видалення звички. Виберіть одну зі запропонованих дій.</value>
+  </data>
+	<data name="RemoveHabitFromArchiveQuestion" xml:space="preserve">
+    <value>Бажаєте видалити цю звичку з архіву?</value>
+  </data>
+	<data name="MessageRemoveHabitFromArchive" xml:space="preserve">
+    <value>Ця дія відновить звичку у ваш активний список.</value>
+  </data>
+	<data name="AddHabitToArchiveQuestionUk" xml:space="preserve">
+    <value>Бажаєте додати цю звичку в архів?</value>
+    </data>
+	<data name="MessageAddHabitToArchiveUk" xml:space="preserve">
+    <value>Ця дія перемістить звичку в архів. Ви зможете відновити її пізніше.</value>
+    </data>
+	<data name="HabitsForLaterDescription" xml:space="preserve">
+    <value>У цьому розділі показані звички, які ви зберегли для опрацювання в майбутньому. Ви можете повернутися до них у будь-який зручний момент.</value>
+    </data>
+	<data name="HabitArchivingInfo" xml:space="preserve">
+    <value>Ваша звичка буде збережена в архів, ви завжди зможете повернути її в основний список.</value>
+    </data>
+	<data name="ArchiveHabit" xml:space="preserve">
+    <value>Додати звичку в архів</value>
+    </data>
 </root>

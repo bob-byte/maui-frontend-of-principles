@@ -208,6 +208,15 @@
                                                IsVisible="{Binding IsNewHabit,
                                                                    Converter={StaticResource IsFalse}}"
                                                Margin="0,5,0,0" />
+                            <dxco:SimpleButton Text="{Binding LocManager[ArchiveHabit]}"
+                                               Clicked="SB_Save_Clicked"
+                                               Style="{StaticResource PrimaryButton}"
+                                               IsVisible="{Binding IsNewHabit,
+                                                                   Converter={StaticResource IsFalse}}"
+                                               Margin="0,5,0,0"
+                                               Command="{Binding ArchiveHabitCommand}" />
+                            <Label Text="{Binding LocManager[HabitArchivingInfo]}"
+                                   IsVisible="{Binding IsArchived}" />
 
                             <dxco:BottomSheet x:Name="GoalsBottomSheet"
                                               AllowDismiss="True"

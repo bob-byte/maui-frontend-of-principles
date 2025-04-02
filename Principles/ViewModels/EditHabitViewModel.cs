@@ -1,3 +1,5 @@
+using CommunityToolkit.Maui.Views;
+
 using DevExpress.Maui.Core.Internal;
 
 using Plugin.LocalNotification;
@@ -56,7 +58,12 @@ public partial class EditHabitViewModel : BaseViewModel
     
     [ObservableProperty]
     private ObservableCollectionEx<UserAreaOfLife> m_allUserAreasOfLife;
-    
+    [ObservableProperty]
+    private bool m_isArchived;
+
+    private MultipleActionPopup? m_multipleActionPopup;
+    private readonly MultipleActionPopupViewModel m_multipleActionPopupViewModel;
+
     public UserAreaOfLife AllAreasOfLifeAsOneItem { get; }
 
     public IAiRecommenderOfHabitsService AiRecommenderOfHabits { get; }
@@ -79,6 +86,7 @@ public partial class EditHabitViewModel : BaseViewModel
         AiRecommenderOfHabits = serviceProvider.GetRequiredService<IAiRecommenderOfHabitsService>();
         GoalService = serviceProvider.GetRequiredService<IGoalService>();
         ReminderService = serviceProvider.GetRequiredService<IReminderService>();
+        m_multipleActionPopupViewModel = new MultipleActionPopupViewModel( serviceProvider );
 
         AllUserAreasOfLife = new ObservableCollectionEx<UserAreaOfLife>();
 
@@ -119,7 +127,28 @@ public partial class EditHabitViewModel : BaseViewModel
             new PeriodOfHabit { Type = PeriodTypeOfHabit.Month, Name = LocStrings.Month.ToLower() }
         ];
     }
-    
+
+    private bool canSaveHabit;
+
+    private async Task ShowMultiActionPopupAsync()
+    {
+        m_multipleActionPopupViewModel.SetActions( new List<ActionButtons>
+                {
+                    new ActionButtons { Text = LocStrings.ArchiveHabit, Command = new Command(() =>
+                    {
+                        ArchiveHabit();
+                        canSaveHabit = true;
+                    }) },
+                    new ActionButtons { Text = LocStrings.AddItAnyway, Command = new Command(() =>
+                    {
+                        canSaveHabit = true;
+                    }) }
+                }, LocStrings.DescriptionOfCannotAddNewHabit );
+
+        m_multipleActionPopup = new MultipleActionPopup( m_multipleActionPopupViewModel );
+        await Application.Current.MainPage.ShowPopupAsync( m_multipleActionPopup );
+    }
+
     [RelayCommand(CanExecute = nameof( CanSave ) )]
     private async Task SaveAsync()
     {
@@ -129,19 +158,13 @@ public partial class EditHabitViewModel : BaseViewModel
             copyOfHabits.Remove( Habit );
         }
 
-        bool canSaveHabit;
         if (IsNewHabit)
         {
             canSaveHabit = ServiceOfHabit.CanAddNewHabit( Habit, copyOfHabits );
 
             if (!canSaveHabit)
             {
-                canSaveHabit = await DialogService.ShowAlertWithTwoBtnsAsync(
-                    msg: LocStrings.DescriptionOfCannotAddNewHabit,
-                    title: LocStrings.TitleOfCannotAddNewHabit,
-                    accept: LocStrings.AddItAnyway,
-                    cancel: LocStrings.Cancel
-                );
+                await ShowMultiActionPopupAsync();
             }
         }
         else
@@ -167,11 +190,12 @@ public partial class EditHabitViewModel : BaseViewModel
                 Status = Habit.Status,
                 Type = Habit.Type,
                 Reminders = Habit.Reminders,
+                IsArchived = IsArchived,
                 PrioritizedHabits = new List<UserHabitWithPriority>()
             };
             
             dto.AreasOfLife!.Remove( AllAreasOfLifeAsOneItem );
-
+            
             copyOfHabits.Add( Habit );
             foreach (UserHabit habit in copyOfHabits)
             {
@@ -184,7 +208,14 @@ public partial class EditHabitViewModel : BaseViewModel
                 {
                     SaveHabitResponse response = await ServiceOfHabit.UpdateHabitAsync( dto );
                     await HandleHabitSaveAsync( response );
-                    ReferenceMessenger.Send( new HabitSavedMessage( Habit, copyOfHabits ) );
+                    if (!dto.IsArchived)
+                    {
+                        ReferenceMessenger.Send( new HabitSavedMessage( Habit, copyOfHabits ) );
+                    }
+                    else
+                    {
+                        ReferenceMessenger.Send( new ArchiveHabitMessage( Habit, copyOfHabits ) );
+                    }
                     await Navigation.GoBackAsync();
                 } );
             }
@@ -195,10 +226,23 @@ public partial class EditHabitViewModel : BaseViewModel
                     SaveHabitResponse response = await ServiceOfHabit.UpdateHabitAsync( dto );
                     await HandleHabitSaveAsync( response );
                     await Navigation.GoBackAsync();
-                    ReferenceMessenger.Send( new HabitSavedMessage( Habit, copyOfHabits ) );
+                    if (!dto.IsArchived)
+                    {
+                        ReferenceMessenger.Send( new HabitSavedMessage( Habit, copyOfHabits ) );
+                    }
+                    else
+                    { 
+                        ReferenceMessenger.Send( new ArchiveHabitMessage( Habit, copyOfHabits ) );
+                    }
                 } );
             }
         }
+    }
+
+    [RelayCommand]
+    private void ArchiveHabit()
+    {
+        IsArchived = true;
     }
 
     public bool CanSave()
@@ -305,6 +349,11 @@ public partial class EditHabitViewModel : BaseViewModel
         else
         {
             Habit.CanHasSubhabits = true;
+        }
+
+        if (query.TryGetValue( "IsArchived", out object? isArchivedValue ) && isArchivedValue is bool archived)
+        {
+            IsArchived = archived;
         }
     }
 

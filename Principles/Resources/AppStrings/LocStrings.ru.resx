@@ -759,4 +759,40 @@
 	<data name="FieldIsNotEditable" xml:space="preserve">
 		<value>Это поле недоступно для редактирования.</value>
     </data>
+	<data name="Archive" xml:space="preserve">
+		<value>Архив</value>
+	</data>
+	<data name="AddToArchive" xml:space="preserve">
+		<value>В архив</value>
+	</data>
+	<data name="ChooseAction" xml:space="preserve">
+    <value>Выберите действие</value>
+  </data>
+	<data name="RemoveFromArchive" xml:space="preserve">
+    <value>Удалить из архива</value>
+  </data>
+	<data name="DeleteArchivedHabitConfirmationText" xml:space="preserve">
+    <value>Вы в процессе удаления привычки. Выберите одно из предложенных действий.</value>
+  </data>
+	<data name="RemoveHabitFromArchiveQuestion" xml:space="preserve">
+    <value>Хотите удалить эту привычку из архива?</value>
+  </data>
+	<data name="MessageRemoveHabitFromArchive" xml:space="preserve">
+    <value>Это действие восстановит привычку в ваш активный список.</value>
+  </data>
+	<data name="AddHabitToArchiveQuestionRu" xml:space="preserve">
+    <value>Хотите добавить эту привычку в архив?</value>
+	</data>
+	<data name="MessageAddHabitToArchiveRu" xml:space="preserve">
+    <value>Это действие переместит привычку в архив. Вы сможете восстановить её позже.</value>
+	</data>
+	<data name="HabitsForLaterDescription" xml:space="preserve">
+    <value>В этом разделе отображаются привычки, которые вы отложили на потом. Вы всегда можете вернуться к ним, когда будете готовы продолжить работу.</value>
+	</data>
+	<data name="HabitArchivingInfo" xml:space="preserve">
+	<value>Ваша привычка будет сохранена в архиве, и вы всегда сможете вернуть её в основной список.</value>
+	</data>
+	<data name="ArchiveHabit" xml:space="preserve">
+    <value>Добавить привычку в архив</value>
+	</data>
 </root>

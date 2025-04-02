@@ -7,6 +7,10 @@ public interface IServiceOfHabit
     Task<List<UserHabit>> ActiveHabitsAsync( DateOnly startInterval, DateOnly endInterval );
     Task<UserHabit> UserHabitAsync( long id );
     Task<SaveHabitResponse> UpdateHabitAsync( EditUserHabitDto habit );
+    Task SetHabitArchiveStatus( HabitArchiveStatus habitArchiveStatus );
+    Task<List<ArсhivedHabitDto>> GetArchivedHabits();
+    Task<List<ProgressOfHabit>> GetProgressesOfHabit( long id );
+    void InitializeHabitProgresses( UserHabit habit, DateOnly startInterval, DateOnly endInterval );
     Task UpdatePrioritiesAsync( IEnumerable<UserHabitWithPriority> habitsWithPriorities );
     void ResetPriorities( IEnumerable<UserHabit> habits );
     bool CanAddNewHabit( UserHabit newHabit, IEnumerable<UserHabit> allHabits );

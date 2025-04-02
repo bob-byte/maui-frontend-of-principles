@@ -1,5 +1,6 @@
 using CommunityToolkit.Maui.Behaviors;
 
+using DevExpress.Maui.Controls;
 using DevExpress.Maui.Core;
 using DevExpress.Maui.DataGrid;
 using Plugin.LocalNotification;
@@ -337,6 +338,14 @@ public partial class ProgressOfHabitsView : ContentPageBase
         };
         editOnSwipe.SetBinding( SwipeItem.CommandProperty, new Binding( nameof( ProgressOfHabitsViewModel.EditHabitCommand ) ) );
         DGV_Habits.StartSwipeItems.Add( editOnSwipe );
+
+        SwipeItem archiveOnSwipe = new()
+        {
+            BackgroundColor = Application.Current!.Resources["NormalHeaderText"] as Color,
+            Caption = LocStrings.AddToArchive
+        }; 
+        archiveOnSwipe.SetBinding( SwipeItem.CommandProperty, new Binding( nameof( ProgressOfHabitsViewModel.ArchiveHabitCommand ) ) );
+        DGV_Habits.StartSwipeItems.Add( archiveOnSwipe );
     }
 #endif
 
@@ -398,5 +407,52 @@ public partial class ProgressOfHabitsView : ContentPageBase
     private void SB_ReminderReport_Cancel_Clicked( object sender, EventArgs e )
     {
         DXP_Reminder.IsOpen = false;
+    }
+
+    private void DXI_Archive_Tapped( object sender, TappedEventArgs e )
+    {
+        ArchiveBottomSheet.State = BottomSheetState.HalfExpanded;
+
+
+        double heightOfReminderBottomSheet = 500;
+
+        if (ViewModel.SettingsService.NormalPageHeight == 0)
+        {
+            ArchiveBottomSheet.HalfExpandedRatio = 0.7;
+        }
+        else
+        {
+            //bottom_sheet_height = full_height * HalfExpandedRatio
+            //HalfExpandedRatio = bottom_sheet_height / full_height
+            ArchiveBottomSheet.HalfExpandedRatio = heightOfReminderBottomSheet / ViewModel.SettingsService.NormalPageHeight;
+        }
+
+        double rowSpacing = G_ArchivedHabits.RowSpacing * (G_ArchivedHabits.RowDefinitions.Count - 1);
+        double additionalSpacing = 15;
+        double height = heightOfReminderBottomSheet - rowSpacing - L_ArhiveCenralHeader.HeightRequest - L_ArhiveCenralHeader.HeightRequest - additionalSpacing;
+
+        SKL_Archive.HeightRequest = height;
+        SKL_Archive.WidthRequest = PageWidth - (G_ArchivedHabits.Padding.Left + G_ArchivedHabits.Padding.Right);
+        DXCV_Archive.HeightRequest = height;
+    }
+
+    private void ME_ArchivedHabitEndIconClicked( object sender, EventArgs e )
+    {
+        ArchiveBottomSheet.State = BottomSheetState.Hidden;
+    }
+
+    private void DXI_Info_Tapped( object sender, TappedEventArgs e )
+    {
+        DXP_Tip.IsOpen = true;
+    }
+
+    private void B_Ok_Clicked( object sender, EventArgs e )
+    {
+        DXP_Tip.IsOpen = false;
+    }
+
+    private void DXI_Plus_Tapped( object sender, TappedEventArgs e )
+    {
+        ArchiveBottomSheet.State = BottomSheetState.Hidden;
     }
 }

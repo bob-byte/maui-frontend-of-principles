@@ -837,4 +837,40 @@
   <data name="FieldIsNotEditable" xml:space="preserve">
     <value>This field is not editable.</value>
   </data>
+  <data name="Archive" xml:space="preserve">
+    <value>Archive</value>
+  </data>
+	<data name="AddToArchive" xml:space="preserve">
+    <value>To archive</value>
+  </data>
+	<data name="ChooseAction" xml:space="preserve">
+    <value>Choose action</value>
+  </data>
+	<data name="RemoveFromArchive" xml:space="preserve">
+    <value>Remove from archive</value>
+  </data>
+	<data name="DeleteArchivedHabitConfirmationText" xml:space="preserve">
+    <value>You are in the process of deleting a habit. Please choose one of the suggested actions.</value>
+  </data>
+	<data name="RemoveHabitFromArchiveQuestion" xml:space="preserve">
+    <value>Do you want to remove this habit from the archive?</value>
+  </data>
+	<data name="MessageRemoveHabitFromArchive" xml:space="preserve">
+    <value>This action will restore the habit to your active list.</value>
+  </data>
+	<data name="AddHabitToArchiveQuestion" xml:space="preserve">
+    <value>Do you want to archive this habit?</value>
+    </data>
+	<data name="MessageAddHabitToArchive" xml:space="preserve">
+    <value>This action will move the habit to the archive. You can restore it later.</value>
+    </data>
+	<data name="HabitsForLaterDescription" xml:space="preserve">
+    <value>This section displays habits that you have archived for later. You can return to them whenever you're ready to work on them again.</value>
+    </data>
+	<data name="HabitArchivingInfo" xml:space="preserve">
+    <value>Your habit will be archived, and you can always return it to the main list.</value>
+    </data>
+	<data name="ArchiveHabit" xml:space="preserve">
+    <value>Add the habit to archive</value>
+    </data>
 </root>

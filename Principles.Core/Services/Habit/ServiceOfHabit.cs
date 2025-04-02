@@ -28,52 +28,7 @@ public class ServiceOfHabit : BaseRemoteService, IServiceOfHabit
         Stopwatch timeWatcher = Stopwatch.StartNew();
         foreach( UserHabit habit in result )
         {
-            bool wasProgressesEmpty = habit.Progresses == null || habit.Progresses.Count == 0;
-            habit.Progresses ??= new ObservableCollectionEx<ProgressOfHabit>();
-
-            List<ProgressOfHabit> progressesInInterval = habit.
-                Progresses.
-                Where( p => startInterval <= p.Date && p.Date <= endInterval ).
-                OrderByDescending( p => p.Date ).
-                ToList();
-            if (progressesInInterval.Count < intervalLength)
-            {
-                for (DateOnly date = endInterval; date >= startInterval; date = date.AddDays( value: -1 ))
-                {
-                    if (wasProgressesEmpty || !progressesInInterval.Any( p => p.Date == date ))
-                    {
-                        ProgressOfHabit progress = new()
-                        {
-                            Id = 0,
-                            Date = date,
-                            Value = ProgressValue.UNKNOWN,
-                            Habit = habit
-                        };
-
-                        habit.Progresses.Add( progress );
-                    }
-                }
-            }
-
-            habit.Progresses = new ObservableCollectionEx<ProgressOfHabit>( habit.Progresses.OrderByDescending( u => u.Date ) );
-
-            int whenToManyProgresses = 150;
-            if (habit.Progresses.Count > whenToManyProgresses)
-            {
-                habit.Progresses.AsParallel().ForAll( p => p.Habit = habit );
-            }
-            else
-            {
-                foreach (ProgressOfHabit progress in habit.Progresses)
-                {
-                    progress.Habit = habit;
-                }
-            }
-
-            if (!wasProgressesEmpty)
-            {
-                Recompute( habit );
-            }
+            InitializeHabitProgresses( habit, startInterval, endInterval );
         }
 
         timeWatcher.Stop();
@@ -84,6 +39,57 @@ public class ServiceOfHabit : BaseRemoteService, IServiceOfHabit
         }
 
         return result;
+    }
+
+    public void InitializeHabitProgresses( UserHabit habit, DateOnly startInterval, DateOnly endInterval )
+    {
+        bool wasProgressesEmpty = habit.Progresses == null || habit.Progresses.Count == 0;
+        habit.Progresses ??= new ObservableCollectionEx<ProgressOfHabit>();
+
+        int intervalLength = (endInterval.ToDateTime( TimeOnly.MinValue ) - startInterval.ToDateTime( TimeOnly.MinValue )).Days + 1;
+
+        List<ProgressOfHabit> progressesInInterval = habit.Progresses
+            .Where( p => startInterval <= p.Date && p.Date <= endInterval )
+            .OrderByDescending( p => p.Date )
+            .ToList();
+
+        if (progressesInInterval.Count < intervalLength)
+        {
+            for (DateOnly date = endInterval; date >= startInterval; date = date.AddDays( -1 ))
+            {
+                if (wasProgressesEmpty || !progressesInInterval.Any( p => p.Date == date ))
+                {
+                    ProgressOfHabit progress = new()
+                    {
+                        Id = 0,
+                        Date = date,
+                        Value = ProgressValue.UNKNOWN,
+                        Habit = habit
+                    };
+                    habit.Progresses.Add( progress );
+                }
+            }
+        }
+
+        habit.Progresses = new ObservableCollectionEx<ProgressOfHabit>( habit.Progresses.OrderByDescending( u => u.Date ) );
+
+        int whenTooManyProgresses = 150;
+        if (habit.Progresses.Count > whenTooManyProgresses)
+        {
+            habit.Progresses.AsParallel().ForAll( p => p.Habit = habit );
+        }
+        else
+        {
+            foreach (ProgressOfHabit progress in habit.Progresses)
+            {
+                progress.Habit = habit;
+            }
+        }
+
+        if (!wasProgressesEmpty)
+        {
+            Recompute( habit );
+        }
     }
 
     public void Recompute( UserHabit habit )
@@ -155,6 +161,38 @@ public class ServiceOfHabit : BaseRemoteService, IServiceOfHabit
 
         string url = $"{UrlBuilder.HabitsPriorities}";
         await RequestProvider.PutAsync( url, habitsWithPriorities.ToList(), SettingsService.AuthAccessToken );
+    }
+
+    public async Task SetHabitArchiveStatus(HabitArchiveStatus habitArchiveStatus )
+    {
+        string url = $"{UrlBuilder.HabitArchiveStatus}";
+        await RequestProvider.PostAsync( url, habitArchiveStatus, SettingsService.AuthAccessToken );
+    }
+
+    public async Task<List<ArсhivedHabitDto>> GetArchivedHabits()
+    {
+        string url = $"{UrlBuilder.Archive}";
+
+        List<ArсhivedHabitDto> result = await RequestProvider.GetAsync<List<ArсhivedHabitDto>>(
+            url,
+            SettingsService.AuthAccessToken
+        ).DefaultConfigureAwait();
+        return result;
+    }
+
+    public async Task<List<ProgressOfHabit>> GetProgressesOfHabit(long id)
+    {
+        if (id == default)
+        {
+            throw new ArgumentException( message: "Is default value", paramName: nameof( id ) );
+        }
+
+        string url = $"{UrlBuilder.Progresses}/{id}";
+        List<ProgressOfHabit> result = await RequestProvider.GetAsync<List<ProgressOfHabit>>(
+            url,
+            SettingsService.AuthAccessToken
+        ).DefaultConfigureAwait();
+        return result;
     }
 
     public void ResetPriorities( IEnumerable<UserHabit> habits )

@@ -1,0 +1,49 @@
+﻿<toolkit:Popup x:Class="Principles.Views.MultipleActionPopup"
+               xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:controls="clr-namespace:Principles.Controls"
+               xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
+               xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+               xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
+               xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+               xmlns:loc="clr-namespace:Principles.Resources.AppStrings"
+               xmlns:m="clr-namespace:Principles.Core.Models;assembly=Principles.Core"
+               xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+               xmlns:templates="clr-namespace:Principles.Views.Templates"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               xmlns:v="clr-namespace:Principles.Views"
+               xmlns:vm="clr-namespace:Principles.ViewModels"
+               x:DataType="vm:MultipleActionPopupViewModel"
+               Color="Transparent">
+
+    <Grid x:Name="G_Popup">
+        <Frame Padding="10"
+               BackgroundColor="White"
+               CornerRadius="20"
+               HasShadow="True">
+            <VerticalStackLayout>
+                <Label Text="{Binding LocManager[ChooseAction]}"
+                       Style="{StaticResource CentralHeader}" />
+                <Label Text="{Binding TextOfLabel}"
+                       FontFamily="MonaSansMedium"
+                       FontSize="16"
+                       HorizontalTextAlignment="Center"
+                       Margin="0,0,0,10" />
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Buttons}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <dxco:SimpleButton Text="{Binding Text}"
+                                               Style="{StaticResource PrimaryButton}"
+                                               Command="{Binding Command}"
+                                               Margin="0,0,0,7"
+                                               Clicked="SB_Clicked"/>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+                <dxco:SimpleButton Text="{Binding LocManager[Cancel]}"
+                                   Style="{StaticResource SecondaryButton}"
+                                   Clicked="SB_Clicked" />
+            </VerticalStackLayout>
+        </Frame>
+    </Grid>
+</toolkit:Popup>
