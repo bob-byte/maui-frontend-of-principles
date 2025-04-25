@@ -59,7 +59,7 @@ public class ReminderService : BaseRemoteService, IReminderService
             {
                 foreach (Reminder? reminder in remindersResponse.GeneralReminders.Where( r => r.IsEnabled ))
                 {
-                    await SaveAsync( 
+                    await SaveLocallyAsync( 
                         reminder.UserNotificationRequestId, 
                         reminder.Title, 
                         reminder.Description, 
@@ -93,7 +93,7 @@ public class ReminderService : BaseRemoteService, IReminderService
                             .AddDays( daysUntilNextReminder )
                             .Add( userHabitReminder.Time.ToTimeSpan() );
                         
-                        await SaveAsync( 
+                        await SaveLocallyAsync( 
                             weekDay.UserNotificationRequestId, 
                             userHabitReminder.Title, 
                             userHabitReminder.Description, 
@@ -106,7 +106,7 @@ public class ReminderService : BaseRemoteService, IReminderService
         }
     }
 
-    public async Task SaveAsync( int id, string title, string description, DateTime notifyTime, ReminderRepeat repeatType )
+    public async Task SaveLocallyAsync( int id, string title, string description, DateTime notifyTime, ReminderRepeat repeatType )
     {
         NotificationRepeat notificationRepeat = repeatType switch
         {
@@ -131,10 +131,10 @@ public class ReminderService : BaseRemoteService, IReminderService
             },
         };
         
-        await SaveAsync( notification );
+        await SaveLocallyAsync( notification );
     }
 
-    public async Task SaveAsync( NotificationRequest notification )
+    public async Task SaveLocallyAsync( NotificationRequest notification )
     {
 #if IOS
         LocalNotificationCenter.Current.Cancel( notification.NotificationId );

@@ -2,6 +2,7 @@
 <v:ContentPageBase x:Class="Principles.Views.SignupView"
                    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                   xmlns:dx="http://schemas.devexpress.com/maui"
                    xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
                    xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
                    xmlns:loc="clr-namespace:Principles.Resources.AppStrings"
@@ -15,145 +16,150 @@
                    Shell.NavBarIsVisible="True"
                    Shell.TabBarIsVisible="False">
     <ScrollView>
-        <Grid>
-            <VerticalStackLayout Margin="15,0,15,10"
-                                 VerticalOptions="StartAndExpand">
-                <skia:SKLottieView Source="fire_loading.json"
-                                   WidthRequest="200"
-                                   HeightRequest="200"
-                                   IsAnimationEnabled="True"
-                                   RepeatCount="-1" />
-                <dxe:TextEdit LabelText="{x:Static loc:LocStrings.UserName}"
-                              Text="{Binding Name.Value}"
-                              AutofillContentType="Username"
-                              ClearIconVisibility="Never"
-                              ErrorText="{Binding Name.Errors,
-                                                  Converter={StaticResource FirstValidationError}}"
-                              HasError="{Binding Name.IsValid,
-                                                 Converter={StaticResource IsFalse}}"
-                              StartIcon="user"
-                              TextChangedCommand="{Binding ValidateNameCommand}" />
-                <dxe:TextEdit x:Name="EmailTextEdit"
-                              LabelText="{x:Static loc:LocStrings.Email}"
-                              Text="{Binding Email.Value}"
-                              Margin="0,5,0,0"
-                              AutofillContentType="EmailAddress"
-                              ClearIconVisibility="Never"
-                              ErrorText="{Binding Email.Errors,
-                                                  Converter={StaticResource FirstValidationError}}"
-                              HasError="{Binding Email.IsValid,
-                                                 Converter={StaticResource IsFalse}}"
-                              Keyboard="Email"
-                              StartIcon="email"
-                              TextChangedCommand="{Binding ValidateEmailCommand}" />
-                <dxe:PasswordEdit x:Name="PasswordTextEdit"
-                                  LabelText="{x:Static loc:LocStrings.Password}"
-                                  Text="{Binding Password.Value}"
-                                  Margin="0,5,0,0"
-                                  AutofillContentType="Password"
+        <dx:SafeKeyboardAreaView>
+            <Grid>
+                <VerticalStackLayout Margin="15,0,15,10"
+                                     VerticalOptions="StartAndExpand">
+                    <skia:SKLottieView Source="fire_loading.json"
+                                       WidthRequest="200"
+                                       HeightRequest="200"
+                                       IsAnimationEnabled="True"
+                                       RepeatCount="-1" />
+                    <dxe:TextEdit LabelText="{x:Static loc:LocStrings.UserName}"
+                                  Text="{Binding Name.Value}"
+                                  AutofillContentType="Username"
                                   ClearIconVisibility="Never"
-                                  ErrorText="{Binding Password.Errors,
+                                  ErrorText="{Binding Name.Errors,
                                                       Converter={StaticResource FirstValidationError}}"
-                                  HasError="{Binding Password.IsValid,
+                                  HasError="{Binding Name.IsValid,
                                                      Converter={StaticResource IsFalse}}"
-                                  StartIcon="password"
-                                  TextChangedCommand="{Binding ValidatePasswordCommand}" />
-                <dxe:ChoiceChipGroup x:Name="CCG_Genders"
-                                     HorizontalOptions="Center"
-                                     IsMultiline="False"
-                                     SelectionChanged="CCG_Genders_SelectionChanged">
-                    <dxe:Chip Text="{x:Static loc:LocStrings.Man}" />
-                    <dxe:Chip Text="{x:Static loc:LocStrings.Woman}" />
-                    <dxe:Chip Text="{x:Static loc:LocStrings.OtherSex}" />
-                </dxe:ChoiceChipGroup>
-                <dxe:MultilineEdit x:Name="ME_Mission"
-                                   LabelText="{x:Static loc:LocStrings.Mission}"
-                                   Text="{Binding Mission}"
-                                   ClearIconVisibility="Never"
-                                   EndIcon="info"
-                                   EndIconCommand="{Binding ShowSnackbarForMissionCommand}"
-                                   EndIconCommandParameter="{x:Reference ME_Mission}"
-                                   IsLabelFloating="False"
-                                   PlaceholderText="{x:Static loc:LocStrings.OptionalPlaceholder}"
-                                   ReturnType="Done"
-                                   StartIcon="mission" />
+                                  ReturnType="Next"
+                                  StartIcon="user"
+                                  TextChangedCommand="{Binding ValidateNameCommand}" />
+                    <dxe:TextEdit x:Name="EmailTextEdit"
+                                  LabelText="{x:Static loc:LocStrings.Email}"
+                                  Text="{Binding Email.Value}"
+                                  Margin="0,5,0,0"
+                                  AutofillContentType="EmailAddress"
+                                  ClearIconVisibility="Never"
+                                  ErrorText="{Binding Email.Errors,
+                                                      Converter={StaticResource FirstValidationError}}"
+                                  HasError="{Binding Email.IsValid,
+                                                     Converter={StaticResource IsFalse}}"
+                                  Keyboard="Email"
+                                  ReturnType="Next"
+                                  StartIcon="email"
+                                  TextChangedCommand="{Binding ValidateEmailCommand}" />
+                    <dxe:PasswordEdit x:Name="PasswordTextEdit"
+                                      LabelText="{x:Static loc:LocStrings.Password}"
+                                      Text="{Binding Password.Value}"
+                                      Margin="0,5,0,0"
+                                      AutofillContentType="Password"
+                                      ClearIconVisibility="Never"
+                                      ErrorText="{Binding Password.Errors,
+                                                          Converter={StaticResource FirstValidationError}}"
+                                      HasError="{Binding Password.IsValid,
+                                                         Converter={StaticResource IsFalse}}"
+                                      ReturnType="Next"
+                                      StartIcon="password"
+                                      TextChangedCommand="{Binding ValidatePasswordCommand}" />
+                    <dxe:ChoiceChipGroup x:Name="CCG_Genders"
+                                         HorizontalOptions="Center"
+                                         IsMultiline="False"
+                                         SelectionChanged="CCG_Genders_SelectionChanged">
+                        <dxe:Chip Text="{x:Static loc:LocStrings.Man}" />
+                        <dxe:Chip Text="{x:Static loc:LocStrings.Woman}" />
+                        <dxe:Chip Text="{x:Static loc:LocStrings.OtherSex}" />
+                    </dxe:ChoiceChipGroup>
+                    <dxe:MultilineEdit x:Name="ME_Mission"
+                                       LabelText="{x:Static loc:LocStrings.Mission}"
+                                       Text="{Binding Mission}"
+                                       ClearIconVisibility="Never"
+                                       EndIcon="info"
+                                       EndIconCommand="{Binding ShowSnackbarForMissionCommand}"
+                                       EndIconCommandParameter="{x:Reference ME_Mission}"
+                                       IsLabelFloating="False"
+                                       PlaceholderText="{x:Static loc:LocStrings.OptionalPlaceholder}"
+                                       ReturnType="Default"
+                                       StartIcon="mission" />
 
-                <dxe:MultilineEdit x:Name="ME_MainSlogan"
-                                   LabelText="{x:Static loc:LocStrings.MainSlogan}"
-                                   Text="{Binding MainSlogan}"
-                                   Margin="0,5,0,0"
-                                   ClearIconVisibility="Never"
-                                   EndIcon="info"
-                                   EndIconCommand="{Binding ShowSnackbarForMainSloganCommand}"
-                                   EndIconCommandParameter="{x:Reference ME_MainSlogan}"
-                                   IsLabelFloating="False"
-                                   PlaceholderText="{x:Static loc:LocStrings.OptionalPlaceholder}"
-                                   ReturnType="Done"
-                                   StartIcon="slogan" />
-                <dxco:SimpleButton Text="{x:Static loc:LocStrings.SignUp}"
-                                   Command="{Binding SignupCommand}"
-                                   Style="{StaticResource PrimaryButton}"
-                                   Margin="0,15,0,0" />
+                    <dxe:MultilineEdit x:Name="ME_MainSlogan"
+                                       LabelText="{x:Static loc:LocStrings.MainSlogan}"
+                                       Text="{Binding MainSlogan}"
+                                       Margin="0,5,0,0"
+                                       ClearIconVisibility="Never"
+                                       EndIcon="info"
+                                       EndIconCommand="{Binding ShowSnackbarForMainSloganCommand}"
+                                       EndIconCommandParameter="{x:Reference ME_MainSlogan}"
+                                       IsLabelFloating="False"
+                                       PlaceholderText="{x:Static loc:LocStrings.OptionalPlaceholder}"
+                                       ReturnType="Default"
+                                       StartIcon="slogan" />
+                    <dxco:SimpleButton Text="{x:Static loc:LocStrings.SignUp}"
+                                       Command="{Binding SignupCommand}"
+                                       Style="{StaticResource PrimaryButton}"
+                                       Margin="0,15,0,0" />
 
-                <Grid Margin="0,10,0,0"
-                      HorizontalOptions="Center"
-                      RowDefinitions="Auto, Auto"
-                      RowSpacing="5"
-                      VerticalOptions="Start">
-                    <Label Text="{x:Static loc:LocStrings.SignUpAgreementText}"
-                           FontAttributes="Italic"
-                           FontFamily="MonaSansMedium"
-                           FontSize="11"
-                           HorizontalTextAlignment="Center"
-                           LineBreakMode="TailTruncation"
-                           MaxLines="5"
-                           TextColor="Gray"
-                           Grid.Row="0" />
-                    <Label FontSize="11"
-                           HorizontalOptions="Center"
-                           HorizontalTextAlignment="Center"
-                           LineBreakMode="TailTruncation"
-                           MaxLines="5"
-                           Grid.Row="1">
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="{x:Static loc:LocStrings.UserAgreementStrInLoginAndSignupViews}"
-                                      FontAttributes="Italic"
-                                      FontFamily="MonaSansMedium"
-                                      FontSize="11"
-                                      TextColor="{StaticResource LightNormalText}">
-                                    <Span.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding OpenUserAgreementCommand}" />
-                                    </Span.GestureRecognizers>
-                                </Span>
-                                <Span Text=" " />
-                                <Span Text="{x:Static loc:LocStrings.LoginSignUpAgreementСonnectingText}"
-                                      FontAttributes="Italic"
-                                      FontFamily="MonaSansMedium"
-                                      FontSize="11"
-                                      TextColor="Gray" />
-                                <Span Text=" " />
-                                <Span Text="{x:Static loc:LocStrings.PrivacyPolicyStrInLoginAndSignupViews}"
-                                      FontAttributes="Italic"
-                                      FontFamily="MonaSansMedium"
-                                      FontSize="11"
-                                      TextColor="{StaticResource LightNormalText}">
-                                    <Span.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding OpenPrivacyPolicyCommand}" />
-                                    </Span.GestureRecognizers>
-                                </Span>
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
-                </Grid>
-            </VerticalStackLayout>
-
-            <ActivityIndicator IsVisible="{Binding IsBusy}"
-                               WidthRequest="100"
+                    <Grid Margin="0,10,0,0"
+                          HorizontalOptions="Center"
+                          RowDefinitions="Auto, Auto"
+                          RowSpacing="5"
+                          VerticalOptions="Start">
+                        <Label Text="{x:Static loc:LocStrings.SignUpAgreementText}"
+                               FontAttributes="Italic"
+                               FontFamily="MonaSansMedium"
+                               FontSize="11"
+                               HorizontalTextAlignment="Center"
+                               LineBreakMode="TailTruncation"
+                               MaxLines="5"
+                               TextColor="Gray"
+                               Grid.Row="0" />
+                        <Label FontSize="11"
                                HorizontalOptions="Center"
-                               IsRunning="{Binding IsBusy}"
-                               VerticalOptions="Center"
-                               Color="{StaticResource Primary}" />
-        </Grid>
+                               HorizontalTextAlignment="Center"
+                               LineBreakMode="TailTruncation"
+                               MaxLines="5"
+                               Grid.Row="1">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{x:Static loc:LocStrings.UserAgreementStrInLoginAndSignupViews}"
+                                          FontAttributes="Italic"
+                                          FontFamily="MonaSansMedium"
+                                          FontSize="11"
+                                          TextColor="{StaticResource LightNormalText}">
+                                        <Span.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding OpenUserAgreementCommand}" />
+                                        </Span.GestureRecognizers>
+                                    </Span>
+                                    <Span Text=" " />
+                                    <Span Text="{x:Static loc:LocStrings.LoginSignUpAgreementСonnectingText}"
+                                          FontAttributes="Italic"
+                                          FontFamily="MonaSansMedium"
+                                          FontSize="11"
+                                          TextColor="Gray" />
+                                    <Span Text=" " />
+                                    <Span Text="{x:Static loc:LocStrings.PrivacyPolicyStrInLoginAndSignupViews}"
+                                          FontAttributes="Italic"
+                                          FontFamily="MonaSansMedium"
+                                          FontSize="11"
+                                          TextColor="{StaticResource LightNormalText}">
+                                        <Span.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding OpenPrivacyPolicyCommand}" />
+                                        </Span.GestureRecognizers>
+                                    </Span>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </Grid>
+                </VerticalStackLayout>
+
+                <ActivityIndicator IsVisible="{Binding IsBusy}"
+                                   WidthRequest="100"
+                                   HorizontalOptions="Center"
+                                   IsRunning="{Binding IsBusy}"
+                                   VerticalOptions="Center"
+                                   Color="{StaticResource Primary}" />
+            </Grid>
+        </dx:SafeKeyboardAreaView>
     </ScrollView>
 </v:ContentPageBase>

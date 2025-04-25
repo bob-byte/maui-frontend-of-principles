@@ -409,13 +409,6 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     {
         await GetAccessToSendNotificationsAsync();
 
-        if (!ReminderReport.IsEnabled && ReminderReport.UserNotificationRequestId != 0)
-        {
-            LocalNotificationCenter.Current.Cancel( ReminderReport.UserNotificationRequestId );
-            closePopup();
-            return;
-        }
-
         Reminder reminder = new()
         {
             Id = ReminderReport.Id,
@@ -434,14 +427,21 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
             ReminderReport.UserNotificationRequestId = response.UserNotificationRequestId;
             reminder.UserNotificationRequestId = response.UserNotificationRequestId;
 
-            DateTime notifyTime = DateTime.Today.Add( reminder.Time.ToTimeSpan() );
-            await ReminderService.SaveAsync(
-                reminder.UserNotificationRequestId,
-                reminder.Title,
-                reminder.Description,
-                notifyTime,
-                ReminderRepeat.Daily
-            );
+            if (reminder.IsEnabled)
+            {
+                DateTime notifyTime = DateTime.Today.Add( reminder.Time.ToTimeSpan() );
+                await ReminderService.SaveLocallyAsync(
+                    reminder.UserNotificationRequestId,
+                    reminder.Title,
+                    reminder.Description,
+                    notifyTime,
+                    ReminderRepeat.Daily
+                );
+            }
+            else
+            {
+                LocalNotificationCenter.Current.Cancel( ReminderReport.UserNotificationRequestId );
+            }
 
             closePopup();
         } );

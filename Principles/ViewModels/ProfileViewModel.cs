@@ -97,7 +97,7 @@ public partial class ProfileViewModel : BaseViewModel
                 foreach (NotificationRequest? notification in notifications.Where( n => n.Title == oldMission ))
                 {
                     notification.Title = newValue;
-                    await m_reminderService.SaveAsync( notification );
+                    await m_reminderService.SaveLocallyAsync( notification );
                 }
             }
 
