@@ -29,7 +29,6 @@ public partial class ProgressOfHabitsView : ContentPageBase
         ViewModel = viewModel;
 
         InitializeComponent();
-        LoadLocalizationData();
 
 #if ANDROID31_0_OR_GREATER || IOS16_0_OR_GREATER
         SwipeItemInitialize();
@@ -45,22 +44,8 @@ public partial class ProgressOfHabitsView : ContentPageBase
         ViewModel.ReferenceMessenger.Register<NewCultureMessage>( this, ( sender, msg ) =>
         {
             UpdateLocalizedStrings();
-            LoadLocalizationData();
         } );
 
-    }
-
-    private void LoadLocalizationData()
-    {
-        L_MyHabits.Text = LocStrings.MyHabits;
-        L_LoadingContent.Text = LocStrings.LoadingContent;
-        L_HabitCollectionIsEmptyDescription.Text = LocStrings.HabitCollectionIsEmptyDescription;
-        L_Reminder.Text = LocStrings.Reminder;
-        ME_ReminderTitle.LabelText = LocStrings.ReminderTitle;
-        ME_ReminderDescription.LabelText = LocStrings.ReminderDescription;
-        TIE_Time.LabelText = LocStrings.Time;
-        SB_ReminderReport_Cancel.Text = LocStrings.Cancel;
-        SB_Save.Text = LocStrings.Save;
     }
 
     private void UpdateLocalizedStrings()

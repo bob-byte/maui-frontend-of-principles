@@ -17,16 +17,19 @@
 
     <TabBar Route="main">
         <ShellContent x:Name="SC_Helper"
+                      Title="{Binding LocManager[Helper]}"
                       Icon="helper"
                       ContentTemplate="{DataTemplate local:HelperView}"
                       Route="helper" />
 
         <ShellContent x:Name="SC_Progress"
+                      Title="{Binding LocManager[Progress]}"
                       Icon="boost"
                       ContentTemplate="{DataTemplate local:ProgressOfHabitsView}"
                       Route="progressofhabits" />
 
         <ShellContent x:Name="SC_Profile"
+                      Title="{Binding LocManager[Profile]}"
                       Icon="profile"
                       ContentTemplate="{DataTemplate local:ProfileView}"
                       Route="profile" />

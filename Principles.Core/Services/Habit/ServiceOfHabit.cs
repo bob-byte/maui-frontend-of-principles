@@ -9,7 +9,7 @@ public class ServiceOfHabit : BaseRemoteService, IServiceOfHabit
         //do nothing
     }
 
-    public List<UserHabit>? StoredUserHabits { get; set; }
+    public ObservableCollectionEx<UserHabit>? StoredUserHabits { get; set; }
 
     public async Task<List<UserHabit>> ActiveHabitsAsync( DateOnly startInterval, DateOnly endInterval )
     {

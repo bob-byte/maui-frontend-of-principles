@@ -533,6 +533,7 @@
             <converters:IsZeroConverter x:Key="IsZero" />
             <converters:IsMoreThanZeroConverter x:Key="IsMoreThanZero" />
             <converters:GenderToUserIconConverter x:Key="GenderToIcon" />
+            <converters:FrequencyToStringConverter x:Key="FrequencyToString" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

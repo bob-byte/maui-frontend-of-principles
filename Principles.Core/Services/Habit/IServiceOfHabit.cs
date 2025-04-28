@@ -2,7 +2,7 @@
 
 public interface IServiceOfHabit
 {
-    List<UserHabit>? StoredUserHabits { get; set; }
+    ObservableCollectionEx<UserHabit>? StoredUserHabits { get; set; }
 
     Task<List<UserHabit>> ActiveHabitsAsync( DateOnly startInterval, DateOnly endInterval );
     Task<UserHabit> UserHabitAsync( long id );
