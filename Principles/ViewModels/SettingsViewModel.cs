@@ -83,6 +83,7 @@ public partial class SettingsViewModel : BaseViewModel
         if (selectedLanguageCode is not null)
         {
             CultureInfo newCulture = new( selectedLanguageCode );
+            LocalizationResourceManager.Initialize( SettingsService );
             LocalizationResourceManager.Instance.SetCulture( newCulture );
             ReferenceMessenger.Send( new NewCultureMessage( newCulture ) );
         }

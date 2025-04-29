@@ -307,6 +307,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
 #if ANDROID31_0_OR_GREATER || IOS16_0_OR_GREATER
     private void SwipeItemInitialize() 
     {
+        LocalizationResourceManager.Initialize( ViewModel.SettingsService );
         SwipeItem swipeForDeletion = new()
         {
             BackgroundColor = Application.Current!.Resources["RedColor"] as Color,

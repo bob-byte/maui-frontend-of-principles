@@ -55,6 +55,8 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
 
         ReferenceMessenger = WeakReferenceMessenger.Default;
 
+        LocalizationResourceManager.Initialize( SettingsService );
+
         ServiceProvider = serviceProvider;
 
         AppName = LocStrings.Principles;

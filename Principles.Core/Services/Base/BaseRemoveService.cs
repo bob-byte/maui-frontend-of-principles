@@ -2,10 +2,14 @@
 using Azure.Core;
 using Azure.Core.Pipeline;
 
+using OpenAI;
+using OpenAI.Chat;
+
 using Principles.Core.Constants;
 using Principles.Core.Services.AiKey;
 
 using System;
+using System.ClientModel;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -21,17 +25,14 @@ public class BaseRemoteService
     }
     
     protected const string DEFAULT_AI_DEPLOYMENT_NAME = "gpt-4o-mini";
-    
-    protected static AsyncLazy<OpenAIClient> LazyAiClient { get; } = new(
+
+    protected static AsyncLazy<ChatClient> LazyAiClient { get; } = new(
         async () =>
         {
             IApiKeyService apiKeyService = ServiceLocator.Current!.GetRequiredService<IApiKeyService>();
-            string apiKey = await apiKeyService.RestoreApiKeyAsync().DefaultConfigureAwait();
+            string apiKey = await apiKeyService.RestoreApiKeyAsync().ConfigureAwait( false );
 
-            OpenAIClientOptions options = new(OpenAIClientOptions.ServiceVersion.V2023_09_01_Preview);
-            options.RetryPolicy = new RetryPolicy( maxRetries: 0 );
-
-            OpenAIClient client = new(apiKey, options);
+            ChatClient client = new( DEFAULT_AI_DEPLOYMENT_NAME, apiKey );
             return client;
         },
         mode: LazyThreadSafetyMode.None

@@ -80,6 +80,7 @@ public partial class EditHabitViewModel : BaseViewModel
         InitPeriodsOfHabit();
 
         AiRecommenderOfHabits = serviceProvider.GetRequiredService<IAiRecommenderOfHabitsService>();
+
         GoalService = serviceProvider.GetRequiredService<IGoalService>();
         ReminderService = serviceProvider.GetRequiredService<IReminderService>();
 
@@ -99,8 +100,9 @@ public partial class EditHabitViewModel : BaseViewModel
         {
             InitPeriodsOfHabit();
             
+            AiRecommenderOfHabits.RecreateSystemMessage();
+            
             AllAreasOfLifeAsOneItem.Name = LocStrings.AllAreasOfLife;
-
             try
             {
                 await ReloadAllAreasOfLifeAsync();
