@@ -5,6 +5,8 @@ using DevExpress.Data.Extensions;
 using OpenAI;
 using OpenAI.Chat;
 
+using System.ClientModel;
+
 namespace Principles.ViewModels;
 
 public partial class HelperViewModel : BaseViewModel
@@ -97,16 +99,20 @@ public partial class HelperViewModel : BaseViewModel
 
                         try
                         {
-                            ChatCompletion chatResponse = await m_aiChatService.GetAnswerStreamAsync( promptCopy );
+                            AsyncCollectionResult<StreamingChatCompletionUpdate>? chatResponse = await m_aiChatService.GetAnswerStreamAsync( promptCopy, cancellationToken );
 
-                            string fullResponse = chatResponse.Content[0].Text;
-
-                            string[] words = fullResponse.Split( ' ' );
-
-                            foreach (string word in words)
+                            if (chatResponse is not null)
                             {
-                                helperMsg.Text += word + " ";
-                                await Task.Delay( millisecondsDelay: 65 );
+                                const int CONTENT_INDEX = 0;
+                                
+                                await foreach (StreamingChatCompletionUpdate chatStream in chatResponse)
+                                {
+                                    if (chatStream.ContentUpdate.Count > 0 && !string.IsNullOrWhiteSpace(chatStream.ContentUpdate[CONTENT_INDEX].Text))
+                                    {
+                                        helperMsg.Text += chatStream.ContentUpdate[CONTENT_INDEX].Text.Replace( "**", string.Empty );
+                                        await Task.Delay( millisecondsDelay: 65 );
+                                    }
+                                }
                             }
                         }
                         catch (TaskCanceledException) { }

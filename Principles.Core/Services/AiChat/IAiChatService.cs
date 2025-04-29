@@ -1,11 +1,12 @@
-﻿using Azure.AI.OpenAI;
+﻿using OpenAI.Chat;
 
-using OpenAI.Chat;
+using System.ClientModel;
+
 namespace Principles.Core.Services;
 
 public interface IAiChatService
 {
-    Task<ChatCompletion> GetAnswerStreamAsync( string prompt );
+    Task<AsyncCollectionResult<StreamingChatCompletionUpdate>?> GetAnswerStreamAsync( string prompt, CancellationToken cancellationToken );
     void AddChatAnswer( string answer );
     void ClearChat();
 }

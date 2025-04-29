@@ -4,6 +4,8 @@ using System.Text;
 using Principles.Core.Constants;
 using OpenAI.Chat;
 
+using System.ClientModel;
+
 namespace Principles.Core.Services;
 
 public class AiChatService : BaseRemoteService, IAiChatService
@@ -23,7 +25,7 @@ public class AiChatService : BaseRemoteService, IAiChatService
         m_chatMessages = new List<ChatMessage>();
     }
 
-    public async Task<ChatCompletion> GetAnswerStreamAsync( string prompt )
+    public async Task<AsyncCollectionResult<StreamingChatCompletionUpdate>?> GetAnswerStreamAsync( string prompt, CancellationToken cancellationToken )
     {
         ChatMessage systemMsg = await SystemMessage().DefaultConfigureAwait();
         if (m_chatMessages.Count == 0)
@@ -38,7 +40,10 @@ public class AiChatService : BaseRemoteService, IAiChatService
         ChatMessage newMessage = ChatMessage.CreateUserMessage( prompt );
         m_chatMessages.Add( newMessage );
         ChatClient client = await LazyAiClient;
-        ChatCompletion response = await client.CompleteChatAsync( m_chatMessages );
+        
+        ChatCompletionOptions options = new() { ResponseFormat = ChatResponseFormat.CreateTextFormat() };
+        AsyncCollectionResult<StreamingChatCompletionUpdate>? response =
+            client.CompleteChatStreamingAsync( m_chatMessages, options, cancellationToken );
         
         return response;
     }
