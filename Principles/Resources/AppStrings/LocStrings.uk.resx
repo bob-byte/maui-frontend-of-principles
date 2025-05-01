@@ -837,4 +837,34 @@
   <data name="FieldIsNotEditable" xml:space="preserve">
     <value>Це поле не доступне для редагування.</value>
   </data>
+  <data name="CompletedDays" xml:space="preserve">
+    <value>Завершених днів</value>
+  </data>
+  <data name="LongestStreak" xml:space="preserve">
+    <value>Найдовша серія</value>
+  </data>
+	<data name="TopSevenStreaks" xml:space="preserve">
+    <value>Топ-7 найтриваліших серій</value>
+  </data>
+	<data name="TopSevenStreaksExplanation" xml:space="preserve">
+  <value>Топ-7 серій виконання звички відображає найстабільніші періоди особистої дисципліни. Цей інструмент допомагає усвідомити власну здатність до послідовних дій, підтримує мотивацію в моменти сумнівів і слугує основою для формування стійких, рекомендованих звичок.</value>
+</data>
+  <data name="StabilityExplanation" xml:space="preserve">
+    <value>Діаграма стабільності показує, наскільки послідовно ви дотримуєтеся звички без пропусків. Вона висвітлює ваші загальні патерни дотримання, допомагаючи побачити, де ви найнадійніші, а де варто звернути додаткову увагу. Відстежуючи стабільність, ви можете святкувати стабільний прогрес, виявляти моменти, які ставлять під виклик вашу рутину, та нарощувати впевненість у здатності підтримувати довгострокові зміни поведінки.</value>
+  </data>
+	<data name="OverallProgress" xml:space="preserve">
+  <value>Загальний прогрес</value>
+</data>
+	<data name="Stability" xml:space="preserve">
+  <value>Стабільність</value>
+</data>
+	<data name="DaysCount" xml:space="preserve">
+  <value>Кількість днів</value>
+</data>
+	<data name="HabitByDayweeks" xml:space="preserve">
+  <value>Звичка за днями тижня</value>
+</data>
+	<data name="HabitByDayweeksExplanation" xml:space="preserve">
+  <value>Діаграма звички за днями тижня показує, як часто ви виконуєте звичку в кожен конкретний день. Вона допомагає виявити дні, коли ви найпослідовніші, та ті, які частіше пропускаєте. Аналізуючи ці закономірності, ви можете скоригувати свій розклад, посилити слабкі сторони та вибудувати більш стабільний ритм звички протягом тижня.</value>
+</data>
 </root>

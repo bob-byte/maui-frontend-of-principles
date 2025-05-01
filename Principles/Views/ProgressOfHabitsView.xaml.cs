@@ -275,7 +275,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
                     Spacing = 4
                 };
 
-                stack.BindTapGesture( "EditHabitCommand", commandSource: ViewModel, parameterPath: "Item", numberOfTapsRequired: 1 );
+                stack.BindTapGesture( "HabitDetailCommand", commandSource: ViewModel, parameterPath: "Item", numberOfTapsRequired: 1 );
 
                 CircularProgressBar progressBar = new();
                 IValueConverter progressConverter = new ProgressOfHabitToInt32Converter( ViewModel.ProgressOfHabitService );

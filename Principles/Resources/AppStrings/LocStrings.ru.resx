@@ -759,4 +759,34 @@
 	<data name="FieldIsNotEditable" xml:space="preserve">
 		<value>Это поле недоступно для редактирования.</value>
     </data>
+	<data name="CompletedDays" xml:space="preserve">
+  <value>Завершённых дней</value>
+</data>
+	<data name="LongestStreak" xml:space="preserve">
+  <value>Самая длинная серия</value>
+</data>
+	<data name="TopSevenStreaks" xml:space="preserve">
+    <value>Топ-7 самых длинных серий</value>
+  </data>
+	<data name="TopSevenStreaksExplanation" xml:space="preserve">
+  <value>Топ-7 серий выполнения привычки отражает наиболее стабильные периоды личной дисциплины. Этот инструмент помогает осознать собственную способность к последовательным действиям, поддерживает мотивацию в моменты сомнений и служит основой для формирования устойчивых, рекомендуемых привычек.</value>
+</data>
+	<data name="StabilityExplanation" xml:space="preserve">
+  <value>Диаграмма стабильности показывает, насколько последовательно вы придерживаетесь привычки без пропусков. Она демонстрирует ваши общие паттерны соблюдения, помогая увидеть, где вы наиболее надежны, а на что стоит обратить дополнительное внимание. Отслеживая стабильность, вы можете отмечать стабильный прогресс, выявлять моменты, бросающие вызов вашей рутине, и укреплять уверенность в своей способности поддерживать долгосрочные изменения поведения.</value>
+</data>
+	<data name="OverallProgress" xml:space="preserve">
+  <value>Общий прогресс</value>
+</data>
+	<data name="Stability" xml:space="preserve">
+  <value>Стабильность</value>
+</data>
+	<data name="DaysCount" xml:space="preserve">
+  <value>Количество дней</value>
+</data>
+	<data name="HabitByDayweeks" xml:space="preserve">
+  <value>Привычка по дням недели</value>
+</data>
+	<data name="HabitByDayweeksExplanation" xml:space="preserve">
+  <value>Диаграмма привычки по дням недели показывает, как часто вы выполняете привычку в каждый конкретный день. Она помогает выявить дни с наибольшей стабильностью и те, которые вы чаще пропускаете. Понимая эти закономерности, вы можете скорректировать распорядок, устранить слабые места и создать более устойчивый ритм выполнения привычки на всю неделю.</value>
+</data>
 </root>

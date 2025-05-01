@@ -11,49 +11,50 @@ public class ReminderTimeAndDaysToStringConverter : BaseConverterOneWay<EditedUs
 
     private static readonly string[] DaysOfWeekNames =
     {
-        LocStrings.Sunday, LocStrings.Monday, LocStrings.Tuesday, LocStrings.Wednesday, LocStrings.Thursday, LocStrings.Friday, LocStrings.Saturday
+        LocStrings.Sunday, LocStrings.Monday, LocStrings.Tuesday, LocStrings.Wednesday,
+        LocStrings.Thursday, LocStrings.Friday, LocStrings.Saturday
     };
 
     public override string ConvertFrom( EditedUserHabitReminder reminder, CultureInfo? culture )
     {
-        if (reminder == null)
+        if (reminder == null || reminder.DaysOfWeek == null || reminder.DaysOfWeek.Count == 0)
             return DefaultConvertReturnValue;
 
-        DateTime time = reminder.Time;
-        IList<WeekDay> daysOfWeek = reminder.DaysOfWeek;
+        string timeStr = reminder.Time.ToString( "H:mm", culture );
 
-        if (daysOfWeek == null || daysOfWeek.Count == 0)
+        var sortedDays = reminder.DaysOfWeek
+            .Select( d => new { Original = (int)d.Type, Order = d.Type == 0 ? 7 : (int)d.Type } )
+            .OrderBy( x => x.Order )
+            .ToList();
+
+        if (sortedDays.Count == 7)
+            return $"{timeStr} {LocStrings.EveryDay}";
+
+        List<string> periodStrings = new List<string>();
+        int i = 0;
+        while (i < sortedDays.Count)
         {
-            return DefaultConvertReturnValue;
-        }
+            int startIndex = i;
+            int endIndex = i;
 
-        bool allDaysSelected = daysOfWeek.Count == 7;
-
-        StringBuilder result = new StringBuilder();
-
-        result.Append( $"{time.ToString( "H:mm", culture )} " );
-
-        if (allDaysSelected)
-        {
-            result.Append( LocStrings.EveryDay );
-        }
-        else
-        {
-            IOrderedEnumerable<WeekDay> sortedDays = daysOfWeek.OrderBy( day => day.Type == 0 ? 7 : (int)day.Type );
-
-            foreach (WeekDay day in sortedDays)
+            while (endIndex + 1 < sortedDays.Count &&
+                   sortedDays[endIndex + 1].Order == sortedDays[endIndex].Order + 1)
             {
-                if (result.Length > time.ToString( "H:mm", culture ).Length + 1)
-                    result.Append( ", " );
-
-                int dayIndex = (int)day.Type;
-                if (dayIndex >= 0 && dayIndex < DaysOfWeekNames.Length)
-                {
-                    result.Append( DaysOfWeekNames[dayIndex] );
-                }
+                endIndex++;
             }
+
+            if (startIndex == endIndex)
+            {
+                periodStrings.Add( DaysOfWeekNames[sortedDays[startIndex].Original] );
+            }
+            else
+            {
+                periodStrings.Add( $"{DaysOfWeekNames[sortedDays[startIndex].Original]}-{DaysOfWeekNames[sortedDays[endIndex].Original]}" );
+            }
+
+            i = endIndex + 1;
         }
 
-        return result.ToString();
+        return $"{timeStr} {string.Join( ", ", periodStrings )}";
     }
 }

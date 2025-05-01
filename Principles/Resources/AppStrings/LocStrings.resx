@@ -836,5 +836,35 @@
   </data>
   <data name="FieldIsNotEditable" xml:space="preserve">
     <value>This field is not editable.</value>
+  </data>  
+  <data name="CompletedDays" xml:space="preserve">
+    <value>Completed days</value>
+  </data>  
+	<data name="Longeststreak" xml:space="preserve">
+    <value>Longest streak</value>
   </data>
+	<data name="TopSevenStreaks" xml:space="preserve">
+    <value>Top-7 streaks</value>
+  </data>
+  <data name="TopSevenStreaksExplanation" xml:space="preserve">
+    <value>The Top 7 habit streaks reflect the most consistent periods of personal discipline. This feature helps recognize your ability to take sustained action, supports motivation during times of doubt, and serves as a foundation for forming stable, recommended habits.</value>
+  </data>
+  <data name="StabilityExplanation" xml:space="preserve">
+    <value>The Stability chart measures how consistently you maintain your habit without missing days. It highlights your overall adherence patterns, helping you see where you’re most reliable and where you might need extra focus. By tracking stability, you can celebrate steady progress, identify moments that challenge your routine, and build confidence in sustaining long‑term behavior change.</value>
+  </data>
+	<data name="OverallProgress" xml:space="preserve">
+  <value>Overall Progress</value>
+</data>
+	<data name="Stability" xml:space="preserve">
+  <value>Stability</value>
+</data>
+	<data name="DaysCount" xml:space="preserve">
+  <value>Days completed</value>
+</data>
+	<data name="HabitByDayweeks" xml:space="preserve">
+  <value>Habit by dayweeks</value>
+</data>
+	<data name="HabitByDayweeksExplanation" xml:space="preserve">
+  <value>The Habit by Day of the Week chart shows how often you complete your habit on each day. It helps you spot which days you're most consistent and which ones tend to be missed. By understanding these patterns, you can adjust your routine, address weak spots, and create a more balanced and sustainable habit rhythm throughout the week.</value>
+</data>
 </root>

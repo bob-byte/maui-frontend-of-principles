@@ -311,6 +311,20 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     }
 
     [RelayCommand]
+    private async Task HabitDetailAsync( UserHabit? habit )
+    {
+        if (habit != null)
+        {
+            Dictionary<string, object> routeParams = new()
+            {
+                { "Id", habit.Id },
+                {"Progress", habit.PercentageAchieved }
+            };
+            await Navigation.NavigateToAsync<HabitDetailViewModel>( routeParams );
+        }
+    }
+
+        [RelayCommand]
     private async Task DeleteHabitAsync(object? obj)
     {
         if(obj is UserHabit habit)

@@ -11,6 +11,12 @@ using SkiaSharp.Views.Maui.Controls.Hosting;
 using DevExpress.Maui.Editors.Internal;
 
 using System.Reflection;
+using LiveChartsCore.SkiaSharpView.Maui;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
+
+
+
 
 #if IOS
 using Microsoft.Maui.Platform;
@@ -31,6 +37,8 @@ public static class MauiProgram
 
         builder
             .UseMauiApp<App>()
+            .UseSkiaSharp()
+            .UseLiveCharts()
             .UseDevExpressControls()
             .UseDevExpressEditors()
             .UseDevExpressCollectionView()
@@ -113,6 +121,7 @@ public static class MauiProgram
         services.AddSingleton<ProfileViewModel>();
         services.AddSingleton<ForgetPasswordViewModel>();
         services.AddSingleton<StartupViewModel>();
+        services.AddSingleton<HabitDetailViewModel>();
 
         return services;
     }
@@ -128,6 +137,7 @@ public static class MauiProgram
         services.AddTransient<ProfileView>();
         services.AddTransient<ForgetPasswordView>();
         services.AddTransient<StartupView>();
+        services.AddTransient<HabitDetailView>();
 
         return services;
     }
