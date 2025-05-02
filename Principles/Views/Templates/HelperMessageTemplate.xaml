@@ -35,6 +35,7 @@
                                BackgroundColor="{AppThemeBinding Light={StaticResource TertiaryLight},
                                                                  Dark={StaticResource TertiaryDark}}"
                                BorderThickness="0"
+                               FontSize="18"
                                TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
                                                            Dark={StaticResource DarkNormalText}}"
                                VerticalOptions="Start" />

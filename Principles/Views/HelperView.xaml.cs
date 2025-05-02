@@ -1,4 +1,6 @@
 
+using DevExpress.Maui.Core;
+
 using Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;
 
 using System.Collections.Specialized;
@@ -22,6 +24,16 @@ public partial class HelperView : ContentPageBase
         {
             LoadLocalizationData();
         } );
+        
+#if IOS
+        View originalContent = Content;
+        
+        SafeKeyboardAreaView wrappedContent = new()
+        {
+            Content = originalContent
+        };
+        Content = wrappedContent;
+#endif
 
         ViewModel.DisplayMessages.CollectionChanged += DisplayMessages_CollectionChanged;
     }

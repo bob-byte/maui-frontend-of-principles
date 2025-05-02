@@ -22,6 +22,7 @@
                                BackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary},
                                                                  Dark={StaticResource LightPrimary}}"
                                BorderThickness="0"
+                               FontSize="18"
                                MinimumHeightRequest="18"
                                TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
                                                            Dark={StaticResource DarkNormalText}}"
