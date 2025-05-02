@@ -15,24 +15,9 @@ public partial class HelperMessageTemplate : Grid
 
         InitializeComponent();
 
-        if(pageWidth != -1)
+        if(pageWidth > 0)
         {
             G_Answer.MaximumWidthRequest = pageWidth - 16 - 10 - 35 - 10 - 35; //values are taken based on the values in the UI controls
         }
-    }
-
-    void ME_Answer_TextChanged( object sender, EventArgs e )
-    {
-#if IOS
-        bool isThisMessageLast = m_viewModel.DisplayMessages.LastOrDefault() == m_message;
-        if (isThisMessageLast && !string.IsNullOrWhiteSpace( m_message.Text ) && ME_Answer.Height != -1 && G_HelperMessageTemplate.Height < ME_Answer.Height + 10)
-        {
-            G_HelperMessageTemplate.HeightRequest = ME_Answer.Height + 10;
-        }
-        else if (string.IsNullOrWhiteSpace( m_message.Text ) || m_message.Text?.Length <= 5)
-        {
-            G_HelperMessageTemplate.HeightRequest = 44;
-        }
-#endif
     }
 }

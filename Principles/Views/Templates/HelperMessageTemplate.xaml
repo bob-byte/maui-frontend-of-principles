@@ -1,44 +1,42 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <?xaml-comp compile="true" ?>
-<Grid xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<Grid x:Class="Principles.Views.Templates.HelperMessageTemplate"
+      xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-      x:Class="Principles.Views.Templates.HelperMessageTemplate"
-      xmlns:msgs="clr-namespace:Principles.Messages"
-      xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
       xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
-      x:DataType="msgs:DisplayMessage"
-      ColumnDefinitions="35, 10, Auto, *"
+      xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+      xmlns:msgs="clr-namespace:Principles.Messages"
+      x:Name="G_HelperMessageTemplate"
       Padding="16,0,0,0"
-      x:Name="G_HelperMessageTemplate">
-
-    <Grid Grid.Column="0"
-          x:Name="G_HelperIcon"
+      x:DataType="msgs:DisplayMessage"
+      ColumnDefinitions="35, 10, Auto, *">
+    <Grid x:Name="G_HelperIcon"
           WidthRequest="35"
           HeightRequest="35"
-          VerticalOptions="Start">
-        <BoxView Color="{AppThemeBinding Light={StaticResource Primary},
-                                         Dark={StaticResource DarkPrimary}}"
-                 CornerRadius="5, 0, 5, 5" />
+          VerticalOptions="Start"
+          Grid.Column="0">
+        <BoxView CornerRadius="5, 0, 5, 5"
+                 Color="{AppThemeBinding Light={StaticResource Primary},
+                                         Dark={StaticResource DarkPrimary}}" />
         <dx:DXImage Source="ai"
-                    TintColor="White"
                     WidthRequest="22"
-                    HeightRequest="22" />
+                    HeightRequest="22"
+                    TintColor="White" />
     </Grid>
-    <Grid Grid.Column="2"
+    <Grid x:Name="G_Answer"
           MaximumWidthRequest="260"
-          x:Name="G_Answer">
+          Grid.Column="2">
         <BoxView CornerRadius="0, 16, 16, 16"
                  Color="{AppThemeBinding Light={StaticResource TertiaryLight},
                                          Dark={StaticResource TertiaryDark}}" />
-        <dx:DXContentPresenter BackgroundColor="{AppThemeBinding Light={StaticResource TertiaryLight},
+        <dx:DXContentPresenter x:Name="ME_Answer"
+                               Content="{Binding Text}"
+                               Margin="10,5"
+                               BackgroundColor="{AppThemeBinding Light={StaticResource TertiaryLight},
                                                                  Dark={StaticResource TertiaryDark}}"
+                               BorderThickness="0"
                                TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
                                                            Dark={StaticResource DarkNormalText}}"
-                               x:Name="ME_Answer"
-                               Content="{Binding Text}"
-                               BorderThickness="0"
-                               Padding="5"
-                               Margin="10,5"
                                VerticalOptions="Start" />
     </Grid>
 </Grid>

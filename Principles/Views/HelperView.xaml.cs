@@ -117,6 +117,8 @@ public partial class HelperView : ContentPageBase
 #if ANDROID
         Shell.SetTabBarIsVisible( this, false );
 #endif
+        
+        ViewModel.PromptEditorFocused = new PromptEditorFocused(ViewModel, isEditorFocused: true);
     }
 
     private void E_Prompt_Unfocused( object sender, FocusEventArgs e )
@@ -124,22 +126,35 @@ public partial class HelperView : ContentPageBase
 #if ANDROID
         Shell.SetTabBarIsVisible( this, true );
 #endif
+        
+        ViewModel.PromptEditorFocused = new PromptEditorFocused(ViewModel, isEditorFocused: false);
     }
 
-    private void DXC_DisplayMessages_LongPress( object sender, DevExpress.Maui.CollectionView.CollectionViewGestureEventArgs e )
+    private async void DXC_DisplayMessages_LongPress( object sender, DevExpress.Maui.CollectionView.CollectionViewGestureEventArgs e )
     {
         if (e.Item is DisplayMessage messageItem)
         {
             if (!string.IsNullOrEmpty( messageItem.Text ))
             {
                 IAsyncRelayCommand<string> command = ViewModel.CopyTextCommand;
-                if (command != null && command.CanExecute( messageItem.Text ))
+                if (command.CanExecute( messageItem.Text ))
                 {
                     command.Execute( messageItem.Text );
+                    
                     DXP_Copy.IsOpen = true;
+                    await Task.Delay( 1500 );
+                    DXP_Copy.IsOpen = false;
                 }
             }
         }
+    }
 
+    private void TGR_HideKeyboard_Tapped( object? sender, TappedEventArgs e )
+    {
+        KeyboardHelper.HideKeyboard();
+        
+#if ANDROID
+        Shell.SetTabBarIsVisible( this, true );
+#endif
     }
 }

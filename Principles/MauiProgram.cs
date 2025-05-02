@@ -87,6 +87,17 @@ public static class MauiProgram
         }
 
         AllowMultiLineTruncation();
+        
+#if IOS
+        //hide Done button above keyboard for Editor control
+        EditorHandler.Mapper.AppendToMapping("NoAccessoryView", (handler, view) =>
+        {
+            if (handler.PlatformView is UITextView uiTextView)
+            {
+                uiTextView.InputAccessoryView = null;
+            }
+        });
+#endif
 
         return builder.Build();
     }

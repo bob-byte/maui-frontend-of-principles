@@ -14,6 +14,9 @@ public partial class HelperViewModel : BaseViewModel
     [ObservableProperty]
     private ObservableCollectionEx<DisplayMessage> m_displayMessages;
 
+    [ObservableProperty] 
+    private PromptEditorFocused m_promptEditorFocused;
+
     private CancellationTokenSource m_cancellationSource;
 
     public HelperViewModel( IServiceProvider serviceProvider, IAiChatService aiChatService )
@@ -135,6 +138,8 @@ public partial class HelperViewModel : BaseViewModel
             finally
             {
                 IsBusy = false;
+                
+                OnPropertyChanged( nameof(PromptEditorFocused) );
             }
         }
     }

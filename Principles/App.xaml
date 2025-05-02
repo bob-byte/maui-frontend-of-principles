@@ -501,6 +501,7 @@
             <converters:IsZeroConverter x:Key="IsZero" />
             <converters:IsMoreThanZeroConverter x:Key="IsMoreThanZero" />
             <converters:GenderToUserIconConverter x:Key="GenderToIcon" />
+            <converters:PromptEditorFocusedToDoShowKeyboardConverter x:Key="PromptEditorFocusedToDoShowKeyboard" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>
