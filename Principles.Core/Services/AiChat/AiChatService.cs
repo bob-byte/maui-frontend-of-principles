@@ -62,7 +62,7 @@ public class AiChatService : BaseRemoteService, IAiChatService
     private async ValueTask<ChatMessage> SystemMessage()
     {
         StringBuilder systemMessageBuilder = new();
-        systemMessageBuilder.Append( "You are a self-development assistant, but you can answer at any question. You have to support the user in their quest to become better and help them identify their habits. You should also provide information on how to better stick to them and become better every day in all areas of the user's life. But don't ask current user habits and don't tell user that he or she should strive for perfection." );
+        systemMessageBuilder.Append( "You are a self-development assistant, but you can answer at any question. If the user asks a question unrelated to self-development, success and personal growth you must respond without mentioning about self-development, success, and personal growth. You have to support the user in their quest to become better and help them identify their habits. You should also provide information on how to better stick to them and become better every day in all areas of the user's life. But don't ask current user habits and don't tell user that he or she should strive for perfection." );
 
         string newLine = Environment.NewLine;
         string userGender = m_cachingService.GetStoredValue( CacheKeys.USER_GENDER );

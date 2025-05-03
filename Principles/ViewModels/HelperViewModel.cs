@@ -21,6 +21,9 @@ public partial class HelperViewModel : BaseViewModel
     [ObservableProperty]
     private ObservableCollectionEx<DisplayMessage> m_displayMessages;
 
+    [ObservableProperty] 
+    private PromptEditorFocused m_promptEditorFocused;
+
     private CancellationTokenSource m_cancellationSource;
 
     public HelperViewModel( IServiceProvider serviceProvider, IAiChatService aiChatService )
@@ -122,7 +125,8 @@ public partial class HelperViewModel : BaseViewModel
                         {
                             ResetCancellationOfAnswerGeneration();
                         }
-
+                        
+                        helperMsg.IsCompleted = true;
                         m_aiChatService.AddChatAnswer( helperMsg.Text );
                         doTryAgain = false;
                     }
@@ -131,6 +135,8 @@ public partial class HelperViewModel : BaseViewModel
                         doTryAgain = await DoRetryOperationOnErrorAsync( ex );
                         if (!doTryAgain)
                         {
+                            helperMsg.IsCompleted = true;
+                            
                             if (string.IsNullOrWhiteSpace( helperMsg.Text ))
                             {
                                 helperMsg.Text = LocStrings.ErrorOccurred;
@@ -147,7 +153,19 @@ public partial class HelperViewModel : BaseViewModel
             finally
             {
                 IsBusy = false;
+                
+                OnPropertyChanged( nameof(PromptEditorFocused) );
             }
+        }
+    }
+
+    [RelayCommand]
+    private async Task CopyTextAsync( string message )
+    {
+        if (!string.IsNullOrEmpty( message ))
+        {
+            await Clipboard.SetTextAsync( message );
+            ReferenceMessenger.Send( new CopiedHelperResponse() );
         }
     }
 

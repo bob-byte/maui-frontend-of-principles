@@ -1,4 +1,7 @@
 
+using DevExpress.Maui.CollectionView;
+using DevExpress.Maui.Core;
+
 using Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;
 
 using System.Collections.Specialized;
@@ -16,10 +19,26 @@ public partial class HelperView : ContentPageBase
         m_deviceOrientationService = DependencyService.Get<ILockDeviceOrientation>();
 
         InitializeComponent();
+        
+#if IOS
+        View originalContent = Content;
+        
+        SafeKeyboardAreaView wrappedContent = new()
+        {
+            Content = originalContent
+        };
+        Content = wrappedContent;
+#endif
 
         ViewModel.DisplayMessages.CollectionChanged += DisplayMessages_CollectionChanged;
+        ViewModel.ReferenceMessenger.Register<CopiedHelperResponse>( this, async ( sender, msg ) =>
+        {
+            DXP_Copy.IsOpen = true;
+            await Task.Delay( 1500 );
+            DXP_Copy.IsOpen = false;
+        } );
     }
-
+    
     protected override void OnAppearing()
     {
         base.OnAppearing();
@@ -67,11 +86,6 @@ public partial class HelperView : ContentPageBase
         await AskQuestionAsync();
     }
 
-    async void TE_Prompt_Completed( System.Object sender, System.EventArgs e )
-    {
-        await AskQuestionAsync();
-    }
-
     private async Task AskQuestionAsync()
 	{
         if (ViewModel.AskUserQuestionCommand.CanExecute( null ))
@@ -82,7 +96,7 @@ public partial class HelperView : ContentPageBase
 
     void CPB_Helper_SizeChanged( System.Object sender, System.EventArgs e )
     {
-        if(CPB_Helper.Width != -1)
+        if(CPB_Helper.Width > 0)
         {
             MessageDataTemplateSelector.PageWidth = CPB_Helper.Width;
         }
@@ -93,7 +107,7 @@ public partial class HelperView : ContentPageBase
         double titleWidth = G_Title.Width;
         double helpIconWidth = DXI_Help.Width;
         double infoIconWidth = DXI_Info.Width;
-        if (titleWidth != -1 && helpIconWidth != -1 && infoIconWidth != -1)
+        if (titleWidth > 0 && helpIconWidth > 0 && infoIconWidth > 0)
         {
             double titleLabelWidth = titleWidth - helpIconWidth - infoIconWidth - 5;
             L_TitleText.WidthRequest = titleLabelWidth;
@@ -105,10 +119,23 @@ public partial class HelperView : ContentPageBase
 #if ANDROID
         Shell.SetTabBarIsVisible( this, false );
 #endif
+        
+        ViewModel.PromptEditorFocused = new PromptEditorFocused(ViewModel, isEditorFocused: true);
     }
 
     private void E_Prompt_Unfocused( object sender, FocusEventArgs e )
     {
+#if ANDROID
+        Shell.SetTabBarIsVisible( this, true );
+#endif
+        
+        ViewModel.PromptEditorFocused = new PromptEditorFocused(ViewModel, isEditorFocused: false);
+    }
+
+    private void TGR_HideKeyboard_Tapped( object? sender, TappedEventArgs e )
+    {
+        KeyboardHelper.HideKeyboard();
+        
 #if ANDROID
         Shell.SetTabBarIsVisible( this, true );
 #endif

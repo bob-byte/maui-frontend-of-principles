@@ -28,17 +28,19 @@ public partial class App : Application
 
         UserAppTheme = AppTheme.Light;
 
-        string savedLanguageCode = Preferences.Get( "AppLanguage", null );
-        if ( savedLanguageCode == null) 
+        string? savedLanguageCode = Preferences.Get( "AppLanguage", null );
+        
+        if (string.IsNullOrWhiteSpace( savedLanguageCode )) 
         {
             savedLanguageCode = CultureInfo.CurrentUICulture.Name;
             Preferences.Set( "AppLanguage", savedLanguageCode );
         }
 
-        CultureInfo currentCulture = new CultureInfo( savedLanguageCode );
+        CultureInfo currentCulture = new( savedLanguageCode );
 
         LocalizationResourceManager.Initialize( m_settingsService );
         LocalizationResourceManager.Instance.SetCulture( currentCulture );
+        
         InitializeComponent();
     }
 
