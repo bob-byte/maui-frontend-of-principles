@@ -1,6 +1,11 @@
-﻿#if ANDROID
+﻿
+#if ANDROID
 using Android.Views.InputMethods;
 using Android.Content;
+
+using Activity = Android.App.Activity;
+using View = Android.Views.View;
+
 using Android.OS;
 #endif
 
@@ -15,10 +20,15 @@ public static class KeyboardHelper
     public static void HideKeyboard()
     {
 #if ANDROID
-        var inputMethodManager = Platform.CurrentActivity?.GetSystemService( Context.InputMethodService ) as InputMethodManager;
+        Activity? activity = Platform.CurrentActivity;
+        var inputMethodManager = activity?.GetSystemService(Context.InputMethodService) as InputMethodManager;
 
-        IBinder? windowToken = Platform.CurrentActivity?.CurrentFocus?.WindowToken;
-        inputMethodManager?.HideSoftInputFromWindow( windowToken, HideSoftInputFlags.None );
+        View? currentFocus = activity?.CurrentFocus;
+        if (currentFocus != null && inputMethodManager != null)
+        {
+            inputMethodManager.HideSoftInputFromWindow(currentFocus.WindowToken, HideSoftInputFlags.None);
+            currentFocus.ClearFocus(); // optional: also clears focus
+        }
 #elif IOS
         UIWindow? keyWindow = UIApplication.SharedApplication.KeyWindow;
         if (keyWindow is not null)

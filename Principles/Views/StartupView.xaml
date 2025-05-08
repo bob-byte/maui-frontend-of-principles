@@ -82,7 +82,7 @@
                 Grid.Row="1">
             <VerticalStackLayout Padding="5,10,5,0"
                                  VerticalOptions="Center">
-                <dxco:SimpleButton Text="{x:Static loc:LocStrings.ContinueWithGoogle}"
+                <dxco:SimpleButton Text="{Binding LocManager[ContinueWithGoogle]}"
                                    Command="{Binding ContinueWithGoogleCommand}"
                                    Style="{StaticResource PrimaryButton}"
                                    Icon="google"
@@ -92,7 +92,7 @@
                                    DisabledBackgroundColor="{StaticResource Primary}" />
                 <OnPlatform x:TypeArguments="View">
                     <On Platform="iOS">
-                        <dxco:SimpleButton Text="{x:Static loc:LocStrings.ContinueWithApple}"
+                        <dxco:SimpleButton Text="{Binding LocManager[ContinueWithApple]}"
                                            Command="{Binding ContinueWithAppleCommand}"
                                            Style="{StaticResource PrimaryButton}"
                                            Icon="apple"
@@ -103,7 +103,7 @@
                                            IsVisible="True" />
                     </On>
                 </OnPlatform>
-                <dxco:SimpleButton Text="{x:Static loc:LocStrings.SignUpWithEmail}"
+                <dxco:SimpleButton Text="{Binding LocManager[SignUpWithEmail]}"
                                    Command="{Binding OpenSignUpViewCommand}"
                                    Style="{StaticResource PrimaryButton}"
                                    Icon="email"
@@ -111,7 +111,7 @@
                                    Background="{StaticResource Primary}"
                                    BorderThickness="2"
                                    DisabledBackgroundColor="{StaticResource Primary}" />
-                <dxco:SimpleButton Text="{x:Static loc:LocStrings.Login}"
+                <dxco:SimpleButton Text="{Binding LocManager[Login]}"
                                    Command="{Binding OpenLoginViewCommand}"
                                    Style="{StaticResource SecondaryButton}"
                                    Margin="0,10,0,10"

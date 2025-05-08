@@ -12,7 +12,6 @@
              windows:Application.ImageDirectory="Assets">
     <Application.Resources>
         <ResourceDictionary>
-
             <Color x:Key="SecondaryLight">White</Color>
             <Color x:Key="SecondaryDark">White</Color>
             <Color x:Key="TertiaryLight">#F0F0F0</Color>
@@ -533,6 +532,8 @@
             <converters:IsZeroConverter x:Key="IsZero" />
             <converters:IsMoreThanZeroConverter x:Key="IsMoreThanZero" />
             <converters:GenderToUserIconConverter x:Key="GenderToIcon" />
+            <converters:PromptEditorFocusedToDoShowKeyboardConverter x:Key="PromptEditorFocusedToDoShowKeyboard" />
+            <converters:FrequencyToStringConverter x:Key="FrequencyToString" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

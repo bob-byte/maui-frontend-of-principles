@@ -1,5 +1,12 @@
 ﻿using Azure.AI.OpenAI;
 
+using DevExpress.Data.Extensions;
+
+using OpenAI;
+using OpenAI.Chat;
+
+using System.ClientModel;
+
 namespace Principles.ViewModels;
 
 public partial class HelperViewModel : BaseViewModel
@@ -13,6 +20,9 @@ public partial class HelperViewModel : BaseViewModel
 
     [ObservableProperty]
     private ObservableCollectionEx<DisplayMessage> m_displayMessages;
+
+    [ObservableProperty] 
+    private PromptEditorFocused m_promptEditorFocused;
 
     private CancellationTokenSource m_cancellationSource;
 
@@ -92,14 +102,19 @@ public partial class HelperViewModel : BaseViewModel
 
                         try
                         {
-                            await foreach (StreamingChatCompletionsUpdate chatUpdate in await m_aiChatService
-                                               .GetAnswerStreamAsync( promptCopy, choiceCount: 1, cancellationToken ))
-                            {
-                                if (!string.IsNullOrWhiteSpace( chatUpdate.ContentUpdate ))
-                                {
-                                    helperMsg.Text += chatUpdate.ContentUpdate.Replace( "**", string.Empty );
+                            AsyncCollectionResult<StreamingChatCompletionUpdate>? chatResponse = await m_aiChatService.GetAnswerStreamAsync( promptCopy, cancellationToken );
 
-                                    await Task.Delay( millisecondsDelay: 65 );
+                            if (chatResponse is not null)
+                            {
+                                const int CONTENT_INDEX = 0;
+                                
+                                await foreach (StreamingChatCompletionUpdate chatStream in chatResponse)
+                                {
+                                    if (chatStream.ContentUpdate.Count > 0 && !string.IsNullOrWhiteSpace(chatStream.ContentUpdate[CONTENT_INDEX].Text))
+                                    {
+                                        helperMsg.Text += chatStream.ContentUpdate[CONTENT_INDEX].Text.Replace( "**", string.Empty );
+                                        await Task.Delay( millisecondsDelay: 65 );
+                                    }
                                 }
                             }
                         }
@@ -110,7 +125,8 @@ public partial class HelperViewModel : BaseViewModel
                         {
                             ResetCancellationOfAnswerGeneration();
                         }
-
+                        
+                        helperMsg.IsCompleted = true;
                         m_aiChatService.AddChatAnswer( helperMsg.Text );
                         doTryAgain = false;
                     }
@@ -119,6 +135,8 @@ public partial class HelperViewModel : BaseViewModel
                         doTryAgain = await DoRetryOperationOnErrorAsync( ex );
                         if (!doTryAgain)
                         {
+                            helperMsg.IsCompleted = true;
+                            
                             if (string.IsNullOrWhiteSpace( helperMsg.Text ))
                             {
                                 helperMsg.Text = LocStrings.ErrorOccurred;
@@ -135,7 +153,19 @@ public partial class HelperViewModel : BaseViewModel
             finally
             {
                 IsBusy = false;
+                
+                OnPropertyChanged( nameof(PromptEditorFocused) );
             }
+        }
+    }
+
+    [RelayCommand]
+    private async Task CopyTextAsync( string message )
+    {
+        if (!string.IsNullOrEmpty( message ))
+        {
+            await Clipboard.SetTextAsync( message );
+            ReferenceMessenger.Send( new CopiedHelperResponse() );
         }
     }
 

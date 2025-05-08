@@ -16,7 +16,6 @@ public partial class SettingsView : ContentPageBase
 
         InitializeComponent();
 
-        LoadLocalizationData();
         m_deviceOrientationService = DependencyService.Get<ILockDeviceOrientation>();
 
         m_multilineEdits = new List<(MultilineEdit Control, string LanguageCode)>
@@ -27,26 +26,6 @@ public partial class SettingsView : ContentPageBase
         };
        
         CheckAndHideRussianLanguage();
-
-        ViewModel.ReferenceMessenger.Register<NewCultureMessage>( this, ( sender, msg ) =>
-        {
-            LoadLocalizationData();
-        } );
-    }
-
-    private void LoadLocalizationData()
-    {
-        Title = LocStrings.Settings;
-        SB_TelegramChannel.Text = LocStrings.JoinOurTelegram;
-        SB_ContactInfo.Text = LocStrings.ContactEmail;
-        SB_PrivacyPolicy.Text = LocStrings.PrivacyPolicy;
-        SB_UserAgreement.Text = LocStrings.UserAgreement;
-        SB_ChangeLanguage.Text = LocStrings.ChangeLanguage;
-        SB_DeleteAccount.Text = LocStrings.DeleteAccount;
-        SB_Logout.Text = LocStrings.Logout;
-        L_ChooseLanguage.Text = LocStrings.ChooseLanguage;
-        SB_ChangeLanguage_Cancel.Text = LocStrings.Cancel;
-        SB_SaveChangeLanguage.Text = LocStrings.Save;
     }
 
     private SettingsViewModel ViewModel {get;}

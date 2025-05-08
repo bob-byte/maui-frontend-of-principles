@@ -837,4 +837,7 @@
   <data name="FieldIsNotEditable" xml:space="preserve">
     <value>Це поле не доступне для редагування.</value>
   </data>
+  <data name="SuccessfulCopy" xml:space="preserve">
+    <value>Текст успішно скопійовано</value>
+  </data>
 </root>

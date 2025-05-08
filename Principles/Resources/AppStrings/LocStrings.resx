@@ -834,7 +834,10 @@
   <data name="ChooseLanguage" xml:space="preserve">
     <value>Choose language</value>
   </data>
-  <data name="FieldIsNotEditable" xml:space="preserve">
+	<data name="FieldIsNotEditable" xml:space="preserve">
     <value>This field is not editable.</value>
+  </data>	
+   <data name="SuccessfulCopy" xml:space="preserve">
+    <value>Text successfully copied</value>
   </data>
 </root>

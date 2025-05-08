@@ -55,6 +55,8 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
 
         ReferenceMessenger = WeakReferenceMessenger.Default;
 
+        LocalizationResourceManager.Initialize( SettingsService );
+
         ServiceProvider = serviceProvider;
 
         AppName = LocStrings.Principles;
@@ -72,6 +74,8 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
             } );
         } );
 
+        OnDisappearingCommand = new AsyncRelayCommand( async () => await OnDisappearingAsync() );
+
         if (GetType() != typeof( ProfileViewModel ))
         {
             ReferenceMessenger.Register<UserInfoChangedMessage>( this, ( sender, msg ) =>
@@ -87,6 +91,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     }
 
     public IAsyncRelayCommand InitializeAsyncCommand { get; }
+    public IAsyncRelayCommand OnDisappearingCommand { get; }
 
     public bool IsLoggedIn
     {
@@ -157,7 +162,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         }
         else
         {
-            CachingService.SetForever( PreferenceKeys.USER_MISSION, value );
+            CachingService.SetForever( CacheKeys.USER_MISSION, value );
         }
     }
 
@@ -200,7 +205,12 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         return Task.CompletedTask;
     }
 
-    protected async Task InitUserInfoAsync()
+    public virtual Task OnDisappearingAsync( object? parameter = null )
+    {
+        return Task.CompletedTask;
+    }
+
+    protected virtual async Task InitUserInfoAsync()
     {
         if (IsLoggedIn)
         {
@@ -229,7 +239,8 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
             }
             else
             {
-                userInfo = new UserInfo { Email = Email };
+                userInfo = new UserInfo();
+                userName.Email = Email;
 
                 UserName.Value = CachingService.GetStoredValue( PreferenceKeys.USER_NAME );
                 userInfo.Name = UserName.Value;
@@ -402,7 +413,6 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         Mission = string.Empty;
         Gender = Gender.Man;
         UserIcon = null;
-        Email = string.Empty;
 
         ReferenceMessenger.Send( new UserLoggedOutMessage() );
 

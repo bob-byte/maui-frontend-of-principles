@@ -9,6 +9,9 @@ public partial class DisplayMessage : ObservableObject
     [ObservableProperty]
     private bool m_isUserMessage;
 
+    [ObservableProperty] 
+    private bool m_isCompleted;
+
     public object? View { get; set; }
     public DataTemplate? DataTemplate { get; set; }
 

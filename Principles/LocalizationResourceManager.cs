@@ -8,13 +8,24 @@ namespace Principles
 {
     public class LocalizationResourceManager : INotifyPropertyChanged
     {
-        private LocalizationResourceManager() 
+        private readonly ISettingsService m_settingsService;
+
+        public LocalizationResourceManager( ISettingsService settingsService )
         {
+            m_settingsService = settingsService;
             LocStrings.Culture = CultureInfo.CurrentUICulture;
         }
 
-        public static LocalizationResourceManager Instance { get; } = new();
-        
+        public static LocalizationResourceManager Instance { get; private set; }
+
+        public static void Initialize( ISettingsService settingsService )
+        {
+            if (Instance == null)
+            {
+                Instance = new LocalizationResourceManager( settingsService );
+            }
+        }
+
         public CultureInfo CurrentCulture => LocStrings.Culture;
 
         public string? this[string resourceKey]
@@ -27,6 +38,8 @@ namespace Principles
             LocStrings.Culture = culture;
             CultureInfo.CurrentCulture = culture;
             CultureInfo.CurrentUICulture = culture;
+            m_settingsService.CurrentCulture = culture.ThreeLetterISOLanguageName;
+
             PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( null ) );
         }
     }
