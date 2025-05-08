@@ -138,7 +138,7 @@
                                 <HorizontalStackLayout Grid.Column="1"
                                                        HorizontalOptions="End"
                                                        Spacing="4">
-                                    <Label Text="{Binding LocManager[Longeststreak]}"
+                                    <Label Text="{Binding LocManager[LongestStreak]}"
                                            FontSize="14" />
                                     <Label Text="{Binding LongestStreak}"
                                            FontSize="14" />

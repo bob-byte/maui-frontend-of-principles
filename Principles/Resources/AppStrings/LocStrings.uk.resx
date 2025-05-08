@@ -870,4 +870,10 @@
   <data name="Calendar" xml:space="preserve">
     <value>Календар</value>
   </data>
+  <data name="YouCannotCompleteHabitInTheFuture" xml:space="preserve">
+    <value>Не можливо позначити звичку, як виконана для майбутніх днів</value>
+  </data>
+  <data name="HabitWasntCreatedBeforeThisDay" xml:space="preserve">
+    <value>Звичка не була створена до цієї дати</value>
+  </data>
 </root>

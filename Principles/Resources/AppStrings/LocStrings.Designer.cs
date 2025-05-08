@@ -1491,12 +1491,6 @@ namespace Principles.Resources.AppStrings {
             }
         }
         
-        internal static string Longeststreak {
-            get {
-                return ResourceManager.GetString("Longeststreak", resourceCulture);
-            }
-        }
-        
         internal static string TopSevenStreaks {
             get {
                 return ResourceManager.GetString("TopSevenStreaks", resourceCulture);
@@ -1548,6 +1542,24 @@ namespace Principles.Resources.AppStrings {
         internal static string Calendar {
             get {
                 return ResourceManager.GetString("Calendar", resourceCulture);
+            }
+        }
+        
+        internal static string LongestStreak {
+            get {
+                return ResourceManager.GetString("LongestStreak", resourceCulture);
+            }
+        }
+        
+        internal static string YouCannotCompleteHabitInTheFuture {
+            get {
+                return ResourceManager.GetString("YouCannotCompleteHabitInTheFuture", resourceCulture);
+            }
+        }
+        
+        internal static string HabitWasntCreatedBeforeThisDay {
+            get {
+                return ResourceManager.GetString("HabitWasntCreatedBeforeThisDay", resourceCulture);
             }
         }
     }

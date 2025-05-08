@@ -248,36 +248,33 @@ public partial class HabitDetailViewModel : BaseViewModel
         {
             return;
         }
-        
+
         var date = DateOnly.FromDateTime( selectedDateTime.Value );
-        
+
         ProgressOfHabit? progressOfHabit = Habit!.Progresses!.FirstOrDefault( h => h.Date == date );
-        if (progressOfHabit is null)
+        if (selectedDateTime.Value.Date > DateTime.Today.Date)
         {
-            progressOfHabit = new ProgressOfHabit()
-            {
-                Id = 0,
-                Date = date,
-                Value = ProgressValue.UNKNOWN,
-                Habit = Habit
-            };
-
-            progressOfHabit.Value = ProgressValue.NextToggled( progressOfHabit.Value );
-
-            Habit!.Progresses!.Add( progressOfHabit );
+            await DialogService.ShowErrorAsync( LocStrings.YouCannotCompleteHabitInTheFuture );
+        }
+        else if (Habit.Progresses![^1].Date > date)
+        {
+            await DialogService.ShowErrorAsync( LocStrings.HabitWasntCreatedBeforeThisDay );
+        }
+        else if (progressOfHabit is null)
+        {
+            LoggingService.LogError( "Progress of habit should exist but it was not created" );
+            await DialogService.ShowErrorAsync( LocStrings.SomethingWentWrong );
         }
         else
         {
             progressOfHabit.Value = ProgressValue.NextToggled( progressOfHabit.Value );
+            progressOfHabit.Habit = Habit;
+            ServiceOfHabit.Recompute( Habit );
+
+            ReferenceMessenger.Send( new MsgThatProgressOfHabitUpdated( progressOfHabit ) );
+
+            await ProgressOfHabitService.UpdateAsync( progressOfHabit );
         }
-
-        progressOfHabit.Habit = Habit;
-        
-        ServiceOfHabit.Recompute( Habit );
-
-        ReferenceMessenger.Send( new MsgThatProgressOfHabitUpdated( progressOfHabit ) );
-        
-        await ProgressOfHabitService.UpdateAsync( progressOfHabit );
     }
 
     private void InitPeriodsOfHabit()

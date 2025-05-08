@@ -93,7 +93,7 @@ public class ServiceOfHabit : BaseRemoteService, IServiceOfHabit
             throw new ArgumentException( message: "Progresses prop is null or empty", paramName: nameof( habit ) );
         }
 
-        DateOnly from = habit.Progresses[habit.Progresses.Count - 1].Date;
+        DateOnly from = habit.Progresses[^1].Date;
         DateOnly to = habit.Progresses[0].Date;
         habit.PercentageAchieved = RecomputedScoreAchieved( habit, from, to );
     }

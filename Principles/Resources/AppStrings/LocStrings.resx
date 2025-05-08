@@ -839,11 +839,8 @@
   </data>  
   <data name="CompletedDays" xml:space="preserve">
     <value>Completed days</value>
-  </data>  
-	<data name="Longeststreak" xml:space="preserve">
-    <value>Longest streak</value>
   </data>
-	<data name="TopSevenStreaks" xml:space="preserve">
+  <data name="TopSevenStreaks" xml:space="preserve">
     <value>Top-7 streaks</value>
   </data>
   <data name="TopSevenStreaksExplanation" xml:space="preserve">
@@ -869,5 +866,14 @@
 </data>
   <data name="Calendar" xml:space="preserve">
     <value>Calendar</value>
+  </data>
+  <data name="LongestStreak" xml:space="preserve">
+    <value>Longest streak</value>
+  </data>
+  <data name="YouCannotCompleteHabitInTheFuture" xml:space="preserve">
+    <value>You can't mark a habit as done for future days</value>
+  </data>
+  <data name="HabitWasntCreatedBeforeThisDay" xml:space="preserve">
+    <value>The habit was not created before this date</value>
   </data>
 </root>
