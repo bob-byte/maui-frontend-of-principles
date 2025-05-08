@@ -25,6 +25,7 @@ public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
     {
+        SQLitePCL.Batteries_V2.Init();
         MauiAppBuilder builder = MauiApp.CreateBuilder();
          
         SetupSerilog();

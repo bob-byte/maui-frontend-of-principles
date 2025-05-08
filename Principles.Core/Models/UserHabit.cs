@@ -81,10 +81,14 @@ public partial class UserHabit : ObservableObject
     [ObservableProperty]
     private int m_complexity;
 
+    [ObservableProperty]
+    private bool m_isSynced;
+
     public UserHabit()
     {
         m_scoreList = new ScoreList();
         m_computedProgresses = new ListOfProgressOfHabit( this );
+        m_isSynced = false;
     }
 
     public override string ToString()

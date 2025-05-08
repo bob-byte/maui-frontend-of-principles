@@ -26,7 +26,7 @@ public class ApiKeyService : IApiKeyService
     {
         string result;
 
-        string? encryptedApiKey = await SecureStorage.GetAsync( CacheKeys.API_KEY ).DefaultConfigureAwait();
+        string? encryptedApiKey = await SecureStorage.GetAsync( PreferenceKeys.API_KEY ).DefaultConfigureAwait();
         
         if (string.IsNullOrWhiteSpace( encryptedApiKey ))
         {
@@ -34,7 +34,7 @@ public class ApiKeyService : IApiKeyService
             ApiKeyResponse response = await m_requestProvider.GetAsync<ApiKeyResponse>( url, m_settingsService.AuthAccessToken! ).DefaultConfigureAwait();
             
             result = DecryptTextHelper.DecryptText( response.Value, m_configuration["ApiKeyEncryptionSettings:FirstKey"]!, m_configuration["ApiKeyEncryptionSettings:SecondKey"]! );
-            await SecureStorage.SetAsync( CacheKeys.API_KEY, response.Value ).DefaultConfigureAwait();
+            await SecureStorage.SetAsync( PreferenceKeys.API_KEY, response.Value ).DefaultConfigureAwait();
         }
         else
         {

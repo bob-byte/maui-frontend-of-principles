@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Maui.Views;
 
+using DevExpress.Maui.Mvvm.Internal;
+
 using Principles.Core.Services.AiKey;
 
 using Application = Microsoft.Maui.Controls.Application;
@@ -14,7 +16,7 @@ public partial class App : Application
 
     private UpdatePopup? m_updatePopup;
     
-    public App( IServiceProvider serviceProvider )
+    public App( IServiceProvider serviceProvider, NetworkService networkService )
     {
         IServiceLocator serviceLocator = serviceProvider.GetRequiredService<IServiceLocator>();
         ServiceLocator.GetCurrentLocator = () => serviceLocator;
@@ -39,6 +41,11 @@ public partial class App : Application
 
         LocalizationResourceManager.Instance.SetCulture( currentCulture );
         InitializeComponent();
+
+        Task.Run( async () =>
+        {
+            await networkService.CheckInitialConnectionAsync();
+        } );
     }
 
     protected override Window CreateWindow( IActivationState? activationState )
@@ -54,7 +61,7 @@ public partial class App : Application
 
         if (VersionTracking.IsFirstLaunchEver || VersionTracking.IsFirstLaunchForCurrentBuild || VersionTracking.IsFirstLaunchForCurrentVersion) 
         {
-            await SecureStorage.SetAsync( CacheKeys.API_KEY, string.Empty );
+            await SecureStorage.SetAsync( PreferenceKeys.API_KEY, string.Empty );
         }
         
         m_loggingService.LogInfo( "App starting..." );
@@ -93,7 +100,7 @@ public partial class App : Application
         
         if (VersionTracking.IsFirstLaunchEver || VersionTracking.IsFirstLaunchForCurrentBuild || VersionTracking.IsFirstLaunchForCurrentVersion) 
         {
-            await SecureStorage.SetAsync( CacheKeys.API_KEY, string.Empty );
+            await SecureStorage.SetAsync( PreferenceKeys.API_KEY, string.Empty );
         }
         
         m_loggingService.LogInfo( "App resuming..." );

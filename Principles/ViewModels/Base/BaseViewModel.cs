@@ -43,7 +43,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     public BaseViewModel( IServiceProvider serviceProvider )
     {
         CachingService = serviceProvider.GetRequiredService<ICachingService>();
-        m_userName = new CachedValidatableObject( CacheKeys.USER_NAME, CachingService );
+        m_userName = new CachedValidatableObject( PreferenceKeys.USER_NAME, CachingService );
 
         Navigation = serviceProvider.GetRequiredService<INavigationService>();
         RequestProvider = serviceProvider.GetRequiredService<IRequestProvider>();
@@ -153,11 +153,11 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     {
         if (string.IsNullOrWhiteSpace( value ))
         {
-            CachingService.Remove( CacheKeys.USER_MISSION );
+            CachingService.Remove( PreferenceKeys.USER_MISSION );
         }
         else
         {
-            CachingService.SetForever( CacheKeys.USER_MISSION, value );
+            CachingService.SetForever( PreferenceKeys.USER_MISSION, value );
         }
     }
 
@@ -165,11 +165,11 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     {
         if (string.IsNullOrWhiteSpace( value ))
         {
-            CachingService.Remove( CacheKeys.USER_EMAIL );
+            CachingService.Remove( PreferenceKeys.USER_EMAIL );
         }
         else
         {
-            CachingService.SetForever( CacheKeys.USER_EMAIL, value );
+            CachingService.SetForever( PreferenceKeys.USER_EMAIL, value );
         }
     }
 
@@ -177,17 +177,17 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     {
         if (string.IsNullOrWhiteSpace( value ))
         {
-            CachingService.Remove( CacheKeys.USER_MAIN_SLOGAN );
+            CachingService.Remove( PreferenceKeys.USER_MAIN_SLOGAN );
         }
         else
         {
-            CachingService.SetForever( CacheKeys.USER_MAIN_SLOGAN, value );
+            CachingService.SetForever( PreferenceKeys.USER_MAIN_SLOGAN, value );
         }
     }
 
     partial void OnGenderChanged( Gender value )
     {
-        CachingService.SetForever( CacheKeys.USER_GENDER, value.ToString() );
+        CachingService.SetForever( PreferenceKeys.USER_GENDER, value.ToString() );
     }
 
     public virtual void ApplyQueryAttributes(IDictionary<string, object> query )
@@ -204,7 +204,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     {
         if (IsLoggedIn)
         {
-            Email = CachingService.GetStoredValue( CacheKeys.USER_EMAIL );
+            Email = CachingService.GetStoredValue( PreferenceKeys.USER_EMAIL );
 
             UserInfo userInfo;
             
@@ -222,26 +222,26 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
                 //Gender.Man is default value, so OnGenderChanged won't be called is Gender = Gender.Man
                 if (Gender == Gender.Man)
                 {
-                    CachingService.SetForever( CacheKeys.USER_GENDER, Gender.ToString() );
+                    CachingService.SetForever( PreferenceKeys.USER_GENDER, Gender.ToString() );
                 }
 
-                CachingService.SetForever( CacheKeys.USER_EMAIL, Email );
+                CachingService.SetForever( PreferenceKeys.USER_EMAIL, Email );
             }
             else
             {
                 userInfo = new UserInfo { Email = Email };
 
-                UserName.Value = CachingService.GetStoredValue( CacheKeys.USER_NAME );
+                UserName.Value = CachingService.GetStoredValue( PreferenceKeys.USER_NAME );
                 userInfo.Name = UserName.Value;
 
-                MainSlogan = CachingService.GetStoredValue( CacheKeys.USER_MAIN_SLOGAN );
+                MainSlogan = CachingService.GetStoredValue( PreferenceKeys.USER_MAIN_SLOGAN );
                 userInfo.MainSlogan = MainSlogan;
 
-                Mission = CachingService.GetStoredValue( CacheKeys.USER_MISSION );
+                Mission = CachingService.GetStoredValue( PreferenceKeys.USER_MISSION );
                 userInfo.Mission = Mission;
 
                 //if gender is not parsed then it will set zero value
-                _ = Enum.TryParse( CachingService.GetStoredValue( CacheKeys.USER_GENDER ), out Gender gender );
+                _ = Enum.TryParse( CachingService.GetStoredValue( PreferenceKeys.USER_GENDER ), out Gender gender );
                 Gender = gender;
                 userInfo.Gender = Gender;
             }

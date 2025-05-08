@@ -2,7 +2,7 @@ using System;
 
 namespace Principles.Core.Constants;
 
-public static class CacheKeys
+public static class PreferenceKeys
 {
     public const string USER_MISSION = "UserMission";
     public const string USER_MAIN_SLOGAN = "UserMainSlogan";

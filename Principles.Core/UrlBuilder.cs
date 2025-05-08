@@ -32,6 +32,7 @@ public class UrlBuilder : IUrlBuilder
     private string? m_allReminders;
     private string? m_appleAuth;
     private string? m_apiKey;
+    private string? m_sync;
 
     public string BaseUrl
     {
@@ -252,6 +253,15 @@ public class UrlBuilder : IUrlBuilder
         {
             m_appleAuth ??= Combine( BaseApiUrl, "account", "appleauthorization" );
             return m_appleAuth;
+        }
+    }
+
+    public string Sync
+    {
+        get
+        {
+            m_sync ??= Combine( BaseApiUrl, "sync", "users" );
+            return m_sync;
         }
     }
 

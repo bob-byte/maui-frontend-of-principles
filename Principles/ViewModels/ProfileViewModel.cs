@@ -63,7 +63,7 @@ public partial class ProfileViewModel : BaseViewModel
         if (isSuccess)
         {
             MainSlogan = newValue;
-            CachingService.SetForever( CacheKeys.USER_MAIN_SLOGAN, MainSlogan );
+            CachingService.SetForever( PreferenceKeys.USER_MAIN_SLOGAN, MainSlogan );
 
             NotifyUserInfoChanged();
 
@@ -87,7 +87,7 @@ public partial class ProfileViewModel : BaseViewModel
             string? oldMission = Mission is null ? null : (string)Mission!.Clone();
 
             Mission = newValue;
-            CachingService.SetForever( CacheKeys.USER_MISSION, Mission );
+            CachingService.SetForever( PreferenceKeys.USER_MISSION, Mission );
 
             if (!string.IsNullOrWhiteSpace( oldMission ))
             {
