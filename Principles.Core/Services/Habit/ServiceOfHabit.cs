@@ -125,9 +125,9 @@ public class ServiceOfHabit : BaseRemoteService, IServiceOfHabit
 
     public async Task<UserHabit> UserHabitAsync( long id )
     {
-        if(id == default)
+        if(id == 0)
         {
-            throw new ArgumentException( message: "Is default value", paramName: nameof( id ) );
+            throw new ArgumentException( message: "is zero", paramName: nameof( id ) );
         }
 
         string url = $"{UrlBuilder.Habits}/{id}";

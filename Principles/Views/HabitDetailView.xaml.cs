@@ -14,9 +14,32 @@ public partial class HabitDetailView : ContentPageBase
 	public HabitDetailView( HabitDetailViewModel viewModel )
 	{
         BindingContext = viewModel;
+        ViewModel = viewModel;
+        ViewModel.PropertyChanged += ViewModelOnPropertyChanged;
 
         InitializeComponent();
+        
+        viewModel.ReferenceMessenger.Register<MsgThatProgressOfHabitUpdated>( this, ( _, _ ) =>
+        {
+            DX_Calendar.Refresh();
+        } );
     }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        DX_Calendar.BindingContext = ViewModel.Habit.Progresses;
+    }
+
+    private void ViewModelOnPropertyChanged( object? sender, PropertyChangedEventArgs e )
+    {
+        if (e.PropertyName == nameof(ViewModel.IsInitialized) && ViewModel.IsInitialized)
+        {
+            DX_Calendar.Refresh();
+        }
+    }
+
+    private HabitDetailViewModel ViewModel { get; }
 
     private void DXI_StreakInfo_Tapped( object sender, TappedEventArgs e )
     {
@@ -45,14 +68,5 @@ public partial class HabitDetailView : ContentPageBase
     private void DXI_HabitByDayweeks_Tapped( object sender, TappedEventArgs e )
     {
         DXP_DayByDayWeeksTip.IsOpen = true;
-    }
-    private void DX_Calendar_CustomDayCellAppearance( object sender, CustomSelectableCellAppearanceEventArgs e )
-    {
-        if (BindingContext is HabitDetailViewModel vm &&
-        vm.CompletedDates.Contains( DateOnly.FromDateTime( e.Date ) ))
-        {
-            e.BackgroundColor = (Application.Current!.Resources["Primary"] as Color)!;
-            e.TextColor = Colors.White;
-        } 
     }
 }

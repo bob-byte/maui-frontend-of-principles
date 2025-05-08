@@ -180,6 +180,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
             foundHabit.Complexity = savedHabit.Complexity;
             foundHabit.Frequency = savedHabit.Frequency;
             foundHabit.Priority = savedHabit.Priority;
+            foundHabit.Reminders = savedHabit.Reminders;
 
             foundHabit.Goal = savedHabit.Goal is null || savedHabit.Goal.Id == 0
                 ? new UserGoal()
@@ -248,8 +249,6 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
 
         UserHabit habit = progressOfHabit.Habit!;
 
-        bool doTryAgain;
-
         SemaphoreSlim locker = m_isBusyForChangeCompleted[habit];
         await locker.WaitAsync();
 
@@ -257,11 +256,15 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
 
         try
         {
+            bool doTryAgain;
+            
             do
             {
                 try
                 {
                     progressOfHabit.Value = ProgressValue.NextToggled( previousValueOfProgress );
+                    
+                    ServiceOfHabit.Recompute( habit );
                     await ProgressOfHabitService.UpdateAsync( progressOfHabit );
 
                     doTryAgain = false;
@@ -317,8 +320,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
         {
             Dictionary<string, object> routeParams = new()
             {
-                { "Id", habit.Id },
-                {"Progress", habit.PercentageAchieved }
+                { "Habit", habit },
             };
             await Navigation.NavigateToAsync<HabitDetailViewModel>( routeParams );
         }

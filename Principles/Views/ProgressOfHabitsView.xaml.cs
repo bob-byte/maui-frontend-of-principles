@@ -278,7 +278,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
                 stack.BindTapGesture( "HabitDetailCommand", commandSource: ViewModel, parameterPath: "Item", numberOfTapsRequired: 1 );
 
                 CircularProgressBar progressBar = new();
-                IValueConverter progressConverter = new ProgressOfHabitToInt32Converter( ViewModel.ProgressOfHabitService );
+                IValueConverter progressConverter = new ProgressOfHabitToInt32Converter();
                 progressBar.Bind( CircularProgressBar.ProgressProperty, path: "Item.PercentageAchieved", converter: progressConverter );
 
                 progressBar.ProgressColor = primaryColor;

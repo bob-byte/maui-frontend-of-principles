@@ -264,7 +264,7 @@ public partial class EditHabitViewModel : BaseViewModel
 
         Habit = new UserHabit();
         InitValidations();
-        
+
         if (query.TryGetValue( "Id", out object? value ) && (long)value != 0)
         {
             Habit.Id = (long)value;
@@ -276,29 +276,25 @@ public partial class EditHabitViewModel : BaseViewModel
             IsNewHabit = true;
         }
 
-        query.TryGetValue( "UserHabits", out object? userHabitsObj );
-        if(userHabitsObj is IEnumerable<UserHabit> userHabits)
+        UserHabits = new ObservableCollectionEx<UserHabit>();
+        foreach (UserHabit habit in ServiceOfHabit.StoredUserHabits!)
         {
-            UserHabits = new ObservableCollectionEx<UserHabit>();
-            foreach(UserHabit habit in userHabits)
+            UserHabits.Add( new UserHabit()
             {
-                UserHabits.Add( new UserHabit()
-                {
-                    Name = habit.Name,
-                    Priority = habit.Priority,
-                    Id = habit.Id,
-                    Complexity = habit.Complexity,
-                    ColorName = habit.ColorName,
-                    AreasOfLife = habit.AreasOfLife,
-                    PercentageAchieved = habit.PercentageAchieved,
-                    Frequency = habit.Frequency,
-                    Status = habit.Status
-                } );
-            }
+                Name = habit.Name,
+                Priority = habit.Priority,
+                Id = habit.Id,
+                Complexity = habit.Complexity,
+                ColorName = habit.ColorName,
+                AreasOfLife = habit.AreasOfLife,
+                PercentageAchieved = habit.PercentageAchieved,
+                Frequency = habit.Frequency,
+                Status = habit.Status
+            } );
         }
 
         query.TryGetValue( "CanHasSubhabits", out object? canHasSubhabitsObj );
-        if(canHasSubhabitsObj is bool canHasSubhabits)
+        if (canHasSubhabitsObj is bool canHasSubhabits)
         {
             Habit.CanHasSubhabits = canHasSubhabits;
         }

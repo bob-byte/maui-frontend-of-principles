@@ -533,6 +533,7 @@
             <converters:IsZeroConverter x:Key="IsZero" />
             <converters:IsMoreThanZeroConverter x:Key="IsMoreThanZero" />
             <converters:GenderToUserIconConverter x:Key="GenderToIcon" />
+            <converters:ProgressOfHabitToInt32Converter x:Key="ProgressToInt32" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -26,21 +26,15 @@ public partial class HabitDetailViewModel : BaseViewModel
     [ObservableProperty]
     private ObservableCollectionEx<bool> m_isDayChecked = new();
     [ObservableProperty]
-    IValueConverter m_progressConverter;
-    [ObservableProperty]
-    private double m_percentageAchievedInProgressbar;
-    [ObservableProperty]
-    private int m_percentageAchievedInLabel;
-    [ObservableProperty]
     private int m_completedDays;
     [ObservableProperty]
     private int m_longestStreak;
     [ObservableProperty]
     private ObservableCollection<StreakData> m_streaks = new();
     [ObservableProperty]
-    private LiveChartsCore.Chart m_streakChart;
+    private Chart m_streakChart;
     [ObservableProperty]
-    private LiveChartsCore.Chart m_stabilityChart;
+    private Chart m_stabilityChart;
     [ObservableProperty]
     private int m_chartWidth;
     [ObservableProperty]
@@ -66,53 +60,44 @@ public partial class HabitDetailViewModel : BaseViewModel
     [ObservableProperty]
     private string? m_goalTitle;
 
+    private SemaphoreSlim m_lockerOfHabitProgressUpdate;
+
     [ObservableProperty]
     private ObservableCollection<UserHabit> m_habitsWithSameGoal = new();
-
-
-    [ObservableProperty]
-    private ObservableCollection<DateOnly> m_completedDates = new();
+    
     public HabitDetailViewModel( IServiceProvider serviceProvider )
         : base( serviceProvider )
     {
         ProgressOfHabitService = serviceProvider.GetRequiredService<IProgressOfHabitService>();
         ServiceOfHabit = serviceProvider.GetRequiredService<IServiceOfHabit>();
-        ProgressConverter = new ProgressOfHabitToInt32Converter( ProgressOfHabitService );
+        EditedReminder = new EditedUserHabitReminder();
+        m_lockerOfHabitProgressUpdate = new SemaphoreSlim( initialCount: 1, maxCount: 1 );
+        
         InitPeriodsOfHabit();
     }
+    
     public ISeries[] Series { get; set; }
     public IProgressOfHabitService ProgressOfHabitService { get; }
     public IServiceOfHabit ServiceOfHabit { get; }
-
+    
     public override void ApplyQueryAttributes( IDictionary<string, object> query )
     {
+        if (query.TryGetValue( "Habit", out object? habitObj ) && habitObj is UserHabit habit)
+        {
+            Habit = habit;
+        }
+        else
+        {
+            throw new ArgumentException("Habit is not supplied to HabitDetailViewModel");
+        }
+        
         base.ApplyQueryAttributes( query );
-
-        Habit = new UserHabit();
-
-        if (query.TryGetValue( "Id", out object? value ) && (long)value != 0)
-        {
-            Habit.Id = (long)value;
-        }
-
-        if (query.TryGetValue( "Progress", out object? progressValue ) && progressValue is double progress)
-        {
-            PercentageAchievedInProgressbar = progress;
-            PercentageAchievedInLabel = ProgressOfHabitService.ConvertScoreToPercentage( progress );
-        }
     }
 
-    public override async Task InitializeAsync( object? parameter = null )
+    public override Task InitializeAsync( object? parameter = null )
     {
-        Habit = await ServiceOfHabit.UserHabitAsync( Habit.Id );
-        if (Habit.Complexity < HabitConstants.MIN_HABIT_COMPLEXITY || HabitConstants.MAX_HABIT_COMPLEXITY < Habit.Complexity)
-        {
-            Habit.Complexity = 5;
-        }
-
-
-        await LoadRemider();
-        OnPropertyChanged( nameof( EditedReminder ) );
+        SetEditedRemider();
+        
         switch (Habit.Frequency!.IntervalLengthInDays)
         {
             default:
@@ -132,12 +117,13 @@ public partial class HabitDetailViewModel : BaseViewModel
                 }
         }
 
-        UpdateFrequencyRepresentation( Habit?.Frequency, SelectedPeriodOfHabit );
+        UpdateFrequencyRepresentation( Habit.Frequency, SelectedPeriodOfHabit );
         CalculateStreaks();
         LoadProgressChartData();
         DrawHabitExecutionChart();
-        InitializeCalendar();
         GoalOfHabit();
+        
+        return base.InitializeAsync( parameter );;
     }
 
     public void GoalOfHabit()
@@ -255,40 +241,43 @@ public partial class HabitDetailViewModel : BaseViewModel
         };
     }
 
-    public void InitializeCalendar()
-    {
-        UserHabit? storedHabit = ServiceOfHabit.StoredUserHabits
-         .FirstOrDefault( h => h.Id == Habit?.Id );
-
-        if (storedHabit == null)
-            return;
-        CompletedDates.Clear();
-        foreach (DateOnly date in storedHabit.Progresses
-            .Where( p => p.Value == ProgressValue.YES_MANUAL )
-            .Select( p => p.Date ))
-        {
-            CompletedDates.Add( date );
-        }
-    }
-
     [RelayCommand]
-    public async Task DateTapped( DateTime? selectedDate )
+    private async Task DateTappedAsync( DateTime? selectedDateTime )
     {
-        if (selectedDate == null)
+        if (selectedDateTime == null)
         {
             return;
         }
-
-        DateOnly dateOnly = DateOnly.FromDateTime( selectedDate.Value );
-
-        if (CompletedDates.Contains( dateOnly ))
+        
+        var date = DateOnly.FromDateTime( selectedDateTime.Value );
+        
+        ProgressOfHabit? progressOfHabit = Habit!.Progresses!.FirstOrDefault( h => h.Date == date );
+        if (progressOfHabit is null)
         {
-            CompletedDates.Remove( dateOnly );
+            progressOfHabit = new ProgressOfHabit()
+            {
+                Id = 0,
+                Date = date,
+                Value = ProgressValue.UNKNOWN,
+                Habit = Habit
+            };
+
+            progressOfHabit.Value = ProgressValue.NextToggled( progressOfHabit.Value );
+
+            Habit!.Progresses!.Add( progressOfHabit );
         }
         else
         {
-            CompletedDates.Add( dateOnly );
+            progressOfHabit.Value = ProgressValue.NextToggled( progressOfHabit.Value );
         }
+
+        progressOfHabit.Habit = Habit;
+        
+        ServiceOfHabit.Recompute( Habit );
+
+        ReferenceMessenger.Send( new MsgThatProgressOfHabitUpdated( progressOfHabit ) );
+        
+        await ProgressOfHabitService.UpdateAsync( progressOfHabit );
     }
 
     private void InitPeriodsOfHabit()
@@ -317,7 +306,7 @@ public partial class HabitDetailViewModel : BaseViewModel
                     Stroke = new SolidColorPaint(SKColors.DeepSkyBlue, 2),
                     GeometryFill = new SolidColorPaint(SKColors.DeepSkyBlue),
                     Fill = null,
-                    LineSmoothness = 0.5
+                    LineSmoothness = 0.5,
                 }
             };
 
@@ -360,7 +349,7 @@ public partial class HabitDetailViewModel : BaseViewModel
             return;
         }
 
-        List<(ObservablePoint point, string label)> events = new List<(ObservablePoint point, string label)>();
+        List<(ObservablePoint point, string label)> events = [];
         double prevDiff = ordered[1].Value - ordered[0].Value;
 
         if (prevDiff != 0)
@@ -430,7 +419,7 @@ public partial class HabitDetailViewModel : BaseViewModel
 
     public void CalculateStreaks()
     {
-        UserHabit? storedHabit = ServiceOfHabit.StoredUserHabits.FirstOrDefault( h => h.Id == Habit?.Id );
+        UserHabit? storedHabit = Habit;
 
         if (storedHabit?.Progresses == null || storedHabit.Progresses.Count == 0)
         {
@@ -587,7 +576,7 @@ public partial class HabitDetailViewModel : BaseViewModel
     }
 
 
-    public async Task LoadRemider() 
+    private void SetEditedRemider() 
     {
         IsDayChecked =
         [
@@ -637,6 +626,8 @@ public partial class HabitDetailViewModel : BaseViewModel
             }
 
         }
+        
+        OnPropertyChanged( nameof( EditedReminder ) );
     }
 
     public void UpdateFrequencyRepresentation( FrequencyOfHabit? frequency, PeriodOfHabit periodOfHabit )
@@ -675,6 +666,45 @@ public partial class HabitDetailViewModel : BaseViewModel
             {
                 FrequencyRepresentation = $"{frequency.Repeats} {LocStrings.timesPer} {periodOfHabit?.Name}";
             }
+        }
+    }
+
+    [RelayCommand]
+    private async Task EditHabitAsync()
+    {
+        Dictionary<string, object> routeParams = new()
+        {
+            { "Id", Habit.Id },
+        };
+        await Navigation.NavigateToAsync<EditHabitViewModel>( routeParams );
+    }
+
+    [RelayCommand]
+    private async Task DeleteHabitAsync()
+    {
+        bool doDelete = await DialogService.ShowConfirmAsync(
+            LocStrings.MessageInDeleteHabitConfirm,
+            LocStrings.DeleteHabitQuestion
+        );
+
+        if (doDelete)
+        {
+            await UiBusyFor( async () =>
+            {
+                HabitDeletionResponse? response = await ServiceOfHabit.DeleteAsync( Habit.Id );
+
+                if (response != null)
+                {
+                    foreach (HabitDeletionResponse.NotificationRequest notification in response.DeletedNotifications)
+                    {
+                        LocalNotificationCenter.Current.Cancel( notification.Id );
+                    }
+                }
+
+                await Navigation.GoBackAsync();
+                ReferenceMessenger.Send( new HabitsDeletedMessege( Habit ) );
+
+            } ).DefaultConfigureAwait();
         }
     }
 }

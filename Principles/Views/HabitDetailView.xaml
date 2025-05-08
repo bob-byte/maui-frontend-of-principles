@@ -7,297 +7,340 @@
                    xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
                    xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
                    xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
-                   xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
                    xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
                    xmlns:loc="clr-namespace:Principles.Resources.AppStrings"
+                   xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
                    xmlns:m="clr-namespace:Principles.Core.Models;assembly=Principles.Core"
                    xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
                    xmlns:templates="clr-namespace:Principles.Views.Templates"
                    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                    xmlns:v="clr-namespace:Principles.Views"
                    xmlns:vm="clr-namespace:Principles.ViewModels"
-                   Title="{Binding Habit.Name}"
-                   x:DataType="vm:HabitDetailViewModel">
+                   x:DataType="vm:HabitDetailViewModel"
+                   Shell.TabBarIsVisible="False">
     <v:ContentPageBase.Resources>
         <ResourceDictionary>
             <converters:ReminderTimeAndDaysToStringConverter x:Key="ReminderValueToString" />
         </ResourceDictionary>
     </v:ContentPageBase.Resources>
 
+    <Shell.TitleView>
+        <Grid Margin="0,0,5,0"
+              ColumnDefinitions="Auto, *, Auto"
+              VerticalOptions="CenterAndExpand">
+            <Label Text="{Binding Habit.Name}"
+                   FontAttributes="Bold"
+                   FontSize="20"
+                   Grid.Column="0"
+                   HeightRequest="50"
+                   HorizontalOptions="Start"
+                   TextColor="{StaticResource TitleTextColor}"
+                   VerticalOptions="Center"
+                   VerticalTextAlignment="Center" />
 
-    <ScrollView>
-        <VerticalStackLayout>
-            <HorizontalStackLayout Spacing="14"
-                                   Padding="0"
-                                   Margin="0,15,0,0"
-                                   HorizontalOptions="Center">
-                <Frame BackgroundColor="{StaticResource LightPrimary}"
-                       CornerRadius="24"
-                       HasShadow="False"
-                       Padding="14,8"
-                       VerticalOptions="Center">
-                    <HorizontalStackLayout Spacing="10"
-                                           VerticalOptions="Center">
-                        <dx:DXImage Source="scheduler.svg"
-                                    WidthRequest="24"
-                                    HeightRequest="24"
-                                    VerticalOptions="Center"
-                                    TintColor="{StaticResource TitleTextColor}" />
-                        <Label Text="{Binding FrequencyRepresentation}"
-                               TextColor="White"
-                               FontAttributes="Bold"
-                               FontSize="16"
-                               VerticalOptions="Center" />
-                    </HorizontalStackLayout>
-                </Frame>
+            <dx:DXImage Source="delete"
+                        Margin="3,0,0,0"
+                        Grid.Column="2"
+                        HeightRequest="30"
+                        HorizontalOptions="End"
+                        TintColor="{StaticResource TitleTextColor}"
+                        VerticalOptions="Center"
+                        WidthRequest="40">
+                <dx:DXImage.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding DeleteHabitCommand}"
+                                          NumberOfTapsRequired="1" />
+                </dx:DXImage.GestureRecognizers>
+            </dx:DXImage>
+        </Grid>
+    </Shell.TitleView>
 
-                <Frame BackgroundColor="{StaticResource LightPrimary}"
-                       CornerRadius="24"
-                       HasShadow="False"
-                       Padding="14,8"
-                       VerticalOptions="Center">
-                    <HorizontalStackLayout Spacing="10"
-                                           VerticalOptions="Center">
-                        <dx:DXImage Source="reminder_third.svg"
-                                    WidthRequest="24"
-                                    HeightRequest="24"
-                                    VerticalOptions="Center"
-                                    TintColor="{StaticResource TitleTextColor}" />
-                        <Label Text="{Binding EditedReminder,
-                                              Converter={StaticResource ReminderValueToString}}"
-                               TextColor="White"
-                               FontAttributes="Bold"
-                               FontSize="16"
-                               VerticalOptions="Center" />
-                    </HorizontalStackLayout>
-                </Frame>
-            </HorizontalStackLayout>
-
-
-            <VerticalStackLayout Padding="10">
-                <Label Text="{Binding LocManager[OverallProgress]}"
-                       FontAttributes="Bold"
-                       FontSize="18" />
-
-                <Frame BorderColor="Gray"
-                       CornerRadius="10"
-                       Padding="10">
-                    <VerticalStackLayout Spacing="5">
-                        <Label Text="{Binding PercentageAchievedInLabel,
-                                              StringFormat='{}{0}%'}"
-                               FontAttributes="Bold"
-                               FontSize="22" />
-
-                        <ProgressBar Progress="{Binding PercentageAchievedInProgressbar}"
-                                     HeightRequest="8"
-                                     BackgroundColor="LightGray"
-                                     ProgressColor="{StaticResource Primary}" />
-
-                        <Grid ColumnDefinitions="*,*"
-                              Padding="5">
-                            <HorizontalStackLayout Spacing="4"
-                                                   HorizontalOptions="Start"
-                                                   Grid.Column="0">
-                                <Label Text="{Binding LocManager[CompletedDays]}"
-                                       FontSize="14" />
-                                <Label Text="{Binding CompletedDays}"
-                                       FontSize="14" />
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout>
+                <ScrollView Orientation="Horizontal"
+                            HorizontalScrollBarVisibility="Never">
+                    <dx:DXStackLayout Orientation="Horizontal"
+                                      Margin="5,15,5,0"
+                                      Padding="0"
+                                      HorizontalOptions="Center"
+                                      ItemSpacing="5">
+                        <Frame Padding="14,8"
+                               BackgroundColor="{StaticResource LightPrimary}"
+                               CornerRadius="24"
+                               HasShadow="False"
+                               VerticalOptions="Center">
+                            <HorizontalStackLayout Spacing="10"
+                                                   VerticalOptions="Center">
+                                <dx:DXImage Source="scheduler.svg"
+                                            HeightRequest="24"
+                                            TintColor="{StaticResource TitleTextColor}"
+                                            VerticalOptions="Center"
+                                            WidthRequest="24" />
+                                <Label Text="{Binding FrequencyRepresentation}"
+                                       FontAttributes="Bold"
+                                       FontSize="14"
+                                       TextColor="White"
+                                       VerticalOptions="Center" />
                             </HorizontalStackLayout>
-                            <HorizontalStackLayout Spacing="4"
-                                                   HorizontalOptions="End"
-                                                   Grid.Column="1">
-                                <Label Text="{Binding LocManager[Longeststreak]}"
-                                       FontSize="14" />
-                                <Label Text="{Binding LongestStreak}"
-                                       FontSize="14" />
+                        </Frame>
+
+                        <Frame Padding="14,8"
+                               BackgroundColor="{StaticResource LightPrimary}"
+                               CornerRadius="24"
+                               HasShadow="False"
+                               IsVisible="{Binding EditedReminder.IsEnabled}"
+                               VerticalOptions="Center">
+                            <HorizontalStackLayout Spacing="10"
+                                                   VerticalOptions="Center">
+                                <dx:DXImage Source="reminder_third.svg"
+                                            HeightRequest="24"
+                                            TintColor="{StaticResource TitleTextColor}"
+                                            VerticalOptions="Center"
+                                            WidthRequest="24" />
+                                <Label Text="{Binding EditedReminder, Converter={StaticResource ReminderValueToString}}"
+                                       FontAttributes="Bold"
+                                       FontSize="14"
+                                       TextColor="White"
+                                       VerticalOptions="Center" />
                             </HorizontalStackLayout>
+                        </Frame>
+                    </dx:DXStackLayout>
+                </ScrollView>
 
-                        </Grid>
-                    </VerticalStackLayout>
-                </Frame>
-            </VerticalStackLayout>
-
-            <VerticalStackLayout Padding="10"
-                                 Spacing="10">
-                <HorizontalStackLayout VerticalOptions="Center"
-                                       Spacing="8">
-                    <Label Text="{Binding LocManager[TopSevenStreaks]}"
+                <VerticalStackLayout Padding="10">
+                    <Label Text="{Binding LocManager[OverallProgress]}"
                            FontAttributes="Bold"
-                           FontSize="18"
-                           VerticalOptions="Center" />
-                    <dx:DXImage Source="info"
-                                HeightRequest="24"
-                                WidthRequest="24"
-                                VerticalOptions="Center">
-                        <dx:DXImage.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="DXI_StreakInfo_Tapped"
-                                                  NumberOfTapsRequired="1" />
-                        </dx:DXImage.GestureRecognizers>
-                    </dx:DXImage>
-                </HorizontalStackLayout>
+                           FontSize="18" />
 
-                <lvc:CartesianChart Series="{Binding StreakSeries}"
-                                    XAxes="{Binding StreakXAxes}"
-                                    YAxes="{Binding StreakYAxes}"
-                                    HeightRequest="300" />
+                    <Frame Padding="10"
+                           BorderColor="Gray"
+                           CornerRadius="10">
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="{Binding Habit.PercentageAchieved, Converter={StaticResource ProgressToInt32}, StringFormat='{}{0}%'}"
+                                   FontAttributes="Bold"
+                                   FontSize="22" />
 
-                <HorizontalStackLayout VerticalOptions="Center"
-                                       Spacing="8">
-                    <Label Text="{Binding LocManager[Stability]}"
-                           FontAttributes="Bold"
-                           FontSize="18"
-                           VerticalOptions="Center" />
-                    <dx:DXImage Source="info"
-                                HeightRequest="24"
-                                WidthRequest="24"
-                                VerticalOptions="Center">
-                        <dx:DXImage.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="DXI_StabilityInfo_Tapped"
-                                                  NumberOfTapsRequired="1" />
-                        </dx:DXImage.GestureRecognizers>
-                    </dx:DXImage>
-                </HorizontalStackLayout>
+                            <ProgressBar BackgroundColor="LightGray"
+                                         HeightRequest="8"
+                                         Progress="{Binding Habit.PercentageAchieved}"
+                                         ProgressColor="{StaticResource Primary}" />
 
-                <lvc:CartesianChart HeightRequest="300"
-                                    Series="{Binding Series}"
-                                    XAxes="{Binding XAxes}"
-                                    YAxes="{Binding YAxes}" />
+                            <Grid Padding="5"
+                                  ColumnDefinitions="*,*">
+                                <HorizontalStackLayout Grid.Column="0"
+                                                       HorizontalOptions="Start"
+                                                       Spacing="4">
+                                    <Label Text="{Binding LocManager[CompletedDays]}"
+                                           FontSize="14" />
+                                    <Label Text="{Binding CompletedDays}"
+                                           FontSize="14" />
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Grid.Column="1"
+                                                       HorizontalOptions="End"
+                                                       Spacing="4">
+                                    <Label Text="{Binding LocManager[Longeststreak]}"
+                                           FontSize="14" />
+                                    <Label Text="{Binding LongestStreak}"
+                                           FontSize="14" />
+                                </HorizontalStackLayout>
 
-                <HorizontalStackLayout VerticalOptions="Center"
-                                       Spacing="8">
-                    <Label Text="{Binding LocManager[HabitByDayweeks]}"
-                           FontAttributes="Bold"
-                           FontSize="18"
-                           VerticalOptions="Center" />
-                    <dx:DXImage Source="info"
-                                HeightRequest="24"
-                                WidthRequest="24"
-                                VerticalOptions="Center">
-                        <dx:DXImage.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="DXI_HabitByDayweeks_Tapped"
-                                                  NumberOfTapsRequired="1" />
-                        </dx:DXImage.GestureRecognizers>
-                    </dx:DXImage>
-                </HorizontalStackLayout>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Frame>
+                </VerticalStackLayout>
 
-                <lvc:CartesianChart HeightRequest="300"
-                                    Series="{Binding HabitExecutionSeries}"
-                                    XAxes="{Binding HabitExecutionXAxes}"
-                                    YAxes="{Binding HabitExecutionYAxes}" />
-
-                <dxe:DXCalendar x:Name="DX_Calendar"
-                                CustomDayCellAppearance="DX_Calendar_CustomDayCellAppearance"
-                                SelectedDateChangedCommand="{Binding DateTappedCommand}"
-                                SelectedDateChangedCommandParameter="{Binding Source={x:Reference DX_Calendar},
-                                                                              Path=SelectedDate}">
-                    <dxe:DXCalendar.HeaderAppearance>
-                        <dxe:CalendarHeaderAppearance BackgroundColor="{StaticResource Primary}" />
-                    </dxe:DXCalendar.HeaderAppearance>
-                </dxe:DXCalendar>
-
-                <Frame BorderColor="Gray"
-                       CornerRadius="10"
-                       Padding="10"
-                       Margin="10">
-                    <VerticalStackLayout Spacing="10">
-                        <Label Text="{Binding GoalTitle}"
+                <VerticalStackLayout x:Name="VSL_WithCalendar"
+                                     Padding="10"
+                                     Spacing="10">
+                    <HorizontalStackLayout Spacing="8"
+                                           VerticalOptions="Center">
+                        <Label Text="{Binding LocManager[TopSevenStreaks]}"
                                FontAttributes="Bold"
                                FontSize="18"
-                               HorizontalOptions="Center" />
-                        <CollectionView ItemsSource="{Binding HabitsWithSameGoal}">
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate x:DataType="m:UserHabit">
-                                    <Label Text="{Binding Name}" />
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                            <CollectionView.EmptyView>
-                                <Label Text="-- немає звичок з цією ціллю" />
-                            </CollectionView.EmptyView>
-                        </CollectionView>
-                    </VerticalStackLayout>
-                </Frame>
+                               VerticalOptions="Center" />
+                        <dx:DXImage Source="info"
+                                    HeightRequest="24"
+                                    VerticalOptions="Center"
+                                    WidthRequest="24">
+                            <dx:DXImage.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                      Tapped="DXI_StreakInfo_Tapped" />
+                            </dx:DXImage.GestureRecognizers>
+                        </dx:DXImage>
+                    </HorizontalStackLayout>
+
+                    <lvc:CartesianChart HeightRequest="300"
+                                        Series="{Binding StreakSeries}"
+                                        XAxes="{Binding StreakXAxes}"
+                                        YAxes="{Binding StreakYAxes}" />
+
+                    <HorizontalStackLayout Spacing="8"
+                                           VerticalOptions="Center">
+                        <Label Text="{Binding LocManager[Stability]}"
+                               FontAttributes="Bold"
+                               FontSize="18"
+                               VerticalOptions="Center" />
+                        <dx:DXImage Source="info"
+                                    HeightRequest="24"
+                                    VerticalOptions="Center"
+                                    WidthRequest="24">
+                            <dx:DXImage.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                      Tapped="DXI_StabilityInfo_Tapped" />
+                            </dx:DXImage.GestureRecognizers>
+                        </dx:DXImage>
+                    </HorizontalStackLayout>
+
+                    <lvc:CartesianChart Padding="0"
+                                        HeightRequest="300"
+                                        Series="{Binding Series}"
+                                        XAxes="{Binding XAxes}"
+                                        YAxes="{Binding YAxes}" />
+
+                    <HorizontalStackLayout Spacing="8"
+                                           VerticalOptions="Center">
+                        <Label Text="{Binding LocManager[HabitByDayweeks]}"
+                               FontAttributes="Bold"
+                               FontSize="18"
+                               VerticalOptions="Center" />
+                        <dx:DXImage Source="info"
+                                    HeightRequest="24"
+                                    VerticalOptions="Center"
+                                    WidthRequest="24">
+                            <dx:DXImage.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                      Tapped="DXI_HabitByDayweeks_Tapped" />
+                            </dx:DXImage.GestureRecognizers>
+                        </dx:DXImage>
+                    </HorizontalStackLayout>
+
+                    <lvc:CartesianChart HeightRequest="300"
+                                        Series="{Binding HabitExecutionSeries}"
+                                        XAxes="{Binding HabitExecutionXAxes}"
+                                        YAxes="{Binding HabitExecutionYAxes}" />
+
+                    <Label Text="{Binding LocManager[Calendar]}"
+                           FontAttributes="Bold"
+                           FontSize="18"
+                           VerticalOptions="Center" />
+
+                    <dxe:DXCalendar x:Name="DX_Calendar"
+                                    Background="#F0F0F0"
+                                    FirstDayOfWeek="Monday">
+                        <dxe:DXCalendar.HeaderAppearance>
+                            <dxe:CalendarHeaderAppearance BackgroundColor="{StaticResource Primary}" />
+                        </dxe:DXCalendar.HeaderAppearance>
+                        <dxe:DXCalendar.DayCellTemplate>
+                            <templates:CalendarCellTemplateSelector />
+                        </dxe:DXCalendar.DayCellTemplate>
+                    </dxe:DXCalendar>
+                </VerticalStackLayout>
+
+                <dxco:DXPopup x:Name="DXP_StreakTip"
+                              VerticalAlignment="Bottom"
+                              AllowAnimation="True"
+                              AllowScrim="True"
+                              AllowShadow="True"
+                              BackgroundColor="{StaticResource LightPrimary}"
+                              CloseOnScrimTap="True"
+                              CornerRadius="5"
+                              MinimumWidthRequest="200"
+                              VerticalOptions="End">
+                    <Grid ColumnDefinitions="85*, 15*">
+                        <Label Text="{Binding LocManager[TopSevenStreaksExplanation]}"
+                               Padding="10"
+                               Grid.Column="0"
+                               TextColor="Black"
+                               VerticalOptions="Center" />
+                        <Button Text="{Binding LocManager[OK], Mode=OneWay}"
+                                BackgroundColor="Transparent"
+                                Clicked="B_StreakOk_Clicked"
+                                Grid.Column="1"
+                                HorizontalOptions="End"
+                                TextColor="White"
+                                VerticalOptions="Center" />
+                    </Grid>
+                </dxco:DXPopup>
+
+                <dxco:DXPopup x:Name="DXP_StabilityTip"
+                              VerticalAlignment="Bottom"
+                              AllowAnimation="True"
+                              AllowScrim="True"
+                              AllowShadow="True"
+                              BackgroundColor="{StaticResource LightPrimary}"
+                              CloseOnScrimTap="True"
+                              CornerRadius="5"
+                              MinimumWidthRequest="200"
+                              VerticalOptions="End">
+                    <Grid ColumnDefinitions="85*, 15*">
+                        <Label Text="{Binding LocManager[StabilityExplanation]}"
+                               Padding="10"
+                               Grid.Column="0"
+                               TextColor="Black"
+                               VerticalOptions="Center" />
+                        <Button Text="{Binding LocManager[OK], Mode=OneWay}"
+                                BackgroundColor="Transparent"
+                                Clicked="B_OkStability_Clicked"
+                                Grid.Column="1"
+                                HorizontalOptions="End"
+                                TextColor="White"
+                                VerticalOptions="Center" />
+                    </Grid>
+                </dxco:DXPopup>
+
+                <dxco:DXPopup x:Name="DXP_DayByDayWeeksTip"
+                              VerticalAlignment="Bottom"
+                              AllowAnimation="True"
+                              AllowScrim="True"
+                              AllowShadow="True"
+                              BackgroundColor="{StaticResource LightPrimary}"
+                              CloseOnScrimTap="True"
+                              CornerRadius="5"
+                              MinimumWidthRequest="200"
+                              VerticalOptions="End">
+                    <Grid ColumnDefinitions="85*, 15*">
+                        <Label Text="{Binding LocManager[HabitByDayweeksExplanation]}"
+                               Padding="10"
+                               Grid.Column="0"
+                               TextColor="Black"
+                               VerticalOptions="Center" />
+                        <Button Text="{Binding LocManager[OK], Mode=OneWay}"
+                                BackgroundColor="Transparent"
+                                Clicked="B_OkDayByDayWeeks_Clicked"
+                                Grid.Column="1"
+                                HorizontalOptions="End"
+                                TextColor="White"
+                                VerticalOptions="Center" />
+                    </Grid>
+                </dxco:DXPopup>
             </VerticalStackLayout>
+        </ScrollView>
 
-            <dxco:DXPopup x:Name="DXP_StreakTip"
-                          VerticalAlignment="Bottom"
-                          AllowAnimation="True"
-                          AllowScrim="True"
-                          AllowShadow="True"
-                          BackgroundColor="{StaticResource LightPrimary}"
-                          CloseOnScrimTap="True"
-                          CornerRadius="5"
-                          MinimumWidthRequest="200"
+        <toolkit:Expander Margin="0,0,15,15"
+                          HorizontalOptions="End"
                           VerticalOptions="End">
-                <Grid ColumnDefinitions="85*, 15*">
-                    <Label Text="{Binding LocManager[TopSevenStreaksExplanation]}"
-                           Padding="10"
-                           TextColor="Black"
-                           VerticalOptions="Center"
-                           Grid.Column="0" />
-                    <Button Text="{Binding LocManager[OK],
-                                           Mode=OneWay}"
-                            Clicked="B_StreakOk_Clicked"
-                            BackgroundColor="Transparent"
-                            HorizontalOptions="End"
-                            TextColor="White"
-                            VerticalOptions="Center"
-                            Grid.Column="1" />
-                </Grid>
-            </dxco:DXPopup>
-
-            <dxco:DXPopup x:Name="DXP_StabilityTip"
-                          VerticalAlignment="Bottom"
-                          AllowAnimation="True"
-                          AllowScrim="True"
-                          AllowShadow="True"
-                          BackgroundColor="{StaticResource LightPrimary}"
-                          CloseOnScrimTap="True"
-                          CornerRadius="5"
-                          MinimumWidthRequest="200"
-                          VerticalOptions="End">
-                <Grid ColumnDefinitions="85*, 15*">
-                    <Label Text="{Binding LocManager[StabilityExplanation]}"
-                           Padding="10"
-                           TextColor="Black"
-                           VerticalOptions="Center"
-                           Grid.Column="0" />
-                    <Button Text="{Binding LocManager[OK],
-                                           Mode=OneWay}"
-                            Clicked="B_OkStability_Clicked"
-                            BackgroundColor="Transparent"
-                            HorizontalOptions="End"
-                            TextColor="White"
-                            VerticalOptions="Center"
-                            Grid.Column="1" />
-                </Grid>
-            </dxco:DXPopup>
-
-            <dxco:DXPopup x:Name="DXP_DayByDayWeeksTip"
-                          VerticalAlignment="Bottom"
-                          AllowAnimation="True"
-                          AllowScrim="True"
-                          AllowShadow="True"
-                          BackgroundColor="{StaticResource LightPrimary}"
-                          CloseOnScrimTap="True"
-                          CornerRadius="5"
-                          MinimumWidthRequest="200"
-                          VerticalOptions="End">
-                <Grid ColumnDefinitions="85*, 15*">
-                    <Label Text="{Binding LocManager[HabitByDayweeksExplanation]}"
-                           Padding="10"
-                           TextColor="Black"
-                           VerticalOptions="Center"
-                           Grid.Column="0" />
-                    <Button Text="{Binding LocManager[OK],
-                                           Mode=OneWay}"
-                            Clicked="B_OkDayByDayWeeks_Clicked"
-                            BackgroundColor="Transparent"
-                            HorizontalOptions="End"
-                            TextColor="White"
-                            VerticalOptions="Center"
-                            Grid.Column="1" />
-                </Grid>
-            </dxco:DXPopup>
-        </VerticalStackLayout>
-    </ScrollView>
+            <toolkit:Expander.Header>
+                <Frame Padding="0"
+                       BackgroundColor="{StaticResource Primary}"
+                       CornerRadius="35"
+                       HasShadow="False"
+                       HeightRequest="55"
+                       WidthRequest="55">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding EditHabitCommand}"
+                                              NumberOfTapsRequired="1" />
+                    </Frame.GestureRecognizers>
+                    <dx:DXImage Source="edit"
+                                HeightRequest="30"
+                                TintColor="White"
+                                WidthRequest="30">
+                        <dx:DXImage.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding EditHabitCommand}"
+                                                  NumberOfTapsRequired="1" />
+                        </dx:DXImage.GestureRecognizers>
+                    </dx:DXImage>
+                </Frame>
+            </toolkit:Expander.Header>
+        </toolkit:Expander>
+    </Grid>
 </v:ContentPageBase>

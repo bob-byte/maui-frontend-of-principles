@@ -867,4 +867,7 @@
 	<data name="HabitByDayweeksExplanation" xml:space="preserve">
   <value>The Habit by Day of the Week chart shows how often you complete your habit on each day. It helps you spot which days you're most consistent and which ones tend to be missed. By understanding these patterns, you can adjust your routine, address weak spots, and create a more balanced and sustainable habit rhythm throughout the week.</value>
 </data>
+  <data name="Calendar" xml:space="preserve">
+    <value>Calendar</value>
+  </data>
 </root>

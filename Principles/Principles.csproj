@@ -101,10 +101,10 @@
 		<PackageReference Include="CommunityToolkit.Maui.Markup" Version="4.0.0" />
 		<PackageReference Include="Polly.Extensions" Version="8.4.0" />
 		<PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="2.0.0" />
-		<PackageReference Include="DevExpress.Maui.CollectionView" Version="24.2.3" />
-		<PackageReference Include="DevExpress.Maui.Controls" Version="24.2.3" />
-		<PackageReference Include="DevExpress.Maui.DataGrid" Version="24.2.3" />
-		<PackageReference Include="DevExpress.Maui.Editors" Version="24.2.3" />
+		<PackageReference Include="DevExpress.Maui.CollectionView" Version="24.2.6" />
+		<PackageReference Include="DevExpress.Maui.Controls" Version="24.2.6" />
+		<PackageReference Include="DevExpress.Maui.DataGrid" Version="24.2.6" />
+		<PackageReference Include="DevExpress.Maui.Editors" Version="24.2.6" />
 		<PackageReference Include="Azure.AI.OpenAI" Version="1.0.0-beta.9" />
 		<PackageReference Include="System.Private.Uri" Version="4.3.2" />
 		<PackageReference Include="System.Text.Json" Version="8.0.5" />
@@ -159,6 +159,18 @@
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		</Compile>
+		<Compile Update="Views\Templates\YesManualCellTemplate.xaml.cs">
+		  <DependentUpon>YesManualCellTemplate.xaml</DependentUpon>
+		  <SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Views\Templates\YesAutoCellTemplate.xaml.cs">
+		  <DependentUpon>YesAutoCellTemplate.xaml</DependentUpon>
+		  <SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Views\Templates\NonYesCellTemplate.xaml.cs">
+		  <DependentUpon>NonYesCellTemplate.xaml</DependentUpon>
+		  <SubType>Code</SubType>
+		</Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -206,6 +218,15 @@
 	  </MauiXaml>
 	  <MauiXaml Update="Views\UpdatePopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Templates\YesManualCellTemplate.xaml">
+	    <SubType>Designer</SubType>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Templates\YesAutoCellTemplate.xaml">
+	    <SubType>Designer</SubType>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Templates\NonYesCellTemplate.xaml">
+	    <SubType>Designer</SubType>
 	  </MauiXaml>
 	</ItemGroup>
 	<ItemGroup>
