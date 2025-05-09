@@ -69,4 +69,14 @@ public partial class HabitDetailView : ContentPageBase
     {
         DXP_DayByDayWeeksTip.IsOpen = true;
     }
+
+    private void DXI_CalendarInfo_Tapped( object sender, TappedEventArgs e )
+    {
+        DXP_CalendarInfoTip.IsOpen = true;
+    }
+
+    private void B_OkCalendarInfo_Clicked( object sender, EventArgs e )
+    {
+        DXP_CalendarInfoTip.IsOpen = false;
+    }
 }

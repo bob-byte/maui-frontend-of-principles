@@ -219,14 +219,28 @@
                                         XAxes="{Binding HabitExecutionXAxes}"
                                         YAxes="{Binding HabitExecutionYAxes}" />
 
-                    <Label Text="{Binding LocManager[Calendar]}"
+                    <HorizontalStackLayout Spacing="8">
+                        <Label Text="{Binding LocManager[Calendar]}"
                            FontAttributes="Bold"
                            FontSize="18"
                            VerticalOptions="Center" />
+                        <dx:DXImage Source="info"
+                                    HeightRequest="24"+
+                                    VerticalOptions="Center"
+                                    WidthRequest="24">
+                            <dx:DXImage.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                      Tapped="DXI_CalendarInfo_Tapped" />
+                            </dx:DXImage.GestureRecognizers>
+                        </dx:DXImage>
+                    </HorizontalStackLayout>
+
+                    
 
                     <dxe:DXCalendar x:Name="DX_Calendar"
                                     Background="#F0F0F0"
                                     FirstDayOfWeek="Monday">
+                        
                         <dxe:DXCalendar.HeaderAppearance>
                             <dxe:CalendarHeaderAppearance BackgroundColor="{StaticResource Primary}" />
                         </dxe:DXCalendar.HeaderAppearance>
@@ -312,7 +326,34 @@
                                 TextColor="White"
                                 VerticalOptions="Center" />
                     </Grid>
+                </dxco:DXPopup> 
+                <dxco:DXPopup x:Name="DXP_CalendarInfoTip"
+                              VerticalAlignment="Bottom"
+                              AllowAnimation="True"
+                              AllowScrim="True"
+                              AllowShadow="True"
+                              BackgroundColor="{StaticResource LightPrimary}"
+                              CloseOnScrimTap="True"
+                              CornerRadius="5"
+                              MinimumWidthRequest="200"
+                              VerticalOptions="End">
+                    <Grid ColumnDefinitions="85*, 15*">
+                        <Label Text="{Binding LocManager[CalendarInfoExplanation]}"
+                               Padding="10"
+                               Grid.Column="0"
+                               TextColor="Black"
+                               VerticalOptions="Center" />
+                        <Button Text="{Binding LocManager[OK], Mode=OneWay}"
+                                BackgroundColor="Transparent"
+                                Clicked="B_OkCalendarInfo_Clicked"
+                                Grid.Column="1"
+                                HorizontalOptions="End"
+                                TextColor="White"
+                                VerticalOptions="Center" />
+                    </Grid>
                 </dxco:DXPopup>
+                
+                
             </VerticalStackLayout>
         </ScrollView>
 

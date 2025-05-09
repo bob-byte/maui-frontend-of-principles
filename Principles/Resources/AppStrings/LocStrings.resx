@@ -687,7 +687,7 @@
   <data name="ChatWithHelperDescription" xml:space="preserve">
     <value>Get answers to various questions from an assistant who will take into account your mission, habits etc.</value>
   </data>
-	<data name="BecomeTruePersonalityTitle" xml:space="preserve">
+  <data name="BecomeTruePersonalityTitle" xml:space="preserve">
     <value>Become a real personality</value>
   </data>
   <data name="BecomeTruePersonalityDescription" xml:space="preserve">
@@ -753,27 +753,27 @@
   <data name="EmptyReminders" xml:space="preserve">
     <value>You don't have any reminders for this habit yet</value>
   </data>
-	<data name="Monday" xml:space="preserve">
+  <data name="Monday" xml:space="preserve">
     <value>Mon</value>
-</data>
-	<data name="Tuesday" xml:space="preserve">
+  </data>
+  <data name="Tuesday" xml:space="preserve">
     <value>Tue</value>
-</data>
-	<data name="Wednesday" xml:space="preserve">
+  </data>
+  <data name="Wednesday" xml:space="preserve">
     <value>Wed</value>
-</data>
-	<data name="Thursday" xml:space="preserve">
+  </data>
+  <data name="Thursday" xml:space="preserve">
     <value>Thu</value>
-</data>
-	<data name="Friday" xml:space="preserve">
+  </data>
+  <data name="Friday" xml:space="preserve">
     <value>Fri</value>
-</data>
-	<data name="Saturday" xml:space="preserve">
+  </data>
+  <data name="Saturday" xml:space="preserve">
     <value>Sat</value>
-</data>
-	<data name="Sunday" xml:space="preserve">
+  </data>
+  <data name="Sunday" xml:space="preserve">
     <value>Sun</value>
-</data>
+  </data>
   <data name="DeviceDoesNotSupportNotifications" xml:space="preserve">
     <value>Oops.. It looks like your operating system doesn't support notifications. Please try updating it.</value>
   </data>
@@ -813,16 +813,16 @@
   <data name="JoinOurTelegram" xml:space="preserve">
     <value>Join our Telegram channel</value>
   </data>
-    <data name="TryAgain" xml:space="preserve">
+  <data name="TryAgain" xml:space="preserve">
     <value>Try again in</value>
   </data>
-    <data name="SecondsInShort" xml:space="preserve">
-		<value>s</value>
+  <data name="SecondsInShort" xml:space="preserve">
+    <value>s</value>
   </data>
-    <data name="SomethingWentWrongWhenUserAuthsUsingExternalService" xml:space="preserve">
+  <data name="SomethingWentWrongWhenUserAuthsUsingExternalService" xml:space="preserve">
     <value>Something went wrong. Please use the "Sign up with email" or "Log in" option.</value>
   </data>
-    <data name="InvalidEmailOrPassword" xml:space="preserve">
+  <data name="InvalidEmailOrPassword" xml:space="preserve">
     <value>Invalid email or password.</value>
   </data>
   <data name="ErrorOccurred" xml:space="preserve">
@@ -836,7 +836,7 @@
   </data>
   <data name="FieldIsNotEditable" xml:space="preserve">
     <value>This field is not editable.</value>
-  </data>  
+  </data>
   <data name="CompletedDays" xml:space="preserve">
     <value>Completed days</value>
   </data>
@@ -849,21 +849,27 @@
   <data name="StabilityExplanation" xml:space="preserve">
     <value>The Stability chart measures how consistently you maintain your habit without missing days. It highlights your overall adherence patterns, helping you see where you’re most reliable and where you might need extra focus. By tracking stability, you can celebrate steady progress, identify moments that challenge your routine, and build confidence in sustaining long‑term behavior change.</value>
   </data>
-	<data name="OverallProgress" xml:space="preserve">
-  <value>Overall Progress</value>
-</data>
-	<data name="Stability" xml:space="preserve">
-  <value>Stability</value>
-</data>
-	<data name="DaysCount" xml:space="preserve">
-  <value>Days completed</value>
-</data>
-	<data name="HabitByDayweeks" xml:space="preserve">
-  <value>Habit by dayweeks</value>
-</data>
-	<data name="HabitByDayweeksExplanation" xml:space="preserve">
-  <value>The Habit by Day of the Week chart shows how often you complete your habit on each day. It helps you spot which days you're most consistent and which ones tend to be missed. By understanding these patterns, you can adjust your routine, address weak spots, and create a more balanced and sustainable habit rhythm throughout the week.</value>
-</data>
+  <data name="OverallProgress" xml:space="preserve">
+    <value>Overall Progress</value>
+  </data>
+  <data name="Stability" xml:space="preserve">
+    <value>Stability</value>
+  </data>
+  <data name="DaysCount" xml:space="preserve">
+    <value>Days completed</value>
+  </data>
+  <data name="HabitByDayweeks" xml:space="preserve">
+    <value>Habit by dayweeks</value>
+  </data>
+  <data name="HabitByDayweeksExplanation" xml:space="preserve">
+    <value>The Habit by Day of the Week chart shows how often you complete your habit on each day. It helps you spot which days you're most consistent and which ones tend to be missed. By understanding these patterns, you can adjust your routine, address weak spots, and create a more balanced and sustainable habit rhythm throughout the week.</value>
+  </data>
+  <data name="CalendarInfoExplanation" xml:space="preserve">
+    <value>The execution of habits by day is displayed:
+Blue - habit completed
+Cyan - it is not necessary to follow the habit
+You can change the status with a press</value>
+  </data>
   <data name="Calendar" xml:space="preserve">
     <value>Calendar</value>
   </data>

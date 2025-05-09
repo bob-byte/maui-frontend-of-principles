@@ -204,11 +204,11 @@
   <data name="Woman" xml:space="preserve">
     <value>Жінка</value>
   </data>
-  <data name="YourMainSloganSuccessfullySaved" xml:space="preserve">
-    <value>Твоє основне гасло успішно збережене</value>
-  </data>
   <data name="YourNameSuccessfullySaved" xml:space="preserve">
     <value>Твоє імʼя успішно збережене</value>
+  </data>
+  <data name="YourMainSloganSuccessfullySaved" xml:space="preserve">
+    <value>Твоє основне гасло успішно збережене</value>
   </data>
   <data name="YourMissionSuccessfullySaved" xml:space="preserve">
     <value>Твоя місія успішно збережена</value>
@@ -489,9 +489,6 @@
   <data name="TitleOfCannotAddNewHabit" xml:space="preserve">
     <value>Додання може бути надмірним</value>
   </data>
-  <data name="Add" xml:space="preserve">
-    <value>Додати</value>
-  </data>
   <data name="AddItAnyway" xml:space="preserve">
     <value>Додати все одно</value>
   </data>
@@ -666,34 +663,34 @@
   <data name="LogInWithEmail" xml:space="preserve">
     <value>Увійти</value>
   </data>
-	<data name="TransformAreasOfLifeTitle" xml:space="preserve">
+  <data name="TransformAreasOfLifeTitle" xml:space="preserve">
     <value>Покращ відстаючі сфери життя</value>
   </data>
-	<data name="TransformAreasOfLifeDescription" xml:space="preserve">
+  <data name="TransformAreasOfLifeDescription" xml:space="preserve">
     <value>Встановлюй цілі правильно та будуй свої звички.</value>
   </data>
-	<data name="GroupHabitsByGoalsTitle" xml:space="preserve">
+  <data name="GroupHabitsByGoalsTitle" xml:space="preserve">
     <value>Безперервний прогрес</value>
   </data>
-	<data name="GroupHabitsByGoalsDescription" xml:space="preserve">
+  <data name="GroupHabitsByGoalsDescription" xml:space="preserve">
     <value>Систематизуй досягнення цілей, групувавши звички за цілями.</value>
   </data>
-	<data name="GetRecommendationsByAITitle" xml:space="preserve">
+  <data name="GetRecommendationsByAITitle" xml:space="preserve">
     <value>Рекомендації</value>
   </data>
-	<data name="GetRecommendationsByAIDescription" xml:space="preserve">
+  <data name="GetRecommendationsByAIDescription" xml:space="preserve">
     <value>Отримай рекомендації, що сформовані на основі твоєї місії, гасла по життю, цілях і т.д.</value>
   </data>
-	<data name="ChatWithHelperTitle" xml:space="preserve">
+  <data name="ChatWithHelperTitle" xml:space="preserve">
     <value>Чат з помічником</value>
   </data>
-	<data name="ChatWithHelperDescription" xml:space="preserve">
+  <data name="ChatWithHelperDescription" xml:space="preserve">
     <value>Отримай відповідь на різноманітні питання від асистента, який зважає на твою місію, звички й т.д.</value>
   </data>
-	<data name="BecomeTruePersonalityTitle" xml:space="preserve">
+  <data name="BecomeTruePersonalityTitle" xml:space="preserve">
     <value>Стань справжньою особистістю</value>
   </data>
-	<data name="BecomeTruePersonalityDescription" xml:space="preserve">
+  <data name="BecomeTruePersonalityDescription" xml:space="preserve">
     <value>Встанови цілі, що орієнтовані на твою ідентичність. Вперед!</value>
   </data>
   <data name="NotYetImplemented" xml:space="preserve">
@@ -723,7 +720,7 @@
   <data name="Update" xml:space="preserve">
     <value>Оновити</value>
   </data>
-	<data name="AppUpdateCloseButton" xml:space="preserve">
+  <data name="AppUpdateCloseButton" xml:space="preserve">
     <value>Закрити</value>
   </data>
   <data name="DontShowUpdateCheckBoxText" xml:space="preserve">
@@ -731,6 +728,9 @@
   </data>
   <data name="HelperWarning" xml:space="preserve">
     <value>ШІ-помічник знає ваші звички, цілі, місію, стать та гасло. Тому можете спитати щось стосовно них. Наприклад, “Яку поставити наступну ціль?" Зауважте: він може інколи помилятись. Перевіряйте важливу інформацію!</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Додати</value>
   </data>
   <data name="ReminderTitle" xml:space="preserve">
     <value>Загаловок</value>
@@ -753,27 +753,27 @@
   <data name="EmptyReminders" xml:space="preserve">
     <value>У вас ще немає нагадувань про цю звичку</value>
   </data>
-	<data name="Monday" xml:space="preserve">
+  <data name="Monday" xml:space="preserve">
     <value>Пн</value>
-</data>
-	<data name="Tuesday" xml:space="preserve">
+  </data>
+  <data name="Tuesday" xml:space="preserve">
     <value>Вт</value>
-</data>
-	<data name="Wednesday" xml:space="preserve">
+  </data>
+  <data name="Wednesday" xml:space="preserve">
     <value>Ср</value>
-</data>
-	<data name="Thursday" xml:space="preserve">
+  </data>
+  <data name="Thursday" xml:space="preserve">
     <value>Чт</value>
-</data>
-	<data name="Friday" xml:space="preserve">
+  </data>
+  <data name="Friday" xml:space="preserve">
     <value>Пт</value>
-</data>
-	<data name="Saturday" xml:space="preserve">
+  </data>
+  <data name="Saturday" xml:space="preserve">
     <value>Сб</value>
-</data>
-	<data name="Sunday" xml:space="preserve">
+  </data>
+  <data name="Sunday" xml:space="preserve">
     <value>Нд</value>
-</data>
+  </data>
   <data name="DeviceDoesNotSupportNotifications" xml:space="preserve">
     <value>Отакої.. Схоже, що ваша операційна система не підтримує сповіщення. Будь ласка, спробуйте оновити її.</value>
   </data>
@@ -813,19 +813,19 @@
   <data name="JoinOurTelegram" xml:space="preserve">
     <value>Приєднуйтесь до нашого Telegram-каналу</value>
   </data>
-    <data name="TryAgain" xml:space="preserve">
-		<value>Повторіть спробу через</value>
+  <data name="TryAgain" xml:space="preserve">
+    <value>Повторіть спробу через</value>
   </data>
-    <data name="SecondsInShort" xml:space="preserve">
-		<value>с</value>
+  <data name="SecondsInShort" xml:space="preserve">
+    <value>с</value>
   </data>
   <data name="SomethingWentWrongWhenUserAuthsUsingExternalService" xml:space="preserve">
     <value>Щось пішло не так. Скористайтесь опцією "Зареєструватись" або "Вхід".</value>
   </data>
-    <data name="InvalidEmailOrPassword" xml:space="preserve">
+  <data name="InvalidEmailOrPassword" xml:space="preserve">
     <value>Неправильна пошта або пароль.</value>
   </data>
-    <data name="ErrorOccurred" xml:space="preserve">
+  <data name="ErrorOccurred" xml:space="preserve">
     <value>Сталася помилка</value>
   </data>
   <data name="ChangeLanguage" xml:space="preserve">
@@ -840,35 +840,42 @@
   <data name="CompletedDays" xml:space="preserve">
     <value>Завершених днів</value>
   </data>
-  <data name="LongestStreak" xml:space="preserve">
-    <value>Найдовша серія</value>
-  </data>
-	<data name="TopSevenStreaks" xml:space="preserve">
+  <data name="TopSevenStreaks" xml:space="preserve">
     <value>Топ-7 найтриваліших серій</value>
   </data>
-	<data name="TopSevenStreaksExplanation" xml:space="preserve">
-  <value>Топ-7 серій виконання звички відображає найстабільніші періоди особистої дисципліни. Цей інструмент допомагає усвідомити власну здатність до послідовних дій, підтримує мотивацію в моменти сумнівів і слугує основою для формування стійких, рекомендованих звичок.</value>
-</data>
+  <data name="TopSevenStreaksExplanation" xml:space="preserve">
+    <value>Топ-7 серій виконання звички відображає найстабільніші періоди особистої дисципліни. Цей інструмент допомагає усвідомити власну здатність до послідовних дій, підтримує мотивацію в моменти сумнівів і слугує основою для формування стійких, рекомендованих звичок.</value>
+  </data>
   <data name="StabilityExplanation" xml:space="preserve">
     <value>Діаграма стабільності показує, наскільки послідовно ви дотримуєтеся звички без пропусків. Вона висвітлює ваші загальні патерни дотримання, допомагаючи побачити, де ви найнадійніші, а де варто звернути додаткову увагу. Відстежуючи стабільність, ви можете святкувати стабільний прогрес, виявляти моменти, які ставлять під виклик вашу рутину, та нарощувати впевненість у здатності підтримувати довгострокові зміни поведінки.</value>
   </data>
-	<data name="OverallProgress" xml:space="preserve">
-  <value>Загальний прогрес</value>
-</data>
-	<data name="Stability" xml:space="preserve">
-  <value>Стабільність</value>
-</data>
-	<data name="DaysCount" xml:space="preserve">
-  <value>Кількість днів</value>
-</data>
-	<data name="HabitByDayweeks" xml:space="preserve">
-  <value>Звичка за днями тижня</value>
-</data>
-	<data name="HabitByDayweeksExplanation" xml:space="preserve">
-  <value>Діаграма звички за днями тижня показує, як часто ви виконуєте звичку в кожен конкретний день. Вона допомагає виявити дні, коли ви найпослідовніші, та ті, які частіше пропускаєте. Аналізуючи ці закономірності, ви можете скоригувати свій розклад, посилити слабкі сторони та вибудувати більш стабільний ритм звички протягом тижня.</value>
-</data>
+  <data name="OverallProgress" xml:space="preserve">
+    <value>Загальний прогрес</value>
+  </data>
+  <data name="Stability" xml:space="preserve">
+    <value>Стабільність</value>
+  </data>
+  <data name="DaysCount" xml:space="preserve">
+    <value>Кількість днів</value>
+  </data>
+  <data name="HabitByDayweeks" xml:space="preserve">
+    <value>Звичка за днями тижня</value>
+  </data>
+  <data name="HabitByDayweeksExplanation" xml:space="preserve">
+    <value>Діаграма звички за днями тижня показує, як часто ви виконуєте звичку в кожен конкретний день. Вона допомагає виявити дні, коли ви найпослідовніші, та ті, які частіше пропускаєте. Аналізуючи ці закономірності, ви можете скоригувати свій розклад, посилити слабкі сторони та вибудувати більш стабільний ритм звички протягом тижня.</value>
+  </data>
+  <data name="CalendarInfoExplanation" xml:space="preserve">
+    <value>Відображає виконання звичок за днями:
+Синій – звичка виконана
+Голубий – дотримуватися звички не обов'язково
+Ви можете змінити статус натисканням по дню
+   </value>
+  </data>
   <data name="Calendar" xml:space="preserve">
     <value>Календар</value>
+  </data>
+  <data name="LongestStreak" xml:space="preserve">
+    <value>Найдовша серія</value>
   </data>
   <data name="YouCannotCompleteHabitInTheFuture" xml:space="preserve">
     <value>Не можливо позначити звичку, як виконана для майбутніх днів</value>
