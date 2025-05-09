@@ -256,30 +256,17 @@ public partial class HabitDetailViewModel : BaseViewModel
         {
             await DialogService.ShowErrorAsync( LocStrings.YouCannotCompleteHabitInTheFuture );
         }
+        else if (Habit.Progresses![^1].Date > date)
+        {
+            await DialogService.ShowErrorAsync( LocStrings.HabitWasntCreatedBeforeThisDay );
+        }
+        else if (progressOfHabit is null)
+        {
+            LoggingService.LogError( "Progress of habit should exist but it was not created" );
+            await DialogService.ShowErrorAsync( LocStrings.SomethingWentWrong );
+        }
         else
         {
-            if (progressOfHabit is null)
-            {
-                if (Habit.Progresses![^1].Date > date)
-                {
-                    progressOfHabit = new ProgressOfHabit()
-                    {
-                        Id = 0,
-                        Value = ProgressValue.UNKNOWN,
-                        Date = date,
-                        Habit = Habit
-                    };
-                
-                    Habit.Progresses!.Add( progressOfHabit );
-                }
-                else
-                {
-                    LoggingService.LogError( "Progresses of habit were initialized incorrectly." );
-                    await DialogService.ShowErrorAsync( LocStrings.SomethingWentWrong );
-                    return;
-                }
-            }
-            
             progressOfHabit.Value = ProgressValue.NextToggled( progressOfHabit.Value );
             progressOfHabit.Habit = Habit;
             ServiceOfHabit.Recompute( Habit );
