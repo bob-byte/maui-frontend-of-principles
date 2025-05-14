@@ -163,7 +163,7 @@ public class ServiceOfHabit : BaseRemoteService, IServiceOfHabit
         await RequestProvider.PutAsync( url, habitsWithPriorities.ToList(), SettingsService.AuthAccessToken );
     }
 
-    public async Task SetHabitArchiveStatus(HabitArchiveStatus habitArchiveStatus )
+    public async Task SetHabitArchiveStatusAsync(HabitArchiveStatus habitArchiveStatus )
     {
         string url = $"{UrlBuilder.HabitArchiveStatus}";
         await RequestProvider.PostAsync( url, habitArchiveStatus, SettingsService.AuthAccessToken );
@@ -180,7 +180,7 @@ public class ServiceOfHabit : BaseRemoteService, IServiceOfHabit
         return result;
     }
 
-    public async Task<List<ProgressOfHabit>> GetProgressesOfHabit(long id)
+    public async Task<List<ProgressOfHabit>> GetProgressesOfHabitAsync(long id)
     {
         if (id == default)
         {
@@ -204,18 +204,41 @@ public class ServiceOfHabit : BaseRemoteService, IServiceOfHabit
         }
     }
 
-    public bool CanAddNewHabit( UserHabit newHabit, IEnumerable<UserHabit> allHabits )
+    public bool IsItRecommendedToCreateNewHabit( UserHabit newHabit )
     {
         bool? result = null;
-        List<UserHabit> activeHabits = allHabits.
-            Where( h => h.PercentageAchieved < 0.4 && h.Status == StatusOfHabit.InProgress ).
-            ToList();
-        if (activeHabits.Count >= 2)
+
+        if (newHabit.IsArchived)
         {
-            result = false;
+            result = true;
+        }
+        else
+        {
+            List<UserHabit> allHabits = StoredUserHabits ?? new List<UserHabit>();
+
+            if (allHabits.Contains( newHabit ))
+            {
+                allHabits.Remove( newHabit );
+            }
+            else
+            {
+                UserHabit? habit = allHabits.FirstOrDefault( h => h.Id == newHabit.Id );
+                if (habit is not null)
+                {
+                    allHabits.Remove( habit );
+                }
+            }
+
+            List<UserHabit> activeHabits = allHabits
+                .Where( h => h.PercentageAchieved < 0.4 && h.Status == StatusOfHabit.InProgress ).ToList();
+            if (activeHabits.Count >= 2)
+            {
+                result = false;
+            }
+
+            result ??= true;
         }
 
-        result ??= true;
         return result.Value;
     }
 

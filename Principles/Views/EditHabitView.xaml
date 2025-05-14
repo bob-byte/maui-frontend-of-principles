@@ -208,15 +208,23 @@
                                                IsVisible="{Binding IsNewHabit,
                                                                    Converter={StaticResource IsFalse}}"
                                                Margin="0,5,0,0" />
-                            <dxco:SimpleButton Text="{Binding LocManager[ArchiveHabit]}"
-                                               Clicked="SB_Save_Clicked"
-                                               Style="{StaticResource PrimaryButton}"
-                                               IsVisible="{Binding IsNewHabit,
-                                                                   Converter={StaticResource IsFalse}}"
-                                               Margin="0,5,0,0"
-                                               Command="{Binding ArchiveHabitCommand}" />
-                            <Label Text="{Binding LocManager[HabitArchivingInfo]}"
-                                   IsVisible="{Binding IsArchived}" />
+                            <dx:DXStackLayout IsVisible="{Binding IsNewHabit,
+                                                                  Converter={StaticResource IsFalse}}"
+                                              Orientation="Vertical"
+                                              ItemSpacing="6">
+                                <dxco:SimpleButton Text="{Binding LocManager[ArchiveHabit]}"
+                                                   Command="{Binding ArchiveHabitCommand}"
+                                                   Style="{StaticResource PrimaryButton}"
+                                                   IsVisible="{Binding Habit.IsArchived,
+                                                                       Converter={StaticResource IsFalse}}"
+                                                   Margin="0,5,0,0" />
+                                <dxco:SimpleButton Text="{Binding LocManager[UnarchiveHabit]}"
+                                                   Command="{Binding UnarchiveHabitCommand}"
+                                                   Style="{StaticResource PrimaryButton}"
+                                                   IsVisible="{Binding Habit.IsArchived}"
+                                                   Margin="0,5,0,0" />
+                            </dx:DXStackLayout>
+
 
                             <dxco:BottomSheet x:Name="GoalsBottomSheet"
                                               AllowDismiss="True"

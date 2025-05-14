@@ -858,19 +858,32 @@
 	<data name="MessageRemoveHabitFromArchive" xml:space="preserve">
     <value>Ця дія відновить звичку у ваш активний список.</value>
   </data>
-	<data name="AddHabitToArchiveQuestionUk" xml:space="preserve">
-    <value>Бажаєте додати цю звичку в архів?</value>
-    </data>
-	<data name="MessageAddHabitToArchiveUk" xml:space="preserve">
-    <value>Ця дія перемістить звичку в архів. Ви зможете відновити її пізніше.</value>
-    </data>
-	<data name="HabitsForLaterDescription" xml:space="preserve">
-    <value>У цьому розділі показані звички, які ви зберегли для опрацювання в майбутньому. Ви можете повернутися до них у будь-який зручний момент.</value>
-    </data>
+  <data name="ShortDescriptionOfArchivedHabits" xml:space="preserve">
+    <value>У цьому розділі будуть відображатися звички, які ви заархівували. Ви можете повернутися до них, коли будете готові попрацювати над ними знову.</value>
+  </data>
 	<data name="HabitArchivingInfo" xml:space="preserve">
     <value>Ваша звичка буде збережена в архів, ви завжди зможете повернути її в основний список.</value>
     </data>
 	<data name="ArchiveHabit" xml:space="preserve">
     <value>Додати звичку в архів</value>
     </data>
+  <data name="AddHabitToArchiveQuestion" xml:space="preserve">
+    <value>Бажаєте додати цю звичку в архів?</value>
+  </data>
+  <data name="MessageAddHabitToArchive" xml:space="preserve">
+    <value>Ця дія перемістить звичку в архів. Ви зможете відновити її пізніше.</value>
+  </data>
+  <data name="UnarchiveHabit" xml:space="preserve">
+    <value>Видалити звичку з архіву</value>
+  </data>
+  <data name="FullDescriptionOfArchivedHabits" xml:space="preserve">
+    <value>Навіщо потрібен архів?
+✅ Побачити прогрес — звички, яких ви дотримувались, — це доказ вашої здатності змінюватись.
+🔁 Проаналізувати причини — які звички спрацювали, а які були занадто складними чи неактуальними.
+🌱 Спробувати знову — іноді корисно повернутись до старої звички, змінивши підхід або складність.
+
+⸻
+
+Підказка: перед створенням нової звички подивіться архів — можливо, щось подібне вже було, і тепер ви знаєте, як зробити краще.</value>
+  </data>
 </root>

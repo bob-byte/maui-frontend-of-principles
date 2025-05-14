@@ -1,25 +1,36 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace Principles.ViewModels;
 
 public partial class MultipleActionPopupViewModel : BaseViewModel
 {
-    public ObservableCollection<ActionButtons> Buttons { get; set; } = new();
     [ObservableProperty]
     private string? m_textOfLabel;
+    
+    public ObservableCollection<ActionData> Buttons { get; set; } = new();
+    
     public MultipleActionPopupViewModel( IServiceProvider serviceProvider )
         : base( serviceProvider )
     {
         //do nothing
     }
 
-
-    public void SetActions( List<ActionButtons> actions, string label )
+    public void SetActions( List<ActionData> actions, string label )
     {
         TextOfLabel = label;
         Buttons.Clear();
-        foreach (ActionButtons action in actions)
+
+        foreach (ActionData action in actions)
         {
+            action.Command = new AsyncRelayCommand(
+                async () =>
+                {
+                    await action.AsyncFunc();
+                    ReferenceMessenger.Send( new CloseMultipleActionPopupMsg() );
+                }
+            );
+
             Buttons.Add( action );
         }
     }

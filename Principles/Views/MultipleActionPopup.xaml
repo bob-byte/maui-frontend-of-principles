@@ -25,24 +25,24 @@
                 <Label Text="{Binding LocManager[ChooseAction]}"
                        Style="{StaticResource CentralHeader}" />
                 <Label Text="{Binding TextOfLabel}"
+                       Margin="0,0,0,10"
                        FontFamily="MonaSansMedium"
                        FontSize="16"
-                       HorizontalTextAlignment="Center"
-                       Margin="0,0,0,10" />
+                       HorizontalTextAlignment="Center" />
                 <VerticalStackLayout BindableLayout.ItemsSource="{Binding Buttons}">
                     <BindableLayout.ItemTemplate>
-                        <DataTemplate>
-                            <dxco:SimpleButton Text="{Binding Text}"
-                                               Style="{StaticResource PrimaryButton}"
-                                               Command="{Binding Command}"
-                                               Margin="0,0,0,7"
-                                               Clicked="SB_Clicked"/>
+                        <DataTemplate x:DataType="m:ActionData">
+                            <dx:DXButton Content="{Binding Text}"
+                                         Command="{Binding Command}"
+                                         Style="{StaticResource PrimaryButton}"
+                                         Margin="0,0,0,7" />
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </VerticalStackLayout>
-                <dxco:SimpleButton Text="{Binding LocManager[Cancel]}"
-                                   Style="{StaticResource SecondaryButton}"
-                                   Clicked="SB_Clicked" />
+                <dx:DXButton x:Name="DXB_Cancel"
+                             Content="{Binding LocManager[Cancel]}"
+                             Clicked="DXB_Cancel_OnClicked"
+                             Style="{StaticResource SecondaryButton}" />
             </VerticalStackLayout>
         </Frame>
     </Grid>

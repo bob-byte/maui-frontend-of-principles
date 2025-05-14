@@ -48,7 +48,11 @@ public partial class ProgressOfHabitsView : ContentPageBase
             UpdateLocalizedStrings();
             LoadLocalizationData();
         } );
-
+        
+        ViewModel.ReferenceMessenger.Register<ShowAllArchivedHabitsMsg>( this, async ( _, _ ) =>
+        {
+            await ShowArchivedHabitsAsync();
+        });
     }
 
     private void LoadLocalizationData()
@@ -409,32 +413,44 @@ public partial class ProgressOfHabitsView : ContentPageBase
         DXP_Reminder.IsOpen = false;
     }
 
-    private void DXI_Archive_Tapped( object sender, TappedEventArgs e )
+    private async void DXI_Archive_Tapped( object sender, TappedEventArgs e )
     {
+        await ShowArchivedHabitsAsync();
+    }
+
+    private async Task ShowArchivedHabitsAsync()
+    {
+        if (ViewModel.GetArchivedHabitsCommand.CanExecute( null ))
+        {
+            await ViewModel.GetArchivedHabitsCommand.ExecuteAsync( null );
+        }
+        
         ArchiveBottomSheet.State = BottomSheetState.HalfExpanded;
 
+        double heightOfBottomSheet;
 
-        double heightOfReminderBottomSheet = 500;
-
-        if (ViewModel.SettingsService.NormalPageHeight == 0)
+        if (ViewModel.SettingsService.NormalPageHeight == 0 || DeviceDisplay.Current.MainDisplayInfo.Orientation == DisplayOrientation.Landscape)
         {
-            ArchiveBottomSheet.HalfExpandedRatio = 0.7;
+            heightOfBottomSheet = 300;
+            ArchiveBottomSheet.HalfExpandedRatio = heightOfBottomSheet / CPB_Page.Height;
         }
         else
         {
+            heightOfBottomSheet = 500;
+            
             //bottom_sheet_height = full_height * HalfExpandedRatio
             //HalfExpandedRatio = bottom_sheet_height / full_height
-            ArchiveBottomSheet.HalfExpandedRatio = heightOfReminderBottomSheet / ViewModel.SettingsService.NormalPageHeight;
+            ArchiveBottomSheet.HalfExpandedRatio = heightOfBottomSheet / ViewModel.SettingsService.NormalPageHeight;
         }
 
-        double rowSpacing = G_ArchivedHabits.RowSpacing * (G_ArchivedHabits.RowDefinitions.Count - 1);
-        double additionalSpacing = 15;
-        double height = heightOfReminderBottomSheet - rowSpacing - L_ArhiveCenralHeader.HeightRequest - L_ArhiveCenralHeader.HeightRequest - additionalSpacing;
+        double rowSpacing = DXSL_ArchivedHabits.ItemSpacing * 2;
+        double additionalSpacing = 30;
+        double height = heightOfBottomSheet - rowSpacing - L_ArhiveCenralHeader.HeightRequest - L_ArhiveCenralHeader.HeightRequest - additionalSpacing;
 
         SKL_Archive.HeightRequest = height;
-        SKL_Archive.WidthRequest = PageWidth - (G_ArchivedHabits.Padding.Left + G_ArchivedHabits.Padding.Right);
+        SKL_Archive.WidthRequest = PageWidth - (DXSL_ArchivedHabits.Padding.Left + DXSL_ArchivedHabits.Padding.Right);
         DXCV_Archive.HeightRequest = height;
-    }
+    } 
 
     private void ME_ArchivedHabitEndIconClicked( object sender, EventArgs e )
     {
@@ -453,6 +469,10 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
     private void DXI_Plus_Tapped( object sender, TappedEventArgs e )
     {
-        ArchiveBottomSheet.State = BottomSheetState.Hidden;
+        if (ViewModel.CreateArchivedHabitCommand.CanExecute( null ))
+        {
+            ArchiveBottomSheet.State = BottomSheetState.Hidden;
+            ViewModel.CreateArchivedHabitCommand.Execute( null );
+        }
     }
 }

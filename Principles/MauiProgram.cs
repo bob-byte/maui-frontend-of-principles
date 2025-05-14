@@ -113,6 +113,7 @@ public static class MauiProgram
         services.AddSingleton<ProfileViewModel>();
         services.AddSingleton<ForgetPasswordViewModel>();
         services.AddSingleton<StartupViewModel>();
+        services.AddSingleton<MultipleActionPopupViewModel>();
 
         return services;
     }

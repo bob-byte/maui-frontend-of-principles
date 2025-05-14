@@ -4,34 +4,44 @@ namespace Principles.Views;
 
 public partial class MultipleActionPopup : Popup
 {
+    private MultipleActionPopupViewModel ViewModel { get; }
+
     public MultipleActionPopup( MultipleActionPopupViewModel viewModel )
     {
         BindingContext = viewModel;
         ViewModel = viewModel;
-        m_settingsService = ServiceLocator.Current!.GetRequiredService<ISettingsService>();
 
         InitializeComponent();
         SetPopupWidth();
+        
+        viewModel.ReferenceMessenger.Register<CloseMultipleActionPopupMsg>( this, ( _, _ ) =>
+        {
+            Close();
+        } );
     }
 
-    public MultipleActionPopupViewModel ViewModel { get; }
-
-    private ISettingsService m_settingsService;
-
-    private void SB_Clicked( object sender, EventArgs e )
+    protected override async Task OnClosed( object? result, bool wasDismissedByTappingOutsideOfPopup,
+        CancellationToken token = new() )
     {
-        Close();
+        ViewModel.ReferenceMessenger.Unregister<CloseMultipleActionPopupMsg>( this );
+        await base.OnClosed(result, wasDismissedByTappingOutsideOfPopup, token);
     }
-
+    
     private void SetPopupWidth()
     {
-        if (m_settingsService.NormalPageWidth == 0 || m_settingsService.NormalPageWidth > 350)
+        ISettingsService settingsService = ViewModel.ServiceProvider.GetRequiredService<ISettingsService>();
+        if (settingsService.NormalPageWidth is 0 or > 350)
         {
             G_Popup.WidthRequest = 350;
         }
         else
         {
-            G_Popup.WidthRequest = m_settingsService.NormalPageWidth - 10;
+            G_Popup.WidthRequest = settingsService.NormalPageWidth - 10;
         }
+    }
+
+    private void DXB_Cancel_OnClicked( object? sender, EventArgs e )
+    {
+        Close();
     }
 }

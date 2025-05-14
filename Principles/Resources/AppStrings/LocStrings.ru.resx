@@ -780,19 +780,32 @@
 	<data name="MessageRemoveHabitFromArchive" xml:space="preserve">
     <value>Это действие восстановит привычку в ваш активный список.</value>
   </data>
-	<data name="AddHabitToArchiveQuestionRu" xml:space="preserve">
-    <value>Хотите добавить эту привычку в архив?</value>
-	</data>
-	<data name="MessageAddHabitToArchiveRu" xml:space="preserve">
-    <value>Это действие переместит привычку в архив. Вы сможете восстановить её позже.</value>
-	</data>
-	<data name="HabitsForLaterDescription" xml:space="preserve">
-    <value>В этом разделе отображаются привычки, которые вы отложили на потом. Вы всегда можете вернуться к ним, когда будете готовы продолжить работу.</value>
+	<data name="ShortDescriptionOfArchivedHabits" xml:space="preserve">
+		<value>В этом разделе будут отображаться привычки, которые вы заархивировали. Вы можете вернуться к ним, когда будете готовы поработать над ними снова.</value>
 	</data>
 	<data name="HabitArchivingInfo" xml:space="preserve">
 	<value>Ваша привычка будет сохранена в архиве, и вы всегда сможете вернуть её в основной список.</value>
 	</data>
 	<data name="ArchiveHabit" xml:space="preserve">
     <value>Добавить привычку в архив</value>
+	</data>
+	<data name="AddHabitToArchiveQuestion" xml:space="preserve">
+		<value>Хотите добавить эту привычку в архив?</value>
+	</data>
+	<data name="MessageAddHabitToArchive" xml:space="preserve">
+		<value>Это действие переместит привычку в архив. Вы сможете восстановить её позже.</value>
+	</data>
+	<data name="UnarchiveHabit" xml:space="preserve">
+		<value>Удалить привычку из архива</value>
+	</data>
+	<data name="FullDescriptionOfArchivedHabits" xml:space="preserve">
+		<value>Зачем нужен архив?
+✅ Увидеть прогресс - привычки, которых вы придерживались, - это доказательство вашей способности меняться.
+🔁 Проанализировать причины - какие привычки сработали, а какие были слишком сложными или неактуальными.
+🌱 Попробовать снова - иногда полезно вернуться к старой привычке, изменив подход или сложность.
+
+⸻
+
+Подсказка: перед созданием новой привычки посмотрите архив - возможно, что-то подобное уже было, и теперь вы знаете, как сделать лучше.</value>
 	</data>
 </root>
