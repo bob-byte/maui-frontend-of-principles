@@ -420,11 +420,6 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
     private async Task ShowArchivedHabitsAsync()
     {
-        if (ViewModel.GetArchivedHabitsCommand.CanExecute( null ))
-        {
-            await ViewModel.GetArchivedHabitsCommand.ExecuteAsync( null );
-        }
-        
         ArchiveBottomSheet.State = BottomSheetState.HalfExpanded;
 
         double heightOfBottomSheet;
@@ -450,6 +445,11 @@ public partial class ProgressOfHabitsView : ContentPageBase
         SKL_Archive.HeightRequest = height;
         SKL_Archive.WidthRequest = PageWidth - (DXSL_ArchivedHabits.Padding.Left + DXSL_ArchivedHabits.Padding.Right);
         DXCV_Archive.HeightRequest = height;
+        
+        if (ViewModel.GetArchivedHabitsCommand.CanExecute( null ))
+        {
+            await ViewModel.GetArchivedHabitsCommand.ExecuteAsync( null );
+        }
     } 
 
     private void ME_ArchivedHabitEndIconClicked( object sender, EventArgs e )
