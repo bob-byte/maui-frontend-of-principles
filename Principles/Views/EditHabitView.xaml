@@ -210,6 +210,23 @@
                                                IsVisible="{Binding IsNewHabit,
                                                                    Converter={StaticResource IsFalse}}"
                                                Margin="0,5,0,0" />
+                            <dx:DXStackLayout IsVisible="{Binding IsNewHabit,
+                                                                  Converter={StaticResource IsFalse}}"
+                                              Orientation="Vertical"
+                                              ItemSpacing="6">
+                                <dxco:SimpleButton Text="{Binding LocManager[ArchiveHabit]}"
+                                                   Command="{Binding ArchiveHabitCommand}"
+                                                   Style="{StaticResource PrimaryButton}"
+                                                   IsVisible="{Binding Habit.IsArchived,
+                                                                       Converter={StaticResource IsFalse}}"
+                                                   Margin="0,5,0,0" />
+                                <dxco:SimpleButton Text="{Binding LocManager[UnarchiveHabit]}"
+                                                   Command="{Binding UnarchiveHabitCommand}"
+                                                   Style="{StaticResource PrimaryButton}"
+                                                   IsVisible="{Binding Habit.IsArchived}"
+                                                   Margin="0,5,0,0" />
+                            </dx:DXStackLayout>
+
 
                             <dxco:BottomSheet x:Name="GoalsBottomSheet"
                                               AllowDismiss="True"
@@ -505,71 +522,6 @@
 
                                     </VerticalStackLayout>
                                 </ScrollView>
-                            </dxco:BottomSheet>
-
-                            <dxco:BottomSheet x:Name="BS_AllHabits">
-                                <Grid Padding="0,7,0,15"
-                                      RowDefinitions="Auto, Auto"
-                                      RowSpacing="20">
-                                    <Label Text="{Binding LocManager[SetPriorityByDragAndDrop]}"
-                                           Style="{StaticResource CentralHeader}"
-                                           HorizontalOptions="CenterAndExpand"
-                                           HorizontalTextAlignment="Center"
-                                           LineBreakMode="WordWrap"
-                                           Grid.Row="0" />
-
-                                    <dxcv:DXCollectionView x:Name="DXC_SelectPriority"
-                                                           ItemsSource="{Binding UserHabits}"
-                                                           AllowDragDropItems="True"
-                                                           ZIndex="100"
-                                                           Grid.Row="1">
-                                        <dxcv:DXCollectionView.Behaviors>
-                                            <toolkit:EventToCommandBehavior Command="{Binding ResetPrioritiesCommand}"
-                                                                            EventName="CompleteItemDragDrop" />
-                                        </dxcv:DXCollectionView.Behaviors>
-                                        <dxcv:DXCollectionView.ItemTemplate>
-                                            <DataTemplate x:DataType="m:UserHabit">
-                                                <Grid ColumnDefinitions="*, 30"
-                                                      ColumnSpacing="15"
-                                                      RowDefinitions="Auto, Auto">
-                                                    <Label Text="{Binding Name}"
-                                                           Padding="10,15,0,0"
-                                                           FontAttributes="Bold"
-                                                           LineBreakMode="TailTruncation"
-                                                           MaxLines="1"
-                                                           VerticalOptions="End"
-                                                           VerticalTextAlignment="End"
-                                                           Grid.Row="0"
-                                                           Grid.Column="0" />
-                                                    <Grid Margin="0,0,5,0"
-                                                          Padding="0"
-                                                          ColumnSpacing="0"
-                                                          RowSpacing="0"
-                                                          Grid.Column="1">
-                                                        <Frame WidthRequest="30"
-                                                               HeightRequest="30"
-                                                               Margin="0"
-                                                               Padding="0"
-                                                               BackgroundColor="{StaticResource LightPrimary}"
-                                                               CornerRadius="15"
-                                                               HasShadow="False"
-                                                               HorizontalOptions="Center"
-                                                               IsClippedToBounds="True"
-                                                               VerticalOptions="Center">
-                                                            <Label Text="{Binding Priority}"
-                                                                   HorizontalTextAlignment="Center"
-                                                                   VerticalTextAlignment="Center" />
-                                                        </Frame>
-                                                    </Grid>
-                                                    <BoxView Style="{StaticResource DefaultHorizonalSeparator}"
-                                                             Grid.Row="1"
-                                                             Grid.Column="0"
-                                                             Grid.ColumnSpan="2" />
-                                                </Grid>
-                                            </DataTemplate>
-                                        </dxcv:DXCollectionView.ItemTemplate>
-                                    </dxcv:DXCollectionView>
-                                </Grid>
                             </dxco:BottomSheet>
                             <dxco:DXPopup x:Name="DXP_Errors"
                                           HeightRequest="200"

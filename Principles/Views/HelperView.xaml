@@ -80,10 +80,9 @@
                 </collectionview:DXCollectionView.ItemTemplate>
             </collectionview:DXCollectionView>
         </Border>
-
         <Grid IsVisible="{Binding IsAnimationVisible}"
               ColumnDefinitions="15*, 70*, 15*"
-              RowDefinitions="20*, 40*, Auto, 40*"
+              RowDefinitions="20*, 35*, 120, 35*"
               Grid.Row="1">
             <skia:SKLottieView x:Name="SKLV_Animation"
                                Source="emptychat_light.json"

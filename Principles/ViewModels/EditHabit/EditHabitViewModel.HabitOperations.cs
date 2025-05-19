@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CommunityToolkit.Maui.Views;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,31 +12,7 @@ public partial class EditHabitViewModel
     [RelayCommand( CanExecute = nameof( CanSave ) )]
     private async Task SaveAsync()
     {
-        List<UserHabit> copyOfHabits = new( UserHabits );
-        if (copyOfHabits.Any( h => h.Id == Habit.Id ))
-        {
-            copyOfHabits.Remove( Habit );
-        }
-
-        bool canSaveHabit;
-        if (IsNewHabit)
-        {
-            canSaveHabit = ServiceOfHabit.CanAddNewHabit( Habit, copyOfHabits );
-
-            if (!canSaveHabit)
-            {
-                canSaveHabit = await DialogService.ShowAlertWithTwoBtnsAsync(
-                    msg: LocStrings.DescriptionOfCannotAddNewHabit,
-                    title: LocStrings.TitleOfCannotAddNewHabit,
-                    accept: LocStrings.AddItAnyway,
-                    cancel: LocStrings.Cancel
-                );
-            }
-        }
-        else
-        {
-            canSaveHabit = true;
-        }
+        bool canSaveHabit = await CanSaveHabitAsync();
 
         if (canSaveHabit)
         {
@@ -54,24 +32,35 @@ public partial class EditHabitViewModel
                 Status = Habit.Status,
                 Type = Habit.Type,
                 Reminders = Habit.Reminders,
+                IsArchived = Habit.IsArchived,
                 PrioritizedHabits = new List<UserHabitWithPriority>()
             };
 
             dto.AreasOfLife!.Remove( AllAreasOfLifeAsOneItem );
 
-            copyOfHabits.Add( Habit );
+            List<UserHabit> copyOfHabits = new( ServiceOfHabit.StoredUserHabits! );
+
             foreach (UserHabit habit in copyOfHabits)
             {
                 dto.PrioritizedHabits.Add( new UserHabitWithPriority { Id = habit.Id, Priority = habit.Priority } );
             }
 
-            if (UserHabits.Count == 1)
+            if (copyOfHabits.Count == 1)
             {
                 await UiBusyFor( async () =>
                 {
                     SaveHabitResponse response = await ServiceOfHabit.UpdateHabitAsync( dto );
                     await HandleHabitSaveAsync( response );
-                    ReferenceMessenger.Send( new HabitSavedMessage( Habit, copyOfHabits ) );
+                    
+                    if (dto.IsArchived)
+                    {
+                        ReferenceMessenger.Send( new ArchiveHabitMessage( Habit, copyOfHabits ) );
+                    }
+                    else
+                    {
+                        ReferenceMessenger.Send( new HabitSavedMessage( Habit, copyOfHabits ) );
+                    }
+                    
                     await Navigation.GoBackAsync();
                 } );
             }
@@ -82,7 +71,15 @@ public partial class EditHabitViewModel
                     SaveHabitResponse response = await ServiceOfHabit.UpdateHabitAsync( dto );
                     await HandleHabitSaveAsync( response );
                     await Navigation.GoBackAsync();
-                    ReferenceMessenger.Send( new HabitSavedMessage( Habit, copyOfHabits ) );
+                    
+                    if (dto.IsArchived)
+                    {
+                        ReferenceMessenger.Send( new ArchiveHabitMessage( Habit, copyOfHabits ) );
+                    }
+                    else
+                    {
+                        ReferenceMessenger.Send( new HabitSavedMessage( Habit, copyOfHabits ) );
+                    }
                 } );
             }
         }
@@ -93,6 +90,51 @@ public partial class EditHabitViewModel
         NameOfHabit.Validate();
 
         return NameOfHabit.IsValid && !IsBusy && !IsLoadingHabitInfo;
+    }
+    
+    private async Task<bool> CanSaveHabitAsync()
+    {
+        bool result;
+        
+        if (IsNewHabit)
+        {
+            result = ServiceOfHabit.IsItRecommendedToCreateNewHabit( Habit );
+
+            if (!result)
+            {
+                MultipleActionPopupViewModel viewModel =
+                    ServiceProvider.GetRequiredService<MultipleActionPopupViewModel>();
+                var multipleActionPopup = new MultipleActionPopup( viewModel );
+
+                List<ActionData> availableActions =
+                [
+                    new(LocStrings.ArchiveHabit, () =>
+                        {
+                            ArchiveHabit();
+                            result = true;
+                            return Task.CompletedTask;
+                        }
+                    ),
+
+                    new(LocStrings.AddItAnyway, () =>
+                        {
+                            result = true;
+                            return Task.CompletedTask;
+                        }
+                    )
+                ];
+
+                viewModel.SetActions( availableActions, LocStrings.DescriptionOfCannotAddNewHabit );
+
+                await Shell.Current.ShowPopupAsync( multipleActionPopup );
+            }
+        }
+        else
+        {
+            result = true;
+        }
+        
+        return result; 
     }
 
     private async Task HandleHabitSaveAsync( SaveHabitResponse response )
@@ -129,6 +171,18 @@ public partial class EditHabitViewModel
     }
 
     [RelayCommand]
+    private void ArchiveHabit()
+    {
+        Habit.IsArchived = true;
+    }
+
+    [RelayCommand]
+    private void UnarchiveHabit()
+    {
+        Habit.IsArchived = false;
+    }
+    
+    [RelayCommand]
     private async Task DeleteHabitAsync( object? obj )
     {
         if (obj is UserHabit habit)
@@ -151,12 +205,11 @@ public partial class EditHabitViewModel
                             LocalNotificationCenter.Current.Cancel( notification.Id );
                         }
                     }
-
-                    UserHabits.Remove( habit );
-
+                    
                     await Navigation.GoBackAsync();
                     ReferenceMessenger.Send( new HabitsDeletedMessege( habit ) );
-
+                    
+                    ServiceOfHabit.StoredUserHabits!.Remove( habit );
                 } ).DefaultConfigureAwait();
             }
         }

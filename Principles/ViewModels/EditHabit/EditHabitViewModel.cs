@@ -40,9 +40,6 @@ public partial class EditHabitViewModel : BaseViewModel
     private ObservableCollectionEx<RecommendedHabit> m_recommendedHabits;
 
     [ObservableProperty]
-    private ObservableCollectionEx<UserHabit> m_userHabits;
-
-    [ObservableProperty]
     private ObservableCollectionEx<UserGoal>? m_userGoals;
 
     [ObservableProperty]
@@ -86,13 +83,12 @@ public partial class EditHabitViewModel : BaseViewModel
 
         AllUserAreasOfLife = new ObservableCollectionEx<UserAreaOfLife>();
 
-        UserHabits = new ObservableCollectionEx<UserHabit>();
         ReferenceMessenger.Register<UserLoggedOutMessage>( this, ( sender, msg ) =>
         {
             DefaultHandleLogout( msg );
 
             AllUserAreasOfLife?.Clear();
-            UserHabits?.Clear();
+            ServiceOfHabit.StoredUserHabits?.Clear();
             UserGoals?.Clear();
         } );
 
@@ -146,27 +142,6 @@ public partial class EditHabitViewModel : BaseViewModel
             IsNewHabit = true;
         }
 
-        query.TryGetValue( "UserHabits", out object? userHabitsObj );
-        if(userHabitsObj is IEnumerable<UserHabit> userHabits)
-        {
-            UserHabits = new ObservableCollectionEx<UserHabit>();
-            foreach(UserHabit habit in userHabits)
-            {
-                UserHabits.Add( new UserHabit()
-                {
-                    Name = habit.Name,
-                    Priority = habit.Priority,
-                    Id = habit.Id,
-                    Complexity = habit.Complexity,
-                    ColorName = habit.ColorName,
-                    AreasOfLife = habit.AreasOfLife,
-                    PercentageAchieved = habit.PercentageAchieved,
-                    Frequency = habit.Frequency,
-                    Status = habit.Status
-                } );
-            }
-        }
-
         query.TryGetValue( "CanHasSubhabits", out object? canHasSubhabitsObj );
         if(canHasSubhabitsObj is bool canHasSubhabits)
         {
@@ -175,6 +150,11 @@ public partial class EditHabitViewModel : BaseViewModel
         else
         {
             Habit.CanHasSubhabits = true;
+        }
+        
+        if (query.TryGetValue( "IsArchived", out object? isArchivedValue ) && isArchivedValue is bool archived)
+        {
+            Habit.IsArchived = archived;
         }
     }
 
@@ -202,18 +182,6 @@ public partial class EditHabitViewModel : BaseViewModel
             Habit.Complexity = 5;
             EditedReminder = new EditedUserHabitReminder();
             ResetDaysOfWeek();
-
-            if (!UserHabits.Contains( Habit ))
-            {
-                UserHabits.Insert( index: 0, Habit );
-            }
-
-            int priority = 1;
-            foreach (UserHabit habit in UserHabits)
-            {
-                habit.Priority = priority;
-                priority++;
-            }
 
             var normalTextColor = (Color)Application.Current!.Resources["LightNormalText"];
             Habit.ColorName = normalTextColor.ToArgbHex();
@@ -286,13 +254,6 @@ public partial class EditHabitViewModel : BaseViewModel
             {
                 Habit.AreasOfLife.Add( AllAreasOfLifeAsOneItem );
             }
-
-            UserHabit? foundHabit = UserHabits.FirstOrDefault( h => h.Id == Habit.Id );
-            if (foundHabit != null)
-            {
-                int index = UserHabits.IndexOf( foundHabit );
-                UserHabits[index] = Habit;
-            }
         }
             
         OnPropertyChanged( nameof( EditedReminder ) );
@@ -346,23 +307,8 @@ public partial class EditHabitViewModel : BaseViewModel
 
     public override async Task OnDisappearingAsync( object? parameter = null )
     {
-        foreach (UserHabit habit in UserHabits)
-        {
-            habit.Reminders?.Clear();
-        }
         EditedReminder = new EditedUserHabitReminder();
         EditedGoal = new UserGoal();
-    }
-
-    [RelayCommand(CanExecute = nameof(CanResetPriorities))]
-    private void ResetPriorities()
-    {
-        ServiceOfHabit.ResetPriorities( UserHabits );
-    }
-
-    private bool CanResetPriorities()
-    {
-        return UserHabits.Count >= 2;
     }
 
     private void NameOfHabitOnPropertyChanging( object? sender, System.ComponentModel.PropertyChangingEventArgs e )

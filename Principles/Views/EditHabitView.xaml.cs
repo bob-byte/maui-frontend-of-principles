@@ -449,14 +449,6 @@ public partial class EditHabitView : ContentPageBase
         TE_AreasOfLife.IsDropDownOpen = !TE_AreasOfLife.IsDropDownOpen;
     }
 
-    void DXC_SelectPriority_CompleteItemDragDrop( System.Object sender, DevExpress.Maui.CollectionView.CompleteItemDragDropEventArgs e )
-    {
-        for (int priority = 1; priority <= ViewModel.UserHabits.Count; priority++)
-        {
-            ViewModel.UserHabits[priority - 1].Priority = priority;
-        }
-    }
-
     private void OnCheckEditChangedInFrequencyPopup( object sender, EventArgs e )
     {
         var selectedCheckEdit = sender as CheckEdit;

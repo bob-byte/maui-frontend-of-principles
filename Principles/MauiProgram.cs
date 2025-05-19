@@ -115,15 +115,16 @@ public static class MauiProgram
 
     public static IServiceCollection RegisterViewModels( this IServiceCollection services )
     {
-        services.AddTransient<LoginViewModel>();
-        services.AddTransient<SignupViewModel>();
-        services.AddTransient<SettingsViewModel>();
+        services.AddSingleton<LoginViewModel>();
+        services.AddSingleton<SignupViewModel>();
+        services.AddSingleton<SettingsViewModel>();
         services.AddSingleton<HelperViewModel>();
-        services.AddTransient<ProgressOfHabitsViewModel>();
-        services.AddTransient<EditHabitViewModel>();
-        services.AddTransient<ProfileViewModel>();
-        services.AddTransient<ForgetPasswordViewModel>();
-        services.AddTransient<StartupViewModel>();
+        services.AddSingleton<ProgressOfHabitsViewModel>();
+        services.AddSingleton<EditHabitViewModel>();
+        services.AddSingleton<ProfileViewModel>();
+        services.AddSingleton<ForgetPasswordViewModel>();
+        services.AddSingleton<StartupViewModel>();
+        services.AddSingleton<MultipleActionPopupViewModel>();
 
         return services;
     }
