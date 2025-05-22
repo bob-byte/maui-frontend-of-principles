@@ -25,20 +25,26 @@
     </v:ContentPageBase.Resources>
 
     <Shell.TitleView>
-        <Grid Margin="0,0,5,0"
+        <Grid x:Name="G_Title"
+            Margin="0,0,5,0"
               ColumnDefinitions="Auto, *, Auto"
-              VerticalOptions="CenterAndExpand">
-            <Label Text="{Binding Habit.Name}"
+              VerticalOptions="Center"
+              SizeChanged="G_Title_SizeChanged">
+            <Label x:Name="L_TitleText"
+                   Text="{Binding Habit.Name}"
                    FontAttributes="Bold"
                    FontSize="20"
                    Grid.Column="0"
                    HeightRequest="50"
                    HorizontalOptions="Start"
+                   LineBreakMode="TailTruncation"
+                   MaxLines="1"
                    TextColor="{StaticResource TitleTextColor}"
                    VerticalOptions="Center"
                    VerticalTextAlignment="Center" />
 
-            <dx:DXImage Source="delete"
+            <dx:DXImage x:Name="DXI_DeleteHabit"
+                        Source="delete"
                         Margin="3,0,0,0"
                         Grid.Column="2"
                         HeightRequest="30"
@@ -195,7 +201,8 @@
                                         HeightRequest="300"
                                         Series="{Binding Series}"
                                         XAxes="{Binding XAxes}"
-                                        YAxes="{Binding YAxes}" />
+                                        YAxes="{Binding YAxes}"
+                                        />
 
                     <HorizontalStackLayout Spacing="8"
                                            VerticalOptions="Center">
@@ -225,7 +232,7 @@
                            FontSize="18"
                            VerticalOptions="Center" />
                         <dx:DXImage Source="info"
-                                    HeightRequest="24"+
+                                    HeightRequest="24"
                                     VerticalOptions="Center"
                                     WidthRequest="24">
                             <dx:DXImage.GestureRecognizers>
@@ -248,6 +255,14 @@
                             <templates:CalendarCellTemplateSelector />
                         </dxe:DXCalendar.DayCellTemplate>
                     </dxe:DXCalendar>
+
+                    <dxco:SimpleButton Text="{x:Static loc:LocStrings.RefreshHabitCharts}"
+                                               Command="{Binding RefreshHabitChartsCommand}"
+                                               CommandParameter="{Binding Habit}"
+                                               Style="{StaticResource PrimaryButton}"
+                                               IsVisible="{Binding IsNewHabit,
+                                               Converter={StaticResource IsFalse}}"
+                                               Margin="80,5,80,0" />
                 </VerticalStackLayout>
 
                 <dxco:DXPopup x:Name="DXP_StreakTip"

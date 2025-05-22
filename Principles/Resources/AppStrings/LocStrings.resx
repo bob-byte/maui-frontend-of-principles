@@ -882,4 +882,7 @@ You can change the status with a press</value>
   <data name="HabitWasntCreatedBeforeThisDay" xml:space="preserve">
     <value>The habit was not created before this date</value>
   </data>
+  <data name="RefreshHabitCharts" xml:space="preserve">
+    <value>Refresh charts</value>
+  </data>
 </root>

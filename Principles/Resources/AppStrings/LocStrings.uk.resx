@@ -883,4 +883,7 @@
   <data name="HabitWasntCreatedBeforeThisDay" xml:space="preserve">
     <value>Звичка не була створена до цієї дати</value>
   </data>
+  <data name="RefreshHabitCharts" xml:space="preserve">
+    <value>Оновити діаграми</value>
+  </data>
 </root>

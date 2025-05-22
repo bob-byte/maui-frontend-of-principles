@@ -883,4 +883,7 @@
   <data name="HabitWasntCreatedBeforeThisDay" xml:space="preserve">
     <value>Привычка не была создана до этой даты</value>
   </data>
+  <data name="RefreshHabitCharts" xml:space="preserve">
+    <value>Обновить диаграммы</value>
+  </data>
 </root>

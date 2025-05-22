@@ -64,7 +64,7 @@ public partial class HabitDetailViewModel : BaseViewModel
 
     [ObservableProperty]
     private ObservableCollection<UserHabit> m_habitsWithSameGoal = new();
-    
+
     public HabitDetailViewModel( IServiceProvider serviceProvider )
         : base( serviceProvider )
     {
@@ -72,14 +72,14 @@ public partial class HabitDetailViewModel : BaseViewModel
         ServiceOfHabit = serviceProvider.GetRequiredService<IServiceOfHabit>();
         EditedReminder = new EditedUserHabitReminder();
         m_lockerOfHabitProgressUpdate = new SemaphoreSlim( initialCount: 1, maxCount: 1 );
-        
+
         InitPeriodsOfHabit();
     }
-    
+
     public ISeries[] Series { get; set; }
     public IProgressOfHabitService ProgressOfHabitService { get; }
     public IServiceOfHabit ServiceOfHabit { get; }
-    
+
     public override void ApplyQueryAttributes( IDictionary<string, object> query )
     {
         if (query.TryGetValue( "Habit", out object? habitObj ) && habitObj is UserHabit habit)
@@ -88,16 +88,16 @@ public partial class HabitDetailViewModel : BaseViewModel
         }
         else
         {
-            throw new ArgumentException("Habit is not supplied to HabitDetailViewModel");
+            throw new ArgumentException( "Habit is not supplied to HabitDetailViewModel" );
         }
-        
+
         base.ApplyQueryAttributes( query );
     }
 
     public override Task InitializeAsync( object? parameter = null )
     {
         SetEditedRemider();
-        
+
         switch (Habit.Frequency!.IntervalLengthInDays)
         {
             default:
@@ -122,8 +122,8 @@ public partial class HabitDetailViewModel : BaseViewModel
         LoadProgressChartData();
         DrawHabitExecutionChart();
         GoalOfHabit();
-        
-        return base.InitializeAsync( parameter );;
+
+        return base.InitializeAsync( parameter ); ;
     }
 
     public void GoalOfHabit()
@@ -288,9 +288,8 @@ public partial class HabitDetailViewModel : BaseViewModel
 
     private void LoadProgressChartData()
     {
-        ScoreList? scoreList = ServiceOfHabit.StoredUserHabits
-            .FirstOrDefault( h => h.Id == Habit?.Id )
-            ?.ScoreList;
+
+        ScoreList? scoreList = Habit.ScoreList;
 
         if (scoreList is null || !scoreList.GetAll().Any())
         {
@@ -315,7 +314,6 @@ public partial class HabitDetailViewModel : BaseViewModel
                     Labeler = v => DateTime.FromOADate(v).ToString("dd.MM"),
                     LabelsRotation = 55,
                     TextSize = 10,
-                    CustomSeparators = Array.Empty<double>()
                 }
             };
 
@@ -347,7 +345,7 @@ public partial class HabitDetailViewModel : BaseViewModel
         }
 
         List<(ObservablePoint point, string label)> events = [];
-        double prevDiff = ordered[1].Value - ordered[0].Value;
+        double prevDiff = ordered[0].Value - ordered[1].Value;
 
         if (prevDiff != 0)
         {
@@ -358,7 +356,8 @@ public partial class HabitDetailViewModel : BaseViewModel
         for (int i = 2; i < ordered.Count; i++)
         {
             double diff = ordered[i].Value - ordered[i - 1].Value;
-            if (diff != 0 && Math.Sign( diff ) != Math.Sign( prevDiff ))
+            //if (diff != 0 && Math.Sign( diff ) != Math.Sign( prevDiff ))
+            if (diff != 0)
             {
                 DateTime date = ordered[i].Date.ToDateTime( TimeOnly.MinValue );
                 events.Add( (new ObservablePoint( date.ToOADate(), ordered[i].Value * 100 ), date.ToString( "dd.MM" )) );
@@ -369,9 +368,9 @@ public partial class HabitDetailViewModel : BaseViewModel
         LineSeries<ObservablePoint> mainSeries = new LineSeries<ObservablePoint>
         {
             Values = events.Select( e => e.point ).ToList(),
-            GeometrySize = 10,                                      
-            Stroke = new SolidColorPaint( SKColors.DeepSkyBlue, 2 ),  
-            GeometryFill = new SolidColorPaint( SKColors.DeepSkyBlue ), 
+            GeometrySize = 1,
+            Stroke = new SolidColorPaint( SKColors.DeepSkyBlue, 2 ),
+            GeometryFill = new SolidColorPaint( SKColors.DeepSkyBlue ),
             Fill = null,
             LineSmoothness = 0.5,
             DataLabelsPaint = null,
@@ -383,17 +382,31 @@ public partial class HabitDetailViewModel : BaseViewModel
 
         List<double?> xLabelsPositions = events.Select( e => (double?)e.point.X ).ToList();
 
+        DateTime minDate = ordered[0].Date.ToDateTime( TimeOnly.MinValue );
+        DateTime maxDate = ordered[ordered.Count - 1].Date.ToDateTime( TimeOnly.MinValue );
+
+        // Кількість бажаних дат + 1 (6 дат = 6 + 1)
+        int segmentCount = 7;
+
+        TimeSpan totalRange = maxDate - minDate;
+        TimeSpan segment = TimeSpan.FromTicks( totalRange.Ticks / segmentCount );
+
+        List<double> customSeparators = new();
+
+        for (int i = 0; i <= segmentCount; i++)
+        {
+            DateTime labelDate = minDate.AddTicks( segment.Ticks * i );
+            customSeparators.Add( labelDate.ToOADate() );
+        }
         XAxes = new[]
         {
             new Axis
             {
                 IsVisible = true,
                 Labeler = v => DateTime.FromOADate(v).ToString("dd.MM"),
-                LabelsRotation = 55,
+                LabelsRotation = 45,
                 TextSize = 10,
-                CustomSeparators = xLabelsPositions
-                    .Where(x => x.HasValue)
-                    .Select(x => x.Value)
+                CustomSeparators = customSeparators
             }
         };
 
@@ -418,16 +431,16 @@ public partial class HabitDetailViewModel : BaseViewModel
     {
         UserHabit? storedHabit = Habit;
 
-        if (storedHabit?.Progresses == null || storedHabit.Progresses.Count == 0)
+        if (storedHabit?.ComputedProgresses == null || storedHabit.ComputedProgresses.GetKnown().Count() == 0)
         {
             CompletedDays = 0;
             LongestStreak = 0;
             Streaks.Clear();
             return;
         }
-
-        List<DateOnly> completedDates = storedHabit.Progresses
-            .Where( p => p.Value == ProgressValue.YES_MANUAL || p.Value == ProgressValue.YES_AUTO )
+        
+        List<DateOnly> completedDates = storedHabit.ComputedProgresses.GetKnown()
+            .Where( p => p.Value == ProgressValue.YES_MANUAL)
             .Select( p => p.Date )
             .OrderBy( d => d )
             .ToList();
@@ -573,7 +586,7 @@ public partial class HabitDetailViewModel : BaseViewModel
     }
 
 
-    private void SetEditedRemider() 
+    private void SetEditedRemider()
     {
         IsDayChecked =
         [
@@ -623,7 +636,7 @@ public partial class HabitDetailViewModel : BaseViewModel
             }
 
         }
-        
+
         OnPropertyChanged( nameof( EditedReminder ) );
     }
 
@@ -703,5 +716,12 @@ public partial class HabitDetailViewModel : BaseViewModel
 
             } ).DefaultConfigureAwait();
         }
+    }
+
+    [RelayCommand]
+    private async Task RefreshHabitCharts( object? obj )
+    {
+        await InitializeAsync();
+        //await InitializeAsync( Habit );
     }
 }

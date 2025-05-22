@@ -6,6 +6,7 @@ using SkiaSharp;
 using DevExpress.Maui.Editors;
 using DevExpress.Maui.DataGrid;
 using LiveChartsCore.SkiaSharpView.SKCharts;
+using static Android.Icu.Text.CaseMap;
 
 namespace Principles.Views;
 
@@ -78,5 +79,20 @@ public partial class HabitDetailView : ContentPageBase
     private void B_OkCalendarInfo_Clicked( object sender, EventArgs e )
     {
         DXP_CalendarInfoTip.IsOpen = false;
+    }
+
+    private void G_Title_SizeChanged( object sender, EventArgs e )
+    {
+        double titleWidth = G_Title.Width;
+        double buttonWidth = DXI_DeleteHabit.WidthRequest; // width = 40
+        if (titleWidth != -1 && buttonWidth != -1)
+        {
+            double titleLabelWidth = titleWidth - buttonWidth - 10;
+#if ANDROID
+            L_TitleText.WidthRequest = titleLabelWidth;
+#else
+            L_TitleText.MaximumWidthRequest = titleLabelWidth;
+#endif
+        }
     }
 }

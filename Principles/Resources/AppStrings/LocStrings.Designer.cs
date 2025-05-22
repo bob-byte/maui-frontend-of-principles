@@ -1612,6 +1612,15 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Refresh charts.
+        /// </summary>
+        internal static string RefreshHabitCharts {
+            get {
+                return ResourceManager.GetString("RefreshHabitCharts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Relationships.
         /// </summary>
         internal static string Relationships {
