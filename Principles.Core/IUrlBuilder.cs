@@ -26,6 +26,9 @@ public interface IUrlBuilder
     string AllReminders { get; }
     string AppleAuth { get; }
     string ApiKey { get; }
+    string HabitArchiveStatus { get; }
+    string Archive {  get; }
+    string Progresses { get; }
 
     string Combine( params string[] uri );
 }

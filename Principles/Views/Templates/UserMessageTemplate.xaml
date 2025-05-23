@@ -13,9 +13,9 @@
     <Grid x:Name="G_Question"
           MaximumWidthRequest="260"
           Grid.Column="1">
-        <BoxView Color="{AppThemeBinding Light={StaticResource LightPrimary},
-                                         Dark={StaticResource LightPrimary}}"
-                 CornerRadius="16, 0, 16, 16" />
+        <BoxView CornerRadius="16, 0, 16, 16"
+                 Color="{AppThemeBinding Light={StaticResource LightPrimary},
+                                         Dark={StaticResource LightPrimary}}" />
         <dxe:MultilineEdit x:Name="ME_Question"
                            Text="{Binding Text}"
                            Margin="10,5"
@@ -29,23 +29,23 @@
                            MinimumHeightRequest="18"
                            TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
                                                        Dark={StaticResource DarkNormalText}}"
-                           TextFontFamily="MonaSansMedium"
+                           TextFontFamily="Roboto"
                            TextFontSize="18"
                            TextVerticalAlignment="Center"
                            VerticalOptions="Start" />
     </Grid>
 
     <Grid x:Name="G_UserIcon"
+          WidthRequest="35"
           HeightRequest="35"
           VerticalOptions="Start"
-          WidthRequest="35"
           Grid.Column="3">
-        <BoxView Color="{StaticResource LightPrimary}"
-                 CornerRadius="0, 5, 5, 5" />
-        <dx:DXImage HeightRequest="22"
-                    Source="{Binding ViewModel.Gender,
+        <BoxView CornerRadius="0, 5, 5, 5"
+                 Color="{StaticResource LightPrimary}" />
+        <dx:DXImage Source="{Binding ViewModel.Gender,
                                      Converter={StaticResource GenderToIcon}}"
-                    WidthRequest="22" />
+                    WidthRequest="22"
+                    HeightRequest="22" />
     </Grid>
 </Grid>
 

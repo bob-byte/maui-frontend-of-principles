@@ -22,6 +22,9 @@ public partial class UserHabit : ObservableObject
     private int m_priority;
 
     [ObservableProperty]
+    private bool m_isArchived;
+
+    [ObservableProperty]
     private string? m_description;
     [ObservableProperty]
     private UserGoal? m_goal;

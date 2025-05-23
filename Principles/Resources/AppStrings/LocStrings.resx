@@ -834,8 +834,60 @@
   <data name="ChooseLanguage" xml:space="preserve">
     <value>Choose language</value>
   </data>
-  <data name="FieldIsNotEditable" xml:space="preserve">
+	<data name="FieldIsNotEditable" xml:space="preserve">
     <value>This field is not editable.</value>
+  </data>	
+   <data name="SuccessfulCopy" xml:space="preserve">
+    <value>Text successfully copied</value>
+  </data>
+  <data name="Archive" xml:space="preserve">
+    <value>Archive</value>
+  </data>
+	<data name="AddToArchive" xml:space="preserve">
+    <value>To archive</value>
+  </data>
+	<data name="ChooseAction" xml:space="preserve">
+    <value>Choose action</value>
+  </data>
+	<data name="RemoveFromArchive" xml:space="preserve">
+    <value>Remove from archive</value>
+  </data>
+	<data name="DeleteArchivedHabitConfirmationText" xml:space="preserve">
+    <value>You are in the process of deleting a habit. Please choose one of the suggested actions.</value>
+  </data>
+	<data name="RemoveHabitFromArchiveQuestion" xml:space="preserve">
+    <value>Do you want to remove this habit from the archive?</value>
+  </data>
+	<data name="MessageRemoveHabitFromArchive" xml:space="preserve">
+    <value>This action will restore the habit to your active list.</value>
+  </data>
+	<data name="AddHabitToArchiveQuestion" xml:space="preserve">
+    <value>Do you want to archive this habit?</value>
+    </data>
+	<data name="MessageAddHabitToArchive" xml:space="preserve">
+    <value>This action will move the habit to the archive. You can restore it later.</value>
+    </data>
+  <data name="ShortDescriptionOfArchivedHabits" xml:space="preserve">
+    <value>This section displays the habits you have archived. You can return to them whenever you are ready to work on them again.</value>
+  </data>
+	<data name="HabitArchivingInfo" xml:space="preserve">
+    <value>Your habit will be archived, and you can always return it to the main list.</value>
+    </data>
+	<data name="ArchiveHabit" xml:space="preserve">
+    <value>Add the habit to archive</value>
+    </data>
+  <data name="UnarchiveHabit" xml:space="preserve">
+    <value>Remove the habit from archieve</value>
+  </data>
+  <data name="FullDescriptionOfArchivedHabits" xml:space="preserve">
+    <value>Why do you need an archive?
+✅ Plan habits you want to add or change in the future.
+🔁 Analyze reasons - which habits worked and which ones were too complicated or irrelevant.
+🌱 Try again - sometimes it's good to go back to an old habit by changing the difficulty or approach. For example, train in the morning instead of the evening.
+
+⸻
+
+Tip: before creating a new habit, look at the archive - maybe something similar has already happened, and now you know how to do it better.</value>
   </data>
   <data name="CompletedDays" xml:space="preserve">
     <value>Completed days</value>

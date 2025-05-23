@@ -15,14 +15,13 @@
                xmlns:vm="clr-namespace:Principles.ViewModels"
                x:DataType="vm:UpdatePopupViewModel"
                Color="Transparent">
-
     <Grid x:Name="G_Popup">
         <Frame Padding="10"
                BackgroundColor="White"
                CornerRadius="20"
                HasShadow="True">
             <VerticalStackLayout Spacing="15">
-                <Label Text="{x:Static loc:LocStrings.AppUpdateAvailable}"
+                <Label Text="{Binding LocManager[AppUpdateAvailable], Mode=OneWay}"
                        FontAttributes="Bold"
                        FontSize="18"
                        HorizontalOptions="Center" />
@@ -42,14 +41,14 @@
                 <HorizontalStackLayout HorizontalOptions="End"
                                        Spacing="10">
                     <dxco:SimpleButton x:Name="SB_CancelAppUpdate"
-                                       Text="{x:Static loc:LocStrings.AppUpdateCloseButton}"
+                                       Text="{Binding LocManager[AppUpdateCloseButton], Mode=OneWay}"
                                        Command="{Binding CancelUpdateCommand}"
                                        Clicked="SB_CancelAppUpdate_Clicked"
                                        Icon="close"
                                        IconHorizontalPosition="Left"
                                        BackgroundColor="{StaticResource CancelButtonColor}" />
                     <dxco:SimpleButton x:Name="SB_AppUpdate"
-                                       Text="{x:Static loc:LocStrings.Update}"
+                                       Text="{Binding LocManager[Update], Mode=OneWay}"
                                        Command="{Binding OpenStoreCommand}"
                                        Clicked="SB_AppUpdate_Clicked"
                                        Icon="{OnPlatform Android='google_play',

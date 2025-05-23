@@ -1,5 +1,6 @@
 using CommunityToolkit.Maui.Behaviors;
 
+using DevExpress.Maui.Controls;
 using DevExpress.Maui.Core;
 using DevExpress.Maui.DataGrid;
 using Plugin.LocalNotification;
@@ -29,7 +30,6 @@ public partial class ProgressOfHabitsView : ContentPageBase
         ViewModel = viewModel;
 
         InitializeComponent();
-        LoadLocalizationData();
 
 #if ANDROID31_0_OR_GREATER || IOS16_0_OR_GREATER
         SwipeItemInitialize();
@@ -45,22 +45,12 @@ public partial class ProgressOfHabitsView : ContentPageBase
         ViewModel.ReferenceMessenger.Register<NewCultureMessage>( this, ( sender, msg ) =>
         {
             UpdateLocalizedStrings();
-            LoadLocalizationData();
         } );
-
-    }
-
-    private void LoadLocalizationData()
-    {
-        L_MyHabits.Text = LocStrings.MyHabits;
-        L_LoadingContent.Text = LocStrings.LoadingContent;
-        L_HabitCollectionIsEmptyDescription.Text = LocStrings.HabitCollectionIsEmptyDescription;
-        L_Reminder.Text = LocStrings.Reminder;
-        ME_ReminderTitle.LabelText = LocStrings.ReminderTitle;
-        ME_ReminderDescription.LabelText = LocStrings.ReminderDescription;
-        TIE_Time.LabelText = LocStrings.Time;
-        SB_ReminderReport_Cancel.Text = LocStrings.Cancel;
-        SB_Save.Text = LocStrings.Save;
+        
+        ViewModel.ReferenceMessenger.Register<ShowAllArchivedHabitsMsg>( this, async ( _, _ ) =>
+        {
+            await ShowArchivedHabitsAsync();
+        });
     }
 
     private void UpdateLocalizedStrings()
@@ -322,6 +312,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
 #if ANDROID31_0_OR_GREATER || IOS16_0_OR_GREATER
     private void SwipeItemInitialize() 
     {
+        LocalizationResourceManager.Initialize( ViewModel.SettingsService );
         SwipeItem swipeForDeletion = new()
         {
             BackgroundColor = Application.Current!.Resources["RedColor"] as Color,
@@ -337,6 +328,14 @@ public partial class ProgressOfHabitsView : ContentPageBase
         };
         editOnSwipe.SetBinding( SwipeItem.CommandProperty, new Binding( nameof( ProgressOfHabitsViewModel.EditHabitCommand ) ) );
         DGV_Habits.StartSwipeItems.Add( editOnSwipe );
+
+        SwipeItem archiveOnSwipe = new()
+        {
+            BackgroundColor = Application.Current!.Resources["NormalHeaderText"] as Color,
+            Caption = LocStrings.AddToArchive
+        }; 
+        archiveOnSwipe.SetBinding( SwipeItem.CommandProperty, new Binding( nameof( ProgressOfHabitsViewModel.ArchiveHabitCommand ) ) );
+        DGV_Habits.StartSwipeItems.Add( archiveOnSwipe );
     }
 #endif
 
@@ -398,5 +397,68 @@ public partial class ProgressOfHabitsView : ContentPageBase
     private void SB_ReminderReport_Cancel_Clicked( object sender, EventArgs e )
     {
         DXP_Reminder.IsOpen = false;
+    }
+
+    private async void DXI_Archive_Tapped( object sender, TappedEventArgs e )
+    {
+        await ShowArchivedHabitsAsync();
+    }
+
+    private async Task ShowArchivedHabitsAsync()
+    {
+        double heightOfBottomSheet;
+
+        if (ViewModel.SettingsService.NormalPageHeight == 0 || DeviceDisplay.Current.MainDisplayInfo.Orientation == DisplayOrientation.Landscape)
+        {
+            heightOfBottomSheet = 300;
+            ArchiveBottomSheet.HalfExpandedRatio = heightOfBottomSheet / CPB_Page.Height;
+        }
+        else
+        {
+            heightOfBottomSheet = 500;
+            
+            //bottom_sheet_height = full_height * HalfExpandedRatio
+            //HalfExpandedRatio = bottom_sheet_height / full_height
+            ArchiveBottomSheet.HalfExpandedRatio = heightOfBottomSheet / ViewModel.SettingsService.NormalPageHeight;
+        }
+
+        double rowSpacing = DXSL_ArchivedHabits.ItemSpacing * 2;
+        double additionalSpacing = 40;
+        double height = heightOfBottomSheet - rowSpacing - L_ArhiveCenralHeader.HeightRequest - L_ArhiveCenralHeader.HeightRequest - additionalSpacing;
+
+        SKL_Archive.HeightRequest = height;
+        SKL_Archive.WidthRequest = PageWidth - (DXSL_ArchivedHabits.Padding.Left + DXSL_ArchivedHabits.Padding.Right);
+        DXCV_Archive.HeightRequest = height;
+        
+        ArchiveBottomSheet.State = BottomSheetState.HalfExpanded;
+        
+        if (ViewModel.GetArchivedHabitsCommand.CanExecute( null ))
+        {
+            await ViewModel.GetArchivedHabitsCommand.ExecuteAsync( null );
+        }
+    }
+
+    private void ME_ArchivedHabitEndIconClicked( object sender, EventArgs e )
+    {
+        ArchiveBottomSheet.State = BottomSheetState.Hidden;
+    }
+
+    private void DXI_Info_Tapped( object sender, TappedEventArgs e )
+    {
+        DXP_Tip.IsOpen = true;
+    }
+
+    private void B_Ok_Clicked( object sender, EventArgs e )
+    {
+        DXP_Tip.IsOpen = false;
+    }
+
+    private void DXI_Plus_Tapped( object sender, TappedEventArgs e )
+    {
+        if (ViewModel.CreateArchivedHabitCommand.CanExecute( null ))
+        {
+            ArchiveBottomSheet.State = BottomSheetState.Hidden;
+            ViewModel.CreateArchivedHabitCommand.Execute( null );
+        }
     }
 }

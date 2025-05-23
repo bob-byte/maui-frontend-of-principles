@@ -1,31 +1,23 @@
 ﻿using Azure.AI.OpenAI;
 using Azure;
 using System.Text;
-
+using OpenAI.Chat;
+using CommunityToolkit.Mvvm.Messaging;
 namespace Principles.Core.Services;
 
 public class AiRecommenderOfHabitsService : BaseRemoteService, IAiRecommenderOfHabitsService
 {
-    private readonly ChatMessage m_setupMessage;
+    private ChatMessage m_setupMessage;
     private readonly IGoalService m_goalService;
+    private readonly ISettingsService m_settingsService;
 
     public AiRecommenderOfHabitsService( IServiceProvider serviceProvider )
         : base( serviceProvider )
     {
-        m_setupMessage = new ChatMessage(
-            role: ChatRole.System,
-            content: $"You are self development assistant. " +
-                     $"You are in the app that focuses on helping users to create, keep and track their atomic habits. " +
-                     $"You should recommend new atomic habits for user. Your answer should be in JSON format and contain an array of habits. " +
-                     $"Each array object should consist of the following fields: {nameof( RecommendedHabit.Name )}, {nameof( RecommendedHabit.ReasonToFollow )}. " +
-                     $"The {nameof( RecommendedHabit.Name )} field indicates habit name and time when execute habit (for example, \"when I wake up\") or location (\"when I am in a gym\"). " +
-                     $"It should NOT contain frequency of a habit (for example, \"every day\"). Example of the {nameof( RecommendedHabit.Name )} field is \"Meditate at least 5 minutes when I wake up\". " +
-                     $"The {nameof( RecommendedHabit.ReasonToFollow )} field indicates why I should follow it and must be very briefly, but accurately explained. You must send only a JSON array in your response and nothing else. " +
-                     $"Your response must be in the {CultureInfo.CurrentUICulture.ThreeLetterISOLanguageName} language, regardless of the language of the user's personal information." +
-                     $"JSON object which contains array of habits must be named \"Habits\" in english."
-        );
-
         m_goalService = serviceProvider.GetRequiredService<IGoalService>();
+        m_settingsService = serviceProvider.GetRequiredService<ISettingsService>();
+        
+        RecreateSystemMessage();
     }
 
     //it creates user chat message that contains:
@@ -58,6 +50,8 @@ public class AiRecommenderOfHabitsService : BaseRemoteService, IAiRecommenderOfH
         {
             messageContentBuilder.Append( $"They also shouldn't conflict with my main slogan of life: \"{userMainSlogan}\". " );
         }
+
+        messageContentBuilder.Append( $"Your response must be only in the {m_settingsService.CurrentCulture} language, regardless of the language of my personal information." );
 
         messageContentBuilder.Append( $"I am a {userGender.ToString().ToLower()}. " );
 
@@ -110,21 +104,19 @@ public class AiRecommenderOfHabitsService : BaseRemoteService, IAiRecommenderOfH
             LoggingService.LogInfo( userMsg );
         }
 
-        ChatMessage newChatMessage = new( ChatRole.User, userMsg );
+        ChatMessage newChatMessage = ChatMessage.CreateUserMessage( userMsg );
         List<ChatMessage> chatMessages = new()
         {
             m_setupMessage,
             newChatMessage,
         };
 
-        ChatCompletionsOptions chatResponseOptions = new( DEFAULT_AI_DEPLOYMENT_NAME, chatMessages );
+        ChatClient aiClient = await LazyAiClient;
 
-        OpenAIClient aiClient = await LazyAiClient;
-        
-        Response<ChatCompletions> response = await aiClient.GetChatCompletionsAsync( chatResponseOptions ).DefaultConfigureAwait();
-        if (response != null && response.Value.Choices.Count > 0)
+        ChatCompletion response = await aiClient.CompleteChatAsync( chatMessages );
+        if (response != null && response.Content.Count > 0)
         {
-            string responseContent = response.Value.Choices[0].Message.Content;
+            string responseContent = response.Content[0].Text;
             responseContent = responseContent.Replace( "```", string.Empty );
             responseContent = responseContent.Replace( "json\n", string.Empty );
 
@@ -151,5 +143,20 @@ public class AiRecommenderOfHabitsService : BaseRemoteService, IAiRecommenderOfH
         {
             throw new InvalidOperationException( "SomethingWentWrong" );
         }
+    }
+
+    public void RecreateSystemMessage()
+    {
+        m_setupMessage = ChatMessage.CreateSystemMessage(
+           content: $"You are self development assistant. " +
+                    $"You are in the app that focuses on helping users to create, keep and track their atomic habits. " +
+                    $"You should recommend new atomic habits for user. Your answer should be in JSON format and contain an array of habits. " +
+                    $"Each array object should consist of the following fields: {nameof( RecommendedHabit.Name )}, {nameof( RecommendedHabit.ReasonToFollow )}. " +
+                    $"The {nameof( RecommendedHabit.Name )} field indicates habit name and time when execute habit (for example, \"when I wake up\") or location (\"when I am in a gym\"). " +
+                    $"It should NOT contain frequency of a habit (for example, \"every day\"). Example of the {nameof( RecommendedHabit.Name )} field is \"Meditate at least 5 minutes when I wake up\". " +
+                    $"The {nameof( RecommendedHabit.ReasonToFollow )} field indicates why I should follow it and must be very briefly, but accurately explained. You must send only a JSON array in your response and nothing else. " +
+                    $"Your response must be in the {m_settingsService.CurrentCulture} language, regardless of the language of the user's personal information." +
+                    $"JSON object which contains array of habits must be named \"Habits\" in english."
+       );
     }
 }

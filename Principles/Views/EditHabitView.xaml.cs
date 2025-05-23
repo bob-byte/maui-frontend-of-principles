@@ -243,7 +243,13 @@ public partial class EditHabitView : ContentPageBase
 
         if (!hasErrors)
         {
-            ViewModel.UpdateFrequencyRepresentation();
+            ViewModel.FrequencyInfo = new HabitFrequencyInfo
+            {
+                Frequency = ViewModel.Habit.Frequency,
+                Period = ViewModel.SelectedPeriodOfHabit
+            };
+
+            OnPropertyChanged( nameof( ViewModel.FrequencyInfo ) );
             DXP_Frequency.IsOpen = false;
         }
     }
@@ -441,14 +447,6 @@ public partial class EditHabitView : ContentPageBase
     void TGR_AreasOfHabit_Tapped( System.Object sender, Microsoft.Maui.Controls.TappedEventArgs e )
     {
         TE_AreasOfLife.IsDropDownOpen = !TE_AreasOfLife.IsDropDownOpen;
-    }
-
-    void DXC_SelectPriority_CompleteItemDragDrop( System.Object sender, DevExpress.Maui.CollectionView.CompleteItemDragDropEventArgs e )
-    {
-        for (int priority = 1; priority <= ViewModel.UserHabits.Count; priority++)
-        {
-            ViewModel.UserHabits[priority - 1].Priority = priority;
-        }
     }
 
     private void OnCheckEditChangedInFrequencyPopup( object sender, EventArgs e )

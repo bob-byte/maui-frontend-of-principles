@@ -15,7 +15,7 @@ public partial class HelperMessageTemplate : Grid
 
         InitializeComponent();
 
-        if(pageWidth != -1)
+        if(pageWidth > 0)
         {
             G_Answer.MaximumWidthRequest = pageWidth - 16 - 10 - 35 - 10 - 35; //values are taken based on the values in the UI controls
         }
@@ -25,7 +25,7 @@ public partial class HelperMessageTemplate : Grid
     {
 #if IOS
         bool isThisMessageLast = m_viewModel.DisplayMessages.LastOrDefault() == m_message;
-        if (isThisMessageLast && !string.IsNullOrWhiteSpace( m_message.Text ) && ME_Answer.Height != -1 && G_HelperMessageTemplate.Height < ME_Answer.Height + 10)
+        if (isThisMessageLast && !string.IsNullOrWhiteSpace( m_message.Text ) && ME_Answer.Height > 0 && G_HelperMessageTemplate.Height < ME_Answer.Height + 10)
         {
             G_HelperMessageTemplate.HeightRequest = ME_Answer.Height + 10;
         }

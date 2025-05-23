@@ -95,6 +95,17 @@ public static class MauiProgram
         }
 
         AllowMultiLineTruncation();
+        
+#if IOS
+        //hide Done button above keyboard for Editor control
+        EditorHandler.Mapper.AppendToMapping("NoAccessoryView", (handler, view) =>
+        {
+            if (handler.PlatformView is UITextView uiTextView)
+            {
+                uiTextView.InputAccessoryView = null;
+            }
+        });
+#endif
 
         return builder.Build();
     }
@@ -121,6 +132,7 @@ public static class MauiProgram
         services.AddSingleton<ProfileViewModel>();
         services.AddSingleton<ForgetPasswordViewModel>();
         services.AddSingleton<StartupViewModel>();
+        services.AddSingleton<MultipleActionPopupViewModel>();
         services.AddSingleton<HabitDetailViewModel>();
 
         return services;
