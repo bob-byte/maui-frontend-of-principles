@@ -868,7 +868,7 @@
     <value>This action will move the habit to the archive. You can restore it later.</value>
     </data>
   <data name="ShortDescriptionOfArchivedHabits" xml:space="preserve">
-    <value>This section displays the habits you have archived. You can return to them whenever you are ready to work on them again.</value>
+    <value>It shows your completed or paused habits.</value>
   </data>
 	<data name="HabitArchivingInfo" xml:space="preserve">
     <value>Your habit will be archived, and you can always return it to the main list.</value>

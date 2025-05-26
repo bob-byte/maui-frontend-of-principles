@@ -377,10 +377,10 @@ public partial class ProgressOfHabitsView : ContentPageBase
         {
             DXP_Reminder.IsOpen = false;
             
-            Snackbar.Make(
+            await Snackbar.Make(
                 LocStrings.DeviceDoesNotSupportNotifications,
                 visualOptions: SnackbarHelper.DefaultOptions()
-            ).Show().GetAwaiter();
+            ).Show();
         }
     }
 
@@ -406,34 +406,37 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
     private async Task ShowArchivedHabitsAsync()
     {
-        double heightOfBottomSheet;
-
-        if (ViewModel.SettingsService.NormalPageHeight == 0 || DeviceDisplay.Current.MainDisplayInfo.Orientation == DisplayOrientation.Landscape)
-        {
-            heightOfBottomSheet = 300;
-            ArchiveBottomSheet.HalfExpandedRatio = heightOfBottomSheet / CPB_Page.Height;
-        }
-        else
-        {
-            heightOfBottomSheet = 500;
-            
-            //bottom_sheet_height = full_height * HalfExpandedRatio
-            //HalfExpandedRatio = bottom_sheet_height / full_height
-            ArchiveBottomSheet.HalfExpandedRatio = heightOfBottomSheet / ViewModel.SettingsService.NormalPageHeight;
-        }
-
-        double rowSpacing = DXSL_ArchivedHabits.ItemSpacing * 2;
-        double additionalSpacing = 40;
-        double height = heightOfBottomSheet - rowSpacing - L_ArhiveCenralHeader.HeightRequest - L_ArhiveCenralHeader.HeightRequest - additionalSpacing;
-
-        SKL_Archive.HeightRequest = height;
-        SKL_Archive.WidthRequest = PageWidth - (DXSL_ArchivedHabits.Padding.Left + DXSL_ArchivedHabits.Padding.Right);
-        DXCV_Archive.HeightRequest = height;
-        
-        ArchiveBottomSheet.State = BottomSheetState.HalfExpanded;
-        
         if (ViewModel.GetArchivedHabitsCommand.CanExecute( null ))
         {
+            double heightOfBottomSheet;
+
+            if (ViewModel.SettingsService.NormalPageHeight == 0 ||
+                DeviceDisplay.Current.MainDisplayInfo.Orientation == DisplayOrientation.Landscape)
+            {
+                heightOfBottomSheet = 300;
+                ArchiveBottomSheet.HalfExpandedRatio = heightOfBottomSheet / CPB_Page.Height;
+            }
+            else
+            {
+                heightOfBottomSheet = 500;
+
+                //bottom_sheet_height = full_height * HalfExpandedRatio
+                //HalfExpandedRatio = bottom_sheet_height / full_height
+                ArchiveBottomSheet.HalfExpandedRatio = heightOfBottomSheet / ViewModel.SettingsService.NormalPageHeight;
+            }
+
+            double rowSpacing = DXSL_ArchivedHabits.ItemSpacing * 2;
+            double additionalSpacing = 40;
+            double height = heightOfBottomSheet - rowSpacing - L_ArhiveCenralHeader.HeightRequest -
+                            L_ArhiveCenralHeader.HeightRequest - additionalSpacing;
+
+            SKL_Archive.HeightRequest = height;
+            SKL_Archive.WidthRequest =
+                PageWidth - (DXSL_ArchivedHabits.Padding.Left + DXSL_ArchivedHabits.Padding.Right);
+            DXCV_Archive.HeightRequest = height;
+
+            ArchiveBottomSheet.State = BottomSheetState.HalfExpanded;
+            
             await ViewModel.GetArchivedHabitsCommand.ExecuteAsync( null );
         }
     }
@@ -445,6 +448,8 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
     private void DXI_Info_Tapped( object sender, TappedEventArgs e )
     {
+        DXP_Tip.WidthRequest = CPB_Page.Width - 20;
+        DXP_Tip.MinimumWidthRequest = CPB_Page.Width - 20;
         DXP_Tip.IsOpen = true;
     }
 

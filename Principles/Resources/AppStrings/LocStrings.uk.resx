@@ -861,8 +861,8 @@
     <data name="MessageRemoveHabitFromArchive" xml:space="preserve">
     <value>Ця дія відновить звичку у ваш активний список.</value>
   </data>
-    <data name="ShortDescriptionOfArchivedHabits" xml:space="preserve">
-    <value>У цьому розділі будуть відображатися звички, які ви заархівували. Ви можете повернутися до них, коли будете готові попрацювати над ними знову.</value>
+  <data name="ShortDescriptionOfArchivedHabits" xml:space="preserve">
+    <value>Тут відображаються твої завершені або призупинені звички.</value>
   </data>
     <data name="HabitArchivingInfo" xml:space="preserve">
     <value>Ваша звичка буде збережена в архів, ви завжди зможете повернути її в основний список.</value>

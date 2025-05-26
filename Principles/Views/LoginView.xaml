@@ -132,11 +132,7 @@
                 </Grid>
             </VerticalStackLayout>
         </ScrollView>
-        <ActivityIndicator IsVisible="{Binding IsBusy}"
-                           WidthRequest="100"
-                           HorizontalOptions="Center"
-                           IsRunning="{Binding IsBusy}"
-                           VerticalOptions="Center"
-                           Color="{StaticResource Primary}" />
+
+        <templates:DefaultActivityIndicator />
     </Grid>
 </v:ContentPageBase>
