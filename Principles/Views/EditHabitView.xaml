@@ -108,7 +108,8 @@
                                                ClearIconVisibility="Never"
                                                EndIcon="info"
                                                EndIconCommand="{Binding TapHabitNameInfoCommand}"
-                                               EndIconCommandParameter="{x:Reference ME_NameOfHabit}"
+                                               EndIconCommandParameter="{OnPlatform iOS={x:Reference ME_NameOfHabit},
+                                                                                    Android={x:Reference ME_HabitGoal}}"
                                                HasError="{Binding NameOfHabit.IsValid,
                                                                   Converter={StaticResource IsFalse}}"
                                                IsErrorIconVisible="True"
