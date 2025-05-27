@@ -59,7 +59,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
         ReminderService = serviceProvider.GetRequiredService<IReminderService>();
 
         EndProgressInterval = DateOnly.FromDateTime( DateTime.Today );
-        StartProgressInterval = EndProgressInterval.AddDays( -HabitConstants.AVERAGE_NUMBER_OF_DAYS_TO_AUTOMATE_HABIT + 1 );
+        StartProgressInterval = EndProgressInterval.AddDays( -HabitConstants.NUMBER_OF_DAYS_IN_PROGRESS + 1 );
         m_isBusyForChangeCompleted = new ConcurrentDictionary<UserHabit, SemaphoreSlim>();
         m_userHabits = new ObservableCollectionEx<UserHabit>();
         ArchivedHabits = new ObservableCollectionEx<ArсhivedHabitDto>();
