@@ -889,4 +889,10 @@
 
 Tip: before creating a new habit, look at the archive - maybe something similar has already happened, and now you know how to do it better.</value>
   </data>
+  <data name="TheHabitWillBeArchived" xml:space="preserve">
+    <value>The habit will be archived</value>
+  </data>
+  <data name="TheHabitWillBeUnarchived" xml:space="preserve">
+    <value>The habit will be unarchived</value>
+  </data>
 </root>

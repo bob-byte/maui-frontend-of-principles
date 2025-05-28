@@ -1574,5 +1574,17 @@ namespace Principles.Resources.AppStrings {
                 return ResourceManager.GetString("FullDescriptionOfArchivedHabits", resourceCulture);
             }
         }
+        
+        internal static string TheHabitWillBeArchived {
+            get {
+                return ResourceManager.GetString("TheHabitWillBeArchived", resourceCulture);
+            }
+        }
+        
+        internal static string TheHabitWillBeUnarchived {
+            get {
+                return ResourceManager.GetString("TheHabitWillBeUnarchived", resourceCulture);
+            }
+        }
     }
 }

@@ -889,4 +889,10 @@
 
 Підказка: перед створенням нової звички подивіться архів — можливо, щось подібне вже було, і тепер ви знаєте, як зробити краще.</value>
   </data>
+  <data name="TheHabitWillBeArchived" xml:space="preserve">
+    <value>Звичку буде архівовано</value>
+  </data>
+  <data name="TheHabitWillBeUnarchived" xml:space="preserve">
+    <value>Звичка буде розархівована</value>
+  </data>
 </root>
