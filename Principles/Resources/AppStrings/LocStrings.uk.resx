@@ -919,11 +919,11 @@
     <data name="ArchiveHabit" xml:space="preserve">
     <value>Додати звичку в архів</value>
     </data>
-    <data name="AddHabitToArchiveQuestion" xml:space="preserve">
-    <value>Бажаєте додати цю звичку в архів?</value>
+  <data name="AddHabitToArchiveQuestion" xml:space="preserve">
+    <value>Перемістити звичку в архів?</value>
   </data>
-    <data name="MessageAddHabitToArchive" xml:space="preserve">
-    <value>Ця дія перемістить звичку в архів. Ви зможете відновити її пізніше.</value>
+  <data name="MessageAddHabitToArchive" xml:space="preserve">
+    <value>Ця дія перемістить звичку в архів. Ви зможете відновити роботу над нею пізніше.</value>
   </data>
     <data name="UnarchiveHabit" xml:space="preserve">
     <value>Видалити звичку з архіву</value>
@@ -937,5 +937,8 @@
 ⸻
 
 Підказка: перед створенням нової звички подивіться архів — можливо, щось подібне вже було, і тепер ви знаєте, як зробити краще.</value>
+  </data>
+  <data name="UnarchiveHabitQuestion" xml:space="preserve">
+    <value>Видалити звичку з архіву?</value>
   </data>
 </root>

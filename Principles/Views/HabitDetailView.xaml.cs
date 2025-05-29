@@ -36,20 +36,14 @@ public partial class HabitDetailView : ContentPageBase
     {
         base.OnAppearing();
         DX_Calendar.BindingContext = ViewModel.Habit.Progresses;
-#if ANDROID
+        
         m_deviceOrientationService.LockOrientation( DeviceOrientation.Portrait );
-        Microsoft.Maui.Controls.Application.Current.On<Microsoft.Maui.Controls.PlatformConfiguration.Android>()
-            .UseWindowSoftInputModeAdjust( WindowSoftInputModeAdjust.Resize );
-#endif
     }
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
-#if ANDROID
+        
         m_deviceOrientationService.UnlockOrientation();
-        Microsoft.Maui.Controls.Application.Current.On<Microsoft.Maui.Controls.PlatformConfiguration.Android>()
-           .UseWindowSoftInputModeAdjust( WindowSoftInputModeAdjust.Pan );
-#endif
     }
 
     private void ViewModelOnPropertyChanged( object? sender, PropertyChangedEventArgs e )
@@ -61,16 +55,6 @@ public partial class HabitDetailView : ContentPageBase
     }
 
     private HabitDetailViewModel ViewModel { get; }
-
-    private void DXI_StreakInfo_Tapped( object sender, TappedEventArgs e )
-    {
-        
-    }
-
-    private void B_StreakOk_Clicked( object sender, EventArgs e )
-    {
-        
-    }
 
     private void DXI_StabilityInfo_Tapped( object sender, TappedEventArgs e )
     {

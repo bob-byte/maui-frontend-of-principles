@@ -862,11 +862,11 @@
     <value>This action will restore the habit to your active list.</value>
   </data>
 	<data name="AddHabitToArchiveQuestion" xml:space="preserve">
-    <value>Do you want to archive this habit?</value>
+    <value>Archive habit?</value>
     </data>
-	<data name="MessageAddHabitToArchive" xml:space="preserve">
-    <value>This action will move the habit to the archive. You can restore it later.</value>
-    </data>
+  <data name="MessageAddHabitToArchive" xml:space="preserve">
+    <value>This action will move the habit to the archive. You can resume working on it later.</value>
+  </data>
   <data name="ShortDescriptionOfArchivedHabits" xml:space="preserve">
     <value>This section displays the habits you have archived. You can return to them whenever you are ready to work on them again.</value>
   </data>
@@ -936,5 +936,8 @@ You can change the status with a press</value>
   </data>
   <data name="RefreshHabitCharts" xml:space="preserve">
     <value>Refresh charts</value>
+  </data>
+  <data name="UnarchiveHabitQuestion" xml:space="preserve">
+    <value>Unarchive Habit?</value>
   </data>
 </root>

@@ -9,11 +9,9 @@ using System.Threading.Tasks;
 namespace Principles.Messages;
 public class ArchiveHabitMessage : ValueChangedMessage<UserHabit>
 {
-    public ArchiveHabitMessage( UserHabit userHabit, IEnumerable<UserHabit> prioterizedHabits )
+    public ArchiveHabitMessage( UserHabit userHabit )
         : base( userHabit )
     {
-        PrioterizedHabits = prioterizedHabits;
+        
     }
-
-    public IEnumerable<UserHabit> PrioterizedHabits { get; }
 }

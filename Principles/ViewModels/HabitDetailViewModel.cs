@@ -722,44 +722,38 @@ public partial class HabitDetailViewModel : BaseViewModel
         }
     }
 
-
-    private EditUserHabitDto CreateDtoFromHabit( UserHabit habit )
-    {
-        return new EditUserHabitDto
-        {
-            Id = habit.Id,
-            Name = habit.Name,
-            Type = habit.Type,
-            AreasOfLife = habit.AreasOfLife,
-            Description = habit.Description,
-            Goal = habit.Goal,
-            Question = habit.Question,
-            Status = habit.Status,
-            IsArchived = habit.IsArchived,
-            Frequency = habit.Frequency,
-            Priority = habit.Priority,
-            Complexity = habit.Complexity,
-            ColorName = habit.ColorName,
-            Reminders = habit.Reminders,
-        };
-    }
-
     [RelayCommand]
     private async Task ArchiveHabit()
     {
-        if (Habit == null)
-            return;
-
-        Habit.IsArchived = true;
-
-        //if (response == null)
-        //{
-        //    await Shell.Current.DisplayAlert( "Помилка", response.ToString(), "ОК" );
-        //    return;
-        //}
-
-        ReferenceMessenger.Send( new ArchiveHabitMessage( Habit, HabitsWithSameGoal ) );
-        await Shell.Current.DisplayAlert( "Архівація", "Звичку заархівовано.", "OK" );
+        bool newValueOfIsArchived = !Habit.IsArchived;
+        
+        string confirmMsg = newValueOfIsArchived ? LocStrings.MessageAddHabitToArchive : LocStrings.MessageRemoveHabitFromArchive;
+        string confirmTitle = newValueOfIsArchived ? LocStrings.AddHabitToArchiveQuestion : LocStrings.UnarchiveHabitQuestion;
+        
+        bool isConfirmed = await DialogService.ShowConfirmAsync(confirmMsg, confirmTitle);
+        
+        if (isConfirmed)
+        {
+            await UiBusyFor(async () =>
+            {
+                await ServiceOfHabit.SetHabitArchiveStatusAsync( new HabitArchiveStatus
+                {
+                    HabitId = Habit.Id, 
+                    IsArchived = newValueOfIsArchived
+                } );
+                
+                Habit.IsArchived = newValueOfIsArchived;
+                
+                if (Habit.IsArchived)
+                {
+                    ReferenceMessenger.Send( new ArchiveHabitMessage( Habit ) );
+                }
+                else
+                {
+                    ReferenceMessenger.Send( new HabitSavedMessage( Habit ) );
+                }
+            }).DefaultConfigureAwait();
+        }
     }
 
     [RelayCommand]
