@@ -6,17 +6,23 @@ using SkiaSharp;
 using DevExpress.Maui.Editors;
 using DevExpress.Maui.DataGrid;
 using LiveChartsCore.SkiaSharpView.SKCharts;
-using static Android.Icu.Text.CaseMap;
+//using static Android.Icu.Text.CaseMap;
+using Microsoft.Maui.Controls.PlatformConfiguration;
+using Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;
+
 
 namespace Principles.Views;
 
 public partial class HabitDetailView : ContentPageBase
 {
-	public HabitDetailView( HabitDetailViewModel viewModel )
+    private readonly ILockDeviceOrientation m_deviceOrientationService;
+    public HabitDetailView( HabitDetailViewModel viewModel )
 	{
         BindingContext = viewModel;
         ViewModel = viewModel;
         ViewModel.PropertyChanged += ViewModelOnPropertyChanged;
+
+        m_deviceOrientationService = DependencyService.Get<ILockDeviceOrientation>();
 
         InitializeComponent();
         
@@ -30,6 +36,20 @@ public partial class HabitDetailView : ContentPageBase
     {
         base.OnAppearing();
         DX_Calendar.BindingContext = ViewModel.Habit.Progresses;
+#if ANDROID
+        m_deviceOrientationService.LockOrientation( DeviceOrientation.Portrait );
+        Microsoft.Maui.Controls.Application.Current.On<Microsoft.Maui.Controls.PlatformConfiguration.Android>()
+            .UseWindowSoftInputModeAdjust( WindowSoftInputModeAdjust.Resize );
+#endif
+    }
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+#if ANDROID
+        m_deviceOrientationService.UnlockOrientation();
+        Microsoft.Maui.Controls.Application.Current.On<Microsoft.Maui.Controls.PlatformConfiguration.Android>()
+           .UseWindowSoftInputModeAdjust( WindowSoftInputModeAdjust.Pan );
+#endif
     }
 
     private void ViewModelOnPropertyChanged( object? sender, PropertyChangedEventArgs e )
@@ -44,12 +64,12 @@ public partial class HabitDetailView : ContentPageBase
 
     private void DXI_StreakInfo_Tapped( object sender, TappedEventArgs e )
     {
-        DXP_StreakTip.IsOpen = true;
+        
     }
 
     private void B_StreakOk_Clicked( object sender, EventArgs e )
     {
-        DXP_StreakTip.IsOpen = false;
+        
     }
 
     private void DXI_StabilityInfo_Tapped( object sender, TappedEventArgs e )
@@ -84,7 +104,7 @@ public partial class HabitDetailView : ContentPageBase
     private void G_Title_SizeChanged( object sender, EventArgs e )
     {
         double titleWidth = G_Title.Width;
-        double buttonWidth = DXI_DeleteHabit.WidthRequest; // width = 40
+        double buttonWidth = DXI_DeleteHabit.WidthRequest + DXI_ArchiveHabit.WidthRequest; // width = 40
         if (titleWidth != -1 && buttonWidth != -1)
         {
             double titleLabelWidth = titleWidth - buttonWidth - 10;

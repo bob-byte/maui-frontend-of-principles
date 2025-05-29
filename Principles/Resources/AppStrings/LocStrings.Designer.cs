@@ -29,9 +29,6 @@ namespace Principles.Resources.AppStrings {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
-    [System.Diagnostics.DebuggerNonUserCodeAttribute()]
-    [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class LocStrings {
         
         private static global::System.Resources.ResourceManager resourceMan;

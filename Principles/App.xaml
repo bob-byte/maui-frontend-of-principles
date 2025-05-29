@@ -534,6 +534,7 @@
             <converters:GenderToUserIconConverter x:Key="GenderToIcon" />
             <converters:PromptEditorFocusedToDoShowKeyboardConverter x:Key="PromptEditorFocusedToDoShowKeyboard" />
             <converters:FrequencyToStringConverter x:Key="FrequencyToString" />
+            <converters:ProgressOfHabitToInt32Converter x:Key="ProgressToInt32" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

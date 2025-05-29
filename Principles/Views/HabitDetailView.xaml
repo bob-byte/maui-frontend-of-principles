@@ -43,6 +43,21 @@
                    VerticalOptions="Center"
                    VerticalTextAlignment="Center" />
 
+            <dx:DXImage x:Name="DXI_ArchiveHabit"
+                        Source="archive.png"
+                        Margin="3,0,0,0"
+                        Grid.Column="1"
+                        HeightRequest="30"
+                        HorizontalOptions="End"
+                        TintColor="{StaticResource TitleTextColor}"
+                        VerticalOptions="Center"
+                        WidthRequest="40">
+                <dx:DXImage.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ArchiveHabitCommand}"
+                                          NumberOfTapsRequired="1" />
+                </dx:DXImage.GestureRecognizers>
+            </dx:DXImage>
+
             <dx:DXImage x:Name="DXI_DeleteHabit"
                         Source="delete"
                         Margin="3,0,0,0"
@@ -122,7 +137,7 @@
                            BorderColor="Gray"
                            CornerRadius="10">
                         <VerticalStackLayout Spacing="5">
-                            <Label Text="{Binding Habit.PercentageAchieved, Converter={StaticResource ProgressToInt32}, StringFormat='{}{0}%'}"
+                            <Label Text="{Binding Habit.PercentageAchieved, Converter={StaticResource ProgressToInt32}, StringFormat='{0}%'}"
                                    FontAttributes="Bold"
                                    FontSize="22" />
 
@@ -164,15 +179,7 @@
                                FontAttributes="Bold"
                                FontSize="18"
                                VerticalOptions="Center" />
-                        <dx:DXImage Source="info"
-                                    HeightRequest="24"
-                                    VerticalOptions="Center"
-                                    WidthRequest="24">
-                            <dx:DXImage.GestureRecognizers>
-                                <TapGestureRecognizer NumberOfTapsRequired="1"
-                                                      Tapped="DXI_StreakInfo_Tapped" />
-                            </dx:DXImage.GestureRecognizers>
-                        </dx:DXImage>
+                        <ImageButton Source="info.png" Command="{Binding ShowStreakTipCommand}" />
                     </HorizontalStackLayout>
 
                     <lvc:CartesianChart HeightRequest="300"
@@ -242,12 +249,12 @@
                         </dx:DXImage>
                     </HorizontalStackLayout>
 
-                    
+
 
                     <dxe:DXCalendar x:Name="DX_Calendar"
                                     Background="#F0F0F0"
                                     FirstDayOfWeek="Monday">
-                        
+
                         <dxe:DXCalendar.HeaderAppearance>
                             <dxe:CalendarHeaderAppearance BackgroundColor="{StaticResource Primary}" />
                         </dxe:DXCalendar.HeaderAppearance>
@@ -265,31 +272,6 @@
                                                Margin="80,5,80,0" />
                 </VerticalStackLayout>
 
-                <dxco:DXPopup x:Name="DXP_StreakTip"
-                              VerticalAlignment="Bottom"
-                              AllowAnimation="True"
-                              AllowScrim="True"
-                              AllowShadow="True"
-                              BackgroundColor="{StaticResource LightPrimary}"
-                              CloseOnScrimTap="True"
-                              CornerRadius="5"
-                              MinimumWidthRequest="200"
-                              VerticalOptions="End">
-                    <Grid ColumnDefinitions="85*, 15*">
-                        <Label Text="{Binding LocManager[TopSevenStreaksExplanation]}"
-                               Padding="10"
-                               Grid.Column="0"
-                               TextColor="Black"
-                               VerticalOptions="Center" />
-                        <Button Text="{Binding LocManager[OK], Mode=OneWay}"
-                                BackgroundColor="Transparent"
-                                Clicked="B_StreakOk_Clicked"
-                                Grid.Column="1"
-                                HorizontalOptions="End"
-                                TextColor="White"
-                                VerticalOptions="Center" />
-                    </Grid>
-                </dxco:DXPopup>
 
                 <dxco:DXPopup x:Name="DXP_StabilityTip"
                               VerticalAlignment="Bottom"
