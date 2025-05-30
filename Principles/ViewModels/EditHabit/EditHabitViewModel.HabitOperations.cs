@@ -176,7 +176,7 @@ public partial class EditHabitViewModel
         Habit.IsArchived = true;
 
         await Snackbar.Make( 
-            message: LocStrings.TheHabitWillBeArchived, 
+            message: LocStrings.TheHabitWillBeArchivedAfterSaving, 
             duration: TimeSpan.FromSeconds( 4 ),
             visualOptions: SnackbarHelper.DefaultOptions() 
         ).Show().DefaultConfigureAwait();
@@ -188,7 +188,7 @@ public partial class EditHabitViewModel
         Habit.IsArchived = false;
         
         await Snackbar.Make(
-            message: LocStrings.TheHabitWillBeUnarchived,
+            message: LocStrings.TheHabitWillBeUnarchivedAfterSaving,
             duration: TimeSpan.FromSeconds( 4 ),
             visualOptions: SnackbarHelper.DefaultOptions() 
         ).Show().DefaultConfigureAwait();

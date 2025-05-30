@@ -1575,15 +1575,15 @@ namespace Principles.Resources.AppStrings {
             }
         }
         
-        internal static string TheHabitWillBeArchived {
+        internal static string TheHabitWillBeArchivedAfterSaving {
             get {
-                return ResourceManager.GetString("TheHabitWillBeArchived", resourceCulture);
+                return ResourceManager.GetString("TheHabitWillBeArchivedAfterSaving", resourceCulture);
             }
         }
         
-        internal static string TheHabitWillBeUnarchived {
+        internal static string TheHabitWillBeUnarchivedAfterSaving {
             get {
-                return ResourceManager.GetString("TheHabitWillBeUnarchived", resourceCulture);
+                return ResourceManager.GetString("TheHabitWillBeUnarchivedAfterSaving", resourceCulture);
             }
         }
     }
