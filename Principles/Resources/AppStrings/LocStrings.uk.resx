@@ -592,7 +592,7 @@
     <value>Змінити пароль</value>
   </data>
   <data name="ConfirmationPasswordChangeLabel" xml:space="preserve">
-    <value>На вашу пошту надіслано одноразовий код для підтвердження зміни паролю</value>
+    <value>На вашу пошту надіслано код для підтвердження зміни пароля</value>
   </data>
   <data name="ConfirmPasswordChangeButton" xml:space="preserve">
     <value>Підтвердити</value>
@@ -894,5 +894,11 @@
   </data>
   <data name="TheHabitWillBeUnarchivedAfterSaving" xml:space="preserve">
     <value>Звичка буде розархівована після збереження</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Змінити пароль</value>
+  </data>
+  <data name="PasswordChange" xml:space="preserve">
+    <value>Зміна паролю</value>
   </data>
 </root>

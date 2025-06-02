@@ -125,6 +125,8 @@ public static class MauiProgram
         services.AddSingleton<ForgetPasswordViewModel>();
         services.AddSingleton<StartupViewModel>();
         services.AddSingleton<MultipleActionPopupViewModel>();
+        services.AddSingleton<ChangePasswordViewModel>();
+        services.AddSingleton<ConfirmEmailPopupViewModel>();
 
         return services;
     }
@@ -140,6 +142,7 @@ public static class MauiProgram
         services.AddTransient<ProfileView>();
         services.AddTransient<ForgetPasswordView>();
         services.AddTransient<StartupView>();
+        services.AddTransient<ChangePasswordView>();
 
         return services;
     }

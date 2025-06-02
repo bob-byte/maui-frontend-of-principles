@@ -589,7 +589,7 @@
     <value>Change password</value>
   </data>
   <data name="ConfirmationPasswordChangeLabel" xml:space="preserve">
-    <value>A one-time code to confirm the password change has been sent to your email</value>
+    <value>A confirmation code for password change has been sent to your email</value>
   </data>
   <data name="ConfirmPasswordChangeButton" xml:space="preserve">
     <value>Confirm</value>
@@ -894,5 +894,11 @@ Tip: before creating a new habit, look at the archive - maybe something similar 
   </data>
   <data name="TheHabitWillBeUnarchivedAfterSaving" xml:space="preserve">
     <value>The habit will be unarchived after saving</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Change password</value>
+  </data>
+  <data name="PasswordChange" xml:space="preserve">
+    <value>Password change</value>
   </data>
 </root>

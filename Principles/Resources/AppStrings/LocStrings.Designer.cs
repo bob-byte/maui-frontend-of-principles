@@ -1586,5 +1586,17 @@ namespace Principles.Resources.AppStrings {
                 return ResourceManager.GetString("TheHabitWillBeUnarchivedAfterSaving", resourceCulture);
             }
         }
+        
+        internal static string ChangePassword {
+            get {
+                return ResourceManager.GetString("ChangePassword", resourceCulture);
+            }
+        }
+        
+        internal static string PasswordChange {
+            get {
+                return ResourceManager.GetString("PasswordChange", resourceCulture);
+            }
+        }
     }
 }

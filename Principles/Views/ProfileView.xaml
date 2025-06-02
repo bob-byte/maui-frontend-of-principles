@@ -82,54 +82,52 @@
 
                 <dxe:TextEdit x:Name="TE_UserName"
                               Text="{Binding UserName.Value}"
-                              LabelText="{Binding LocManager[UserName]}"
                               Margin="0,2"
                               ClearIconVisibility="Never"
                               EndIcon="check_third"
                               EndIconColor="{StaticResource Primary}"
                               ErrorColor="{StaticResource Error}"
-                              ErrorText="{Binding UserName.Errors,
-                                                  Converter={StaticResource FirstValidationError}}"
+                              ErrorText="{Binding UserName.Errors, Converter={StaticResource FirstValidationError}}"
                               Focused="TRG_UserName_Focused"
                               Grid.Column="1"
-                              HasError="{Binding UserName.IsValid,
-                                                 Converter={StaticResource IsFalse}}"
+                              HasError="{Binding UserName.IsValid, Converter={StaticResource IsFalse}}"
                               IsEndIconVisible="{Binding UserName.IsValid}"
                               IsReadOnly="True"
+                              LabelText="{Binding LocManager[UserName]}"
                               TextChangedCommand="{Binding ValidateUserNameCommand}" />
             </Grid>
 
             <dxe:MultilineEdit x:Name="ME_Email"
                                Text="{Binding Email}"
-                               LabelText="{Binding LocManager[Email]}"
                                Margin="0,2"
                                ClearIconVisibility="Never"
                                EndIcon="check_third"
                                EndIconColor="{StaticResource Primary}"
                                Focused="ME_Email_Focused"
-                               IsReadOnly="True" />
+                               IsReadOnly="True"
+                               LabelText="{Binding LocManager[Email]}" />
 
             <dxe:MultilineEdit x:Name="ME_MainSlogan"
                                Text="{Binding MainSlogan}"
-                               LabelText="{Binding LocManager[MainSlogan]}"
                                Margin="0,2"
                                ClearIconVisibility="Never"
                                EndIcon="info"
                                EndIconColor="{StaticResource Primary}"
                                EndIconCommand="{Binding ShowSnackbarForMainSloganCommand}"
                                Focused="TGR_MainSlogan_Focused"
-                               IsReadOnly="True" />
+                               IsReadOnly="True"
+                               LabelText="{Binding LocManager[MainSlogan]}" />
 
             <dxe:MultilineEdit x:Name="ME_Mision"
                                Text="{Binding Mission}"
-                               LabelText="{Binding LocManager[Mission]}"
                                Margin="0,2"
                                ClearIconVisibility="Never"
                                EndIcon="info"
                                EndIconColor="{StaticResource Primary}"
                                EndIconCommand="{Binding ShowSnackbarForMissionCommand}"
                                Focused="TGR_Mission_Focused"
-                               IsReadOnly="True" />
+                               IsReadOnly="True"
+                               LabelText="{Binding LocManager[Mission]}" />
 
             <dxco:DXPopup x:Name="DXP_Prompt"
                           AllowAnimation="True"
@@ -161,8 +159,8 @@
                                            FontSize="16"
                                            IconHorizontalPosition="Left" />
                         <dxco:SimpleButton x:Name="SB_Save"
-                                           Style="{StaticResource PrimaryButton}"
                                            Text="{Binding LocManager[Save]}"
+                                           Style="{StaticResource PrimaryButton}"
                                            Icon="check_second"
                                            Margin="0,0,5,5"
                                            Clicked="SB_Save_Clicked"
@@ -190,8 +188,7 @@
                            Grid.Column="0"
                            TextColor="Black"
                            VerticalOptions="Center" />
-                    <Button Text="{Binding LocalizationResourceManager[OK],
-                                           Mode=OneWay}"
+                    <Button Text="{Binding LocalizationResourceManager[OK], Mode=OneWay}"
                             BackgroundColor="Transparent"
                             Clicked="B_Ok_Clicked"
                             Grid.Column="1"
