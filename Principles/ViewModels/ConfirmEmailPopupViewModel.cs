@@ -3,21 +3,19 @@
 public partial class ConfirmEmailPopupViewModel : BaseViewModel
 {
     [ObservableProperty]
-    private string m_confirmationCodeByUser;
+    private string? m_confirmationCodeByUser;
 
     private string m_email;
     private string m_password;
     private int m_validConfirmationCode;
-    private ConfirmEmailPopup m_changePasswordPopup;
+
+    private IChangePasswordService ChangePasswordService { get; }
+    
     public ConfirmEmailPopupViewModel( IServiceProvider serviceProvider )
         : base( serviceProvider )
     {
         ChangePasswordService = serviceProvider.GetRequiredService<IChangePasswordService>();
-        LoginService = serviceProvider.GetRequiredService<ILoginService>();
     }
-    public IChangePasswordService ChangePasswordService { get; }
-
-    public ILoginService LoginService { get; }
 
     public void SetData( string newPassword, int confirmationCode, string email )
     {
@@ -29,23 +27,34 @@ public partial class ConfirmEmailPopupViewModel : BaseViewModel
     [RelayCommand]
     private async Task ConfirmPasswordChangeAsync()
     {
-        await UiBusyFor( async () =>
+        _ = int.TryParse( ConfirmationCodeByUser, out int setCodeByUser );
+
+        if (setCodeByUser == m_validConfirmationCode)
         {
-            _ = int.TryParse( ConfirmationCodeByUser, out int setCodeByUser );
-            if (setCodeByUser == m_validConfirmationCode)
+            ConfirmationCodeByUser = string.Empty;
+            
+            bool isSuccessfullyChangedPassword = false;
+            
+            await UiBusyFor( async () =>
             {
                 await ChangePasswordService.ChangePasswordAsync( m_email, m_password );
-                await DialogService.ShowAlertAsync( LocStrings.YourPasswordSuccessfullyChanged, LocStrings.Success, LocStrings.OK );
-                if( string.IsNullOrWhiteSpace(SettingsService.AuthAccessToken))
-                {
-                    await LoginService.LoginAsync( m_email, m_password );
-                    await Navigation.GoToInitialViewAsync();
-                }
-            }
-            else
+                isSuccessfullyChangedPassword = true;
+            } );
+
+            if (isSuccessfullyChangedPassword)
             {
-                await DialogService.ShowErrorAsync( LocStrings.WrongConfirmationCode );
+                await DialogService.ShowAlertAsync(
+                    LocStrings.YourPasswordSuccessfullyChanged, 
+                    LocStrings.Success,
+                    LocStrings.OK
+                );
+
+                await Navigation.GoToInitialViewAsync();
             }
-        } );
+        }
+        else
+        {
+            await DialogService.ShowErrorAsync( LocStrings.WrongConfirmationCode );
+        }
     }
 }

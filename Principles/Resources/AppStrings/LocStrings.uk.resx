@@ -840,4 +840,7 @@
   <data name="ChangePassword" xml:space="preserve">
     <value>Змінити пароль</value>
   </data>
+  <data name="PasswordChange" xml:space="preserve">
+    <value>Зміна паролю</value>
+  </data>
 </root>

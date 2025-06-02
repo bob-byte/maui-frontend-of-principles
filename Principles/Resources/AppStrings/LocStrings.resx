@@ -840,4 +840,7 @@
   <data name="ChangePassword" xml:space="preserve">
     <value>Change password</value>
   </data>
+  <data name="PasswordChange" xml:space="preserve">
+    <value>Password change</value>
+  </data>
 </root>

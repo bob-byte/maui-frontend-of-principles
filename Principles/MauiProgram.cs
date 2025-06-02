@@ -114,6 +114,7 @@ public static class MauiProgram
         services.AddSingleton<ForgetPasswordViewModel>();
         services.AddSingleton<StartupViewModel>();
         services.AddSingleton<ChangePasswordViewModel>();
+        services.AddSingleton<ConfirmEmailPopupViewModel>();
 
         return services;
     }
