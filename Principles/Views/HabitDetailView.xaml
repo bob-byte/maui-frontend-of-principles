@@ -56,6 +56,11 @@
                     <TapGestureRecognizer Command="{Binding ArchiveHabitCommand}"
                                           NumberOfTapsRequired="1" />
                 </dx:DXImage.GestureRecognizers>
+                <dx:DXImage.Triggers>
+                    <DataTrigger TargetType="dx:DXImage" Binding="{Binding IsArchived}" Value="True">
+                        <Setter Property="Source" Value="unarchive.png" />
+                    </DataTrigger>
+                </dx:DXImage.Triggers>
             </dx:DXImage>
 
             <dx:DXImage x:Name="DXI_DeleteHabit"
@@ -193,15 +198,8 @@
                                FontAttributes="Bold"
                                FontSize="18"
                                VerticalOptions="Center" />
-                        <dx:DXImage Source="info"
-                                    HeightRequest="24"
-                                    VerticalOptions="Center"
-                                    WidthRequest="24">
-                            <dx:DXImage.GestureRecognizers>
-                                <TapGestureRecognizer NumberOfTapsRequired="1"
-                                                      Tapped="DXI_StabilityInfo_Tapped" />
-                            </dx:DXImage.GestureRecognizers>
-                        </dx:DXImage>
+                        <ImageButton Source="info.png" Command="{Binding StabilityInfoCommand}" />
+
                     </HorizontalStackLayout>
 
                     <lvc:CartesianChart Padding="0"
@@ -217,15 +215,7 @@
                                FontAttributes="Bold"
                                FontSize="18"
                                VerticalOptions="Center" />
-                        <dx:DXImage Source="info"
-                                    HeightRequest="24"
-                                    VerticalOptions="Center"
-                                    WidthRequest="24">
-                            <dx:DXImage.GestureRecognizers>
-                                <TapGestureRecognizer NumberOfTapsRequired="1"
-                                                      Tapped="DXI_HabitByDayweeks_Tapped" />
-                            </dx:DXImage.GestureRecognizers>
-                        </dx:DXImage>
+                        <ImageButton Source="info.png" Command="{Binding HabitByDayWeeksCommand}" />
                     </HorizontalStackLayout>
 
                     <lvc:CartesianChart HeightRequest="300"
@@ -238,15 +228,8 @@
                            FontAttributes="Bold"
                            FontSize="18"
                            VerticalOptions="Center" />
-                        <dx:DXImage Source="info"
-                                    HeightRequest="24"
-                                    VerticalOptions="Center"
-                                    WidthRequest="24">
-                            <dx:DXImage.GestureRecognizers>
-                                <TapGestureRecognizer NumberOfTapsRequired="1"
-                                                      Tapped="DXI_CalendarInfo_Tapped" />
-                            </dx:DXImage.GestureRecognizers>
-                        </dx:DXImage>
+
+                        <ImageButton Source="info.png" Command="{Binding CalendarInfoCommand}" />
                     </HorizontalStackLayout>
 
 
@@ -273,82 +256,7 @@
                 </VerticalStackLayout>
 
 
-                <dxco:DXPopup x:Name="DXP_StabilityTip"
-                              VerticalAlignment="Bottom"
-                              AllowAnimation="True"
-                              AllowScrim="True"
-                              AllowShadow="True"
-                              BackgroundColor="{StaticResource LightPrimary}"
-                              CloseOnScrimTap="True"
-                              CornerRadius="5"
-                              MinimumWidthRequest="200"
-                              VerticalOptions="End">
-                    <Grid ColumnDefinitions="85*, 15*">
-                        <Label Text="{Binding LocManager[StabilityExplanation]}"
-                               Padding="10"
-                               Grid.Column="0"
-                               TextColor="Black"
-                               VerticalOptions="Center" />
-                        <Button Text="{Binding LocManager[OK], Mode=OneWay}"
-                                BackgroundColor="Transparent"
-                                Clicked="B_OkStability_Clicked"
-                                Grid.Column="1"
-                                HorizontalOptions="End"
-                                TextColor="White"
-                                VerticalOptions="Center" />
-                    </Grid>
-                </dxco:DXPopup>
 
-                <dxco:DXPopup x:Name="DXP_DayByDayWeeksTip"
-                              VerticalAlignment="Bottom"
-                              AllowAnimation="True"
-                              AllowScrim="True"
-                              AllowShadow="True"
-                              BackgroundColor="{StaticResource LightPrimary}"
-                              CloseOnScrimTap="True"
-                              CornerRadius="5"
-                              MinimumWidthRequest="200"
-                              VerticalOptions="End">
-                    <Grid ColumnDefinitions="85*, 15*">
-                        <Label Text="{Binding LocManager[HabitByDayweeksExplanation]}"
-                               Padding="10"
-                               Grid.Column="0"
-                               TextColor="Black"
-                               VerticalOptions="Center" />
-                        <Button Text="{Binding LocManager[OK], Mode=OneWay}"
-                                BackgroundColor="Transparent"
-                                Clicked="B_OkDayByDayWeeks_Clicked"
-                                Grid.Column="1"
-                                HorizontalOptions="End"
-                                TextColor="White"
-                                VerticalOptions="Center" />
-                    </Grid>
-                </dxco:DXPopup> 
-                <dxco:DXPopup x:Name="DXP_CalendarInfoTip"
-                              VerticalAlignment="Bottom"
-                              AllowAnimation="True"
-                              AllowScrim="True"
-                              AllowShadow="True"
-                              BackgroundColor="{StaticResource LightPrimary}"
-                              CloseOnScrimTap="True"
-                              CornerRadius="5"
-                              MinimumWidthRequest="200"
-                              VerticalOptions="End">
-                    <Grid ColumnDefinitions="85*, 15*">
-                        <Label Text="{Binding LocManager[CalendarInfoExplanation]}"
-                               Padding="10"
-                               Grid.Column="0"
-                               TextColor="Black"
-                               VerticalOptions="Center" />
-                        <Button Text="{Binding LocManager[OK], Mode=OneWay}"
-                                BackgroundColor="Transparent"
-                                Clicked="B_OkCalendarInfo_Clicked"
-                                Grid.Column="1"
-                                HorizontalOptions="End"
-                                TextColor="White"
-                                VerticalOptions="Center" />
-                    </Grid>
-                </dxco:DXPopup>
                 
                 
             </VerticalStackLayout>

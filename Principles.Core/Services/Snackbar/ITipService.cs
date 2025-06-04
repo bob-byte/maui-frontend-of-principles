@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Principles.Core.Services;
-public interface ISnackbarService
+public interface ITipService
 {
     Task ShowAsync( string message, string actionText = null, Action? action = null );
 }

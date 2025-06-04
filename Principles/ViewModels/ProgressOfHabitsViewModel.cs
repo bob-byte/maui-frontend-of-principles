@@ -502,7 +502,29 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
         }
     }
 
-        [RelayCommand]
+    [RelayCommand]
+    private async Task ArchivedHabitDetailAsync(ArсhivedHabitDto? archivedHabit)
+    {
+        if (archivedHabit is null)
+            return;
+
+        var userHabit = await ServiceOfHabit.UserHabitAsync( archivedHabit.Id);
+
+        List<ProgressOfHabit> progresses = await ServiceOfHabit.GetProgressesOfHabitAsync( userHabit.Id );
+        userHabit.Progresses = new ObservableCollectionEx<ProgressOfHabit>( progresses );
+        userHabit.IsArchived = true;
+        ServiceOfHabit.InitializeHabitProgresses( userHabit, StartProgressInterval, EndProgressInterval );
+
+        Dictionary<string, object> routeParams = new()
+        {
+            { "Habit", userHabit },
+            { "IsArchived", true }
+        };
+        
+        await Navigation.NavigateToAsync<HabitDetailViewModel>(routeParams);
+    }
+
+    [RelayCommand]
     private async Task DeleteHabitAsync(object? obj)
     {
         if(obj is UserHabit habit)

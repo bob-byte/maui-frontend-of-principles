@@ -400,7 +400,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
     }
 
     private async void DXI_Archive_Tapped( object sender, TappedEventArgs e )
-    {
+    {     
         await ShowArchivedHabitsAsync();
     }
 
@@ -459,6 +459,19 @@ public partial class ProgressOfHabitsView : ContentPageBase
         {
             ArchiveBottomSheet.State = BottomSheetState.Hidden;
             ViewModel.CreateArchivedHabitCommand.Execute( null );
+        }
+    }
+    private void ArchivedHabitButton_Clicked( object sender, EventArgs e )
+    {
+        if (sender is Button button && button.CommandParameter is ArñhivedHabitDto archivedHabit)
+        {
+            ArchiveBottomSheet.State = BottomSheetState.Hidden;
+
+            if (BindingContext is ProgressOfHabitsViewModel vm &&
+            vm.ArchivedHabitDetailCommand.CanExecute( archivedHabit ))
+            {
+                vm.ArchivedHabitDetailCommand.Execute( archivedHabit );
+            }
         }
     }
 }

@@ -71,7 +71,7 @@ public partial class HabitDetailViewModel : BaseViewModel
         ProgressOfHabitService = serviceProvider.GetRequiredService<IProgressOfHabitService>();
         ServiceOfHabit = serviceProvider.GetRequiredService<IServiceOfHabit>();
 
-        SnackbarService = serviceProvider.GetRequiredService<ISnackbarService>();
+        SnackbarService = serviceProvider.GetRequiredService<ITipService>();
 
         EditedReminder = new EditedUserHabitReminder();
         m_lockerOfHabitProgressUpdate = new SemaphoreSlim( initialCount: 1, maxCount: 1 );
@@ -82,7 +82,7 @@ public partial class HabitDetailViewModel : BaseViewModel
     public ISeries[] Series { get; set; }
     public IProgressOfHabitService ProgressOfHabitService { get; }
     public IServiceOfHabit ServiceOfHabit { get; }
-    public ISnackbarService SnackbarService { get; }
+    public ITipService SnackbarService { get; }
 
     public override void ApplyQueryAttributes( IDictionary<string, object> query )
     {
@@ -156,19 +156,17 @@ public partial class HabitDetailViewModel : BaseViewModel
 
     public List<HabitDayStat> CalculateDaysOfWeekData()
     {
-        UserHabit? storedHabit = ServiceOfHabit.StoredUserHabits.FirstOrDefault( h => h.Id == Habit?.Id );
-
-        if (storedHabit?.Progresses == null || storedHabit.Progresses.Count == 0)
+        if (Habit?.Progresses == null || Habit.Progresses.Count == 0)
         {
             return new List<HabitDayStat>();
         }
 
-        List<DateOnly> completedDates = storedHabit.Progresses
-            .Where( p => p.Value == ProgressValue.YES_MANUAL || p.Value == ProgressValue.YES_AUTO )
-            .Select( p => p.Date )
+        List<DateOnly> completedDates = Habit.Progresses
+            .Where(p => p.Value == ProgressValue.YES_MANUAL || p.Value == ProgressValue.YES_AUTO)
+            .Select(p => p.Date)
             .ToList();
 
-        Dictionary<DayOfWeek, int> dayCounts = Enumerable.Range( 0, 7 ).ToDictionary( i => (DayOfWeek)i, _ => 0 );
+        Dictionary<DayOfWeek, int> dayCounts = Enumerable.Range(0, 7).ToDictionary(i => (DayOfWeek)i, _ => 0);
 
         foreach (DateOnly date in completedDates)
         {
@@ -192,11 +190,11 @@ public partial class HabitDetailViewModel : BaseViewModel
             [DayOfWeek.Sunday] = LocStrings.SundayShort
         };
 
-        return orderedDays.Select( d => new HabitDayStat
+        return orderedDays.Select(d => new HabitDayStat
         {
             DayName = dayNames[d],
             ExecutionCount = dayCounts[d]
-        } ).ToList();
+        }).ToList();
     }
 
     public void DrawHabitExecutionChart()
@@ -723,27 +721,6 @@ public partial class HabitDetailViewModel : BaseViewModel
     }
 
 
-    private EditUserHabitDto CreateDtoFromHabit( UserHabit habit )
-    {
-        return new EditUserHabitDto
-        {
-            Id = habit.Id,
-            Name = habit.Name,
-            Type = habit.Type,
-            AreasOfLife = habit.AreasOfLife,
-            Description = habit.Description,
-            Goal = habit.Goal,
-            Question = habit.Question,
-            Status = habit.Status,
-            IsArchived = habit.IsArchived,
-            Frequency = habit.Frequency,
-            Priority = habit.Priority,
-            Complexity = habit.Complexity,
-            ColorName = habit.ColorName,
-            Reminders = habit.Reminders,
-        };
-    }
-
     [RelayCommand]
     private async Task ArchiveHabit()
     {
@@ -752,12 +729,6 @@ public partial class HabitDetailViewModel : BaseViewModel
 
         Habit.IsArchived = true;
 
-        //if (response == null)
-        //{
-        //    await Shell.Current.DisplayAlert( "Помилка", response.ToString(), "ОК" );
-        //    return;
-        //}
-
         ReferenceMessenger.Send( new ArchiveHabitMessage( Habit, HabitsWithSameGoal ) );
         await Shell.Current.DisplayAlert( "Архівація", "Звичку заархівовано.", "OK" );
     }
@@ -765,16 +736,40 @@ public partial class HabitDetailViewModel : BaseViewModel
     [RelayCommand]
     private async Task ShowStreakTipAsync()
     {
-        var snackbar = SnackbarService.ShowAsync(
-            LocManager["StabilityExplanation"],
+        SnackbarService.ShowAsync(
+            LocStrings.TopSevenStreaksExplanation,
             actionText: LocManager["OK"]);
     }
 
+    [RelayCommand]
+    private async Task StabilityInfoAsync()
+    {
+        SnackbarService.ShowAsync(
+            LocStrings.StabilityExplanation,
+            actionText: LocManager["OK"] );
+    }
+
+    [RelayCommand]
+    private async Task HabitByDayWeeksAsync()
+    {
+        SnackbarService.ShowAsync(
+            LocStrings.HabitByDayweeksExplanation,
+            actionText: LocManager["OK"] );
+    }
+
+    [RelayCommand]
+    private async Task CalendarInfoAsync()
+    {
+        SnackbarService.ShowAsync(
+            LocStrings.CalendarInfoExplanation,
+            actionText: LocManager["OK"] );
+    }
+
+    
 
     [RelayCommand]
     private async Task RefreshHabitCharts( object? obj )
     {
         await InitializeAsync();
-        //await InitializeAsync( Habit );
     }
 }

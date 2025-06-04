@@ -118,7 +118,7 @@ public static class MauiProgram
         services.AddSingleton<ILaunchUriHelper, LaunchUriHelper>();
         services.AddSingleton<IReminderService, ReminderService>();
 
-        services.AddSingleton<ISnackbarService, SnackbarService>();
+        services.AddSingleton<ITipService, TipService>();
 
         return services;
     }

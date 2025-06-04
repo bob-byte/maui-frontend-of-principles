@@ -62,45 +62,6 @@ public partial class HabitDetailView : ContentPageBase
 
     private HabitDetailViewModel ViewModel { get; }
 
-    private void DXI_StreakInfo_Tapped( object sender, TappedEventArgs e )
-    {
-        
-    }
-
-    private void B_StreakOk_Clicked( object sender, EventArgs e )
-    {
-        
-    }
-
-    private void DXI_StabilityInfo_Tapped( object sender, TappedEventArgs e )
-    {
-        DXP_StabilityTip.IsOpen = true;
-    }
-
-    private void B_OkStability_Clicked( object sender, EventArgs e )
-    {
-        DXP_StabilityTip.IsOpen = false;
-    }
-    private void B_OkDayByDayWeeks_Clicked( object sender, EventArgs e )
-    {
-        DXP_DayByDayWeeksTip.IsOpen = false;
-    }
-
-    private void DXI_HabitByDayweeks_Tapped( object sender, TappedEventArgs e )
-    {
-        DXP_DayByDayWeeksTip.IsOpen = true;
-    }
-
-    private void DXI_CalendarInfo_Tapped( object sender, TappedEventArgs e )
-    {
-        DXP_CalendarInfoTip.IsOpen = true;
-    }
-
-    private void B_OkCalendarInfo_Clicked( object sender, EventArgs e )
-    {
-        DXP_CalendarInfoTip.IsOpen = false;
-    }
-
     private void G_Title_SizeChanged( object sender, EventArgs e )
     {
         double titleWidth = G_Title.Width;
