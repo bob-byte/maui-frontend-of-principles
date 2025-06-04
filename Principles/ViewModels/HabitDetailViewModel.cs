@@ -720,17 +720,38 @@ public partial class HabitDetailViewModel : BaseViewModel
         }
     }
 
-
     [RelayCommand]
     private async Task ArchiveHabit()
     {
-        if (Habit == null)
-            return;
-
-        Habit.IsArchived = true;
-
-        ReferenceMessenger.Send( new ArchiveHabitMessage( Habit, HabitsWithSameGoal ) );
-        await Shell.Current.DisplayAlert( "Архівація", "Звичку заархівовано.", "OK" );
+        bool newValueOfIsArchived = !Habit.IsArchived;
+        
+        string confirmMsg = newValueOfIsArchived ? LocStrings.MessageAddHabitToArchive : LocStrings.MessageRemoveHabitFromArchive;
+        string confirmTitle = newValueOfIsArchived ? LocStrings.AddHabitToArchiveQuestion : LocStrings.UnarchiveHabitQuestion;
+        
+        bool isConfirmed = await DialogService.ShowConfirmAsync(confirmMsg, confirmTitle);
+        
+        if (isConfirmed)
+        {
+            await UiBusyFor(async () =>
+            {
+                await ServiceOfHabit.SetHabitArchiveStatusAsync( new HabitArchiveStatus
+                {
+                    HabitId = Habit.Id, 
+                    IsArchived = newValueOfIsArchived
+                } );
+                
+                Habit.IsArchived = newValueOfIsArchived;
+                
+                if (Habit.IsArchived)
+                {
+                    ReferenceMessenger.Send( new ArchiveHabitMessage( Habit ) );
+                }
+                else
+                {
+                    ReferenceMessenger.Send( new HabitSavedMessage( Habit ) );
+                }
+            }).DefaultConfigureAwait();
+        }
     }
 
     [RelayCommand]

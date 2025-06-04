@@ -36,20 +36,14 @@ public partial class HabitDetailView : ContentPageBase
     {
         base.OnAppearing();
         DX_Calendar.BindingContext = ViewModel.Habit.Progresses;
-#if ANDROID
+        
         m_deviceOrientationService.LockOrientation( DeviceOrientation.Portrait );
-        Microsoft.Maui.Controls.Application.Current.On<Microsoft.Maui.Controls.PlatformConfiguration.Android>()
-            .UseWindowSoftInputModeAdjust( WindowSoftInputModeAdjust.Resize );
-#endif
     }
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
-#if ANDROID
+        
         m_deviceOrientationService.UnlockOrientation();
-        Microsoft.Maui.Controls.Application.Current.On<Microsoft.Maui.Controls.PlatformConfiguration.Android>()
-           .UseWindowSoftInputModeAdjust( WindowSoftInputModeAdjust.Pan );
-#endif
     }
 
     private void ViewModelOnPropertyChanged( object? sender, PropertyChangedEventArgs e )

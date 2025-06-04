@@ -54,11 +54,11 @@ public partial class EditHabitViewModel
                     
                     if (dto.IsArchived)
                     {
-                        ReferenceMessenger.Send( new ArchiveHabitMessage( Habit, copyOfHabits ) );
+                        ReferenceMessenger.Send( new ArchiveHabitMessage( Habit ) );
                     }
                     else
                     {
-                        ReferenceMessenger.Send( new HabitSavedMessage( Habit, copyOfHabits ) );
+                        ReferenceMessenger.Send( new HabitSavedMessage( Habit ) );
                     }
                     
                     await Navigation.GoBackAsync();
@@ -74,11 +74,11 @@ public partial class EditHabitViewModel
                     
                     if (dto.IsArchived)
                     {
-                        ReferenceMessenger.Send( new ArchiveHabitMessage( Habit, copyOfHabits ) );
+                        ReferenceMessenger.Send( new ArchiveHabitMessage( Habit ) );
                     }
                     else
                     {
-                        ReferenceMessenger.Send( new HabitSavedMessage( Habit, copyOfHabits ) );
+                        ReferenceMessenger.Send( new HabitSavedMessage( Habit ) );
                     }
                 } );
             }
