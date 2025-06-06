@@ -69,8 +69,6 @@
                                           Tapped="DXI_Archive_Tapped" />
                 </dx:DXImage.GestureRecognizers>
             </dx:DXImage>
-            
-            
 
             <dx:DXImage Source="edit"
                         IsVisible="{Binding SelectedHabit,
@@ -365,28 +363,29 @@
                             <dx:DXStackLayout Orientation="Vertical">
                                 <Grid>
                                     <dxe:MultilineEdit Text="{Binding Name}"
-                                                   Style="{StaticResource RoundedMultilineEditStyle}"
-                                                   Margin="0,10,0,0"
-                                                   EndIcon="editgoal"
-                                                   EndIconClicked="ME_ArchivedHabitEndIconClicked"
-                                                   EndIconCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:ProgressOfHabitsViewModel}},
-                                                                            Path=EditArchivedHabitCommand}"
-                                                   EndIconCommandParameter="{Binding .}"
-                                                   StartIcon="deletegoal"
-                                                   StartIconCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:ProgressOfHabitsViewModel}},
-                                                                              Path=DeleteArchivedHabitCommand}"
-                                                   StartIconCommandParameter="{Binding .}" />
+                                                       Style="{StaticResource RoundedMultilineEditStyle}"
+                                                       Margin="0,10,0,0"
+                                                       EndIcon="editgoal"
+                                                       EndIconClicked="ME_ArchivedHabitEndIconClicked"
+                                                       EndIconCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:ProgressOfHabitsViewModel}},
+                                                                                Path=EditArchivedHabitCommand}"
+                                                       EndIconCommandParameter="{Binding .}"
+                                                       StartIcon="deletegoal"
+                                                       StartIconCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:ProgressOfHabitsViewModel}},
+                                                                                  Path=DeleteArchivedHabitCommand}"
+                                                       StartIconCommandParameter="{Binding .}" />
 
-                                    <Button BackgroundColor="Transparent"
-                                            x:Name="ArchivedHabitButton"
+                                    <Button x:Name="ArchivedHabitButton"
                                             CommandParameter="{Binding .}"
-                                            HorizontalOptions="Fill"
-                                            VerticalOptions="Fill"
+                                            Clicked="ArchivedHabitButton_Clicked"
                                             Padding="0"
+                                            BackgroundColor="Transparent"
                                             BorderWidth="0"
-                                            Clicked="ArchivedHabitButton_Clicked">
+                                            HorizontalOptions="Fill"
+                                            VerticalOptions="Fill">
                                         <Button.Margin>
-                                            <Thickness Left="40" Right="40" />
+                                            <Thickness Left="40"
+                                                       Right="40" />
                                         </Button.Margin>
                                     </Button>
                                 </Grid>

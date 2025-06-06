@@ -52,6 +52,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         SettingsService = serviceProvider.GetRequiredService<ISettingsService>();
         ServiceOfHabit = serviceProvider.GetRequiredService<IServiceOfHabit>();
         AreaOfLifeService = serviceProvider.GetRequiredService<IAreaOfLifeService>();
+        TipService = serviceProvider.GetRequiredService<ITipService>();
 
         ReferenceMessenger = WeakReferenceMessenger.Default;
 
@@ -137,6 +138,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     public ILoggingService LoggingService { get; }
     public ISettingsService SettingsService { get; }
     public ICachingService CachingService { get; }
+    public ITipService TipService { get; }
 
     protected void DefaultHandleLogout(UserLoggedOutMessage message)
     {

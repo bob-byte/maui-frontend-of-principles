@@ -1,4 +1,6 @@
-﻿using LiveChartsCore.SkiaSharpView.Painting;
+﻿using CommunityToolkit.Maui.Views;
+
+using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore;
 
@@ -71,8 +73,6 @@ public partial class HabitDetailViewModel : BaseViewModel
         ProgressOfHabitService = serviceProvider.GetRequiredService<IProgressOfHabitService>();
         ServiceOfHabit = serviceProvider.GetRequiredService<IServiceOfHabit>();
 
-        SnackbarService = serviceProvider.GetRequiredService<ITipService>();
-
         EditedReminder = new EditedUserHabitReminder();
         m_lockerOfHabitProgressUpdate = new SemaphoreSlim( initialCount: 1, maxCount: 1 );
 
@@ -82,7 +82,6 @@ public partial class HabitDetailViewModel : BaseViewModel
     public ISeries[] Series { get; set; }
     public IProgressOfHabitService ProgressOfHabitService { get; }
     public IServiceOfHabit ServiceOfHabit { get; }
-    public ITipService SnackbarService { get; }
 
     public override void ApplyQueryAttributes( IDictionary<string, object> query )
     {
@@ -122,12 +121,17 @@ public partial class HabitDetailViewModel : BaseViewModel
         }
 
         UpdateFrequencyRepresentation( Habit.Frequency, SelectedPeriodOfHabit );
-        CalculateStreaks();
-        LoadProgressChartData();
-        DrawHabitExecutionChart();
+        SetCharts();
         GoalOfHabit();
 
         return base.InitializeAsync( parameter ); ;
+    }
+
+    private void SetCharts()
+    {
+        CalculateStreaks();
+        LoadProgressChartData();
+        DrawHabitExecutionChart();
     }
 
     public void GoalOfHabit()
@@ -269,13 +273,34 @@ public partial class HabitDetailViewModel : BaseViewModel
         }
         else
         {
+            int previousValueOfProgress = progressOfHabit.Value;
             progressOfHabit.Value = ProgressValue.NextToggled( progressOfHabit.Value );
             progressOfHabit.Habit = Habit;
             ServiceOfHabit.Recompute( Habit );
 
             ReferenceMessenger.Send( new MsgThatProgressOfHabitUpdated( progressOfHabit ) );
 
-            await ProgressOfHabitService.UpdateAsync( progressOfHabit );
+            bool doTryAgain;
+
+            do
+            {
+                try
+                {
+                    await ProgressOfHabitService.UpdateAsync( progressOfHabit );
+                    doTryAgain = false;
+                }
+                catch (Exception ex)
+                {
+                    doTryAgain = await DoRetryOperationOnErrorAsync( ex );
+                    if (!doTryAgain)
+                    {
+                        progressOfHabit.Value = previousValueOfProgress;
+                        ServiceOfHabit.Recompute( Habit );
+                        
+                        ReferenceMessenger.Send( new MsgThatProgressOfHabitUpdated( progressOfHabit ) );
+                    }
+                }
+            } while (doTryAgain);
         }
     }
 
@@ -694,30 +719,78 @@ public partial class HabitDetailViewModel : BaseViewModel
     [RelayCommand]
     private async Task DeleteHabitAsync()
     {
-        bool doDelete = await DialogService.ShowConfirmAsync(
-            LocStrings.MessageInDeleteHabitConfirm,
-            LocStrings.DeleteHabitQuestion
-        );
-
-        if (doDelete)
+        if (Habit.IsArchived)
         {
-            await UiBusyFor( async () =>
-            {
-                HabitDeletionResponse? response = await ServiceOfHabit.DeleteAsync( Habit.Id );
-
-                if (response != null)
-                {
-                    foreach (HabitDeletionResponse.NotificationRequest notification in response.DeletedNotifications)
+            var popupViewModel = ServiceProvider.GetRequiredService<MultipleActionPopupViewModel>();
+            List<ActionData> availableActions =
+            [
+                new(
+                    LocStrings.RemoveFromArchive,
+                    async () =>
                     {
-                        LocalNotificationCenter.Current.Cancel( notification.Id );
+                        await RemoveHabitFromArchiveAsync();
                     }
-                }
+                ),
+                new(
+                    LocStrings.DeleteTheHabit,
+                    async () =>
+                    {
+                        await DeleteHabitFromServerAsync();
+                    }
+                )
+            ];
+            popupViewModel.SetActions( availableActions, LocStrings.DeleteArchivedHabitConfirmationText );
 
-                await Navigation.GoBackAsync();
-                ReferenceMessenger.Send( new HabitsDeletedMessege( Habit ) );
-
-            } ).DefaultConfigureAwait();
+            MultipleActionPopup popup = new( popupViewModel );
+            await Shell.Current.ShowPopupAsync( popup );
         }
+        else
+        {
+            bool doDelete = await DialogService.ShowConfirmAsync(
+                LocStrings.MessageInDeleteHabitConfirm,
+                LocStrings.DeleteHabitQuestion
+            );
+
+            if (doDelete)
+            {
+                await DeleteHabitFromServerAsync();
+            }
+        }
+    }
+
+    private async Task DeleteHabitFromServerAsync()
+    {
+        await UiBusyFor( async () =>
+        {
+            HabitDeletionResponse? response = await ServiceOfHabit.DeleteAsync( Habit.Id );
+
+            if (response != null)
+            {
+                foreach (HabitDeletionResponse.NotificationRequest notification in response.DeletedNotifications)
+                {
+                    LocalNotificationCenter.Current.Cancel( notification.Id );
+                }
+            }
+
+            await Navigation.GoBackAsync();
+            ReferenceMessenger.Send( new HabitsDeletedMessege( Habit ) );
+
+        } ).DefaultConfigureAwait();
+    }
+
+    private async Task RemoveHabitFromArchiveAsync()
+    {
+        await UiBusyFor( async () =>
+        {
+            await ServiceOfHabit.SetHabitArchiveStatusAsync( new HabitArchiveStatus
+            {
+                HabitId = Habit.Id, 
+                IsArchived = false
+            } );
+            Habit.IsArchived = false;
+            
+            ReferenceMessenger.Send( new HabitSavedMessage( Habit ) );
+        } );
     }
 
     [RelayCommand]
@@ -757,40 +830,42 @@ public partial class HabitDetailViewModel : BaseViewModel
     [RelayCommand]
     private async Task ShowStreakTipAsync()
     {
-        SnackbarService.ShowAsync(
+        await TipService.ShowSnackbarAsync(
             LocStrings.TopSevenStreaksExplanation,
-            actionText: LocManager["OK"]);
+            duration: TimeSpan.FromSeconds( 10 )
+        );
     }
 
     [RelayCommand]
     private async Task StabilityInfoAsync()
     {
-        SnackbarService.ShowAsync(
+        await TipService.ShowSnackbarAsync(
             LocStrings.StabilityExplanation,
-            actionText: LocManager["OK"] );
+            duration: TimeSpan.FromSeconds( 10 ) 
+        );
     }
 
     [RelayCommand]
     private async Task HabitByDayWeeksAsync()
     {
-        SnackbarService.ShowAsync(
+        await TipService.ShowSnackbarAsync(
             LocStrings.HabitByDayweeksExplanation,
-            actionText: LocManager["OK"] );
+            duration: TimeSpan.FromSeconds( 10 ) 
+        );
     }
 
     [RelayCommand]
     private async Task CalendarInfoAsync()
     {
-        SnackbarService.ShowAsync(
+        await TipService.ShowSnackbarAsync(
             LocStrings.CalendarInfoExplanation,
-            actionText: LocManager["OK"] );
+            duration: TimeSpan.FromSeconds( 10 ) 
+        );
     }
 
-    
-
     [RelayCommand]
-    private async Task RefreshHabitCharts( object? obj )
+    private void RefreshHabitCharts()
     {
-        await InitializeAsync();
+        SetCharts();
     }
 }

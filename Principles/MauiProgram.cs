@@ -37,13 +37,13 @@ public static class MauiProgram
 
         builder
             .UseMauiApp<App>()
-            .UseSkiaSharp()
-            .UseLiveCharts()
+            .UseDevExpress( useLocalization: false ) //register handlers for all DevExpress controls
             .UseDevExpressControls()
             .UseDevExpressEditors()
             .UseDevExpressCollectionView()
             .UseDevExpressDataGrid()
-            .UseDevExpress( useLocalization: false ) //register handlers for all DevExpress controls
+            .UseSkiaSharp()
+            .UseLiveCharts()
             .UseLocalNotification()
             .UseMauiCommunityToolkit()
             .UseMauiCommunityToolkitMarkup()

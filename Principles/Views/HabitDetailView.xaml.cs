@@ -5,6 +5,8 @@ using LiveChartsCore;
 using SkiaSharp;
 using DevExpress.Maui.Editors;
 using DevExpress.Maui.DataGrid;
+
+using LiveChartsCore.Measure;
 using LiveChartsCore.SkiaSharpView.SKCharts;
 //using static Android.Icu.Text.CaseMap;
 using Microsoft.Maui.Controls.PlatformConfiguration;
@@ -25,6 +27,8 @@ public partial class HabitDetailView : ContentPageBase
         m_deviceOrientationService = DependencyService.Get<ILockDeviceOrientation>();
 
         InitializeComponent();
+
+        CC_Streaks.AnimationsSpeed = TimeSpan.FromSeconds( 2 );
         
         viewModel.ReferenceMessenger.Register<MsgThatProgressOfHabitUpdated>( this, ( _, _ ) =>
         {

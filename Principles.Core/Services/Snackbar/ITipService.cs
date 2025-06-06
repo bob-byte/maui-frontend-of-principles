@@ -7,5 +7,6 @@ using System.Threading.Tasks;
 namespace Principles.Core.Services;
 public interface ITipService
 {
-    Task ShowAsync( string message, string actionText = null, Action? action = null );
+    Task ShowSnackbarAsync( string message );
+    Task ShowSnackbarAsync( string message, TimeSpan duration );
 }
