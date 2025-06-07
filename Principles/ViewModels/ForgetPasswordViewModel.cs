@@ -1,4 +1,6 @@
 ﻿
+using CommunityToolkit.Maui.Views;
+
 namespace Principles.ViewModels;
 
 public partial class ForgetPasswordViewModel : BaseViewModel
@@ -17,11 +19,14 @@ public partial class ForgetPasswordViewModel : BaseViewModel
 
     private int m_validConfirmationCode;
 
+    private ConfirmEmailPopupViewModel m_confirmEmailPopupViewModel;
+    private ConfirmEmailPopup m_confirmEmailPopup;
     public ForgetPasswordViewModel( IServiceProvider serviceProvider )
         : base( serviceProvider )
     {
         ChangePasswordService = serviceProvider.GetRequiredService<IChangePasswordService>();
         LoginService = serviceProvider.GetRequiredService<ILoginService>();
+        m_confirmEmailPopupViewModel = new ConfirmEmailPopupViewModel( serviceProvider );
     }
 
     public IChangePasswordService ChangePasswordService { get; }
@@ -53,33 +58,14 @@ public partial class ForgetPasswordViewModel : BaseViewModel
             await UiBusyFor( async () =>
             {
                 m_validConfirmationCode = await ChangePasswordService.GeneratedCodeAsync( Email.Value );
-                IsConfirmChangePasswordOpen = true;
+                Page? currentPage = Application.Current.MainPage.Navigation?.NavigationStack.LastOrDefault();
+
+                m_confirmEmailPopupViewModel.SetData( NewPassword.Value, m_validConfirmationCode, Email.Value );
+                m_confirmEmailPopup = new ConfirmEmailPopup( m_confirmEmailPopupViewModel );
+
+                currentPage.ShowPopup( m_confirmEmailPopup );
             } );
         }
-    }
-
-    [RelayCommand]
-    private async Task ConfirmPasswordChangeAsync()
-    {
-        await UiBusyFor( async () =>
-        {
-            _ = int.TryParse( ConfirmationCodeByUser, out int setCodeByUser );
-            if (setCodeByUser == m_validConfirmationCode)
-            {
-                await ChangePasswordService.ChangePasswordAsync( Email.Value, NewPassword.Value );
-
-                IsConfirmChangePasswordOpen = false;
-                await DialogService.ShowAlertAsync( LocStrings.YourPasswordSuccessfullyChanged, LocStrings.Success, LocStrings.OK );
-
-                await LoginService.LoginAsync( Email.Value, NewPassword.Value );
-                await Navigation.GoToInitialViewAsync();
-            }
-            else
-            {
-                IsConfirmChangePasswordOpen = false;
-                await DialogService.ShowErrorAsync( LocStrings.WrongConfirmationCode );
-            }
-        } );
     }
 
     [RelayCommand]

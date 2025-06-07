@@ -3,6 +3,9 @@
 using DevExpress.Maui.Editors;
 
 using System;
+
+using TapGestureRecognizer = Microsoft.Maui.Controls.TapGestureRecognizer;
+
 namespace Principles.Views.Templates;
 
 public class CalendarCellTemplateSelector : DataTemplateSelector
@@ -16,18 +19,27 @@ public class CalendarCellTemplateSelector : DataTemplateSelector
 
         DataTemplate result = new (() =>
         {
-            ProgressOfHabit progressOfHabit = m_viewModel.Habit.ComputedProgresses.Get( date );
-
-            View template = progressOfHabit.Value switch
+            View template;
+            try
             {
-                ProgressValue.YES_MANUAL => new YesManualCellTemplate( calendarCellData ),
-                ProgressValue.YES_AUTO => new YesAutoCellTemplate( calendarCellData ),
-                _ => new NonYesCellTemplate( calendarCellData )
-            };
+                ProgressOfHabit progressOfHabit = m_viewModel.Habit.ComputedProgresses.Get( date );
+                template = progressOfHabit.Value switch
+                {
+                    ProgressValue.YES_MANUAL => new YesManualCellTemplate( calendarCellData ),
+                    ProgressValue.YES_AUTO => new YesAutoCellTemplate( calendarCellData ),
+                    _ => new NonYesCellTemplate( calendarCellData )
+                };
+            }
+            catch
+            {
+                template = new NonYesCellTemplate( calendarCellData );
+            }
+
             template.GestureRecognizers.Add( new TapGestureRecognizer()
             {
                 Command = m_viewModel.DateTappedCommand,
-                CommandParameter = calendarCellData.Date
+                CommandParameter = calendarCellData.Date,
+                NumberOfTapsRequired = 1
             } );
             
             return template;

@@ -305,10 +305,19 @@ public partial class EditHabitViewModel : BaseViewModel
         IsLoadingHabitInfo = false;
     }
 
-    public override async Task OnDisappearingAsync( object? parameter = null )
+    public override Task OnDisappearingAsync( object? parameter = null )
     {
         EditedReminder = new EditedUserHabitReminder();
         EditedGoal = new UserGoal();
+        Habit = new UserHabit();
+        RecommendedHabits = new ObservableCollectionEx<RecommendedHabit>();
+        
+#if ANDROID
+        UserGoals = new ObservableCollectionEx<UserGoal>();
+        AllUserAreasOfLife = new ObservableCollectionEx<UserAreaOfLife>();
+#endif
+        
+        return Task.CompletedTask;
     }
 
     private void NameOfHabitOnPropertyChanging( object? sender, System.ComponentModel.PropertyChangingEventArgs e )

@@ -589,7 +589,7 @@
     <value>Змінити пароль</value>
   </data>
   <data name="ConfirmationPasswordChangeLabel" xml:space="preserve">
-    <value>На вашу пошту надіслано одноразовий код для підтвердження зміни паролю</value>
+    <value>На вашу пошту надіслано код для підтвердження зміни пароля</value>
   </data>
   <data name="ConfirmPasswordChangeButton" xml:space="preserve">
     <value>Підтвердити</value>
@@ -910,8 +910,8 @@
     <data name="MessageRemoveHabitFromArchive" xml:space="preserve">
     <value>Ця дія відновить звичку у ваш активний список.</value>
   </data>
-    <data name="ShortDescriptionOfArchivedHabits" xml:space="preserve">
-    <value>У цьому розділі будуть відображатися звички, які ви заархівували. Ви можете повернутися до них, коли будете готові попрацювати над ними знову.</value>
+  <data name="ShortDescriptionOfArchivedHabits" xml:space="preserve">
+    <value>Тут відображаються твої завершені або призупинені звички.</value>
   </data>
     <data name="HabitArchivingInfo" xml:space="preserve">
     <value>Ваша звичка буде збережена в архів, ви завжди зможете повернути її в основний список.</value>
@@ -940,5 +940,17 @@
   </data>
   <data name="UnarchiveHabitQuestion" xml:space="preserve">
     <value>Видалити звичку з архіву?</value>
+  </data>
+  <data name="TheHabitWillBeArchivedAfterSaving" xml:space="preserve">
+    <value>Звичку буде архівовано після збереження</value>
+  </data>
+  <data name="TheHabitWillBeUnarchivedAfterSaving" xml:space="preserve">
+    <value>Звичка буде розархівована після збереження</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Змінити пароль</value>
+  </data>
+  <data name="PasswordChange" xml:space="preserve">
+    <value>Зміна паролю</value>
   </data>
 </root>

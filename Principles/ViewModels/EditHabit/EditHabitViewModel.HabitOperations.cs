@@ -110,7 +110,7 @@ public partial class EditHabitViewModel
                 [
                     new(LocStrings.ArchiveHabit, () =>
                         {
-                            ArchiveHabit();
+                            Habit.IsArchived = true;
                             result = true;
                             return Task.CompletedTask;
                         }
@@ -171,15 +171,27 @@ public partial class EditHabitViewModel
     }
 
     [RelayCommand]
-    private void ArchiveHabit()
+    private async Task ArchiveHabitAsync()
     {
         Habit.IsArchived = true;
+
+        await Snackbar.Make( 
+            message: LocStrings.TheHabitWillBeArchivedAfterSaving, 
+            duration: TimeSpan.FromSeconds( 4 ),
+            visualOptions: SnackbarHelper.DefaultOptions() 
+        ).Show().DefaultConfigureAwait();
     }
 
     [RelayCommand]
-    private void UnarchiveHabit()
+    private async Task UnarchiveHabitAsync()
     {
         Habit.IsArchived = false;
+        
+        await Snackbar.Make(
+            message: LocStrings.TheHabitWillBeUnarchivedAfterSaving,
+            duration: TimeSpan.FromSeconds( 4 ),
+            visualOptions: SnackbarHelper.DefaultOptions() 
+        ).Show().DefaultConfigureAwait();
     }
     
     [RelayCommand]

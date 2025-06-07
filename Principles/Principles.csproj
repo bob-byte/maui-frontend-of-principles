@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>net9.0-android;net9.0-ios</TargetFrameworks>
-        
+
 		<OutputType>Exe</OutputType>
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
@@ -15,8 +15,8 @@
 		<ApplicationId>com.set.principles</ApplicationId>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>2.1.5</ApplicationDisplayVersion>
-		<ApplicationVersion>42</ApplicationVersion>
+		<ApplicationDisplayVersion>3.0.0</ApplicationDisplayVersion>
+		<ApplicationVersion>43</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net9.0-android'">21.0</SupportedOSPlatformVersion>
@@ -28,24 +28,34 @@
 		<NullabilityInfoContextSupport>true</NullabilityInfoContextSupport>
 	</PropertyGroup>
 
+<!--	<PropertyGroup>-->
+<!--		<MtouchNoSymbolStrip Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">True</MtouchNoSymbolStrip>-->
+<!--	</PropertyGroup>-->
+
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-ios|AnyCPU'">
-	  <NoWarn>1701;1702;8632</NoWarn>
-	  <ArchiveOnBuild>true</ArchiveOnBuild>
-	  <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
-	  <CodesignEntitlements>Platforms\iOS\Entitlements.plist</CodesignEntitlements>
-	  <CodesignKey>iPhone Distribution: Bohdan Bats (CHVN5SL89P)</CodesignKey>
-	  <CodesignProvision>Principles Ad Hoc</CodesignProvision>
-	  <CreatePackage>false</CreatePackage>
-	  <BuildIpa>true</BuildIpa>
+		<NoWarn>1701;1702;8632</NoWarn>
+		<ArchiveOnBuild>true</ArchiveOnBuild>
+		<RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
+		<CodesignEntitlements>Platforms\iOS\Entitlements.plist</CodesignEntitlements>
+		<CodesignKey>iPhone Distribution: Bohdan Bats (CHVN5SL89P)</CodesignKey>
+		<CodesignProvision>Principles Ad Hoc</CodesignProvision>
+		<CreatePackage>false</CreatePackage>
+		<BuildIpa>true</BuildIpa>
 	</PropertyGroup>
-	
+
+	<!--Comment it out when behavior of the published Android app doesn't work as expected-->
+	<!--<PropertyGroup Condition="'$(TargetFramework)' == 'net9.0-android'">
+        <RunAOTCompilation>false</RunAOTCompilation>
+		<PublishTrimmed>false</PublishTrimmed>
+    </PropertyGroup>-->
+
 	<!-- App Icon -->
 	<ItemGroup Condition="$(TargetFramework.Contains('-android'))">
 		<MauiIcon Include="Resources\AppIcon\appicon.png" Color="#1F1F1F" ForegroundScale="0.6" />
-    </ItemGroup>
+	</ItemGroup>
 	<ItemGroup Condition="$(TargetFramework.Contains('-ios'))">
-        <MauiIcon Include="Resources\AppIcon\appicon.png" Color="#1F1F1F" />
-    </ItemGroup>
+		<MauiIcon Include="Resources\AppIcon\appicon.png" Color="#1F1F1F" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<!-- Splash Screen -->
@@ -67,30 +77,29 @@
 
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
-		
+
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
 	<ItemGroup Condition="$(TargetFramework.Contains('-ios'))">
-      <BundleResource Include="Platforms\iOS\Resources\**" TargetPath="%(RecursiveDir)%(Filename)%(Extension)" />
-    </ItemGroup>
+		<BundleResource Include="Platforms\iOS\Resources\**" TargetPath="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
 
 	<PropertyGroup Condition="$(TargetFramework.Contains('-ios'))">
-      <IPhoneResourcePrefix>Platforms/iOS/Resources/loc</IPhoneResourcePrefix>
-    </PropertyGroup>
+		<IPhoneResourcePrefix>Platforms/iOS/Resources/loc</IPhoneResourcePrefix>
+	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Remove="appsettings.Development.json" />
-	  <None Remove="Platforms\Android\Resources\values-ru\colors.xml" />
-	  <None Remove="Platforms\Android\Resources\values-ru\Strings.xml" />
-	  <None Remove="Platforms\Android\Resources\values-ru\styles.xml" />
+		<None Remove="appsettings.Development.json" />
+		<None Remove="Platforms\Android\Resources\values-ru\colors.xml" />
+		<None Remove="Platforms\Android\Resources\values-ru\Strings.xml" />
+		<None Remove="Platforms\Android\Resources\values-ru\styles.xml" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="9.0.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
-		<PackageReference Include="LiveChartsCore.SkiaSharpView.Maui" Version="2.0.0-rc5.4" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
 		<PackageReference Include="Plugin.LocalNotification" Version="11.1.4" />
 		<PackageReference Include="Serilog" Version="3.1.1" />
@@ -106,152 +115,135 @@
 		<PackageReference Include="DevExpress.Maui.DataGrid" Version="24.2.7" />
 		<PackageReference Include="DevExpress.Maui.Editors" Version="24.2.7" />
 		<PackageReference Include="Azure.AI.OpenAI" Version="2.1.0" />
-		<PackageReference Include="System.Private.Uri" Version="4.3.2" />
+<!--		<PackageReference Include="System.Private.Uri" Version="4.3.2" />-->
 		<PackageReference Include="System.Text.Json" Version="8.0.5" />
+		<PackageReference Include="LiveChartsCore.SkiaSharpView.Maui" Version="2.0.0-rc5.4" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<Compile Update="App.xaml.cs">
-		  <DependentUpon>App.xaml</DependentUpon>
-		</Compile>
-		<Compile Update="Views\HabitDetailView.xaml.cs">
-		  <DependentUpon>HabitDetailView.xaml</DependentUpon>
+			<DependentUpon>App.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\StartupView.xaml.cs">
-		  <DependentUpon>StartupView.xaml</DependentUpon>
+			<DependentUpon>StartupView.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\ForgetPasswordView.xaml.cs">
-		  <DependentUpon>ForgetPasswordView.xaml</DependentUpon>
+			<DependentUpon>ForgetPasswordView.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\EditPrincipleView.xaml.cs">
-		  <DependentUpon>EditPrincipleView.xaml</DependentUpon>
+			<DependentUpon>EditPrincipleView.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\SettingsView.xaml.cs">
-		  <DependentUpon>SettingsView.xaml</DependentUpon>
+			<DependentUpon>SettingsView.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\LoginView.xaml.cs">
-		  <DependentUpon>LoginView.xaml</DependentUpon>
+			<DependentUpon>LoginView.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\MentorView.xaml.cs">
-		  <DependentUpon>MentorView.xaml</DependentUpon>
+			<DependentUpon>MentorView.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\PrinciplesView.xaml.cs">
-		  <DependentUpon>PrinciplesView.xaml</DependentUpon>
+			<DependentUpon>PrinciplesView.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\ProfileView.xaml.cs">
-		  <DependentUpon>ProfileView.xaml</DependentUpon>
+			<DependentUpon>ProfileView.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\SignupView.xaml.cs">
-		  <DependentUpon>SignupView.xaml</DependentUpon>
+			<DependentUpon>SignupView.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\Templates\DefaultActivityIndicator.xaml.cs">
-		  <DependentUpon>DefaultActivityIndicator.xaml</DependentUpon>
+			<DependentUpon>DefaultActivityIndicator.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\Templates\BaseTemplateView.xaml.cs">
-		  <DependentUpon>BaseTemplateView.xaml</DependentUpon>
+			<DependentUpon>BaseTemplateView.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Platforms\iOS\LocStrings.Designer.cs">
-		  <ExcludeFromCurrentConfiguration>true</ExcludeFromCurrentConfiguration>
-		  <DependentUpon>LocStrings.resx</DependentUpon>
+			<ExcludeFromCurrentConfiguration>true</ExcludeFromCurrentConfiguration>
+			<DependentUpon>LocStrings.resx</DependentUpon>
 		</Compile>
 		<Compile Update="Resources\AppStrings\LocStrings.Designer.cs">
-		  <DependentUpon>LocStrings.resx</DependentUpon>
-		  <DesignTime>True</DesignTime>
-		  <AutoGen>True</AutoGen>
-		</Compile>
-		<Compile Update="Views\Templates\YesManualCellTemplate.xaml.cs">
-		  <DependentUpon>YesManualCellTemplate.xaml</DependentUpon>
-		  <SubType>Code</SubType>
-		</Compile>
-		<Compile Update="Views\Templates\YesAutoCellTemplate.xaml.cs">
-		  <DependentUpon>YesAutoCellTemplate.xaml</DependentUpon>
-		  <SubType>Code</SubType>
-		</Compile>
-		<Compile Update="Views\Templates\NonYesCellTemplate.xaml.cs">
-		  <DependentUpon>NonYesCellTemplate.xaml</DependentUpon>
-		  <SubType>Code</SubType>
+			<DependentUpon>LocStrings.resx</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
 		</Compile>
 		<Compile Update="Views\MultipleActionPopup.xaml.cs">
-		  <DependentUpon>MultipleActionPopup.xaml</DependentUpon>
+			<DependentUpon>MultipleActionPopup.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\ConfirmEmailPopup.xaml.cs">
+			<DependentUpon>ConfirmEmailPopup.xaml</DependentUpon>
 		</Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="App.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="AppShell.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Controls\CircularProgressBar.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\HabitDetailView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\StartupView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\ForgetPasswordView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\EditPrincipleView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\SettingsView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\MentorView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\PrinciplesView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\ProfileView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\SignupView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Templates\DefaultActivityIndicator.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Templates\BaseTemplateView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\MultipleActionPopup.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\UpdatePopup.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Templates\YesManualCellTemplate.xaml">
-	    <SubType>Designer</SubType>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Templates\YesAutoCellTemplate.xaml">
-	    <SubType>Designer</SubType>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Templates\NonYesCellTemplate.xaml">
-	    <SubType>Designer</SubType>
-	  </MauiXaml>
+		<MauiXaml Update="App.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="AppShell.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Controls\CircularProgressBar.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\StartupView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\ForgetPasswordView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\EditPrincipleView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\SettingsView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\MentorView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\PrinciplesView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\ProfileView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\SignupView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Templates\DefaultActivityIndicator.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Templates\BaseTemplateView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\UpdatePopup.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\MultipleActionPopup.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\ChangePasswordView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\ConfirmEmailPopup.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 	</ItemGroup>
 	<ItemGroup>
-	  <EmbeddedResource Condition=" '$(EnableDefaultEmbeddedResourceItems)' == 'true' " Update="Resources\AppStrings\LocStrings.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
-	    <LastGenOutput>LocStrings.Designer.cs</LastGenOutput>
-	  </EmbeddedResource>
+		<EmbeddedResource Condition=" '$(EnableDefaultEmbeddedResourceItems)' == 'true' " Update="Resources\AppStrings\LocStrings.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>LocStrings.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
 	</ItemGroup>
 	<ItemGroup>
-	  <BundleResource Include="Platforms\iOS\Resources\loc\en.lproj\InfoPlist.strings" />
-	  <BundleResource Include="Platforms\iOS\Resources\loc\uk.lproj\InfoPlist.strings" />
+		<BundleResource Include="Platforms\iOS\Resources\loc\en.lproj\InfoPlist.strings" />
+		<BundleResource Include="Platforms\iOS\Resources\loc\uk.lproj\InfoPlist.strings" />
 	</ItemGroup>
 	<ItemGroup>
-	  <EmbeddedResource Include="appsettings.Development.json">
-	    <DependentUpon>appsettings.json</DependentUpon>
-	  </EmbeddedResource>
+		<EmbeddedResource Include="appsettings.Development.json">
+			<DependentUpon>appsettings.json</DependentUpon>
+		</EmbeddedResource>
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\Principles.Core\Principles.Core.csproj" />
+		<ProjectReference Include="..\Principles.Core\Principles.Core.csproj" />
 	</ItemGroup>
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
 		<BundleResource Include="Platforms\iOS\PrivacyInfo.xcprivacy" LogicalName="PrivacyInfo.xcprivacy" />
@@ -259,14 +251,14 @@
 	<ItemGroup>
 		<EmbeddedResource Include="appsettings.json" />
 	</ItemGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-      <WarningLevel>4</WarningLevel>
-      <NoWarn>1701;1702;CS1573;CS1591;CS8632</NoWarn>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LocalDebug|AnyCPU'">
-      <WarningLevel>4</WarningLevel>
-      <NoWarn>1701;1702;CS1573;CS1591;CS8632</NoWarn>
-      <DefineConstants>LOCALDEBUG;DEBUG;TRACE</DefineConstants>
-      <DebugSymbols>true</DebugSymbols>
-    </PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+		<WarningLevel>4</WarningLevel>
+		<NoWarn>1701;1702;CS1573;CS1591;CS8632</NoWarn>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LocalDebug|AnyCPU'">
+		<WarningLevel>4</WarningLevel>
+		<NoWarn>1701;1702;CS1573;CS1591;CS8632</NoWarn>
+		<DefineConstants>LOCALDEBUG;DEBUG;TRACE</DefineConstants>
+		<DebugSymbols>true</DebugSymbols>
+	</PropertyGroup>
 </Project>

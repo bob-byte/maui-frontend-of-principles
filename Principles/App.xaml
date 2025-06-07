@@ -60,7 +60,7 @@
 
             <Color x:Key="NormalHeaderText">#55555c</Color>
             <Color x:Key="Error">#007BFF</Color>
-            <Color x:Key="RedColor">#FF2400</Color>
+            <Color x:Key="RedColor">#D32F2F</Color>
             <Color x:Key="TitleTextColor">White</Color>
             <Color x:Key="LightEditControlBackColor">#F5F5F5</Color>
             <Color x:Key="DarkEditControlBackColor">#d3d3d3</Color>
@@ -94,6 +94,9 @@
                 <Setter Property="IconColor"
                         Value="{AppThemeBinding Light={StaticResource DarkIconColor},
                                                 Dark={StaticResource IconColor}}" />
+                <Setter Property="PressedIconColor"
+                        Value="{AppThemeBinding Light={StaticResource DarkIconColor},
+                                                Dark={StaticResource IconColor}}" />
                 <Setter Property="BorderColor"
                         Value="{StaticResource SecondaryLight}" />
                 <Setter Property="PressedBorderColor"
@@ -109,6 +112,9 @@
                         Value="{AppThemeBinding Light={StaticResource Primary},
                                                 Dark={StaticResource DarkPrimary}}" />
                 <Setter Property="IconColor"
+                        Value="{AppThemeBinding Light={StaticResource DarkIconColor},
+                                                Dark={StaticResource IconColor}}" />
+                <Setter Property="PressedIconColor"
                         Value="{AppThemeBinding Light={StaticResource DarkIconColor},
                                                 Dark={StaticResource IconColor}}" />
                 <Setter Property="BorderColor"

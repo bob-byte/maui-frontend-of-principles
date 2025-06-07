@@ -62,10 +62,7 @@ public partial class HabitDetailViewModel : BaseViewModel
     [ObservableProperty]
     private string? m_goalTitle;
 
-    private SemaphoreSlim m_lockerOfHabitProgressUpdate;
-
-    [ObservableProperty]
-    private ObservableCollection<UserHabit> m_habitsWithSameGoal = new();
+    private readonly SemaphoreSlim m_lockerOfHabitProgressUpdate;
 
     public HabitDetailViewModel( IServiceProvider serviceProvider )
         : base( serviceProvider )
@@ -122,7 +119,6 @@ public partial class HabitDetailViewModel : BaseViewModel
 
         UpdateFrequencyRepresentation( Habit.Frequency, SelectedPeriodOfHabit );
         SetCharts();
-        GoalOfHabit();
 
         return base.InitializeAsync( parameter ); ;
     }
@@ -132,30 +128,6 @@ public partial class HabitDetailViewModel : BaseViewModel
         CalculateStreaks();
         LoadProgressChartData();
         DrawHabitExecutionChart();
-    }
-
-    public void GoalOfHabit()
-    {
-        if (Habit?.Goal == null)
-        {
-            GoalTitle = LocStrings.NoGoalSpecified;
-            HabitsWithSameGoal.Clear();
-            return;
-        }
-
-        GoalTitle = Habit.Goal.Name;
-        List<UserHabit> relatedHabits = ServiceOfHabit.StoredUserHabits
-            .Where( h => h.Goal?.Name == Habit.Goal.Name )
-            .ToList();
-
-        HabitsWithSameGoal.Clear();
-        if (relatedHabits.Any())
-        {
-            foreach (UserHabit habit in relatedHabits)
-            {
-                HabitsWithSameGoal.Add( habit );
-            }
-        }
     }
 
     public List<HabitDayStat> CalculateDaysOfWeekData()
@@ -177,13 +149,13 @@ public partial class HabitDetailViewModel : BaseViewModel
             dayCounts[date.DayOfWeek]++;
         }
 
-        DayOfWeek[] orderedDays = new[]
-        {
+        DayOfWeek[] orderedDays =
+        [
             DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday,
             DayOfWeek.Thursday, DayOfWeek.Friday, DayOfWeek.Saturday, DayOfWeek.Sunday
-        };
+        ];
 
-        Dictionary<DayOfWeek, string> dayNames = new Dictionary<DayOfWeek, string>
+        Dictionary<DayOfWeek, string> dayNames = new()
         {
             [DayOfWeek.Monday] = LocStrings.MondayShort,
             [DayOfWeek.Tuesday] = LocStrings.TuesdayShort,
@@ -276,9 +248,21 @@ public partial class HabitDetailViewModel : BaseViewModel
             int previousValueOfProgress = progressOfHabit.Value;
             progressOfHabit.Value = ProgressValue.NextToggled( progressOfHabit.Value );
             progressOfHabit.Habit = Habit;
-            ServiceOfHabit.Recompute( Habit );
 
-            ReferenceMessenger.Send( new MsgThatProgressOfHabitUpdated( progressOfHabit ) );
+            await m_lockerOfHabitProgressUpdate.WaitAsync();
+
+            try
+            {
+                ServiceOfHabit.Recompute( Habit );
+
+                ReferenceMessenger.Send( new MsgThatProgressOfHabitUpdated( progressOfHabit ) );
+
+                SetCharts();
+            }
+            finally
+            {
+                m_lockerOfHabitProgressUpdate.Release();
+            }
 
             bool doTryAgain;
 
@@ -287,6 +271,7 @@ public partial class HabitDetailViewModel : BaseViewModel
                 try
                 {
                     await ProgressOfHabitService.UpdateAsync( progressOfHabit );
+
                     doTryAgain = false;
                 }
                 catch (Exception ex)
@@ -296,7 +281,7 @@ public partial class HabitDetailViewModel : BaseViewModel
                     {
                         progressOfHabit.Value = previousValueOfProgress;
                         ServiceOfHabit.Recompute( Habit );
-                        
+
                         ReferenceMessenger.Send( new MsgThatProgressOfHabitUpdated( progressOfHabit ) );
                     }
                 }
@@ -861,11 +846,5 @@ public partial class HabitDetailViewModel : BaseViewModel
             LocStrings.CalendarInfoExplanation,
             duration: TimeSpan.FromSeconds( 10 ) 
         );
-    }
-
-    [RelayCommand]
-    private void RefreshHabitCharts()
-    {
-        SetCharts();
     }
 }

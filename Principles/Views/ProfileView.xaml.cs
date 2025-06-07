@@ -28,7 +28,13 @@ public partial class ProfileView : ContentPageBase
     void TGR_MainSlogan_Focused( object sender, FocusEventArgs e )
     {
         L_Prompt.Text = LocStrings.YourMainSlogan;
+        
+#if ANDROID
         L_TipText.Text = LocStrings.MainSloganExplanation;
+#else
+        E_TipText.Text = LocStrings.MainSloganExplanation;
+#endif
+        
         ME_PromptResult.Text = ViewModel.MainSlogan;
         ME_PromptResult.HeightRequest = 140;
         ME_PromptResult.MaximumHeightRequest = 140;
@@ -42,7 +48,13 @@ public partial class ProfileView : ContentPageBase
     void TGR_Mission_Focused( object sender, FocusEventArgs e )
     {
         L_Prompt.Text = LocStrings.YourMission;
+        
+#if ANDROID
         L_TipText.Text = LocStrings.MissionExplanation;
+#else
+        E_TipText.Text = LocStrings.MissionExplanation;
+#endif
+        
         ME_PromptResult.Text = ViewModel.Mission;
         ME_PromptResult.HeightRequest = 170;
         ME_PromptResult.MaximumHeightRequest = 300;
@@ -83,6 +95,9 @@ public partial class ProfileView : ContentPageBase
 
     private void EI_Tip_Clicked( object sender, EventArgs e )
     {
+        DXP_Tip.WidthRequest = CPB_Page.Width - 20;
+        DXP_Tip.MinimumWidthRequest = CPB_Page.Width - 20;
+        
         DXP_Tip.IsOpen = true;
     }
 

@@ -28,11 +28,21 @@ public partial class HabitDetailView : ContentPageBase
 
         InitializeComponent();
 
+        DX_Calendar.DayCellTemplate = new CalendarCellTemplateSelector();
+
         CC_Streaks.AnimationsSpeed = TimeSpan.FromSeconds( 2 );
+        CC_Stability.AnimationsSpeed = TimeSpan.FromSeconds( 2 );
         
-        viewModel.ReferenceMessenger.Register<MsgThatProgressOfHabitUpdated>( this, ( _, _ ) =>
+        viewModel.ReferenceMessenger.Register<MsgThatProgressOfHabitUpdated>( this, async ( _, _ ) =>
         {
-            DX_Calendar.Refresh();
+            try
+            {
+                await MainThread.InvokeOnMainThreadAsync( DX_Calendar.Refresh );
+            }
+            catch
+            {
+                
+            }
         } );
     }
 

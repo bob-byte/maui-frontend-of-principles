@@ -32,7 +32,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     [ObservableProperty]
     private ObservableCollectionEx<UserHabit> m_userHabits;
     [ObservableProperty]
-    private ObservableCollection<ArсhivedHabitDto>? m_archivedHabits;
+    private ObservableCollection<ArсhivedHabitDto> m_archivedHabits;
 
     private readonly SemaphoreSlim m_initLocker;
     
@@ -59,9 +59,10 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
         ReminderService = serviceProvider.GetRequiredService<IReminderService>();
 
         EndProgressInterval = DateOnly.FromDateTime( DateTime.Today );
-        StartProgressInterval = EndProgressInterval.AddDays( -HabitConstants.AVERAGE_NUMBER_OF_DAYS_TO_AUTOMATE_HABIT + 1 );
+        StartProgressInterval = EndProgressInterval.AddDays( -HabitConstants.NUMBER_OF_DAYS_IN_PROGRESS + 1 );
         m_isBusyForChangeCompleted = new ConcurrentDictionary<UserHabit, SemaphoreSlim>();
         m_userHabits = new ObservableCollectionEx<UserHabit>();
+        ArchivedHabits = new ObservableCollectionEx<ArсhivedHabitDto>();
         ServiceOfHabit.StoredUserHabits = UserHabits;
 
         ReferenceMessenger.Register<UserLoggedOutMessage>( this, ( sender, msg ) =>
@@ -125,7 +126,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
             }
         } );
 
-        ReferenceMessenger.Register<ArchiveHabitMessage>( this, ( sender, msg ) => 
+        ReferenceMessenger.Register<ArchiveHabitMessage>( this, async ( _, msg ) => 
         {
             if (msg?.Value != null)
             {
@@ -135,6 +136,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
                     UserHabits.Remove( habitToRemove );
                 }
 
+                await Task.Delay( 500 );
                 ReferenceMessenger.Send( new ShowAllArchivedHabitsMsg() );
             }
         } );
@@ -232,6 +234,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
                 if (!m_isInitialized)
                 {
                     await InitUserInfoAsync();
+
                     List<UserHabit> habits = await ServiceOfHabit.ActiveHabitsAsync( StartProgressInterval, EndProgressInterval );
 
                     foreach (UserHabit habit in habits)
@@ -580,10 +583,10 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     [RelayCommand]
     private async Task LoadHabitReportReminderAsync(Action openPopup)
     {
+        openPopup();
         await UiBusyFor(async () =>
         {
             Reminder reminder = await ReminderService.HabitsReportReminderAsync() ?? new Reminder();
-            openPopup();
             
             if (reminder.Id == 0)
             {

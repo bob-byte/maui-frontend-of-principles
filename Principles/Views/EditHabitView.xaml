@@ -10,6 +10,7 @@
                    xmlns:loc="clr-namespace:Principles.Resources.AppStrings"
                    xmlns:m="clr-namespace:Principles.Core.Models;assembly=Principles.Core"
                    xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+                   xmlns:templates="clr-namespace:Principles.Views.Templates"
                    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                    xmlns:v="clr-namespace:Principles.Views"
                    xmlns:vm="clr-namespace:Principles.ViewModels"
@@ -107,7 +108,8 @@
                                                ClearIconVisibility="Never"
                                                EndIcon="info"
                                                EndIconCommand="{Binding TapHabitNameInfoCommand}"
-                                               EndIconCommandParameter="{x:Reference ME_NameOfHabit}"
+                                               EndIconCommandParameter="{OnPlatform iOS={x:Reference ME_NameOfHabit},
+                                                                                    Android={x:Reference ME_HabitGoal}}"
                                                HasError="{Binding NameOfHabit.IsValid,
                                                                   Converter={StaticResource IsFalse}}"
                                                IsErrorIconVisible="True"
@@ -785,12 +787,6 @@
             </dxco:TabViewItem>
         </dxco:TabView>
 
-        <ActivityIndicator IsVisible="{Binding IsBusy}"
-                           WidthRequest="100"
-                           HeightRequest="100"
-                           HorizontalOptions="Center"
-                           IsRunning="{Binding IsBusy}"
-                           VerticalOptions="Center"
-                           Color="{StaticResource Primary}" />
+        <templates:DefaultActivityIndicator />
     </Grid>
 </v:ContentPageBase>

@@ -15,9 +15,6 @@ using LiveChartsCore.SkiaSharpView.Maui;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 
-
-
-
 #if IOS
 using Microsoft.Maui.Platform;
 #endif
@@ -117,7 +114,6 @@ public static class MauiProgram
         services.AddSingleton<IDialogService, DialogService>();
         services.AddSingleton<ILaunchUriHelper, LaunchUriHelper>();
         services.AddSingleton<IReminderService, ReminderService>();
-
         services.AddSingleton<ITipService, TipService>();
 
         return services;
@@ -135,6 +131,8 @@ public static class MauiProgram
         services.AddSingleton<ForgetPasswordViewModel>();
         services.AddSingleton<StartupViewModel>();
         services.AddSingleton<MultipleActionPopupViewModel>();
+        services.AddSingleton<ChangePasswordViewModel>();
+        services.AddSingleton<ConfirmEmailPopupViewModel>();
         services.AddSingleton<HabitDetailViewModel>();
 
         return services;
@@ -152,6 +150,7 @@ public static class MauiProgram
         services.AddTransient<ForgetPasswordView>();
         services.AddTransient<StartupView>();
         services.AddTransient<HabitDetailView>();
+        services.AddTransient<ChangePasswordView>();
 
         return services;
     }
