@@ -9,9 +9,11 @@ using System.Threading.Tasks;
 namespace Principles.Messages;
 public class ArchiveHabitMessage : ValueChangedMessage<UserHabit>
 {
-    public ArchiveHabitMessage( UserHabit userHabit )
+    public bool DoShowAllArchivedHabits { get; }
+
+    public ArchiveHabitMessage( UserHabit userHabit, bool doShowAllArchivedHabits )
         : base( userHabit )
     {
-        
+        DoShowAllArchivedHabits = doShowAllArchivedHabits;
     }
 }

@@ -84,6 +84,10 @@
                 <Setter Property="BarTextColor"
                         Value="White" />
             </Style>
+            <Style TargetType="Span">
+                <Setter Property="TextColor"
+                        Value="{StaticResource LightNormalText}" />
+            </Style>
             <Style x:Key="PrimaryButton"
                    TargetType="dxco:SimpleButton">
                 <Setter Property="BackgroundColor"
@@ -453,7 +457,11 @@
                 <Setter Property="TextColor"
                         Value="{AppThemeBinding Light={StaticResource LightNormalText},
                                                 Dark={StaticResource DarkNormalText}}" />
-
+            </Style>
+            <Style TargetType="Editor">
+                    <Setter Property="TextColor"
+                            Value="{AppThemeBinding Light={StaticResource LightNormalText},
+                                            Dark={StaticResource DarkNormalText}}" />
             </Style>
             <Style TargetType="Entry">
                 <Setter Property="BackgroundColor"
@@ -541,6 +549,9 @@
             <converters:PromptEditorFocusedToDoShowKeyboardConverter x:Key="PromptEditorFocusedToDoShowKeyboard" />
             <converters:FrequencyToStringConverter x:Key="FrequencyToString" />
             <converters:ProgressOfHabitToInt32Converter x:Key="ProgressToInt32" />
+            <converters:ReminderTimeAndDaysToStringConverter x:Key="ReminderValueToString" />
+            <converters:ComplexityToHelpTextConverter x:Key="HabitComplexityToHelpText" />
+            <converters:DateToTextDecorationsConverter x:Key="DateToTextDecorations" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

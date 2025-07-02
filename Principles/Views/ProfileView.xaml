@@ -232,6 +232,8 @@
                     <Label x:Name="L_CantEdit"
                            Text="{Binding LocManager[FieldIsNotEditable]}"
                            Margin="10,10,0,0"
+                           LineBreakMode="TailTruncation"
+                           MaxLines="10"
                            FontSize="20"
                            VerticalOptions="Center" />
                     <dxco:SimpleButton x:Name="SB_ChangeEmail"

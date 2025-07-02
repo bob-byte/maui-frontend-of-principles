@@ -9,4 +9,6 @@ public interface ITipService
 {
     Task ShowSnackbarAsync( string message );
     Task ShowSnackbarAsync( string message, TimeSpan duration );
+    Task ShowToastAsync( string message );
+    Task ShowToastAsync( string message, TipDuration duration );
 }

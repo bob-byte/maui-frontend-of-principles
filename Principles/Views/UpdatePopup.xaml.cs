@@ -8,6 +8,8 @@ public partial class UpdatePopup : Popup
 
     public UpdatePopup( UpdatePopupViewModel viewModel )
     {
+        KeyboardHelper.HideKeyboard();
+        
         BindingContext = viewModel;
         ViewModel = viewModel;
 

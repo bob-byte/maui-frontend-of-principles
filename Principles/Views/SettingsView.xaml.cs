@@ -94,6 +94,7 @@ public partial class SettingsView : ContentPageBase
                 await Task.Delay( 200 );
 
                 ViewModel.ChangeLanguageCommand.Execute( codeOfSelectedLanguage );
+                await ViewModel.TipService.ShowToastAsync( LocStrings.InterfaceLanguageSuccessfullyChanged, TipDuration.Short );
             }
         }
     }

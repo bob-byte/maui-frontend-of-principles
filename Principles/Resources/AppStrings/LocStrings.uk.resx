@@ -483,19 +483,19 @@
   <data name="Appearance" xml:space="preserve">
     <value>Тема додатку</value>
   </data>
-  <data name="DescriptionOfCannotAddNewHabit" xml:space="preserve">
-    <value>Порада: "створіть цю звичку після того автоматизуєте інші". Це допоможе вам не перегоріти та дотримуватись інших звичок.</value>
+  <data name="DescriptionOfAdviceNotToWorkOnNewHabit" xml:space="preserve">
+    <value>Порада: "почніть роботу над поточною звичкою, коли автоматизуйте інші". Це допоможе вам не перегоріти та дотримуватись інших звичок.</value>
   </data>
-  <data name="TitleOfCannotAddNewHabit" xml:space="preserve">
-    <value>Додання може бути надмірним</value>
+  <data name="TitleOfAdviceNotToWorkOnNewHabit" xml:space="preserve">
+    <value>Надто багато неавтоматизованих звичок</value>
   </data>
-  <data name="AddItAnyway" xml:space="preserve">
-    <value>Додати все одно</value>
+  <data name="CreateItAnyway" xml:space="preserve">
+    <value>Створити все одно</value>
   </data>
   <data name="SetPriorityByDragAndDrop" xml:space="preserve">
     <value>Встановіть пріоритети за допомогою перетягування</value>
   </data>
-  <data name="ComplexityHelpText" xml:space="preserve">
+  <data name="ComplexityCantBeChangedAfterCreationOfHabit" xml:space="preserve">
     <value>Складність неможливо буде змінити після створення звички</value>
   </data>
   <data name="TooManyMessagesError" xml:space="preserve">
@@ -840,11 +840,11 @@
   <data name="CompletedDays" xml:space="preserve">
     <value>Завершених днів</value>
   </data>
-  <data name="TopSevenStreaks" xml:space="preserve">
-    <value>Топ-7 найтриваліших серій</value>
+  <data name="TopFiveStreaks" xml:space="preserve">
+    <value>Топ-5 найтриваліших серій</value>
   </data>
-  <data name="TopSevenStreaksExplanation" xml:space="preserve">
-    <value>Топ-7 серій виконання звички відображає найстабільніші періоди особистої дисципліни. Цей інструмент допомагає усвідомити власну здатність до послідовних дій, підтримує мотивацію в моменти сумнівів і слугує основою для формування стійких, рекомендованих звичок.</value>
+  <data name="TopFiveStreaksExplanation" xml:space="preserve">
+    <value>Топ-5 серій виконання звички відображає найстабільніші періоди особистої дисципліни. Цей інструмент допомагає усвідомити власну здатність до послідовних дій, підтримує мотивацію в моменти сумнівів і слугує основою для формування стійких, рекомендованих звичок.</value>
   </data>
   <data name="StabilityExplanation" xml:space="preserve">
     <value>Діаграма стабільності показує, наскільки послідовно ви дотримуєтеся звички без пропусків. Вона висвітлює ваші загальні патерни дотримання, допомагаючи побачити, де ви найнадійніші, а де варто звернути додаткову увагу. Відстежуючи стабільність, ви можете святкувати стабільний прогрес, виявляти моменти, які ставлять під виклик вашу рутину, та нарощувати впевненість у здатності підтримувати довгострокові зміни поведінки.</value>
@@ -866,10 +866,9 @@
   </data>
   <data name="CalendarInfoExplanation" xml:space="preserve">
     <value>Відображає виконання звичок за днями:
-Синій – звичка виконана
-Голубий – дотримуватися звички не обов'язково
-Ви можете змінити статус натисканням по дню
-   </value>
+- Синій – звичка виконана;
+- Голубий – дотримуватися звички не обов'язково.
+Ви можете змінити статус натисканням по дню.</value>
   </data>
   <data name="Calendar" xml:space="preserve">
     <value>Календар</value>
@@ -878,7 +877,7 @@
     <value>Найдовша серія</value>
   </data>
   <data name="YouCannotCompleteHabitInTheFuture" xml:space="preserve">
-    <value>Не можливо позначити звичку, як виконана для майбутніх днів</value>
+    <value>Неможливо позначити звичку, як виконана для майбутніх днів</value>
   </data>
   <data name="HabitWasntCreatedBeforeThisDay" xml:space="preserve">
     <value>Звичка не була створена до цієї дати</value>
@@ -952,5 +951,71 @@
   </data>
   <data name="PasswordChange" xml:space="preserve">
     <value>Зміна паролю</value>
+  </data>
+  <data name="JanuaryShort" xml:space="preserve">
+    <value>січ</value>
+  </data>
+  <data name="FebruaryShort" xml:space="preserve">
+    <value>лют</value>
+  </data>
+  <data name="MarchShort" xml:space="preserve">
+    <value>бер</value>
+  </data>
+  <data name="AprilShort" xml:space="preserve">
+    <value>кві</value>
+  </data>
+  <data name="MayShort" xml:space="preserve">
+    <value>тра</value>
+  </data>
+  <data name="NumberOfExecution" xml:space="preserve">
+    <value>Кількість виконань</value>
+  </data>
+  <data name="TheHabitSuccessfullySaved" xml:space="preserve">
+    <value>Звичку успішно збережено</value>
+  </data>
+  <data name="JuneShort" xml:space="preserve">
+    <value>чер</value>
+  </data>
+  <data name="JulyShort" xml:space="preserve">
+    <value>лип</value>
+  </data>
+  <data name="AugustShort" xml:space="preserve">
+    <value>сер</value>
+  </data>
+  <data name="SeptemberShort" xml:space="preserve">
+    <value>вер</value>
+  </data>
+  <data name="OctoberShort" xml:space="preserve">
+    <value>жов</value>
+  </data>
+  <data name="NovemberShort" xml:space="preserve">
+    <value>лис</value>
+  </data>
+  <data name="DecemberShort" xml:space="preserve">
+    <value>гру</value>
+  </data>
+  <data name="YearShort" xml:space="preserve">
+    <value>р.</value>
+  </data>
+  <data name="InterfaceLanguageSuccessfullyChanged" xml:space="preserve">
+    <value>Мову інтерфейсу успішно змінено</value>
+  </data>
+  <data name="HabitAutomationExplanation" xml:space="preserve">
+    <value>Для автоматизації звички потрібно регулярне виконання протягом</value>
+  </data>
+  <data name="Just" xml:space="preserve">
+    <value>Тільки</value>
+  </data>
+  <data name="daysToGoUntilHabitAutomatic" xml:space="preserve">
+    <value>залишилось днів до повної автоматизації звички</value>
+  </data>
+  <data name="ThereAreStill" xml:space="preserve">
+    <value>Ще</value>
+  </data>
+  <data name="ComplexityInfoText" xml:space="preserve">
+    <value>Наскільки важко дотримуватися звички за зусиллями, часом і самоконтролем</value>
+  </data>
+  <data name="TheHabitIsAlreadyAutomated" xml:space="preserve">
+    <value>Звичка вже автоматична</value>
   </data>
 </root>

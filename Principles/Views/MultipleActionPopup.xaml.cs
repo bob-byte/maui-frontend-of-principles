@@ -8,6 +8,8 @@ public partial class MultipleActionPopup : Popup
 
     public MultipleActionPopup( MultipleActionPopupViewModel viewModel )
     {
+        KeyboardHelper.HideKeyboard();
+        
         BindingContext = viewModel;
         ViewModel = viewModel;
 
@@ -40,7 +42,7 @@ public partial class MultipleActionPopup : Popup
         }
     }
 
-    private void DXB_Cancel_OnClicked( object? sender, EventArgs e )
+    private void SB_Cancel_OnClicked( object? sender, EventArgs e )
     {
         Close();
     }

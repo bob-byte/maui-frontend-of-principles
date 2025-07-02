@@ -4,9 +4,8 @@ namespace Principles.Views.Templates;
 
 public partial class NonYesCellTemplate
 {
-    public NonYesCellTemplate(CalendarCellData calendarCellData)
+    public NonYesCellTemplate()
     {
-        BindingContext = calendarCellData;
         InitializeComponent();
     }
 }

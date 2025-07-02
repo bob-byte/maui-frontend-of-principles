@@ -4,9 +4,8 @@ namespace Principles.Views.Templates;
 
 public partial class YesManualCellTemplate
 {
-    public YesManualCellTemplate(CalendarCellData calendarCellData)
+    public YesManualCellTemplate()
     {
-        BindingContext = calendarCellData;
         InitializeComponent();
     }
 }

@@ -5,4 +5,5 @@
        Text="{Binding DisplayText}"
        x:DataType="dx:CalendarCellData"
        HorizontalTextAlignment="Center"
-       VerticalTextAlignment="Center" />
+       VerticalTextAlignment="Center"
+       TextDecorations="{Binding Date, Converter={StaticResource DateToTextDecorations}}" />

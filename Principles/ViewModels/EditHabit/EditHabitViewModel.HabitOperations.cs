@@ -27,7 +27,6 @@ public partial class EditHabitViewModel
                 Id = Habit.Id,
                 Name = Habit.Name,
                 Priority = Habit.Priority,
-                Question = Habit.Question,
                 Goal = Habit.Goal,
                 Status = Habit.Status,
                 Type = Habit.Type,
@@ -45,42 +44,49 @@ public partial class EditHabitViewModel
                 dto.PrioritizedHabits.Add( new UserHabitWithPriority { Id = habit.Id, Priority = habit.Priority } );
             }
 
-            if (copyOfHabits.Count == 1)
+            bool isHabitSaved = false;
+            
+            await UiBusyFor( async () =>
             {
-                await UiBusyFor( async () =>
+                UserHabit savedHabit = Habit;
+                if (copyOfHabits.Count == 1)
                 {
                     SaveHabitResponse response = await ServiceOfHabit.UpdateHabitAsync( dto );
                     await HandleHabitSaveAsync( response );
-                    
+
                     if (dto.IsArchived)
                     {
-                        ReferenceMessenger.Send( new ArchiveHabitMessage( Habit ) );
+                        ReferenceMessenger.Send( new ArchiveHabitMessage( savedHabit, doShowAllArchivedHabits: true ) );
                     }
                     else
                     {
-                        ReferenceMessenger.Send( new HabitSavedMessage( Habit ) );
+                        ReferenceMessenger.Send( new HabitSavedMessage( savedHabit ) );
                     }
-                    
+
                     await Navigation.GoBackAsync();
-                } );
-            }
-            else
-            {
-                await UiBusyFor( async () =>
+                }
+                else
                 {
                     SaveHabitResponse response = await ServiceOfHabit.UpdateHabitAsync( dto );
                     await HandleHabitSaveAsync( response );
                     await Navigation.GoBackAsync();
-                    
+
                     if (dto.IsArchived)
                     {
-                        ReferenceMessenger.Send( new ArchiveHabitMessage( Habit ) );
+                        ReferenceMessenger.Send( new ArchiveHabitMessage( savedHabit, doShowAllArchivedHabits: true ) );
                     }
                     else
                     {
-                        ReferenceMessenger.Send( new HabitSavedMessage( Habit ) );
+                        ReferenceMessenger.Send( new HabitSavedMessage( savedHabit ) );
                     }
-                } );
+                }
+
+                isHabitSaved = true;
+            } );
+
+            if (isHabitSaved)
+            {
+                await TipService.ShowToastAsync( LocStrings.TheHabitSuccessfullySaved );
             }
         }
     }
@@ -116,7 +122,7 @@ public partial class EditHabitViewModel
                         }
                     ),
 
-                    new(LocStrings.AddItAnyway, () =>
+                    new(LocStrings.CreateItAnyway, () =>
                         {
                             result = true;
                             return Task.CompletedTask;
@@ -124,7 +130,7 @@ public partial class EditHabitViewModel
                     )
                 ];
 
-                viewModel.SetActions( availableActions, LocStrings.DescriptionOfCannotAddNewHabit );
+                viewModel.Configure( availableActions, LocStrings.DescriptionOfAdviceNotToWorkOnNewHabit, LocStrings.TitleOfAdviceNotToWorkOnNewHabit );
 
                 await Shell.Current.ShowPopupAsync( multipleActionPopup );
             }
@@ -175,11 +181,7 @@ public partial class EditHabitViewModel
     {
         Habit.IsArchived = true;
 
-        await Snackbar.Make( 
-            message: LocStrings.TheHabitWillBeArchivedAfterSaving, 
-            duration: TimeSpan.FromSeconds( 4 ),
-            visualOptions: SnackbarHelper.DefaultOptions() 
-        ).Show().DefaultConfigureAwait();
+        await TipService.ShowToastAsync( LocStrings.TheHabitWillBeArchivedAfterSaving ).DefaultConfigureAwait();
     }
 
     [RelayCommand]
@@ -187,11 +189,7 @@ public partial class EditHabitViewModel
     {
         Habit.IsArchived = false;
         
-        await Snackbar.Make(
-            message: LocStrings.TheHabitWillBeUnarchivedAfterSaving,
-            duration: TimeSpan.FromSeconds( 4 ),
-            visualOptions: SnackbarHelper.DefaultOptions() 
-        ).Show().DefaultConfigureAwait();
+        await TipService.ShowToastAsync( LocStrings.TheHabitWillBeUnarchivedAfterSaving ).DefaultConfigureAwait();
     }
     
     [RelayCommand]
@@ -218,7 +216,7 @@ public partial class EditHabitViewModel
                         }
                     }
                     
-                    await Navigation.GoBackAsync();
+                    await Navigation.GoToInitialViewAsync();
                     ReferenceMessenger.Send( new HabitsDeletedMessege( habit ) );
                     
                     ServiceOfHabit.StoredUserHabits!.Remove( habit );

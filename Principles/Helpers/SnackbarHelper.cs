@@ -31,7 +31,8 @@ public static class SnackbarHelper
         {
             ActionButtonTextColor = buttonTextColor,
             BackgroundColor = bgColor,
-            TextColor = textColor
+            TextColor = textColor,
+            CornerRadius = 8
         };
         return result;
     }

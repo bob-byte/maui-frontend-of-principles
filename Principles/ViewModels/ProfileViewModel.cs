@@ -30,11 +30,8 @@ public partial class ProfileViewModel : BaseViewModel
             UserName.Value = newValue;
 
             NotifyUserInfoChanged();
-
-            await Snackbar.Make(
-                LocStrings.YourNameSuccessfullySaved,
-                visualOptions: SnackbarHelper.DefaultOptions()
-            ).Show();
+            
+            await TipService.ShowToastAsync( LocStrings.YourNameSuccessfullySaved ).DefaultConfigureAwait();
         }
     }
 
@@ -67,7 +64,7 @@ public partial class ProfileViewModel : BaseViewModel
 
             NotifyUserInfoChanged();
 
-            await Snackbar.Make( LocStrings.YourMainSloganSuccessfullySaved, visualOptions: SnackbarHelper.DefaultOptions() ).Show();
+            await TipService.ShowToastAsync( LocStrings.YourMainSloganSuccessfullySaved ).DefaultConfigureAwait();
         }
     }
 
@@ -103,7 +100,7 @@ public partial class ProfileViewModel : BaseViewModel
 
             NotifyUserInfoChanged();
 
-            await Snackbar.Make( LocStrings.YourMissionSuccessfullySaved, visualOptions: SnackbarHelper.DefaultOptions() ).Show();
+            await TipService.ShowToastAsync( LocStrings.YourMissionSuccessfullySaved ).DefaultConfigureAwait();
         }
     }
 

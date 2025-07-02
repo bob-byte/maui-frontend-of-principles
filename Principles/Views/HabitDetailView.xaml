@@ -18,11 +18,6 @@
                    xmlns:vm="clr-namespace:Principles.ViewModels"
                    x:DataType="vm:HabitDetailViewModel"
                    Shell.TabBarIsVisible="False">
-    <v:ContentPageBase.Resources>
-        <ResourceDictionary>
-            <converters:ReminderTimeAndDaysToStringConverter x:Key="ReminderValueToString" />
-        </ResourceDictionary>
-    </v:ContentPageBase.Resources>
 
     <Shell.TitleView>
         <Grid x:Name="G_Title"
@@ -32,28 +27,27 @@
               VerticalOptions="Center">
             <Label x:Name="L_TitleText"
                    Text="{Binding Habit.Name}"
-                   HeightRequest="50"
                    FontAttributes="Bold"
                    FontSize="20"
+                   Grid.Column="0"
+                   HeightRequest="50"
                    HorizontalOptions="Start"
                    LineBreakMode="TailTruncation"
                    MaxLines="1"
                    TextColor="{StaticResource TitleTextColor}"
                    VerticalOptions="Center"
-                   VerticalTextAlignment="Center"
-                   Grid.Column="0" />
+                   VerticalTextAlignment="Center" />
 
             <dx:DXImage x:Name="DXI_ArchiveHabit"
-                        Source="archive"
-                        IsVisible="{Binding Habit.IsArchived,
-                                            Converter={StaticResource IsFalse}}"
-                        WidthRequest="35"
-                        HeightRequest="35"
+                        Source="archive_habit"
                         Margin="3,0,0,0"
+                        Grid.Column="1"
+                        HeightRequest="35"
                         HorizontalOptions="End"
+                        IsVisible="{Binding Habit.IsArchived, Converter={StaticResource IsFalse}}"
                         TintColor="{StaticResource TitleTextColor}"
                         VerticalOptions="Center"
-                        Grid.Column="1">
+                        WidthRequest="35">
                 <dx:DXImage.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding ArchiveHabitCommand}"
                                           NumberOfTapsRequired="1" />
@@ -61,14 +55,14 @@
             </dx:DXImage>
 
             <dx:DXImage x:Name="DXI_DeleteHabit"
-                        Source="delete"
-                        WidthRequest="40"
-                        HeightRequest="30"
+                        Source="delete_solid"
                         Margin="3,0,0,0"
+                        Grid.Column="2"
+                        HeightRequest="30"
                         HorizontalOptions="End"
                         TintColor="{StaticResource TitleTextColor}"
                         VerticalOptions="Center"
-                        Grid.Column="2">
+                        WidthRequest="40">
                 <dx:DXImage.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding DeleteHabitCommand}"
                                           NumberOfTapsRequired="1" />
@@ -81,12 +75,13 @@
         <ScrollView>
             <VerticalStackLayout>
                 <ScrollView Orientation="Horizontal"
-                            HorizontalScrollBarVisibility="Never">
-                    <dx:DXStackLayout Orientation="Horizontal"
-                                      Margin="5,15,5,0"
+                            HorizontalScrollBarVisibility="Never"
+                            HorizontalOptions="Center">
+                    <HorizontalStackLayout Margin="5,15,5,0"
                                       Padding="0"
                                       HorizontalOptions="Center"
-                                      ItemSpacing="5">
+                                      Spacing="5"
+                                      VerticalOptions="Center">
                         <Frame Padding="14,8"
                                BackgroundColor="{StaticResource LightPrimary}"
                                CornerRadius="{OnPlatform Android=24,
@@ -96,10 +91,10 @@
                             <HorizontalStackLayout Spacing="10"
                                                    VerticalOptions="Center">
                                 <dx:DXImage Source="scheduler"
-                                            WidthRequest="24"
                                             HeightRequest="24"
                                             TintColor="{StaticResource TitleTextColor}"
-                                            VerticalOptions="Center" />
+                                            VerticalOptions="Center"
+                                            WidthRequest="24" />
                                 <Label Text="{Binding FrequencyRepresentation}"
                                        FontAttributes="Bold"
                                        FontSize="14"
@@ -108,32 +103,32 @@
                             </HorizontalStackLayout>
                         </Frame>
 
-                        <Frame IsVisible="{Binding EditedReminder.IsEnabled}"
-                               Padding="14,8"
+                        <Frame Padding="14,8"
                                BackgroundColor="{StaticResource LightPrimary}"
                                CornerRadius="{OnPlatform Android=24,
                                                          iOS=17}"
                                HasShadow="False"
+                               IsVisible="{Binding EditedReminder.IsEnabled}"
                                VerticalOptions="Center">
                             <HorizontalStackLayout Spacing="10"
                                                    VerticalOptions="Center">
-                                <dx:DXImage Source="reminder_third"
-                                            WidthRequest="24"
+                                <dx:DXImage Source="clock"
                                             HeightRequest="24"
                                             TintColor="{StaticResource TitleTextColor}"
-                                            VerticalOptions="Center" />
-                                <Label Text="{Binding EditedReminder,
-                                                      Converter={StaticResource ReminderValueToString}}"
+                                            VerticalOptions="Center"
+                                            WidthRequest="24" />
+                                <Label Text="{Binding EditedReminder, Converter={StaticResource ReminderValueToString}}"
                                        FontAttributes="Bold"
                                        FontSize="14"
                                        TextColor="White"
                                        VerticalOptions="Center" />
                             </HorizontalStackLayout>
                         </Frame>
-                    </dx:DXStackLayout>
+                    </HorizontalStackLayout>
                 </ScrollView>
 
-                <VerticalStackLayout Padding="10">
+                <VerticalStackLayout Padding="10"
+                                     Spacing="5">
                     <Label Text="{Binding LocManager[OverallProgress]}"
                            FontAttributes="Bold"
                            FontSize="18" />
@@ -142,36 +137,55 @@
                            BorderColor="Gray"
                            CornerRadius="10">
                         <VerticalStackLayout Spacing="5">
-                            <Label Text="{Binding Habit.PercentageAchieved,
-                                                  Converter={StaticResource ProgressToInt32},
-                                                  StringFormat='{0}%'}"
+                            <Label Text="{Binding Habit.PercentageAchieved, Converter={StaticResource ProgressToInt32}, StringFormat='{0}%'}"
                                    FontAttributes="Bold"
                                    FontSize="22" />
 
-                            <ProgressBar HeightRequest="8"
-                                         BackgroundColor="LightGray"
+                            <ProgressBar BackgroundColor="LightGray"
+                                         HeightRequest="8"
                                          Progress="{Binding Habit.PercentageAchieved}"
                                          ProgressColor="{StaticResource Primary}" />
 
                             <Grid Padding="5"
                                   ColumnDefinitions="*,*">
-                                <HorizontalStackLayout HorizontalOptions="Start"
-                                                       Spacing="4"
-                                                       Grid.Column="0">
-                                    <Label Text="{Binding LocManager[CompletedDays]}"
-                                           FontSize="14" />
+                                <HorizontalStackLayout Grid.Column="0"
+                                                       HorizontalOptions="Start"
+                                                       Spacing="4">
+                                    <Label>
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding LocManager[NumberOfExecution]}"
+                                                      FontSize="12"
+                                                      FontAttributes="Bold" />
+                                                <Span Text=":"
+                                                      FontSize="12"
+                                                      FontAttributes="Bold" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
                                     <Label Text="{Binding CompletedDays}"
-                                           FontSize="14" />
+                                           FontSize="12"
+                                           FontAttributes="Bold" />
                                 </HorizontalStackLayout>
-                                <HorizontalStackLayout HorizontalOptions="End"
-                                                       Spacing="4"
-                                                       Grid.Column="1">
-                                    <Label Text="{Binding LocManager[LongestStreak]}"
-                                           FontSize="14" />
+                                <HorizontalStackLayout Grid.Column="1"
+                                                       HorizontalOptions="End"
+                                                       Spacing="4">
+                                    <Label>
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding LocManager[LongestStreak]}"
+                                                      FontSize="12"
+                                                      FontAttributes="Bold" />
+                                                <Span Text=":"
+                                                      FontSize="12"
+                                                      FontAttributes="Bold" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
                                     <Label Text="{Binding LongestStreak}"
-                                           FontSize="14" />
+                                           FontSize="12"
+                                           FontAttributes="Bold" />
                                 </HorizontalStackLayout>
-
                             </Grid>
                         </VerticalStackLayout>
                     </Frame>
@@ -182,7 +196,7 @@
                                      Spacing="10">
                     <HorizontalStackLayout Spacing="8"
                                            VerticalOptions="Center">
-                        <Label Text="{Binding LocManager[TopSevenStreaks]}"
+                        <Label Text="{Binding LocManager[TopFiveStreaks]}"
                                FontAttributes="Bold"
                                FontSize="18"
                                VerticalOptions="Center" />
@@ -208,8 +222,8 @@
                     </HorizontalStackLayout>
 
                     <lvc:CartesianChart x:Name="CC_Stability"
-                                        HeightRequest="300"
                                         Padding="0"
+                                        HeightRequest="300"
                                         Series="{Binding Series}"
                                         XAxes="{Binding XAxes}"
                                         YAxes="{Binding YAxes}" />
@@ -224,7 +238,8 @@
                                      Command="{Binding HabitByDayWeeksCommand}" />
                     </HorizontalStackLayout>
 
-                    <lvc:CartesianChart HeightRequest="300"
+                    <lvc:CartesianChart x:Name="CC_HabitByWeekDays"
+                                        HeightRequest="300"
                                         Series="{Binding HabitExecutionSeries}"
                                         XAxes="{Binding HabitExecutionXAxes}"
                                         YAxes="{Binding HabitExecutionYAxes}" />
@@ -245,6 +260,9 @@
                         <dxe:DXCalendar.HeaderAppearance>
                             <dxe:CalendarHeaderAppearance BackgroundColor="{StaticResource Primary}" />
                         </dxe:DXCalendar.HeaderAppearance>
+                        <dxe:DXCalendar.DayCellTemplate>
+                            <templates:CalendarCellTemplateSelector />
+                        </dxe:DXCalendar.DayCellTemplate>
                     </dxe:DXCalendar>
                 </VerticalStackLayout>
             </VerticalStackLayout>
@@ -254,21 +272,29 @@
                           HorizontalOptions="End"
                           VerticalOptions="End">
             <toolkit:Expander.Header>
-                <Frame WidthRequest="55"
-                       HeightRequest="55"
-                       Padding="0"
+                <Frame Padding="0"
                        BackgroundColor="{StaticResource Primary}"
                        CornerRadius="{OnPlatform Android=35,
                                                  iOS=25}"
-                       HasShadow="False">
+                       HeightRequest="55"
+                       WidthRequest="55">
+                    <Frame.Shadow>
+                        <Shadow Opacity="0.3"
+                                Radius="12"
+                                Offset="0,6">
+                            <Shadow.Brush>
+                                <Color>	#0066FF</Color>
+                            </Shadow.Brush>
+                        </Shadow>
+                    </Frame.Shadow>
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding EditHabitCommand}"
                                               NumberOfTapsRequired="1" />
                     </Frame.GestureRecognizers>
                     <dx:DXImage Source="edit"
-                                WidthRequest="30"
                                 HeightRequest="30"
-                                TintColor="White">
+                                TintColor="White"
+                                WidthRequest="30">
                         <dx:DXImage.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding EditHabitCommand}"
                                                   NumberOfTapsRequired="1" />

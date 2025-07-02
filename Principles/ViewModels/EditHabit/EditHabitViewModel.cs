@@ -48,6 +48,8 @@ public partial class EditHabitViewModel : BaseViewModel
     [ObservableProperty]
     private bool m_isRecommendedHabitsLoading;
     
+    private bool m_isInHabitDetails;
+    
     [ObservableProperty]
     private ObservableCollectionEx<PeriodOfHabit> m_periodsOfHabit;
     
@@ -131,9 +133,14 @@ public partial class EditHabitViewModel : BaseViewModel
         Habit = new UserHabit();
         InitValidations();
         
-        if (query.TryGetValue( "Id", out object? value ) && (long)value != 0)
+        if (query.TryGetValue( "Habit", out object? value ) && value is UserHabit habit)
         {
-            Habit.Id = (long)value;
+            Habit.MergeFrom( habit );
+            ServiceOfHabit.Recompute( Habit );
+            if (Habit.Goal is not null && Habit.Goal.Id == 0)
+            {
+                Habit.Goal = null;
+            }
 
             IsNewHabit = false;
         }
@@ -141,20 +148,20 @@ public partial class EditHabitViewModel : BaseViewModel
         {
             IsNewHabit = true;
         }
-
-        query.TryGetValue( "CanHasSubhabits", out object? canHasSubhabitsObj );
-        if(canHasSubhabitsObj is bool canHasSubhabits)
-        {
-            Habit.CanHasSubhabits = canHasSubhabits;
-        }
-        else
-        {
-            Habit.CanHasSubhabits = true;
-        }
         
         if (query.TryGetValue( "IsArchived", out object? isArchivedValue ) && isArchivedValue is bool archived)
         {
             Habit.IsArchived = archived;
+        }
+
+        if (query.TryGetValue( "IsInHabitDetails", out object? objIsInHabitDetails ) &&
+            objIsInHabitDetails is bool isInHabitDetails)
+        {
+            m_isInHabitDetails = isInHabitDetails;
+        }
+        else
+        {
+            m_isInHabitDetails = false;
         }
     }
 
@@ -188,10 +195,9 @@ public partial class EditHabitViewModel : BaseViewModel
         }
         else
         {
-            Habit = await ServiceOfHabit.UserHabitAsync( Habit.Id );
             if (Habit.Complexity < HabitConstants.MIN_HABIT_COMPLEXITY || HabitConstants.MAX_HABIT_COMPLEXITY < Habit.Complexity)
             {
-                Habit.Complexity = 5;
+                Habit.Complexity = HabitConstants.DEFAULT_HABIT_COMPLEXITY;
             }
             
             EditedReminder = new EditedUserHabitReminder();
@@ -300,6 +306,8 @@ public partial class EditHabitViewModel : BaseViewModel
         Habit.Goal ??= new UserGoal();
         await ReloadGoalsAsync();
 
+        NotifyPropertyChanged( nameof(Habit) );
+
         await base.InitializeAsync( parameter );
 
         IsLoadingHabitInfo = false;
@@ -355,11 +363,6 @@ public partial class EditHabitViewModel : BaseViewModel
         }
 
         return selectedDaysIndexes;
-    }
-
-    public void NotifyPropertyChanged( string propertyName )
-    {
-        OnPropertyChanged( propertyName );
     }
     
     public void ResetDaysOfWeek()

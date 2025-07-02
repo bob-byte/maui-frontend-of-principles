@@ -120,6 +120,10 @@ public partial class HelperViewModel : BaseViewModel
                         }
                         catch (TaskCanceledException) { }
                         catch (OperationCanceledException) { }
+                        #if ANDROID
+                        catch (Android.OS.NetworkOnMainThreadException) { }
+                        #endif
+                        
 
                         if (cancellationToken.IsCancellationRequested)
                         {

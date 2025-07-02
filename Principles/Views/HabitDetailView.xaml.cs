@@ -27,11 +27,12 @@ public partial class HabitDetailView : ContentPageBase
         m_deviceOrientationService = DependencyService.Get<ILockDeviceOrientation>();
 
         InitializeComponent();
-
-        DX_Calendar.DayCellTemplate = new CalendarCellTemplateSelector();
-
-        CC_Streaks.AnimationsSpeed = TimeSpan.FromSeconds( 2 );
-        CC_Stability.AnimationsSpeed = TimeSpan.FromSeconds( 2 );
+        
+        var animationSpeed = TimeSpan.FromSeconds( 1.5 );
+        
+        CC_Streaks.AnimationsSpeed = animationSpeed;
+        CC_Stability.AnimationsSpeed = animationSpeed;
+        CC_HabitByWeekDays.AnimationsSpeed = animationSpeed;
         
         viewModel.ReferenceMessenger.Register<MsgThatProgressOfHabitUpdated>( this, async ( _, _ ) =>
         {
@@ -39,9 +40,9 @@ public partial class HabitDetailView : ContentPageBase
             {
                 await MainThread.InvokeOnMainThreadAsync( DX_Calendar.Refresh );
             }
-            catch
+            catch(Exception ex)
             {
-                
+                viewModel.LoggingService.LogCriticalError( ex );
             }
         } );
     }
@@ -49,7 +50,6 @@ public partial class HabitDetailView : ContentPageBase
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        DX_Calendar.BindingContext = ViewModel.Habit.Progresses;
         
         m_deviceOrientationService.LockOrientation( DeviceOrientation.Portrait );
     }

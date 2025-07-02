@@ -15,8 +15,8 @@
 		<ApplicationId>com.set.principles</ApplicationId>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>3.0.0</ApplicationDisplayVersion>
-		<ApplicationVersion>43</ApplicationVersion>
+		<ApplicationDisplayVersion>3.0.8</ApplicationDisplayVersion>
+		<ApplicationVersion>51</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net9.0-android'">21.0</SupportedOSPlatformVersion>
@@ -69,8 +69,10 @@
 		<MauiImage Update="Resources\Images\reminder_first.svg" BaseSize="40, 40" />
 		<MauiImage Update="Resources\Images\reminder_second.svg" BaseSize="60, 60" />
 		<MauiImage Update="Resources\Images\reminder_third.svg" BaseSize="40, 40" />
-		<MauiImage Update="Resources\Images\edit.png" BaseSize="40, 40" />
-		<MauiImage Update="Resources\Images\delete.png" BaseSize="40, 40" />
+<!--		<MauiImage Update="Resources\Images\edit.png" BaseSize="40, 40" />-->
+<!--		<MauiImage Update="Resources\Images\delete.png" BaseSize="40, 40" />-->
+<!--		<MauiImage Update="Resources\Images\edit_solid.svg" BaseSize="40, 40" />-->
+<!--		<MauiImage Update="Resources\Images\delete_solid.svg" BaseSize="40, 40" />-->
 		<MauiImage Update="Resources\Images\logolargesize.png" BaseSize="200, 200" />
 		<MauiImage Update="Resources\Images\larger_help.png" BaseSize="40, 40" />
 		<MauiImage Include="Resources\Images\*jpg" BaseSize="23, 23" />
@@ -110,10 +112,10 @@
 		<PackageReference Include="CommunityToolkit.Maui.Markup" Version="4.0.0" />
 		<PackageReference Include="Polly.Extensions" Version="8.4.0" />
 		<PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="2.0.0" />
-		<PackageReference Include="DevExpress.Maui.CollectionView" Version="24.2.7" />
-		<PackageReference Include="DevExpress.Maui.Controls" Version="24.2.7" />
-		<PackageReference Include="DevExpress.Maui.DataGrid" Version="24.2.7" />
-		<PackageReference Include="DevExpress.Maui.Editors" Version="24.2.7" />
+		<PackageReference Include="DevExpress.Maui.CollectionView" Version="25.1.2-beta" />
+		<PackageReference Include="DevExpress.Maui.Controls" Version="25.1.2-beta" />
+		<PackageReference Include="DevExpress.Maui.DataGrid" Version="25.1.2-beta" />
+		<PackageReference Include="DevExpress.Maui.Editors" Version="25.1.2-beta" />
 		<PackageReference Include="Azure.AI.OpenAI" Version="2.1.0" />
 <!--		<PackageReference Include="System.Private.Uri" Version="4.3.2" />-->
 		<PackageReference Include="System.Text.Json" Version="8.0.5" />
@@ -154,8 +156,14 @@
 		<Compile Update="Views\Templates\DefaultActivityIndicator.xaml.cs">
 			<DependentUpon>DefaultActivityIndicator.xaml</DependentUpon>
 		</Compile>
-		<Compile Update="Views\Templates\BaseTemplateView.xaml.cs">
-			<DependentUpon>BaseTemplateView.xaml</DependentUpon>
+		<Compile Update="Views\Templates\NonYesCellTemplate.xaml.cs">
+			<DependentUpon>NonYesCellTemplate.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Templates\YesAutoCellTemplate.xaml.cs">
+			<DependentUpon>YesAutoCellTemplate.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Templates\YesManualCellTemplate.xaml.cs">
+			<DependentUpon>YesManualCellTemplate.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Platforms\iOS\LocStrings.Designer.cs">
 			<ExcludeFromCurrentConfiguration>true</ExcludeFromCurrentConfiguration>
@@ -212,6 +220,15 @@
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\Templates\BaseTemplateView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Templates\NonYesCellTemplate.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Templates\YesAutoCellTemplate.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Templates\YesManualCellTemplate.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\UpdatePopup.xaml">

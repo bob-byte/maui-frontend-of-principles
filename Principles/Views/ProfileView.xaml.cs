@@ -19,6 +19,7 @@ public partial class ProfileView : ContentPageBase
         ME_PromptResult.Text = ViewModel.UserName.Value;
         ME_PromptResult.HeightRequest = -1;
         ME_PromptResult.MaxLineCount = 1;
+        ME_PromptResult.ReturnType = ReturnType.Done;
         ME_PromptResult.IsEndIconVisible = false;
         TE_UserName.Unfocus();
 
@@ -39,6 +40,7 @@ public partial class ProfileView : ContentPageBase
         ME_PromptResult.HeightRequest = 140;
         ME_PromptResult.MaximumHeightRequest = 140;
         ME_PromptResult.MaxLineCount = 5;
+        ME_PromptResult.ReturnType = ReturnType.Default;
         ME_PromptResult.IsEndIconVisible = true;
         ME_MainSlogan.Unfocus();
 
@@ -59,6 +61,7 @@ public partial class ProfileView : ContentPageBase
         ME_PromptResult.HeightRequest = 170;
         ME_PromptResult.MaximumHeightRequest = 300;
         ME_PromptResult.MaxLineCount = 7;
+        ME_PromptResult.ReturnType = ReturnType.Default;
         ME_PromptResult.IsEndIconVisible = true;
         ME_Mision.Unfocus();
 

@@ -34,17 +34,16 @@ public static class MauiProgram
 
         builder
             .UseMauiApp<App>()
-            .UseDevExpress( useLocalization: false ) //register handlers for all DevExpress controls
+            .UseSkiaSharp()
+            .UseLiveCharts()
             .UseDevExpressControls()
             .UseDevExpressEditors()
             .UseDevExpressCollectionView()
             .UseDevExpressDataGrid()
-            .UseSkiaSharp()
-            .UseLiveCharts()
+            .UseDevExpress( useLocalization: false ) //register handlers for all DevExpress controls
             .UseLocalNotification()
             .UseMauiCommunityToolkit()
             .UseMauiCommunityToolkitMarkup()
-            .UseSkiaSharp()
             .ConfigureEssentials(essentials =>
             {
                 essentials.UseVersionTracking();

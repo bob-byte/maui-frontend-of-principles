@@ -74,6 +74,15 @@ public partial class HabitDetailViewModel : BaseViewModel
         m_lockerOfHabitProgressUpdate = new SemaphoreSlim( initialCount: 1, maxCount: 1 );
 
         InitPeriodsOfHabit();
+        
+        ReferenceMessenger.Register<HabitSavedMessage>( this, async ( _, message ) =>
+        {
+            UserHabit savedHabit = message.Value;
+            if (savedHabit.Id != 0 && Habit?.Id == savedHabit.Id)
+            {
+                await InitializeAsync();
+            }
+        } );
     }
 
     public ISeries[] Series { get; set; }
@@ -202,7 +211,7 @@ public partial class HabitDetailViewModel : BaseViewModel
                 MinLimit = -0.5,
                 MaxLimit = 6.5,
                 LabelsRotation = 0,
-                TextSize = 12,
+                TextSize = 10,
                 Labels = dayNames
             }
         };
@@ -211,7 +220,7 @@ public partial class HabitDetailViewModel : BaseViewModel
         {
             new Axis
             {
-                Name = LocStrings.DaysCount,
+                Name = LocStrings.NumberOfExecution,
                 NameTextSize = 14,
                 MinLimit = 0,
                 TextSize = 12
@@ -234,20 +243,31 @@ public partial class HabitDetailViewModel : BaseViewModel
         {
             await DialogService.ShowErrorAsync( LocStrings.YouCannotCompleteHabitInTheFuture );
         }
-        else if (Habit.Progresses![^1].Date > date)
-        {
-            await DialogService.ShowErrorAsync( LocStrings.HabitWasntCreatedBeforeThisDay );
-        }
-        else if (progressOfHabit is null)
-        {
-            LoggingService.LogError( "Progress of habit should exist but it was not created" );
-            await DialogService.ShowErrorAsync( LocStrings.SomethingWentWrong );
-        }
         else
         {
-            int previousValueOfProgress = progressOfHabit.Value;
-            progressOfHabit.Value = ProgressValue.NextToggled( progressOfHabit.Value );
-            progressOfHabit.Habit = Habit;
+            int previousValueOfProgress;
+
+            if (progressOfHabit is null)
+            {
+                previousValueOfProgress = ProgressValue.NO;
+                
+                progressOfHabit = new ProgressOfHabit
+                {
+                    Date = date,
+                    Habit = Habit,
+                    Value = ProgressValue.YES_MANUAL
+                };
+                Habit.Progresses!.Add( progressOfHabit );
+                Habit.Progresses =
+                    new ObservableCollectionEx<ProgressOfHabit>( Habit.Progresses.OrderByDescending( p => p.Date ) );
+            }
+            else
+            {
+                previousValueOfProgress = progressOfHabit.Value;
+                progressOfHabit.Value = ProgressValue.NextToggled( progressOfHabit.Value );
+                
+                progressOfHabit.Habit = Habit;
+            }
 
             await m_lockerOfHabitProgressUpdate.WaitAsync();
 
@@ -280,7 +300,21 @@ public partial class HabitDetailViewModel : BaseViewModel
                     if (!doTryAgain)
                     {
                         progressOfHabit.Value = previousValueOfProgress;
-                        ServiceOfHabit.Recompute( Habit );
+                        
+                        await m_lockerOfHabitProgressUpdate.WaitAsync();
+
+                        try
+                        {
+                            ServiceOfHabit.Recompute( Habit );
+
+                            ReferenceMessenger.Send( new MsgThatProgressOfHabitUpdated( progressOfHabit ) );
+
+                            SetCharts();
+                        }
+                        finally
+                        {
+                            m_lockerOfHabitProgressUpdate.Release();
+                        }
 
                         ReferenceMessenger.Send( new MsgThatProgressOfHabitUpdated( progressOfHabit ) );
                     }
@@ -300,10 +334,9 @@ public partial class HabitDetailViewModel : BaseViewModel
 
     private void LoadProgressChartData()
     {
-
         ScoreList? scoreList = Habit.ScoreList;
-
-        if (scoreList is null || !scoreList.GetAll().Any())
+        
+        if (Habit.Progresses!.Count(p => p.Value == ProgressValue.YES_MANUAL) < 2)
         {
             Series = new ISeries[]
             {
@@ -323,7 +356,12 @@ public partial class HabitDetailViewModel : BaseViewModel
                 new Axis
                 {
                     IsVisible = true,
-                    Labeler = v => DateTime.FromOADate(v).ToString("dd.MM"),
+                    Labeler = v =>
+                    {
+                        var dateTime = DateTime.FromOADate( v );
+                        string result = $"{dateTime.Day} {TranslateMonth( dateTime.Month )}";
+                        return result;
+                    },
                     LabelsRotation = 55,
                     TextSize = 10,
                 }
@@ -394,28 +432,48 @@ public partial class HabitDetailViewModel : BaseViewModel
 
         List<double?> xLabelsPositions = events.Select( e => (double?)e.point.X ).ToList();
 
-        DateTime minDate = ordered[0].Date.ToDateTime( TimeOnly.MinValue );
-        DateTime maxDate = ordered[ordered.Count - 1].Date.ToDateTime( TimeOnly.MinValue );
-
-        // Кількість бажаних дат + 1 (6 дат = 6 + 1)
-        int segmentCount = 7;
+        List<ProgressOfHabit> progresses = Habit.ComputedProgresses.GetKnown().ToList();
+        ProgressOfHabit? firstExecuted = progresses.LastOrDefault(p => p.Value == ProgressValue.YES_MANUAL);
+        DateTime minDate = firstExecuted is null 
+            ? DateTime.Today.Subtract( TimeSpan.FromDays( 1 ) ) 
+            : firstExecuted.Date.ToDateTime( TimeOnly.MinValue );
+        
+        DateTime maxDate = progresses[0].Date.ToDateTime( TimeOnly.MinValue );
 
         TimeSpan totalRange = maxDate - minDate;
-        TimeSpan segment = TimeSpan.FromTicks( totalRange.Ticks / segmentCount );
 
         List<double> customSeparators = new();
 
-        for (int i = 0; i <= segmentCount; i++)
+        if (totalRange > TimeSpan.FromDays( 16 ))
         {
-            DateTime labelDate = minDate.AddTicks( segment.Ticks * i );
-            customSeparators.Add( labelDate.ToOADate() );
+            // Кількість бажаних дат + 1 (4 дат = 4 + 1)
+            int segmentCount = 4;
+            TimeSpan segment = TimeSpan.FromTicks( totalRange.Ticks / segmentCount );
+            
+            for (int i = 0; i < segmentCount; i++)
+            {
+                DateTime labelDate = minDate.AddTicks( segment.Ticks * i );
+                customSeparators.Add( labelDate.ToOADate() );
+            }
         }
+        else
+        {
+            customSeparators.Add( minDate.ToOADate() );
+        }
+        
+        customSeparators.Add( maxDate.ToOADate() );
+        
         XAxes = new[]
         {
             new Axis
             {
                 IsVisible = true,
-                Labeler = v => DateTime.FromOADate(v).ToString("dd.MM"),
+                Labeler = v =>
+                {
+                    var dateTime = DateTime.FromOADate( v );
+                    string result = $"{dateTime.Day} {TranslateMonth( dateTime.Month )}";
+                    return result;
+                },
                 LabelsRotation = 45,
                 TextSize = 10,
                 CustomSeparators = customSeparators
@@ -442,22 +500,14 @@ public partial class HabitDetailViewModel : BaseViewModel
     public void CalculateStreaks()
     {
         UserHabit? storedHabit = Habit;
-
-        if (storedHabit?.ComputedProgresses == null || storedHabit.ComputedProgresses.GetKnown().Count() == 0)
-        {
-            CompletedDays = 0;
-            LongestStreak = 0;
-            Streaks.Clear();
-            return;
-        }
         
-        List<DateOnly> completedDates = storedHabit.ComputedProgresses.GetKnown()
-            .Where( p => p.Value == ProgressValue.YES_MANUAL)
-            .Select( p => p.Date )
-            .OrderBy( d => d )
+        List<ProgressOfHabit> completedDates = storedHabit.ComputedProgresses.GetKnown()
+            .Where( p => p.Value is ProgressValue.YES_MANUAL or ProgressValue.YES_AUTO)
+            .OrderBy( d => d.Date )
             .ToList();
 
-        CompletedDays = completedDates.Count;
+        CompletedDays = completedDates.Count( p => p.Value is ProgressValue.YES_MANUAL );
+        
         Streaks.Clear();
 
         List<StreakData> streakList = new();
@@ -466,16 +516,19 @@ public partial class HabitDetailViewModel : BaseViewModel
         DateOnly? prevDate = null;
         DateOnly? streakStartDate = null;
 
-        foreach (DateOnly date in completedDates)
+        foreach (ProgressOfHabit progress in completedDates)
         {
-            if (prevDate == null || date == prevDate.Value.AddDays( 1 ))
+            if (prevDate == null || progress.Date == prevDate.Value.AddDays( 1 ))
             {
                 if (currentStreak == 0)
                 {
-                    streakStartDate = date;
+                    streakStartDate = progress.Date;
                 }
 
-                currentStreak++;
+                if (progress.Value == ProgressValue.YES_MANUAL)
+                {
+                    currentStreak++;
+                }
             }
             else
             {
@@ -489,12 +542,12 @@ public partial class HabitDetailViewModel : BaseViewModel
                     } );
                 }
 
-                streakStartDate = date;
+                streakStartDate = progress.Date;
                 currentStreak = 1;
             }
 
             longestStreak = Math.Max( longestStreak, currentStreak );
-            prevDate = date;
+            prevDate = progress.Date;
         }
 
         if (currentStreak >= 3 && streakStartDate.HasValue && prevDate.HasValue)
@@ -510,10 +563,10 @@ public partial class HabitDetailViewModel : BaseViewModel
         List<StreakData> topStreaks = streakList
             .OrderByDescending( s => s.StreakDays )
             .ThenByDescending( s => s.StartDate )
-            .Take( 7 )
+            .Take( 5 )
             .ToList();
 
-        while (topStreaks.Count < 7)
+        while (topStreaks.Count < 5)
         {
             topStreaks.Add( new StreakData
             {
@@ -539,19 +592,40 @@ public partial class HabitDetailViewModel : BaseViewModel
         LoadStreaksChartData();
     }
 
+    private string TranslateMonth( int month )
+    {
+        string result = month switch
+        {
+            1 => LocStrings.JanuaryShort,
+            2 => LocStrings.FebruaryShort,
+            3 => LocStrings.MarchShort,
+            4 => LocStrings.AprilShort,
+            5 => LocStrings.MayShort,
+            6 => LocStrings.JuneShort,
+            7 => LocStrings.JulyShort,
+            8 => LocStrings.AugustShort,
+            9 => LocStrings.SeptemberShort,
+            10 => LocStrings.OctoberShort,
+            11 => LocStrings.NovemberShort,
+            _ => LocStrings.DecemberShort,
+        };
+        
+        return result;
+    }
+
     private void LoadStreaksChartData()
     {
         List<int> values = Streaks.Select( s => s.StreakDays ).ToList();
         List<string> labels = Streaks
             .Select( s => s.StreakDays > 0 && s.StartDate != DateOnly.MinValue
-                ? $"{s.StartDate:dd.MM.yy}–{s.EndDate:dd.MM.yy}"
+                ? $"{s.StartDate.Day} {TranslateMonth( s.StartDate.Month )} - {s.EndDate.Day} {TranslateMonth( s.EndDate.Month )} {s.EndDate.ToString("yy")}"
                 : string.Empty )
             .ToList();
 
         List<double> separators = Enumerable.Range( 0, labels.Count ).Select( i => (double)i ).ToList();
 
-        StreakSeries = new ISeries[]
-        {
+        StreakSeries =
+        [
             new ColumnSeries<int>
             {
                 Values = values,
@@ -563,16 +637,16 @@ public partial class HabitDetailViewModel : BaseViewModel
                 IsHoverable = false,
                 IsVisible = true
             }
-        };
+        ];
 
-        StreakXAxes = new Axis[]
-        {
+        StreakXAxes =
+        [
             new Axis
             {
                 IsVisible = true,
                 MinLimit = -0.5,
                 MaxLimit = values.Count - 0.5,
-                LabelsRotation = 35,
+                LabelsRotation = 35,//was 35
                 TextSize = 10,
                 Labeler = v =>
                 {
@@ -581,20 +655,27 @@ public partial class HabitDetailViewModel : BaseViewModel
                         ? labels[idx]
                         : string.Empty;
                 },
+                // LabelsDensity = 100,
+                LabelsAlignment = Align.Start,
                 CustomSeparators = separators
             }
-        };
+        ];
 
-        StreakYAxes = new Axis[]
-        {
+        StreakYAxes =
+        [
             new Axis
             {
-                Name = LocStrings.DaysCount,
+                Name = LocStrings.NumberOfExecution,
                 NameTextSize = 14,
                 MinLimit = 0,
                 TextSize = 12
             }
-        };
+        ];
+
+        if (values.All( v => v == 0 ))
+        {
+            StreakYAxes[0].MaxLimit = 30;
+        }
     }
 
 
@@ -696,8 +777,10 @@ public partial class HabitDetailViewModel : BaseViewModel
     {
         Dictionary<string, object> routeParams = new()
         {
-            { "Id", Habit.Id },
+            { "Habit", Habit },
+            { "IsInHabitDetails", true }
         };
+        
         await Navigation.NavigateToAsync<EditHabitViewModel>( routeParams );
     }
 
@@ -711,20 +794,14 @@ public partial class HabitDetailViewModel : BaseViewModel
             [
                 new(
                     LocStrings.RemoveFromArchive,
-                    async () =>
-                    {
-                        await RemoveHabitFromArchiveAsync();
-                    }
+                    RemoveHabitFromArchiveAsync
                 ),
                 new(
                     LocStrings.DeleteTheHabit,
-                    async () =>
-                    {
-                        await DeleteHabitFromServerAsync();
-                    }
+                    DeleteHabitFromServerAsync
                 )
             ];
-            popupViewModel.SetActions( availableActions, LocStrings.DeleteArchivedHabitConfirmationText );
+            popupViewModel.Configure( availableActions, LocStrings.DeleteArchivedHabitConfirmationText );
 
             MultipleActionPopup popup = new( popupViewModel );
             await Shell.Current.ShowPopupAsync( popup );
@@ -802,7 +879,7 @@ public partial class HabitDetailViewModel : BaseViewModel
                 
                 if (Habit.IsArchived)
                 {
-                    ReferenceMessenger.Send( new ArchiveHabitMessage( Habit ) );
+                    ReferenceMessenger.Send( new ArchiveHabitMessage( Habit, doShowAllArchivedHabits: false ) );
                 }
                 else
                 {
@@ -812,11 +889,27 @@ public partial class HabitDetailViewModel : BaseViewModel
         }
     }
 
+    public override async Task OnDisappearingAsync( object? parameter = null )
+    {
+        await base.OnDisappearingAsync(parameter);
+
+        Streaks = new ObservableCollection<StreakData>();
+        Series = [];
+        XAxes = [];
+        YAxes = [];
+        StreakSeries = [];
+        StreakXAxes = [];
+        StreakYAxes = [];
+        HabitExecutionSeries = [];
+        HabitExecutionXAxes = [];
+        HabitExecutionYAxes = [];
+    }
+
     [RelayCommand]
     private async Task ShowStreakTipAsync()
     {
         await TipService.ShowSnackbarAsync(
-            LocStrings.TopSevenStreaksExplanation,
+            LocStrings.TopFiveStreaksExplanation,
             duration: TimeSpan.FromSeconds( 10 )
         );
     }

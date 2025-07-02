@@ -21,8 +21,8 @@
                                  MaximumWidthRequest="500"
                                  VerticalOptions="Center">
                 <Image Source="logolargesize"
-                       WidthRequest="200"
-                       HeightRequest="200" />
+                       WidthRequest="180"
+                       HeightRequest="180" />
                 <Label Text="{Binding AppName}"
                        FontFamily="CambriaBold"
                        FontSize="40"
@@ -67,7 +67,7 @@
                                    Text="{Binding LocManager[Logout]}"
                                    Command="{Binding LogoutCommand}"
                                    Style="{StaticResource SecondaryButton}"
-                                   Margin="0,15,0,0" />
+                                   Margin="0,15,0,10" />
 
                 <dxco:BottomSheet x:Name="BS_ChangeLanguage"
                                   AllowDismiss="True"

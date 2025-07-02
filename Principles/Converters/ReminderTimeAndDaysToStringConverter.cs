@@ -8,13 +8,7 @@ namespace Principles.Converters;
 public class ReminderTimeAndDaysToStringConverter : BaseConverterOneWay<EditedUserHabitReminder, string>
 {
     public override string DefaultConvertReturnValue { get; set; } = string.Empty;
-
-    private static readonly string[] DaysOfWeekNames =
-    {
-        LocStrings.Sunday, LocStrings.Monday, LocStrings.Tuesday, LocStrings.Wednesday,
-        LocStrings.Thursday, LocStrings.Friday, LocStrings.Saturday
-    };
-
+    
     public override string ConvertFrom( EditedUserHabitReminder reminder, CultureInfo? culture )
     {
         if (reminder == null || reminder.DaysOfWeek == null || reminder.DaysOfWeek.Count == 0)
@@ -29,6 +23,12 @@ public class ReminderTimeAndDaysToStringConverter : BaseConverterOneWay<EditedUs
 
         if (sortedDays.Count == 7)
             return $"{timeStr} {LocStrings.EveryDay}";
+        
+        string[] daysOfWeekNames =
+        [
+            LocStrings.Sunday, LocStrings.Monday, LocStrings.Tuesday, LocStrings.Wednesday,
+            LocStrings.Thursday, LocStrings.Friday, LocStrings.Saturday
+        ];
 
         List<string> periodStrings = new List<string>();
         int i = 0;
@@ -45,11 +45,11 @@ public class ReminderTimeAndDaysToStringConverter : BaseConverterOneWay<EditedUs
 
             if (startIndex == endIndex)
             {
-                periodStrings.Add( DaysOfWeekNames[sortedDays[startIndex].Original] );
+                periodStrings.Add( daysOfWeekNames[sortedDays[startIndex].Original] );
             }
             else
             {
-                periodStrings.Add( $"{DaysOfWeekNames[sortedDays[startIndex].Original]}-{DaysOfWeekNames[sortedDays[endIndex].Original]}" );
+                periodStrings.Add( $"{daysOfWeekNames[sortedDays[startIndex].Original]}-{daysOfWeekNames[sortedDays[endIndex].Original]}" );
             }
 
             i = endIndex + 1;

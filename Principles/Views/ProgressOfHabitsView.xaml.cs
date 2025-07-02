@@ -55,8 +55,13 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
     private void UpdateLocalizedStrings()
     {
-        DGV_Habits.Columns.Clear();
+        RebuildViewOfActiveHabits();
+    }
 
+    private void RebuildViewOfActiveHabits()
+    {
+        DGV_Habits.Columns.Clear();
+        
         AddGroupingColumn();
         AddFirstCol();
         AddColumns();
@@ -65,6 +70,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
         SwipeItemInitialize();
 #endif
     }
+    
     ~ProgressOfHabitsView()
     {
 #if IOS
@@ -227,18 +233,18 @@ public partial class ProgressOfHabitsView : ContentPageBase
     {
         TextColumn goalColumn = new()
         {
-            FieldName = "Goal.Name",
+            FieldName = "Goal",
             IsGrouped = true,
             SortMode = DataSortMode.Custom,
-            GroupInterval = DataGroupInterval.DisplayText,
+            GroupInterval = DataGroupInterval.Value,
             GroupCaptionTemplate = new DataTemplate( () =>
             {
                 Label label = new()
                 {
                     FontSize = 15,
-                    TextColor = Colors.Black
+                    TextColor = (Application.Current!.Resources["LightNormalText"] as Color)!,
                 };
-                label.SetBinding( Label.TextProperty, new Binding( path: "GroupValueText" ) );
+                label.SetBinding( Label.TextProperty, new Binding( path: "GroupValue.Name" ) );
                 return label;
             } )
         };
@@ -313,29 +319,30 @@ public partial class ProgressOfHabitsView : ContentPageBase
     private void SwipeItemInitialize() 
     {
         LocalizationResourceManager.Initialize( ViewModel.SettingsService );
-        SwipeItem swipeForDeletion = new()
-        {
-            BackgroundColor = Application.Current!.Resources["RedColor"] as Color,
-            Caption = (string)LocalizationResourceManager.Instance["Delete"]
-        };
-        swipeForDeletion.SetBinding( SwipeItem.CommandProperty, new Binding( nameof( ProgressOfHabitsViewModel.DeleteHabitCommand ) ) );
-        DGV_Habits.StartSwipeItems.Add( swipeForDeletion );
 
-        SwipeItem editOnSwipe = new()
+        GridSwipeItem editOnSwipe = new()
         {
             BackgroundColor = Application.Current!.Resources["Primary"] as Color,
-            Caption = LocStrings.Edit
+            Image = ImageSource.FromFile( "edit_solid" )
         };
-        editOnSwipe.SetBinding( SwipeItem.CommandProperty, new Binding( nameof( ProgressOfHabitsViewModel.EditHabitCommand ) ) );
+        editOnSwipe.SetBinding( GridSwipeItem.CommandProperty, new Binding( nameof( ProgressOfHabitsViewModel.EditHabitCommand ) ) );
         DGV_Habits.StartSwipeItems.Add( editOnSwipe );
 
-        SwipeItem archiveOnSwipe = new()
+        GridSwipeItem archiveOnSwipe = new()
         {
-            BackgroundColor = Application.Current!.Resources["NormalHeaderText"] as Color,
-            Caption = LocStrings.AddToArchive
+            BackgroundColor = Application.Current!.Resources["LightPrimary"] as Color,
+            Image = ImageSource.FromFile( "archive_habit" )
         }; 
-        archiveOnSwipe.SetBinding( SwipeItem.CommandProperty, new Binding( nameof( ProgressOfHabitsViewModel.ArchiveHabitCommand ) ) );
+        archiveOnSwipe.SetBinding( GridSwipeItem.CommandProperty, new Binding( nameof( ProgressOfHabitsViewModel.ArchiveHabitCommand ) ) );
         DGV_Habits.StartSwipeItems.Add( archiveOnSwipe );
+        
+        GridSwipeItem swipeForDeletion = new()
+        {
+            BackgroundColor = Application.Current!.Resources["RedColor"] as Color,
+            Image = ImageSource.FromFile( "delete_solid" )
+        };
+        swipeForDeletion.SetBinding( GridSwipeItem.CommandProperty, new Binding( nameof( ProgressOfHabitsViewModel.DeleteHabitCommand ) ) );
+        DGV_Habits.StartSwipeItems.Add( swipeForDeletion );
     }
 #endif
 
@@ -355,11 +362,30 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
     private void DGV_Habits_SortByGoalName( object sender, CustomSortEventArgs e )
     {
-        if (e.Column.FieldName == "Goal.Name")
+        if (e.Column.FieldName == "Goal")
         {
-            string goalNameToCompare = e.Value1 as string;
+            var goal1 = e.Value1 as UserGoal;
+            var goal2 = e.Value2 as UserGoal;
 
-            e.Result = goalNameToCompare == LocStrings.NoGoalSpecified ? 1 : 0;
+            bool isFirstNoGoal = goal1?.Name == LocStrings.NoGoalSpecified;
+            bool isSecondNoGoal = goal2?.Name == LocStrings.NoGoalSpecified;
+
+            if (isFirstNoGoal && !isSecondNoGoal)
+            {
+                e.Result = -1; // NoGoalSpecified comes first
+            }
+            else if (!isFirstNoGoal && isSecondNoGoal)
+            {
+                e.Result = 1; // NoGoalSpecified comes first
+            }
+            else
+            {
+                e.Result = goal1?.Id.CompareTo( goal2?.Id );
+            }
+        }
+        else
+        {
+            
         }
     }
 
@@ -400,8 +426,16 @@ public partial class ProgressOfHabitsView : ContentPageBase
     }
 
     private async void DXI_Archive_Tapped( object sender, TappedEventArgs e )
-    {     
-        await ShowArchivedHabitsAsync();
+    {
+        if (ViewModel.SelectedHabit is null && ViewModel.GetArchivedHabitsCommand.CanExecute( null ))
+        {
+            await ShowArchivedHabitsAsync();
+        }
+        else if (ViewModel.SelectedHabit is not null &&
+                 ViewModel.ArchiveHabitCommand.CanExecute( ViewModel.SelectedHabit ))
+        {
+            await ViewModel.ArchiveHabitCommand.ExecuteAsync( ViewModel.SelectedHabit );
+        }
     }
 
     private async Task ShowArchivedHabitsAsync()
@@ -439,6 +473,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
             
             await ViewModel.GetArchivedHabitsCommand.ExecuteAsync( null );
         }
+        
     }
 
     private void ME_ArchivedHabitEndIconClicked( object sender, EventArgs e )

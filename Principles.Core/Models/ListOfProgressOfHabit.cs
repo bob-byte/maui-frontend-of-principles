@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace Principles.Core.Models
 {
-    public class ListOfProgressOfHabit : INotifyCollectionChanged
+    public class ListOfProgressOfHabit : INotifyCollectionChanged, ICloneable
     {
-        private readonly Dictionary<DateOnly, ProgressOfHabit> m_progresses;
+        private Dictionary<DateOnly, ProgressOfHabit> m_progresses;
         private readonly TimeOnly m_zeroTime;
 
         public event NotifyCollectionChangedEventHandler? CollectionChanged;
@@ -24,7 +24,7 @@ namespace Principles.Core.Models
         public DateOnly? StartInterval { get; set; }
         public DateOnly? EndInterval { get; set; }
 
-        public ProgressOfHabit Get( DateOnly date )
+        public ProgressOfHabit Get( DateOnly date, int defaultValue = ProgressValue.UNKNOWN )
         {
             m_progresses.TryGetValue( date, out ProgressOfHabit? result );
             if (result is null)
@@ -33,7 +33,7 @@ namespace Principles.Core.Models
                 {
                     Date = date,
                     Habit = Habit,
-                    Value = ProgressValue.UNKNOWN
+                    Value = defaultValue
                 };
             }
 
@@ -46,7 +46,7 @@ namespace Principles.Core.Models
             //CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.))
         }
 
-        public List<ProgressOfHabit> GetByInterval( DateOnly from, DateOnly to )
+        public List<ProgressOfHabit> GetByInterval( DateOnly from, DateOnly to, int defaultValue = ProgressValue.UNKNOWN )
         {
             List<ProgressOfHabit> result = new();
             if(from <= to)
@@ -54,7 +54,7 @@ namespace Principles.Core.Models
                 DateOnly current = to;
                 while(current >= from)
                 {
-                    result.Add( Get( current ) );
+                    result.Add( Get( current, defaultValue ) );
                     current = current.AddDays( -1 );
                 }
             }
@@ -252,6 +252,15 @@ namespace Principles.Core.Models
                 }
             }
 
+            return result;
+        }
+
+        public object Clone()
+        {
+            ListOfProgressOfHabit result = new(Habit);
+            result.m_progresses = new Dictionary<DateOnly, ProgressOfHabit>( m_progresses );
+            result.StartInterval = StartInterval;
+            result.EndInterval = EndInterval;
             return result;
         }
     }

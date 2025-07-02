@@ -9,7 +9,6 @@ public interface IServiceOfHabit
     Task<SaveHabitResponse> UpdateHabitAsync( EditUserHabitDto habit );
     Task SetHabitArchiveStatusAsync( HabitArchiveStatus habitArchiveStatus );
     Task<List<ArсhivedHabitDto>> GetArchivedHabits();
-    Task<List<ProgressOfHabit>> GetProgressesOfHabitAsync( long id );
     void InitializeHabitProgresses( UserHabit habit, DateOnly startInterval, DateOnly endInterval );
     Task UpdatePrioritiesAsync( IEnumerable<UserHabitWithPriority> habitsWithPriorities );
     bool IsItRecommendedToCreateNewHabit( UserHabit newHabit );
@@ -19,4 +18,6 @@ public interface IServiceOfHabit
     double RecomputedScoreAchieved( UserHabit habit, DateOnly from, DateOnly to );
 
     bool ShouldHabitBeFollowed( ProgressOfHabit progress, UserHabit habit );
+
+    int GetDaysUntilFullAutomation( UserHabit habit );
 }

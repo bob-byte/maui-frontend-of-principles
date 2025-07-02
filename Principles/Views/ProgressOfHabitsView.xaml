@@ -21,82 +21,94 @@
                    IconImageSource="fire_third.svg"
                    Shell.NavBarIsVisible="True">
     <Shell.TitleView>
-        <Grid Margin="0,0,5,0"
-              ColumnDefinitions="Auto, 0, Auto, *, Auto, Auto"
+        <Grid Margin="0,0,10,0"
+              ColumnDefinitions="Auto, Auto, *, Auto, Auto, Auto"
               VerticalOptions="CenterAndExpand">
             <dx:DXImage Source="fire_seventh"
-                        WidthRequest="35"
+                        Grid.Column="0"
                         HeightRequest="35"
                         TintColor="{StaticResource DarkIconColor}"
-                        Grid.Column="0" />
+                        WidthRequest="35" />
             <Label x:Name="L_MyHabits"
                    Text="{Binding LocManager[MyHabits]}"
-                   HeightRequest="50"
                    FontAttributes="Bold"
                    FontSize="20"
+                   Grid.Column="1"
+                   HeightRequest="50"
                    HorizontalOptions="Start"
                    TextColor="{StaticResource TitleTextColor}"
                    VerticalOptions="Center"
-                   VerticalTextAlignment="Center"
-                   Grid.Column="2" />
+                   VerticalTextAlignment="Center" />
 
             <dx:DXImage Source="reminder_third"
-                        IsVisible="{Binding SelectedHabit,
-                                            Converter={StaticResource IsNull}}"
-                        WidthRequest="45"
+                        Grid.Column="3"
                         HeightRequest="45"
                         HorizontalOptions="End"
+                        IsVisible="{Binding SelectedHabit, Converter={StaticResource IsNull}}"
                         TintColor="{StaticResource TitleTextColor}"
                         VerticalOptions="Center"
-                        Grid.Column="4">
+                        WidthRequest="45">
                 <dx:DXImage.GestureRecognizers>
                     <TapGestureRecognizer NumberOfTapsRequired="1"
                                           Tapped="DXI_Reminder_Tapped" />
                 </dx:DXImage.GestureRecognizers>
             </dx:DXImage>
 
-            <dx:DXImage Source="archive"
-                        IsVisible="{Binding SelectedHabit,
-                                            Converter={StaticResource IsNull}}"
-                        WidthRequest="35"
-                        HeightRequest="35"
-                        Margin="10,0,10,0"
-                        HorizontalOptions="Center"
-                        TintColor="{StaticResource TitleTextColor}"
-                        VerticalOptions="Center"
-                        Grid.Column="5">
-                <dx:DXImage.GestureRecognizers>
-                    <TapGestureRecognizer NumberOfTapsRequired="1"
-                                          Tapped="DXI_Archive_Tapped" />
-                </dx:DXImage.GestureRecognizers>
-            </dx:DXImage>
-
-            <dx:DXImage Source="edit"
-                        IsVisible="{Binding SelectedHabit,
-                                            Converter={StaticResource IsNotNull}}"
-                        WidthRequest="40"
+            <dx:DXImage Source="edit_solid"
+                        Margin="0,0,0,0"
+                        Grid.Column="3"
                         HeightRequest="30"
-                        Margin="35,0,0,0"
                         HorizontalOptions="End"
+                        IsVisible="{Binding SelectedHabit, Converter={StaticResource IsNotNull}}"
                         TintColor="{StaticResource TitleTextColor}"
                         VerticalOptions="Center"
-                        Grid.Column="4">
+                        WidthRequest="40">
                 <dx:DXImage.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding EditHabitCommand}"
                                           CommandParameter="{Binding SelectedHabit}"
                                           NumberOfTapsRequired="1" />
                 </dx:DXImage.GestureRecognizers>
             </dx:DXImage>
-            <dx:DXImage Source="delete"
-                        IsVisible="{Binding SelectedHabit,
-                                            Converter={StaticResource IsNotNull}}"
-                        WidthRequest="40"
-                        HeightRequest="30"
+
+            <dx:DXImage Source="archive"
+                        IsVisible="{Binding SelectedHabit, Converter={StaticResource IsNull}}"
                         Margin="3,0,0,0"
+                        Grid.Column="4"
+                        HeightRequest="35"
                         HorizontalOptions="End"
                         TintColor="{StaticResource TitleTextColor}"
                         VerticalOptions="Center"
-                        Grid.Column="6">
+                        WidthRequest="35">
+                <dx:DXImage.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1"
+                                          Tapped="DXI_Archive_Tapped" />
+                </dx:DXImage.GestureRecognizers>
+            </dx:DXImage>
+            
+            <dx:DXImage Source="archive_habit"
+                        IsVisible="{Binding SelectedHabit, Converter={StaticResource IsNotNull}}"
+                        Margin="3,0,0,0"
+                        Grid.Column="4"
+                        HeightRequest="35"
+                        HorizontalOptions="End"
+                        TintColor="{StaticResource TitleTextColor}"
+                        VerticalOptions="Center"
+                        WidthRequest="35">
+                <dx:DXImage.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1"
+                                          Tapped="DXI_Archive_Tapped" />
+                </dx:DXImage.GestureRecognizers>
+            </dx:DXImage>
+            
+            <dx:DXImage Source="delete_solid"
+                        Margin="3,0,0,0"
+                        Grid.Column="5"
+                        HeightRequest="30"
+                        HorizontalOptions="End"
+                        IsVisible="{Binding SelectedHabit, Converter={StaticResource IsNotNull}}"
+                        TintColor="{StaticResource TitleTextColor}"
+                        VerticalOptions="Center"
+                        WidthRequest="40">
                 <dx:DXImage.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding DeleteHabitCommand}"
                                           CommandParameter="{Binding SelectedHabit}"
@@ -132,19 +144,17 @@
             </dxg:DataGridView.GroupRowAppearance>
 
             <dxg:DataGridView.SwipeItemAppearance>
-                <dxg:SwipeItemAppearance Width="125" />
+                <dxg:SwipeItemAppearance Width="65" />
             </dxg:DataGridView.SwipeItemAppearance>
 
             <dxg:DataGridView.Columns>
-                <!--  {} in GroupCaptionDisplayFormat means display Goal.Name without a caption  -->
-                <dxg:TextColumn FieldName="Goal.Name"
-                                GroupCaptionDisplayFormat="{}{1}"
-                                GroupInterval="DisplayText"
+                <dxg:TextColumn FieldName="Goal"
+                                GroupInterval="Value"
                                 IsGrouped="True"
                                 SortMode="Custom">
                     <dxg:TextColumn.GroupCaptionTemplate>
                         <DataTemplate x:DataType="dxg:GroupRowData">
-                            <Label Text="{Binding GroupValueText}"
+                            <Label Text="{Binding GroupValue.Name}"
                                    FontSize="15" />
                         </DataTemplate>
                     </dxg:TextColumn.GroupCaptionTemplate>
@@ -157,56 +167,56 @@
             </dxg:DataGridView.CellAppearance>
         </dxg:DataGridView>
 
-        <dx:DXStackLayout IsVisible="{Binding UserHabits.Count,
-                                              Converter={StaticResource IsZero}}"
-                          Orientation="Vertical"
+        <dx:DXStackLayout Orientation="Vertical"
                           HorizontalOptions="CenterAndExpand"
+                          IsVisible="{Binding UserHabits.Count, Converter={StaticResource IsZero}}"
                           ItemSpacing="10"
                           VerticalOptions="Start">
             <skia:SKLottieView Source="checks.json"
-                               IsVisible="{Binding IsBusy,
-                                                   Converter={StaticResource IsFalse}}"
-                               WidthRequest="300"
-                               HeightRequest="250"
                                Margin="0,150,0,0"
+                               HeightRequest="250"
                                IsAnimationEnabled="True"
-                               RepeatCount="-1" />
+                               IsVisible="{Binding IsBusy, Converter={StaticResource IsFalse}}"
+                               RepeatCount="-1"
+                               WidthRequest="300" />
             <Label x:Name="L_HabitCollectionIsEmptyDescription"
                    Text="{Binding LocManager[HabitCollectionIsEmptyDescription]}"
-                   IsVisible="{Binding IsBusy,
-                                       Converter={StaticResource IsFalse}}"
                    FontFamily="MonaSansMedium"
                    FontSize="14"
                    HorizontalTextAlignment="Center"
+                   IsVisible="{Binding IsBusy, Converter={StaticResource IsFalse}}"
                    TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
                                                Dark={StaticResource DarkNormalText}}" />
         </dx:DXStackLayout>
 
-        <toolkit:Expander IsVisible="{Binding DoShowPlusButton}"
-                          Margin="0,0,15,15"
+        <toolkit:Expander Margin="0,0,15,15"
                           HorizontalOptions="End"
+                          IsVisible="{Binding DoShowPlusButton}"
                           VerticalOptions="End">
             <toolkit:Expander.Header>
-                <Frame WidthRequest="55"
-                       HeightRequest="55"
-                       Padding="0"
+                <Frame Padding="0"
                        BackgroundColor="{StaticResource Primary}"
                        CornerRadius="{OnPlatform Android=35,
-                                                 iOS=25}">
+                                                 iOS=25}"
+                       HeightRequest="55"
+                       WidthRequest="55">
                     <Frame.Shadow>
-                        <Shadow Brush="Black"
-                                Opacity="0.3"
+                        <Shadow Opacity="0.3"
                                 Radius="12"
-                                Offset="0,6" />
+                                Offset="0,6">
+                            <Shadow.Brush>
+                                <Color>	#0066FF</Color>
+                            </Shadow.Brush>
+                        </Shadow>
                     </Frame.Shadow>
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding AddHabitCommand}"
                                               NumberOfTapsRequired="1" />
                     </Frame.GestureRecognizers>
                     <dx:DXImage Source="small_plus"
-                                WidthRequest="30"
                                 HeightRequest="30"
-                                TintColor="White">
+                                TintColor="White"
+                                WidthRequest="30">
                         <dx:DXImage.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding AddHabitCommand}"
                                                   NumberOfTapsRequired="1" />
@@ -229,17 +239,17 @@
                            Text="{Binding LocManager[Reminder]}"
                            Style="{StaticResource CentralHeader}" />
                     <dxe:MultilineEdit x:Name="ME_ReminderTitle"
-                                       LabelText="{Binding LocManager[ReminderTitle]}"
                                        Text="{Binding ReminderReport.Title}"
                                        ClearIconVisibility="Never"
+                                       LabelText="{Binding LocManager[ReminderTitle]}"
                                        MaxLineCount="2"
                                        MaximumWidthRequest="285"
                                        ReturnType="Done"
                                        StartIcon="remindertitle" />
                     <dxe:MultilineEdit x:Name="ME_ReminderDescription"
-                                       LabelText="{Binding LocManager[ReminderDescription]}"
                                        Text="{Binding ReminderReport.Description}"
                                        ClearIconVisibility="Never"
+                                       LabelText="{Binding LocManager[ReminderDescription]}"
                                        MaxLineCount="3"
                                        MaximumWidthRequest="285"
                                        ReturnType="Done"
@@ -252,28 +262,27 @@
                                   StartIcon="clock"
                                   TimeSpan="{Binding ReminderReport.Time}" />
 
-                    <dx:DXSwitch IsChecked="{Binding ReminderReport.IsEnabled}"
-                                 Content="{Binding LocManager[Enable],
-                                                   Mode=OneWay}" />
+                    <dx:DXSwitch Content="{Binding LocManager[Enable], Mode=OneWay}"
+                                 IsChecked="{Binding ReminderReport.IsEnabled}" />
 
                     <HorizontalStackLayout Padding="0"
                                            HorizontalOptions="End">
                         <dxco:SimpleButton x:Name="SB_ReminderReport_Cancel"
                                            Text="{Binding LocManager[Cancel]}"
-                                           Clicked="SB_ReminderReport_Cancel_Clicked"
                                            Icon="close"
-                                           IconHorizontalPosition="Left"
                                            Margin="0,0,5,5"
                                            BackgroundColor="{StaticResource CancelButtonColor}"
-                                           FontSize="16" />
+                                           Clicked="SB_ReminderReport_Cancel_Clicked"
+                                           FontSize="16"
+                                           IconHorizontalPosition="Left" />
                         <dxco:SimpleButton x:Name="SB_Save"
                                            Text="{Binding LocManager[Save]}"
-                                           Clicked="SB_Save_Clicked"
                                            Style="{StaticResource PrimaryButton}"
                                            Icon="check_second"
-                                           IconHorizontalPosition="Left"
                                            Margin="0,0,0,5"
-                                           FontSize="16" />
+                                           Clicked="SB_Save_Clicked"
+                                           FontSize="16"
+                                           IconHorizontalPosition="Left" />
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
                 <templates:DefaultActivityIndicator />
@@ -287,6 +296,7 @@
                                                             Dark={StaticResource DarkBackground}}"
                           HalfExpandedRatio="0.7"
                           ShowGrabber="False">
+            <Grid>
             <dx:DXStackLayout x:Name="DXSL_ArchivedHabits"
                               Orientation="Vertical"
                               Padding="10,0,10,0">
@@ -300,12 +310,12 @@
 
                     <dx:DXImage x:Name="DXI_Info"
                                 Source="info"
-                                WidthRequest="40"
+                                Grid.Column="0"
                                 HeightRequest="40"
                                 HorizontalOptions="Start"
                                 VerticalOptions="Center"
-                                Grid.Row="0"
-                                Grid.Column="0">
+                                WidthRequest="40"
+                                Grid.Row="0">
                         <dx:DXImage.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1"
                                                   Tapped="DXI_Info_Tapped" />
@@ -315,20 +325,20 @@
                     <Label x:Name="L_ArhiveCenralHeader"
                            Text="{Binding LocManager[Archive]}"
                            Style="{StaticResource CentralHeader}"
+                           Grid.Column="1"
                            HeightRequest="40"
                            HorizontalOptions="Center"
                            VerticalOptions="Center"
-                           Grid.Row="0"
-                           Grid.Column="1" />
+                           Grid.Row="0" />
 
                     <dx:DXImage Source="plus"
-                                WidthRequest="40"
+                                Grid.Column="2"
                                 HeightRequest="40"
                                 HorizontalOptions="End"
                                 TintColor="{StaticResource LabelText}"
                                 VerticalOptions="Center"
-                                Grid.Row="0"
-                                Grid.Column="2">
+                                WidthRequest="40"
+                                Grid.Row="0">
                         <dx:DXImage.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1"
                                                   Tapped="DXI_Plus_Tapped" />
@@ -338,18 +348,16 @@
 
                 <skia:SKLottieView x:Name="SKL_Archive"
                                    Source="archive.json"
-                                   IsVisible="{Binding ArchivedHabits.Count,
-                                                       Converter={StaticResource IsZero}}"
                                    HorizontalOptions="Center"
                                    IsAnimationEnabled="True"
+                                   IsVisible="{Binding ArchivedHabits.Count, Converter={StaticResource IsZero}}"
                                    RepeatCount="-1" />
 
                 <dxcv:DXCollectionView x:Name="DXCV_Archive"
                                        ItemsSource="{Binding ArchivedHabits}"
-                                       IsVisible="{Binding ArchivedHabits.Count,
-                                                           Converter={StaticResource IsMoreThanZero}}"
                                        AllowDragDropItems="False"
                                        IsScrollBarVisible="True"
+                                       IsVisible="{Binding ArchivedHabits.Count, Converter={StaticResource IsMoreThanZero}}"
                                        ZIndex="100">
                     <dxcv:DXCollectionView.ItemTemplate>
                         <DataTemplate x:DataType="m:ArсhivedHabitDto">
@@ -360,20 +368,18 @@
                                                        Margin="0,10,0,0"
                                                        EndIcon="editgoal"
                                                        EndIconClicked="ME_ArchivedHabitEndIconClicked"
-                                                       EndIconCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:ProgressOfHabitsViewModel}},
-                                                                                Path=EditArchivedHabitCommand}"
+                                                       EndIconCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:ProgressOfHabitsViewModel}}, Path=EditArchivedHabitCommand}"
                                                        EndIconCommandParameter="{Binding .}"
                                                        StartIcon="deletegoal"
-                                                       StartIconCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:ProgressOfHabitsViewModel}},
-                                                                                  Path=DeleteArchivedHabitCommand}"
+                                                       StartIconCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:ProgressOfHabitsViewModel}}, Path=DeleteArchivedHabitCommand}"
                                                        StartIconCommandParameter="{Binding .}" />
 
                                     <Button x:Name="ArchivedHabitButton"
-                                            CommandParameter="{Binding .}"
-                                            Clicked="ArchivedHabitButton_Clicked"
                                             Padding="0"
                                             BackgroundColor="Transparent"
                                             BorderWidth="0"
+                                            Clicked="ArchivedHabitButton_Clicked"
+                                            CommandParameter="{Binding .}"
                                             HorizontalOptions="Fill"
                                             VerticalOptions="Fill">
                                         <Button.Margin>
@@ -388,12 +394,11 @@
                     </dxcv:DXCollectionView.ItemTemplate>
                 </dxcv:DXCollectionView>
                 <Label Text="{Binding LocManager[ShortDescriptionOfArchivedHabits]}"
-                       IsVisible="{Binding ArchivedHabits.Count,
-                                           Converter={StaticResource IsZero}}"
-                       HeightRequest="120"
                        FontFamily="MonaSansMedium"
                        FontSize="16"
+                       HeightRequest="120"
                        HorizontalTextAlignment="Center"
+                       IsVisible="{Binding ArchivedHabits.Count, Converter={StaticResource IsZero}}"
                        VerticalOptions="Start"
                        VerticalTextAlignment="Start" />
 
@@ -427,17 +432,18 @@
                                        VerticalTextAlignment="Center" />
                             </On>
                         </OnPlatform>
-                        <Button Text="{Binding LocManager[OK],
-                                               Mode=OneWay}"
-                                Clicked="B_Ok_Clicked"
+                        <Button Text="{Binding LocManager[OK], Mode=OneWay}"
                                 BackgroundColor="Transparent"
+                                Clicked="B_Ok_Clicked"
+                                Grid.Column="1"
                                 HorizontalOptions="End"
                                 TextColor="White"
-                                VerticalOptions="Center"
-                                Grid.Column="1" />
+                                VerticalOptions="Center" />
                     </Grid>
                 </dxco:DXPopup>
             </dx:DXStackLayout>
+                <templates:DefaultActivityIndicator />
+            </Grid>
         </dxco:BottomSheet>
         <templates:DefaultActivityIndicator />
     </Grid>

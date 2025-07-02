@@ -8,7 +8,7 @@ public class ProgressOfHabitToInt32Converter : BaseConverterOneWay<double, int>
 
     public override int ConvertFrom( double value, CultureInfo culture )
     {
-        int result = (int)Math.Round( value * 100.0, MidpointRounding.ToEven );
+        int result = Score.Round( value );
         return result;
     }
 }

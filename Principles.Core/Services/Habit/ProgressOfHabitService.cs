@@ -7,12 +7,10 @@ namespace Principles.Core.Services;
 
 public class ProgressOfHabitService : BaseRemoteService, IProgressOfHabitService
 {
-    private IServiceOfHabit m_serviceOfHabit;
-
     public ProgressOfHabitService( IServiceProvider serviceProvider )
         : base( serviceProvider )
     {
-        m_serviceOfHabit = serviceProvider.GetRequiredService<IServiceOfHabit>();
+        
     }
 
     public async Task UpdateAsync( ProgressOfHabit progressOfHabit )

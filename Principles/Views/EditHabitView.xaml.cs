@@ -33,7 +33,8 @@ public partial class EditHabitView : ContentPageBase
             //bottom_sheet_height = full_height * HalfExpandedRatio
             //HalfExpandedRatio = bottom_sheet_height / full_height
             double heightOfReminderBottomSheet = 500;
-            BS_EditReminder.HalfExpandedRatio = heightOfReminderBottomSheet / ViewModel.SettingsService.NormalPageHeight;
+            BS_EditReminder.HalfExpandedRatio =
+                heightOfReminderBottomSheet / ViewModel.SettingsService.NormalPageHeight;
         }
     }
 
@@ -48,11 +49,11 @@ public partial class EditHabitView : ContentPageBase
         base.OnDisappearing();
         m_deviceOrientationService.UnlockOrientation();
     }
-    
+
     private void ViewModel_HabitPropertyChanged( object? sender, PropertyChangedEventArgs e )
     {
         UserHabit habit = ViewModel.Habit;
-        if (e.PropertyName == nameof( EditHabitViewModel.Habit ) && habit != null)
+        if (e.PropertyName == nameof(EditHabitViewModel.Habit) && habit != null)
         {
             habit.PropertyChanged += TypeOfHabit_PropertyChanged;
 
@@ -74,7 +75,7 @@ public partial class EditHabitView : ContentPageBase
 
     private void TypeOfHabit_PropertyChanged( object? sender, PropertyChangedEventArgs e )
     {
-        if(e.PropertyName == nameof( UserHabit.Type ))
+        if (e.PropertyName == nameof(UserHabit.Type))
         {
             switch (ViewModel.Habit.Type)
             {
@@ -156,18 +157,18 @@ public partial class EditHabitView : ContentPageBase
         {
             try
             {
-                int previousInterval = frequency.IntervalLengthInDays;
                 frequency.IntervalLengthInDays = Convert.ToUInt16( TE_RepeatsOfSeveralDays.Text );
 
                 frequency.Type = frequency.IntervalLengthInDays > 1
-                        ? FrequencyType.EverySeveralDays
-                        : FrequencyType.EveryDay;
+                    ? FrequencyType.EverySeveralDays
+                    : FrequencyType.EveryDay;
 
                 frequency.Repeats = 1;
             }
             catch
             {
-                string errorMsg = $"{LocStrings.CannotParse} \"{TE_RepeatsOfSeveralDays.Text}\" {LocStrings.ToInteger.ToLower()}";
+                string errorMsg =
+                    $"{LocStrings.CannotParse} \"{TE_RepeatsOfSeveralDays.Text}\" {LocStrings.ToInteger.ToLower()}";
                 ViewModel.LoggingService.LogError( errorMsg );
                 await ViewModel.DialogService.ShowErrorAsync( errorMsg );
                 hasErrors = true;
@@ -183,7 +184,7 @@ public partial class EditHabitView : ContentPageBase
                 {
                     case PeriodTypeOfHabit.Week:
                         {
-                            if(repeats >= 7)
+                            if (repeats >= 7)
                             {
                                 frequency.Type = FrequencyType.EveryDay;
                                 repeats = 1;
@@ -237,7 +238,8 @@ public partial class EditHabitView : ContentPageBase
             }
             catch
             {
-                await ViewModel.DialogService.ShowErrorAsync( $"{LocStrings.CannotParse} \"{TE_RepeatsOfSeveralDays.Text}\" {LocStrings.ToInteger.ToLower()}" );
+                await ViewModel.DialogService.ShowErrorAsync(
+                    $"{LocStrings.CannotParse} \"{TE_RepeatsOfSeveralDays.Text}\" {LocStrings.ToInteger.ToLower()}" );
                 hasErrors = true;
             }
         }
@@ -246,11 +248,12 @@ public partial class EditHabitView : ContentPageBase
         {
             ViewModel.FrequencyInfo = new HabitFrequencyInfo
             {
-                Frequency = ViewModel.Habit.Frequency,
-                Period = ViewModel.SelectedPeriodOfHabit
+                Frequency = ViewModel.Habit.Frequency, Period = ViewModel.SelectedPeriodOfHabit
             };
 
-            OnPropertyChanged( nameof( ViewModel.FrequencyInfo ) );
+            OnPropertyChanged( nameof(ViewModel.FrequencyInfo) );
+            ViewModel.Habit.NotifyPropertyChanged( nameof(UserHabit.Complexity) );
+            
             DXP_Frequency.IsOpen = false;
         }
     }
@@ -295,7 +298,7 @@ public partial class EditHabitView : ContentPageBase
         {
             TE_AreasOfLife.IsDropDownOpen = !TE_AreasOfLife.IsDropDownOpen;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             ViewModel.LoggingService.LogError( ex, ex.Message );
         }
@@ -325,7 +328,7 @@ public partial class EditHabitView : ContentPageBase
         {
             await ViewModel.SaveCommand.ExecuteAsync( null );
         }
-        else if( !ViewModel.IsBusy && !ViewModel.IsLoadingHabitInfo )
+        else if (!ViewModel.IsBusy && !ViewModel.IsLoadingHabitInfo)
         {
             DXS_ErrorMessages.Children.Clear();
             DXS_ErrorMessages.RowDefinitions.Clear();
@@ -333,7 +336,8 @@ public partial class EditHabitView : ContentPageBase
             int numRow = 0;
             foreach (string errMsg in ViewModel.NameOfHabit.Errors)
             {
-                Label errorLabel = new()
+#if ANDROID
+                Label errorControl = new()
                 {
                     Text = errMsg,
                     FontSize = 16,
@@ -345,21 +349,32 @@ public partial class EditHabitView : ContentPageBase
                     VerticalOptions = LayoutOptions.Center,
                     VerticalTextAlignment = TextAlignment.Center
                 };
-
-                RowDefinition row = new()
+#else
+                Editor errorControl = new()
                 {
-                    Height = new GridLength( value: 1, GridUnitType.Auto )
+                    Text = errMsg,
+                    FontSize = 16,
+                    FontFamily = "MonaSansMedium",
+                    HorizontalOptions = LayoutOptions.Start,
+                    HorizontalTextAlignment = TextAlignment.Start,
+                    VerticalOptions = LayoutOptions.Center,
+                    VerticalTextAlignment = TextAlignment.Center
                 };
+#endif
+
+                RowDefinition row = new() { Height = new GridLength( value: 1, GridUnitType.Auto ) };
                 DXS_ErrorMessages.AddRowDefinition( row );
-                DXS_ErrorMessages.Children.Add( errorLabel );
-                DXS_ErrorMessages.SetRow( errorLabel, numRow );
+                DXS_ErrorMessages.Children.Add( errorControl );
+                DXS_ErrorMessages.SetRow( errorControl, numRow );
                 numRow++;
             }
 
             DXP_Errors.MaximumWidthRequest = PageWidth - 40;
             DXP_Errors.MaximumHeightRequest = PageHeight - 60;
-            HSL_ErrorMessages.MaximumWidthRequest = DXP_Errors.MaximumWidthRequest - (HSL_ErrorMessages.Margin.Left + HSL_ErrorMessages.Margin.Right);
-            DXS_ErrorMessages.MaximumWidthRequest = HSL_ErrorMessages.MaximumWidthRequest - (DXI_Error.WidthRequest + HSL_ErrorMessages.ItemSpacing);
+            HSL_ErrorMessages.MaximumWidthRequest = DXP_Errors.MaximumWidthRequest -
+                                                    (HSL_ErrorMessages.Margin.Left + HSL_ErrorMessages.Margin.Right);
+            DXS_ErrorMessages.MaximumWidthRequest = HSL_ErrorMessages.MaximumWidthRequest -
+                                                    (DXI_Error.WidthRequest + HSL_ErrorMessages.ItemSpacing);
 
             DXP_Errors.IsOpen = true;
         }
@@ -378,16 +393,21 @@ public partial class EditHabitView : ContentPageBase
 
             if (m_doExecuteReloadOfRecommendedHabits || ViewModel.RecommendedHabits.Count == 0)
             {
-                bool canReload = ViewModel.ReloadRecommendedHabitsCommand.CanExecute( ShowSnackbarOfSuccessfulRecomendedHabitsReload );
+                bool canReload =
+                    ViewModel.ReloadRecommendedHabitsCommand.CanExecute(
+                        ShowSnackbarOfSuccessfulRecomendedHabitsReload );
 
                 if (canReload)
                 {
-                    bool isConfirmed = await ViewModel.DialogService.ShowConfirmAsync( LocStrings.ConfirmMessageOnRecommededHabitsView, LocStrings.ConfirmTitleOnRecommendedHabitsView );
+                    bool isConfirmed = await ViewModel.DialogService.ShowConfirmAsync(
+                        LocStrings.ConfirmMessageOnRecommededHabitsView,
+                        LocStrings.ConfirmTitleOnRecommendedHabitsView );
                     doShowRecommendedHabits = isConfirmed;
 
                     if (isConfirmed)
                     {
-                        ViewModel.ReloadRecommendedHabitsCommand.Execute( ShowSnackbarOfSuccessfulRecomendedHabitsReload );
+                        ViewModel.ReloadRecommendedHabitsCommand.Execute(
+                            ShowSnackbarOfSuccessfulRecomendedHabitsReload );
                         m_doExecuteReloadOfRecommendedHabits = false;
                     }
                 }
@@ -495,7 +515,7 @@ public partial class EditHabitView : ContentPageBase
         {
             enteredText.Text = enteredText.Text.Substring( startIndex: 0, length: 2 );
         }
-        else if(enteredText?.Text == "0")
+        else if (enteredText?.Text == "0")
         {
             enteredText.Text = "1";
         }
@@ -549,7 +569,7 @@ public partial class EditHabitView : ContentPageBase
         if (GoalsBottomSheet.State == BottomSheetState.Hidden)
         {
             GoalsBottomSheet.State = BottomSheetState.HalfExpanded;
-            
+
             double heightOfReminderBottomSheet = 500;
 
             if (ViewModel.SettingsService.NormalPageHeight == 0)
@@ -560,12 +580,14 @@ public partial class EditHabitView : ContentPageBase
             {
                 //bottom_sheet_height = full_height * HalfExpandedRatio
                 //HalfExpandedRatio = bottom_sheet_height / full_height
-                GoalsBottomSheet.HalfExpandedRatio = heightOfReminderBottomSheet / ViewModel.SettingsService.NormalPageHeight;
+                GoalsBottomSheet.HalfExpandedRatio =
+                    heightOfReminderBottomSheet / ViewModel.SettingsService.NormalPageHeight;
             }
-            
+
             double rowSpacing = G_Goals.RowSpacing * (G_Goals.RowDefinitions.Count - 1);
             double additionalSpacing = 15;
-            double height = heightOfReminderBottomSheet - rowSpacing - L_GoalSelectionCenterHeader.HeightRequest - L_GoalRecommendation.HeightRequest - additionalSpacing;
+            double height = heightOfReminderBottomSheet - rowSpacing - L_GoalSelectionCenterHeader.HeightRequest -
+                            L_GoalRecommendation.HeightRequest - additionalSpacing;
 
             SKL_Goals.HeightRequest = height;
             SKL_Goals.WidthRequest = PageWidth - (G_Goals.Padding.Left + G_Goals.Padding.Right);
@@ -580,11 +602,7 @@ public partial class EditHabitView : ContentPageBase
     private void OnGoalAddTap( object sender, TappedEventArgs e )
     {
         DXP_GoalAdd.IsOpen = true;
-        ViewModel.EditedGoal = new UserGoal()
-        {
-            Id = 0,
-            Name = $"{LocStrings.Be} "
-        };
+        ViewModel.EditedGoal = new UserGoal() { Id = 0, Name = $"{LocStrings.Be} " };
     }
 
     private void OnGoalNameTap( object sender, TappedEventArgs e )
@@ -609,9 +627,10 @@ public partial class EditHabitView : ContentPageBase
         if (ViewModel.SaveGoalCommand.CanExecute( closePopup ))
         {
             await ViewModel.SaveGoalCommand.ExecuteAsync( closePopup );
-            
+
             UserGoal? habitGoal = ViewModel.Habit.Goal;
-            if (!m_doExecuteReloadOfRecommendedHabits && habitGoal is not null && habitGoal.Id != 0 && habitGoal.Id == ViewModel.EditedGoal.Id && habitGoal.Name != ViewModel.EditedGoal.Name)
+            if (!m_doExecuteReloadOfRecommendedHabits && habitGoal is not null && habitGoal.Id != 0 &&
+                habitGoal.Id == ViewModel.EditedGoal.Id && habitGoal.Name != ViewModel.EditedGoal.Name)
             {
                 m_doExecuteReloadOfRecommendedHabits = true;
             }
@@ -621,7 +640,7 @@ public partial class EditHabitView : ContentPageBase
     private void OnGoalNameTapped( object sender, HandledEventArgs e )
     {
         var multilineEdit = sender as MultilineEdit;
-        if(multilineEdit is not null)
+        if (multilineEdit is not null)
         {
             GoalsBottomSheet.State = BottomSheetState.Hidden;
 
@@ -696,7 +715,7 @@ public partial class EditHabitView : ContentPageBase
 
             return;
         }
-        
+
         if (ViewModel.Habit.Reminders is null || !ViewModel.Habit.Reminders.Any())
         {
             ViewModel.EditedReminder ??= new EditedUserHabitReminder();
@@ -711,7 +730,9 @@ public partial class EditHabitView : ContentPageBase
                 else
                 {
                     string mission = ViewModel.CachingService.GetStoredValue( CacheKeys.USER_MISSION );
-                    ME_ReminderTitle.Text = string.IsNullOrWhiteSpace( mission ) ? LocStrings.BecomeTruePersonalityTitle : mission;
+                    ME_ReminderTitle.Text = string.IsNullOrWhiteSpace( mission )
+                        ? LocStrings.BecomeTruePersonalityTitle
+                        : mission;
                 }
             }
 
@@ -721,7 +742,7 @@ public partial class EditHabitView : ContentPageBase
             }
 
             DXS_IsReminderEnabled.IsChecked = true;
-            
+
             TimeSpan? time = TimeSpan.FromHours( 8 );
             TE_ReminderTime.TimeSpan = time;
         }
@@ -754,18 +775,14 @@ public partial class EditHabitView : ContentPageBase
 
         if (reminder.DaysOfWeek is null || !reminder.DaysOfWeek.Any())
         {
-            reminder.DaysOfWeek = ViewModel.GetSelectedDaysIndexes().Select( index => new WeekDay
-            {
-                Type = (DayOfWeek)index
-            } ).ToList();
+            reminder.DaysOfWeek = ViewModel.GetSelectedDaysIndexes()
+                .Select( index => new WeekDay { Type = (DayOfWeek)index } ).ToList();
         }
         else
         {
-            List<WeekDay> selectedDaysOfWeek = ViewModel.GetSelectedDaysIndexes().Select( index => new WeekDay
-            {
-                Type = (DayOfWeek)index
-            } ).ToList();
-            
+            List<WeekDay> selectedDaysOfWeek = ViewModel.GetSelectedDaysIndexes()
+                .Select( index => new WeekDay { Type = (DayOfWeek)index } ).ToList();
+
             List<WeekDay> reminderDaysOfWeek = reminder.DaysOfWeek.ToList();
             foreach (WeekDay weekDay in selectedDaysOfWeek)
             {
@@ -774,14 +791,15 @@ public partial class EditHabitView : ContentPageBase
                     reminder.DaysOfWeek.Add( weekDay );
                 }
             }
-            
+
             foreach (WeekDay weekDay in reminderDaysOfWeek)
             {
                 if (selectedDaysOfWeek.All( d => d.Type != weekDay.Type ))
                 {
                     reminder.DaysOfWeek.Remove( weekDay );
 
-                    if (weekDay.UserNotificationRequestId != 0 && ViewModel.InactiveDaysToDelete.All(d => d.UserNotificationRequestId != weekDay.UserNotificationRequestId))
+                    if (weekDay.UserNotificationRequestId != 0 && ViewModel.InactiveDaysToDelete.All( d =>
+                            d.UserNotificationRequestId != weekDay.UserNotificationRequestId ))
                     {
                         ViewModel.InactiveDaysToDelete.Add( weekDay );
                     }
@@ -803,9 +821,10 @@ public partial class EditHabitView : ContentPageBase
     {
         e.Request = () =>
         {
-            return string.IsNullOrWhiteSpace( TE_AreasOfLife.Text ) ? 
-                ViewModel.AllUserAreasOfLife : 
-                ViewModel.AllUserAreasOfLife.Where( a => a.Name!.StartsWith( TE_AreasOfLife.Text, StringComparison.CurrentCultureIgnoreCase ) ).ToList();
+            return string.IsNullOrWhiteSpace( TE_AreasOfLife.Text )
+                ? ViewModel.AllUserAreasOfLife
+                : ViewModel.AllUserAreasOfLife.Where( a =>
+                    a.Name!.StartsWith( TE_AreasOfLife.Text, StringComparison.CurrentCultureIgnoreCase ) ).ToList();
         };
     }
 
@@ -815,5 +834,15 @@ public partial class EditHabitView : ContentPageBase
         {
             ME_HabitGoal.Unfocus();
         }
+    }
+
+    private void NE_Complexity_OnUpIconClicked( object? sender, HandledEventArgs e )
+    {
+        ViewModel.NotifyPropertyChanged( nameof(ViewModel.Habit) );
+    }
+
+    private void NE_Complexity_OnDownIconClicked( object? sender, HandledEventArgs e )
+    {
+        ViewModel.NotifyPropertyChanged( nameof(ViewModel.Habit) );
     }
 }

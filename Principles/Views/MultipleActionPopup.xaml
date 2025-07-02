@@ -22,27 +22,28 @@
                CornerRadius="20"
                HasShadow="True">
             <VerticalStackLayout>
-                <Label Text="{Binding LocManager[ChooseAction]}"
+                <Label Text="{Binding Title}"
                        Style="{StaticResource CentralHeader}" />
                 <Label Text="{Binding TextOfLabel}"
-                       Margin="0,0,0,10"
+                       Margin="0,10,0,10"
                        FontFamily="MonaSansMedium"
                        FontSize="16"
                        HorizontalTextAlignment="Center" />
                 <VerticalStackLayout BindableLayout.ItemsSource="{Binding Buttons}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="m:ActionData">
-                            <dx:DXButton Content="{Binding Text}"
-                                         Command="{Binding Command}"
-                                         Style="{StaticResource PrimaryButton}"
-                                         Margin="0,0,0,7" />
+                            <dxco:SimpleButton Text="{Binding Text}"
+                                               Command="{Binding Command}"
+                                               Style="{StaticResource PrimaryButton}"
+                                               Margin="0,0,0,7" />
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </VerticalStackLayout>
-                <dx:DXButton x:Name="DXB_Cancel"
-                             Content="{Binding LocManager[Cancel]}"
-                             Clicked="DXB_Cancel_OnClicked"
-                             Style="{StaticResource SecondaryButton}" />
+                <dxco:SimpleButton x:Name="SB_Cancel"
+                                   Text="{Binding LocManager[Cancel]}"
+                                   Style="{StaticResource SecondaryButton}"
+                                   Clicked="SB_Cancel_OnClicked"
+                                   TextColor="{StaticResource SecondaryLight}" />
             </VerticalStackLayout>
         </Frame>
     </Grid>

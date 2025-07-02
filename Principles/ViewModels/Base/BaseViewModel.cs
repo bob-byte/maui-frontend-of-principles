@@ -68,10 +68,8 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
             await UiBusyFor( async () =>
             {
                 await InitializeAsync();
-                if (!IsInitialized)
-                {
-                    IsInitialized = true;
-                }
+                
+                IsInitialized = true;
             } );
         } );
 
@@ -403,10 +401,17 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         Mission = string.Empty;
         Gender = Gender.Man;
         UserIcon = null;
+        
+        CachingService.Remove( CacheKeys.USER_EMAIL );
 
         ReferenceMessenger.Send( new UserLoggedOutMessage() );
 
         await Navigation.GoToInitialViewAsync();
+    }
+
+    public void NotifyPropertyChanged( string propertyName )
+    {
+        OnPropertyChanged( propertyName );
     }
 
     protected bool SetProperty<T>(ref T backingStore, T value,

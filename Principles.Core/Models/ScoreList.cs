@@ -28,7 +28,7 @@ public class ScoreList
     {
         return m_scores.Values;
     }
-
+    
     public void Recompute( int complexity, FrequencyOfHabit frequency, ListOfProgressOfHabit progressList, DateOnly from, DateOnly to )
     {
         m_scores.Clear();
