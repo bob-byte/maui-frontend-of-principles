@@ -223,6 +223,7 @@ public partial class HabitDetailViewModel : BaseViewModel
                 Name = LocStrings.NumberOfExecution,
                 NameTextSize = 14,
                 MinLimit = 0,
+                MinStep = 1,
                 TextSize = 12
             }
         };
@@ -433,7 +434,9 @@ public partial class HabitDetailViewModel : BaseViewModel
         List<double?> xLabelsPositions = events.Select( e => (double?)e.point.X ).ToList();
 
         List<ProgressOfHabit> progresses = Habit.ComputedProgresses.GetKnown().ToList();
-        ProgressOfHabit? firstExecuted = progresses.LastOrDefault(p => p.Value == ProgressValue.YES_MANUAL);
+        ProgressOfHabit? firstExecuted = progresses.LastOrDefault(p => p.Value == ProgressValue.YES_MANUAL); 
+        
+        //TODO: scores are wider than progresses. We should make them shorter
         DateTime minDate = firstExecuted is null 
             ? DateTime.Today.Subtract( TimeSpan.FromDays( 1 ) ) 
             : firstExecuted.Date.ToDateTime( TimeOnly.MinValue );
