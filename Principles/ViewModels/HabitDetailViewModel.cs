@@ -10,6 +10,7 @@ using System;
 using System.Collections.ObjectModel;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.Drawing;
+using Plugin.MauiMTAdmob;
 
 namespace Principles.ViewModels;
 
@@ -61,6 +62,9 @@ public partial class HabitDetailViewModel : BaseViewModel
     private Axis[] m_habitExecutionYAxes;
     [ObservableProperty]
     private string? m_goalTitle;
+    [ObservableProperty]
+    private int m_dateTapCount = 0;
+    private const int MAXTAPSBEFOREAD = 5;
 
     private readonly SemaphoreSlim m_lockerOfHabitProgressUpdate;
 
@@ -325,6 +329,17 @@ public partial class HabitDetailViewModel : BaseViewModel
                 }
             } while (doTryAgain);
         }
+
+        DateTapCount++;
+        if (!CrossMauiMTAdmob.Current.IsInterstitialLoaded())
+        {
+            CrossMauiMTAdmob.Current.LoadInterstitial( "ca-app-pub-3940256099942544/1033173712" );
+        }
+        else if (DateTapCount >= MAXTAPSBEFOREAD)
+        {
+            DateTapCount = 0;
+            CrossMauiMTAdmob.Current.ShowInterstitial();
+        }
     }
 
     private void InitPeriodsOfHabit()
@@ -441,7 +456,7 @@ public partial class HabitDetailViewModel : BaseViewModel
         DateTime minDate = firstExecuted is null 
             ? DateTime.Today.Subtract( TimeSpan.FromDays( 1 ) ) 
             : firstExecuted.Date.ToDateTime( TimeOnly.MinValue );
-        
+
         DateTime maxDate = progresses[0].Date.ToDateTime( TimeOnly.MinValue );
 
         TimeSpan totalRange = maxDate - minDate;

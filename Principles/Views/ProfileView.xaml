@@ -12,6 +12,7 @@
                        xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                        xmlns:views="clr-namespace:Principles.Views"
                        xmlns:vm="clr-namespace:Principles.ViewModels"
+                       xmlns:ads="clr-namespace:Plugin.MauiMTAdmob.Controls;assembly=Plugin.MauiMtAdmob"
                        x:Name="CPB_Page"
                        x:DataType="vm:ProfileViewModel">
     <Shell.TitleView>
@@ -132,6 +133,12 @@
                                Focused="TGR_Mission_Focused"
                                IsReadOnly="True" />
 
+            <ads:MTAdView x:Name="AdView"
+                          HorizontalOptions="Center"
+                          VerticalOptions="End"
+                          HeightRequest="{OnIdiom Phone=50, Tablet=90, Desktop=120}" 
+                          AdSize="Banner"
+                          Margin="10, 0, 0, 10"/>
             <dxco:DXPopup x:Name="DXP_Prompt"
                           AllowAnimation="True"
                           AllowScrim="True"

@@ -4,6 +4,7 @@ using DevExpress.Maui.Core;
 using DevExpress.Maui.Editors;
 
 using Plugin.LocalNotification;
+using Plugin.MauiMTAdmob;
 
 namespace Principles.Views;
 
@@ -36,6 +37,11 @@ public partial class EditHabitView : ContentPageBase
             BS_EditReminder.HalfExpandedRatio =
                 heightOfReminderBottomSheet / ViewModel.SettingsService.NormalPageHeight;
         }
+
+        DateAdViewBottom.AdsId = "ca-app-pub-6307192789973793/4685555664";
+        DateAdViewBottom.LoadAd();
+        HowToKeepAdViewBottom.AdsId = "ca-app-pub-6307192789973793/4685555664";
+        HowToKeepAdViewBottom.LoadAd();
     }
 
     protected override void OnAppearing()

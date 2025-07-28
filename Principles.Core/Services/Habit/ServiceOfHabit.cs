@@ -49,7 +49,10 @@ public class ServiceOfHabit : BaseRemoteService, IServiceOfHabit
                 {
                     ProgressOfHabit progress = new()
                     {
-                        Id = 0, Date = date, Value = ProgressValue.UNKNOWN, Habit = habit
+                        Id = 0,
+                        Date = date,
+                        Value = ProgressValue.UNKNOWN,
+                        Habit = habit
                     };
                     habit.Progresses.Add( progress );
                 }

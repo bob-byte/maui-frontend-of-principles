@@ -1,5 +1,7 @@
 ﻿using Foundation;
 
+using Google.MobileAds;
+
 using ObjCRuntime;
 
 using Principles.Platforms.iOS;
@@ -23,6 +25,12 @@ public class AppDelegate : MauiUIApplicationDelegate
     {
         Runtime.MarshalManagedException += ( _, e ) => e.ExceptionMode = MarshalManagedExceptionMode.UnwindNativeCode;
         Runtime.MarshalObjectiveCException += ( _, e ) => e.ExceptionMode = MarshalObjectiveCExceptionMode.UnwindManagedCode;
+        MobileAds.SharedInstance.Start( CompletionHandler );
         return base.FinishedLaunching( application, launchOptions );
+    }
+
+    private void CompletionHandler(InitializationStatus status)
+    {
+
     }
 }

@@ -14,6 +14,7 @@ using System.Reflection;
 using LiveChartsCore.SkiaSharpView.Maui;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
+using Plugin.MauiMTAdmob;
 
 #if IOS
 using Microsoft.Maui.Platform;
@@ -34,6 +35,7 @@ public static class MauiProgram
 
         builder
             .UseMauiApp<App>()
+            .UseMauiMTAdmob()
             .UseSkiaSharp()
             .UseLiveCharts()
             .UseDevExpressControls()
@@ -114,6 +116,7 @@ public static class MauiProgram
         services.AddSingleton<ILaunchUriHelper, LaunchUriHelper>();
         services.AddSingleton<IReminderService, ReminderService>();
         services.AddSingleton<ITipService, TipService>();
+        services.AddSingleton<IAdvertisementService, AdvertisementService>();
 
         return services;
     }

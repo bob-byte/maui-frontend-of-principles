@@ -1,6 +1,7 @@
 using DevExpress.Maui.Core.Internal;
 
 using Plugin.LocalNotification;
+using Plugin.MauiMTAdmob;
 
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -163,6 +164,8 @@ public partial class EditHabitViewModel : BaseViewModel
         {
             m_isInHabitDetails = false;
         }
+        CrossMauiMTAdmob.Current.LoadInterstitial( "ca-app-pub-3940256099942544/1033173712" );
+        CrossMauiMTAdmob.Current.ShowInterstitial();
     }
 
     public override async Task InitializeAsync( object? parameter = null )
