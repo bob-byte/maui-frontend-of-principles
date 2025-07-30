@@ -176,6 +176,14 @@ public static class MauiProgram
     {
         IDeviceInfo deviceInfo = DeviceInfo.Current;
         IAppInfo appInfo = AppInfo.Current;
+        
+        string? stackTrace = null;
+        if (logEvent.Exception is not null)
+        {
+            string exception = logEvent.Exception.ToString();
+            int indexOfFirstNewLine = exception.IndexOf( Environment.NewLine, StringComparison.Ordinal );
+            stackTrace = exception.Substring( indexOfFirstNewLine );
+        }
 
         SaveLogRequest result = new(
             DeviceOs: $"{deviceInfo.Platform} {deviceInfo.VersionString}",
@@ -185,7 +193,7 @@ public static class MauiProgram
             AppVersion: appInfo.VersionString,
             LogType: logEvent.Level.ToString(),
             LogMessage: logEvent.MessageTemplate.Text,
-            StackTrace: logEvent.Exception?.StackTrace
+            StackTrace: stackTrace
         );
         return result;
     }
