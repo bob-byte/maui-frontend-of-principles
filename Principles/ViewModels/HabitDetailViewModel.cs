@@ -74,15 +74,6 @@ public partial class HabitDetailViewModel : BaseViewModel
         m_lockerOfHabitProgressUpdate = new SemaphoreSlim( initialCount: 1, maxCount: 1 );
 
         InitPeriodsOfHabit();
-        
-        ReferenceMessenger.Register<HabitSavedMessage>( this, async ( _, message ) =>
-        {
-            UserHabit savedHabit = message.Value;
-            if (savedHabit.Id != 0 && Habit?.Id == savedHabit.Id)
-            {
-                await InitializeAsync();
-            }
-        } );
     }
 
     public ISeries[] Series { get; set; }
