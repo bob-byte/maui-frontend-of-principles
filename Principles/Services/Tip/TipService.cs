@@ -9,6 +9,8 @@ public class TipService : ITipService
 
     public async Task ShowSnackbarAsync( string message, TimeSpan duration )
     {
+        KeyboardHelper.HideKeyboard();
+        
         SnackbarOptions snackbarOptions = DefaultSnackbarOptions();
 
         ISnackbar snackbar = Snackbar.Make(
@@ -31,6 +33,8 @@ public class TipService : ITipService
         };
         await ShowSnackbarAsync( message, snackbarDuration );
 #else
+        KeyboardHelper.HideKeyboard();
+
         ToastDuration toastDuration = duration switch
         {
             TipDuration.Short => ToastDuration.Short,
@@ -45,6 +49,8 @@ public class TipService : ITipService
 #if IOS
         await ShowSnackbarAsync( message, TimeSpan.FromSeconds( 2 ) );
 #else
+        KeyboardHelper.HideKeyboard();
+
         await Toast.Make( message, ToastDuration.Short ).Show();
 #endif
     }
