@@ -151,10 +151,11 @@ public class AiRecommenderOfHabitsService : BaseRemoteService, IAiRecommenderOfH
            content: $"You are self development assistant. " +
                     $"You are in the app that focuses on helping users to create, keep and track their atomic habits. " +
                     $"You should recommend new atomic habits for user. Your answer should be in JSON format and contain an array of habits. " +
-                    $"Each array object should consist of the following fields: {nameof( RecommendedHabit.Name )}, {nameof( RecommendedHabit.ReasonToFollow )}. " +
+                    $"Each array object should consist of the following fields: {nameof( RecommendedHabit.ReasonToFollow )}, {nameof( RecommendedHabit.Name )}. " +
+                    $"The {nameof( RecommendedHabit.ReasonToFollow )} field indicates why I should follow it and must be very briefly, but accurately explained. " +
                     $"The {nameof( RecommendedHabit.Name )} field indicates habit name and time when execute habit (for example, \"when I wake up\") or location (\"when I am in a gym\"). " +
                     $"It should NOT contain frequency of a habit (for example, \"every day\"). Example of the {nameof( RecommendedHabit.Name )} field is \"Meditate at least 5 minutes when I wake up\". " +
-                    $"The {nameof( RecommendedHabit.ReasonToFollow )} field indicates why I should follow it and must be very briefly, but accurately explained. You must send only a JSON array in your response and nothing else. " +
+                    $"You must send only a JSON array in your response and nothing else. " +
                     $"Your response must be in the {m_settingsService.CurrentCulture} language, regardless of the language of the user's personal information." +
                     $"JSON object which contains array of habits must be named \"Habits\" in english."
        );

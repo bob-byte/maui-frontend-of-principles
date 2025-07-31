@@ -10,6 +10,7 @@ public class EditUserHabitDto
     public UserGoal? Goal { get; set; }
     public string? Question { get; set; }
     public StatusOfHabit Status { get; set; }
+    public bool IsArchived { get; set; }
     public FrequencyOfHabit? Frequency { get; set; }
     public TimeOnly? Remind { get; set; }
     public int Priority { get; set; }

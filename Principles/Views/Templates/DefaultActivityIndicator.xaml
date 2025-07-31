@@ -1,19 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Principles.Views.Templates.DefaultActivityIndicator"
-             xmlns:vm="clr-namespace:Principles.ViewModels"
-             x:DataType="vm:BaseViewModel"
-             IsVisible="{Binding IsBusy}"
-             WidthRequest="130"
-             HeightRequest="130"
-             VerticalOptions="Center"
-             HorizontalOptions="Center">
-        <ActivityIndicator Color="{StaticResource Primary}"
-                           IsRunning="{Binding IsBusy}"
-                           VerticalOptions="Center"
-                           HorizontalOptions="Center"
-                           WidthRequest="100"
-                           HeightRequest="100" />
-</ContentView>
-
+<Frame x:Class="Principles.Views.Templates.DefaultActivityIndicator"
+       xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:vm="clr-namespace:Principles.ViewModels"
+       IsVisible="{Binding IsBusy}"
+       WidthRequest="{OnPlatform iOS=60,
+                                 Android=70}"
+       HeightRequest="{OnPlatform iOS=60,
+                                  Android=70}"
+       Padding="0"
+       x:DataType="vm:BaseViewModel"
+       BackgroundColor="{StaticResource LightEditControlBackColor}"
+       CornerRadius="{OnPlatform Android=35,
+                                 iOS=25}"
+       HorizontalOptions="Center"
+       VerticalOptions="Center">
+    <Frame.Shadow>
+        <Shadow Brush="Black"
+                Opacity="0.3"
+                Radius="12"
+                Offset="0,6" />
+    </Frame.Shadow>
+    <ActivityIndicator WidthRequest="{OnPlatform Android=45}"
+                       HeightRequest="{OnPlatform Android=45}"
+                       HorizontalOptions="Center"
+                       IsRunning="{Binding IsBusy}"
+                       VerticalOptions="Center"
+                       Color="{StaticResource Primary}" />
+</Frame>

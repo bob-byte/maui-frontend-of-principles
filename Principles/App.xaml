@@ -60,7 +60,7 @@
 
             <Color x:Key="NormalHeaderText">#55555c</Color>
             <Color x:Key="Error">#007BFF</Color>
-            <Color x:Key="RedColor">#FF2400</Color>
+            <Color x:Key="RedColor">#D32F2F</Color>
             <Color x:Key="TitleTextColor">White</Color>
             <Color x:Key="LightEditControlBackColor">#F5F5F5</Color>
             <Color x:Key="DarkEditControlBackColor">#d3d3d3</Color>
@@ -84,6 +84,10 @@
                 <Setter Property="BarTextColor"
                         Value="White" />
             </Style>
+            <Style TargetType="Span">
+                <Setter Property="TextColor"
+                        Value="{StaticResource LightNormalText}" />
+            </Style>
             <Style x:Key="PrimaryButton"
                    TargetType="dxco:SimpleButton">
                 <Setter Property="BackgroundColor"
@@ -92,6 +96,9 @@
                 <Setter Property="TextColor"
                         Value="White" />
                 <Setter Property="IconColor"
+                        Value="{AppThemeBinding Light={StaticResource DarkIconColor},
+                                                Dark={StaticResource IconColor}}" />
+                <Setter Property="PressedIconColor"
                         Value="{AppThemeBinding Light={StaticResource DarkIconColor},
                                                 Dark={StaticResource IconColor}}" />
                 <Setter Property="BorderColor"
@@ -109,6 +116,9 @@
                         Value="{AppThemeBinding Light={StaticResource Primary},
                                                 Dark={StaticResource DarkPrimary}}" />
                 <Setter Property="IconColor"
+                        Value="{AppThemeBinding Light={StaticResource DarkIconColor},
+                                                Dark={StaticResource IconColor}}" />
+                <Setter Property="PressedIconColor"
                         Value="{AppThemeBinding Light={StaticResource DarkIconColor},
                                                 Dark={StaticResource IconColor}}" />
                 <Setter Property="BorderColor"
@@ -447,7 +457,11 @@
                 <Setter Property="TextColor"
                         Value="{AppThemeBinding Light={StaticResource LightNormalText},
                                                 Dark={StaticResource DarkNormalText}}" />
-
+            </Style>
+            <Style TargetType="Editor">
+                    <Setter Property="TextColor"
+                            Value="{AppThemeBinding Light={StaticResource LightNormalText},
+                                            Dark={StaticResource DarkNormalText}}" />
             </Style>
             <Style TargetType="Entry">
                 <Setter Property="BackgroundColor"
@@ -534,6 +548,10 @@
             <converters:GenderToUserIconConverter x:Key="GenderToIcon" />
             <converters:PromptEditorFocusedToDoShowKeyboardConverter x:Key="PromptEditorFocusedToDoShowKeyboard" />
             <converters:FrequencyToStringConverter x:Key="FrequencyToString" />
+            <converters:ProgressOfHabitToInt32Converter x:Key="ProgressToInt32" />
+            <converters:ReminderTimeAndDaysToStringConverter x:Key="ReminderValueToString" />
+            <converters:ComplexityToHelpTextConverter x:Key="HabitComplexityToHelpText" />
+            <converters:DateToTextDecorationsConverter x:Key="DateToTextDecorations" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -9,6 +9,8 @@ namespace Principles;
 [Register("AppDelegate")]
 public class AppDelegate : MauiUIApplicationDelegate
 {
+    public AppDelegate() { }
+    
     protected override MauiApp CreateMauiApp()
     {
         DependencyService.RegisterSingleton<IDeviceOrientation>( new DeviceOrientationForIos() );

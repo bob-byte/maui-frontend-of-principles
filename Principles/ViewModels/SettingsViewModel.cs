@@ -88,4 +88,10 @@ public partial class SettingsViewModel : BaseViewModel
             ReferenceMessenger.Send( new NewCultureMessage( newCulture ) );
         }
     }
+
+    [RelayCommand]
+    private Task ShowChangePasswordAsync()
+    {
+        return Navigation.NavigateToAsync<ChangePasswordViewModel>();
+    }
 }

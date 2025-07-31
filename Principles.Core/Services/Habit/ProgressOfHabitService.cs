@@ -7,12 +7,10 @@ namespace Principles.Core.Services;
 
 public class ProgressOfHabitService : BaseRemoteService, IProgressOfHabitService
 {
-    private IServiceOfHabit m_serviceOfHabit;
-
     public ProgressOfHabitService( IServiceProvider serviceProvider )
         : base( serviceProvider )
     {
-        m_serviceOfHabit = serviceProvider.GetRequiredService<IServiceOfHabit>();
+        
     }
 
     public async Task UpdateAsync( ProgressOfHabit progressOfHabit )
@@ -35,12 +33,7 @@ public class ProgressOfHabitService : BaseRemoteService, IProgressOfHabitService
         #endregion
 
         UserHabit habit = progressOfHabit.Habit;
-
-        string isCompletedAsStr = progressOfHabit.Value == ProgressValue.YES_MANUAL ? "check" : "uncheck";
-        double beforeProgress = habit.PercentageAchieved;
-
-        m_serviceOfHabit.Recompute( habit );
-
+        
         string url = $"{UrlBuilder.ProgressOfHabit}/{progressOfHabit.Id}";
         UpdateProgressDto dto = new()
         {
@@ -55,17 +48,5 @@ public class ProgressOfHabitService : BaseRemoteService, IProgressOfHabitService
             SettingsService.AuthAccessToken
         );
         progressOfHabit.Id = response.Id;
-
-        if (SettingsService.IsDebug)
-        {
-            LoggingService.LogInfo( $"Before progress of habit: {beforeProgress};{Environment.NewLine}" +
-                $"After {isCompletedAsStr}: {habit.PercentageAchieved}." );
-        }
-    }
-
-    public int ConvertScoreToPercentage( double score )
-    {
-        return (int)Math.Round( score * 100.0, MidpointRounding.ToEven );
-        //return Math.Ceiling( score * 100 - 0.5 ) / 100.0;
     }
 }

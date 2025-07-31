@@ -40,9 +40,6 @@ public partial class EditHabitViewModel : BaseViewModel
     private ObservableCollectionEx<RecommendedHabit> m_recommendedHabits;
 
     [ObservableProperty]
-    private ObservableCollectionEx<UserHabit> m_userHabits;
-
-    [ObservableProperty]
     private ObservableCollectionEx<UserGoal>? m_userGoals;
 
     [ObservableProperty]
@@ -50,6 +47,8 @@ public partial class EditHabitViewModel : BaseViewModel
 
     [ObservableProperty]
     private bool m_isRecommendedHabitsLoading;
+    
+    private bool m_isInHabitDetails;
     
     [ObservableProperty]
     private ObservableCollectionEx<PeriodOfHabit> m_periodsOfHabit;
@@ -86,13 +85,12 @@ public partial class EditHabitViewModel : BaseViewModel
 
         AllUserAreasOfLife = new ObservableCollectionEx<UserAreaOfLife>();
 
-        UserHabits = new ObservableCollectionEx<UserHabit>();
         ReferenceMessenger.Register<UserLoggedOutMessage>( this, ( sender, msg ) =>
         {
             DefaultHandleLogout( msg );
 
             AllUserAreasOfLife?.Clear();
-            UserHabits?.Clear();
+            ServiceOfHabit.StoredUserHabits?.Clear();
             UserGoals?.Clear();
         } );
 
@@ -135,9 +133,14 @@ public partial class EditHabitViewModel : BaseViewModel
         Habit = new UserHabit();
         InitValidations();
         
-        if (query.TryGetValue( "Id", out object? value ) && (long)value != 0)
+        if (query.TryGetValue( "Habit", out object? value ) && value is UserHabit habit)
         {
-            Habit.Id = (long)value;
+            Habit.MergeFrom( habit );
+            ServiceOfHabit.Recompute( Habit );
+            if (Habit.Goal is not null && Habit.Goal.Id == 0)
+            {
+                Habit.Goal = null;
+            }
 
             IsNewHabit = false;
         }
@@ -145,36 +148,20 @@ public partial class EditHabitViewModel : BaseViewModel
         {
             IsNewHabit = true;
         }
-
-        query.TryGetValue( "UserHabits", out object? userHabitsObj );
-        if(userHabitsObj is IEnumerable<UserHabit> userHabits)
+        
+        if (query.TryGetValue( "IsArchived", out object? isArchivedValue ) && isArchivedValue is bool archived)
         {
-            UserHabits = new ObservableCollectionEx<UserHabit>();
-            foreach(UserHabit habit in userHabits)
-            {
-                UserHabits.Add( new UserHabit()
-                {
-                    Name = habit.Name,
-                    Priority = habit.Priority,
-                    Id = habit.Id,
-                    Complexity = habit.Complexity,
-                    ColorName = habit.ColorName,
-                    AreasOfLife = habit.AreasOfLife,
-                    PercentageAchieved = habit.PercentageAchieved,
-                    Frequency = habit.Frequency,
-                    Status = habit.Status
-                } );
-            }
+            Habit.IsArchived = archived;
         }
 
-        query.TryGetValue( "CanHasSubhabits", out object? canHasSubhabitsObj );
-        if(canHasSubhabitsObj is bool canHasSubhabits)
+        if (query.TryGetValue( "IsInHabitDetails", out object? objIsInHabitDetails ) &&
+            objIsInHabitDetails is bool isInHabitDetails)
         {
-            Habit.CanHasSubhabits = canHasSubhabits;
+            m_isInHabitDetails = isInHabitDetails;
         }
         else
         {
-            Habit.CanHasSubhabits = true;
+            m_isInHabitDetails = false;
         }
     }
 
@@ -203,27 +190,14 @@ public partial class EditHabitViewModel : BaseViewModel
             EditedReminder = new EditedUserHabitReminder();
             ResetDaysOfWeek();
 
-            if (!UserHabits.Contains( Habit ))
-            {
-                UserHabits.Insert( index: 0, Habit );
-            }
-
-            int priority = 1;
-            foreach (UserHabit habit in UserHabits)
-            {
-                habit.Priority = priority;
-                priority++;
-            }
-
             var normalTextColor = (Color)Application.Current!.Resources["LightNormalText"];
             Habit.ColorName = normalTextColor.ToArgbHex();
         }
         else
         {
-            Habit = await ServiceOfHabit.UserHabitAsync( Habit.Id );
             if (Habit.Complexity < HabitConstants.MIN_HABIT_COMPLEXITY || HabitConstants.MAX_HABIT_COMPLEXITY < Habit.Complexity)
             {
-                Habit.Complexity = 5;
+                Habit.Complexity = HabitConstants.DEFAULT_HABIT_COMPLEXITY;
             }
             
             EditedReminder = new EditedUserHabitReminder();
@@ -286,13 +260,6 @@ public partial class EditHabitViewModel : BaseViewModel
             {
                 Habit.AreasOfLife.Add( AllAreasOfLifeAsOneItem );
             }
-
-            UserHabit? foundHabit = UserHabits.FirstOrDefault( h => h.Id == Habit.Id );
-            if (foundHabit != null)
-            {
-                int index = UserHabits.IndexOf( foundHabit );
-                UserHabits[index] = Habit;
-            }
         }
             
         OnPropertyChanged( nameof( EditedReminder ) );
@@ -339,30 +306,26 @@ public partial class EditHabitViewModel : BaseViewModel
         Habit.Goal ??= new UserGoal();
         await ReloadGoalsAsync();
 
+        NotifyPropertyChanged( nameof(Habit) );
+
         await base.InitializeAsync( parameter );
 
         IsLoadingHabitInfo = false;
     }
 
-    public override async Task OnDisappearingAsync( object? parameter = null )
+    public override Task OnDisappearingAsync( object? parameter = null )
     {
-        foreach (UserHabit habit in UserHabits)
-        {
-            habit.Reminders?.Clear();
-        }
         EditedReminder = new EditedUserHabitReminder();
         EditedGoal = new UserGoal();
-    }
-
-    [RelayCommand(CanExecute = nameof(CanResetPriorities))]
-    private void ResetPriorities()
-    {
-        ServiceOfHabit.ResetPriorities( UserHabits );
-    }
-
-    private bool CanResetPriorities()
-    {
-        return UserHabits.Count >= 2;
+        Habit = new UserHabit();
+        RecommendedHabits = new ObservableCollectionEx<RecommendedHabit>();
+        
+#if ANDROID
+        UserGoals = new ObservableCollectionEx<UserGoal>();
+        AllUserAreasOfLife = new ObservableCollectionEx<UserAreaOfLife>();
+#endif
+        
+        return Task.CompletedTask;
     }
 
     private void NameOfHabitOnPropertyChanging( object? sender, System.ComponentModel.PropertyChangingEventArgs e )
@@ -400,11 +363,6 @@ public partial class EditHabitViewModel : BaseViewModel
         }
 
         return selectedDaysIndexes;
-    }
-
-    public void NotifyPropertyChanged( string propertyName )
-    {
-        OnPropertyChanged( propertyName );
     }
     
     public void ResetDaysOfWeek()

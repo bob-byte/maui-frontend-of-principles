@@ -13,11 +13,9 @@ namespace Principles.Messages;
 /// </summary>
 public class HabitSavedMessage : ValueChangedMessage<UserHabit>
 {
-    public HabitSavedMessage(UserHabit userHabit, IEnumerable<UserHabit> prioterizedHabits)
+    public HabitSavedMessage(UserHabit userHabit)
         : base( userHabit )
     {
-        PrioterizedHabits = prioterizedHabits;
+        
     }
-
-    public IEnumerable<UserHabit> PrioterizedHabits { get; }
 }

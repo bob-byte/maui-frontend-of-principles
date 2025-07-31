@@ -24,6 +24,11 @@ public class ScoreList
         return value;
     }
 
+    public IEnumerable<Score> GetAll()
+    {
+        return m_scores.Values;
+    }
+    
     public void Recompute( int complexity, FrequencyOfHabit frequency, ListOfProgressOfHabit progressList, DateOnly from, DateOnly to )
     {
         m_scores.Clear();

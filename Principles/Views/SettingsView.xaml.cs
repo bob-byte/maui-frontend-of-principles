@@ -21,8 +21,7 @@ public partial class SettingsView : ContentPageBase
         m_multilineEdits = new List<(MultilineEdit Control, string LanguageCode)>
         {
             (ME_English, "en"),
-            (ME_Ukrainian, "uk"),
-            (ME_Russian, "ru")
+            (ME_Ukrainian, "uk")
         };
        
         CheckAndHideRussianLanguage();
@@ -43,51 +42,18 @@ public partial class SettingsView : ContentPageBase
     }
     private void CheckAndHideRussianLanguage()
     {
-        TimeZoneInfo userTimeZone = TimeZoneInfo.Local;
-        bool isKyivTimezone = userTimeZone.Id.Contains( "Europe/Kiev" );
-        
-        MultilineEdit russianME = ME_Russian;
-        
-        if (ViewModel.SettingsService.NormalPageHeight == 0)
-        {
-            double halfExpandedRatio;
-            if (isKyivTimezone)
-            {
-                russianME.IsVisible = false;
-                halfExpandedRatio = 0.35;
-            }
-            else
-            {
-                halfExpandedRatio = 0.45;
-            }
+        double heightOfBottomSheet = 300;
             
-            BS_ChangeLanguage.HalfExpandedRatio = halfExpandedRatio;
-        }
-        else
-        {
-            double heightOfBottomSheet;
-
-            if (isKyivTimezone)
-            {
-                russianME.IsVisible = false;
-                heightOfBottomSheet = 300;
-            }
-            else
-            {
-                heightOfBottomSheet = 365;
-            }
-            
-            //bottom_sheet_height = full_height * HalfExpandedRatio
-            //HalfExpandedRatio = bottom_sheet_height / full_height
-            BS_ChangeLanguage.HalfExpandedRatio = heightOfBottomSheet / ViewModel.SettingsService.NormalPageHeight;
-        }
+        //bottom_sheet_height = full_height * HalfExpandedRatio
+        //HalfExpandedRatio = bottom_sheet_height / full_height
+        BS_ChangeLanguage.HalfExpandedRatio = heightOfBottomSheet / ViewModel.SettingsService.NormalPageHeight;
     }
 
     private void SB_ChangeLanguage_Clicked( object sender, EventArgs e )
     {
-        string currentLanguage = Preferences.Get( "AppLanguage", null )?.Split( '-' )[0];
+        string? currentLanguage = Preferences.Get( "AppLanguage", null )?.Split( '-' )[0];
 
-        if (!m_multilineEdits.Any( item => item.LanguageCode == currentLanguage ))
+        if (m_multilineEdits.All( item => item.LanguageCode != currentLanguage ))
         {
             currentLanguage = "en";
         }
@@ -128,6 +94,7 @@ public partial class SettingsView : ContentPageBase
                 await Task.Delay( 200 );
 
                 ViewModel.ChangeLanguageCommand.Execute( codeOfSelectedLanguage );
+                await ViewModel.TipService.ShowToastAsync( LocStrings.InterfaceLanguageSuccessfullyChanged, TipDuration.Short );
             }
         }
     }

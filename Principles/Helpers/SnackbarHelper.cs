@@ -14,7 +14,7 @@ public static class SnackbarHelper
         Color buttonTextColor;
         Color bgColor;
         Color textColor;
-        if (Application.Current.UserAppTheme == AppTheme.Dark)
+        if (Application.Current!.UserAppTheme == AppTheme.Dark)
         {
             buttonTextColor = (Color)Application.Current.Resources["LightNormalText"];
             bgColor = (Color)Application.Current.Resources["DarkPrimary"];
@@ -31,7 +31,8 @@ public static class SnackbarHelper
         {
             ActionButtonTextColor = buttonTextColor,
             BackgroundColor = bgColor,
-            TextColor = textColor
+            TextColor = textColor,
+            CornerRadius = 8
         };
         return result;
     }

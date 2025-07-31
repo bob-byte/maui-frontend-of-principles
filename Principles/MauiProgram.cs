@@ -11,6 +11,9 @@ using SkiaSharp.Views.Maui.Controls.Hosting;
 using DevExpress.Maui.Editors.Internal;
 
 using System.Reflection;
+using LiveChartsCore.SkiaSharpView.Maui;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
 
 #if IOS
 using Microsoft.Maui.Platform;
@@ -32,6 +35,8 @@ public static class MauiProgram
 
         builder
             .UseMauiApp<App>()
+            .UseSkiaSharp()
+            .UseLiveCharts()
             .UseDevExpressControls()
             .UseDevExpressEditors()
             .UseDevExpressCollectionView()
@@ -40,7 +45,6 @@ public static class MauiProgram
             .UseLocalNotification()
             .UseMauiCommunityToolkit()
             .UseMauiCommunityToolkitMarkup()
-            .UseSkiaSharp()
             .ConfigureEssentials(essentials =>
             {
                 essentials.UseVersionTracking();
@@ -110,21 +114,26 @@ public static class MauiProgram
         services.AddSingleton<IDialogService, DialogService>();
         services.AddSingleton<ILaunchUriHelper, LaunchUriHelper>();
         services.AddSingleton<IReminderService, ReminderService>();
+        services.AddSingleton<ITipService, TipService>();
 
         return services;
     }
 
     public static IServiceCollection RegisterViewModels( this IServiceCollection services )
     {
-        services.AddTransient<LoginViewModel>();
-        services.AddTransient<SignupViewModel>();
-        services.AddTransient<SettingsViewModel>();
+        services.AddSingleton<LoginViewModel>();
+        services.AddSingleton<SignupViewModel>();
+        services.AddSingleton<SettingsViewModel>();
         services.AddSingleton<HelperViewModel>();
-        services.AddTransient<ProgressOfHabitsViewModel>();
-        services.AddTransient<EditHabitViewModel>();
-        services.AddTransient<ProfileViewModel>();
-        services.AddTransient<ForgetPasswordViewModel>();
-        services.AddTransient<StartupViewModel>();
+        services.AddSingleton<ProgressOfHabitsViewModel>();
+        services.AddSingleton<EditHabitViewModel>();
+        services.AddSingleton<ProfileViewModel>();
+        services.AddSingleton<ForgetPasswordViewModel>();
+        services.AddSingleton<StartupViewModel>();
+        services.AddSingleton<MultipleActionPopupViewModel>();
+        services.AddSingleton<ChangePasswordViewModel>();
+        services.AddSingleton<ConfirmEmailPopupViewModel>();
+        services.AddSingleton<HabitDetailViewModel>();
 
         return services;
     }
@@ -140,6 +149,8 @@ public static class MauiProgram
         services.AddTransient<ProfileView>();
         services.AddTransient<ForgetPasswordView>();
         services.AddTransient<StartupView>();
+        services.AddTransient<HabitDetailView>();
+        services.AddTransient<ChangePasswordView>();
 
         return services;
     }
@@ -166,6 +177,14 @@ public static class MauiProgram
     {
         IDeviceInfo deviceInfo = DeviceInfo.Current;
         IAppInfo appInfo = AppInfo.Current;
+        
+        string? stackTrace = null;
+        if (logEvent.Exception is not null)
+        {
+            string exception = logEvent.Exception.ToString();
+            int indexOfFirstNewLine = exception.IndexOf( Environment.NewLine, StringComparison.Ordinal );
+            stackTrace = exception.Substring( indexOfFirstNewLine );
+        }
 
         SaveLogRequest result = new(
             DeviceOs: $"{deviceInfo.Platform} {deviceInfo.VersionString}",
@@ -175,7 +194,7 @@ public static class MauiProgram
             AppVersion: appInfo.VersionString,
             LogType: logEvent.Level.ToString(),
             LogMessage: logEvent.MessageTemplate.Text,
-            StackTrace: logEvent.Exception?.StackTrace
+            StackTrace: stackTrace
         );
         return result;
     }

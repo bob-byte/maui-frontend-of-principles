@@ -1,0 +1,50 @@
+﻿<toolkit:Popup x:Class="Principles.Views.ConfirmEmailPopup"
+               xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:controls="clr-namespace:Principles.Controls"
+               xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
+               xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+               xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
+               xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+               xmlns:loc="clr-namespace:Principles.Resources.AppStrings"
+               xmlns:m="clr-namespace:Principles.Core.Models;assembly=Principles.Core"
+               xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+               xmlns:templates="clr-namespace:Principles.Views.Templates"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               xmlns:v="clr-namespace:Principles.Views"
+               xmlns:vm="clr-namespace:Principles.ViewModels"
+               x:DataType="vm:ConfirmEmailPopupViewModel"
+               Color="Transparent">
+    <Grid x:Name="G_Popup">
+        <Frame Padding="10"
+               BackgroundColor="White"
+               CornerRadius="20"
+               HasShadow="True">
+            <Grid>
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="{Binding LocManager[ConfirmationPasswordChangeLabel]}"
+                           FontAttributes="Bold"
+                           FontSize="16"
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center" />
+                    <dxe:MultilineEdit x:Name="ME_ConfirmationCode"
+                                       Text="{Binding ConfirmationCodeByUser}"
+                                       ClearIconVisibility="Never"
+                                       Keyboard="Numeric"
+                                       MaxLineCount="1"
+                                       TextFontSize="16"
+                                       TextHorizontalAlignment="Center" />
+                    <dxco:SimpleButton x:Name="SB_ChangePassword"
+                                       Text="{Binding LocManager[ConfirmPasswordChangeButton]}"
+                                       Clicked="SB_ChangePassword_Clicked"
+                                       Style="{StaticResource PrimaryButton}"
+                                       Margin="0,0,0,0"
+                                       FontSize="16"
+                                       HorizontalOptions="End" />
+                </VerticalStackLayout>
+
+                <templates:DefaultActivityIndicator />
+            </Grid>
+        </Frame>
+    </Grid>
+</toolkit:Popup>

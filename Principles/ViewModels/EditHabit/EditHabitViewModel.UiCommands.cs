@@ -59,7 +59,7 @@ public partial class EditHabitViewModel
     private Task TapComplexityInfoAsync( VisualElement visualElement )
     {
         return visualElement.DisplaySnackbar(
-            LocStrings.ComplexityHelpText,
+            LocStrings.ComplexityInfoText,
             duration: TimeSpan.FromSeconds( 6 ),
             visualOptions: SnackbarHelper.DefaultOptions()
         );

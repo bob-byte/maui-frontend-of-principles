@@ -23,7 +23,7 @@ public partial class EditHabitViewModel
                     RecommendedHabits.Clear();
                 }
 
-                IEnumerable<UserHabit> userHabits = UserHabits.Where( u => u.Id > 0 );
+                IEnumerable<UserHabit> userHabits = ServiceOfHabit.StoredUserHabits!.Where( u => u.Id > 0 );
                 List<RecommendedHabit> recommendedHabits = await AiRecommenderOfHabits.RecommendedHabitsAsync(
                     userHabits,
                     Habit.AreasOfLife!,

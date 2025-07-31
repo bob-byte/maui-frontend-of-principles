@@ -12,6 +12,7 @@
                        xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                        xmlns:views="clr-namespace:Principles.Views"
                        xmlns:vm="clr-namespace:Principles.ViewModels"
+                       x:Name="CPB_Page"
                        x:DataType="vm:ProfileViewModel">
     <Shell.TitleView>
         <Grid Margin="0,0,5,0"
@@ -19,22 +20,22 @@
               VerticalOptions="CenterAndExpand">
             <Label x:Name="L_Profile"
                    Text="{Binding LocManager[Profile]}"
+                   HeightRequest="50"
                    FontAttributes="Bold"
                    FontSize="20"
-                   Grid.Column="0"
-                   HeightRequest="50"
                    HorizontalOptions="Start"
                    TextColor="{StaticResource TitleTextColor}"
                    VerticalOptions="Center"
-                   VerticalTextAlignment="Center" />
+                   VerticalTextAlignment="Center"
+                   Grid.Column="0" />
             <dx:DXImage Source="settings"
-                        Margin="65,0,0,0"
-                        Grid.Column="2"
+                        WidthRequest="40"
                         HeightRequest="40"
+                        Margin="65,0,0,0"
                         HorizontalOptions="End"
                         TintColor="{StaticResource TitleTextColor}"
                         VerticalOptions="Center"
-                        WidthRequest="40">
+                        Grid.Column="2">
                 <dx:DXImage.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding GoToSettingsCommand}"
                                           NumberOfTapsRequired="1" />
@@ -56,33 +57,33 @@
                 <Grid Margin="0,0,0,0"
                       Padding="0"
                       ColumnSpacing="0"
-                      Grid.Column="0"
-                      RowSpacing="0">
-                    <Frame Margin="0"
+                      RowSpacing="0"
+                      Grid.Column="0">
+                    <Frame WidthRequest="48"
+                           HeightRequest="48"
+                           Margin="0"
                            Padding="0"
                            BackgroundColor="{StaticResource DarkEditControlBackColor}"
                            CornerRadius="24"
                            HasShadow="False"
-                           HeightRequest="48"
                            HorizontalOptions="Center"
                            IsClippedToBounds="True"
-                           VerticalOptions="Center"
-                           WidthRequest="48">
+                           VerticalOptions="Center">
                         <Image Source="{Binding Gender, Converter={StaticResource GenderToIcon}}" />
                     </Frame>
 
-                    <Ellipse Fill="Transparent"
+                    <Ellipse WidthRequest="50"
                              HeightRequest="50"
+                             Fill="Transparent"
                              HorizontalOptions="Center"
                              Stroke="White"
                              StrokeThickness="2"
-                             VerticalOptions="Center"
-                             WidthRequest="50" />
+                             VerticalOptions="Center" />
                 </Grid>
 
                 <dxe:TextEdit x:Name="TE_UserName"
-                              Text="{Binding UserName.Value}"
                               LabelText="{Binding LocManager[UserName]}"
+                              Text="{Binding UserName.Value}"
                               Margin="0,2"
                               ClearIconVisibility="Never"
                               EndIcon="check_third"
@@ -91,17 +92,17 @@
                               ErrorText="{Binding UserName.Errors,
                                                   Converter={StaticResource FirstValidationError}}"
                               Focused="TRG_UserName_Focused"
-                              Grid.Column="1"
                               HasError="{Binding UserName.IsValid,
                                                  Converter={StaticResource IsFalse}}"
                               IsEndIconVisible="{Binding UserName.IsValid}"
                               IsReadOnly="True"
-                              TextChangedCommand="{Binding ValidateUserNameCommand}" />
+                              TextChangedCommand="{Binding ValidateUserNameCommand}"
+                              Grid.Column="1" />
             </Grid>
 
             <dxe:MultilineEdit x:Name="ME_Email"
-                               Text="{Binding Email}"
                                LabelText="{Binding LocManager[Email]}"
+                               Text="{Binding Email}"
                                Margin="0,2"
                                ClearIconVisibility="Never"
                                EndIcon="check_third"
@@ -110,8 +111,8 @@
                                IsReadOnly="True" />
 
             <dxe:MultilineEdit x:Name="ME_MainSlogan"
-                               Text="{Binding MainSlogan}"
                                LabelText="{Binding LocManager[MainSlogan]}"
+                               Text="{Binding MainSlogan}"
                                Margin="0,2"
                                ClearIconVisibility="Never"
                                EndIcon="info"
@@ -121,8 +122,8 @@
                                IsReadOnly="True" />
 
             <dxe:MultilineEdit x:Name="ME_Mision"
-                               Text="{Binding Mission}"
                                LabelText="{Binding LocManager[Mission]}"
+                               Text="{Binding Mission}"
                                Margin="0,2"
                                ClearIconVisibility="Never"
                                EndIcon="info"
@@ -154,20 +155,20 @@
                     <HorizontalStackLayout HorizontalOptions="End">
                         <dxco:SimpleButton x:Name="SB_Cancel"
                                            Text="{Binding LocManager[Cancel]}"
+                                           Clicked="SB_Cancel_Clicked"
                                            Icon="close"
+                                           IconHorizontalPosition="Left"
                                            Margin="0,0,5,5"
                                            BackgroundColor="{StaticResource CancelButtonColor}"
-                                           Clicked="SB_Cancel_Clicked"
-                                           FontSize="16"
-                                           IconHorizontalPosition="Left" />
+                                           FontSize="16" />
                         <dxco:SimpleButton x:Name="SB_Save"
-                                           Style="{StaticResource PrimaryButton}"
                                            Text="{Binding LocManager[Save]}"
-                                           Icon="check_second"
-                                           Margin="0,0,5,5"
                                            Clicked="SB_Save_Clicked"
-                                           FontSize="16"
-                                           IconHorizontalPosition="Left" />
+                                           Style="{StaticResource PrimaryButton}"
+                                           Icon="check_second"
+                                           IconHorizontalPosition="Left"
+                                           Margin="0,0,5,5"
+                                           FontSize="16" />
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
             </dxco:DXPopup>
@@ -183,21 +184,38 @@
                           CornerRadius="5"
                           MinimumWidthRequest="200"
                           VerticalOptions="End">
-
-                <Grid ColumnDefinitions="85*, 15*">
-                    <Label x:Name="L_TipText"
-                           Padding="10"
-                           Grid.Column="0"
-                           TextColor="Black"
-                           VerticalOptions="Center" />
-                    <Button Text="{Binding LocalizationResourceManager[OK],
+                <Grid ColumnDefinitions="85*, 15*"
+                      VerticalOptions="Center">
+                    <Grid VerticalOptions="Center"
+                          Grid.Column="0">
+                        <OnPlatform x:TypeArguments="View">
+                            <On Platform="iOS">
+                                <Editor x:Name="E_TipText"
+                                        Margin="10"
+                                        BackgroundColor="{StaticResource LightPrimary}"
+                                        IsReadOnly="True"
+                                        TextColor="Black"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                            </On>
+                            <On Platform="Android">
+                                <Label x:Name="L_TipText"
+                                       Padding="10"
+                                       BackgroundColor="{StaticResource LightPrimary}"
+                                       TextColor="Black"
+                                       VerticalOptions="Center"
+                                       VerticalTextAlignment="Center" />
+                            </On>
+                        </OnPlatform>
+                    </Grid>
+                    <Button Text="{Binding LocManager[OK],
                                            Mode=OneWay}"
-                            BackgroundColor="Transparent"
                             Clicked="B_Ok_Clicked"
-                            Grid.Column="1"
+                            BackgroundColor="Transparent"
                             HorizontalOptions="End"
                             TextColor="White"
-                            VerticalOptions="Center" />
+                            VerticalOptions="Center"
+                            Grid.Column="1" />
                 </Grid>
             </dxco:DXPopup>
 
@@ -214,13 +232,15 @@
                     <Label x:Name="L_CantEdit"
                            Text="{Binding LocManager[FieldIsNotEditable]}"
                            Margin="10,10,0,0"
+                           LineBreakMode="TailTruncation"
+                           MaxLines="10"
                            FontSize="20"
                            VerticalOptions="Center" />
                     <dxco:SimpleButton x:Name="SB_ChangeEmail"
                                        Text="{Binding LocManager[OK]}"
+                                       Clicked="SB_ChangeEmail_Clicked"
                                        Style="{StaticResource PrimaryButton}"
                                        Margin="0,10,10,10"
-                                       Clicked="SB_ChangeEmail_Clicked"
                                        FontSize="16"
                                        HorizontalOptions="End"
                                        VerticalOptions="Center" />

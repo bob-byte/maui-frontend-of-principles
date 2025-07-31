@@ -1,0 +1,9 @@
+﻿<Label x:Class="Principles.Views.Templates.NonYesCellTemplate"
+       xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:dx="http://schemas.devexpress.com/maui"
+       Text="{Binding DisplayText}"
+       x:DataType="dx:CalendarCellData"
+       HorizontalTextAlignment="Center"
+       VerticalTextAlignment="Center"
+       TextDecorations="{Binding Date, Converter={StaticResource DateToTextDecorations}}" />

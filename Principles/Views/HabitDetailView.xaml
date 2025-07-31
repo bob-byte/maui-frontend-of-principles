@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<v:ContentPageBase x:Class="Principles.Views.HabitDetailView"
+                   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                   xmlns:controls="clr-namespace:Principles.Controls"
+                   xmlns:converters="clr-namespace:Principles.Converters;assembly=Principles"
+                   xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
+                   xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+                   xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
+                   xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+                   xmlns:loc="clr-namespace:Principles.Resources.AppStrings"
+                   xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
+                   xmlns:m="clr-namespace:Principles.Core.Models;assembly=Principles.Core"
+                   xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+                   xmlns:templates="clr-namespace:Principles.Views.Templates"
+                   xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+                   xmlns:v="clr-namespace:Principles.Views"
+                   xmlns:vm="clr-namespace:Principles.ViewModels"
+                   x:DataType="vm:HabitDetailViewModel"
+                   Shell.TabBarIsVisible="False">
+
+    <Shell.TitleView>
+        <Grid x:Name="G_Title"
+              Margin="0,0,5,0"
+              ColumnDefinitions="Auto, *, Auto"
+              SizeChanged="G_Title_SizeChanged"
+              VerticalOptions="Center">
+            <Label x:Name="L_TitleText"
+                   Text="{Binding Habit.Name}"
+                   FontAttributes="Bold"
+                   FontSize="20"
+                   Grid.Column="0"
+                   HeightRequest="50"
+                   HorizontalOptions="Start"
+                   LineBreakMode="TailTruncation"
+                   MaxLines="1"
+                   TextColor="{StaticResource TitleTextColor}"
+                   VerticalOptions="Center"
+                   VerticalTextAlignment="Center" />
+
+            <dx:DXImage x:Name="DXI_ArchiveHabit"
+                        Source="archive_habit"
+                        Margin="3,0,0,0"
+                        Grid.Column="1"
+                        HeightRequest="35"
+                        HorizontalOptions="End"
+                        IsVisible="{Binding Habit.IsArchived, Converter={StaticResource IsFalse}}"
+                        TintColor="{StaticResource TitleTextColor}"
+                        VerticalOptions="Center"
+                        WidthRequest="35">
+                <dx:DXImage.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ArchiveHabitCommand}"
+                                          NumberOfTapsRequired="1" />
+                </dx:DXImage.GestureRecognizers>
+            </dx:DXImage>
+
+            <dx:DXImage x:Name="DXI_DeleteHabit"
+                        Source="delete_solid"
+                        Margin="3,0,0,0"
+                        Grid.Column="2"
+                        HeightRequest="30"
+                        HorizontalOptions="End"
+                        TintColor="{StaticResource TitleTextColor}"
+                        VerticalOptions="Center"
+                        WidthRequest="40">
+                <dx:DXImage.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding DeleteHabitCommand}"
+                                          NumberOfTapsRequired="1" />
+                </dx:DXImage.GestureRecognizers>
+            </dx:DXImage>
+        </Grid>
+    </Shell.TitleView>
+
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout>
+                <ScrollView Orientation="Horizontal"
+                            HorizontalScrollBarVisibility="Never"
+                            HorizontalOptions="Center">
+                    <HorizontalStackLayout Margin="5,15,5,0"
+                                      Padding="0"
+                                      HorizontalOptions="Center"
+                                      Spacing="5"
+                                      VerticalOptions="Center">
+                        <Frame Padding="14,8"
+                               BackgroundColor="{StaticResource LightPrimary}"
+                               CornerRadius="{OnPlatform Android=24,
+                                                         iOS=17}"
+                               HasShadow="False"
+                               VerticalOptions="Center">
+                            <HorizontalStackLayout Spacing="10"
+                                                   VerticalOptions="Center">
+                                <dx:DXImage Source="scheduler"
+                                            HeightRequest="24"
+                                            TintColor="{StaticResource TitleTextColor}"
+                                            VerticalOptions="Center"
+                                            WidthRequest="24" />
+                                <Label Text="{Binding FrequencyRepresentation}"
+                                       FontAttributes="Bold"
+                                       FontSize="14"
+                                       TextColor="White"
+                                       VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </Frame>
+
+                        <Frame Padding="14,8"
+                               BackgroundColor="{StaticResource LightPrimary}"
+                               CornerRadius="{OnPlatform Android=24,
+                                                         iOS=17}"
+                               HasShadow="False"
+                               IsVisible="{Binding EditedReminder.IsEnabled}"
+                               VerticalOptions="Center">
+                            <HorizontalStackLayout Spacing="10"
+                                                   VerticalOptions="Center">
+                                <dx:DXImage Source="clock"
+                                            HeightRequest="24"
+                                            TintColor="{StaticResource TitleTextColor}"
+                                            VerticalOptions="Center"
+                                            WidthRequest="24" />
+                                <Label Text="{Binding EditedReminder, Converter={StaticResource ReminderValueToString}}"
+                                       FontAttributes="Bold"
+                                       FontSize="14"
+                                       TextColor="White"
+                                       VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </Frame>
+                    </HorizontalStackLayout>
+                </ScrollView>
+
+                <VerticalStackLayout Padding="10"
+                                     Spacing="5">
+                    <Label Text="{Binding LocManager[OverallProgress]}"
+                           FontAttributes="Bold"
+                           FontSize="18" />
+
+                    <Frame Padding="10"
+                           BorderColor="Gray"
+                           CornerRadius="10">
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="{Binding Habit.PercentageAchieved, Converter={StaticResource ProgressToInt32}, StringFormat='{0}%'}"
+                                   FontAttributes="Bold"
+                                   FontSize="22" />
+
+                            <ProgressBar BackgroundColor="LightGray"
+                                         HeightRequest="8"
+                                         Progress="{Binding Habit.PercentageAchieved}"
+                                         ProgressColor="{StaticResource Primary}" />
+
+                            <Grid Padding="5"
+                                  ColumnDefinitions="*,*">
+                                <HorizontalStackLayout Grid.Column="0"
+                                                       HorizontalOptions="Start"
+                                                       Spacing="4">
+                                    <Label>
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding LocManager[NumberOfExecution]}"
+                                                      FontSize="12"
+                                                      FontAttributes="Bold" />
+                                                <Span Text=":"
+                                                      FontSize="12"
+                                                      FontAttributes="Bold" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    <Label Text="{Binding CompletedDays}"
+                                           FontSize="12"
+                                           FontAttributes="Bold" />
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Grid.Column="1"
+                                                       HorizontalOptions="End"
+                                                       Spacing="4">
+                                    <Label>
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding LocManager[LongestStreak]}"
+                                                      FontSize="12"
+                                                      FontAttributes="Bold" />
+                                                <Span Text=":"
+                                                      FontSize="12"
+                                                      FontAttributes="Bold" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    <Label Text="{Binding LongestStreak}"
+                                           FontSize="12"
+                                           FontAttributes="Bold" />
+                                </HorizontalStackLayout>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Frame>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout x:Name="VSL_WithCalendar"
+                                     Padding="10"
+                                     Spacing="10">
+                    <HorizontalStackLayout Spacing="8"
+                                           VerticalOptions="Center">
+                        <Label Text="{Binding LocManager[TopFiveStreaks]}"
+                               FontAttributes="Bold"
+                               FontSize="18"
+                               VerticalOptions="Center" />
+                        <ImageButton Source="info"
+                                     Command="{Binding ShowStreakTipCommand}" />
+                    </HorizontalStackLayout>
+
+                    <lvc:CartesianChart x:Name="CC_Streaks"
+                                        HeightRequest="300"
+                                        Series="{Binding StreakSeries}"
+                                        XAxes="{Binding StreakXAxes}"
+                                        YAxes="{Binding StreakYAxes}" />
+
+                    <HorizontalStackLayout Spacing="8"
+                                           VerticalOptions="Center">
+                        <Label Text="{Binding LocManager[Stability]}"
+                               FontAttributes="Bold"
+                               FontSize="18"
+                               VerticalOptions="Center" />
+                        <ImageButton Source="info"
+                                     Command="{Binding StabilityInfoCommand}" />
+
+                    </HorizontalStackLayout>
+
+                    <lvc:CartesianChart x:Name="CC_Stability"
+                                        Padding="0"
+                                        HeightRequest="300"
+                                        Series="{Binding Series}"
+                                        XAxes="{Binding XAxes}"
+                                        YAxes="{Binding YAxes}" />
+
+                    <HorizontalStackLayout Spacing="8"
+                                           VerticalOptions="Center">
+                        <Label Text="{Binding LocManager[HabitByDayweeks]}"
+                               FontAttributes="Bold"
+                               FontSize="18"
+                               VerticalOptions="Center" />
+                        <ImageButton Source="info"
+                                     Command="{Binding HabitByDayWeeksCommand}" />
+                    </HorizontalStackLayout>
+
+                    <lvc:CartesianChart x:Name="CC_HabitByWeekDays"
+                                        HeightRequest="300"
+                                        Series="{Binding HabitExecutionSeries}"
+                                        XAxes="{Binding HabitExecutionXAxes}"
+                                        YAxes="{Binding HabitExecutionYAxes}" />
+
+                    <HorizontalStackLayout Spacing="8">
+                        <Label Text="{Binding LocManager[Calendar]}"
+                               FontAttributes="Bold"
+                               FontSize="18"
+                               VerticalOptions="Center" />
+
+                        <ImageButton Source="info"
+                                     Command="{Binding CalendarInfoCommand}" />
+                    </HorizontalStackLayout>
+
+                    <dxe:DXCalendar x:Name="DX_Calendar"
+                                    Background="#F0F0F0"
+                                    FirstDayOfWeek="Monday">
+                        <dxe:DXCalendar.HeaderAppearance>
+                            <dxe:CalendarHeaderAppearance BackgroundColor="{StaticResource Primary}" />
+                        </dxe:DXCalendar.HeaderAppearance>
+                        <dxe:DXCalendar.DayCellTemplate>
+                            <templates:CalendarCellTemplateSelector />
+                        </dxe:DXCalendar.DayCellTemplate>
+                    </dxe:DXCalendar>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <toolkit:Expander Margin="0,0,15,15"
+                          HorizontalOptions="End"
+                          VerticalOptions="End">
+            <toolkit:Expander.Header>
+                <Frame Padding="0"
+                       BackgroundColor="{StaticResource Primary}"
+                       CornerRadius="{OnPlatform Android=35,
+                                                 iOS=25}"
+                       HeightRequest="55"
+                       WidthRequest="55">
+                    <Frame.Shadow>
+                        <Shadow Opacity="0.3"
+                                Radius="12"
+                                Offset="0,6">
+                            <Shadow.Brush>
+                                <Color>	#0066FF</Color>
+                            </Shadow.Brush>
+                        </Shadow>
+                    </Frame.Shadow>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding EditHabitCommand}"
+                                              NumberOfTapsRequired="1" />
+                    </Frame.GestureRecognizers>
+                    <dx:DXImage Source="edit"
+                                HeightRequest="30"
+                                TintColor="White"
+                                WidthRequest="30">
+                        <dx:DXImage.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding EditHabitCommand}"
+                                                  NumberOfTapsRequired="1" />
+                        </dx:DXImage.GestureRecognizers>
+                    </dx:DXImage>
+                </Frame>
+            </toolkit:Expander.Header>
+        </toolkit:Expander>
+
+        <templates:DefaultActivityIndicator />
+    </Grid>
+</v:ContentPageBase>

@@ -32,7 +32,9 @@ public class UrlBuilder : IUrlBuilder
     private string? m_allReminders;
     private string? m_appleAuth;
     private string? m_apiKey;
-    private string? m_sync;
+    private string? m_habitArchiveStatus;
+    private string? m_archive;
+    private string? m_progresses;
 
     public string BaseUrl
     {
@@ -91,6 +93,32 @@ public class UrlBuilder : IUrlBuilder
         {
             m_habitsPriorities ??= Combine( BaseApiUrl, "habits", "priorities" );
             return m_habitsPriorities;
+        }
+    }
+    public string Archive
+    {
+        get
+        {
+            m_archive ??= Combine( BaseApiUrl, "habits", "archive" );
+            return m_archive;
+        }
+    }
+
+    public string HabitArchiveStatus
+    {
+        get
+        {
+            m_habitArchiveStatus ??= Combine( BaseApiUrl, "habits", "archivestatus" );
+            return m_habitArchiveStatus;
+        }
+    }
+
+    public string Progresses
+    {
+        get
+        {
+            m_progresses ??= Combine( BaseApiUrl, "habits", "progresses" );
+            return m_progresses;
         }
     }
 
@@ -253,15 +281,6 @@ public class UrlBuilder : IUrlBuilder
         {
             m_appleAuth ??= Combine( BaseApiUrl, "account", "appleauthorization" );
             return m_appleAuth;
-        }
-    }
-
-    public string Sync
-    {
-        get
-        {
-            m_sync ??= Combine( BaseApiUrl, "sync", "users" );
-            return m_sync;
         }
     }
 
