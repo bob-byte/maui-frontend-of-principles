@@ -22,13 +22,17 @@
                    Shell.NavBarIsVisible="True">
     <Shell.TitleView>
         <Grid Margin="0,0,10,0"
-              ColumnDefinitions="Auto, Auto, *, Auto, Auto, Auto"
+              ColumnDefinitions="Auto, Auto, *, Auto, Auto, Auto, Auto"
               VerticalOptions="CenterAndExpand">
+
             <dx:DXImage Source="fire_seventh"
                         Grid.Column="0"
                         HeightRequest="35"
+                        HorizontalOptions="End"
                         TintColor="{StaticResource DarkIconColor}"
-                        WidthRequest="35" />
+                        WidthRequest="35">
+            </dx:DXImage>
+
             <Label x:Name="L_MyHabits"
                    Text="{Binding LocManager[MyHabits]}"
                    FontAttributes="Bold"
@@ -40,8 +44,29 @@
                    VerticalOptions="Center"
                    VerticalTextAlignment="Center" />
 
-            <dx:DXImage Source="reminder_third"
+            <Label Text="{Binding UserHabits, Converter={StaticResource UserHabitsToStreak}}"
+                   FontAttributes="Bold"
+                   FontSize="20"
+                   Grid.Column="2"
+                   HeightRequest="50"
+                   HorizontalOptions="End"
+                   TextColor="{StaticResource TitleTextColor}"
+                   VerticalOptions="Center"
+                   VerticalTextAlignment="Center" />
+
+            <dx:DXImage Source="fire_first"
                         Grid.Column="3"
+                        HeightRequest="35"
+                        HorizontalOptions="End"
+                        TintColor="{StaticResource DarkIconColor}"
+                        WidthRequest="35">
+                <dx:DXImage.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding HabitStreakInfoCommand}"/>
+                </dx:DXImage.GestureRecognizers>
+            </dx:DXImage>
+
+            <dx:DXImage Source="reminder_third"
+                        Grid.Column="4"
                         HeightRequest="45"
                         HorizontalOptions="End"
                         IsVisible="{Binding SelectedHabit, Converter={StaticResource IsNull}}"
@@ -56,7 +81,7 @@
 
             <dx:DXImage Source="edit_solid"
                         Margin="0,0,0,0"
-                        Grid.Column="3"
+                        Grid.Column="4"
                         HeightRequest="30"
                         HorizontalOptions="End"
                         IsVisible="{Binding SelectedHabit, Converter={StaticResource IsNotNull}}"
@@ -73,7 +98,7 @@
             <dx:DXImage Source="archive"
                         IsVisible="{Binding SelectedHabit, Converter={StaticResource IsNull}}"
                         Margin="3,0,0,0"
-                        Grid.Column="4"
+                        Grid.Column="5"
                         HeightRequest="35"
                         HorizontalOptions="End"
                         TintColor="{StaticResource TitleTextColor}"
@@ -88,7 +113,7 @@
             <dx:DXImage Source="archive_habit"
                         IsVisible="{Binding SelectedHabit, Converter={StaticResource IsNotNull}}"
                         Margin="3,0,0,0"
-                        Grid.Column="4"
+                        Grid.Column="5"
                         HeightRequest="35"
                         HorizontalOptions="End"
                         TintColor="{StaticResource TitleTextColor}"
@@ -102,7 +127,7 @@
             
             <dx:DXImage Source="delete_solid"
                         Margin="3,0,0,0"
-                        Grid.Column="5"
+                        Grid.Column="6"
                         HeightRequest="30"
                         HorizontalOptions="End"
                         IsVisible="{Binding SelectedHabit, Converter={StaticResource IsNotNull}}"

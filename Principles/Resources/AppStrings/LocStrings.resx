@@ -687,7 +687,7 @@
   <data name="ChatWithHelperDescription" xml:space="preserve">
     <value>Get answers to various questions from an assistant who will take into account your mission, habits etc.</value>
   </data>
-	<data name="BecomeTruePersonalityTitle" xml:space="preserve">
+  <data name="BecomeTruePersonalityTitle" xml:space="preserve">
     <value>Become a real personality</value>
   </data>
   <data name="BecomeTruePersonalityDescription" xml:space="preserve">
@@ -753,27 +753,27 @@
   <data name="EmptyReminders" xml:space="preserve">
     <value>You don't have any reminders for this habit yet</value>
   </data>
-	<data name="Monday" xml:space="preserve">
+  <data name="Monday" xml:space="preserve">
     <value>Mon</value>
-</data>
-	<data name="Tuesday" xml:space="preserve">
+  </data>
+  <data name="Tuesday" xml:space="preserve">
     <value>Tue</value>
-</data>
-	<data name="Wednesday" xml:space="preserve">
+  </data>
+  <data name="Wednesday" xml:space="preserve">
     <value>Wed</value>
-</data>
-	<data name="Thursday" xml:space="preserve">
+  </data>
+  <data name="Thursday" xml:space="preserve">
     <value>Thu</value>
-</data>
-	<data name="Friday" xml:space="preserve">
+  </data>
+  <data name="Friday" xml:space="preserve">
     <value>Fri</value>
-</data>
-	<data name="Saturday" xml:space="preserve">
+  </data>
+  <data name="Saturday" xml:space="preserve">
     <value>Sat</value>
-</data>
-	<data name="Sunday" xml:space="preserve">
+  </data>
+  <data name="Sunday" xml:space="preserve">
     <value>Sun</value>
-</data>
+  </data>
   <data name="DeviceDoesNotSupportNotifications" xml:space="preserve">
     <value>Oops.. It looks like your operating system doesn't support notifications. Please try updating it.</value>
   </data>
@@ -813,16 +813,16 @@
   <data name="JoinOurTelegram" xml:space="preserve">
     <value>Join our Telegram channel</value>
   </data>
-    <data name="TryAgain" xml:space="preserve">
+  <data name="TryAgain" xml:space="preserve">
     <value>Try again in</value>
   </data>
-    <data name="SecondsInShort" xml:space="preserve">
-		<value>s</value>
+  <data name="SecondsInShort" xml:space="preserve">
+    <value>s</value>
   </data>
-    <data name="SomethingWentWrongWhenUserAuthsUsingExternalService" xml:space="preserve">
+  <data name="SomethingWentWrongWhenUserAuthsUsingExternalService" xml:space="preserve">
     <value>Something went wrong. Please use the "Sign up with email" or "Log in" option.</value>
   </data>
-    <data name="InvalidEmailOrPassword" xml:space="preserve">
+  <data name="InvalidEmailOrPassword" xml:space="preserve">
     <value>Invalid email or password.</value>
   </data>
   <data name="ErrorOccurred" xml:space="preserve">
@@ -834,48 +834,48 @@
   <data name="ChooseLanguage" xml:space="preserve">
     <value>Choose language</value>
   </data>
-	<data name="FieldIsNotEditable" xml:space="preserve">
+  <data name="FieldIsNotEditable" xml:space="preserve">
     <value>This field is not editable.</value>
-  </data>	
-   <data name="SuccessfulCopy" xml:space="preserve">
+  </data>
+  <data name="SuccessfulCopy" xml:space="preserve">
     <value>Text successfully copied</value>
   </data>
   <data name="Archive" xml:space="preserve">
     <value>Archive</value>
   </data>
-	<data name="AddToArchive" xml:space="preserve">
+  <data name="AddToArchive" xml:space="preserve">
     <value>To archive</value>
   </data>
-	<data name="ChooseAction" xml:space="preserve">
+  <data name="ChooseAction" xml:space="preserve">
     <value>Choose action</value>
   </data>
-	<data name="RemoveFromArchive" xml:space="preserve">
+  <data name="RemoveFromArchive" xml:space="preserve">
     <value>Remove from archive</value>
   </data>
-	<data name="DeleteArchivedHabitConfirmationText" xml:space="preserve">
+  <data name="DeleteArchivedHabitConfirmationText" xml:space="preserve">
     <value>You are in the process of deleting a habit. Please choose one of the suggested actions.</value>
   </data>
-	<data name="RemoveHabitFromArchiveQuestion" xml:space="preserve">
+  <data name="RemoveHabitFromArchiveQuestion" xml:space="preserve">
     <value>Do you want to remove this habit from the archive?</value>
   </data>
-	<data name="MessageRemoveHabitFromArchive" xml:space="preserve">
+  <data name="MessageRemoveHabitFromArchive" xml:space="preserve">
     <value>This action will restore the habit to your active list.</value>
   </data>
-	<data name="AddHabitToArchiveQuestion" xml:space="preserve">
+  <data name="AddHabitToArchiveQuestion" xml:space="preserve">
     <value>Do you want to archive this habit?</value>
-    </data>
-	<data name="MessageAddHabitToArchive" xml:space="preserve">
+  </data>
+  <data name="MessageAddHabitToArchive" xml:space="preserve">
     <value>This action will move the habit to the archive. You can resume working on it later.</value>
-    </data>
+  </data>
   <data name="ShortDescriptionOfArchivedHabits" xml:space="preserve">
     <value>This section displays the habits you have archived. You can return to them whenever you are ready to work on them again.</value>
   </data>
-	<data name="HabitArchivingInfo" xml:space="preserve">
+  <data name="HabitArchivingInfo" xml:space="preserve">
     <value>Your habit will be archived, and you can always return it to the main list.</value>
-    </data>
-	<data name="ArchiveHabit" xml:space="preserve">
+  </data>
+  <data name="ArchiveHabit" xml:space="preserve">
     <value>Add the habit to archive</value>
-    </data>
+  </data>
   <data name="UnarchiveHabit" xml:space="preserve">
     <value>Remove the habit from archieve</value>
   </data>
@@ -889,19 +889,19 @@
 
 Tip: before creating a new habit, look at the archive - maybe something similar has already happened, and now you know how to do it better.</value>
   </data>
-    <data name="TheHabitWillBeArchivedAfterSaving" xml:space="preserve">
+  <data name="TheHabitWillBeArchivedAfterSaving" xml:space="preserve">
     <value>The habit will be archived after saving</value>
   </data>
-    <data name="TheHabitWillBeUnarchivedAfterSaving" xml:space="preserve">
+  <data name="TheHabitWillBeUnarchivedAfterSaving" xml:space="preserve">
     <value>The habit will be unarchived after saving</value>
   </data>
-    <data name="ChangePassword" xml:space="preserve">
+  <data name="ChangePassword" xml:space="preserve">
     <value>Change password</value>
   </data>
-    <data name="PasswordChange" xml:space="preserve">
+  <data name="PasswordChange" xml:space="preserve">
     <value>Password change</value>
   </data>
-    <data name="CompletedDays" xml:space="preserve">
+  <data name="CompletedDays" xml:space="preserve">
     <value>Completed days</value>
   </data>
   <data name="TopFiveStreaks" xml:space="preserve">
@@ -910,46 +910,46 @@ Tip: before creating a new habit, look at the archive - maybe something similar 
   <data name="TopFiveStreaksExplanation" xml:space="preserve">
     <value>The Top 5 habit streaks reflect the most consistent periods of personal discipline. This feature helps recognize your ability to take sustained action, supports motivation during times of doubt, and serves as a foundation for forming stable, recommended habits.</value>
   </data>
-    <data name="StabilityExplanation" xml:space="preserve">
+  <data name="StabilityExplanation" xml:space="preserve">
     <value>The Stability chart measures how consistently you maintain your habit without missing days. It highlights your overall adherence patterns, helping you see where you’re most reliable and where you might need extra focus. By tracking stability, you can celebrate steady progress, identify moments that challenge your routine, and build confidence in sustaining long‑term behavior change.</value>
   </data>
-    <data name="OverallProgress" xml:space="preserve">
+  <data name="OverallProgress" xml:space="preserve">
     <value>Overall Progress</value>
   </data>
-    <data name="Stability" xml:space="preserve">
+  <data name="Stability" xml:space="preserve">
     <value>Stability</value>
   </data>
-    <data name="DaysCount" xml:space="preserve">
+  <data name="DaysCount" xml:space="preserve">
     <value>Days completed</value>
   </data>
-    <data name="HabitByDayweeks" xml:space="preserve">
+  <data name="HabitByDayweeks" xml:space="preserve">
     <value>Habit by dayweeks</value>
   </data>
-    <data name="HabitByDayweeksExplanation" xml:space="preserve">
+  <data name="HabitByDayweeksExplanation" xml:space="preserve">
     <value>The Habit by Day of the Week chart shows how often you complete your habit on each day. It helps you spot which days you're most consistent and which ones tend to be missed. By understanding these patterns, you can adjust your routine, address weak spots, and create a more balanced and sustainable habit rhythm throughout the week.</value>
   </data>
-    <data name="CalendarInfoExplanation" xml:space="preserve">
+  <data name="CalendarInfoExplanation" xml:space="preserve">
     <value>The execution of habits by day is displayed:
 - Blue - habit completed;
 - Cyan - it is not necessary to follow the habit.
 You can change the status with a press.</value>
   </data>
-    <data name="Calendar" xml:space="preserve">
+  <data name="Calendar" xml:space="preserve">
     <value>Calendar</value>
   </data>
-    <data name="LongestStreak" xml:space="preserve">
+  <data name="LongestStreak" xml:space="preserve">
     <value>Longest streak</value>
   </data>
-    <data name="YouCannotCompleteHabitInTheFuture" xml:space="preserve">
+  <data name="YouCannotCompleteHabitInTheFuture" xml:space="preserve">
     <value>You can't mark a habit as done for future days</value>
   </data>
-    <data name="HabitWasntCreatedBeforeThisDay" xml:space="preserve">
+  <data name="HabitWasntCreatedBeforeThisDay" xml:space="preserve">
     <value>The habit was not created before this date</value>
   </data>
-    <data name="RefreshHabitCharts" xml:space="preserve">
+  <data name="RefreshHabitCharts" xml:space="preserve">
     <value>Refresh charts</value>
   </data>
-    <data name="UnarchiveHabitQuestion" xml:space="preserve">
+  <data name="UnarchiveHabitQuestion" xml:space="preserve">
     <value>Unarchive Habit?</value>
   </data>
   <data name="JanuaryShort" xml:space="preserve">
@@ -1017,5 +1017,8 @@ You can change the status with a press.</value>
   </data>
   <data name="TheHabitIsAlreadyAutomated" xml:space="preserve">
     <value>The habit is already automated</value>
+  </data>
+  <data name="HabitStreakExplanation" xml:space="preserve">
+    <value>Shows how many days in a row you've opened the app and completed your habits. Missing even one day resets the streak</value>
   </data>
 </root>

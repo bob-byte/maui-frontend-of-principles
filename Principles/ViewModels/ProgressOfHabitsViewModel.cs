@@ -120,6 +120,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
 
                 m_isBusyForChangeCompleted.TryRemove( habitToRemove, out SemaphoreSlim? locker );
                 locker?.Dispose();
+                NotifyPropertyChanged( nameof( UserHabits ) );
             }
         } );
 
@@ -138,6 +139,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
                     await Task.Delay( 500 );
                     ReferenceMessenger.Send( new ShowAllArchivedHabitsMsg() );
                 }
+                NotifyPropertyChanged( nameof( UserHabits ) );
             }
         } );
 
@@ -145,6 +147,12 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
         {
             UpdateLocalizedStrings();
         } );
+
+        ReferenceMessenger.Register<MsgThatProgressOfHabitUpdated>( this, ( sender, msg ) =>
+        {
+            NotifyPropertyChanged( nameof( UserHabits ) );
+        } );
+            
     }
 
     private void UpdateLocalizedStrings()
@@ -166,7 +174,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     private void HandleHabitSave(object receiver, HabitSavedMessage message)
     {
         SelectedHabit = null;
-
+        
         UserHabit savedHabit = message.Value;
         UserHabit? foundHabit = UserHabits.FirstOrDefault( u => u.Id == savedHabit.Id );
 
@@ -189,6 +197,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
 
             ServiceOfHabit.Recompute( foundHabit );
         }
+        NotifyPropertyChanged( nameof( UserHabits ) );
     }
 
     public override async Task InitializeAsync( object? parameter = null )
@@ -221,6 +230,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
                     habits = habits.OrderBy( h => h.Goal!.Id ).ThenBy( h => h.Id ).ToList();
                     UserHabits.Reload( habits );
 
+                    NotifyPropertyChanged( nameof( UserHabits ) );
                     IsProgressesInitialized = true;
                     m_isInitialized = true;
                 }
@@ -256,7 +266,8 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
                 try
                 {
                     progressOfHabit.Value = ProgressValue.NextToggled( previousValueOfProgress );
-                    
+
+                    NotifyPropertyChanged( nameof( UserHabits ) );
                     ServiceOfHabit.Recompute( habit );
                     await ProgressOfHabitService.UpdateAsync( progressOfHabit );
 
@@ -269,6 +280,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
                     {
                         progressOfHabit.Value = previousValueOfProgress;
                         ServiceOfHabit.Recompute( habit );
+                        NotifyPropertyChanged( nameof( UserHabits ) );
                     }
                 }
             }
@@ -655,5 +667,14 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     {
         //TODO: it should support all Android versions which our app supports
         return LocalNotificationCenter.Current.RequestNotificationPermission();
+    }
+
+    [RelayCommand]
+    private async Task HabitStreakInfoAsync()
+    {
+        await TipService.ShowSnackbarAsync(
+            LocStrings.HabitStreakExplanation,
+            duration: TimeSpan.FromSeconds( 10 )
+        );
     }
 }

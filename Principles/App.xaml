@@ -552,6 +552,7 @@
             <converters:ReminderTimeAndDaysToStringConverter x:Key="ReminderValueToString" />
             <converters:ComplexityToHelpTextConverter x:Key="HabitComplexityToHelpText" />
             <converters:DateToTextDecorationsConverter x:Key="DateToTextDecorations" />
+            <converters:UserHabitsToStreakConverter x:Key="UserHabitsToStreak" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>
