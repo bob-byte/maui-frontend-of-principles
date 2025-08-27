@@ -31,7 +31,25 @@ public partial class UserHabit : ObservableObject, ICloneable
 
     [ObservableProperty]
     private ObservableCollectionEx<UserHabitReminder>? m_reminders;
-    
+
+    [ObservableProperty]
+    private HabitKind m_kind;
+
+    [ObservableProperty]
+    private string? m_unit;
+
+    [ObservableProperty]
+    private double? m_targetPerOneTime;
+
+    [ObservableProperty]
+    private NumericalHabitType m_targetType;
+
+    [ObservableProperty]
+    private double? m_minRate;
+
+    [ObservableProperty]
+    private double? m_maxRate;
+
     public bool IsNew()
     {
         return Id == 0;

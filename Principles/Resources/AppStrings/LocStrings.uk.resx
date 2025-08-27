@@ -1021,4 +1021,40 @@
   <data name="HabitStreakExplanation" xml:space="preserve">
     <value>Показує кількість днів поспіль, коли ви відкривали додаток і виконували звички. Якщо пропустити хоча б один день — серія обнуляється</value>
   </data>
+  <data name="YesOrNoDescription" xml:space="preserve">
+    <value>Зробити / не зробити дію в конкретний день</value>
+  </data>
+  <data name="YesOrNo" xml:space="preserve">
+    <value>Так або Ні</value>
+  </data>
+  <data name="YesOrNoWithRate" xml:space="preserve">
+    <value>Так або Ні з оцінкою</value>
+  </data>
+  <data name="YesOrNoWithRateDescription" xml:space="preserve">
+    <value>Ідентичне тільки оцінюється ефективність звички при виконанні</value>
+  </data>
+  <data name="Mind" xml:space="preserve">
+    <value>Розумова</value>
+  </data>
+  <data name="MindDescription" xml:space="preserve">
+    <value>Нагадування про важливу думку або ставлення</value>
+  </data>
+  <data name="Numeric" xml:space="preserve">
+    <value>Числова</value>
+  </data>
+  <data name="NumericDescription" xml:space="preserve">
+    <value>Звичка з кількісним результатом</value>
+  </data>
+  <data name="HabitKind" xml:space="preserve">
+    <value>Вибери тип звички</value>
+  </data>
+  <data name="Min" xml:space="preserve">
+    <value>Мін</value>
+  </data>
+  <data name="Max" xml:space="preserve">
+    <value>Макс</value>
+  </data>
+  <data name="TargetPerOneExecution" xml:space="preserve">
+    <value>Ціль за одне виконання</value>
+  </data>
 </root>

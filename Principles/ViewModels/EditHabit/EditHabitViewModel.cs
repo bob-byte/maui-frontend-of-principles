@@ -47,24 +47,26 @@ public partial class EditHabitViewModel : BaseViewModel
 
     [ObservableProperty]
     private bool m_isRecommendedHabitsLoading;
-    
+
     private bool m_isInHabitDetails;
-    
+
     [ObservableProperty]
     private ObservableCollectionEx<PeriodOfHabit> m_periodsOfHabit;
-    
+
     [ObservableProperty]
     private ObservableCollectionEx<UserAreaOfLife> m_allUserAreasOfLife;
 
     [ObservableProperty]
     private HabitFrequencyInfo m_frequencyInfo;
-    
+    [ObservableProperty]
+    private List<string> m_minMaxOptions;
+
     public UserAreaOfLife AllAreasOfLifeAsOneItem { get; }
 
     public IAiRecommenderOfHabitsService AiRecommenderOfHabits { get; }
     public IGoalService GoalService { get; }
     public IReminderService ReminderService { get; }
-    
+
     public List<WeekDay> InactiveDaysToDelete { get; }
 
     public EditHabitViewModel( IServiceProvider serviceProvider )
@@ -77,6 +79,7 @@ public partial class EditHabitViewModel : BaseViewModel
         };
 
         InitPeriodsOfHabit();
+        InitMinMaxOfHabit();
 
         AiRecommenderOfHabits = serviceProvider.GetRequiredService<IAiRecommenderOfHabitsService>();
 
@@ -97,9 +100,10 @@ public partial class EditHabitViewModel : BaseViewModel
         ReferenceMessenger.Register<NewCultureMessage>( this, async ( sender, msg ) =>
         {
             InitPeriodsOfHabit();
-            
+            InitMinMaxOfHabit();
+
             AiRecommenderOfHabits.RecreateSystemMessage();
-            
+
             AllAreasOfLifeAsOneItem.Name = LocStrings.AllAreasOfLife;
             try
             {
@@ -122,6 +126,14 @@ public partial class EditHabitViewModel : BaseViewModel
             new PeriodOfHabit { Type = PeriodTypeOfHabit.Month, Name = LocStrings.Month.ToLower() }
         ];
     }
+    private void InitMinMaxOfHabit()
+    {
+        MinMaxOptions =
+        [
+            LocStrings.Min,
+            LocStrings.Max
+        ];
+    }
 
     //It is call on navigate to this EditHabitView
     public override void ApplyQueryAttributes( IDictionary<string, object> query )
@@ -132,7 +144,7 @@ public partial class EditHabitViewModel : BaseViewModel
 
         Habit = new UserHabit();
         InitValidations();
-        
+
         if (query.TryGetValue( "Habit", out object? value ) && value is UserHabit habit)
         {
             Habit.MergeFrom( habit );
@@ -148,7 +160,7 @@ public partial class EditHabitViewModel : BaseViewModel
         {
             IsNewHabit = true;
         }
-        
+
         if (query.TryGetValue( "IsArchived", out object? isArchivedValue ) && isArchivedValue is bool archived)
         {
             Habit.IsArchived = archived;
@@ -162,6 +174,10 @@ public partial class EditHabitViewModel : BaseViewModel
         else
         {
             m_isInHabitDetails = false;
+        }
+        if (query.TryGetValue( "HabitKind", out object? kindObj ) && kindObj is HabitKind kind)
+        {
+            Habit.Kind = kind;
         }
     }
 
@@ -177,7 +193,7 @@ public partial class EditHabitViewModel : BaseViewModel
             true, // Friday
             true, // Saturday
         ];
-        
+
         RecommendedHabits = new ObservableCollectionEx<RecommendedHabit>();
         Habit.Frequency ??= new FrequencyOfHabit();
 
@@ -199,7 +215,7 @@ public partial class EditHabitViewModel : BaseViewModel
             {
                 Habit.Complexity = HabitConstants.DEFAULT_HABIT_COMPLEXITY;
             }
-            
+
             EditedReminder = new EditedUserHabitReminder();
 
             if (Habit.Reminders != null && Habit.Reminders.Count > 0)
@@ -235,9 +251,9 @@ public partial class EditHabitViewModel : BaseViewModel
                         UserNotificationRequestId = d.UserNotificationRequestId
                     } ).ToList();
                 }
-                
+
             }
-            
+
             Habit.AreasOfLife ??= new ObservableCollectionEx<UserAreaOfLife>();
             List<UserAreaOfLife> habitAreas = new( Habit.AreasOfLife.Count );
 
@@ -261,7 +277,7 @@ public partial class EditHabitViewModel : BaseViewModel
                 Habit.AreasOfLife.Add( AllAreasOfLifeAsOneItem );
             }
         }
-            
+
         OnPropertyChanged( nameof( EditedReminder ) );
         OnPropertyChanged( nameof( IsDayChecked ) );
 
@@ -319,12 +335,12 @@ public partial class EditHabitViewModel : BaseViewModel
         EditedGoal = new UserGoal();
         Habit = new UserHabit();
         RecommendedHabits = new ObservableCollectionEx<RecommendedHabit>();
-        
+
 #if ANDROID
         UserGoals = new ObservableCollectionEx<UserGoal>();
         AllUserAreasOfLife = new ObservableCollectionEx<UserAreaOfLife>();
 #endif
-        
+
         return Task.CompletedTask;
     }
 
@@ -364,7 +380,7 @@ public partial class EditHabitViewModel : BaseViewModel
 
         return selectedDaysIndexes;
     }
-    
+
     public void ResetDaysOfWeek()
     {
         IsDayChecked.Clear();

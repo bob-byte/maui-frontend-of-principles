@@ -235,7 +235,7 @@
                         </Shadow>
                     </Frame.Shadow>
                     <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding AddHabitCommand}"
+                        <TapGestureRecognizer Tapped="DXI_Habits_Tapped"
                                               NumberOfTapsRequired="1" />
                     </Frame.GestureRecognizers>
                     <dx:DXImage Source="small_plus"
@@ -243,7 +243,7 @@
                                 TintColor="White"
                                 WidthRequest="30">
                         <dx:DXImage.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding AddHabitCommand}"
+                            <TapGestureRecognizer Tapped="DXI_Habits_Tapped"
                                                   NumberOfTapsRequired="1" />
                         </dx:DXImage.GestureRecognizers>
                     </dx:DXImage>
@@ -470,6 +470,128 @@
                 <templates:DefaultActivityIndicator />
             </Grid>
         </dxco:BottomSheet>
+
+        <dxco:BottomSheet x:Name="HabitKindBottomSheet"
+                          AllowDismiss="True"
+                          AllowedState="HalfExpanded"
+                          BackgroundColor="{AppThemeBinding Light={StaticResource Background},
+                                                            Dark={StaticResource DarkBackground}}"
+                          HalfExpandedRatio="0.7"
+                          ShowGrabber="False">
+            <Grid>
+                <dx:DXStackLayout x:Name="DXSL_HabitKind"
+                              Orientation="Vertical"
+                              Padding="10,0,10,0"
+                              ItemSpacing="12"
+                                  >
+                    <Label x:Name="L_HabitKindCenralHeader"
+                           Text="{Binding LocManager[HabitKind]}"
+                           Style="{StaticResource CentralHeader}"
+                           Grid.Column="1"
+                           HeightRequest="40"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           Grid.Row="0" />
+
+                    <dxco:SimpleButton HorizontalContentAlignment="Center"
+                                       CornerRadius="12"
+                                       BorderThickness="1"
+                                       BorderColor="LightGray"
+                                       BackgroundColor="Transparent"
+                                       Clicked="HabitKindButton_Clicked"
+                                       CommandParameter="{x:Static m:HabitKind.YesOrNo}">
+                        <Grid ColumnDefinitions="Auto, *" 
+                              RowDefinitions="Auto, Auto"
+                              ColumnSpacing="16">
+                            <dx:DXImage Source="yes_or_no"
+                                        Grid.RowSpan="2"
+                                        Grid.Column="0"
+                                        HeightRequest="48"
+                                        WidthRequest="48"
+                                        TintColor="{StaticResource LabelText}"
+                                        VerticalOptions="Center"/>
+                            <Label Text="{Binding LocManager[YesOrNo]}"
+                                   Grid.Column="1" 
+                                   Grid.Row="0"
+                                   FontAttributes="Bold"
+                                   FontSize="20"
+                                   TextColor="{StaticResource LabelText}"/>
+                            <Label Text="{Binding LocManager[YesOrNoDescription]}"
+                                   Grid.Column="1"
+                                   Grid.Row="1"
+                                   LineBreakMode="WordWrap"
+                                   FontSize="16"
+                                   TextColor="Gray"/>
+                        </Grid>
+                    </dxco:SimpleButton>
+                    <dxco:SimpleButton HorizontalContentAlignment="Center"
+                                       CornerRadius="12"
+                                       BorderThickness="1"
+                                       BorderColor="LightGray"
+                                       BackgroundColor="Transparent"
+                                       Clicked="HabitKindButton_Clicked"
+                                       CommandParameter="{x:Static m:HabitKind.Mind}">
+                        <Grid ColumnDefinitions="Auto, *" 
+                              RowDefinitions="Auto, Auto"
+                              ColumnSpacing="16">
+                            <dx:DXImage Source="mind.png"
+                                        Grid.RowSpan="2"
+                                        Grid.Column="0"
+                                        HeightRequest="48"
+                                        WidthRequest="48"
+                                        TintColor="{StaticResource LabelText}"
+                                        VerticalOptions="Center"/>
+                            <Label Text="{Binding LocManager[Mind]}"
+                                   Grid.Column="1" 
+                                   Grid.Row="0"
+                                   FontAttributes="Bold"
+                                   FontSize="20"
+                                   TextColor="{StaticResource LabelText}"/>
+                            <Label Text="{Binding LocManager[MindDescription]}"
+                                   Grid.Column="1"
+                                   Grid.Row="1"
+                                   LineBreakMode="WordWrap"
+                                   FontSize="16"
+                                   TextColor="Gray"/>
+                        </Grid>
+                    </dxco:SimpleButton>
+
+                    <dxco:SimpleButton HorizontalContentAlignment="Center"
+                                       CornerRadius="12"
+                                       BorderThickness="1"
+                                       BorderColor="LightGray"
+                                       BackgroundColor="Transparent"
+                                       Clicked="HabitKindButton_Clicked"
+                                       CommandParameter="{x:Static m:HabitKind.Numeric}">
+                        <Grid ColumnDefinitions="Auto, *" 
+                              RowDefinitions="Auto, Auto"
+                              ColumnSpacing="16">
+                            <dx:DXImage Source="numeric.png"
+                                        Grid.RowSpan="2"
+                                        Grid.Column="0"
+                                        HeightRequest="48"
+                                        WidthRequest="48"
+                                        TintColor="{StaticResource LabelText}"
+                                        VerticalOptions="Center"/>
+                            <Label Text="{Binding LocManager[Numeric]}"
+                                   Grid.Column="1" 
+                                   Grid.Row="0"
+                                   FontAttributes="Bold"
+                                   FontSize="20"
+                                   TextColor="{StaticResource LabelText}"/>
+                            <Label Text="{Binding LocManager[NumericDescription]}"
+                                   Grid.Column="1"
+                                   Grid.Row="1"
+                                   LineBreakMode="WordWrap"
+                                   FontSize="16"
+                                   TextColor="Gray"/>
+                        </Grid>
+                    </dxco:SimpleButton>
+                </dx:DXStackLayout>
+                <templates:DefaultActivityIndicator />
+            </Grid>
+        </dxco:BottomSheet>
+
         <templates:DefaultActivityIndicator />
     </Grid>
 </v:ContentPageBase>

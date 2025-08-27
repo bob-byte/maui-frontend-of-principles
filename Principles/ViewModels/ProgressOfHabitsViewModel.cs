@@ -1,4 +1,3 @@
-
 using DevExpress.Maui.DataGrid;
 
 using Principles.Core.Models;
@@ -8,6 +7,7 @@ using Plugin.LocalNotification;
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Maui.Views;
+using DevExpress.Maui.Controls;
 
 namespace Principles.ViewModels;
 
@@ -293,11 +293,12 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private async Task AddHabitAsync()
-    {
+    private async Task AddHabitAsync( HabitKind kind )
+    {        
         Dictionary<string, object> routeParams = new()
         {
-            { "IsArchived", false }
+            { "IsArchived", false },
+            { "HabitKind", kind }
         };
 
         DoShowPlusButton = false;

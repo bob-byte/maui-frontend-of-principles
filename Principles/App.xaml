@@ -553,6 +553,7 @@
             <converters:ComplexityToHelpTextConverter x:Key="HabitComplexityToHelpText" />
             <converters:DateToTextDecorationsConverter x:Key="DateToTextDecorations" />
             <converters:UserHabitsToStreakConverter x:Key="UserHabitsToStreak" />
+            <converters:HabitKindToBoolConverter x:Key="HabitKindToBool" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -168,6 +168,84 @@
                                           TapCommand="{Binding TapWithoutExceptionsTypeCommand, Source={RelativeSource AncestorType={x:Type vm:EditHabitViewModel}}}"
                                           TapCommandParameter="{x:Reference C_WithoutExceptionsType}" />
                             </dxe:ChoiceChipGroup>
+
+                            <Grid x:Name="G_MindHabitKind"
+                                  HorizontalOptions="FillAndExpand" 
+                                  ColumnDefinitions="*, *"
+                                  ColumnSpacing="10"
+                                  IsVisible="{Binding Habit.Kind, Converter={StaticResource HabitKindToBool}, ConverterParameter=Mind}">
+                                <dxe:MultilineEdit x:Name="ME_MinRateOfHabit"
+                                                   Text="{Binding NameOfHabit.Value}"
+                                                   ClearIconVisibility="Never"
+                                                   EndIcon="info"
+                                                   EndIconCommand="{Binding TapHabitNameInfoCommand}"
+                                                   EndIconCommandParameter="{OnPlatform iOS={x:Reference ME_NameOfHabit},
+                                                                                        Android={x:Reference ME_HabitGoal}}"
+                                                   HasError="{Binding NameOfHabit.IsValid, Converter={StaticResource IsFalse}}"
+                                                   IsErrorIconVisible="True"
+                                                   LabelText="{Binding LocManager[Min]}"
+                                                   MaxLineCount="5"
+                                                   ReturnType="Done"
+                                                   StartIcon="fire_first"
+                                                   TextChangedCommand="{Binding ValidateHabitNameCommand}" 
+                                                   Grid.Column="0"/>
+                                <dxe:MultilineEdit x:Name="ME_MaxRateOfHabit"
+                                                   Text="{Binding NameOfHabit.Value}"
+                                                   ClearIconVisibility="Never"
+                                                   EndIcon="info"
+                                                   EndIconCommand="{Binding TapHabitNameInfoCommand}"
+                                                   EndIconCommandParameter="{OnPlatform iOS={x:Reference ME_NameOfHabit},
+                                                                                        Android={x:Reference ME_HabitGoal}}"
+                                                   HasError="{Binding NameOfHabit.IsValid, Converter={StaticResource IsFalse}}"
+                                                   IsErrorIconVisible="True"
+                                                   LabelText="{Binding LocManager[Max]}"
+                                                   MaxLineCount="5"
+                                                   ReturnType="Done"
+                                                   StartIcon="fire_first"
+                                                   TextChangedCommand="{Binding ValidateHabitNameCommand}" 
+                                                   Grid.Column="1"/>
+                            </Grid>
+                            <Grid x:Name="G_NumericHabitKind"
+                                  HorizontalOptions="FillAndExpand" 
+                                  ColumnSpacing="10"
+                                  RowSpacing="10"
+                                  ColumnDefinitions="*,*,*"
+                                  RowDefinitions="Auto, *"
+                                  IsVisible="{Binding Habit.Kind, Converter={StaticResource HabitKindToBool}, ConverterParameter=Numeric}">
+                                <Label x:Name="L_NumericTitleText"
+                                       Text="{Binding LocManager[TargetPerOneExecution]}"
+                                       FontAttributes="Bold"
+                                       FontSize="17"
+                                       LineBreakMode="TailTruncation"
+                                       MaxLines="2"
+                                       TextColor="{StaticResource LightNormalText}"
+                                       Grid.Row="0"
+                                       Grid.ColumnSpan="3"/>
+                                <dxe:ComboBoxEdit AllowAnimation="True"
+                                                  SelectedIndex="0"
+                                                  SelectedItem="{Binding Habit.TargetType, Mode=TwoWay}"
+                                                  ItemsSource="{Binding MinMaxOptions}"
+                                                  Grid.Row="1"
+                                                  Grid.Column="0"/>
+                                <dxe:NumericEdit x:Name="NE_TargetPerOneTime"
+                                                 Value="{Binding Habit.TargetPerOneTime, Mode=TwoWay}"
+                                                 IsUpDownIconVisible="False"
+                                                 MinValue="0"
+                                                 MaxDecimalDigitCount="0"
+                                                 Grid.Row="1"
+                                                 Grid.Column="1"/>
+                                <dxe:AutoCompleteEdit AllowAnimation="True"
+                                                      SubmitIconVisibility="Never"
+                                                      SelectedItem="{Binding Habit.Unit, Mode=TwoWay}"
+                                                      LabelText="{Binding LocManager[Unit]}"
+                                                      PlaceholderText="{Binding LocManager[ChooseOrType]}"
+                                                      ItemsSource="{Binding MinMaxOptions}"
+                                                      Text="{Binding SelectedUnit, Mode=TwoWay}"
+                                                      KeepFocusOnItemSelection="False"
+                                                      Grid.Row="1"
+                                                      Grid.Column="2"/>
+                            </Grid>
+
                             <dxe:TextEdit x:Name="TE_Frequency"
                                           Text="{Binding FrequencyInfo, Converter={StaticResource FrequencyToString}, Mode=OneWay}"
                                           EndIcon="dotshorizontal"

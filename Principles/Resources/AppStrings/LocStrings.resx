@@ -1021,4 +1021,40 @@ You can change the status with a press.</value>
   <data name="HabitStreakExplanation" xml:space="preserve">
     <value>Shows how many days in a row you've opened the app and completed your habits. Missing even one day resets the streak</value>
   </data>
+  <data name="YesOrNoDescription" xml:space="preserve">
+    <value>Do / skip an action on a specific day</value>
+  </data>
+  <data name="YesOrNo" xml:space="preserve">
+    <value>Yes or No</value>
+  </data>
+  <data name="YesOrNoWithRate" xml:space="preserve">
+    <value>Yes or No with rate</value>
+  </data>
+  <data name="YesOrNoWithRateDescription" xml:space="preserve">
+    <value>Same, but measures habit effectiveness when completed</value>
+  </data>
+  <data name="Mind" xml:space="preserve">
+    <value>Mind</value>
+  </data>
+  <data name="MindDescription" xml:space="preserve">
+    <value>Reminder of an important idea or mindset</value>
+  </data>
+  <data name="Numeric" xml:space="preserve">
+    <value>Numeric</value>
+  </data>
+  <data name="NumericDescription" xml:space="preserve">
+    <value>Habit with a measurable result</value>
+  </data>
+  <data name="HabitKind" xml:space="preserve">
+    <value>Choose a habit type</value>
+  </data>
+  <data name="Min" xml:space="preserve">
+    <value>Min</value>
+  </data>
+  <data name="Max" xml:space="preserve">
+    <value>Max</value>
+  </data>
+  <data name="TargetPerOneExecution" xml:space="preserve">
+    <value>Target per one execution</value>
+  </data>
 </root>

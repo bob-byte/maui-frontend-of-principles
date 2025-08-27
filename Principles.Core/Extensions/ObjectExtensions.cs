@@ -54,28 +54,34 @@ public static class ObjectExtensions
             {
                 targetProp.SetValue(target, sourceValue);
             }
-            else if (typeof(IEnumerable).IsAssignableFrom(sourcePropType) && sourcePropType != typeof(string))
+            else if (Nullable.GetUnderlyingType( targetPropType ) != null)
+            {
+                var underlyingType = Nullable.GetUnderlyingType( targetPropType )!;
+                var convertedValue = Convert.ChangeType( sourceValue, underlyingType );
+                targetProp.SetValue( target, convertedValue );
+            }
+            else if (typeof( IEnumerable ).IsAssignableFrom( sourcePropType ) && sourcePropType != typeof( string ))
             {
                 if (sourceProp.Name is "Progresses" or "ComputedProgresses")
                 {
-                    targetProp.SetValue(target, sourceValue);
+                    targetProp.SetValue( target, sourceValue );
                 }
                 else
                 {
-                    object? targetValue = targetProp.GetValue(target);
-                    object merged = MergeEnumerables(targetValue, sourceValue, targetPropType);
-                    targetProp.SetValue(target, merged);
+                    object? targetValue = targetProp.GetValue( target );
+                    object merged = MergeEnumerables( targetValue, sourceValue, targetPropType );
+                    targetProp.SetValue( target, merged );
                 }
             }
             else
             {
-                object? targetValue = targetProp.GetValue(target);
+                object? targetValue = targetProp.GetValue( target );
                 if (targetValue == null)
                 {
                     try
                     {
-                        targetValue = Activator.CreateInstance(targetPropType);
-                        targetProp.SetValue(target, targetValue);
+                        targetValue = Activator.CreateInstance( targetPropType );
+                        targetProp.SetValue( target, targetValue );
                     }
                     catch
                     {
@@ -83,7 +89,7 @@ public static class ObjectExtensions
                     }
                 }
 
-                MergeInternal(targetValue, sourceValue, visited);
+                MergeInternal( targetValue, sourceValue, visited );
             }
         }
     }

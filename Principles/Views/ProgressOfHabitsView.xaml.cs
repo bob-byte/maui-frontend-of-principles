@@ -438,6 +438,11 @@ public partial class ProgressOfHabitsView : ContentPageBase
         }
     }
 
+    private async void DXI_Habits_Tapped( object sender, TappedEventArgs e )
+    {
+        await ChooseHabitKindAsync();
+    }
+
     private async Task ShowArchivedHabitsAsync()
     {
         if (ViewModel.GetArchivedHabitsCommand.CanExecute( null ))
@@ -476,6 +481,26 @@ public partial class ProgressOfHabitsView : ContentPageBase
         
     }
 
+    private async Task ChooseHabitKindAsync()
+    {
+        double heightOfBottomSheet;
+
+        if (ViewModel.SettingsService.NormalPageHeight == 0 ||
+            DeviceDisplay.Current.MainDisplayInfo.Orientation == DisplayOrientation.Landscape)
+        {
+            heightOfBottomSheet = 300;
+            HabitKindBottomSheet.HalfExpandedRatio = heightOfBottomSheet / CPB_Page.Height;
+        }
+        else
+        {
+            heightOfBottomSheet = 500;
+
+            HabitKindBottomSheet.HalfExpandedRatio = heightOfBottomSheet / ViewModel.SettingsService.NormalPageHeight;
+        }
+            HabitKindBottomSheet.State = BottomSheetState.HalfExpanded;
+            //await ViewModel.GetArchivedHabitsCommand.ExecuteAsync( null );
+    }
+
     private void ME_ArchivedHabitEndIconClicked( object sender, EventArgs e )
     {
         ArchiveBottomSheet.State = BottomSheetState.Hidden;
@@ -512,6 +537,20 @@ public partial class ProgressOfHabitsView : ContentPageBase
             vm.ArchivedHabitDetailCommand.CanExecute( archivedHabit ))
             {
                 vm.ArchivedHabitDetailCommand.Execute( archivedHabit );
+            }
+        }
+    }
+
+    private void HabitKindButton_Clicked( object sender, EventArgs e )
+    {
+        if (sender is DevExpress.Maui.Controls.SimpleButton button && button.CommandParameter is HabitKind kind)
+        {
+            HabitKindBottomSheet.State = BottomSheetState.Hidden;
+
+            if (BindingContext is ProgressOfHabitsViewModel vm &&
+            vm.AddHabitCommand.CanExecute( kind ))
+            {
+                vm.AddHabitCommand.Execute( kind );
             }
         }
     }

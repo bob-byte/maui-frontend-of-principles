@@ -1097,6 +1097,15 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Choose a habit type.
+        /// </summary>
+        internal static string HabitKind {
+            get {
+                return ResourceManager.GetString("HabitKind", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Specify a name of habit and time or place of its implementation. This will increase the probability of compliance. Example: I pray as soon as I wake up..
         /// </summary>
         internal static string HabitNameRecommendation {
@@ -1448,6 +1457,15 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Max.
+        /// </summary>
+        internal static string Max {
+            get {
+                return ResourceManager.GetString("Max", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to May.
         /// </summary>
         internal static string MayShort {
@@ -1525,6 +1543,33 @@ namespace Principles.Resources.AppStrings {
         internal static string MessageRemoveHabitFromArchive {
             get {
                 return ResourceManager.GetString("MessageRemoveHabitFromArchive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Min.
+        /// </summary>
+        internal static string Min {
+            get {
+                return ResourceManager.GetString("Min", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mind.
+        /// </summary>
+        internal static string Mind {
+            get {
+                return ResourceManager.GetString("Mind", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reminder of an important idea or mindset.
+        /// </summary>
+        internal static string MindDescription {
+            get {
+                return ResourceManager.GetString("MindDescription", resourceCulture);
             }
         }
         
@@ -1678,6 +1723,24 @@ namespace Principles.Resources.AppStrings {
         internal static string NumberOfExecution {
             get {
                 return ResourceManager.GetString("NumberOfExecution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Numeric.
+        /// </summary>
+        internal static string Numeric {
+            get {
+                return ResourceManager.GetString("Numeric", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Habit with a measurable result.
+        /// </summary>
+        internal static string NumericDescription {
+            get {
+                return ResourceManager.GetString("NumericDescription", resourceCulture);
             }
         }
         
@@ -2240,6 +2303,15 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Target per one execution.
+        /// </summary>
+        internal static string TargetPerOneExecution {
+            get {
+                return ResourceManager.GetString("TargetPerOneExecution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The habit is already automated.
         /// </summary>
         internal static string TheHabitIsAlreadyAutomated {
@@ -2659,6 +2731,42 @@ namespace Principles.Resources.AppStrings {
         internal static string Yes {
             get {
                 return ResourceManager.GetString("Yes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes or No.
+        /// </summary>
+        internal static string YesOrNo {
+            get {
+                return ResourceManager.GetString("YesOrNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do / skip an action on a specific day.
+        /// </summary>
+        internal static string YesOrNoDescription {
+            get {
+                return ResourceManager.GetString("YesOrNoDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes or No with rate.
+        /// </summary>
+        internal static string YesOrNoWithRate {
+            get {
+                return ResourceManager.GetString("YesOrNoWithRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Same, but measures habit effectiveness when completed.
+        /// </summary>
+        internal static string YesOrNoWithRateDescription {
+            get {
+                return ResourceManager.GetString("YesOrNoWithRateDescription", resourceCulture);
             }
         }
         
