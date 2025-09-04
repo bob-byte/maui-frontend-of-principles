@@ -204,6 +204,8 @@ public partial class EditHabitViewModel : BaseViewModel
             Habit.AreasOfLife = new ObservableCollectionEx<UserAreaOfLife>();
             Habit.Complexity = 5;
             EditedReminder = new EditedUserHabitReminder();
+            Habit.MinRate = 0;
+            Habit.MaxRate = 10;
             ResetDaysOfWeek();
 
             var normalTextColor = (Color)Application.Current!.Resources["LightNormalText"];

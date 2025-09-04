@@ -175,7 +175,7 @@
                                   ColumnSpacing="10"
                                   IsVisible="{Binding Habit.Kind, Converter={StaticResource HabitKindToBool}, ConverterParameter=Mind}">
                                 <dxe:MultilineEdit x:Name="ME_MinRateOfHabit"
-                                                   Text="{Binding NameOfHabit.Value}"
+                                                   Text="{Binding Habit.MinRate, Mode=TwoWay}"
                                                    ClearIconVisibility="Never"
                                                    EndIcon="info"
                                                    EndIconCommand="{Binding TapHabitNameInfoCommand}"
@@ -190,7 +190,7 @@
                                                    TextChangedCommand="{Binding ValidateHabitNameCommand}" 
                                                    Grid.Column="0"/>
                                 <dxe:MultilineEdit x:Name="ME_MaxRateOfHabit"
-                                                   Text="{Binding NameOfHabit.Value}"
+                                                   Text="{Binding Habit.MaxRate, Mode=TwoWay}"
                                                    ClearIconVisibility="Never"
                                                    EndIcon="info"
                                                    EndIconCommand="{Binding TapHabitNameInfoCommand}"
@@ -234,13 +234,12 @@
                                                  MaxDecimalDigitCount="0"
                                                  Grid.Row="1"
                                                  Grid.Column="1"/>
-                                <dxe:AutoCompleteEdit AllowAnimation="True"
+                                <dxe:AutoCompleteEdit AllowAnimation="True"                                
                                                       SubmitIconVisibility="Never"
-                                                      SelectedItem="{Binding Habit.Unit, Mode=TwoWay}"
                                                       LabelText="{Binding LocManager[Unit]}"
                                                       PlaceholderText="{Binding LocManager[ChooseOrType]}"
                                                       ItemsSource="{Binding MinMaxOptions}"
-                                                      Text="{Binding SelectedUnit, Mode=TwoWay}"
+                                                      Text="{Binding Habit.Unit, Mode=TwoWay}"
                                                       KeepFocusOnItemSelection="False"
                                                       Grid.Row="1"
                                                       Grid.Column="2"/>
