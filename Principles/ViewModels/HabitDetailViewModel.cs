@@ -78,15 +78,6 @@ public partial class HabitDetailViewModel : BaseViewModel
         m_lockerOfHabitProgressUpdate = new SemaphoreSlim( initialCount: 1, maxCount: 1 );
 
         InitPeriodsOfHabit();
-        
-        ReferenceMessenger.Register<HabitSavedMessage>( this, async ( _, message ) =>
-        {
-            UserHabit savedHabit = message.Value;
-            if (savedHabit.Id != 0 && Habit?.Id == savedHabit.Id)
-            {
-                await InitializeAsync();
-            }
-        } );
     }
 
     public ISeries[] Series { get; set; }
@@ -452,7 +443,9 @@ public partial class HabitDetailViewModel : BaseViewModel
         List<double?> xLabelsPositions = events.Select( e => (double?)e.point.X ).ToList();
 
         List<ProgressOfHabit> progresses = Habit.ComputedProgresses.GetKnown().ToList();
-        ProgressOfHabit? firstExecuted = progresses.LastOrDefault(p => p.Value == ProgressValue.YES_MANUAL);
+        ProgressOfHabit? firstExecuted = progresses.LastOrDefault(p => p.Value == ProgressValue.YES_MANUAL); 
+        
+        //TODO: scores are wider than progresses. We should make them shorter
         DateTime minDate = firstExecuted is null 
             ? DateTime.Today.Subtract( TimeSpan.FromDays( 1 ) ) 
             : firstExecuted.Date.ToDateTime( TimeOnly.MinValue );

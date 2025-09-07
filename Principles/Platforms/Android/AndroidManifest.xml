@@ -18,7 +18,7 @@
 		<receiver android:name="com.set.principles.NotificationReceiver" android:exported="true" />
 		<service android:name="com.set.principles.NotificationService" android:exported="false" />
 		<meta-data android:name="com.google.android.gms.ads.APPLICATION_ID"
-					android:value="ca-app-pub-6307192789973793~7116826627"/>
+			android:value="ca-app-pub-6307192789973793~7116826627"/>
 	</application>
 
 	<queries>
