@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.set.principles" android:versionName="3.0.9" android:versionCode="58">
-	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="35" />
+	<uses-sdk android:minSdkVersion="23" android:targetSdkVersion="35" />
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
 
@@ -16,6 +16,8 @@
         android:networkSecurityConfig="@xml/network_security_config" android:allowBackup="true" android:label="Principles" android:icon="@mipmap/appicon">
 		<receiver android:name="com.set.principles.NotificationReceiver" android:exported="true" />
 		<service android:name="com.set.principles.NotificationService" android:exported="false" />
+		<meta-data android:name="com.google.android.gms.ads.APPLICATION_ID"
+			android:value="ca-app-pub-6307192789973793~7116826627"/>
 	</application>
 
 	<queries>
