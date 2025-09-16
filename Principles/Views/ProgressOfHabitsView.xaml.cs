@@ -30,6 +30,12 @@ public partial class ProgressOfHabitsView : ContentPageBase
         ViewModel = viewModel;
 
         InitializeComponent();
+#if ANDROID
+        DateAdViewBottom.AdsId = "ca-app-pub-6307192789973793/8957186556";
+#elif IOS
+        DateAdViewBottom.AdsId = "ca-app-pub-6307192789973793/4995365596";
+#endif
+        DateAdViewBottom.LoadAd();
 
 #if ANDROID31_0_OR_GREATER || IOS16_0_OR_GREATER
         SwipeItemInitialize();

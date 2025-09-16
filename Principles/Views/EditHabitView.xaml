@@ -745,12 +745,6 @@
                             </VerticalStackLayout>
                         </dx:SafeKeyboardAreaView>
                     </ScrollView>
-                    <ads:MTAdView x:Name="DateAdViewBottom"
-                          HorizontalOptions="Center"
-                          VerticalOptions="End"
-                          HeightRequest="{OnIdiom Phone=50, Tablet=90, Desktop=120}" 
-                          AdSize="Banner"
-                          Margin="10, 0, 0, 10"/>
                 </Grid>
             </dxco:TabViewItem>
             <dxco:TabViewItem HeaderIconPosition="{OnPlatform iOS='Right'}"
@@ -782,12 +776,6 @@
                                FontSize="12"/>
                         </VerticalStackLayout>
                     </ScrollView>
-                    <ads:MTAdView x:Name="HowToKeepAdViewBottom"
-                          HorizontalOptions="Center"
-                          VerticalOptions="End"
-                          HeightRequest="{OnIdiom Phone=50, Tablet=90, Desktop=120}" 
-                          AdSize="Banner"
-                          Margin="10, 0, 0, 10"/>
                 </Grid>
             </dxco:TabViewItem>
         </dxco:TabView>

@@ -62,9 +62,6 @@ public partial class HabitDetailViewModel : BaseViewModel
     private Axis[] m_habitExecutionYAxes;
     [ObservableProperty]
     private string? m_goalTitle;
-    [ObservableProperty]
-    private int m_dateTapCount = 0;
-    private const int MAXTAPSBEFOREAD = 5;
 
     private readonly SemaphoreSlim m_lockerOfHabitProgressUpdate;
 
@@ -78,6 +75,7 @@ public partial class HabitDetailViewModel : BaseViewModel
         m_lockerOfHabitProgressUpdate = new SemaphoreSlim( initialCount: 1, maxCount: 1 );
 
         InitPeriodsOfHabit();
+        InitAds();
     }
 
     public ISeries[] Series { get; set; }
@@ -125,6 +123,18 @@ public partial class HabitDetailViewModel : BaseViewModel
         SetCharts();
 
         return base.InitializeAsync( parameter ); ;
+    }
+
+    private void InitAds()
+    {
+        if (!CrossMauiMTAdmob.Current.IsInterstitialLoaded())
+        {
+#if ANDROID
+            CrossMauiMTAdmob.Current.LoadInterstitial( "ca-app-pub-6307192789973793/7567835848" );
+#elif IOS
+            CrossMauiMTAdmob.Current.LoadInterstitial( "ca-app-pub-6307192789973793/6132315308" );
+#endif
+        }
     }
 
     private void SetCharts()
@@ -321,15 +331,13 @@ public partial class HabitDetailViewModel : BaseViewModel
             } while (doTryAgain);
         }
 
-        DateTapCount++;
-        if (!CrossMauiMTAdmob.Current.IsInterstitialLoaded())
+        int dateTapCount = Preferences.Get( "DateTapCount", 0 ) + 1;
+        Preferences.Set( "DateTapCount", dateTapCount );
+        if (dateTapCount >= 5)
         {
-            CrossMauiMTAdmob.Current.LoadInterstitial( "ca-app-pub-3940256099942544/1033173712" );
-        }
-        else if (DateTapCount >= MAXTAPSBEFOREAD)
-        {
-            DateTapCount = 0;
+            Preferences.Set( "DateTapCount", 0 );
             CrossMauiMTAdmob.Current.ShowInterstitial();
+            InitAds();
         }
     }
 

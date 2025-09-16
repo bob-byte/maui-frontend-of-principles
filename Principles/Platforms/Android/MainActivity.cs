@@ -18,30 +18,14 @@ public class MainActivity : MauiAppCompatActivity
     {
         base.OnCreate( savedInstanceState );
         MobileAds.Initialize( this );
-
-        var androidId = Android.Provider.Settings.Secure.GetString(
-            ContentResolver,
-            Android.Provider.Settings.Secure.AndroidId );
-        var md5 = System.Security.Cryptography.MD5.Create();
-        var bytes = md5.ComputeHash( System.Text.Encoding.UTF8.GetBytes( androidId ) );
-        var hashedId = string.Concat( bytes.Select( b => b.ToString( "X2" ) ) );
-        System.Diagnostics.Debug.WriteLine( $"Test Device ID: {hashedId}" );
-
         RequestConsent();
     }
 
 
     private void RequestConsent()
     {
-        var debugSettings = new ConsentDebugSettings
-            .Builder( this )
-            .SetDebugGeography( ConsentDebugSettings.DebugGeography.DebugGeographyEea )
-            .AddTestDeviceHashedId( "2CCF7401618406FDEF0E2940789EC74C" )
-            .Build();
-
         var parameters = new ConsentRequestParameters.Builder()
             .SetTagForUnderAgeOfConsent( false )
-            .SetConsentDebugSettings( debugSettings )
             .Build();
 
         var consentInformation = UserMessagingPlatform.GetConsentInformation( this );
@@ -57,19 +41,24 @@ public class MainActivity : MauiAppCompatActivity
     private class ConsentInfoUpdateSuccessListener : Java.Lang.Object, IConsentInformationOnConsentInfoUpdateSuccessListener
     {
         private readonly MainActivity activity;
-        public ConsentInfoUpdateSuccessListener( MainActivity activity )
-        {
-            this.activity = activity;
-        }
+        public ConsentInfoUpdateSuccessListener( MainActivity activity ) => this.activity = activity;
+
         public void OnConsentInfoUpdateSuccess()
         {
-            if (UserMessagingPlatform.GetConsentInformation( activity ).IsConsentFormAvailable)
+            var ci = UserMessagingPlatform.GetConsentInformation( activity );
+            System.Diagnostics.Debug.WriteLine( $"[UMP] InfoUpdateSuccess → Status={ci.ConsentStatus}, FormAvailable={ci.IsConsentFormAvailable}" );
+
+            if (ci.ConsentStatus == ConsentInformationConsentStatus.Required && ci.IsConsentFormAvailable)
             {
                 UserMessagingPlatform.LoadConsentForm(
                     activity,
                     new ConsentFormLoadSuccessListener( activity ),
                     new ConsentFormLoadFailureListener()
                 );
+            }
+            else
+            {
+                activity.SetupAds();
             }
         }
     }
@@ -78,40 +67,56 @@ public class MainActivity : MauiAppCompatActivity
     {
         public void OnConsentInfoUpdateFailure( FormError error )
         {
-            System.Diagnostics.Debug.WriteLine( $"Consent update failed: {error.Message}" );
+            System.Diagnostics.Debug.WriteLine( $"[UMP] InfoUpdate FAILED → {error.Message}" );
         }
     }
 
     private class ConsentFormLoadSuccessListener : Java.Lang.Object, IOnConsentFormLoadSuccessListener
     {
         private readonly MainActivity activity;
-        public ConsentFormLoadSuccessListener( MainActivity activity )
-        {
-            this.activity = activity;
-        }
+        public ConsentFormLoadSuccessListener( MainActivity activity ) => this.activity = activity;
 
-        public void OnConsentFormLoadSuccess( IConsentForm p0 )
+        public void OnConsentFormLoadSuccess( IConsentForm form )
         {
-            p0.Show( activity, new ConsentFormDismissedListener() );
+            System.Diagnostics.Debug.WriteLine( "[UMP] Consent form loaded → showing..." );
+            form.Show( activity, new ConsentFormDismissedListener( activity ) );
         }
     }
 
-    private class ConsentFormLoadFailureListener : Java.Lang.Object, UserMessagingPlatform.IOnConsentFormLoadFailureListener
+    private class ConsentFormLoadFailureListener : Java.Lang.Object, IOnConsentFormLoadFailureListener
     {
         public void OnConsentFormLoadFailure( FormError error )
         {
-            System.Diagnostics.Debug.WriteLine( $"Consent form load failed: {error.Message}" );
+            System.Diagnostics.Debug.WriteLine( $"[UMP] Form load FAILED → {error.Message}" );
         }
     }
 
     private class ConsentFormDismissedListener : Java.Lang.Object, IConsentFormOnConsentFormDismissedListener
     {
+        private readonly MainActivity activity;
+        public ConsentFormDismissedListener( MainActivity activity ) => this.activity = activity;
+
         public void OnConsentFormDismissed( FormError error )
         {
             if (error != null)
-                System.Diagnostics.Debug.WriteLine( $"Consent form dismissed with error: {error.Message}" );
+                System.Diagnostics.Debug.WriteLine( $"[UMP] Form dismissed with error: {error.Message}" );
             else
-                System.Diagnostics.Debug.WriteLine( "Consent form dismissed successfully." );
+                System.Diagnostics.Debug.WriteLine( "[UMP] Form dismissed successfully." );
+
+            activity.SetupAds();
         }
+    }
+    private void SetupAds()
+    {
+        var ci = UserMessagingPlatform.GetConsentInformation( this );
+
+        bool nonPersonalized = ci.ConsentStatus != ConsentInformationConsentStatus.Obtained;
+
+        var extras = new Bundle();
+        if (nonPersonalized)
+            extras.PutString( "npa", "1" ); 
+
+        System.Diagnostics.Debug.WriteLine( $"[ADS] Initializing ads. NonPersonalized={nonPersonalized}" );
+
     }
 }

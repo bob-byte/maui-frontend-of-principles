@@ -13,15 +13,17 @@ public partial class ProfileView : ContentPageBase
 
         InitializeComponent();
 
-        AdView.AdsId = "ca-app-pub-6307192789973793/4685555664";
+#if ANDROID
+        AdView.AdsId = "ca-app-pub-6307192789973793/8957186556";
+#elif IOS
+        AdView.AdsId = "ca-app-pub-6307192789973793/1193999180";
+#endif
         AdView.LoadAd();
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        CrossMauiMTAdmob.Current.LoadInterstitial( "ca-app-pub-3940256099942544/1033173712" );
-        CrossMauiMTAdmob.Current.ShowInterstitial();
     }
 
     void TRG_UserName_Focused( object sender, FocusEventArgs e )

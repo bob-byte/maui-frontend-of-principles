@@ -132,13 +132,12 @@
                                EndIconCommand="{Binding ShowSnackbarForMissionCommand}"
                                Focused="TGR_Mission_Focused"
                                IsReadOnly="True" />
-
             <ads:MTAdView x:Name="AdView"
                           HorizontalOptions="Center"
                           VerticalOptions="End"
                           HeightRequest="{OnIdiom Phone=50, Tablet=90, Desktop=120}" 
                           AdSize="Banner"
-                          Margin="10, 0, 0, 10"/>
+                          Margin="0,2"/>
             <dxco:DXPopup x:Name="DXP_Prompt"
                           AllowAnimation="True"
                           AllowScrim="True"
