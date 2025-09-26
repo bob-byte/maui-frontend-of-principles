@@ -792,7 +792,7 @@ public partial class HabitDetailViewModel : BaseViewModel
                 ),
                 new(
                     LocStrings.DeleteTheHabit,
-                    DeleteHabitFromServerAsync
+                    DeleteHabitFromDatabasesAsync
                 )
             ];
             popupViewModel.Configure( availableActions, LocStrings.DeleteArchivedHabitConfirmationText );
@@ -809,28 +809,19 @@ public partial class HabitDetailViewModel : BaseViewModel
 
             if (doDelete)
             {
-                await DeleteHabitFromServerAsync();
+                await DeleteHabitFromDatabasesAsync();
             }
         }
     }
 
-    private async Task DeleteHabitFromServerAsync()
+    private async Task DeleteHabitFromDatabasesAsync()
     {
         await UiBusyFor( async () =>
         {
-            HabitDeletionResponse? response = await ServiceOfHabit.DeleteAsync( Habit.Id );
-
-            if (response != null)
-            {
-                foreach (HabitDeletionResponse.NotificationRequest notification in response.DeletedNotifications)
-                {
-                    LocalNotificationCenter.Current.Cancel( notification.Id );
-                }
-            }
+            await ServiceOfHabit.DeleteAsync( Habit );
 
             await Navigation.GoBackAsync();
             ReferenceMessenger.Send( new HabitsDeletedMessege( Habit ) );
-
         } ).DefaultConfigureAwait();
     }
 
@@ -838,12 +829,8 @@ public partial class HabitDetailViewModel : BaseViewModel
     {
         await UiBusyFor( async () =>
         {
-            await ServiceOfHabit.SetHabitArchiveStatusAsync( new HabitArchiveStatus
-            {
-                HabitId = Habit.Id, 
-                IsArchived = false
-            } );
             Habit.IsArchived = false;
+            await ServiceOfHabit.SetHabitArchiveStatusAsync( Habit );
             
             ReferenceMessenger.Send( new HabitSavedMessage( Habit ) );
         } );
@@ -863,13 +850,8 @@ public partial class HabitDetailViewModel : BaseViewModel
         {
             await UiBusyFor(async () =>
             {
-                await ServiceOfHabit.SetHabitArchiveStatusAsync( new HabitArchiveStatus
-                {
-                    HabitId = Habit.Id, 
-                    IsArchived = newValueOfIsArchived
-                } );
-                
                 Habit.IsArchived = newValueOfIsArchived;
+                await ServiceOfHabit.SetHabitArchiveStatusAsync( Habit ).DefaultConfigureAwait();
                 
                 if (Habit.IsArchived)
                 {

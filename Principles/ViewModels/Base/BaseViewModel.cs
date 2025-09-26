@@ -79,7 +79,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         {
             ReferenceMessenger.Register<UserInfoChangedMessage>( this, ( sender, msg ) =>
             {
-                UserInfo newUserInfo = msg.Value;
+                User newUserInfo = msg.Value;
                 UserName.Value = newUserInfo.Name;
                 Gender = newUserInfo.Gender;
                 Mission = newUserInfo.Mission;
@@ -216,13 +216,13 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         {
             Email = CachingService.GetStoredValue( PreferenceKeys.USER_EMAIL );
 
-            UserInfo userInfo;
+            User userInfo;
             
             //we use Email to check whether user info is stored, because it (email) was recently added
             if (string.IsNullOrEmpty( Email ))
             {
                 string url = $"{UrlBuilder.Profile}";
-                userInfo = await RequestProvider.GetAsync<UserInfo>( url, SettingsService.AuthAccessToken );
+                userInfo = await RequestProvider.GetAsync<User>( url, SettingsService.AuthAccessToken );
                 UserName.Value = userInfo.Name;
                 MainSlogan = userInfo.MainSlogan;
                 Mission = userInfo.Mission;
@@ -239,8 +239,8 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
             }
             else
             {
-                userInfo = new UserInfo();
-                userName.Email = Email;
+                userInfo = new User();
+                userInfo.Email = Email;
 
                 UserName.Value = CachingService.GetStoredValue( PreferenceKeys.USER_NAME );
                 userInfo.Name = UserName.Value;

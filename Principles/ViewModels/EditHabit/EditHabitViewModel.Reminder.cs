@@ -42,40 +42,4 @@ public partial class EditHabitViewModel
             LocalNotificationCenter.Current.Cancel( day.UserNotificationRequestId );
         }
     }
-    private async Task AddNotificationToDeviceAsync( UserHabitReminder reminder, WeekDay weekDay )
-    {
-        if (reminder.IsEnabled)
-        {
-            DateTime currentDate = DateTime.Now;
-            TimeSpan currentTime = currentDate.TimeOfDay;
-
-            int reminderDayIndex = (int)weekDay.Type;
-
-            int currentDayIndex = (int)currentDate.DayOfWeek;
-
-            int daysUntilNextReminder = (reminderDayIndex - currentDayIndex + 7) % 7;
-
-            if (daysUntilNextReminder == 0 && reminder.Time.ToTimeSpan() < currentTime)
-            {
-                daysUntilNextReminder = 7;
-            }
-
-            DateTime notifyDateTime = currentDate.Date
-                .AddDays( daysUntilNextReminder )
-                .Add( reminder.Time.ToTimeSpan() );
-
-            await ReminderService.SaveLocallyAsync(
-                weekDay.UserNotificationRequestId,
-                reminder.Title,
-                reminder.Description,
-                notifyDateTime,
-                ReminderRepeat.Weekly
-            );
-        }
-        else if (!IsNewHabit && weekDay.UserNotificationRequestId != 0)
-        {
-            //TODO: test how it works for new habit
-            LocalNotificationCenter.Current.Cancel( weekDay.UserNotificationRequestId );
-        }
-    }
 }

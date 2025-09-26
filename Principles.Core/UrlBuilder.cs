@@ -18,6 +18,7 @@ public class UrlBuilder : IUrlBuilder
     private string? m_userMainSlogan;
     private string? m_userMission;
     private string? m_habitsInProgress;
+    private string? m_allHabits;
     private string? m_areasOfLife;
     private string? m_progressOfHabit;
     private string? m_habits;
@@ -84,6 +85,15 @@ public class UrlBuilder : IUrlBuilder
         {
             m_habitsInProgress ??= Combine( BaseApiUrl, "habits", "inprogress" );
             return m_habitsInProgress;
+        }
+    }
+
+    public string AllHabits
+    {
+        get
+        {
+            m_allHabits ??= Combine( BaseApiUrl, "habits", "all" );
+            return m_allHabits;
         }
     }
 

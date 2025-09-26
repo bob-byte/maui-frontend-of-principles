@@ -5,9 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Principles.Core.Models;
-public class ArсhivedHabitDto
+public class ArсhivedHabit
 {
     public long Id { get; set; }
+    public long LocalId { get; set; }
     public string Name { get; set; }
     public DateTime ArchivingTime { get; set; }
 }

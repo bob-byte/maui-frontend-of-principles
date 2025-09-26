@@ -68,6 +68,24 @@ public class RequestProvider : IRequestProvider
         return response;
     }
 
+    public async Task<TResult> PostJsonAsync<TResult>( string uri, string json, string token = "", string header = "" )
+    {
+        HttpClient httpClient = GetOrCreateHttpClient( token );
+
+        if (!string.IsNullOrEmpty( header ))
+        {
+            AddHeaderParameter( httpClient, header );
+        }
+        
+        var content = new StringContent( json, Encoding.UTF8, MediaTypeNames.Application.Json );
+
+        HttpResponseMessage response = await httpClient.PostAsync( uri, content ).DefaultConfigureAwait();
+
+        await HandleResponse( response ).DefaultConfigureAwait();
+        TResult result = await response.Content.ReadFromJsonAsync<TResult>().DefaultConfigureAwait();
+        return result;
+    }
+
     public async Task<TResult> PostAsync<TRequest, TResult>(
         string uri,
         TRequest data,

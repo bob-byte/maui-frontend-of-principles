@@ -1,284 +1,247 @@
-# Offline Mode Implementation Guide
+## Offline Mode Implementation Guide
 
 ## Overview
 
-This document describes the offline mode implementation for the Principles app. The implementation provides a robust offline-first architecture using SQLite for local storage and a sync queue system for data synchronization.
+This document describes the current offline mode implementation for the Principles app. It uses a lightweight local repository backed by SQLite and a sync queue processed by handlers when connectivity is available.
 
 ## Architecture
 
-### Core Components
+### Core Components (actual classes)
 
-1. **SQLite Database** (`DatabaseService`)
-   - Local storage using `sqlite-net-pcl`
-   - ACID compliant transactions
-   - Cross-platform support (iOS/Android)
+1. **Local Repository** (`IOfflineRepository` / `OfflineRepository`)
+   - Generic CRUD over SQLite via `sqlite-net-pcl`
+   - Auto-creates tables for all types implementing `IOfflineEntity`
+   - Supports sync and async operations, simple field queries, and raw SQL
 
-2. **Sync Queue System** (`SyncQueueService`)
-   - Queues offline operations for later sync
-   - Handles Create, Update, Delete operations
-   - Retry mechanism with exponential backoff
+2. **Remote API abstraction** (`IRemoteApiService<T>` / `RemoteApiService<T>`)
+   - Typed remote operations for entities (`T : IEntity`)
 
-3. **Enhanced Sync Service** (`EnhancedSyncService`)
-   - Processes queued operations when online
-   - Handles network connectivity
-   - Provides sync status information
+3. **Offline-aware API** (`IOfflineApiService<T>` / `OfflineApiService<T>`)
+   - Wraps local repository + remote API + sync queue
+   - Decides when to read remote vs local; queues writes while offline
 
-4. **Offline Service** (`OfflineService`)
-   - High-level interface for offline operations
-   - Automatic fallback to local data
-   - Network connectivity monitoring
+4. **Sync Queue** (`ISyncQueueService` / `SyncQueueService`)
+   - Persists pending operations as `SyncQueueItem` in local DB
+   - **Enhanced retry logic** with exponential backoff and jitter
+   - **Failure lifecycle management** with proper error tracking
+   - **Stuck item recovery** and automatic cleanup strategies
 
-## Database Choice: SQLite
+5. **Sync Orchestrator** (`ISyncService` / `SyncService`)
+   - Discovers and invokes `ISyncQueueHandler` implementations
+   - **Comprehensive error handling** with proper logging
+   - **Stuck item detection and recovery**
+   - **Sync status monitoring** and cleanup operations
 
-**Why SQLite is the best choice for this app:**
+6. **Connectivity** (`INetworkService` / `NetworkService`)
+   - Indicates whether device is online; used by `OfflineApiService<T>`
 
-### ✅ Advantages
-- **Already integrated** - Using `sqlite-net-pcl` which is perfect for .NET MAUI
-- **Cross-platform** - Works seamlessly on iOS and Android
-- **Lightweight** - Minimal memory footprint (~500KB)
-- **ACID compliance** - Ensures data integrity
-- **No server required** - Perfect for offline-first architecture
-- **Mature ecosystem** - Well-tested with existing packages
-- **Performance** - Fast read/write operations
-- **File-based** - Easy backup and restore
+### Key Models
 
-### 🔄 Alternative Considerations
-- **Realm**: More complex, better for complex relationships, but overkill
-- **Entity Framework Core**: Heavier, better for complex queries, but SQLite-net-pcl is more suitable for mobile
-- **Custom JSON storage**: Less robust, no ACID compliance
+- `IOfflineEntity`
+  - Marker with `[PrimaryKey, AutoIncrement] long LocalId { get; set; }`
 
-## Usage Examples
+- `OperationType`
+  - Values: `Save`, `Delete`
 
-### Basic Offline Operations
+- `SyncQueueItem`
+  - Fields:
+    - `long LocalId`
+    - `long? EntityId`
+    - `long? EntityLocalId`
+    - `string HandlerType` (required)
+    - `string Operation` (required, typically `Save` or `Delete`)
+    - `string? PayloadJson`
+    - `DateTime LastModified` (UTC, set on create)
+    - `bool IsProcessing`
+    - `bool IsProcessed`
+    - **`int RetryCount`** - tracks retry attempts
+    - **`DateTime? NextRetryAt`** - when to retry next
+    - **`DateTime? LastRetryAt`** - when last retry occurred
+    - **`string? ErrorMessage`** - last error details
+    - **`DateTime? ProcessedAt`** - when successfully processed
+    - **`bool IsFailed`** - permanent failure flag
 
+- **`SyncRetryConfig`** - configurable retry behavior
+  - `MaxRetryAttempts` (default: 3)
+  - `BaseDelay` (default: 1 minute)
+  - `MaxDelay` (default: 1 hour)
+  - `BackoffMultiplier` (default: 2.0)
+  - `JitterRange` (default: 30 seconds)
+
+- **`SyncStatus`** - sync operation status
+  - `PendingCount` - items waiting to be processed
+  - `FailedCount` - permanently failed items
+  - `StuckCount` - items stuck in processing
+  - `LastSyncAttempt` - when last sync occurred
+
+## Data Flow
+
+### Read (GetAll)
+1. If online and `forceRefresh == true`, fetch remote list, persist locally, return remote
+2. Otherwise, read from local repository
+
+### Write (Save/Delete/Execute)
+1. Apply local change first (insert/update/delete via `IOfflineRepository`)
+2. If online, attempt remote call; on failure, enqueue
+3. If offline, enqueue directly
+4. `ISyncService.SyncAsync()` later processes the queue using registered handlers
+
+### Enhanced Sync Process
+1. **Pre-sync cleanup**: Reset any stuck items (>30 minutes in processing)
+2. **Smart filtering**: Only process items due for retry (`NextRetryAt <= now`)
+3. **Proper lifecycle**: Mark as processing → execute → mark as processed/failed
+4. **Retry management**: Exponential backoff with jitter prevents thundering herd
+5. **Error handling**: Comprehensive logging and error tracking
+6. **Cleanup strategies**: Configurable retention policies for failed/processed items
+
+## Usage Examples (reflecting current APIs)
+
+### Inject and use `OfflineApiService<T>`
 ```csharp
-// Inject the service
-private readonly IOfflineService _offlineService;
+private readonly IOfflineApiService<UserHabit> _offlineApi; // resolved from DI
 
-// Create a new habit with offline support
-public async Task CreateHabitAsync(UserHabit habit)
+public async Task<List<UserHabit>> LoadHabitsAsync(bool forceRefresh)
 {
-    await _offlineService.SaveWithOfflineSupportAsync(habit, OperationType.Create);
+    return await _offlineApi.GetAllAsync(forceRefresh);
 }
 
-// Update a habit with offline support
-public async Task UpdateHabitAsync(UserHabit habit)
+public async Task SaveHabitAsync(UserHabit habit)
 {
-    await _offlineService.SaveWithOfflineSupportAsync(habit, OperationType.Update);
+    await _offlineApi.SaveAsync(habit);
 }
 
-// Delete a habit with offline support
 public async Task DeleteHabitAsync(UserHabit habit)
 {
-    await _offlineService.SaveWithOfflineSupportAsync(habit, OperationType.Delete);
+    await _offlineApi.DeleteAsync(habit);
 }
 ```
 
-### Data Retrieval with Offline Fallback
-
+### Execute custom operation with local-first change
 ```csharp
-public async Task<List<UserHabit>> GetHabitsAsync()
-{
-    return await _offlineService.ExecuteWithOfflineSupportAsync(
-        // Online operation
-        async () => await _habitService.GetHabitsAsync(),
-        // Offline fallback
-        await _databaseService.GetAllAsync<UserHabit>()
-    );
-}
+// handlerType must match the handler's CanHandle() type key
+await _offlineApi.ExecuteAsync(
+    localChange: () => _localRepository.UpdateAsync(habit),
+    handlerType: nameof(UserHabit),
+    operation: "CustomOperation",
+    data: new { habitId = habit.Id, value = 123 }
+);
 ```
 
-### Sync Status Monitoring
-
+### Processing the queue with enhanced features
 ```csharp
-public async Task CheckSyncStatusAsync()
+// Typically called when app gains connectivity, or on a timer
+await _syncService.SyncAsync();
+
+// Monitor sync status
+var status = await _syncService.GetSyncStatusAsync();
+if (status.FailedCount > 0)
 {
-    var status = await _offlineService.GetSyncStatusAsync();
-    
-    if (status.PendingCount > 0)
-    {
-        // Show sync indicator
-        ShowSyncIndicator(status.PendingCount);
-    }
-    
-    if (status.FailedCount > 0)
-    {
-        // Show error message
-        ShowSyncError(status.LastError);
-    }
+    // Handle failed operations
+    Console.WriteLine($"Failed operations: {status.FailedCount}");
 }
+
+// Cleanup old items (failed items older than 7 days, processed items older than 1 day)
+await _syncService.CleanupOldItemsAsync(
+    TimeSpan.FromDays(7), 
+    TimeSpan.FromDays(1)
+);
+```
+
+### Advanced queue management
+```csharp
+// Get stuck items and reset them
+var stuckItems = await _syncQueueService.GetStuckItemsAsync();
+if (stuckItems.Count > 0)
+{
+    await _syncQueueService.ResetStuckItemsAsync();
+}
+
+// Manual cleanup of old failed items
+await _syncQueueService.CleanupOldFailedItemsAsync(TimeSpan.FromDays(30));
 ```
 
 ## Implementation Details
 
-### Sync Queue Item Structure
+### `OfflineRepository`
+- Initializes SQLite connections (sync/async) with flags: ReadWrite, Create, SharedCache, FullMutex
+- Creates tables for all `IOfflineEntity` implementations at startup
+- Provides `SaveAsync`, `Insert*`, `Update*`, `Delete*`, `Get*`, `Where*`, `Upsert*`, transaction helpers, and raw SQL
 
+### `OfflineApiService<T>`
+- `GetAllAsync(forceRefresh)`; refreshes local cache from remote when online and requested
+- `SaveAsync(item)`; saves locally, then remote or queue
+- `DeleteAsync(item)`; deletes locally, then remote or queue
+- `ExecuteAsync(localChange, handlerType, operation, data)`; runs local change, then remote call or queues executable task
+
+### `SyncQueueService` (Enhanced)
+- **Smart queue filtering**: Only returns items ready for processing
+- **Retry lifecycle**: Tracks retry counts, schedules next attempts with exponential backoff
+- **Failure management**: Marks items as failed after max retries, provides error details
+- **Stuck item recovery**: Detects and resets items stuck in processing
+- **Cleanup strategies**: Configurable retention policies for different item states
+
+### `SyncService` (Enhanced)
+- **Pre-sync cleanup**: Automatically resets stuck items before processing
+- **Comprehensive error handling**: Logs all operations and errors via `ILoggingService`
+- **Proper lifecycle management**: Uses `MarkAsProcessedAsync` and `MarkAsFailedAsync`
+- **Status monitoring**: Provides detailed sync status information
+- **Cleanup operations**: Orchestrates cleanup of old items
+
+### `ISyncQueueHandler`
+- Contract:
 ```csharp
-public class SyncQueueItem
-{
-    [PrimaryKey, AutoIncrement]
-    public int Id { get; set; }
-    
-    public string EntityType { get; set; }           // e.g., "UserHabit"
-    public OperationType Operation { get; set; }     // Create, Update, Delete
-    public string PayloadJson { get; set; }          // Serialized entity
-    public DateTime CreatedAt { get; set; }
-    
-    public bool IsProcessing { get; set; } = false;
-    public bool IsProcessed { get; set; } = false;
-    
-    public string? EntityId { get; set; }
-    public DateTime? ProcessedAt { get; set; }
-    public string? ErrorMessage { get; set; }
-    public int RetryCount { get; set; } = 0;
-    public DateTime? LastRetryAt { get; set; }
-}
+bool CanHandle(string handlerType);
+Task SaveAsync(long entityId, long localId, string? payloadJson);
+Task DeleteAsync(long entityId, string? payloadJson);
+Task ExecuteAsync(string operation, string? payloadJson);
 ```
 
-### Sync Process Flow
+## Dependency Injection Registration
 
-1. **User performs action** (create/update/delete)
-2. **Save locally** - Data is immediately saved to SQLite
-3. **Queue for sync** - Operation is added to sync queue
-4. **Network check** - If online, attempt immediate sync
-5. **Background sync** - When network becomes available, process queue
-6. **Retry logic** - Failed operations are retried with backoff
-7. **Cleanup** - Old processed operations are cleaned up
-
-### Error Handling
-
-- **Network failures**: Operations are queued for later sync
-- **API failures**: Retry with exponential backoff (max 3 attempts)
-- **Data conflicts**: Currently uses "last write wins" strategy
-- **Corruption**: SQLite provides ACID compliance for data integrity
-
-## Configuration
-
-### Service Registration
-
-Services are already registered in `ServiceCollectionExtensions.cs`:
-
+Registered in `Principles.Core/Extensions/ServiceCollectionExtensions.cs`:
 ```csharp
-services.AddSingleton<IDatabaseService, DatabaseService>();
+services.AddSingleton<INetworkService, NetworkService>();
+services.AddSingleton<ISyncService, SyncService>();
 services.AddSingleton<ISyncQueueService, SyncQueueService>();
-services.AddSingleton<IEnhancedSyncService, EnhancedSyncService>();
-services.AddSingleton<IOfflineService, OfflineService>();
+services.AddSingleton<IOfflineRepository, OfflineRepository>();
+services.AddSingleton<RemoteApiService<UserHabit>, HabitRemoteApi>();
 ```
 
-### Database Initialization
-
-The database is automatically initialized in `DatabaseService`:
-
-```csharp
-public async Task InitializeAsync()
-{
-    await _db.CreateTableAsync<UserInfo>();
-    await _db.CreateTableAsync<SyncQueueItem>();
-    // Add other tables as needed
-}
-```
-
-## Best Practices
-
-### 1. Always Use Offline Service
-```csharp
-// ✅ Good
-await _offlineService.SaveWithOfflineSupportAsync(habit, OperationType.Create);
-
-// ❌ Bad - Direct API calls without offline support
-await _habitService.CreateHabitAsync(habit);
-```
-
-### 2. Handle Sync Status in UI
-```csharp
-// Show sync indicator when there are pending operations
-var status = await _offlineService.GetSyncStatusAsync();
-if (status.PendingCount > 0)
-{
-    ShowSyncIndicator();
-}
-```
-
-### 3. Provide User Feedback
-```csharp
-if (!_offlineService.IsOnline)
-{
-    await ShowMessageAsync("You're offline. Changes will sync when you're back online.");
-}
-```
-
-### 4. Regular Cleanup
-```csharp
-// Clean up old sync data periodically
-await _offlineService.CleanupOldDataAsync();
-```
+Note: `OfflineApiService<T>` is constructed via `IServiceProvider` in its constructor and expects `IOfflineRepository`, `IRemoteApiService<T>`, `ISyncQueueService`, and `INetworkService` to be registered.
 
 ## Testing
 
-### Offline Testing
-1. Enable airplane mode
-2. Perform operations (create/update/delete)
-3. Verify data is saved locally
-4. Disable airplane mode
-5. Verify sync occurs automatically
+### Offline
+1. Disable connectivity
+2. Perform save/delete/execute operations — verify local DB is updated and queue items are created
+3. Re-enable connectivity
+4. Trigger `SyncAsync()` and verify items are processed and removed
 
-### Sync Testing
-1. Perform operations while offline
-2. Check sync queue in database
-3. Go online and verify sync
-4. Check for any failed operations
+### Online with transient failures
+1. Stay online but simulate server failure
+2. Verify the operation is queued and processed later
+3. Check retry behavior with exponential backoff
+
+### Retry and failure scenarios
+1. Simulate handler failures to test retry logic
+2. Verify items are marked as failed after max retries
+3. Test stuck item recovery and cleanup operations
 
 ## Troubleshooting
 
-### Common Issues
+- Verify `HandlerType` in queue items matches a handler's `CanHandle`
+- Ensure entity types used in local storage implement `IOfflineEntity` so tables are created
+- Check `IsProcessing` stuck items and logs in `SyncService` catch blocks
+- Monitor retry counts and exponential backoff timing
+- Use `GetSyncStatusAsync()` to monitor queue health
+- Reset stuck items with `ResetStuckItemsAsync()` if needed
 
-1. **Sync not working**
-   - Check network connectivity
-   - Verify sync queue has items
-   - Check logs for errors
+## Notes / Future Work
 
-2. **Data not appearing offline**
-   - Ensure data is saved locally first
-   - Check database initialization
-   - Verify table creation
-
-3. **Performance issues**
-   - Clean up old sync data
-   - Limit sync queue size
-   - Optimize database queries
-
-### Debug Commands
-
-```csharp
-// Check sync status
-var status = await _offlineService.GetSyncStatusAsync();
-
-// Force sync
-await _offlineService.ForceSyncAsync();
-
-// Check pending operations
-var pending = await _syncQueueService.GetPendingOperationsAsync();
-
-// Clean up old data
-await _offlineService.CleanupOldDataAsync();
-```
-
-## Future Enhancements
-
-1. **Conflict Resolution**: Implement user-choice conflict resolution
-2. **Selective Sync**: Sync only specific data types
-3. **Compression**: Compress sync payloads
-4. **Incremental Sync**: Only sync changed data
-5. **Background Sync**: Periodic background sync
-6. **Sync Analytics**: Track sync performance and errors
-
-## Conclusion
-
-The offline implementation provides a robust, user-friendly experience that works seamlessly whether the user is online or offline. SQLite is the perfect choice for this implementation, offering the right balance of performance, reliability, and simplicity.
-
-The architecture is designed to be:
-- **Reliable**: ACID compliance ensures data integrity
-- **Fast**: Local operations are immediate
-- **User-friendly**: Seamless online/offline transitions
-- **Maintainable**: Clean separation of concerns
-- **Scalable**: Easy to add new entity types 
+- **Retry/backoff system** is now fully implemented with configurable parameters
+- **Comprehensive logging** via `ILoggingService` for debugging and monitoring
+- **Stuck item detection and recovery** prevents sync from getting blocked
+- **Cleanup strategies** prevent database bloat while maintaining audit trails
+- **Sync status monitoring** provides visibility into queue health
+- **Conflict resolution strategy** is handler-defined; consider explicit strategies if needed
+- **Background sync** could be implemented using the new status monitoring capabilities

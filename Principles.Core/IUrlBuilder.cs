@@ -4,6 +4,7 @@ public interface IUrlBuilder
 {
     string BaseUrl { get; }
     string BaseApiUrl { get; }
+    string AllHabits { get; }
     string HabitsInProgress { get; }
     string Habits { get; }
     string HabitsPriorities { get; }

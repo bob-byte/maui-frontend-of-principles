@@ -30,6 +30,12 @@ public class ReminderService : BaseRemoteService, IReminderService
         return LocalNotificationCenter.Current.RequestNotificationPermission();
     }
 
+    public Task CancelLocallyAsync( int id )
+    {
+        LocalNotificationCenter.Current.Cancel( id );
+        return Task.CompletedTask;
+    }
+
     public async Task TryToRecoverAllUserRemindersAsync()
     {
         if (!LocalNotificationCenter.Current.IsSupported)

@@ -1,5 +1,4 @@
 using Principles.Core.Services.AiKey;
-using Principles.Core.Services.Managers;
 
 using System.Net.Http.Headers;
 using System.Net.Mime;
@@ -62,10 +61,11 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IAppleAuthService, AppleAuthService>();
         services.AddSingleton<IApiKeyService, ApiKeyService>();
 
-        services.AddSingleton<NetworkService>();
-        services.AddSingleton<IDatabaseService, DatabaseService>();
+        services.AddSingleton<INetworkService, NetworkService>();
         services.AddSingleton<ISyncService, SyncService>();
-        services.AddSingleton<IUserManagerService, UserManagerService>();
+        services.AddSingleton<ISyncQueueService, SyncQueueService>();
+        services.AddSingleton<IOfflineRepository, OfflineRepository>();
+        services.AddSingleton<RemoteApiService<UserHabit>, HabitRemoteApi>();
 
         return services;
     }

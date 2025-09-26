@@ -11,4 +11,5 @@ public interface IReminderService
     Task<Reminder> HabitsReportReminderAsync();
     Task<SaveHabitsReportReminderResponse> SaveHabitsReportReminderAsync( Reminder reminder );
     Task RequestAccessToSendNotificationsAsync();
+    Task CancelLocallyAsync( int id );
 }

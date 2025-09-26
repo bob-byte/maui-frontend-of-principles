@@ -504,7 +504,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
     
     private void ArchivedHabitButton_Clicked( object sender, EventArgs e )
     {
-        if (sender is Button button && button.CommandParameter is ArсhivedHabitDto archivedHabit)
+        if (sender is Button button && button.CommandParameter is ArсhivedHabit archivedHabit)
         {
             ArchiveBottomSheet.State = BottomSheetState.Hidden;
 

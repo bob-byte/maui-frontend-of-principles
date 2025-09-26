@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace Principles.Core.Models;
 
-public record UserInfo
+public record User : IOfflineEntity
 {
+    public long Id { get; set; }
+    public long LocalId { get; set; }
     public string Name { get; set; }
     public string MainSlogan { get; set; }
     public string Mission { get; set; }
     public string Email { get; set; }
     public Gender Gender { get; set; }
-    public bool IsSynced { get; set; }
+    public DateTime LastModified { get; set; }
 }

@@ -1,104 +1,93 @@
+
 namespace Principles.Core.Services;
 
-public class OfflineApiService<T>
+public class OfflineApiService<T> : IOfflineApiService<T> where T: IEntity, new()
 {
-    private readonly IOfflineRepository<T> _localRepository;
-    private readonly IRemoteApiService<T> _remoteApi;
-    private readonly ISyncQueue<T> _syncQueue;
-    private readonly IConnectivityService _connectivity;
+    private readonly IOfflineRepository m_localRepository;
+    private readonly IRemoteApiService<T> m_remoteApi;
+    private readonly ISyncQueueService m_syncQueue;
+    private readonly INetworkService m_networkService;
 
-    public OfflineApiService(
-        IOfflineRepository<T> localRepository,
-        IRemoteApiService<T> remoteApi,
-        ISyncQueue<T> syncQueue,
-        IConnectivityService connectivity)
+    public OfflineApiService(IServiceProvider serviceProvider)
     {
-        _localRepository = localRepository;
-        _remoteApi = remoteApi;
-        _syncQueue = syncQueue;
-        _connectivity = connectivity;
+        m_localRepository = serviceProvider.GetRequiredService<IOfflineRepository>();
+        m_remoteApi = serviceProvider.GetRequiredService<IRemoteApiService<T>>();
+        m_syncQueue = serviceProvider.GetRequiredService<ISyncQueueService>();
+        m_networkService = serviceProvider.GetRequiredService<INetworkService>();
     }
 
-    public async Task<IEnumerable<T>> GetAllAsync(bool forceRefresh = false)
+    public async Task<List<T>> GetAllAsync(bool forceRefresh = false)
     {
-        if (_connectivity.IsConnected && forceRefresh)
+        if (m_networkService.IsConnected && forceRefresh)
         {
-            var remoteItems = await _remoteApi.GetAllAsync();
-            await _localRepository.SaveRangeAsync(remoteItems);
+            List<T> remoteItems = await m_remoteApi.GetAllAsync();
+            await m_localRepository.SaveRangeAsync(remoteItems);
             return remoteItems;
         }
 
-        return await _localRepository.GetAllAsync();
+        return await m_localRepository.GetAllAsync<T>();
     }
 
-    public async Task AddAsync(T item)
+    public async Task SaveAsync(T item)
     {
-        await _localRepository.AddAsync(item);
+        await m_localRepository.SaveAsync(item);
 
-        if (_connectivity.IsConnected)
+        if (m_networkService.IsConnected)
         {
             try
             {
-                await _remoteApi.AddAsync(item);
+                await m_remoteApi.SaveAsync(item);
             }
             catch
             {
-                await _syncQueue.EnqueueAddAsync(item);
+                await m_syncQueue.AddToQueueAsync(item, OperationType.Save);
             }
         }
         else
         {
-            await _syncQueue.EnqueueAddAsync(item);
+            await m_syncQueue.AddToQueueAsync(item, OperationType.Save);
         }
     }
 
-    public async Task UpdateAsync(T item)
+    public async Task ExecuteAsync(Func<Task> localChange, string handlerType, string operation, object? data)
     {
-        await _localRepository.UpdateAsync(item);
+        await localChange();
 
-        if (_connectivity.IsConnected)
+        if (m_networkService.IsConnected)
         {
             try
             {
-                await _remoteApi.UpdateAsync(item);
+                await m_remoteApi.ExecuteAsync(operation, data);
             }
             catch
             {
-                await _syncQueue.EnqueueUpdateAsync(item);
+                await m_syncQueue.AddToQueueAsync(handlerType, operation, data);
             }
         }
         else
         {
-            await _syncQueue.EnqueueUpdateAsync(item);
+            await m_syncQueue.AddToQueueAsync(handlerType, operation, data);
         }
     }
-
+    
     public async Task DeleteAsync(T item)
     {
-        await _localRepository.DeleteAsync(item);
+        await m_localRepository.DeleteAsync(item);
 
-        if (_connectivity.IsConnected)
+        if (m_networkService.IsConnected)
         {
             try
             {
-                await _remoteApi.DeleteAsync(item);
+                await m_remoteApi.DeleteAsync(item);
             }
             catch
             {
-                await _syncQueue.EnqueueDeleteAsync(item);
+                await m_syncQueue.AddToQueueAsync(item, OperationType.Delete);
             }
         }
         else
         {
-            await _syncQueue.EnqueueDeleteAsync(item);
+            await m_syncQueue.AddToQueueAsync(item, OperationType.Delete);
         }
-    }
-
-    public async Task SyncAsync()
-    {
-        if (!_connectivity.IsConnected)
-            return;
-
-        await _syncQueue.ProcessAsync(_remoteApi);
     }
 }

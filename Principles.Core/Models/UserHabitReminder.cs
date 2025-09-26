@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace Principles.Core.Models;
 
-public class UserHabitReminder : ICloneable
+public class UserHabitReminder : ICloneable, IEntity
 {
     public long Id { get; set; }
+    public DateTime LastModified { get; set; }
+    public long LocalId { get; set; }
     public string Title { get; set; }
     public string Description { get; set; }
     public TimeOnly Time { get; set; }

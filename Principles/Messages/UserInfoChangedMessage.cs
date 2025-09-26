@@ -11,9 +11,9 @@ namespace Principles.Messages;
 /// <summary>
 /// Signals that habit count was added
 /// </summary>
-public class UserInfoChangedMessage : ValueChangedMessage<UserInfo>
+public class UserInfoChangedMessage : ValueChangedMessage<User>
 {
-    public UserInfoChangedMessage( UserInfo userInfo )
+    public UserInfoChangedMessage( User userInfo )
         : base( userInfo )
     {
         //do nothing

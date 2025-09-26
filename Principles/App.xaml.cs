@@ -13,10 +13,11 @@ public partial class App : Application
     private readonly UpdatePopupViewModel m_updatePopupViewModel;
     private readonly ISettingsService m_settingsService;
     private readonly ILoggingService m_loggingService;
+    private readonly ISyncService m_syncService;
 
     private UpdatePopup? m_updatePopup;
     
-    public App( IServiceProvider serviceProvider, NetworkService networkService )
+    public App( IServiceProvider serviceProvider )
     {
         IServiceLocator serviceLocator = serviceProvider.GetRequiredService<IServiceLocator>();
         ServiceLocator.GetCurrentLocator = () => serviceLocator;
@@ -25,6 +26,7 @@ public partial class App : Application
         
         m_settingsService = serviceProvider.GetRequiredService<ISettingsService>();
         m_loggingService = serviceProvider.GetRequiredService<ILoggingService>();
+        m_syncService = serviceProvider.GetRequiredService<ISyncService>();
 
         m_updatePopupViewModel = new UpdatePopupViewModel( serviceProvider );
 
@@ -44,11 +46,6 @@ public partial class App : Application
         LocalizationResourceManager.Instance.SetCulture( currentCulture );
         
         InitializeComponent();
-
-        Task.Run( async () =>
-        {
-            await networkService.CheckInitialConnectionAsync();
-        } );
     }
 
     protected override Window CreateWindow( IActivationState? activationState )
@@ -85,6 +82,10 @@ public partial class App : Application
                 m_loggingService.LogError( ex, ex.Message );
             }
         }
+        else
+        {
+            Task.Run( () => m_syncService.SyncAsync() ).GetAwaiter();
+        }
         
         bool shouldShowPopup = await m_updatePopupViewModel.ShouldShowPopup();
         
@@ -107,6 +108,8 @@ public partial class App : Application
         }
         
         m_loggingService.LogInfo( "App resuming..." );
+        
+        Task.Run( () => m_syncService.SyncAsync() ).GetAwaiter();
         
         m_updatePopupViewModel.ReferenceMessenger.Send( new TryAddNewDayInHabitListMessage() );
 

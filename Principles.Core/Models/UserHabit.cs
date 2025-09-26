@@ -2,7 +2,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Principles.Core.Models;
 
-public partial class UserHabit : ObservableObject, ICloneable
+public partial class UserHabit : ObservableObject, ICloneable, IEntity
 {
     [ObservableProperty]
     private long m_id;
@@ -34,7 +34,7 @@ public partial class UserHabit : ObservableObject, ICloneable
     
     public bool IsNew()
     {
-        return Id == 0;
+        return LocalId == 0;
     }
 
     private double m_percentageAchieved;
@@ -67,14 +67,14 @@ public partial class UserHabit : ObservableObject, ICloneable
     [ObservableProperty]
     private int m_complexity;
 
-    [ObservableProperty]
-    private bool m_isSynced;
+    public long LocalId { get; set; }
+    
+    public DateTime LastModified { get; set; }
 
     public UserHabit()
     {
         m_scoreList = new ScoreList();
         m_computedProgresses = new ListOfProgressOfHabit( this );
-        m_isSynced = false;
     }
 
     public override string ToString()

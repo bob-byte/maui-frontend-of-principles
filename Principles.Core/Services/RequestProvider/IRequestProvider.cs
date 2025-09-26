@@ -10,7 +10,7 @@ public interface IRequestProvider
     Task<HttpResponseMessage> PostAsync<TRequest>( string uri, TRequest data, string token = "", string header = "" );
     Task<TResult> PostAsync<TRequest, TResult>( string uri, TRequest data, string token = "", string header = "" );
     Task<TResult> PostAsync<TResult>( string uri, string token = "", string header = "" );
-    Task<TResult> PostAsync<TResult>( string uri, string data, string clientId, string clientSecret );
+    Task<TResult> PostJsonAsync<TResult>( string uri, string json, string token = "", string header = "" );
     Task<HttpResponseMessage> PutAsync<TRequest>( string uri, TRequest data, string token = "", string header = "" );
     Task<TResult> PutAsync<TResult>( string uri, string data, string token = "", string header = "" );
     Task<TResponse> PutAsync<TRequest, TResponse>( string uri, TRequest data, string token = "", string header = "" );

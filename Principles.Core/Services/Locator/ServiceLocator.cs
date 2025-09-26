@@ -12,7 +12,7 @@ public class ServiceLocator : IServiceLocator
         ServiceProvider = serviceProvider;
     }
 
-    public static IServiceLocator? Current => GetCurrentLocator?.Invoke();
+    public static IServiceLocator Current => GetCurrentLocator?.Invoke()!;
 
     public static Func<IServiceLocator>? GetCurrentLocator { get; set; }
 

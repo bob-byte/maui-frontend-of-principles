@@ -51,8 +51,8 @@ public partial class EditHabitViewModel
                 UserHabit savedHabit = Habit;
                 if (copyOfHabits.Count == 1)
                 {
-                    SaveHabitResponse response = await ServiceOfHabit.UpdateHabitAsync( dto );
-                    await HandleHabitSaveAsync( response );
+                    await ServiceOfHabit.UpdateHabitAsync( Habit );
+                    await HandleHabitSaveAsync();
 
                     if (dto.IsArchived)
                     {
@@ -67,8 +67,8 @@ public partial class EditHabitViewModel
                 }
                 else
                 {
-                    SaveHabitResponse response = await ServiceOfHabit.UpdateHabitAsync( dto );
-                    await HandleHabitSaveAsync( response );
+                    await ServiceOfHabit.UpdateHabitAsync( Habit );
+                    await HandleHabitSaveAsync();
                     await Navigation.GoBackAsync();
 
                     if (dto.IsArchived)
@@ -143,36 +143,11 @@ public partial class EditHabitViewModel
         return result; 
     }
 
-    private async Task HandleHabitSaveAsync( SaveHabitResponse response )
+    private async Task HandleHabitSaveAsync()
     {
-        Habit.Id = response.Id;
-        Habit.Frequency!.Id = response.FrequencyId;
-
-        if (response.ReminderIds is not null && Habit.Reminders?.Any() == true)
+        if (InactiveDaysToDelete.Count > 0)
         {
-            await ReminderService.RequestAccessToSendNotificationsAsync();
-
-            for (int numReminder = 0; numReminder < response.ReminderIds.Count; numReminder++)
-            {
-                SaveHabitResponse.Reminder dtoOfReminder = response.ReminderIds[numReminder];
-                UserHabitReminder habitReminder = Habit.Reminders[numReminder];
-                habitReminder.Id = dtoOfReminder.Id;
-
-                if (InactiveDaysToDelete.Count > 0)
-                {
-                    RemoveInactiveNotifications( InactiveDaysToDelete );
-                }
-
-                for (int numWeekDay = 0; numWeekDay < dtoOfReminder.DaysOfWeek?.Count; numWeekDay++)
-                {
-                    SaveHabitResponse.WeekDay dtoOfWeekDay = dtoOfReminder.DaysOfWeek[numWeekDay];
-                    WeekDay? weekDay = habitReminder.DaysOfWeek.First( d => d.Type == dtoOfWeekDay.Type );
-                    weekDay.Id = dtoOfWeekDay.Id;
-                    weekDay.UserNotificationRequestId = dtoOfWeekDay.NotificationRequestId;
-
-                    await AddNotificationToDeviceAsync( habitReminder, weekDay );
-                }
-            }
+            RemoveInactiveNotifications( InactiveDaysToDelete );
         }
     }
 
@@ -206,15 +181,7 @@ public partial class EditHabitViewModel
             {
                 await UiBusyFor( async () =>
                 {
-                    HabitDeletionResponse? response = await ServiceOfHabit.DeleteAsync( habit.Id );
-
-                    if (response != null)
-                    {
-                        foreach (HabitDeletionResponse.NotificationRequest notification in response.DeletedNotifications)
-                        {
-                            LocalNotificationCenter.Current.Cancel( notification.Id );
-                        }
-                    }
+                    await ServiceOfHabit.DeleteAsync( habit );
                     
                     await Navigation.GoToInitialViewAsync();
                     ReferenceMessenger.Send( new HabitsDeletedMessege( habit ) );

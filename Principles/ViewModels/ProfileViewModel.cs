@@ -106,7 +106,7 @@ public partial class ProfileViewModel : BaseViewModel
 
     private void NotifyUserInfoChanged()
     {
-        UserInfoChangedMessage msg = new( new UserInfo
+        UserInfoChangedMessage msg = new( new User
         {
             Gender = Gender,
             Name = UserName.Value!,

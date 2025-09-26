@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Principles.Core.Models;
 
-public partial class FrequencyOfHabit : ObservableObject, ICloneable
+public partial class FrequencyOfHabit : ObservableObject, ICloneable, IEntity
 {
     public const double MAX_VALUE = 1.0;
     
@@ -22,7 +22,9 @@ public partial class FrequencyOfHabit : ObservableObject, ICloneable
     private int m_intervalLengthInDays = 1;
     
     public long Id { get; set; }
-    
+    public long LocalId { get; set; }
+    public DateTime LastModified { get; set; }
+
     public double Value =>
         (double)Repeats / IntervalLengthInDays;
     

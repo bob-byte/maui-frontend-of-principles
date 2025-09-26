@@ -5,79 +5,42 @@ using Toast = CommunityToolkit.Maui.Alerts.Toast;
 namespace Principles.Core.Services;
 public class NetworkService : INetworkService
 {
-    private readonly ISyncService _syncService;
-    private readonly IDatabaseService _localDb;
-    private bool wasConnected;
-
-
-    public NetworkService( ISyncService syncService, IDatabaseService localDb )
+    private bool m_wasConnected;
+    private readonly ISyncService m_syncService;
+    
+    public NetworkService(IServiceProvider serviceProvider)
     {
-        wasConnected = Connectivity.Current.NetworkAccess == NetworkAccess.Internet;
-        _syncService = syncService;
-        _localDb = localDb;
-        // Слухаємо зміни підключення
-        Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
+        m_wasConnected = IsConnected;
+        
+        m_syncService = serviceProvider.GetRequiredService<ISyncService>();
+        
+        Connectivity.Current.ConnectivityChanged += async (sender, e) => await Connectivity_ConnectivityChanged(sender, e);
     }
+    
+    public bool IsConnected => Connectivity.Current.NetworkAccess == NetworkAccess.Internet;
 
-    public async Task CheckInitialConnectionAsync()
-    {
-        if (Connectivity.Current.NetworkAccess == NetworkAccess.Internet)
-        {
-            await ShowGreetingToastAsync();
-            await TrySyncAsync();
-        }
-        else
-        {
-            await Toast.Make( "Інтернет не доступний" ).Show();
-        }
-    }
-
-    private async void Connectivity_ConnectivityChanged( object? sender, ConnectivityChangedEventArgs e )
+    private async Task Connectivity_ConnectivityChanged( object? sender, ConnectivityChangedEventArgs e )
     {
         bool isNowConnected = e.NetworkAccess == NetworkAccess.Internet;
 
-        if (wasConnected != isNowConnected)
+        if (m_wasConnected != isNowConnected)
         {
-            wasConnected = isNowConnected;
+            m_wasConnected = isNowConnected;
 
             if (isNowConnected)
             {
+                m_syncService.SyncAsync().GetAwaiter();
                 await ShowGreetingToastAsync();
-                await TrySyncAsync();
             }
-
             else
+            {
                 await Toast.Make( "Інтернет втраченo" ).Show();
+            }
         }
     }
 
     private async Task ShowGreetingToastAsync()
     {
-        string name = await GetUserNameAsync();
-        await Toast.Make( $"Інтернет знову доступний\nВітаю {name}" ).Show();
-    }
-
-    private async Task<string> GetUserNameAsync()
-    {
-        try
-        {
-            var users = await _localDb.GetAllAsync<UserDto>();
-            return users?.FirstOrDefault()?.Name ?? "користувачу";
-        }
-        catch
-        {
-            return "користувачу";
-        }
-    }
-    private async Task TrySyncAsync()
-    {
-        try
-        {
-            await _syncService.SyncUsersAsync();
-        }
-        catch (Exception ex)
-        {
-            await Toast.Make( $"Помилка синхронізації: {ex.Message}" ).Show();
-        }
+        await Toast.Make( $"Інтернет знову доступний" ).Show();
     }
 }
