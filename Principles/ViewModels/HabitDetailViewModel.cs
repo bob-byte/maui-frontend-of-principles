@@ -331,13 +331,16 @@ public partial class HabitDetailViewModel : BaseViewModel
             } while (doTryAgain);
         }
 
-        int dateTapCount = Preferences.Get( "DateTapCount", 0 ) + 1;
-        Preferences.Set( "DateTapCount", dateTapCount );
-        if (dateTapCount >= 5)
+        if (IsIntrusiveAdsEnabled)
         {
-            Preferences.Set( "DateTapCount", 0 );
-            CrossMauiMTAdmob.Current.ShowInterstitial();
-            InitAds();
+            int dateTapCount = Preferences.Get( "DateTapCount", 0 ) + 1;
+            Preferences.Set( "DateTapCount", dateTapCount );
+            if (dateTapCount >= 5)
+            {
+                Preferences.Set( "DateTapCount", 0 );
+                CrossMauiMTAdmob.Current.ShowInterstitial();
+                InitAds();
+            }
         }
     }
 

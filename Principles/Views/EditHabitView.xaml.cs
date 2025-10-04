@@ -259,27 +259,6 @@ public partial class EditHabitView : ContentPageBase
         }
     }
 
-    //TODO: replace to ViewModel
-    void C_WithoutExceptionsType_Tap( System.Object sender, System.ComponentModel.HandledEventArgs e )
-    {
-        ViewModel.Habit.Type = TypeOfHabit.WithoutExceptions;
-        C_WithoutExceptionsType.DisplaySnackbar(
-            LocStrings.WithoutExceptionsHabitTypeShortDescription,
-            duration: Timeout.InfiniteTimeSpan,
-            visualOptions: SnackbarHelper.DefaultOptions()
-        );
-    }
-
-    void C_IntegrallyWiseType_Tap( System.Object sender, System.ComponentModel.HandledEventArgs e )
-    {
-        ViewModel.Habit.Type = TypeOfHabit.IntegrallyWise;
-        C_IntegrallyWiseType.DisplaySnackbar(
-            LocStrings.IntegrallyWiseHabitTypeShortDescription,
-            duration: Timeout.InfiniteTimeSpan,
-            visualOptions: SnackbarHelper.DefaultOptions()
-        );
-    }
-
     void TE_AreasOfLife_EndIconClicked( System.Object sender, System.EventArgs e )
     {
         TE_AreasOfLife.IsDropDownOpen = !TE_AreasOfLife.IsDropDownOpen;

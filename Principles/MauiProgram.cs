@@ -71,7 +71,14 @@ public static class MauiProgram
             .RegisterMauiServices()
             .RegisterViewModels()
             .RegisterViews();
-
+        
+        
+        CrossMauiMTAdmob.Current.OnInterstitialFailedToLoad += ( _, args ) =>
+        {
+            ILoggingService loggingService = ServiceLocator.Current!.GetRequiredService<ILoggingService>();
+            loggingService.LogError( args.ErrorMessage );
+        };
+        
         var assembly = Assembly.GetExecutingAssembly();
 
         //TODO: replace appsettings.json and implementation of the config to Principles.Core project
@@ -110,6 +117,7 @@ public static class MauiProgram
 
     public static IServiceCollection RegisterMauiServices( this IServiceCollection services )
     {
+        services.AddSingleton<ICachingService, CachingService>();
         services.AddSingleton<ISettingsService, SettingsService>();
         services.AddSingleton<INavigationService, MauiNavigationService>();
         services.AddSingleton<IDialogService, DialogService>();

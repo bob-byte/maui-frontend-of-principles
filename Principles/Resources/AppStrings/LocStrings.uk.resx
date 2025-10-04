@@ -1018,4 +1018,28 @@
   <data name="TheHabitIsAlreadyAutomated" xml:space="preserve">
     <value>Звичка вже автоматична</value>
   </data>
+  <data name="DescriptionWhyWeAppendedAds" xml:space="preserve">
+    <value>Ми додали рекламу, щоб «Principles» залишались безкоштовними для всіх. Завдяки цьому ми зможемо ще швидше розвивати додаток. Дякуємо, що ви з нами!</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Повідомлення</value>
+  </data>
+  <data name="YouAreWelcome" xml:space="preserve">
+    <value>Будь ласка</value>
+  </data>
+  <data name="EnableIntrusiveAds" xml:space="preserve">
+    <value>Увімкнути навʼязливу рекламу</value>
+  </data>
+  <data name="DisableIntrusiveAds" xml:space="preserve">
+    <value>Вимкнути навʼязливу рекламу</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Попередження</value>
+  </data>
+  <data name="DescriptionOfAdsEnabling" xml:space="preserve">
+    <value>Дякуємо вам за підтримку та розвиток нашого додатку! Ви найкращі!</value>
+  </data>
+  <data name="DisablingAdsDescription" xml:space="preserve">
+    <value>Це вимкне навʼязливу рекламу й погіршить підтримку та розвиток додатку. Ви впевнені, що хочете це зробити?</value>
+  </data>
 </root>

@@ -151,4 +151,30 @@ public partial class ProfileViewModel : BaseViewModel
             visualOptions: SnackbarHelper.DefaultOptions()
         );
     }
+
+    [RelayCommand]
+    private async Task EnableAdsAsync()
+    {
+        IsIntrusiveAdsEnabled = true;
+        
+        await DialogService.ShowAlertAsync( 
+            LocStrings.DescriptionOfAdsEnabling,
+            LocStrings.Success, 
+            LocStrings.YouAreWelcome 
+        );
+    }
+
+    [RelayCommand]
+    private async Task DisableAdsAsync()
+    {
+        bool isConfirmed = await DialogService.ShowConfirmAsync( 
+            LocStrings.DisablingAdsDescription,
+            LocStrings.Warning
+        );
+
+        if (isConfirmed)
+        {
+            IsIntrusiveAdsEnabled = false;
+        }
+    }
 }

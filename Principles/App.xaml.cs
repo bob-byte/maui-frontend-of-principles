@@ -86,6 +86,12 @@ public partial class App : Application
             m_updatePopup ??= new UpdatePopup( m_updatePopupViewModel );
             Windows[0].Page!.ShowPopup( m_updatePopup );
         }
+
+#if IOS
+        // Initialize advertisement service and request tracking permission
+        IAdvertisementService advertisementService = ServiceLocator.Current!.GetRequiredService<IAdvertisementService>();
+        await advertisementService.GetAccessToTrackAsync();
+#endif
     }
 
     protected override async void OnResume()

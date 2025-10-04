@@ -100,6 +100,16 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         }
     }
 
+    public bool IsIntrusiveAdsEnabled
+    {
+        get => CachingService.GetStoredValueOrDefault( CacheKeys.IS_ENABLED_ADS, defaultValue: true );
+        set
+        {
+            CachingService.SetForever( CacheKeys.IS_ENABLED_ADS, value );
+            NotifyPropertyChanged( nameof(IsIntrusiveAdsEnabled) );
+        }
+    }
+
     public WeakReferenceMessenger ReferenceMessenger { get; }
 
     public INavigationService Navigation { get; }

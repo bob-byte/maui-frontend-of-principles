@@ -1826,5 +1826,53 @@ namespace Principles.Resources.AppStrings {
                 return ResourceManager.GetString("TheHabitIsAlreadyAutomated", resourceCulture);
             }
         }
+        
+        internal static string DescriptionWhyWeAppendedAds {
+            get {
+                return ResourceManager.GetString("DescriptionWhyWeAppendedAds", resourceCulture);
+            }
+        }
+        
+        internal static string Message {
+            get {
+                return ResourceManager.GetString("Message", resourceCulture);
+            }
+        }
+        
+        internal static string YouAreWelcome {
+            get {
+                return ResourceManager.GetString("YouAreWelcome", resourceCulture);
+            }
+        }
+        
+        internal static string EnableIntrusiveAds {
+            get {
+                return ResourceManager.GetString("EnableIntrusiveAds", resourceCulture);
+            }
+        }
+        
+        internal static string DisableIntrusiveAds {
+            get {
+                return ResourceManager.GetString("DisableIntrusiveAds", resourceCulture);
+            }
+        }
+        
+        internal static string Warning {
+            get {
+                return ResourceManager.GetString("Warning", resourceCulture);
+            }
+        }
+        
+        internal static string DescriptionOfAdsEnabling {
+            get {
+                return ResourceManager.GetString("DescriptionOfAdsEnabling", resourceCulture);
+            }
+        }
+        
+        internal static string DisablingAdsDescription {
+            get {
+                return ResourceManager.GetString("DisablingAdsDescription", resourceCulture);
+            }
+        }
     }
 }

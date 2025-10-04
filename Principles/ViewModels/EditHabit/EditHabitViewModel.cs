@@ -130,9 +130,9 @@ public partial class EditHabitViewModel : BaseViewModel
         if (!CrossMauiMTAdmob.Current.IsInterstitialLoaded())
         {
 #if ANDROID
-        CrossMauiMTAdmob.Current.LoadInterstitial( "ca-app-pub-6307192789973793/7567835848" );
+            CrossMauiMTAdmob.Current.LoadInterstitial( "ca-app-pub-6307192789973793/7567835848" );
 #elif IOS
-            CrossMauiMTAdmob.Current.LoadInterstitial( "ca-app-pub-6307192789973793/6132315308" );
+            CrossMauiMTAdmob.Current.LoadInterstitial( "ca-app-pub-3940256099942544/4411468910" );
 #endif
         }
     }
@@ -178,13 +178,16 @@ public partial class EditHabitViewModel : BaseViewModel
             m_isInHabitDetails = false;
         }
 
-        int editHabitViewCount = Preferences.Get( "EditHabitViewCount", 0 ) + 1;
-        Preferences.Set( "EditHabitViewCount", editHabitViewCount );
-        if (editHabitViewCount >= 2)
+        if (IsIntrusiveAdsEnabled)
         {
-            Preferences.Set( "EditHabitViewCount", 0 );
-            CrossMauiMTAdmob.Current.ShowInterstitial();
-            InitAds();
+            int editHabitViewCount = Preferences.Get( "EditHabitViewCount", 0 ) + 1;
+            Preferences.Set( "EditHabitViewCount", editHabitViewCount );
+            if (editHabitViewCount >= 2)
+            {
+                Preferences.Set( "EditHabitViewCount", 0 );
+                CrossMauiMTAdmob.Current.ShowInterstitial();
+                InitAds();
+            }
         }
     }
 

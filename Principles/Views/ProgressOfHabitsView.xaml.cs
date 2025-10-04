@@ -4,6 +4,8 @@ using DevExpress.Maui.Controls;
 using DevExpress.Maui.Core;
 using DevExpress.Maui.DataGrid;
 using Plugin.LocalNotification;
+using Plugin.MauiMTAdmob;
+
 using Principles.Controls;
 using System.Windows.Input;
 
@@ -30,11 +32,16 @@ public partial class ProgressOfHabitsView : ContentPageBase
         ViewModel = viewModel;
 
         InitializeComponent();
+        
 #if ANDROID
         DateAdViewBottom.AdsId = "ca-app-pub-6307192789973793/8957186556";
 #elif IOS
         DateAdViewBottom.AdsId = "ca-app-pub-6307192789973793/4995365596";
 #endif
+        DateAdViewBottom.AdsFailedToLoad += ( sender, args ) =>
+        {
+            ViewModel.LoggingService.LogError( args.ErrorMessage );
+        };
         DateAdViewBottom.LoadAd();
 
 #if ANDROID31_0_OR_GREATER || IOS16_0_OR_GREATER

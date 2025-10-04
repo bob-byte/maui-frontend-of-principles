@@ -1018,4 +1018,28 @@ You can change the status with a press.</value>
   <data name="TheHabitIsAlreadyAutomated" xml:space="preserve">
     <value>The habit is already automated</value>
   </data>
+  <data name="DescriptionWhyWeAppendedAds" xml:space="preserve">
+    <value>We have added advertising so that Principles remains free for everyone. This will allow us to develop the app even faster. Thank you for being with us!</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="YouAreWelcome" xml:space="preserve">
+    <value>You are welcome</value>
+  </data>
+  <data name="EnableIntrusiveAds" xml:space="preserve">
+    <value>Enable intrusive ads</value>
+  </data>
+  <data name="DisableIntrusiveAds" xml:space="preserve">
+    <value>Disable intrusive ads</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="DescriptionOfAdsEnabling" xml:space="preserve">
+    <value>Thank you for supporting and developing our app! You are the best!</value>
+  </data>
+  <data name="DisablingAdsDescription" xml:space="preserve">
+    <value>This will disable intrusive ads and impair the support and development of the app. Are you sure you want to do this?</value>
+  </data>
 </root>
