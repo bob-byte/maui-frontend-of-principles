@@ -132,7 +132,7 @@ public partial class EditHabitViewModel : BaseViewModel
 #if ANDROID
             CrossMauiMTAdmob.Current.LoadInterstitial( "ca-app-pub-6307192789973793/7567835848" );
 #elif IOS
-            CrossMauiMTAdmob.Current.LoadInterstitial( "ca-app-pub-3940256099942544/4411468910" );
+            CrossMauiMTAdmob.Current.LoadInterstitial( "ca-app-pub-6307192789973793/6132315308" );
 #endif
         }
     }
