@@ -1,16 +1,13 @@
-using CommunityToolkit.Maui.Behaviors;
-
 using DevExpress.Maui.Controls;
 using DevExpress.Maui.Core;
 using DevExpress.Maui.DataGrid;
-using Plugin.LocalNotification;
-using Plugin.MauiMTAdmob;
+
+using Plugin.AdMob;
 
 using Principles.Controls;
 using System.Windows.Input;
 
 using Application = Microsoft.Maui.Controls.Application;
-using SwipeItem = DevExpress.Maui.DataGrid.SwipeItem;
 
 namespace Principles.Views;
 
@@ -32,17 +29,6 @@ public partial class ProgressOfHabitsView : ContentPageBase
         ViewModel = viewModel;
 
         InitializeComponent();
-        
-#if ANDROID
-        DateAdViewBottom.AdsId = "ca-app-pub-6307192789973793/8957186556";
-#elif IOS
-        DateAdViewBottom.AdsId = "ca-app-pub-6307192789973793/4995365596";
-#endif
-        DateAdViewBottom.AdsFailedToLoad += ( sender, args ) =>
-        {
-            ViewModel.LoggingService.LogError( args.ErrorMessage );
-        };
-        DateAdViewBottom.LoadAd();
 
 #if ANDROID31_0_OR_GREATER || IOS16_0_OR_GREATER
         SwipeItemInitialize();
@@ -527,5 +513,10 @@ public partial class ProgressOfHabitsView : ContentPageBase
                 vm.ArchivedHabitDetailCommand.Execute( archivedHabit );
             }
         }
+    }
+
+    private void BA_Ad_OnAdFailedToLoad( object? sender, IAdError e )
+    {
+        ViewModel.LoggingService.LogError( e.Message );
     }
 }

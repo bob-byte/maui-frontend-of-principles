@@ -10,7 +10,6 @@ using System;
 using System.Collections.ObjectModel;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.Drawing;
-using Plugin.MauiMTAdmob;
 
 namespace Principles.ViewModels;
 
@@ -75,7 +74,6 @@ public partial class HabitDetailViewModel : BaseViewModel
         m_lockerOfHabitProgressUpdate = new SemaphoreSlim( initialCount: 1, maxCount: 1 );
 
         InitPeriodsOfHabit();
-        InitAds();
     }
 
     public ISeries[] Series { get; set; }
@@ -121,20 +119,16 @@ public partial class HabitDetailViewModel : BaseViewModel
 
         UpdateFrequencyRepresentation( Habit.Frequency, SelectedPeriodOfHabit );
         SetCharts();
+        
+        int dateTapCount = Preferences.Get( "HabitDetailCount", 0 ) + 1;
+        Preferences.Set( "HabitDetailCount", dateTapCount );
+        if (dateTapCount >= 3)
+        {
+            Preferences.Set( "HabitDetailCount", 0 );
+            AdService.ShowInterstitialAdAsync();
+        }
 
         return base.InitializeAsync( parameter ); ;
-    }
-
-    private void InitAds()
-    {
-        if (!CrossMauiMTAdmob.Current.IsInterstitialLoaded())
-        {
-#if ANDROID
-            CrossMauiMTAdmob.Current.LoadInterstitial( "ca-app-pub-6307192789973793/7567835848" );
-#elif IOS
-            CrossMauiMTAdmob.Current.LoadInterstitial( "ca-app-pub-6307192789973793/6132315308" );
-#endif
-        }
     }
 
     private void SetCharts()
@@ -245,6 +239,14 @@ public partial class HabitDetailViewModel : BaseViewModel
             return;
         }
 
+        int dateTapCount = Preferences.Get( "DateTapCount", 0 ) + 1;
+        Preferences.Set( "DateTapCount", dateTapCount );
+        if (dateTapCount >= 5)
+        {
+            Preferences.Set( "DateTapCount", 0 );
+            await AdService.ShowInterstitialAdAsync();
+        }
+
         var date = DateOnly.FromDateTime( selectedDateTime.Value );
 
         ProgressOfHabit? progressOfHabit = Habit!.Progresses!.FirstOrDefault( h => h.Date == date );
@@ -259,13 +261,8 @@ public partial class HabitDetailViewModel : BaseViewModel
             if (progressOfHabit is null)
             {
                 previousValueOfProgress = ProgressValue.NO;
-                
-                progressOfHabit = new ProgressOfHabit
-                {
-                    Date = date,
-                    Habit = Habit,
-                    Value = ProgressValue.YES_MANUAL
-                };
+
+                progressOfHabit = new ProgressOfHabit { Date = date, Habit = Habit, Value = ProgressValue.YES_MANUAL };
                 Habit.Progresses!.Add( progressOfHabit );
                 Habit.Progresses =
                     new ObservableCollectionEx<ProgressOfHabit>( Habit.Progresses.OrderByDescending( p => p.Date ) );
@@ -274,7 +271,7 @@ public partial class HabitDetailViewModel : BaseViewModel
             {
                 previousValueOfProgress = progressOfHabit.Value;
                 progressOfHabit.Value = ProgressValue.NextToggled( progressOfHabit.Value );
-                
+
                 progressOfHabit.Habit = Habit;
             }
 
@@ -309,7 +306,7 @@ public partial class HabitDetailViewModel : BaseViewModel
                     if (!doTryAgain)
                     {
                         progressOfHabit.Value = previousValueOfProgress;
-                        
+
                         await m_lockerOfHabitProgressUpdate.WaitAsync();
 
                         try
@@ -329,18 +326,6 @@ public partial class HabitDetailViewModel : BaseViewModel
                     }
                 }
             } while (doTryAgain);
-        }
-
-        if (IsIntrusiveAdsEnabled)
-        {
-            int dateTapCount = Preferences.Get( "DateTapCount", 0 ) + 1;
-            Preferences.Set( "DateTapCount", dateTapCount );
-            if (dateTapCount >= 5)
-            {
-                Preferences.Set( "DateTapCount", 0 );
-                CrossMauiMTAdmob.Current.ShowInterstitial();
-                InitAds();
-            }
         }
     }
 

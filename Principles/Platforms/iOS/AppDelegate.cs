@@ -1,14 +1,10 @@
 ﻿using Foundation;
 
-using MT.Admob.UMP;
+using Google.MobileAds;
 
 using ObjCRuntime;
 
-using Plugin.MauiMTAdmob;
-
 using Principles.Platforms.iOS;
-
-using DebugGeography = Plugin.MauiMTAdmob.Extra.DebugGeography;
 
 namespace Principles;
 
@@ -28,7 +24,7 @@ public class AppDelegate : MauiUIApplicationDelegate
         Runtime.MarshalManagedException += ( _, e ) => e.ExceptionMode = MarshalManagedExceptionMode.UnwindNativeCode;
         Runtime.MarshalObjectiveCException += ( _, e ) => e.ExceptionMode = MarshalObjectiveCExceptionMode.UnwindManagedCode;
 
-        CrossMauiMTAdmob.Current.Init(debugMode: true, geography: DebugGeography.DEBUG_GEOGRAPHY_REGULATED_US_STATE);
+        MobileAds.SharedInstance.Start(completionHandler: null);
         
         return base.FinishedLaunching( application, launchOptions );
     }

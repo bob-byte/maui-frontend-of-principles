@@ -14,7 +14,9 @@ using System.Reflection;
 using LiveChartsCore.SkiaSharpView.Maui;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
-using Plugin.MauiMTAdmob;
+
+using Plugin.AdMob;
+using Plugin.AdMob.Configuration;
 
 #if IOS
 using Microsoft.Maui.Platform;
@@ -35,7 +37,10 @@ public static class MauiProgram
 
         builder
             .UseMauiApp<App>()
-            .UseMauiMTAdmob()
+            .UseAdMob(
+                androidDefaultInterstitialAdUnitId: "ca-app-pub-6307192789973793/7567835848",
+                iosDefaultInterstitialAdUnitId: "ca-app-pub-6307192789973793/6132315308",
+                automaticallyAskForConsent: false)
             .UseSkiaSharp()
             .UseLiveCharts()
             .UseDevExpressControls()
@@ -71,13 +76,6 @@ public static class MauiProgram
             .RegisterMauiServices()
             .RegisterViewModels()
             .RegisterViews();
-        
-        
-        CrossMauiMTAdmob.Current.OnInterstitialFailedToLoad += ( _, args ) =>
-        {
-            ILoggingService loggingService = ServiceLocator.Current!.GetRequiredService<ILoggingService>();
-            loggingService.LogError( args.ErrorMessage );
-        };
         
         var assembly = Assembly.GetExecutingAssembly();
 
@@ -124,7 +122,7 @@ public static class MauiProgram
         services.AddSingleton<ILaunchUriHelper, LaunchUriHelper>();
         services.AddSingleton<IReminderService, ReminderService>();
         services.AddSingleton<ITipService, TipService>();
-        services.AddSingleton<IAdvertisementService, AdvertisementService>();
+        services.AddSingleton<IAdService, AdService>();
 
         return services;
     }

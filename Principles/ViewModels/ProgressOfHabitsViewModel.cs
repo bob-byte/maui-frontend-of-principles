@@ -9,8 +9,6 @@ using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Maui.Views;
 
-using Plugin.MauiMTAdmob;
-
 namespace Principles.ViewModels;
 
 public partial class ProgressOfHabitsViewModel : BaseViewModel
@@ -251,33 +249,22 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
 
         try
         {
-            if (IsIntrusiveAdsEnabled)
+            int dateTapCount = Preferences.Get( "DateTapCount", 0 ) + 1;
+            Preferences.Set( "DateTapCount", dateTapCount );
+            if (dateTapCount >= 5)
             {
-                int dateTapCount = Preferences.Get( "DateTapCount", 0 ) + 1;
-                Preferences.Set( "DateTapCount", dateTapCount );
-                if (dateTapCount >= 5)
-                {
-                    Preferences.Set( "DateTapCount", 0 );
-                    CrossMauiMTAdmob.Current.ShowInterstitial();
-                    if (!CrossMauiMTAdmob.Current.IsInterstitialLoaded())
-                    {
-#if ANDROID
-                        CrossMauiMTAdmob.Current.LoadInterstitial( "ca-app-pub-6307192789973793/7567835848" );
-#elif IOS
-                        CrossMauiMTAdmob.Current.LoadInterstitial( "ca-app-pub-6307192789973793/6132315308" );
-#endif
-                    }
-                }
+                Preferences.Set( "DateTapCount", 0 );
+                AdService.ShowInterstitialAdAsync();
             }
 
             bool doTryAgain;
-            
+
             do
             {
                 try
                 {
                     progressOfHabit.Value = ProgressValue.NextToggled( previousValueOfProgress );
-                    
+
                     ServiceOfHabit.Recompute( habit );
                     await ProgressOfHabitService.UpdateAsync( progressOfHabit );
 
@@ -292,8 +279,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
                         ServiceOfHabit.Recompute( habit );
                     }
                 }
-            }
-            while (doTryAgain);
+            } while (doTryAgain);
         }
         finally
         {

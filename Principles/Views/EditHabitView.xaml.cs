@@ -4,7 +4,6 @@ using DevExpress.Maui.Core;
 using DevExpress.Maui.Editors;
 
 using Plugin.LocalNotification;
-using Plugin.MauiMTAdmob;
 
 namespace Principles.Views;
 

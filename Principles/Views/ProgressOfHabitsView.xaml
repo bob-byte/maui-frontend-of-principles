@@ -2,15 +2,12 @@
 <v:ContentPageBase x:Class="Principles.Views.ProgressOfHabitsView"
                    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                   xmlns:ads="clr-namespace:Plugin.MauiMTAdmob.Controls;assembly=Plugin.MauiMtAdmob"
-                   xmlns:controls="clr-namespace:Principles.Controls"
+                   xmlns:admob="clr-namespace:Plugin.AdMob;assembly=Plugin.AdMob"
                    xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
                    xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
                    xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
                    xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
                    xmlns:dxg="clr-namespace:DevExpress.Maui.DataGrid;assembly=DevExpress.Maui.DataGrid"
-                   xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
-                   xmlns:loc="clr-namespace:Principles.Resources.AppStrings"
                    xmlns:m="clr-namespace:Principles.Core.Models;assembly=Principles.Core"
                    xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
                    xmlns:templates="clr-namespace:Principles.Views.Templates"
@@ -200,14 +197,17 @@
                                                    Dark={StaticResource DarkNormalText}}" />
             </dx:DXStackLayout>
 
-            <ads:MTAdView x:Name="DateAdViewBottom"
-                          HeightRequest="{OnIdiom Phone=50,
-                                                  Tablet=90}"
-                          Margin="10,0,0,10"
-                          AdSize="Banner"
-                          HorizontalOptions="Center"
-                          VerticalOptions="Start"
-                          Grid.Row="2" />
+            <admob:BannerAd x:Name="BA_Ad"
+                            Margin="0,0,0,10"
+                            AdSize="Custom"
+                            AdUnitId="{OnPlatform iOS='ca-app-pub-6307192789973793/4995365596',
+                                                  Android='ca-app-pub-6307192789973793/8957186556'}"
+                            CustomAdHeight="50"
+                            CustomAdWidth="320"
+                            HorizontalOptions="Center"
+                            OnAdFailedToLoad="BA_Ad_OnAdFailedToLoad"
+                            VerticalOptions="Start"
+                            Grid.Row="2" />
         </Grid>
 
         <toolkit:Expander IsVisible="{Binding DoShowPlusButton}"

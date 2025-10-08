@@ -1,4 +1,3 @@
-using Plugin.MauiMTAdmob;
 
 namespace Principles.Views;
 
@@ -12,18 +11,6 @@ public partial class ProfileView : ContentPageBase
         BindingContext = viewModel;
 
         InitializeComponent();
-
-#if ANDROID
-        AdView.AdsId = "ca-app-pub-6307192789973793/8957186556";
-#elif IOS
-        AdView.AdsId = "ca-app-pub-6307192789973793/1193999180";
-#endif
-        AdView.LoadAd();
-    }
-
-    protected override void OnAppearing()
-    {
-        base.OnAppearing();
     }
 
     void TRG_UserName_Focused( object sender, FocusEventArgs e )

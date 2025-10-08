@@ -1,7 +1,6 @@
 using DevExpress.Maui.Core.Internal;
 
 using Plugin.LocalNotification;
-using Plugin.MauiMTAdmob;
 
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -78,7 +77,6 @@ public partial class EditHabitViewModel : BaseViewModel
         };
 
         InitPeriodsOfHabit();
-        InitAds();
 
         AiRecommenderOfHabits = serviceProvider.GetRequiredService<IAiRecommenderOfHabitsService>();
 
@@ -125,18 +123,6 @@ public partial class EditHabitViewModel : BaseViewModel
         ];
     }
 
-    private void InitAds()
-    {
-        if (!CrossMauiMTAdmob.Current.IsInterstitialLoaded())
-        {
-#if ANDROID
-            CrossMauiMTAdmob.Current.LoadInterstitial( "ca-app-pub-6307192789973793/7567835848" );
-#elif IOS
-            CrossMauiMTAdmob.Current.LoadInterstitial( "ca-app-pub-6307192789973793/6132315308" );
-#endif
-        }
-    }
-
     //It is call on navigate to this EditHabitView
     public override void ApplyQueryAttributes( IDictionary<string, object> query )
     {
@@ -146,7 +132,7 @@ public partial class EditHabitViewModel : BaseViewModel
 
         Habit = new UserHabit();
         InitValidations();
-        
+
         if (query.TryGetValue( "Habit", out object? value ) && value is UserHabit habit)
         {
             Habit.MergeFrom( habit );
@@ -162,7 +148,7 @@ public partial class EditHabitViewModel : BaseViewModel
         {
             IsNewHabit = true;
         }
-        
+
         if (query.TryGetValue( "IsArchived", out object? isArchivedValue ) && isArchivedValue is bool archived)
         {
             Habit.IsArchived = archived;
@@ -178,16 +164,13 @@ public partial class EditHabitViewModel : BaseViewModel
             m_isInHabitDetails = false;
         }
 
-        if (IsIntrusiveAdsEnabled)
+        int habitDetailCount = Preferences.Get( "HabitDetailCount", 0 ) + 1;
+        Preferences.Set( "HabitDetailCount", habitDetailCount );
+        if (habitDetailCount >= 3)
         {
-            int editHabitViewCount = Preferences.Get( "EditHabitViewCount", 0 ) + 1;
-            Preferences.Set( "EditHabitViewCount", editHabitViewCount );
-            if (editHabitViewCount >= 2)
-            {
-                Preferences.Set( "EditHabitViewCount", 0 );
-                CrossMauiMTAdmob.Current.ShowInterstitial();
-                InitAds();
-            }
+            Preferences.Set( "HabitDetailCount", 0 );
+            
+            AdService.ShowInterstitialAdAsync();
         }
     }
 

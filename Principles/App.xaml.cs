@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Maui.Views;
 
+using Plugin.AdMob.Services;
+
 using Principles.Core.Services.AiKey;
 
 using Application = Microsoft.Maui.Controls.Application;
@@ -84,14 +86,12 @@ public partial class App : Application
         if (shouldShowPopup)
         {
             m_updatePopup ??= new UpdatePopup( m_updatePopupViewModel );
-            Windows[0].Page!.ShowPopup( m_updatePopup );
+            await Windows[0].Page!.ShowPopupAsync( m_updatePopup );
         }
 
-#if IOS
         // Initialize advertisement service and request tracking permission
-        IAdvertisementService advertisementService = ServiceLocator.Current!.GetRequiredService<IAdvertisementService>();
+        IAdService advertisementService = ServiceLocator.Current!.GetRequiredService<IAdService>();
         await advertisementService.GetAccessToTrackAsync();
-#endif
     }
 
     protected override async void OnResume()

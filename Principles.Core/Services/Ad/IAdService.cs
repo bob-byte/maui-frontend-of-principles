@@ -1,5 +1,6 @@
 ﻿namespace Principles.Core.Services;
-public interface IAdvertisementService
+public interface IAdService
 {
     Task GetAccessToTrackAsync();
+    Task ShowInterstitialAdAsync();
 }

@@ -53,6 +53,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         ServiceOfHabit = serviceProvider.GetRequiredService<IServiceOfHabit>();
         AreaOfLifeService = serviceProvider.GetRequiredService<IAreaOfLifeService>();
         TipService = serviceProvider.GetRequiredService<ITipService>();
+        AdService = serviceProvider.GetRequiredService<IAdService>();
 
         ReferenceMessenger = WeakReferenceMessenger.Default;
 
@@ -100,21 +101,13 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         }
     }
 
-    public bool IsIntrusiveAdsEnabled
-    {
-        get => CachingService.GetStoredValueOrDefault( CacheKeys.IS_ENABLED_ADS, defaultValue: true );
-        set
-        {
-            CachingService.SetForever( CacheKeys.IS_ENABLED_ADS, value );
-            NotifyPropertyChanged( nameof(IsIntrusiveAdsEnabled) );
-        }
-    }
-
     public WeakReferenceMessenger ReferenceMessenger { get; }
 
     public INavigationService Navigation { get; }
 
     public IServiceOfHabit ServiceOfHabit { get; }
+
+    public IAdService AdService { get; }
 
     public IAreaOfLifeService AreaOfLifeService { get; }
 
