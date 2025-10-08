@@ -120,6 +120,8 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
 
                 m_isBusyForChangeCompleted.TryRemove( habitToRemove, out SemaphoreSlim? locker );
                 locker?.Dispose();
+                
+                NotifyPropertyChanged( nameof( UserHabits ) );
             }
         } );
 
@@ -138,12 +140,19 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
                     await Task.Delay( 500 );
                     ReferenceMessenger.Send( new ShowAllArchivedHabitsMsg() );
                 }
+                
+                NotifyPropertyChanged( nameof( UserHabits ) );
             }
         } );
 
         ReferenceMessenger.Register<NewCultureMessage>( this, ( sender, msg ) =>
         {
             UpdateLocalizedStrings();
+        } );
+
+        ReferenceMessenger.Register<MsgThatProgressOfHabitUpdated>( this, ( sender, msg ) =>
+        {
+            NotifyPropertyChanged( nameof( UserHabits ) );
         } );
     }
 
@@ -189,6 +198,8 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
 
             ServiceOfHabit.Recompute( foundHabit );
         }
+        
+        NotifyPropertyChanged( nameof( UserHabits ) );
     }
 
     public override async Task InitializeAsync( object? parameter = null )
@@ -220,6 +231,8 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
 
                     habits = habits.OrderBy( h => h.Goal!.Id ).ThenBy( h => h.Id ).ToList();
                     UserHabits.Reload( habits );
+                    
+                    NotifyPropertyChanged( nameof( UserHabits ) );
 
                     IsProgressesInitialized = true;
                     m_isInitialized = true;
@@ -249,23 +262,16 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
 
         try
         {
-            int dateTapCount = Preferences.Get( "DateTapCount", 0 ) + 1;
-            Preferences.Set( "DateTapCount", dateTapCount );
-            if (dateTapCount >= 5)
-            {
-                Preferences.Set( "DateTapCount", 0 );
-                AdService.ShowInterstitialAdAsync();
-            }
-
             bool doTryAgain;
-
+            
             do
             {
                 try
                 {
                     progressOfHabit.Value = ProgressValue.NextToggled( previousValueOfProgress );
-
+                    
                     ServiceOfHabit.Recompute( habit );
+                    NotifyPropertyChanged( nameof( UserHabits ) );
                     await ProgressOfHabitService.UpdateAsync( progressOfHabit );
 
                     doTryAgain = false;
@@ -277,9 +283,11 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
                     {
                         progressOfHabit.Value = previousValueOfProgress;
                         ServiceOfHabit.Recompute( habit );
+                        NotifyPropertyChanged( nameof( UserHabits ) );
                     }
                 }
-            } while (doTryAgain);
+            }
+            while (doTryAgain);
         }
         finally
         {
@@ -662,5 +670,14 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     {
         //TODO: it should support all Android versions which our app supports
         return LocalNotificationCenter.Current.RequestNotificationPermission();
+    }
+
+    [RelayCommand]
+    private async Task HabitStreakInfoAsync()
+    {
+        await TipService.ShowSnackbarAsync(
+            LocStrings.HabitStreakExplanation,
+            duration: TimeSpan.FromSeconds( 10 )
+        );
     }
 }

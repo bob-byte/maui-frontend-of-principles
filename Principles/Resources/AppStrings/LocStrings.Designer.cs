@@ -1874,5 +1874,11 @@ namespace Principles.Resources.AppStrings {
                 return ResourceManager.GetString("DisablingAdsDescription", resourceCulture);
             }
         }
+        
+        internal static string HabitStreakExplanation {
+            get {
+                return ResourceManager.GetString("HabitStreakExplanation", resourceCulture);
+            }
+        }
     }
 }

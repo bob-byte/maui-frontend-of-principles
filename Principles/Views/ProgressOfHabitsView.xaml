@@ -20,7 +20,7 @@
                    Shell.NavBarIsVisible="True">
     <Shell.TitleView>
         <Grid Margin="0,0,10,0"
-              ColumnDefinitions="Auto, Auto, *, Auto, Auto, Auto"
+              ColumnDefinitions="Auto, Auto, *, Auto, Auto, Auto, Auto"
               VerticalOptions="CenterAndExpand">
             <dx:DXImage Source="fire_seventh"
                         WidthRequest="35"
@@ -38,6 +38,32 @@
                    VerticalTextAlignment="Center"
                    Grid.Column="1" />
 
+            <Label Text="{Binding UserHabits,
+                                  Converter={StaticResource UserHabitsToStreak}}"
+                   HeightRequest="50"
+                   FontAttributes="Bold"
+                   FontSize="20"
+                   HorizontalOptions="End"
+                   TextColor="{StaticResource TitleTextColor}"
+                   VerticalOptions="Center"
+                   VerticalTextAlignment="Center"
+                   Grid.Column="2">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding HabitStreakInfoCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+
+            <dx:DXImage Source="fire_first"
+                        WidthRequest="35"
+                        HeightRequest="35"
+                        HorizontalOptions="End"
+                        TintColor="{StaticResource DarkIconColor}"
+                        Grid.Column="3">
+                <dx:DXImage.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding HabitStreakInfoCommand}" />
+                </dx:DXImage.GestureRecognizers>
+            </dx:DXImage>
+
             <dx:DXImage Source="reminder_third"
                         IsVisible="{Binding SelectedHabit,
                                             Converter={StaticResource IsNull}}"
@@ -46,7 +72,7 @@
                         HorizontalOptions="End"
                         TintColor="{StaticResource TitleTextColor}"
                         VerticalOptions="Center"
-                        Grid.Column="3">
+                        Grid.Column="4">
                 <dx:DXImage.GestureRecognizers>
                     <TapGestureRecognizer NumberOfTapsRequired="1"
                                           Tapped="DXI_Reminder_Tapped" />
@@ -62,7 +88,7 @@
                         HorizontalOptions="End"
                         TintColor="{StaticResource TitleTextColor}"
                         VerticalOptions="Center"
-                        Grid.Column="3">
+                        Grid.Column="4">
                 <dx:DXImage.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding EditHabitCommand}"
                                           CommandParameter="{Binding SelectedHabit}"
@@ -79,7 +105,7 @@
                         HorizontalOptions="End"
                         TintColor="{StaticResource TitleTextColor}"
                         VerticalOptions="Center"
-                        Grid.Column="4">
+                        Grid.Column="5">
                 <dx:DXImage.GestureRecognizers>
                     <TapGestureRecognizer NumberOfTapsRequired="1"
                                           Tapped="DXI_Archive_Tapped" />
@@ -95,7 +121,7 @@
                         HorizontalOptions="End"
                         TintColor="{StaticResource TitleTextColor}"
                         VerticalOptions="Center"
-                        Grid.Column="4">
+                        Grid.Column="5">
                 <dx:DXImage.GestureRecognizers>
                     <TapGestureRecognizer NumberOfTapsRequired="1"
                                           Tapped="DXI_Archive_Tapped" />
@@ -111,7 +137,7 @@
                         HorizontalOptions="End"
                         TintColor="{StaticResource TitleTextColor}"
                         VerticalOptions="Center"
-                        Grid.Column="5">
+                        Grid.Column="6">
                 <dx:DXImage.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding DeleteHabitCommand}"
                                           CommandParameter="{Binding SelectedHabit}"
