@@ -79,6 +79,11 @@ public class MauiNavigationService : INavigationService
         return Shell.Current.GoToAsync(state: "..", animate: true);
     }
 
+    public Task GoBackAsync(IDictionary<string, object> routeParameters)
+    {
+        return Shell.Current.GoToAsync(state: "..", animate: true, routeParameters);
+    }
+
     private static Task InternalNavigateToAsync( Type viewModelType, IDictionary<string, object> routeParameters, bool isMainRoute, bool isAbsoluteRoute )
     {
         string route = viewModelType.Name.

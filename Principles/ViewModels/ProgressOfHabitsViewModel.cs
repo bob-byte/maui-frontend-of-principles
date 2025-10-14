@@ -262,6 +262,14 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
 
         try
         {
+            int dateTapCount = Preferences.Get( "DateTapCount", 0 ) + 1;
+            Preferences.Set( "DateTapCount", dateTapCount );
+            if (dateTapCount >= 5)
+            {
+                Preferences.Set( "DateTapCount", 0 );
+                await AdService.ShowInterstitialAdAsync();
+            }
+            
             bool doTryAgain;
             
             do

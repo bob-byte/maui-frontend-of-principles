@@ -43,6 +43,17 @@ public class AdService : IAdService
         m_interstitialAd.Load();
     }
 
+    public void LoadInterstitialAd()
+    {
+        if (m_interstitialAd is null)
+        {
+            IInterstitialAdService interstitialAdService = ServiceLocator.Current!.GetRequiredService<IInterstitialAdService>();
+            m_interstitialAd = interstitialAdService.CreateAd( AdConfig.DefaultInterstitialAdUnitId );
+        }
+        
+        m_interstitialAd.Load();
+    }
+
     public async Task ShowInterstitialAdAsync()
     {
         IInterstitialAdService adService = ServiceLocator.Current!.GetRequiredService<IInterstitialAdService>();
@@ -51,7 +62,7 @@ public class AdService : IAdService
         {
             TaskCompletionSource taskCompletionSource = new();
             
-            IInterstitialAd? interstitialAd = m_interstitialAd;
+            IInterstitialAd interstitialAd = m_interstitialAd;
             interstitialAd.OnAdFailedToShow += ( _, error ) =>
             {
                 ILoggingService loggingService = ServiceLocator.Current!.GetRequiredService<ILoggingService>();
@@ -67,6 +78,8 @@ public class AdService : IAdService
             };
             
             interstitialAd.Show();
+            
+            await taskCompletionSource.Task;
         }
         else
         {
@@ -84,8 +97,6 @@ public class AdService : IAdService
                 taskCompletionSource.SetResult();
             };
             
-            m_interstitialAd.Load();
-            
             m_interstitialAd.OnAdFailedToShow += ( _, error ) =>
             {
                 ILoggingService loggingService = ServiceLocator.Current!.GetRequiredService<ILoggingService>();
@@ -96,9 +107,19 @@ public class AdService : IAdService
             m_interstitialAd.OnAdShowed += ( _, _ ) =>
             {
                 taskCompletionSource.SetResult();
+                
+                m_interstitialAd = adService.CreateAd( AdConfig.DefaultInterstitialAdUnitId );
+                m_interstitialAd.Load();
             };
+            
+            m_interstitialAd.Load();
 
             await taskCompletionSource.Task;
         }
+    }
+
+    public void CleanupAds()
+    {
+        m_interstitialAd = null;
     }
 }

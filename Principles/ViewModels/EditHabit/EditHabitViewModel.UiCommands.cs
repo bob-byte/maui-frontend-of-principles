@@ -10,7 +10,9 @@ public partial class EditHabitViewModel
     [RelayCommand]
     private Task BackAsync()
     {
-        return Navigation.GoBackAsync();
+        IDictionary<string, object> routeParams = new Dictionary<string, object>();
+        routeParams.Add( "ShowAd", false );
+        return Navigation.GoBackAsync(routeParams);
     }
 
     [RelayCommand]

@@ -13,6 +13,16 @@ public class UserHabitsToStreakConverter : BaseConverterOneWay<ObservableCollect
         {
             return 0;
         }
+        
+        IAppOpenTrackerService appOpenTracker = ServiceLocator.Current!.GetRequiredService<IAppOpenTrackerService>();
+
+        DateTime? dateTimeLastMissedAppOpen = appOpenTracker.GetLastMissedDate();
+       
+        DateOnly? lastMissedAppOpen = null;
+        if (dateTimeLastMissedAppOpen.HasValue)
+        {
+            lastMissedAppOpen = DateOnly.FromDateTime(dateTimeLastMissedAppOpen.Value);
+        }
 
         Dictionary<DateOnly, List<int>> progressesByDate = new();
 
@@ -25,13 +35,16 @@ public class UserHabitsToStreakConverter : BaseConverterOneWay<ObservableCollect
 
             foreach (ProgressOfHabit progress in habit.Progresses)
             {
-                if (progressesByDate.TryGetValue( progress.Date, out List<int>? value ))
+                if (lastMissedAppOpen is null || lastMissedAppOpen.Value < progress.Date)
                 {
-                    value.Add( progress.Value );
-                }
-                else
-                {
-                    progressesByDate[progress.Date] = [progress.Value];
+                    if (progressesByDate.TryGetValue( progress.Date, out List<int>? value ))
+                    {
+                        value.Add( progress.Value );
+                    }
+                    else
+                    {
+                        progressesByDate[progress.Date] = [progress.Value];
+                    }
                 }
             }
         }

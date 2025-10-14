@@ -51,5 +51,5 @@ public class SettingsService : ISettingsService
         get => Preferences.Get( key: "normal_page_height", defaultValue: 0.0 );
         set => Preferences.Set( key: "normal_page_height", value );
     }
-    public string CurrentCulture { get; set; }
+    public string? CurrentCulture { get; set; }
 }

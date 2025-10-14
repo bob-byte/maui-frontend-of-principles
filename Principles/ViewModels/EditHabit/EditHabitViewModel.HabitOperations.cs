@@ -46,6 +46,9 @@ public partial class EditHabitViewModel
 
             bool isHabitSaved = false;
             
+            IDictionary<string, object> routeParams = new Dictionary<string, object>();
+            routeParams.Add( "ShowAd", false );
+            
             await UiBusyFor( async () =>
             {
                 UserHabit savedHabit = Habit;
@@ -63,13 +66,14 @@ public partial class EditHabitViewModel
                         ReferenceMessenger.Send( new HabitSavedMessage( savedHabit ) );
                     }
 
-                    await Navigation.GoBackAsync();
+                    await Navigation.GoBackAsync(routeParams);
                 }
                 else
                 {
                     SaveHabitResponse response = await ServiceOfHabit.UpdateHabitAsync( dto );
                     await HandleHabitSaveAsync( response );
-                    await Navigation.GoBackAsync();
+                    
+                    await Navigation.GoBackAsync(routeParams);
 
                     if (dto.IsArchived)
                     {

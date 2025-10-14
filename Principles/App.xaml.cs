@@ -13,6 +13,8 @@ public partial class App : Application
     private readonly UpdatePopupViewModel m_updatePopupViewModel;
     private readonly ISettingsService m_settingsService;
     private readonly ILoggingService m_loggingService;
+    private readonly IAdService m_adService;
+    private readonly IAppOpenTrackerService m_appOpenTracker;
 
     private UpdatePopup? m_updatePopup;
     
@@ -25,6 +27,8 @@ public partial class App : Application
         
         m_settingsService = serviceProvider.GetRequiredService<ISettingsService>();
         m_loggingService = serviceProvider.GetRequiredService<ILoggingService>();
+        m_adService = serviceProvider.GetRequiredService<IAdService>();
+        m_appOpenTracker = serviceProvider.GetRequiredService<IAppOpenTrackerService>();
 
         m_updatePopupViewModel = new UpdatePopupViewModel( serviceProvider );
 
@@ -55,6 +59,8 @@ public partial class App : Application
     {
         base.OnStart();
         
+        m_appOpenTracker.TrackAppOpen();
+        
         LocalNotificationCenter.Current.ClearAll();
 
         if (VersionTracking.IsFirstLaunchEver || VersionTracking.IsFirstLaunchForCurrentBuild || VersionTracking.IsFirstLaunchForCurrentVersion) 
@@ -81,6 +87,8 @@ public partial class App : Application
             }
         }
         
+        await m_adService.GetAccessToTrackAsync();
+        
         bool shouldShowPopup = await m_updatePopupViewModel.ShouldShowPopup();
         
         if (shouldShowPopup)
@@ -88,15 +96,15 @@ public partial class App : Application
             m_updatePopup ??= new UpdatePopup( m_updatePopupViewModel );
             await Windows[0].Page!.ShowPopupAsync( m_updatePopup );
         }
-
-        // Initialize advertisement service and request tracking permission
-        IAdService advertisementService = ServiceLocator.Current!.GetRequiredService<IAdService>();
-        await advertisementService.GetAccessToTrackAsync();
     }
 
     protected override async void OnResume()
     {
         base.OnResume();
+        
+        m_adService.LoadInterstitialAd();
+        
+        m_loggingService.LogInfo( "App resuming..." );
         
         LocalNotificationCenter.Current.ClearAll();
         
@@ -104,8 +112,6 @@ public partial class App : Application
         {
             await SecureStorage.SetAsync( CacheKeys.API_KEY, string.Empty );
         }
-        
-        m_loggingService.LogInfo( "App resuming..." );
         
         m_updatePopupViewModel.ReferenceMessenger.Send( new TryAddNewDayInHabitListMessage() );
 
@@ -116,6 +122,13 @@ public partial class App : Application
             m_updatePopup = new UpdatePopup( m_updatePopupViewModel );
             Windows[0].Page!.ShowPopup( m_updatePopup );
         }
+    }
+
+    protected override void OnSleep()
+    {
+        m_adService.CleanupAds();
+        
+        base.OnSleep();
     }
 
     private void CurrentDomain_UnhandledException( object sender, UnhandledExceptionEventArgs e )

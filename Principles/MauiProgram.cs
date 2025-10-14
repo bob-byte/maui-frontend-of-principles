@@ -40,7 +40,7 @@ public static class MauiProgram
             .UseAdMob(
                 androidDefaultInterstitialAdUnitId: "ca-app-pub-6307192789973793/7567835848",
                 iosDefaultInterstitialAdUnitId: "ca-app-pub-6307192789973793/6132315308",
-                automaticallyAskForConsent: false)
+                automaticallyAskForConsent: false )
             .UseSkiaSharp()
             .UseLiveCharts()
             .UseDevExpressControls()
@@ -51,10 +51,10 @@ public static class MauiProgram
             .UseLocalNotification()
             .UseMauiCommunityToolkit()
             .UseMauiCommunityToolkitMarkup()
-            .ConfigureEssentials(essentials =>
+            .ConfigureEssentials( essentials =>
             {
                 essentials.UseVersionTracking();
-            })
+            } )
             .ConfigureFonts( fonts =>
             {
                 fonts.AddFont( "FontAwesome6FreeBrands.otf", "FontAwesomeBrands" );
@@ -123,6 +123,7 @@ public static class MauiProgram
         services.AddSingleton<IReminderService, ReminderService>();
         services.AddSingleton<ITipService, TipService>();
         services.AddSingleton<IAdService, AdService>();
+        services.AddSingleton<IAppOpenTrackerService, AppOpenTrackerService>();
 
         return services;
     }

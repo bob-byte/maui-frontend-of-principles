@@ -72,6 +72,14 @@ public partial class HabitDetailViewModel : BaseViewModel
 
         EditedReminder = new EditedUserHabitReminder();
         m_lockerOfHabitProgressUpdate = new SemaphoreSlim( initialCount: 1, maxCount: 1 );
+        
+        ReferenceMessenger.Register<HabitSavedMessage>( this, (_, msg) =>
+        {
+            if (Habit.Id == msg.Value.Id)
+            {
+                Habit.MergeFrom( msg.Value );
+            }
+        } );
 
         InitPeriodsOfHabit();
     }
@@ -91,11 +99,37 @@ public partial class HabitDetailViewModel : BaseViewModel
             throw new ArgumentException( "Habit is not supplied to HabitDetailViewModel" );
         }
 
+        if (query.TryGetValue( "ShowAd", out object? showAdObj ) && showAdObj is bool showAd)
+        {
+            if (showAd)
+            {
+                int dateTapCount = Preferences.Get( "HabitDetailCount", 0 ) + 1;
+                Preferences.Set( "HabitDetailCount", dateTapCount );
+                if (dateTapCount >= 3)
+                {
+                    Preferences.Set( "HabitDetailCount", 0 );
+                    AdService.ShowInterstitialAdAsync();
+                }
+            }
+        }
+        else
+        {
+            int dateTapCount = Preferences.Get( "HabitDetailCount", 0 ) + 1;
+            Preferences.Set( "HabitDetailCount", dateTapCount );
+            if (dateTapCount >= 3)
+            {
+                Preferences.Set( "HabitDetailCount", 0 );
+                AdService.ShowInterstitialAdAsync();
+            }
+        }
+
         base.ApplyQueryAttributes( query );
     }
 
-    public override Task InitializeAsync( object? parameter = null )
+    public override async Task InitializeAsync( object? parameter = null )
     {
+        await base.InitializeAsync( parameter );
+        
         SetEditedRemider();
 
         switch (Habit.Frequency!.IntervalLengthInDays)
@@ -119,16 +153,6 @@ public partial class HabitDetailViewModel : BaseViewModel
 
         UpdateFrequencyRepresentation( Habit.Frequency, SelectedPeriodOfHabit );
         SetCharts();
-        
-        int dateTapCount = Preferences.Get( "HabitDetailCount", 0 ) + 1;
-        Preferences.Set( "HabitDetailCount", dateTapCount );
-        if (dateTapCount >= 3)
-        {
-            Preferences.Set( "HabitDetailCount", 0 );
-            AdService.ShowInterstitialAdAsync();
-        }
-
-        return base.InitializeAsync( parameter ); ;
     }
 
     private void SetCharts()
@@ -786,7 +810,8 @@ public partial class HabitDetailViewModel : BaseViewModel
         Dictionary<string, object> routeParams = new()
         {
             { "Habit", Habit },
-            { "IsInHabitDetails", true }
+            { "IsInHabitDetails", true },
+            { "WillBeAdShownAfterBack", true }
         };
         
         await Navigation.NavigateToAsync<EditHabitViewModel>( routeParams );
