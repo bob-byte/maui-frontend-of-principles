@@ -197,9 +197,10 @@
                 </VerticalStackLayout>
 
                 <VerticalStackLayout x:Name="VSL_WithCalendar"
-                                     Padding="10"
+                                     Padding="0, 0, 0, 10"
                                      Spacing="10">
-                    <HorizontalStackLayout Spacing="8"
+                    <HorizontalStackLayout Padding="10, 10, 0, 0"
+                                           Spacing="8"
                                            VerticalOptions="Center">
                         <Label Text="{Binding LocManager[TopFiveStreaks]}"
                                FontAttributes="Bold"
@@ -215,7 +216,8 @@
                                         XAxes="{Binding StreakXAxes}"
                                         YAxes="{Binding StreakYAxes}" />
 
-                    <HorizontalStackLayout Spacing="8"
+                    <HorizontalStackLayout Padding="10, 0"
+                                           Spacing="8"
                                            VerticalOptions="Center">
                         <Label Text="{Binding LocManager[Stability]}"
                                FontAttributes="Bold"
@@ -228,12 +230,12 @@
 
                     <lvc:CartesianChart x:Name="CC_Stability"
                                         HeightRequest="300"
-                                        Padding="0"
                                         Series="{Binding Series}"
                                         XAxes="{Binding XAxes}"
                                         YAxes="{Binding YAxes}" />
 
-                    <HorizontalStackLayout Spacing="8"
+                    <HorizontalStackLayout Padding="10, 0"
+                                           Spacing="8"
                                            VerticalOptions="Center">
                         <Label Text="{Binding LocManager[HabitByDayweeks]}"
                                FontAttributes="Bold"
@@ -249,7 +251,8 @@
                                         XAxes="{Binding HabitExecutionXAxes}"
                                         YAxes="{Binding HabitExecutionYAxes}" />
 
-                    <HorizontalStackLayout Spacing="8">
+                    <HorizontalStackLayout Padding="10, 0"
+                                           Spacing="8">
                         <Label Text="{Binding LocManager[Calendar]}"
                                FontAttributes="Bold"
                                FontSize="18"
@@ -259,16 +262,18 @@
                                      Command="{Binding CalendarInfoCommand}" />
                     </HorizontalStackLayout>
 
-                    <dxe:DXCalendar x:Name="DX_Calendar"
-                                    Background="#F0F0F0"
-                                    FirstDayOfWeek="Monday">
-                        <dxe:DXCalendar.HeaderAppearance>
-                            <dxe:CalendarHeaderAppearance BackgroundColor="{StaticResource Primary}" />
-                        </dxe:DXCalendar.HeaderAppearance>
-                        <dxe:DXCalendar.DayCellTemplate>
-                            <templates:CalendarCellTemplateSelector />
-                        </dxe:DXCalendar.DayCellTemplate>
-                    </dxe:DXCalendar>
+                    <Grid Padding="10, 0">
+                        <dxe:DXCalendar x:Name="DX_Calendar"
+                                        Background="#F0F0F0"
+                                        FirstDayOfWeek="Monday">
+                            <dxe:DXCalendar.HeaderAppearance>
+                                <dxe:CalendarHeaderAppearance BackgroundColor="{StaticResource Primary}" />
+                            </dxe:DXCalendar.HeaderAppearance>
+                            <dxe:DXCalendar.DayCellTemplate>
+                                <templates:CalendarCellTemplateSelector />
+                            </dxe:DXCalendar.DayCellTemplate>
+                        </dxe:DXCalendar>
+                    </Grid>
                 </VerticalStackLayout>
             </VerticalStackLayout>
         </ScrollView>

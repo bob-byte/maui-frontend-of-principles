@@ -223,8 +223,6 @@ public partial class HabitDetailViewModel : BaseViewModel
                 DataLabelsPosition = LiveChartsCore.Measure.DataLabelsPosition.Top,
                 IsHoverable = false,
                 IsVisible = true,
-                MaxBarWidth = 40,
-                Padding = 0
             }
         };
 
@@ -233,12 +231,11 @@ public partial class HabitDetailViewModel : BaseViewModel
             new Axis
             {
                 IsVisible = true,
-                MinLimit = -0.25, // original = -0.5
-                MaxLimit = 7.0,  // original = 6.5
+                MinLimit = -0.5,
+                MaxLimit = 6.5,
                 LabelsRotation = 0,
-                TextSize = 10,
+                TextSize = 9,
                 Labels = dayNames,
-                UnitWidth = 0.5,
             }
         };
 
@@ -678,7 +675,7 @@ public partial class HabitDetailViewModel : BaseViewModel
                 IsVisible = true,
                 MinLimit = -0.5,
                 MaxLimit = values.Count - 0.5,
-                LabelsRotation = 35,//was 35
+                LabelsRotation = 35,
                 TextSize = 10,
                 Labeler = v =>
                 {
@@ -687,7 +684,6 @@ public partial class HabitDetailViewModel : BaseViewModel
                         ? labels[idx]
                         : string.Empty;
                 },
-                // LabelsDensity = 100,
                 LabelsAlignment = Align.Start,
                 CustomSeparators = separators
             }
