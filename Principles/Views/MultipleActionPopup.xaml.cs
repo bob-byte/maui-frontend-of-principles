@@ -6,9 +6,13 @@ public partial class MultipleActionPopup : Popup
 {
     private MultipleActionPopupViewModel ViewModel { get; }
 
-    public MultipleActionPopup( MultipleActionPopupViewModel viewModel )
+    public MultipleActionPopup( List<ActionData> actions, string description, string? title = null )
     {
         KeyboardHelper.HideKeyboard();
+
+        MultipleActionPopupViewModel viewModel =
+            ServiceLocator.Current!.GetRequiredService<MultipleActionPopupViewModel>();
+        viewModel.Configure( actions, description, title );
         
         BindingContext = viewModel;
         ViewModel = viewModel;

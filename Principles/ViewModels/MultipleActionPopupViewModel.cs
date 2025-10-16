@@ -16,13 +16,13 @@ public partial class MultipleActionPopupViewModel : BaseViewModel
         //do nothing
     }
 
-    public void Configure( List<ActionData> actions, string label, string? title = null )
+    public void Configure( List<ActionData> actions, string description, string? title = null )
     {
         Title = string.IsNullOrWhiteSpace( title ) ? 
             LocStrings.ChooseAction : 
             title;
         
-        TextOfLabel = label;
+        TextOfLabel = description;
         Buttons.Clear();
 
         foreach (ActionData action in actions)

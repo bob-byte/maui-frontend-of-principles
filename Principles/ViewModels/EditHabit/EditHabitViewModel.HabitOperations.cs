@@ -112,10 +112,6 @@ public partial class EditHabitViewModel
 
             if (!result)
             {
-                MultipleActionPopupViewModel viewModel =
-                    ServiceProvider.GetRequiredService<MultipleActionPopupViewModel>();
-                var multipleActionPopup = new MultipleActionPopup( viewModel );
-
                 List<ActionData> availableActions =
                 [
                     new(LocStrings.ArchiveHabit, () =>
@@ -133,8 +129,9 @@ public partial class EditHabitViewModel
                         }
                     )
                 ];
-
-                viewModel.Configure( availableActions, LocStrings.DescriptionOfAdviceNotToWorkOnNewHabit, LocStrings.TitleOfAdviceNotToWorkOnNewHabit );
+                
+                var multipleActionPopup = new MultipleActionPopup( availableActions,
+                    LocStrings.DescriptionOfAdviceNotToWorkOnNewHabit, LocStrings.TitleOfAdviceNotToWorkOnNewHabit );
 
                 await Shell.Current.ShowPopupAsync( multipleActionPopup );
             }

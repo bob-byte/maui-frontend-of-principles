@@ -818,7 +818,6 @@ public partial class HabitDetailViewModel : BaseViewModel
     {
         if (Habit.IsArchived)
         {
-            var popupViewModel = ServiceProvider.GetRequiredService<MultipleActionPopupViewModel>();
             List<ActionData> availableActions =
             [
                 new(
@@ -830,9 +829,8 @@ public partial class HabitDetailViewModel : BaseViewModel
                     DeleteHabitFromServerAsync
                 )
             ];
-            popupViewModel.Configure( availableActions, LocStrings.DeleteArchivedHabitConfirmationText );
-
-            MultipleActionPopup popup = new( popupViewModel );
+            MultipleActionPopup popup = new( availableActions, LocStrings.DeleteArchivedHabitConfirmationText );
+            
             await Shell.Current.ShowPopupAsync( popup );
         }
         else

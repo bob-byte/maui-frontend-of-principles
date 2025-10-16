@@ -413,9 +413,6 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     [RelayCommand]
     private async Task DeleteArchivedHabitAsync( ArсhivedHabitDto archivedHabit )
     {
-        var multipleActionViewModel =
-            ServiceProvider.GetRequiredService<MultipleActionPopupViewModel>();
-        MultipleActionPopup popup = new( multipleActionViewModel );
 
         List<ActionData> availableActions =
         [
@@ -434,8 +431,8 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
                 }
             )
         ];
-        multipleActionViewModel.Configure( availableActions, LocStrings.DeleteArchivedHabitConfirmationText );
-
+        
+        MultipleActionPopup popup = new( availableActions, description: LocStrings.DeleteArchivedHabitConfirmationText );
         await Shell.Current.ShowPopupAsync( popup );
     }
 
