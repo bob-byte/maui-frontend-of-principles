@@ -87,8 +87,6 @@ public partial class App : Application
             }
         }
         
-        await m_adService.GetAccessToTrackAsync();
-        
         bool shouldShowPopup = await m_updatePopupViewModel.ShouldShowPopup();
         
         if (shouldShowPopup)
@@ -96,11 +94,15 @@ public partial class App : Application
             m_updatePopup ??= new UpdatePopup( m_updatePopupViewModel );
             await Windows[0].Page!.ShowPopupAsync( m_updatePopup );
         }
+        
+        await m_adService.GetAccessToTrackAsync();
     }
 
     protected override async void OnResume()
     {
         base.OnResume();
+        
+        m_appOpenTracker.TrackAppOpen();
         
         m_adService.LoadInterstitialAd();
         

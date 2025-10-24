@@ -12,7 +12,18 @@ namespace Principles.Services;
 
 public class AdService : IAdService
 {
+    private readonly ILoggingService m_loggingService;
+
     private IInterstitialAd? m_interstitialAd;
+
+    public AdService( IServiceProvider serviceProvider )
+    {
+        m_loggingService = serviceProvider.GetRequiredService<ILoggingService>();
+    }
+
+    public event EventHandler ConsentIsConfigured;
+
+    public bool IsConsentConfigured { get; private set; }
     
     public async Task GetAccessToTrackAsync()
     {
@@ -27,19 +38,49 @@ public class AdService : IAdService
                 LocStrings.OK 
             );
         }
-            
+
 #if IOS
         if (ATTrackingManager.TrackingAuthorizationStatus == ATTrackingManagerAuthorizationStatus.NotDetermined)
         {
             await ATTrackingManager.RequestTrackingAuthorizationAsync();
         }
 #endif
-            
+
         IAdConsentService adConsentService = ServiceLocator.Current!.GetRequiredService<IAdConsentService>();
+        TaskCompletionSource taskCompletionSource = new();
+        adConsentService.OnConsentFormDismissed += ( _, _ ) => 
+        {
+            taskCompletionSource.SetResult();
+        };
+        adConsentService.OnConsentFormError += ( _, error ) =>
+        {
+            taskCompletionSource.SetResult();
+            m_loggingService.LogError( $"Consent form error: {error.Message}" );
+        };
+        adConsentService.OnConsentInfoFailedToUpdate += ( _, error ) =>
+        {
+            taskCompletionSource.SetResult();
+            m_loggingService.LogError( $"Consent info failed to update: {error.Message}" );
+        };
+        adConsentService.OnConsentInfoUpdated += ( _, _ ) => 
+        {
+            taskCompletionSource.SetResult();
+        };
         adConsentService.LoadAndShowConsentFormIfRequired();
-        
+
+        await taskCompletionSource.Task;
+
+        IsConsentConfigured = true;
+        ConsentIsConfigured?.Invoke( this, new EventArgs() );
+
         IInterstitialAdService adService = ServiceLocator.Current!.GetRequiredService<IInterstitialAdService>();
+        
         m_interstitialAd = adService.CreateAd( AdConfig.DefaultInterstitialAdUnitId );
+        m_interstitialAd.OnAdFailedToLoad += ( _, error ) =>
+        {
+            m_loggingService.LogError( $"Failed to load interstitial ad: {error.Message}" );
+        };
+
         m_interstitialAd.Load();
     }
 
@@ -54,6 +95,17 @@ public class AdService : IAdService
         m_interstitialAd.Load();
     }
 
+    public async Task IfRequiredShowInterstitialAdAsync()
+    {
+        int tapsToShowAds = Preferences.Get( CacheKeys.TAPS_TO_SHOW_ADS, 0 ) + 1;
+        Preferences.Set( CacheKeys.TAPS_TO_SHOW_ADS, tapsToShowAds );
+        if (tapsToShowAds >= Constants.Constants.MAX_TAPS_TO_SHOW_ADS)
+        {
+            Preferences.Set( CacheKeys.TAPS_TO_SHOW_ADS, 0 );
+            await ShowInterstitialAdAsync().DefaultConfigureAwait();
+        }
+    }
+
     public async Task ShowInterstitialAdAsync()
     {
         IInterstitialAdService adService = ServiceLocator.Current!.GetRequiredService<IInterstitialAdService>();
@@ -65,8 +117,7 @@ public class AdService : IAdService
             IInterstitialAd interstitialAd = m_interstitialAd;
             interstitialAd.OnAdFailedToShow += ( _, error ) =>
             {
-                ILoggingService loggingService = ServiceLocator.Current!.GetRequiredService<ILoggingService>();
-                loggingService.LogError( $"Failed to show interstitial ad: {error.Message}" );
+                m_loggingService.LogError( $"Failed to show interstitial ad: {error.Message}" );
                 
                 taskCompletionSource.SetResult();
             };
@@ -91,16 +142,14 @@ public class AdService : IAdService
             };
             m_interstitialAd.OnAdFailedToLoad += ( _, error ) =>
             {
-                ILoggingService loggingService = ServiceLocator.Current!.GetRequiredService<ILoggingService>();
-                loggingService.LogError( $"Failed to load interstitial ad: {error.Message}" );
+                m_loggingService.LogError( $"Failed to load interstitial ad: {error.Message}" );
                 
                 taskCompletionSource.SetResult();
             };
             
             m_interstitialAd.OnAdFailedToShow += ( _, error ) =>
             {
-                ILoggingService loggingService = ServiceLocator.Current!.GetRequiredService<ILoggingService>();
-                loggingService.LogError( $"Failed to show interstitial ad: {error.Message}" );
+                m_loggingService.LogError( $"Failed to show interstitial ad: {error.Message}" );
                 
                 taskCompletionSource.SetResult();
             };

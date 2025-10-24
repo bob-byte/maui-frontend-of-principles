@@ -10,5 +10,5 @@ public static class CacheKeys
     public const string USER_GENDER = "UserGender";
     public const string USER_EMAIL = "UserEmail";
     public const string API_KEY = "ApiKey";
-    public const string IS_ENABLED_ADS = "IsEnabledAds";
+    public const string TAPS_TO_SHOW_ADS = "TapsToShowAds";
 }

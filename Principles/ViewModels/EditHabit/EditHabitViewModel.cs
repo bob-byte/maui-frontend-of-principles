@@ -131,11 +131,11 @@ public partial class EditHabitViewModel : BaseViewModel
         base.ApplyQueryAttributes( query );
 
         Habit = new UserHabit();
-        InitValidations();
 
         if (query.TryGetValue( "Habit", out object? value ) && value is UserHabit habit)
         {
             Habit.MergeFrom( habit );
+            
             ServiceOfHabit.Recompute( Habit );
             if (Habit.Goal is not null && Habit.Goal.Id == 0)
             {
@@ -148,6 +148,8 @@ public partial class EditHabitViewModel : BaseViewModel
         {
             IsNewHabit = true;
         }
+
+        InitValidations();
 
         if (query.TryGetValue( "IsArchived", out object? isArchivedValue ) && isArchivedValue is bool archived)
         {
@@ -164,14 +166,7 @@ public partial class EditHabitViewModel : BaseViewModel
             m_isInHabitDetails = false;
         }
 
-        int habitDetailCount = Preferences.Get( "HabitDetailCount", 0 ) + 1;
-        Preferences.Set( "HabitDetailCount", habitDetailCount );
-        if (habitDetailCount >= 3)
-        {
-            Preferences.Set( "HabitDetailCount", 0 );
-            
-            AdService.ShowInterstitialAdAsync();
-        }
+        AdService.IfRequiredShowInterstitialAdAsync();
     }
 
     public override async Task InitializeAsync( object? parameter = null )
@@ -301,7 +296,7 @@ public partial class EditHabitViewModel : BaseViewModel
             Period = SelectedPeriodOfHabit
         };
 
-        Habit.AreasOfLife.CollectionChanged += AreasOfLife_CollectionChanged;
+        // Habit.AreasOfLife.CollectionChanged += AreasOfLife_CollectionChanged;
 
         if (AllUserAreasOfLife.Count == 0)
         {

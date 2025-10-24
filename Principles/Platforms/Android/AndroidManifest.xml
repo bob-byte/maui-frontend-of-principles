@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.set.principles" android:versionName="3.1.1" android:versionCode="60">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.set.principles" android:versionName="3.1.11" android:versionCode="70">
 	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="35" />
+	<uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
 
 	<!--The following 6 permissions are for notifications-->
 	<uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
@@ -15,6 +15,7 @@
 
 	<application
         android:networkSecurityConfig="@xml/network_security_config" android:allowBackup="true" android:label="Principles" android:icon="@mipmap/appicon">
+		<activity android:name="com.google.android.gms.ads.AdActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" android:theme="@android:style/Theme.Translucent" />
 		<receiver android:name="com.set.principles.NotificationReceiver" android:exported="true" />
 		<service android:name="com.set.principles.NotificationService" android:exported="false" />
 		<meta-data android:name="com.google.android.gms.ads.APPLICATION_ID"

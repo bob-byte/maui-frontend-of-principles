@@ -23,12 +23,22 @@ public partial class ProgressOfHabitsView : ContentPageBase
     private TimeZoneChangedReceiver? m_timeZoneChangeReceiver;
 #endif
 
-    public ProgressOfHabitsView(ProgressOfHabitsViewModel viewModel)
-	{
+    public ProgressOfHabitsView( ProgressOfHabitsViewModel viewModel )
+    {
         BindingContext = viewModel;
         ViewModel = viewModel;
 
         InitializeComponent();
+
+        IAdService adService = ServiceLocator.Current!.GetRequiredService<IAdService>();
+        if (adService.IsConsentConfigured)
+        {
+            AppendBannerAd();
+        }
+        else
+        {
+            adService.ConsentIsConfigured += ( _, _ ) => AppendBannerAd();
+        }
 
 #if ANDROID31_0_OR_GREATER || IOS16_0_OR_GREATER
         SwipeItemInitialize();
@@ -45,11 +55,33 @@ public partial class ProgressOfHabitsView : ContentPageBase
         {
             UpdateLocalizedStrings();
         } );
-        
+
         ViewModel.ReferenceMessenger.Register<ShowAllArchivedHabitsMsg>( this, async ( _, _ ) =>
         {
             await ShowArchivedHabitsAsync();
-        });
+        } );
+    }
+
+    private void AppendBannerAd()
+    {
+        BannerAd bannerAd = new()
+        {
+            Margin = new Thickness( 0, 0, 0, 10 ),
+            AdSize = AdSize.Custom,
+#if ANDROID
+            AdUnitId = "ca-app-pub-6307192789973793/8957186556",
+#else
+            AdUnitId = "ca-app-pub-6307192789973793/4995365596",
+#endif
+            CustomAdHeight = 50,
+            CustomAdWidth = 320,
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Start
+        };
+        bannerAd.OnAdFailedToLoad += BA_Ad_OnAdFailedToLoad;
+
+        G_Main.Children.Add( bannerAd );
+        G_Main.SetRow( bannerAd, 2 );
     }
 
     private void UpdateLocalizedStrings()
@@ -517,6 +549,6 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
     private void BA_Ad_OnAdFailedToLoad( object? sender, IAdError e )
     {
-        ViewModel.LoggingService.LogError( e.Message );
+        ViewModel.LoggingService.LogError( $"Failed to load banner ad: {e.Message}" );
     }
 }

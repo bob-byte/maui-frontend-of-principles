@@ -15,8 +15,8 @@
 		<ApplicationId>com.set.principles</ApplicationId>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>3.1.1</ApplicationDisplayVersion>
-		<ApplicationVersion>53</ApplicationVersion>
+		<ApplicationDisplayVersion>3.1.5</ApplicationDisplayVersion>
+		<ApplicationVersion>57</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net9.0-android'">21.0</SupportedOSPlatformVersion>
@@ -44,10 +44,10 @@
 	</PropertyGroup>
 
 	<!--Comment it out when behavior of the published Android app doesn't work as expected-->
-	<!--<PropertyGroup Condition="'$(TargetFramework)' == 'net9.0-android'">
+	<!-- <PropertyGroup Condition="'$(TargetFramework)' == 'net9.0-android'">
         <RunAOTCompilation>false</RunAOTCompilation>
 		<PublishTrimmed>false</PublishTrimmed>
-    </PropertyGroup>-->
+    </PropertyGroup> -->
 
 	<!-- App Icon -->
 	<ItemGroup Condition="$(TargetFramework.Contains('-android'))">

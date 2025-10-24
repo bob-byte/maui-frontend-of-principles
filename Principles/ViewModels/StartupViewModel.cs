@@ -1,4 +1,6 @@
 
+using Principles.Exceptions;
+
 using System.Net;
 
 namespace Principles.ViewModels;
@@ -77,10 +79,16 @@ public partial class StartupViewModel : BaseViewModel
     private async Task HandleExceptionWhenGoogleAuthAsync(Exception ex)
     {
         string? errorMsg = null;
-            
+
         if (ex is TimeoutException || ex.InnerException is TimeoutException)
         {
             errorMsg = LocStrings.OperationTimeoutMessage;
+        }
+        else if (ex is ExtendedHttpRequestException extendedHttpRequestException)
+        {
+            errorMsg = extendedHttpRequestException.HttpCode is HttpStatusCode.ServiceUnavailable or HttpStatusCode.NotFound
+                ? LocManager["ServerTechnicalWorkIsInProgress"]!
+                : LocStrings.NoInternetConnection;
         }
         else if (ex is HttpRequestException or AggregateException or WebException)
         {
@@ -130,10 +138,16 @@ public partial class StartupViewModel : BaseViewModel
         if (!isCancelledByUser)
         {
             string? errorMsg = null;
-                
+
             if (ex is TimeoutException || ex.InnerException is TimeoutException)
             {
                 errorMsg = LocStrings.OperationTimeoutMessage;
+            }
+            else if (ex is ExtendedHttpRequestException extendedHttpRequestException)
+            {
+                errorMsg = extendedHttpRequestException.HttpCode is HttpStatusCode.ServiceUnavailable or HttpStatusCode.NotFound
+                    ? LocManager["ServerTechnicalWorkIsInProgress"]!
+                    : LocStrings.NoInternetConnection;
             }
             else if (ex is HttpRequestException or AggregateException or WebException)
             {

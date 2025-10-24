@@ -174,32 +174,34 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
 
     private void HandleHabitSave(object receiver, HabitSavedMessage message)
     {
-        SelectedHabit = null;
-
-        UserHabit savedHabit = message.Value;
-        UserHabit? foundHabit = UserHabits.FirstOrDefault( u => u.Id == savedHabit.Id );
-
-        if (foundHabit is null)
+        if (!message.Value.IsArchived)
         {
-            ServiceOfHabit.InitializeHabitProgresses( savedHabit, StartProgressInterval, EndProgressInterval );
+            SelectedHabit = null;
 
-            savedHabit.Goal ??= new UserGoal();
-            if (savedHabit.Goal.Id == 0)
+            UserHabit savedHabit = message.Value;
+            UserHabit? foundHabit = UserHabits.FirstOrDefault( u => u.Id == savedHabit.Id );
+
+            if (foundHabit is null)
             {
-                savedHabit.Goal.Name = LocStrings.NoGoalSpecified;
+                ServiceOfHabit.InitializeHabitProgresses( savedHabit, StartProgressInterval, EndProgressInterval );
+
+                savedHabit.Goal ??= new UserGoal();
+                if (savedHabit.Goal.Id == 0)
+                {
+                    savedHabit.Goal.Name = LocStrings.NoGoalSpecified;
+                }
+
+                UserHabits.Add( savedHabit );
+                m_isBusyForChangeCompleted.TryAdd( savedHabit, new SemaphoreSlim( 1, 1 ) );
+            }
+            else
+            {
+                foundHabit.MergeFrom( savedHabit );
+                ServiceOfHabit.Recompute( foundHabit );
             }
 
-            UserHabits.Add( savedHabit );
-            m_isBusyForChangeCompleted.TryAdd( savedHabit, new SemaphoreSlim( 1, 1 ) );
+            NotifyPropertyChanged( nameof( UserHabits ) );
         }
-        else
-        {
-            foundHabit.MergeFrom( savedHabit );
-
-            ServiceOfHabit.Recompute( foundHabit );
-        }
-        
-        NotifyPropertyChanged( nameof( UserHabits ) );
     }
 
     public override async Task InitializeAsync( object? parameter = null )
@@ -262,13 +264,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
 
         try
         {
-            int dateTapCount = Preferences.Get( "DateTapCount", 0 ) + 1;
-            Preferences.Set( "DateTapCount", dateTapCount );
-            if (dateTapCount >= 5)
-            {
-                Preferences.Set( "DateTapCount", 0 );
-                await AdService.ShowInterstitialAdAsync();
-            }
+            AdService.IfRequiredShowInterstitialAdAsync().GetAwaiter();
             
             bool doTryAgain;
             
@@ -403,17 +399,21 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
             {
                 await ServiceOfHabit.SetHabitArchiveStatusAsync( new HabitArchiveStatus
                 {
-                    HabitId = habit.Id, IsArchived = true
+                    HabitId = habit.Id,
+                    IsArchived = true
                 } );
                 UserHabits.Remove( habit );
+
+                ServiceOfHabit.CancelAllRemindersOfHabit( habit );
             } );
+            
+            TipService.ShowToastAsync( LocManager["TheHabitIsArchived"]! ).GetAwaiter();
         }
     }
 
     [RelayCommand]
     private async Task DeleteArchivedHabitAsync( ArсhivedHabitDto archivedHabit )
     {
-
         List<ActionData> availableActions =
         [
             new(
@@ -483,11 +483,14 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
             
             ServiceOfHabit.InitializeHabitProgresses( habit, StartProgressInterval, EndProgressInterval );
             UserHabits.Add( habit );
-            
+
             if (!m_isBusyForChangeCompleted.ContainsKey( habit ))
             {
                 m_isBusyForChangeCompleted.TryAdd( habit, new SemaphoreSlim( 1, 1 ) );
             }
+
+            await ServiceOfHabit.RestoreRemindersOfHabit( habit );
+            TipService.ShowToastAsync( LocManager["TheHabitIsUnarchived"]! ).GetAwaiter();
         } );
     }
 

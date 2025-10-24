@@ -131,35 +131,6 @@
                                                    StartIcon="goal"
                                                    StartIconClicked="ME_HabitGoal_IconClicked"
                                                    Tap="ME_HabitGoal_Tap" />
-                                <dxe:AutoCompleteTokenEdit x:Name="TE_AreasOfLife"
-                                                           LabelText="{Binding LocManager[AreasOfHabit]}"
-                                                           ItemsSource="{Binding AllUserAreasOfLife}"
-                                                           AllowAnimation="True"
-                                                           DisplayMember="Name"
-                                                           DropDownSelectedItemBackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary},
-                                                                                                                 Dark={StaticResource LightPrimary}}"
-                                                           EndIcon="dotshorizontal"
-                                                           EndIconClicked="TE_AreasOfLife_EndIconClicked"
-                                                           IsStartIconVisible="True"
-                                                           SelectedItems="{Binding Habit.AreasOfLife,
-                                                                                   Mode=TwoWay}"
-                                                           SelectionChanged="TE_AreasOfLife_SelectionChanged"
-                                                           StartIcon="rule"
-                                                           Tap="TE_AreasOfLife_Tap">
-                                    <dxe:AutoCompleteTokenEdit.ItemsSourceProvider>
-                                        <dxe:AsyncItemsSourceProvider CharacterCountThreshold="-1"
-                                                                      ItemsRequested="AISP_AreasRequested" />
-                                    </dxe:AutoCompleteTokenEdit.ItemsSourceProvider>
-                                    <dxe:AutoCompleteTokenEdit.TokenAppearance>
-                                        <dxe:TokenAppearance BorderColor="{StaticResource Primary}"
-                                                             BorderThickness="2.5"
-                                                             CornerRadius="14"
-                                                             FontSize="14"
-                                                             PressedBorderColor="{StaticResource Primary}"
-                                                             TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
-                                                                                         Dark={StaticResource DarkNormalText}}" />
-                                    </dxe:AutoCompleteTokenEdit.TokenAppearance>
-                                </dxe:AutoCompleteTokenEdit>
                                 <dxe:ChoiceChipGroup x:Name="CCG_Types"
                                                      Margin="0,0,0,-10"
                                                      HorizontalOptions="Center"
@@ -201,24 +172,6 @@
                                                    StartIcon="reminder"
                                                    StartIconClicked="ME_HabitReminder_IconClicked"
                                                    Tap="ME_HabitReminder_Tap" />
-                                <dxco:SimpleButton Text="{Binding LocManager[DeleteTheHabit]}"
-                                                   Command="{Binding DeleteHabitCommand}"
-                                                   CommandParameter="{Binding Habit}"
-                                                   Style="{StaticResource SecondaryButton}"
-                                                   IsVisible="{Binding IsNewHabit,
-                                                                       Converter={StaticResource IsFalse}}"
-                                                   Margin="0,5,0,0" />
-                                <dxco:SimpleButton Text="{Binding LocManager[ArchiveHabit]}"
-                                                   Command="{Binding ArchiveHabitCommand}"
-                                                   Style="{StaticResource PrimaryButton}"
-                                                   IsVisible="{Binding Habit.IsArchived,
-                                                                       Converter={StaticResource IsFalse}}"
-                                                   Margin="0,5,0,0" />
-                                <dxco:SimpleButton Text="{Binding LocManager[UnarchiveHabit]}"
-                                                   Command="{Binding UnarchiveHabitCommand}"
-                                                   Style="{StaticResource PrimaryButton}"
-                                                   IsVisible="{Binding Habit.IsArchived}"
-                                                   Margin="0,5,0,0" />
                                 <dxco:SimpleButton Text="{Binding LocManager[RecommendedHabitsButton]}"
                                                    Clicked="SB_RecomendedHabit_Clicked"
                                                    Style="{StaticResource PrimaryButton}"
@@ -339,6 +292,7 @@
 
                                                 <dxe:MultilineEdit x:Name="ME_EditedGoal"
                                                                    Text="{Binding EditedGoal.Name}"
+                                                                   ReturnType="Done"
                                                                    ClearIconVisibility="Never"
                                                                    IsErrorIconVisible="False"
                                                                    MaxCharacterCount="255"
@@ -775,7 +729,7 @@
                     <ScrollView>
                         <VerticalStackLayout Padding="10"
                                              Spacing="6">
-                            <dxe:MultilineEdit LabelText="{Binding LocManager[NotesOrHowToKeepHabit]}"
+                            <dxe:MultilineEdit LabelText="{Binding LocManager[Notes]}"
                                                Text="{Binding Habit.Description}"
                                                ClearIconVisibility="Never"
                                                StartIcon="notes" />

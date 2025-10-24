@@ -246,8 +246,8 @@
     <data name="Data" xml:space="preserve">
     <value>Data</value>
   </data>
-    <data name="NotesOrHowToKeepHabit" xml:space="preserve">
-    <value>Notes / How to keep habit</value>
+    <data name="Notes" xml:space="preserve">
+    <value>Notes</value>
   </data>
     <data name="UseSubhabits" xml:space="preserve">
     <value>Use subhabits</value>
@@ -1044,5 +1044,14 @@ You can change the status with a press.</value>
   </data>
   <data name="HabitStreakExplanation" xml:space="preserve">
     <value>Shows how many days in a row you've opened the app and completed your habits. Missing even one day resets the streak.</value>
+  </data>
+  <data name="TheHabitIsArchived" xml:space="preserve">
+    <value>The habit is archived.</value>
+  </data>
+    <data name="TheHabitIsUnarchived" xml:space="preserve">
+    <value>The habit is unarchived.</value>
+  </data>
+    <data name="ServerTechnicalWorkIsInProgress" xml:space="preserve">
+    <value>Technical work on our server is in progress. Please try again later.</value>
   </data>
 </root>

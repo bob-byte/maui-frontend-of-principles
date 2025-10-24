@@ -11,4 +11,6 @@ public interface IReminderService
     Task<Reminder> HabitsReportReminderAsync();
     Task<SaveHabitsReportReminderResponse> SaveHabitsReportReminderAsync( Reminder reminder );
     Task RequestAccessToSendNotificationsAsync();
+    void Cancel( int id );
+    Task AddNotificationToDeviceAsync( bool isNewHabit, UserHabitReminder reminder, WeekDay weekDay );
 }

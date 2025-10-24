@@ -7,7 +7,7 @@
   "AttributeIndentation": 0,
   "AttributeIndentationStyle": 1,
   "RemoveDesignTimeReferences": false,
-  "EnableAttributeReordering": true,
+  "EnableAttributeReordering": false,
   "AttributeOrderingRuleGroups": [
     "x:Class",
     "xmlns, xmlns:x",

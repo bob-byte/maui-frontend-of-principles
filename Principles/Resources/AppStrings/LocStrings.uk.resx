@@ -246,8 +246,8 @@
     <data name="Data" xml:space="preserve">
     <value>Дані</value>
   </data>
-    <data name="NotesOrHowToKeepHabit" xml:space="preserve">
-    <value>Помітки / Як дотримуватись звички</value>
+    <data name="Notes" xml:space="preserve">
+    <value>Нотатки</value>
   </data>
     <data name="UseSubhabits" xml:space="preserve">
     <value>Використати підзвички</value>
@@ -1044,5 +1044,14 @@
   </data>
   <data name="HabitStreakExplanation" xml:space="preserve">
     <value>Показує кількість днів поспіль, коли ви відкривали додаток і виконували звички. Якщо пропустити хоча б один день — серія обнуляється.</value>
+  </data>
+  <data name="TheHabitIsArchived" xml:space="preserve">
+    <value>Звичка занесено в архів.</value>
+  </data>
+    <data name="TheHabitIsUnarchived" xml:space="preserve">
+    <value>Звичку виведено з архіву.</value>
+  </data>
+    <data name="ServerTechnicalWorkIsInProgress" xml:space="preserve">
+    <value>Ведуться технічні роботи над сервером. Спробуйте, будь ласка, пізніше.</value>
   </data>
 </root>

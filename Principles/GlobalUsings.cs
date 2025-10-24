@@ -34,6 +34,7 @@ global using System.Linq;
 global using DevExpress.Maui;
 global using CommunityToolkit.Mvvm.Messaging;
 global using Plugin.LocalNotification;
+global using Principles.Core.Constants;
 #if IOS
 global using UIKit;
 #endif

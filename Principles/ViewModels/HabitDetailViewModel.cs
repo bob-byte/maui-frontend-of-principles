@@ -18,8 +18,6 @@ public partial class HabitDetailViewModel : BaseViewModel
     [ObservableProperty]
     private UserHabit m_habit;
     [ObservableProperty]
-    private string m_frequencyRepresentation;
-    [ObservableProperty]
     private PeriodOfHabit m_selectedPeriodOfHabit;
     [ObservableProperty]
     private ObservableCollectionEx<PeriodOfHabit> m_periodsOfHabit;
@@ -68,16 +66,23 @@ public partial class HabitDetailViewModel : BaseViewModel
         : base( serviceProvider )
     {
         ProgressOfHabitService = serviceProvider.GetRequiredService<IProgressOfHabitService>();
-        ServiceOfHabit = serviceProvider.GetRequiredService<IServiceOfHabit>();
 
         EditedReminder = new EditedUserHabitReminder();
         m_lockerOfHabitProgressUpdate = new SemaphoreSlim( initialCount: 1, maxCount: 1 );
         
+        FrequencyInfo = new();
         ReferenceMessenger.Register<HabitSavedMessage>( this, (_, msg) =>
         {
             if (Habit.Id == msg.Value.Id)
             {
-                Habit.MergeFrom( msg.Value );
+                if (msg.Value.IsArchived)
+                {
+                    Habit.MergeFrom( msg.Value );
+                }
+
+                NotifyPropertyChanged( nameof( Habit ) );
+                SetEditedRemider();
+                SetFrequency();
             }
         } );
 
@@ -86,7 +91,7 @@ public partial class HabitDetailViewModel : BaseViewModel
 
     public ISeries[] Series { get; set; }
     public IProgressOfHabitService ProgressOfHabitService { get; }
-    public IServiceOfHabit ServiceOfHabit { get; }
+    public HabitFrequencyInfo FrequencyInfo { get; set; }
 
     public override void ApplyQueryAttributes( IDictionary<string, object> query )
     {
@@ -103,24 +108,12 @@ public partial class HabitDetailViewModel : BaseViewModel
         {
             if (showAd)
             {
-                int dateTapCount = Preferences.Get( "HabitDetailCount", 0 ) + 1;
-                Preferences.Set( "HabitDetailCount", dateTapCount );
-                if (dateTapCount >= 3)
-                {
-                    Preferences.Set( "HabitDetailCount", 0 );
-                    AdService.ShowInterstitialAdAsync();
-                }
+                AdService.IfRequiredShowInterstitialAdAsync();
             }
         }
         else
         {
-            int dateTapCount = Preferences.Get( "HabitDetailCount", 0 ) + 1;
-            Preferences.Set( "HabitDetailCount", dateTapCount );
-            if (dateTapCount >= 3)
-            {
-                Preferences.Set( "HabitDetailCount", 0 );
-                AdService.ShowInterstitialAdAsync();
-            }
+            AdService.IfRequiredShowInterstitialAdAsync();
         }
 
         base.ApplyQueryAttributes( query );
@@ -129,9 +122,16 @@ public partial class HabitDetailViewModel : BaseViewModel
     public override async Task InitializeAsync( object? parameter = null )
     {
         await base.InitializeAsync( parameter );
-        
+
         SetEditedRemider();
 
+        SetFrequency();
+
+        SetCharts();
+    }
+    
+    private void SetFrequency()
+    {
         switch (Habit.Frequency!.IntervalLengthInDays)
         {
             default:
@@ -151,8 +151,10 @@ public partial class HabitDetailViewModel : BaseViewModel
                 }
         }
 
-        UpdateFrequencyRepresentation( Habit.Frequency, SelectedPeriodOfHabit );
-        SetCharts();
+        FrequencyInfo.Frequency = Habit.Frequency;
+        FrequencyInfo.Period = SelectedPeriodOfHabit;
+
+        NotifyPropertyChanged( nameof( FrequencyInfo ) );
     }
 
     private void SetCharts()
@@ -260,13 +262,7 @@ public partial class HabitDetailViewModel : BaseViewModel
             return;
         }
 
-        int dateTapCount = Preferences.Get( "DateTapCount", 0 ) + 1;
-        Preferences.Set( "DateTapCount", dateTapCount );
-        if (dateTapCount >= 5)
-        {
-            Preferences.Set( "DateTapCount", 0 );
-            await AdService.ShowInterstitialAdAsync();
-        }
+        AdService.IfRequiredShowInterstitialAdAsync().GetAwaiter();
 
         var date = DateOnly.FromDateTime( selectedDateTime.Value );
 
@@ -761,45 +757,6 @@ public partial class HabitDetailViewModel : BaseViewModel
         OnPropertyChanged( nameof( EditedReminder ) );
     }
 
-    public void UpdateFrequencyRepresentation( FrequencyOfHabit? frequency, PeriodOfHabit periodOfHabit )
-    {
-        if (frequency != null)
-        {
-            if (frequency.Repeats == 1)
-            {
-                switch (frequency.Type)
-                {
-                    case FrequencyType.EveryDay:
-                        {
-                            FrequencyRepresentation = LocStrings.EveryDay;
-                            break;
-                        }
-
-                    case FrequencyType.EverySeveralDays:
-                        {
-                            FrequencyRepresentation = $"{LocStrings.Every} {frequency.IntervalLengthInDays} {LocStrings.days}";
-                            break;
-                        }
-
-                    case FrequencyType.SeveralTimesPerPeriod:
-                        {
-                            FrequencyRepresentation = periodOfHabit.Type switch
-                            {
-                                PeriodTypeOfHabit.Month => LocStrings.EveryMonth,
-                                PeriodTypeOfHabit.Year => LocStrings.EveryYear,
-                                _ => LocStrings.EveryWeek
-                            };
-                            break;
-                        }
-                }
-            }
-            else
-            {
-                FrequencyRepresentation = $"{frequency.Repeats} {LocStrings.timesPer} {periodOfHabit?.Name}";
-            }
-        }
-    }
-
     [RelayCommand]
     private async Task EditHabitAsync()
     {
@@ -906,11 +863,16 @@ public partial class HabitDetailViewModel : BaseViewModel
                 
                 if (Habit.IsArchived)
                 {
+                    ServiceOfHabit.CancelAllRemindersOfHabit( Habit );
+                    SetEditedRemider();
                     ReferenceMessenger.Send( new ArchiveHabitMessage( Habit, doShowAllArchivedHabits: false ) );
+                    TipService.ShowToastAsync( LocManager["TheHabitIsArchived"]! ).GetAwaiter();
                 }
                 else
                 {
+                    await ServiceOfHabit.RestoreRemindersOfHabit( Habit );
                     ReferenceMessenger.Send( new HabitSavedMessage( Habit ) );
+                    TipService.ShowToastAsync( LocManager["TheHabitIsUnarchived"]! ).GetAwaiter();
                 }
             }).DefaultConfigureAwait();
         }

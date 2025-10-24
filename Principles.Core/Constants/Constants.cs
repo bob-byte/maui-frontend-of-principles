@@ -14,5 +14,7 @@ public static class Constants
     }
 
     public static JsonSerializerOptions JsonOptions { get; }
+    
+    public const int MAX_TAPS_TO_SHOW_ADS = 5;
 }
 

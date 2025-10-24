@@ -96,7 +96,7 @@
                                             HeightRequest="24"
                                             TintColor="{StaticResource TitleTextColor}"
                                             VerticalOptions="Center" />
-                                <Label Text="{Binding FrequencyRepresentation}"
+                                <Label Text="{Binding FrequencyInfo, Converter={StaticResource FrequencyToString}}"
                                        FontAttributes="Bold"
                                        FontSize="14"
                                        TextColor="White"

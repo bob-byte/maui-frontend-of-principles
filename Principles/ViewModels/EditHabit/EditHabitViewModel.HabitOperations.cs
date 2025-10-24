@@ -46,42 +46,38 @@ public partial class EditHabitViewModel
 
             bool isHabitSaved = false;
             
-            IDictionary<string, object> routeParams = new Dictionary<string, object>();
-            routeParams.Add( "ShowAd", false );
+            IDictionary<string, object> routeParams = new Dictionary<string, object>
+            {
+                { "ShowAd", false }
+            };
             
             await UiBusyFor( async () =>
             {
                 UserHabit savedHabit = Habit;
+
+                SaveHabitResponse response = await ServiceOfHabit.UpdateHabitAsync( dto );
+                await HandleHabitSaveAsync( response );
+
                 if (copyOfHabits.Count == 1)
                 {
-                    SaveHabitResponse response = await ServiceOfHabit.UpdateHabitAsync( dto );
-                    await HandleHabitSaveAsync( response );
+                    ReferenceMessenger.Send( new HabitSavedMessage( savedHabit ) );
 
-                    if (dto.IsArchived)
+                    if (dto.IsArchived && !m_isInHabitDetails)
                     {
                         ReferenceMessenger.Send( new ArchiveHabitMessage( savedHabit, doShowAllArchivedHabits: true ) );
                     }
-                    else
-                    {
-                        ReferenceMessenger.Send( new HabitSavedMessage( savedHabit ) );
-                    }
 
-                    await Navigation.GoBackAsync(routeParams);
+                    await Navigation.GoBackAsync( routeParams );
                 }
                 else
                 {
-                    SaveHabitResponse response = await ServiceOfHabit.UpdateHabitAsync( dto );
-                    await HandleHabitSaveAsync( response );
-                    
-                    await Navigation.GoBackAsync(routeParams);
+                    await Navigation.GoBackAsync( routeParams );
 
-                    if (dto.IsArchived)
+                    ReferenceMessenger.Send( new HabitSavedMessage( savedHabit ) );
+
+                    if (dto.IsArchived && !m_isInHabitDetails)
                     {
                         ReferenceMessenger.Send( new ArchiveHabitMessage( savedHabit, doShowAllArchivedHabits: true ) );
-                    }
-                    else
-                    {
-                        ReferenceMessenger.Send( new HabitSavedMessage( savedHabit ) );
                     }
                 }
 
@@ -171,57 +167,8 @@ public partial class EditHabitViewModel
                     weekDay.Id = dtoOfWeekDay.Id;
                     weekDay.UserNotificationRequestId = dtoOfWeekDay.NotificationRequestId;
 
-                    await AddNotificationToDeviceAsync( habitReminder, weekDay );
+                    await ReminderService.AddNotificationToDeviceAsync( IsNewHabit, habitReminder, weekDay );
                 }
-            }
-        }
-    }
-
-    [RelayCommand]
-    private async Task ArchiveHabitAsync()
-    {
-        Habit.IsArchived = true;
-
-        await TipService.ShowToastAsync( LocStrings.TheHabitWillBeArchivedAfterSaving ).DefaultConfigureAwait();
-    }
-
-    [RelayCommand]
-    private async Task UnarchiveHabitAsync()
-    {
-        Habit.IsArchived = false;
-        
-        await TipService.ShowToastAsync( LocStrings.TheHabitWillBeUnarchivedAfterSaving ).DefaultConfigureAwait();
-    }
-    
-    [RelayCommand]
-    private async Task DeleteHabitAsync( object? obj )
-    {
-        if (obj is UserHabit habit)
-        {
-            bool doDelete = await DialogService.ShowConfirmAsync(
-                LocStrings.MessageInDeleteHabitConfirm,
-                LocStrings.DeleteHabitQuestion
-            );
-
-            if (doDelete)
-            {
-                await UiBusyFor( async () =>
-                {
-                    HabitDeletionResponse? response = await ServiceOfHabit.DeleteAsync( habit.Id );
-
-                    if (response != null)
-                    {
-                        foreach (HabitDeletionResponse.NotificationRequest notification in response.DeletedNotifications)
-                        {
-                            LocalNotificationCenter.Current.Cancel( notification.Id );
-                        }
-                    }
-                    
-                    await Navigation.GoToInitialViewAsync();
-                    ReferenceMessenger.Send( new HabitsDeletedMessege( habit ) );
-                    
-                    ServiceOfHabit.StoredUserHabits!.Remove( habit );
-                } ).DefaultConfigureAwait();
             }
         }
     }

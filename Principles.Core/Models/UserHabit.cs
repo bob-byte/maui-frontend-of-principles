@@ -2,7 +2,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Principles.Core.Models;
 
-public partial class UserHabit : ObservableObject, ICloneable
+public partial class UserHabit : ObservableObject
 {
     [ObservableProperty]
     private long m_id;
@@ -88,24 +88,50 @@ public partial class UserHabit : ObservableObject, ICloneable
         return Id.GetHashCode();
     }
 
-    public object Clone()
+    public void MergeFrom(UserHabit userHabit)
     {
-        var habit = MemberwiseClone() as UserHabit;
-        habit!.Frequency = Frequency?.Clone() as FrequencyOfHabit;
-
-        if (Reminders is not null)
+        Id = userHabit.Id;
+        Name = userHabit.Name;
+        Type = userHabit.Type;
+        Status = userHabit.Status;
+        if (userHabit.AreasOfLife is null)
         {
-            habit.Reminders = new ObservableCollectionEx<UserHabitReminder>();
-
-            foreach (UserHabitReminder reminder in Reminders)
+            AreasOfLife = null;
+        }
+        else
+        {
+            AreasOfLife = [];
+            foreach (UserAreaOfLife areaOfLife in userHabit.AreasOfLife)
             {
-                habit.Reminders.Add((reminder.Clone() as UserHabitReminder)!);
+                AreasOfLife.Add( areaOfLife );
             }
         }
-        
-        habit.Goal = habit.Goal?.Clone() as UserGoal;
-        
-        return habit;
+
+        Priority = userHabit.Priority;
+        IsArchived = userHabit.IsArchived;
+        Description = userHabit.Description;
+        Goal = userHabit.Goal?.Clone() as UserGoal;
+
+        if (userHabit.Reminders is null)
+        {
+            Reminders = null;
+        }
+        else
+        {
+            Reminders = [];
+            foreach (UserHabitReminder reminder in userHabit.Reminders)
+            {
+                Reminders.Add( (reminder.Clone() as UserHabitReminder)! );
+            }
+        }
+
+        PercentageAchieved = userHabit.PercentageAchieved;
+        Progresses = userHabit.Progresses;
+        ComputedProgresses = userHabit.ComputedProgresses;
+        ScoreList = userHabit.ScoreList;
+        Frequency = userHabit.Frequency?.Clone() as FrequencyOfHabit;
+        ColorName = userHabit.ColorName;
+        Complexity = userHabit.Complexity;
     }
 
     public void NotifyPropertyChanged( string propertyName )

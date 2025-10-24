@@ -353,17 +353,23 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
             else if (ex is ServiceAuthenticationException)
             {
                 await SettingsService.SetAuthAccessTokenAsync( "" );
-                
+
                 errorMsg = LocStrings.YouAreNotAuthorized;
                 await DialogService.ShowErrorAsync( errorMsg );
-                
+
                 await LogoutAsync();
-                
+
                 showPopupWithRetry = false;
             }
             else if (ex is TaskCanceledException or TimeoutException)
             {
                 errorMsg = LocStrings.OperationTimeoutMessage;
+            }
+            else if (ex is ExtendedHttpRequestException extendedHttpRequestException)
+            {
+                errorMsg = extendedHttpRequestException.HttpCode is HttpStatusCode.ServiceUnavailable or HttpStatusCode.NotFound
+                    ? LocManager["ServerTechnicalWorkIsInProgress"]!
+                    : LocStrings.NoInternetConnection;
             }
             else if (ex is HttpRequestException or AggregateException or WebException)
             {

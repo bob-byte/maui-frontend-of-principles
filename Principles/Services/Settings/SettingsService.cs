@@ -16,7 +16,7 @@ public class SettingsService : ISettingsService
         {
             bool result;
 #if DEBUG || LOCALDEBUG
-            result = true;
+            result = false;
 #else
             result = false;
 #endif

@@ -28,7 +28,7 @@ public class ExtendedHttpRequestException : HttpRequestException
 
     public override string ToString()
     {
-        return $"HTTP status code: {HttpCode} ({(int)HttpCode}).\n" +
+        return $"ExtendedHttpRequestException. HTTP status code: {HttpCode} ({(int)HttpCode}).\n" +
                $"Message: {Message}.\n" +
                base.ToString();
     }
