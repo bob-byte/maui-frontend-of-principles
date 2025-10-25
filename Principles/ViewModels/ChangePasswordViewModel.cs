@@ -44,7 +44,7 @@ public partial class ChangePasswordViewModel : BaseViewModel
             await UiBusyFor( async () =>
             {
                 m_validConfirmationCode = await ChangePasswordService.GeneratedCodeAsync( Email );
-                Page? currentPage = Application.Current?.Windows[0].Page?.Navigation?.NavigationStack.LastOrDefault();
+                Page? currentPage = Shell.Current.Navigation.NavigationStack.LastOrDefault();
 
                 if (currentPage is not null)
                 {

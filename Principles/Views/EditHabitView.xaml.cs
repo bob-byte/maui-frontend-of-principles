@@ -3,8 +3,6 @@ using DevExpress.Maui.Controls;
 using DevExpress.Maui.Core;
 using DevExpress.Maui.Editors;
 
-using Plugin.LocalNotification;
-
 namespace Principles.Views;
 
 public partial class EditHabitView : ContentPageBase
@@ -258,31 +256,6 @@ public partial class EditHabitView : ContentPageBase
         }
     }
 
-    // void TE_AreasOfLife_EndIconClicked( System.Object sender, System.EventArgs e )
-    // {
-    //     TE_AreasOfLife.IsDropDownOpen = !TE_AreasOfLife.IsDropDownOpen;
-    // }
-
-    // void TE_AreasOfLife_SelectionChanged( object sender, EventArgs e )
-    // {
-    //     TE_AreasOfLife.Text = string.Empty;
-    //     TE_AreasOfLife.IsLabelFloating = TE_AreasOfLife.SelectedItems?.Count == 0;
-
-    //     m_doExecuteReloadOfRecommendedHabits = true;
-    // }
-
-    // private void TE_AreasOfLife_Tap( object sender, HandledEventArgs e )
-    // {
-    //     try
-    //     {
-    //         TE_AreasOfLife.IsDropDownOpen = !TE_AreasOfLife.IsDropDownOpen;
-    //     }
-    //     catch (Exception ex)
-    //     {
-    //         ViewModel.LoggingService.LogError( ex, ex.Message );
-    //     }
-    // }
-
     void RepeatsOfSeveralDays_Focused( System.Object sender, Microsoft.Maui.Controls.FocusEventArgs e )
     {
         if (e.IsFocused)
@@ -443,11 +416,6 @@ public partial class EditHabitView : ContentPageBase
 #endif
         }
     }
-
-    // void TGR_AreasOfHabit_Tapped( System.Object sender, Microsoft.Maui.Controls.TappedEventArgs e )
-    // {
-    //     TE_AreasOfLife.IsDropDownOpen = !TE_AreasOfLife.IsDropDownOpen;
-    // }
 
     private void OnCheckEditChangedInFrequencyPopup( object sender, EventArgs e )
     {
@@ -795,17 +763,6 @@ public partial class EditHabitView : ContentPageBase
     {
         BS_EditReminder.State = BottomSheetState.Hidden;
     }
-
-    // private void AISP_AreasRequested( object? sender, ItemsRequestEventArgs e )
-    // {
-    //     e.Request = () =>
-    //     {
-    //         return string.IsNullOrWhiteSpace( TE_AreasOfLife.Text )
-    //             ? ViewModel.AllUserAreasOfLife
-    //             : ViewModel.AllUserAreasOfLife.Where( a =>
-    //                 a.Name!.StartsWith( TE_AreasOfLife.Text, StringComparison.CurrentCultureIgnoreCase ) ).ToList();
-    //     };
-    // }
 
     private void GoalsBottomSheet_OnStateChanged( object? sender, ValueChangedEventArgs<BottomSheetState> e )
     {

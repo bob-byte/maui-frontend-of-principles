@@ -61,6 +61,8 @@ public partial class App : Application
         
         m_appOpenTracker.TrackAppOpen();
         
+        await m_adService.GetAccessToTrackAsync();
+        
         LocalNotificationCenter.Current.ClearAll();
 
         if (VersionTracking.IsFirstLaunchEver || VersionTracking.IsFirstLaunchForCurrentBuild || VersionTracking.IsFirstLaunchForCurrentVersion) 
@@ -92,10 +94,8 @@ public partial class App : Application
         if (shouldShowPopup)
         {
             m_updatePopup ??= new UpdatePopup( m_updatePopupViewModel );
-            await Windows[0].Page!.ShowPopupAsync( m_updatePopup );
+            await Shell.Current.ShowPopupAsync( m_updatePopup );
         }
-        
-        await m_adService.GetAccessToTrackAsync();
     }
 
     protected override async void OnResume()
@@ -122,7 +122,7 @@ public partial class App : Application
         if (shouldShowPopup)
         {
             m_updatePopup = new UpdatePopup( m_updatePopupViewModel );
-            Windows[0].Page!.ShowPopup( m_updatePopup );
+            await Shell.Current!.ShowPopupAsync( m_updatePopup );
         }
     }
 
