@@ -56,7 +56,9 @@ public partial class UserHabit : ObservableObject
     private ListOfProgressOfHabit m_computedProgresses;
 
     [ObservableProperty]
-    private ScoreList m_scoreList;
+    private ScoreList? m_scoreList;
+    
+    private bool m_isScoreListComputed = false;
 
     [ObservableProperty]
     private FrequencyOfHabit? m_frequency;
@@ -69,8 +71,34 @@ public partial class UserHabit : ObservableObject
 
     public UserHabit()
     {
-        m_scoreList = new ScoreList();
+        ScoreList = null; // Не створюємо ScoreList заздалегідь
         m_computedProgresses = new ListOfProgressOfHabit( this );
+        m_isScoreListComputed = false; // Позначаємо що ScoreList ще не обчислений
+    }
+    
+    /// <summary>
+    /// Ленива властивість для ScoreList, яка обчислюється тільки коли потрібна в HabitDetailView
+    /// </summary>
+    public ScoreList LazyScoreList
+    {
+        get
+        {
+            if (!m_isScoreListComputed)
+            {
+                ScoreList = new ScoreList();
+                m_isScoreListComputed = true;
+            }
+            return ScoreList!;
+        }
+    }
+    
+    /// <summary>
+    /// Скидає ленивий ScoreList, щоб він був переобчислений при наступному зверненні
+    /// </summary>
+    public void ResetLazyScoreList()
+    {
+        ScoreList = null;
+        m_isScoreListComputed = false;
     }
 
     public override string ToString()
@@ -128,7 +156,7 @@ public partial class UserHabit : ObservableObject
         PercentageAchieved = userHabit.PercentageAchieved;
         Progresses = userHabit.Progresses;
         ComputedProgresses = userHabit.ComputedProgresses;
-        ScoreList = userHabit.ScoreList;
+        // Не копіюємо ScoreList, він буде створений лениво при потребі
         Frequency = userHabit.Frequency?.Clone() as FrequencyOfHabit;
         ColorName = userHabit.ColorName;
         Complexity = userHabit.Complexity;

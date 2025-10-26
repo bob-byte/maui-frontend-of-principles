@@ -297,6 +297,9 @@ public partial class HabitDetailViewModel : BaseViewModel
             try
             {
                 ServiceOfHabit.Recompute( Habit );
+                
+                // Скидаємо ленивий ScoreList при оновленні прогресу
+                Habit.ResetLazyScoreList();
 
                 ReferenceMessenger.Send( new MsgThatProgressOfHabitUpdated( progressOfHabit ) );
 
@@ -329,6 +332,9 @@ public partial class HabitDetailViewModel : BaseViewModel
                         try
                         {
                             ServiceOfHabit.Recompute( Habit );
+                            
+                            // Скидаємо ленивий ScoreList при оновленні прогресу
+                            Habit.ResetLazyScoreList();
 
                             ReferenceMessenger.Send( new MsgThatProgressOfHabitUpdated( progressOfHabit ) );
 
@@ -357,7 +363,23 @@ public partial class HabitDetailViewModel : BaseViewModel
 
     private void LoadProgressChartData()
     {
-        ScoreList? scoreList = Habit.ScoreList;
+        // Використовуємо ленивий ScoreList для оптимізації
+        ScoreList scoreList = Habit.LazyScoreList;
+        
+        // Обчислюємо ScoreList тільки коли потрібно для HabitDetailView
+        if (Habit.Progresses != null && Habit.Frequency != null)
+        {
+            List<ProgressOfHabit> knownProgresses = Habit.Progresses
+                .Where(p => p.Value == ProgressValue.YES_MANUAL || p.Value == ProgressValue.NO)
+                .ToList();
+            
+            Habit.ComputedProgresses.RecomputeFrom(knownProgresses, Habit.Frequency, isNumerical: false);
+            
+            // Обчислюємо ScoreList для відображення на графіку
+            DateOnly from = DateOnly.FromDateTime(DateTime.Today.AddDays(-30)); // Останні 30 днів
+            DateOnly to = DateOnly.FromDateTime(DateTime.Today);
+            scoreList.Recompute(Habit.Complexity, Habit.Frequency, Habit.ComputedProgresses, from, to);
+        }
         
         if (Habit.Progresses!.Count(p => p.Value == ProgressValue.YES_MANUAL) < 2)
         {

@@ -89,7 +89,12 @@ public class ServiceOfHabit : BaseRemoteService, IServiceOfHabit
 
         DateOnly from = habit.Progresses[^1].Date;
         DateOnly to = habit.Progresses[0].Date;
+        
+        // Обчислюємо тільки PercentageAchieved, ScoreList буде обчислений лениво в HabitDetailView
         habit.PercentageAchieved = RecomputedScoreAchieved( habit, from, to );
+        
+        // Скидаємо ленивий ScoreList щоб він був переобчислений при наступному зверненні
+        habit.ResetLazyScoreList();
     }
 
     public double RecomputedScoreAchieved( UserHabit habit, DateOnly from, DateOnly to )
@@ -110,9 +115,11 @@ public class ServiceOfHabit : BaseRemoteService, IServiceOfHabit
             Where( p => p.Value == ProgressValue.YES_MANUAL || p.Value == ProgressValue.NO ).
             ToList();
         habit.ComputedProgresses.RecomputeFrom( knownProgresses, habit.Frequency, isNumerical: false );
-        habit.ScoreList.Recompute( habit.Complexity, habit.Frequency, habit.ComputedProgresses, from, to );
+        
+        // Використовуємо ленивий ScoreList для обчислення PercentageAchieved
+        habit.LazyScoreList.Recompute( habit.Complexity, habit.Frequency, habit.ComputedProgresses, from, to );
 
-        double result = habit.ScoreList.Get( to ).Value;
+        double result = habit.LazyScoreList.Get( to ).Value;
 
         return result;
     }
