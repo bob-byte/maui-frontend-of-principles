@@ -190,9 +190,7 @@ public static class MauiProgram
         string? stackTrace = null;
         if (logEvent.Exception is not null)
         {
-            string exception = logEvent.Exception.ToString();
-            int indexOfFirstNewLine = exception.IndexOf( Environment.NewLine, StringComparison.Ordinal );
-            stackTrace = exception.Substring( indexOfFirstNewLine );
+            stackTrace = logEvent.Exception.ToString();
         }
 
         SaveLogRequest result = new(
