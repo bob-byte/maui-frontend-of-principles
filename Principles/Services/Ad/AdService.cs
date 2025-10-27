@@ -97,6 +97,7 @@ public class AdService : IAdService
 
     public async Task IfRequiredShowInterstitialAdAsync()
     {
+#if !DEBUG
         int tapsToShowAds = Preferences.Get( CacheKeys.TAPS_TO_SHOW_ADS, 0 ) + 1;
         Preferences.Set( CacheKeys.TAPS_TO_SHOW_ADS, tapsToShowAds );
         if (tapsToShowAds >= Constants.Constants.MAX_TAPS_TO_SHOW_ADS)
@@ -104,6 +105,7 @@ public class AdService : IAdService
             Preferences.Set( CacheKeys.TAPS_TO_SHOW_ADS, 0 );
             await ShowInterstitialAdAsync().DefaultConfigureAwait();
         }
+#endif
     }
 
     public async Task ShowInterstitialAdAsync()
