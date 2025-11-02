@@ -130,7 +130,7 @@ public partial class StartupViewModel : BaseViewModel
         if (!isCancelledByUser)
         {
             string? errorMsg = null;
-                
+
             if (ex is TimeoutException || ex.InnerException is TimeoutException)
             {
                 errorMsg = LocStrings.OperationTimeoutMessage;

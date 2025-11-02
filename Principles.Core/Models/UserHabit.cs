@@ -6,6 +6,11 @@ public partial class UserHabit : ObservableObject, ICloneable, IEntity
 {
     [ObservableProperty]
     private long m_id;
+
+    public long LocalId { get; set; }
+    
+    public DateTime LastModified { get; set; }
+
     [ObservableProperty]
     private string? m_name;
 
@@ -67,10 +72,6 @@ public partial class UserHabit : ObservableObject, ICloneable, IEntity
     [ObservableProperty]
     private int m_complexity;
 
-    public long LocalId { get; set; }
-    
-    public DateTime LastModified { get; set; }
-
     public UserHabit()
     {
         m_scoreList = new ScoreList();
@@ -79,7 +80,7 @@ public partial class UserHabit : ObservableObject, ICloneable, IEntity
 
     public override string ToString()
     {
-        return Name ?? "NULL";
+        return Name ?? string.Empty;
     }
 
     public override bool Equals( object? obj )

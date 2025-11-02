@@ -136,7 +136,7 @@
                           FullSwipeMode="Start"
                           IsHorizontalScrollBarVisible="False"
                           IsLoadMoreEnabled="True"
-                          LoadMoreCommand=""
+                          LoadMoreCommand="{Binding SyncCommand}"
                           RowLongPressCommand="{OnPlatform iOS={Binding SelectRowCommand}}"
                           SelectedItem="{OnPlatform iOS={Binding SelectedHabit}}"
                           SelectionMode="{OnPlatform iOS=Single,

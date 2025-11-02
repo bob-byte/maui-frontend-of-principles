@@ -1,20 +1,20 @@
-﻿using Microsoft.Maui.Devices; // Add this for Connectivity
-using CommunityToolkit.Maui.Alerts;
-using Toast = CommunityToolkit.Maui.Alerts.Toast;
-
-namespace Principles.Core.Services;
+﻿
+namespace Principles.Services;
 public class NetworkService : INetworkService
 {
-    private bool m_wasConnected;
     private readonly ISyncService m_syncService;
+    private readonly ITipService m_tipService;
+
+    private bool m_wasConnected;
     
     public NetworkService(IServiceProvider serviceProvider)
     {
         m_wasConnected = IsConnected;
-        
+
         m_syncService = serviceProvider.GetRequiredService<ISyncService>();
-        
-        Connectivity.Current.ConnectivityChanged += async (sender, e) => await Connectivity_ConnectivityChanged(sender, e);
+        m_tipService = serviceProvider.GetRequiredService<ITipService>();
+
+        Connectivity.Current.ConnectivityChanged += async ( sender, e ) => await Connectivity_ConnectivityChanged( sender, e ).ConfigureAwait( false );
     }
     
     public bool IsConnected => Connectivity.Current.NetworkAccess == NetworkAccess.Internet;
@@ -30,17 +30,17 @@ public class NetworkService : INetworkService
             if (isNowConnected)
             {
                 m_syncService.SyncAsync().GetAwaiter();
-                await ShowGreetingToastAsync();
+                await ShowGreetingToastAsync().ConfigureAwait( false );
             }
             else
             {
-                await Toast.Make( "Інтернет втраченo" ).Show();
+                await m_tipService.ShowToastAsync( LocStrings.InternetIsLost ).ConfigureAwait( false );
             }
         }
     }
 
-    private async Task ShowGreetingToastAsync()
+    private Task ShowGreetingToastAsync()
     {
-        await Toast.Make( $"Інтернет знову доступний" ).Show();
+        return m_tipService.ShowToastAsync( LocStrings.InternetIsAvailableAgain );
     }
 }

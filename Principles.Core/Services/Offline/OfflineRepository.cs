@@ -8,26 +8,12 @@ public class OfflineRepository : IOfflineRepository
     private readonly SQLiteAsyncConnection m_asyncConn;
     private bool m_disposed;
 
-    public OfflineRepository(string dbPath)
+    public OfflineRepository(IDatabaseProvider databaseProvider, IDatabaseMigrator migrator)
     {
-        SQLiteOpenFlags flags = SQLiteOpenFlags.ReadWrite |
-                                SQLiteOpenFlags.Create |
-                                SQLiteOpenFlags.SharedCache |
-                                SQLiteOpenFlags.FullMutex;
-
-        m_syncConn = new SQLiteConnection( dbPath, flags );
-        m_asyncConn =
-            new SQLiteAsyncConnection( dbPath, flags );
+        m_syncConn = databaseProvider.SyncConnection;
+        m_asyncConn = databaseProvider.AsyncConnection;
         
-        Type interfaceType = typeof(IOfflineEntity);
-
-        // Find all types that implement IOfflineEntity
-        Type[] tableTypes = AppDomain.CurrentDomain.GetAssemblies()
-            .SelectMany(a => a.GetTypes())
-            .Where(t => interfaceType.IsAssignableFrom(t) && t is { IsInterface: false, IsAbstract: false })
-            .ToArray();
-
-        m_syncConn.CreateTables(CreateFlags.None, tableTypes);
+        migrator.Migrate();
     }
     
     public Task<TField> GetFieldAsync<T, TField>( long localId, string fieldName )

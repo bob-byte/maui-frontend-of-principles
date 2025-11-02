@@ -1,15 +1,22 @@
 ﻿namespace Principles.Core.Models;
 
-public partial class ProgressOfHabit : ObservableObject
+public partial class ProgressOfHabit : ObservableObject, IEntity
 {
+    public long LocalId { get; set; }
+    public DateTime LastModified { get; set; }
+
     [ObservableProperty]
     private long m_id;
+
     [ObservableProperty]
     private DateOnly m_date;
+
     [ObservableProperty]
     private int m_value;
+
     [ObservableProperty]
     private UserHabit? m_habit;
+    
     [ObservableProperty]
     private string? m_notes;
 

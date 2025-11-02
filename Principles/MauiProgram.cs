@@ -115,6 +115,8 @@ public static class MauiProgram
         services.AddSingleton<ILaunchUriHelper, LaunchUriHelper>();
         services.AddSingleton<IReminderService, ReminderService>();
         services.AddSingleton<ITipService, TipService>();
+        services.AddSingleton<INetworkService, NetworkService>();
+        services.AddSingleton<IDatabasePathProvider, DatabasePathProvider>();
 
         return services;
     }

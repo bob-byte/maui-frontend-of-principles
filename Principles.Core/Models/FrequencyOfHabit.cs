@@ -22,7 +22,9 @@ public partial class FrequencyOfHabit : ObservableObject, ICloneable, IEntity
     private int m_intervalLengthInDays = 1;
     
     public long Id { get; set; }
+    
     public long LocalId { get; set; }
+    
     public DateTime LastModified { get; set; }
 
     public double Value =>

@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Principles.Core.Models;
-public partial class UserGoal : ObservableObject, ICloneable
+﻿namespace Principles.Core.Models;
+public partial class UserGoal : ObservableObject, ICloneable, IEntity
 {
+    public long LocalId { get; set; }
     public long Id { get; set; }
+    public DateTime LastModified { get; set; }
 
     [ObservableProperty]
     private string? m_name;

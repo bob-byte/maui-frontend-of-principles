@@ -61,11 +61,12 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IAppleAuthService, AppleAuthService>();
         services.AddSingleton<IApiKeyService, ApiKeyService>();
 
-        services.AddSingleton<INetworkService, NetworkService>();
         services.AddSingleton<ISyncService, SyncService>();
+        services.AddSingleton<ISyncRetryConfig, DefaultSyncRetryConfig>();
         services.AddSingleton<ISyncQueueService, SyncQueueService>();
         services.AddSingleton<IOfflineRepository, OfflineRepository>();
         services.AddSingleton<RemoteApiService<UserHabit>, HabitRemoteApi>();
+        services.AddSingleton<IDatabaseProvider, DatabaseProvider>();
 
         return services;
     }

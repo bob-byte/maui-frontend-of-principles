@@ -5,12 +5,12 @@ namespace Principles.Core.Services;
 public class SyncQueueService : ISyncQueueService
 {
     private readonly IOfflineRepository m_repository;
-    private readonly SyncRetryConfig m_retryConfig;
+    private readonly ISyncRetryConfig m_retryConfig;
 
-    public SyncQueueService(IOfflineRepository repository, SyncRetryConfig? retryConfig = null)
+    public SyncQueueService(IOfflineRepository repository, ISyncRetryConfig syncRetryConfig)
     {
         m_repository = repository;
-        m_retryConfig = retryConfig ?? SyncRetryConfig.Default;
+        m_retryConfig = syncRetryConfig;
     }
 
     public async Task AddToQueueAsync(string handlerType, OperationType operation, IEntity payload)
