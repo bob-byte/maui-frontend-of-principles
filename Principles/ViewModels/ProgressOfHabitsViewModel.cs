@@ -1,13 +1,14 @@
+using CommunityToolkit.Maui.Views;
 
 using DevExpress.Maui.DataGrid;
 
+using Plugin.LocalNotification;
+
 using Principles.Core.Models;
 using Principles.Exceptions;
-using Plugin.LocalNotification;
 
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
-using CommunityToolkit.Maui.Views;
 
 namespace Principles.ViewModels;
 
@@ -32,7 +33,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     [ObservableProperty]
     private ObservableCollectionEx<UserHabit> m_userHabits;
     [ObservableProperty]
-    private ObservableCollection<ArсhivedHabitDto> m_archivedHabits;
+    private ObservableCollection<ArchivedHabitDto> m_archivedHabits;
 
     private readonly SemaphoreSlim m_initLocker;
     
@@ -61,7 +62,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
         StartProgressInterval = EndProgressInterval.AddDays( -HabitConstants.NUMBER_OF_DAYS_IN_PROGRESS + 1 );
         m_isBusyForChangeCompleted = new ConcurrentDictionary<UserHabit, SemaphoreSlim>();
         m_userHabits = new ObservableCollectionEx<UserHabit>();
-        ArchivedHabits = new ObservableCollectionEx<ArсhivedHabitDto>();
+        ArchivedHabits = new ObservableCollectionEx<ArchivedHabitDto>();
         ServiceOfHabit.StoredUserHabits = UserHabits;
         
         ReferenceMessenger.Register<HabitSavedMessage>( this, HandleHabitSave );
@@ -93,6 +94,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
                 habit.Goal!.Name = editedGoal.Name;
             }
         } );
+        
         ReferenceMessenger.Register<GoalIsDeletedMessage>( this, ( sender, msg ) =>
         {
             UserGoal deletedGoal = msg.Value;
@@ -244,6 +246,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
             {
                 m_initLocker.Release();
             }
+
         }
     }
 
@@ -296,6 +299,12 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
         finally
         {
             locker.Release();
+        }
+
+        // message that habit completed
+        if (Score.Round( habit.PercentageAchieved ) == 100)
+        {
+            ReferenceMessenger.Send( new CompletedHabitMessage(previousValueOfProgress, progressOfHabit ) );
         }
     }
 
@@ -352,7 +361,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private async Task EditArchivedHabitAsync( ArсhivedHabitDto archivedHabit )
+    private async Task EditArchivedHabitAsync( ArchivedHabitDto archivedHabit )
     {
         UserHabit userHabit = await ServiceOfHabit.UserHabitAsync( archivedHabit.Id );
 
@@ -380,8 +389,8 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     {
         await UiBusyFor( async () =>
         {
-            List<ArсhivedHabitDto> archivedHabits = await ServiceOfHabit.GetArchivedHabits();
-            ArchivedHabits = new ObservableCollection<ArсhivedHabitDto>( archivedHabits );
+            List<ArchivedHabitDto> archivedHabits = await ServiceOfHabit.GetArchivedHabits();
+            ArchivedHabits = new ObservableCollection<ArchivedHabitDto>( archivedHabits );
         } );
     }
 
@@ -411,8 +420,29 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
         }
     }
 
+    /// ad new method without popUp
     [RelayCommand]
-    private async Task DeleteArchivedHabitAsync( ArсhivedHabitDto archivedHabit )
+    private async Task ArchiveCompletedHabitAsync( UserHabit habit )
+    {
+        
+            await UiBusyFor( async () =>
+            {
+                await ServiceOfHabit.SetHabitArchiveStatusAsync( new HabitArchiveStatus
+                {
+                    HabitId = habit.Id,
+                    IsArchived = true
+                } );
+                UserHabits.Remove( habit );
+
+                ServiceOfHabit.CancelAllRemindersOfHabit( habit );
+            } );
+
+            TipService.ShowToastAsync( LocManager["TheHabitIsArchived"]! ).GetAwaiter();
+        
+    }
+
+    [RelayCommand]
+    private async Task DeleteArchivedHabitAsync( ArchivedHabitDto archivedHabit )
     {
         List<ActionData> availableActions =
         [
@@ -436,7 +466,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
         await Shell.Current.ShowPopupAsync( popup );
     }
 
-    private async Task DeleteArchivedHabitInServerAsync( ArсhivedHabitDto habit )
+    private async Task DeleteArchivedHabitInServerAsync( ArchivedHabitDto habit )
     {
         bool doDelete = await DialogService.ShowConfirmAsync(
             LocStrings.MessageInDeleteHabitConfirm,
@@ -462,7 +492,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
         }
     }
 
-    private async Task RemoveHabitFromArchiveAsync( ArсhivedHabitDto archivedHabit )
+    private async Task RemoveHabitFromArchiveAsync( ArchivedHabitDto archivedHabit )
     {
         await UiBusyFor( async () =>
         {
@@ -508,7 +538,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private async Task ArchivedHabitDetailAsync(ArсhivedHabitDto? archivedHabit)
+    private async Task ArchivedHabitDetailAsync(ArchivedHabitDto? archivedHabit)
     {
         if (archivedHabit is null)
         {

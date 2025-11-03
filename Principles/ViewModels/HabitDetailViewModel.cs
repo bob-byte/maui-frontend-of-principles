@@ -343,6 +343,12 @@ public partial class HabitDetailViewModel : BaseViewModel
                     }
                 }
             } while (doTryAgain);
+
+            // message that habit completed
+            if (Score.Round( Habit.PercentageAchieved) == 100)
+            {
+                ReferenceMessenger.Send( new CompletedHabitMessage(previousValueOfProgress, progressOfHabit) );
+            }
         }
     }
 

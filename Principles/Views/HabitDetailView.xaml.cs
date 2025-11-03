@@ -1,16 +1,18 @@
+using DevExpress.Maui.Controls;
+using DevExpress.Maui.DataGrid;
+using DevExpress.Maui.Editors;
+
+using LiveChartsCore;
+using LiveChartsCore.Measure;
+using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Maui;
 using LiveChartsCore.SkiaSharpView.Painting;
-using LiveChartsCore.SkiaSharpView;
-using LiveChartsCore;
-using SkiaSharp;
-using DevExpress.Maui.Editors;
-using DevExpress.Maui.DataGrid;
-
-using LiveChartsCore.Measure;
 using LiveChartsCore.SkiaSharpView.SKCharts;
 //using static Android.Icu.Text.CaseMap;
 using Microsoft.Maui.Controls.PlatformConfiguration;
 using Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;
+
+using SkiaSharp;
 
 
 namespace Principles.Views;

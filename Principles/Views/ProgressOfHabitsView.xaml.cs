@@ -1,10 +1,13 @@
 using DevExpress.Maui.Controls;
 using DevExpress.Maui.Core;
 using DevExpress.Maui.DataGrid;
+using DevExpress.Maui.Editors;
 
 using Plugin.AdMob;
 
 using Principles.Controls;
+using Principles.Core.Models;
+
 using System.Windows.Input;
 
 using Application = Microsoft.Maui.Controls.Application;
@@ -39,6 +42,27 @@ public partial class ProgressOfHabitsView : ContentPageBase
         {
             adService.ConsentIsConfigured += ( _, _ ) => AppendBannerAd();
         }
+
+        /// method to show bottomSheet when habyt was completed
+        viewModel.ReferenceMessenger.Register<CompletedHabitMessage>( this, async ( _, msg ) =>
+        {
+            try
+            {
+                if(msg.PreviousValueOfProgress == ProgressValue.UNKNOWN)
+                {
+                    await MainThread.InvokeOnMainThreadAsync( async () =>
+                    {
+                        ViewModel.SelectedHabit = msg.ProgressOfHabit.Habit;
+                        bottomSheet2.State = DevExpress.Maui.Controls.BottomSheetState.HalfExpanded;
+                    } );
+                }
+            
+            }
+            catch (Exception ex)
+            {
+                viewModel.LoggingService.LogCriticalError( ex );
+            }
+        } );
 
 #if ANDROID31_0_OR_GREATER || IOS16_0_OR_GREATER
         SwipeItemInitialize();
@@ -535,7 +559,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
     
     private void ArchivedHabitButton_Clicked( object sender, EventArgs e )
     {
-        if (sender is Button button && button.CommandParameter is ArсhivedHabitDto archivedHabit)
+        if (sender is Button button && button.CommandParameter is ArchivedHabitDto archivedHabit)
         {
             ArchiveBottomSheet.State = BottomSheetState.Hidden;
 
@@ -545,6 +569,34 @@ public partial class ProgressOfHabitsView : ContentPageBase
                 vm.ArchivedHabitDetailCommand.Execute( archivedHabit );
             }
         }
+    }
+
+    /// new archivation method to bottomSheet 
+    private void ArchivedCompletedHabitButton_Clicked( object sender, EventArgs e )
+    {
+        if (ViewModel.ArchiveCompletedHabitCommand.CanExecute( ViewModel.SelectedHabit ))
+            {
+                ViewModel.ArchiveCompletedHabitCommand.ExecuteAsync( ViewModel.SelectedHabit );
+                ViewModel.SelectedHabit = null;
+        }
+        bottomSheet2.State = DevExpress.Maui.Controls.BottomSheetState.Hidden;
+
+
+
+    }
+
+    /// new archivation method to bottomSheet 
+    private void ComplicateCompletedHabitButton_Clicked( object sender, EventArgs e )
+    {
+        if (ViewModel.ArchiveCompletedHabitCommand.CanExecute( ViewModel.SelectedHabit ))
+        {
+            ViewModel.ArchiveCompletedHabitCommand.ExecuteAsync( ViewModel.SelectedHabit );
+            ViewModel.SelectedHabit = null;
+        }
+        bottomSheet2.State = DevExpress.Maui.Controls.BottomSheetState.Hidden;
+
+
+
     }
 
     private void BA_Ad_OnAdFailedToLoad( object? sender, IAdError e )

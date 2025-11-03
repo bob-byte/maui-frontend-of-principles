@@ -157,11 +157,11 @@ public class ServiceOfHabit : BaseRemoteService, IServiceOfHabit
         await RequestProvider.PostAsync( url, habitArchiveStatus, SettingsService.AuthAccessToken );
     }
 
-    public async Task<List<ArсhivedHabitDto>> GetArchivedHabits()
+    public async Task<List<ArchivedHabitDto>> GetArchivedHabits()
     {
         string url = $"{UrlBuilder.Archive}";
 
-        List<ArсhivedHabitDto> result = await RequestProvider.GetAsync<List<ArсhivedHabitDto>>(
+        List<ArchivedHabitDto> result = await RequestProvider.GetAsync<List<ArchivedHabitDto>>(
             url,
             SettingsService.AuthAccessToken
         ).DefaultConfigureAwait();

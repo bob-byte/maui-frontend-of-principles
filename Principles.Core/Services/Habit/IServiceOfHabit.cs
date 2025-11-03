@@ -8,7 +8,7 @@ public interface IServiceOfHabit
     Task<UserHabit> UserHabitAsync( long id );
     Task<SaveHabitResponse> UpdateHabitAsync( EditUserHabitDto habit );
     Task SetHabitArchiveStatusAsync( HabitArchiveStatus habitArchiveStatus );
-    Task<List<ArсhivedHabitDto>> GetArchivedHabits();
+    Task<List<ArchivedHabitDto>> GetArchivedHabits();
     void InitializeHabitProgresses( UserHabit habit, DateOnly startInterval, DateOnly endInterval );
     Task UpdatePrioritiesAsync( IEnumerable<UserHabitWithPriority> habitsWithPriorities );
     bool IsItRecommendedToCreateNewHabit( UserHabit newHabit );
