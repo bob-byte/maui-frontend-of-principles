@@ -139,14 +139,25 @@ public partial class StartupViewModel : BaseViewModel
         {
             string? errorMsg = null;
 
-            if (ex is TimeoutException || ex.InnerException is TimeoutException)
+            bool isAppleAuthUnavailableOnDevice = ex.Message.Contains( "1000" );
+
+            if (isAppleAuthUnavailableOnDevice)
+            {
+                //don't show any message if apple auth is not supported on device, because it will be shown by iOS
+                errorMsg = null;
+            }
+            else if (ex is NotSupportedException)
+            {
+                errorMsg = LocStrings.AppleAuthUnavailableOnDevice;
+            }
+            else if (ex is TimeoutException || ex.InnerException is TimeoutException)
             {
                 errorMsg = LocStrings.OperationTimeoutMessage;
             }
             else if (ex is ExtendedHttpRequestException extendedHttpRequestException)
             {
                 errorMsg = extendedHttpRequestException.HttpCode is HttpStatusCode.ServiceUnavailable or HttpStatusCode.NotFound
-                    ? LocManager["ServerTechnicalWorkIsInProgress"]!
+                    ? LocStrings.ServerTechnicalWorkIsInProgress
                     : LocStrings.NoInternetConnection;
             }
             else if (ex is HttpRequestException or AggregateException or WebException)
@@ -158,6 +169,7 @@ public partial class StartupViewModel : BaseViewModel
                 errorMsg = LocStrings.SomethingWentWrong;
                 LoggingService.LogError( ex, ex.Message );
             }
+            
                 
             bool doShowAlert = !string.IsNullOrWhiteSpace( errorMsg );
             if (doShowAlert)
