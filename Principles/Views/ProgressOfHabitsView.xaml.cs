@@ -30,14 +30,17 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
         InitializeComponent();
 
-        IAdService adService = ServiceLocator.Current!.GetRequiredService<IAdService>();
-        if (adService.IsConsentConfigured)
+        if (ViewModel.SettingsService.IsAdsEnabled)
         {
-            AppendBannerAd();
-        }
-        else
-        {
-            adService.ConsentIsConfigured += ( _, _ ) => AppendBannerAd();
+            IAdService adService = ServiceLocator.Current!.GetRequiredService<IAdService>();
+            if (adService.IsConsentConfigured)
+            {
+                AppendBannerAd();
+            }
+            else
+            {
+                adService.ConsentIsConfigured += ( _, _ ) => AppendBannerAd();
+            }
         }
 
 #if ANDROID31_0_OR_GREATER || IOS16_0_OR_GREATER

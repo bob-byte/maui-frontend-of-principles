@@ -52,4 +52,6 @@ public class SettingsService : ISettingsService
         set => Preferences.Set( key: "normal_page_height", value );
     }
     public string? CurrentCulture { get; set; }
+
+    public bool IsAdsEnabled => false;
 }

@@ -143,8 +143,7 @@
     </Shell.TitleView>
 
     <Grid BackgroundColor="{StaticResource Background}">
-        <Grid RowDefinitions="*,20,Auto"
-              x:Name="G_Main">
+        <Grid x:Name="G_Main">
             <dxg:DataGridView x:Name="DGV_Habits"
                               ItemsSource="{Binding UserHabits}"
                               AllowDragDropRows="False"
@@ -217,7 +216,7 @@
             </dx:DXStackLayout>
         </Grid>
 
-        <toolkit:Expander Margin="0,0,15,65"
+        <toolkit:Expander Margin="0,0,15,15"
                           HorizontalOptions="End"
                           IsVisible="{Binding DoShowPlusButton}"
                           VerticalOptions="End">

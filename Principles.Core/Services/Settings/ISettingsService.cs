@@ -7,6 +7,7 @@ public interface ISettingsService
     double NormalPageWidth { get; set; }
     double NormalPageHeight { get; set; }
     string? CurrentCulture { get; set; }
+    bool IsAdsEnabled { get; }
 
     Task<string> GetAuthAccessTokenAsync();
     Task SetAuthAccessTokenAsync( string value );

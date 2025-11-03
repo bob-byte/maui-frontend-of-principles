@@ -264,7 +264,10 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
 
         try
         {
-            AdService.IfRequiredShowInterstitialAdAsync().GetAwaiter();
+            if (SettingsService.IsAdsEnabled)
+            {
+                AdService.IfRequiredShowInterstitialAdAsync().GetAwaiter();
+            }
             
             bool doTryAgain;
             

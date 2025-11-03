@@ -13,12 +13,14 @@ namespace Principles.Services;
 public class AdService : IAdService
 {
     private readonly ILoggingService m_loggingService;
+    private readonly ISettingsService m_settingsService;
 
     private IInterstitialAd? m_interstitialAd;
 
     public AdService( IServiceProvider serviceProvider )
     {
         m_loggingService = serviceProvider.GetRequiredService<ILoggingService>();
+        m_settingsService = serviceProvider.GetRequiredService<ISettingsService>();
     }
 
     public event EventHandler ConsentIsConfigured;
@@ -73,19 +75,27 @@ public class AdService : IAdService
         IsConsentConfigured = true;
         ConsentIsConfigured?.Invoke( this, new EventArgs() );
 
-        IInterstitialAdService adService = ServiceLocator.Current!.GetRequiredService<IInterstitialAdService>();
-        
-        m_interstitialAd = adService.CreateAd( AdConfig.DefaultInterstitialAdUnitId );
-        m_interstitialAd.OnAdFailedToLoad += ( _, error ) =>
+        if (m_settingsService.IsAdsEnabled)
         {
-            m_loggingService.LogError( $"Failed to load interstitial ad: {error.Message}" );
-        };
+            IInterstitialAdService adService = ServiceLocator.Current!.GetRequiredService<IInterstitialAdService>();
 
-        m_interstitialAd.Load();
+            m_interstitialAd = adService.CreateAd( AdConfig.DefaultInterstitialAdUnitId );
+            m_interstitialAd.OnAdFailedToLoad += ( _, error ) =>
+            {
+                m_loggingService.LogError( $"Failed to load interstitial ad: {error.Message}" );
+            };
+
+            m_interstitialAd.Load();
+        }
     }
 
     public void LoadInterstitialAd()
     {
+        if (!m_settingsService.IsAdsEnabled)
+        {
+            return;
+        }
+        
         if (m_interstitialAd is null)
         {
             IInterstitialAdService interstitialAdService = ServiceLocator.Current!.GetRequiredService<IInterstitialAdService>();
@@ -97,7 +107,11 @@ public class AdService : IAdService
 
     public async Task IfRequiredShowInterstitialAdAsync()
     {
-#if !DEBUG
+        if (!m_settingsService.IsAdsEnabled)
+        {
+            return;
+        }
+
         int tapsToShowAds = Preferences.Get( CacheKeys.TAPS_TO_SHOW_ADS, 0 ) + 1;
         Preferences.Set( CacheKeys.TAPS_TO_SHOW_ADS, tapsToShowAds );
         if (tapsToShowAds >= Constants.Constants.MAX_TAPS_TO_SHOW_ADS)
@@ -105,11 +119,15 @@ public class AdService : IAdService
             Preferences.Set( CacheKeys.TAPS_TO_SHOW_ADS, 0 );
             await ShowInterstitialAdAsync().DefaultConfigureAwait();
         }
-#endif
     }
 
     public async Task ShowInterstitialAdAsync()
     {
+        if (!m_settingsService.IsAdsEnabled)
+        {
+            return;
+        }
+        
         IInterstitialAdService adService = ServiceLocator.Current!.GetRequiredService<IInterstitialAdService>();
         
         if (m_interstitialAd is not null && m_interstitialAd.IsLoaded)
