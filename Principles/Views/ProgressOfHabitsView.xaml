@@ -506,30 +506,27 @@
             AllowDismiss="False"
             BackgroundColor="{AppThemeBinding Light={StaticResource Background},
                                               Dark={StaticResource DarkBackground}}"
-            HalfExpandedRatio="0.7"
+            HalfExpandedRatio="0.5"
             ShowGrabber="False"
             State="FullExpanded">
             <VerticalStackLayout
                 HorizontalOptions="CenterAndExpand"
                 Spacing="20"
                 VerticalOptions="CenterAndExpand">
-                <!--  Головний текст (титульний)  -->
                 <Label
                     FontAttributes="Bold"
                     FontSize="28"
                     HorizontalTextAlignment="Center"
                     Style="{StaticResource CentralHeader}"
-                    Text="Congratulation, u did it!"
+                    Text="{Binding LocManager[CompletedHabitTitle]}"
                     TextColor="#222222" />
-                <!--  Підтекст  -->
                 <Label
                     Margin="0,0,0,10"
                     FontSize="16"
                     HorizontalTextAlignment="Center"
                     Style="{StaticResource CentralHeader}"
-                    Text="Now u mast deside what to do with this habit. U cant complicate this habit and continue do this or arhice the habit to think about it later"
+                    Text="{Binding LocManager[FullDescriptionOfCompletedHabits]}"
                     TextColor="#666666" />
-                <!--  Кнопки в ряд  -->
                 <Grid
                     ColumnDefinitions="*,*"
                     ColumnSpacing="16"
@@ -543,17 +540,17 @@
                         CornerRadius="12"
                         FontSize="16"
                         HeightRequest="48"
-                        Text="Archive"
+                        Text="{Binding LocManager[AddToArchive]}"
                         TextColor="#333333" />
-                    <!--  DX  -->
                     <Button
                         Grid.Column="1"
                         BackgroundColor="{StaticResource Primary}"
                         Clicked="ComplicateCompletedHabitButton_Clicked"
+                        CommandParameter="{Binding SelectedHabit}"
                         CornerRadius="12"
                         FontSize="16"
                         HeightRequest="48"
-                        Text="Complicate"
+                        Text="{Binding LocManager[ComplicateHabit]}"
                         TextColor="White" />
                 </Grid>
             </VerticalStackLayout>

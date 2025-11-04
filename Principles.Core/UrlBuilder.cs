@@ -35,6 +35,7 @@ public class UrlBuilder : IUrlBuilder
     private string? m_habitArchiveStatus;
     private string? m_archive;
     private string? m_progresses;
+    private string? m_habitComplexity;
 
     public string BaseUrl
     {
@@ -281,6 +282,15 @@ public class UrlBuilder : IUrlBuilder
         {
             m_appleAuth ??= Combine( BaseApiUrl, "account", "appleauthorization" );
             return m_appleAuth;
+        }
+    }
+
+    public string HabitComplexity
+    {
+        get
+        {
+            m_habitComplexity ??= Combine( BaseApiUrl, "habits", "complexity" );
+            return m_habitComplexity;
         }
     }
 

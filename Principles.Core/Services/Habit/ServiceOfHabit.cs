@@ -1,5 +1,4 @@
-﻿
-namespace Principles.Core.Services;
+﻿namespace Principles.Core.Services;
 
 public class ServiceOfHabit : BaseRemoteService, IServiceOfHabit
 {
@@ -297,5 +296,14 @@ public class ServiceOfHabit : BaseRemoteService, IServiceOfHabit
                 }
             }
         }
+    }
+
+    public async Task SetHabitComplexityAsync( UserHabit habit, int newComplexity)
+    {
+        HabitComplexityDto habitComplexityDto = new( habit.Id, newComplexity );
+        string url = UrlBuilder.HabitComplexity;
+        await RequestProvider.PutAsync( url, habitComplexityDto, SettingsService.AuthAccessToken );
+
+        habit.Complexity = newComplexity;
     }
 }

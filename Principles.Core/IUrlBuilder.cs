@@ -29,6 +29,7 @@ public interface IUrlBuilder
     string HabitArchiveStatus { get; }
     string Archive {  get; }
     string Progresses { get; }
+    string HabitComplexity { get; }
 
     string Combine( params string[] uri );
 }

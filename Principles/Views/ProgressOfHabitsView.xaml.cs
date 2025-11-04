@@ -571,12 +571,11 @@ public partial class ProgressOfHabitsView : ContentPageBase
         }
     }
 
-    /// new archivation method to bottomSheet 
-    private void ArchivedCompletedHabitButton_Clicked( object sender, EventArgs e )
+    private async void ArchivedCompletedHabitButton_Clicked( object sender, EventArgs e )
     {
         if (ViewModel.ArchiveCompletedHabitCommand.CanExecute( ViewModel.SelectedHabit ))
             {
-                ViewModel.ArchiveCompletedHabitCommand.ExecuteAsync( ViewModel.SelectedHabit );
+                await ViewModel.ArchiveCompletedHabitCommand.ExecuteAsync( ViewModel.SelectedHabit );
                 ViewModel.SelectedHabit = null;
         }
         bottomSheet2.State = DevExpress.Maui.Controls.BottomSheetState.Hidden;
@@ -585,17 +584,14 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
     }
 
-    /// new archivation method to bottomSheet 
-    private void ComplicateCompletedHabitButton_Clicked( object sender, EventArgs e )
+    private async void ComplicateCompletedHabitButton_Clicked( object sender, EventArgs e )
     {
-        if (ViewModel.ArchiveCompletedHabitCommand.CanExecute( ViewModel.SelectedHabit ))
+        if (ViewModel.UpdateHabitComplexityCommand.CanExecute( ViewModel.SelectedHabit ))
         {
-            ViewModel.ArchiveCompletedHabitCommand.ExecuteAsync( ViewModel.SelectedHabit );
+            await ViewModel.UpdateHabitComplexityCommand.ExecuteAsync( ViewModel.SelectedHabit );
             ViewModel.SelectedHabit = null;
         }
         bottomSheet2.State = DevExpress.Maui.Controls.BottomSheetState.Hidden;
-
-
 
     }
 

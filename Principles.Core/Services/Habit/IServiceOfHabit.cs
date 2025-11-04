@@ -23,4 +23,6 @@ public interface IServiceOfHabit
 
     void CancelAllRemindersOfHabit( UserHabit habit );
     Task RestoreRemindersOfHabit( UserHabit habit );
+    
+    Task SetHabitComplexityAsync( UserHabit habit, int newComplexity );
 }
