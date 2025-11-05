@@ -344,6 +344,10 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
                 {
                     errorMsg = LocStrings.InternalServerError;
                 }
+                else if (extendedEx.HttpCode is HttpStatusCode.ServiceUnavailable or HttpStatusCode.NotFound)
+                {
+                    errorMsg = LocStrings.ServerTechnicalWorkIsInProgress;
+                }
                 else
                 {
                     LoggingService.LogCriticalError( ex );
@@ -364,12 +368,6 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
             else if (ex is TaskCanceledException or TimeoutException)
             {
                 errorMsg = LocStrings.OperationTimeoutMessage;
-            }
-            else if (ex is ExtendedHttpRequestException extendedHttpRequestException)
-            {
-                errorMsg = extendedHttpRequestException.HttpCode is HttpStatusCode.ServiceUnavailable or HttpStatusCode.NotFound
-                    ? LocManager["ServerTechnicalWorkIsInProgress"]!
-                    : LocStrings.NoInternetConnection;
             }
             else if (ex is HttpRequestException or AggregateException or WebException)
             {

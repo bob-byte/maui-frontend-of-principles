@@ -87,7 +87,7 @@ public partial class StartupViewModel : BaseViewModel
         else if (ex is ExtendedHttpRequestException extendedHttpRequestException)
         {
             errorMsg = extendedHttpRequestException.HttpCode is HttpStatusCode.ServiceUnavailable or HttpStatusCode.NotFound
-                ? LocManager["ServerTechnicalWorkIsInProgress"]!
+                ? LocStrings.ServerTechnicalWorkIsInProgress
                 : LocStrings.NoInternetConnection;
         }
         else if (ex is HttpRequestException or AggregateException or WebException)
