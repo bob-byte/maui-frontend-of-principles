@@ -62,7 +62,6 @@ public partial class ProgressOfHabitsView : ContentPageBase
     {
         DGV_Habits.Columns.Clear();
         
-        AddGroupingColumn();
         AddFirstCol();
         AddColumns();
 #if ANDROID31_0_OR_GREATER || IOS16_0_OR_GREATER
@@ -149,7 +148,6 @@ public partial class ProgressOfHabitsView : ContentPageBase
 #if IOS
                     DGV_Habits.Columns.Clear();
 
-                    AddGroupingColumn();
                     AddFirstCol();
                     AddColumns();
 #else
@@ -227,29 +225,6 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
             DGV_Habits.Columns.Add( templateColumn );
         }
-    }
-
-    private void AddGroupingColumn()
-    {
-        TextColumn goalColumn = new()
-        {
-            FieldName = "Goal",
-            IsGrouped = true,
-            SortMode = DataSortMode.Custom,
-            GroupInterval = DataGroupInterval.Value,
-            GroupCaptionTemplate = new DataTemplate( () =>
-            {
-                Label label = new()
-                {
-                    FontSize = 15,
-                    TextColor = (Application.Current!.Resources["LightNormalText"] as Color)!,
-                };
-                label.SetBinding( Label.TextProperty, new Binding( path: "GroupValue.Name" ) );
-                return label;
-            } )
-        };
-
-        DGV_Habits.Columns.Add( goalColumn );
     }
 
     private void AddFirstCol()
@@ -360,32 +335,50 @@ public partial class ProgressOfHabitsView : ContentPageBase
     }
 #endif
 
-    private void DGV_Habits_SortByGoalName( object sender, CustomSortEventArgs e )
+    private void DGV_Habits_CustomSort( object sender, CustomSortEventArgs e )
     {
         if (e.Column.FieldName == "Goal")
         {
             var goal1 = e.Value1 as UserGoal;
             var goal2 = e.Value2 as UserGoal;
 
-            bool isFirstNoGoal = goal1?.Name == LocStrings.NoGoalSpecified;
-            bool isSecondNoGoal = goal2?.Name == LocStrings.NoGoalSpecified;
-
-            if (isFirstNoGoal && !isSecondNoGoal)
-            {
-                e.Result = -1; // NoGoalSpecified comes first
-            }
-            else if (!isFirstNoGoal && isSecondNoGoal)
-            {
-                e.Result = 1; // NoGoalSpecified comes first
-            }
+            if (goal1 == null && goal2 == null) { e.Result = 0; }
+            else if (goal1 == null) { e.Result = -1; }
+            else if (goal2 == null) { e.Result = 1; }
             else
             {
-                e.Result = goal1?.Id.CompareTo( goal2?.Id );
+                bool isFirstNoGoal = goal1.Name == LocStrings.NoGoalSpecified;
+                bool isSecondNoGoal = goal2.Name == LocStrings.NoGoalSpecified;
+
+                if (isFirstNoGoal && !isSecondNoGoal)
+                {
+                    e.Result = -1;
+                }
+                else if (!isFirstNoGoal && isSecondNoGoal)
+                {
+                    e.Result = 1;
+                }
+                else
+                {
+                    e.Result = goal1.Id.CompareTo( goal2.Id );
+                }
+            }
+        }
+        else if (e.Column.FieldName == "Type")
+        {
+            if (e.Value1 == null && e.Value2 == null) { e.Result = 0; }
+            else if (e.Value1 == null) { e.Result = -1; }
+            else if (e.Value2 == null) { e.Result = 1; }
+            else
+            {
+                var kind1 = (TypeOfHabit)e.Value1;
+                var kind2 = (TypeOfHabit)e.Value2;
+                e.Result = kind1.CompareTo( kind2 );
             }
         }
         else
         {
-            
+
         }
     }
 
@@ -393,7 +386,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
     {
         if (LocalNotificationCenter.Current.IsSupported)
         {
-            Action openPopup = () => DXP_Reminder.IsOpen = true;
+            System.Action openPopup = () => DXP_Reminder.IsOpen = true;
             if (ViewModel.LoadHabitReportReminderCommand.CanExecute( openPopup ))
             {
                 await ViewModel.LoadHabitReportReminderCommand.ExecuteAsync( openPopup ).DefaultConfigureAwait();
@@ -412,7 +405,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
     private async void SB_Save_Clicked( object sender, EventArgs e )
     {
-        Action closePopup = () => DXP_Reminder.IsOpen = false;
+        System.Action closePopup = () => DXP_Reminder.IsOpen = false;
         
         if (ViewModel.SaveHabitsReportReminderCommand.CanExecute( closePopup ))
         {
@@ -425,7 +418,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
         DXP_Reminder.IsOpen = false;
     }
 
-    private async void DXI_Archive_Tapped( object sender, TappedEventArgs e )
+    private async void DXI_Archive_Tapped( object sender, EventArgs e )
     {
         if (ViewModel.SelectedHabit is null && ViewModel.GetArchivedHabitsCommand.CanExecute( null ))
         {
@@ -554,4 +547,30 @@ public partial class ProgressOfHabitsView : ContentPageBase
             }
         }
     }
+    private void SortByGoal_Clicked( object sender, EventArgs e )
+    {
+        DGV_Habits.BeginUpdate();
+
+        TypeColumn.IsGrouped = false;
+        GoalColumn.IsGrouped = true;
+
+        TypeColumn.IsVisible = false;
+        GoalColumn.IsVisible = true;
+
+        DGV_Habits.EndUpdate();
+    }
+
+    private void SortByHabitType_Clicked( object sender, EventArgs e )
+    {
+        DGV_Habits.BeginUpdate();
+
+        TypeColumn.IsGrouped = true;
+        GoalColumn.IsGrouped = false;
+
+        TypeColumn.IsVisible = true;
+        GoalColumn.IsVisible = false;
+
+        DGV_Habits.EndUpdate();
+    }
+
 }

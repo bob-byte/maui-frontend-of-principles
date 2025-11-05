@@ -61,12 +61,17 @@ public partial class EditHabitView : ContentPageBase
             {
                 default:
                     {
-                        CCG_Types.SelectChip( C_WithoutExceptionsType );
+                        CCG_Types.SelectChip( C_PrincipledType );
                         break;
                     }
-                case TypeOfHabit.IntegrallyWise:
+                case TypeOfHabit.Flexible:
                     {
-                        CCG_Types.SelectChip( C_IntegrallyWiseType );
+                        CCG_Types.SelectChip( C_FlexibleType );
+                        break;
+                    }
+                case TypeOfHabit.Mind:
+                    {
+                        CCG_Types.SelectChip( C_MindType );
                         break;
                     }
             }
@@ -81,12 +86,17 @@ public partial class EditHabitView : ContentPageBase
             {
                 default:
                     {
-                        CCG_Types.SelectChip( C_WithoutExceptionsType );
+                        CCG_Types.SelectChip( C_PrincipledType );
                         break;
                     }
-                case TypeOfHabit.IntegrallyWise:
+                case TypeOfHabit.Flexible:
                     {
-                        CCG_Types.SelectChip( C_IntegrallyWiseType );
+                        CCG_Types.SelectChip( C_FlexibleType );
+                        break;
+                    }
+                case TypeOfHabit.Mind:
+                    {
+                        CCG_Types.SelectChip( C_MindType );
                         break;
                     }
             }
@@ -261,8 +271,8 @@ public partial class EditHabitView : ContentPageBase
     //TODO: replace to ViewModel
     void C_WithoutExceptionsType_Tap( System.Object sender, System.ComponentModel.HandledEventArgs e )
     {
-        ViewModel.Habit.Type = TypeOfHabit.WithoutExceptions;
-        C_WithoutExceptionsType.DisplaySnackbar(
+        ViewModel.Habit.Type = TypeOfHabit.Principled;
+        C_PrincipledType.DisplaySnackbar(
             LocStrings.WithoutExceptionsHabitTypeShortDescription,
             duration: Timeout.InfiniteTimeSpan,
             visualOptions: SnackbarHelper.DefaultOptions()
@@ -271,8 +281,8 @@ public partial class EditHabitView : ContentPageBase
 
     void C_IntegrallyWiseType_Tap( System.Object sender, System.ComponentModel.HandledEventArgs e )
     {
-        ViewModel.Habit.Type = TypeOfHabit.IntegrallyWise;
-        C_IntegrallyWiseType.DisplaySnackbar(
+        ViewModel.Habit.Type = TypeOfHabit.Flexible;
+        C_FlexibleType.DisplaySnackbar(
             LocStrings.IntegrallyWiseHabitTypeShortDescription,
             duration: Timeout.InfiniteTimeSpan,
             visualOptions: SnackbarHelper.DefaultOptions()
@@ -844,5 +854,45 @@ public partial class EditHabitView : ContentPageBase
     private void NE_Complexity_OnDownIconClicked( object? sender, HandledEventArgs e )
     {
         ViewModel.NotifyPropertyChanged( nameof(ViewModel.Habit) );
+    }
+
+    private async Task ChooseHabitKindAsync()
+    {
+        double heightOfBottomSheet;
+
+        if (ViewModel.SettingsService.NormalPageHeight == 0 ||
+            DeviceDisplay.Current.MainDisplayInfo.Orientation == DisplayOrientation.Landscape)
+        {
+            heightOfBottomSheet = 300;
+            EditKindBottomSheet.HalfExpandedRatio = heightOfBottomSheet / CPB_EditHabit.Height;
+        }
+        else
+        {
+            heightOfBottomSheet = 500;
+
+            EditKindBottomSheet.HalfExpandedRatio = heightOfBottomSheet / ViewModel.SettingsService.NormalPageHeight;
+        }
+        EditKindBottomSheet.State = BottomSheetState.HalfExpanded;
+    }
+    private void EditHabitKindButton_Clicked( object sender, EventArgs e )
+    {
+        if (sender is DevExpress.Maui.Controls.SimpleButton button && button.CommandParameter is ProgressMarkVariaty mark)
+        {
+            EditKindBottomSheet.State = BottomSheetState.Hidden;
+
+            if (BindingContext is EditHabitViewModel vm)
+            {
+                if (vm.Habit != null)
+                {
+                    vm.Habit.ProgressMarkVariaty = mark;
+                }
+            }
+        }
+    }
+    private async void C_TypeOfHabit_Tap( object sender, HandledEventArgs e )
+    {
+        if (sender is Chip chip && chip.TapCommandParameter is TypeOfHabit type)
+            ViewModel.Habit.Type = type;
+        await ChooseHabitKindAsync();
     }
 }

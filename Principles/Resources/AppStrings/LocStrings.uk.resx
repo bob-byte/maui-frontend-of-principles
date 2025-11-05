@@ -267,10 +267,10 @@
   <data name="Type" xml:space="preserve">
     <value>Тип</value>
   </data>
-  <data name="WithoutExceptions" xml:space="preserve">
-    <value>Без винятків</value>
+  <data name="Principled" xml:space="preserve">
+    <value>Принципова</value>
   </data>
-  <data name="IntegrallyWise" xml:space="preserve">
+  <data name="Flexible" xml:space="preserve">
     <value>Гнучка</value>
   </data>
   <data name="Frequency" xml:space="preserve">
@@ -1056,5 +1056,29 @@
   </data>
   <data name="TargetPerOneExecution" xml:space="preserve">
     <value>Ціль за одне виконання</value>
+  </data>
+  <data name="SkipDay" xml:space="preserve">
+    <value>Пропустити день</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Виконано?</value>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>Нотатка</value>
+  </data>
+  <data name="Performance" xml:space="preserve">
+    <value>Рейтинг продуктивності (необов'язково)</value>
+  </data>
+  <data name="Rate" xml:space="preserve">
+    <value>Оціни виконання</value>
+  </data>
+  <data name="EnterNumber" xml:space="preserve">
+    <value>Введіть число</value>
+  </data>
+  <data name="YesOrNoExample" xml:space="preserve">
+    <value>Приклади: Потренуватись, Встати до 07:00</value>
+  </data>
+  <data name="NumericExample" xml:space="preserve">
+    <value>Приклади: Вивчати програмування 2 год, Прочитати 10 сторінок</value>
   </data>
 </root>

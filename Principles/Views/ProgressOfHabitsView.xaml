@@ -16,10 +16,12 @@
                    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                    xmlns:v="clr-namespace:Principles.Views"
                    xmlns:vm="clr-namespace:Principles.ViewModels"
+                   xmlns:the49="https://schemas.the49.com/dotnet/2023/maui"
                    x:Name="CPB_Page"
                    x:DataType="vm:ProgressOfHabitsViewModel"
                    IconImageSource="fire_third.svg"
                    Shell.NavBarIsVisible="True">
+    
     <Shell.TitleView>
         <Grid Margin="0,0,10,0"
               ColumnDefinitions="Auto, Auto, *, Auto, Auto, Auto, Auto"
@@ -79,6 +81,47 @@
                 </dx:DXImage.GestureRecognizers>
             </dx:DXImage>
 
+            <dx:DXImage Source="more"
+                        Margin="3,0,0,0"
+                        Grid.Column="5"
+                        VerticalOptions="Center"
+                        HeightRequest="35"
+                        WidthRequest="35"
+                        HorizontalOptions="End"
+                        TintColor="{StaticResource TitleTextColor}"
+                        the49:ContextMenu.ShowMenuOnClick="True">
+                <the49:ContextMenu.Menu>
+                    <DataTemplate>
+                        <the49:Menu >
+                            <the49:Group Title="Ахрів">
+                                <the49:Action Title="Архів"
+                                              IsVisible="{Binding SelectedHabit, Converter={StaticResource IsNull}}"
+                                              Clicked="DXI_Archive_Tapped"/>
+                            </the49:Group>
+                            <the49:Action Title="Групувати за метою"
+                                          Clicked="SortByGoal_Clicked"/>
+                            <the49:Action Title="Групувати за типом звички"
+                                          Clicked="SortByHabitType_Clicked"/>
+                        </the49:Menu>
+                    </DataTemplate>
+                </the49:ContextMenu.Menu>
+            </dx:DXImage>
+
+            <dx:DXImage Source="archive_habit"
+                        IsVisible="{Binding SelectedHabit, Converter={StaticResource IsNotNull}}"
+                        Margin="3,0,0,0"
+                        Grid.Column="5"
+                        HeightRequest="35"
+                        HorizontalOptions="End"
+                        TintColor="{StaticResource TitleTextColor}"
+                        VerticalOptions="Center"
+                        WidthRequest="35">
+                <dx:DXImage.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1"
+                                          Tapped="DXI_Archive_Tapped" />
+                </dx:DXImage.GestureRecognizers>
+            </dx:DXImage>
+
             <dx:DXImage Source="edit_solid"
                         Margin="0,0,0,0"
                         Grid.Column="4"
@@ -95,36 +138,6 @@
                 </dx:DXImage.GestureRecognizers>
             </dx:DXImage>
 
-            <dx:DXImage Source="archive"
-                        IsVisible="{Binding SelectedHabit, Converter={StaticResource IsNull}}"
-                        Margin="3,0,0,0"
-                        Grid.Column="5"
-                        HeightRequest="35"
-                        HorizontalOptions="End"
-                        TintColor="{StaticResource TitleTextColor}"
-                        VerticalOptions="Center"
-                        WidthRequest="35">
-                <dx:DXImage.GestureRecognizers>
-                    <TapGestureRecognizer NumberOfTapsRequired="1"
-                                          Tapped="DXI_Archive_Tapped" />
-                </dx:DXImage.GestureRecognizers>
-            </dx:DXImage>
-            
-            <dx:DXImage Source="archive_habit"
-                        IsVisible="{Binding SelectedHabit, Converter={StaticResource IsNotNull}}"
-                        Margin="3,0,0,0"
-                        Grid.Column="5"
-                        HeightRequest="35"
-                        HorizontalOptions="End"
-                        TintColor="{StaticResource TitleTextColor}"
-                        VerticalOptions="Center"
-                        WidthRequest="35">
-                <dx:DXImage.GestureRecognizers>
-                    <TapGestureRecognizer NumberOfTapsRequired="1"
-                                          Tapped="DXI_Archive_Tapped" />
-                </dx:DXImage.GestureRecognizers>
-            </dx:DXImage>
-            
             <dx:DXImage Source="delete_solid"
                         Margin="3,0,0,0"
                         Grid.Column="6"
@@ -152,7 +165,7 @@
                           AllowSort="False"
                           AllowVirtualHorizontalScrolling="True"
                           BackgroundColor="{StaticResource Background}"
-                          CustomSort="DGV_Habits_SortByGoalName"
+                          CustomSort="DGV_Habits_CustomSort"
                           FullSwipeMode="Start"
                           IsHorizontalScrollBarVisible="False"
                           IsLoadMoreEnabled="False"
@@ -174,12 +187,27 @@
 
             <dxg:DataGridView.Columns>
                 <dxg:TextColumn FieldName="Goal"
+                                x:Name="GoalColumn"
                                 GroupInterval="Value"
                                 IsGrouped="True"
                                 SortMode="Custom">
                     <dxg:TextColumn.GroupCaptionTemplate>
                         <DataTemplate x:DataType="dxg:GroupRowData">
                             <Label Text="{Binding GroupValue.Name}"
+                                   FontSize="15" />
+                        </DataTemplate>
+                    </dxg:TextColumn.GroupCaptionTemplate>
+                </dxg:TextColumn>
+
+                <dxg:TextColumn FieldName="Type"
+                                x:Name="TypeColumn"
+                                GroupInterval="Value"
+                                IsGrouped="False"
+                                IsVisible="False"
+                                SortMode="Custom">
+                    <dxg:TextColumn.GroupCaptionTemplate>
+                        <DataTemplate x:DataType="dxg:GroupRowData">
+                            <Label Text="{Binding GroupValue}"
                                    FontSize="15" />
                         </DataTemplate>
                     </dxg:TextColumn.GroupCaptionTemplate>
@@ -591,7 +619,6 @@
                 <templates:DefaultActivityIndicator />
             </Grid>
         </dxco:BottomSheet>
-
         <templates:DefaultActivityIndicator />
     </Grid>
 </v:ContentPageBase>

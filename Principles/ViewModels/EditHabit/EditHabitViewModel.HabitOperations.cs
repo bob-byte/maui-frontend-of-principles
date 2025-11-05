@@ -38,8 +38,8 @@ public partial class EditHabitViewModel
                 TargetPerOneTime = Habit.TargetPerOneTime,
                 Unit = Habit.Unit,
                 MinRate = Habit.MinRate,
-                MaxRate = Habit.MaxRate
-
+                MaxRate = Habit.MaxRate,
+                ProgressMarkVariaty = Habit.ProgressMarkVariaty
             };
 
             dto.AreasOfLife!.Remove( AllAreasOfLifeAsOneItem );

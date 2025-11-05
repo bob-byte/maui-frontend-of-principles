@@ -27,6 +27,7 @@ public partial class HabitDetailView : ContentPageBase
         m_deviceOrientationService = DependencyService.Get<ILockDeviceOrientation>();
 
         InitializeComponent();
+        DX_Calendar.DayCellTemplate = new CalendarCellTemplateSelector( this );
         
         var animationSpeed = TimeSpan.FromSeconds( 1.5 );
         

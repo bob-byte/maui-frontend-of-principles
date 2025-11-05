@@ -9,6 +9,7 @@ public class ProgressToImgConverter : BaseConverterOneWay<ProgressOfHabit, View>
 {
     private static readonly ImageSource s_fireIcon = ImageSource.FromFile( "check_third" );
     private static readonly ImageSource s_crossIcon = ImageSource.FromFile( "cross" );
+    private static readonly ImageSource s_questionIcon = ImageSource.FromFile( "question" );
 
     private static readonly Color s_grayColor = (Application.Current!.Resources["GrayColor"] as Color)!;
     private static readonly Color s_primaryColor = (Application.Current!.Resources["Primary"] as Color)!;
@@ -49,6 +50,14 @@ public class ProgressToImgConverter : BaseConverterOneWay<ProgressOfHabit, View>
                     break;
                 }
 
+            case ProgressValue.SKIP:
+                {
+                    image.Source = s_questionIcon;
+                    image.TintColor = s_grayColor;
+
+                    break;
+                }
+
             default:
                 {
                     image.Source = s_crossIcon;
@@ -58,6 +67,43 @@ public class ProgressToImgConverter : BaseConverterOneWay<ProgressOfHabit, View>
 
                     break;
                 }
+        }
+        if (computed.Habit.Kind == HabitKind.Numeric)
+        {
+            bool isOverMax = computed.Habit.TargetPerOneTime >= computed.Habit.MaxRate; 
+            Color textColor = isOverMax ? s_primaryColor : s_grayColor;
+            FontAttributes fontWeight = isOverMax ? FontAttributes.Bold : FontAttributes.None;
+
+            var valueLabel = new Label
+            {
+                Text = computed.Habit.TargetPerOneTime.ToString(),
+                FontSize = 16,
+                FontAttributes = fontWeight,
+                TextColor = textColor,
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center,
+                LineBreakMode = LineBreakMode.TailTruncation, 
+                MaxLines = 1
+            };
+
+            var unitLabel = new Label
+            {
+                Text = computed.Habit.Unit,
+                FontSize = 12,
+                TextColor = textColor,
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center,
+                LineBreakMode = LineBreakMode.TailTruncation,
+                MaxLines = 1
+            };
+
+            return new VerticalStackLayout
+            {
+                Spacing = -4,
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center,
+                Children = { valueLabel, unitLabel }
+            };
         }
 
         return image;

@@ -267,10 +267,10 @@
   <data name="Type" xml:space="preserve">
     <value>Type</value>
   </data>
-  <data name="WithoutExceptions" xml:space="preserve">
-    <value>No exceptions</value>
+  <data name="Principled" xml:space="preserve">
+    <value>Principled</value>
   </data>
-  <data name="IntegrallyWise" xml:space="preserve">
+  <data name="Flexible" xml:space="preserve">
     <value>Flexible</value>
   </data>
   <data name="Frequency" xml:space="preserve">
@@ -1056,5 +1056,29 @@ You can change the status with a press.</value>
   </data>
   <data name="TargetPerOneExecution" xml:space="preserve">
     <value>Target per one execution</value>
+  </data>
+  <data name="SkipDay" xml:space="preserve">
+    <value>Skip a day</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Done?</value>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="Performance" xml:space="preserve">
+    <value>Performance rating (optional)</value>
+  </data>
+  <data name="Rate" xml:space="preserve">
+    <value>Rate performance</value>
+  </data>
+  <data name="EnterNumber" xml:space="preserve">
+    <value>Enter a number</value>
+  </data>
+  <data name="YesOrNoExample" xml:space="preserve">
+    <value>Examples: Exercise, Get up by 7:00 A.M</value>
+  </data>
+  <data name="NumericExample" xml:space="preserve">
+    <value>Examples: Study programming for 2 hours, Read 10 pages</value>
   </data>
 </root>

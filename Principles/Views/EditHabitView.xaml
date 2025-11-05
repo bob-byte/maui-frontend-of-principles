@@ -156,19 +156,24 @@
                             <dxe:ChoiceChipGroup x:Name="CCG_Types"
                                                  Margin="0,0,0,-10"
                                                  HorizontalOptions="Center"
-                                                 IsMultiline="False">
-                                <dxe:Chip x:Name="C_IntegrallyWiseType"
-                                          Text="{x:Static loc:LocStrings.IntegrallyWise}"
+                                                 IsMultiline="True">
+                                <dxe:Chip x:Name="C_PrincipledType"
+                                          Text="{x:Static loc:LocStrings.Principled}"
                                           Icon="info"
-                                          TapCommand="{Binding TapIntegrallyWiseTypeCommand, Source={RelativeSource AncestorType={x:Type vm:EditHabitViewModel}}}"
-                                          TapCommandParameter="{x:Reference C_IntegrallyWiseType}" />
-                                <dxe:Chip x:Name="C_WithoutExceptionsType"
-                                          Text="{x:Static loc:LocStrings.WithoutExceptions}"
+                                          Tap="C_TypeOfHabit_Tap"
+                                          TapCommandParameter="{x:Static m:TypeOfHabit.Principled}"/>
+                                <dxe:Chip x:Name="C_FlexibleType"
+                                          Text="{x:Static loc:LocStrings.Flexible}"
                                           Icon="info"
-                                          TapCommand="{Binding TapWithoutExceptionsTypeCommand, Source={RelativeSource AncestorType={x:Type vm:EditHabitViewModel}}}"
-                                          TapCommandParameter="{x:Reference C_WithoutExceptionsType}" />
+                                          Tap="C_TypeOfHabit_Tap"
+                                          TapCommandParameter="{x:Static m:TypeOfHabit.Flexible}"/>
+                                <dxe:Chip x:Name="C_MindType"
+                                          Text="{x:Static loc:LocStrings.Mind}"
+                                          Icon="info"
+                                          TapCommand="{Binding TapMindTypeCommand, Source={RelativeSource AncestorType={x:Type vm:EditHabitViewModel}}}"
+                                          TapCommandParameter="{x:Reference C_MindType}" 
+                                          IsVisible="{Binding CanSelectMindType, Source={RelativeSource AncestorType={x:Type vm:EditHabitViewModel}}}"/>
                             </dxe:ChoiceChipGroup>
-
                             <Grid x:Name="G_MindHabitKind"
                                   HorizontalOptions="FillAndExpand" 
                                   ColumnDefinitions="*, *"
@@ -222,9 +227,10 @@
                                        Grid.Row="0"
                                        Grid.ColumnSpan="3"/>
                                 <dxe:ComboBoxEdit AllowAnimation="True"
-                                                  SelectedIndex="0"
-                                                  SelectedItem="{Binding Habit.TargetType, Mode=TwoWay}"
                                                   ItemsSource="{Binding MinMaxOptions}"
+                                                  SelectedValue="{Binding Habit.TargetType, Mode=TwoWay}"
+                                                  DisplayMember="Display"
+                                                  ValueMember="Value"
                                                   Grid.Row="1"
                                                   Grid.Column="0"/>
                                 <dxe:NumericEdit x:Name="NE_TargetPerOneTime"
@@ -238,7 +244,6 @@
                                                       SubmitIconVisibility="Never"
                                                       LabelText="{Binding LocManager[Unit]}"
                                                       PlaceholderText="{Binding LocManager[ChooseOrType]}"
-                                                      ItemsSource="{Binding MinMaxOptions}"
                                                       Text="{Binding Habit.Unit, Mode=TwoWay}"
                                                       KeepFocusOnItemSelection="False"
                                                       Grid.Row="1"
@@ -851,6 +856,97 @@
                 </ScrollView>
             </dxco:TabViewItem>
         </dxco:TabView>
+
+        <dxco:BottomSheet x:Name="EditKindBottomSheet"
+                          AllowDismiss="True"
+                          AllowedState="HalfExpanded"
+                          BackgroundColor="{AppThemeBinding Light={StaticResource Background},
+                                                            Dark={StaticResource DarkBackground}}"
+                          HalfExpandedRatio="0.7"
+                          IsVisible="{Binding IsKindSheetOpen}"
+                          ShowGrabber="False">
+            <Grid>
+                <dx:DXStackLayout x:Name="DXSL_HabitKind"
+                              Orientation="Vertical"
+                              Padding="10,0,10,0"
+                              ItemSpacing="12">
+                    <Label x:Name="L_HabitKindCenralHeader"
+                           Text="{Binding LocManager[HabitKind]}"
+                           Style="{StaticResource CentralHeader}"
+                           Grid.Column="1"
+                           HeightRequest="40"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           Grid.Row="0" />
+
+                    <dxco:SimpleButton HorizontalContentAlignment="Center"
+                                       CornerRadius="12"
+                                       BorderThickness="1"
+                                       BorderColor="LightGray"
+                                       BackgroundColor="Transparent"
+                                       Clicked="EditHabitKindButton_Clicked"
+                                       CommandParameter="{x:Static m:ProgressMarkVariaty.YesOrNo}">
+                        <Grid ColumnDefinitions="Auto, *" 
+                              RowDefinitions="Auto, Auto"
+                              ColumnSpacing="16">
+                            <dx:DXImage Source="yes_or_no"
+                                        Grid.RowSpan="2"
+                                        Grid.Column="0"
+                                        HeightRequest="48"
+                                        WidthRequest="48"
+                                        TintColor="{StaticResource LabelText}"
+                                        VerticalOptions="Center"/>
+                            <Label Text="{Binding LocManager[YesOrNo]}"
+                                   Grid.Column="1" 
+                                   Grid.Row="0"
+                                   FontAttributes="Bold"
+                                   FontSize="20"
+                                   TextColor="{StaticResource LabelText}"/>
+                            <Label Text="{Binding LocManager[YesOrNoExample]}"
+                                   Grid.Column="1"
+                                   Grid.Row="1"
+                                   LineBreakMode="WordWrap"
+                                   FontSize="16"
+                                   TextColor="Gray"/>
+                        </Grid>
+                    </dxco:SimpleButton>
+
+                    <dxco:SimpleButton HorizontalContentAlignment="Center"
+                                       CornerRadius="12"
+                                       BorderThickness="1"
+                                       BorderColor="LightGray"
+                                       BackgroundColor="Transparent"
+                                       Clicked="EditHabitKindButton_Clicked"
+                                       CommandParameter="{x:Static m:ProgressMarkVariaty.Numeric}">
+                        <Grid ColumnDefinitions="Auto, *" 
+                              RowDefinitions="Auto, Auto"
+                              ColumnSpacing="16">
+                            <dx:DXImage Source="numeric.png"
+                                        Grid.RowSpan="2"
+                                        Grid.Column="0"
+                                        HeightRequest="48"
+                                        WidthRequest="48"
+                                        TintColor="{StaticResource LabelText}"
+                                        VerticalOptions="Center"/>
+                            <Label Text="{Binding LocManager[Numeric]}"
+                                   Grid.Column="1" 
+                                   Grid.Row="0"
+                                   FontAttributes="Bold"
+                                   FontSize="20"
+                                   TextColor="{StaticResource LabelText}"/>
+                            <Label Text="{Binding LocManager[NumericExample]}"
+                                   Grid.Column="1"
+                                   Grid.Row="1"
+                                   LineBreakMode="WordWrap"
+                                   FontSize="16"
+                                   TextColor="Gray"/>
+                        </Grid>
+                    </dxco:SimpleButton>
+                </dx:DXStackLayout>
+                <templates:DefaultActivityIndicator />
+            </Grid>
+        </dxco:BottomSheet>
+
 
         <templates:DefaultActivityIndicator />
     </Grid>

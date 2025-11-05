@@ -49,6 +49,8 @@ public partial class UserHabit : ObservableObject, ICloneable
 
     [ObservableProperty]
     private double? m_maxRate;
+    [ObservableProperty]
+    private ProgressMarkVariaty m_progressMarkVariaty;
 
     public bool IsNew()
     {

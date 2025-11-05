@@ -8,7 +8,7 @@ namespace Principles.ViewModels;
 public partial class EditHabitViewModel
 {
     [RelayCommand]
-    private async Task ReloadRecommendedHabitsAsync( Action afterAction )
+    private async Task ReloadRecommendedHabitsAsync( System.Action afterAction )
     {
         IsRecommendedHabitsLoading = true;
 

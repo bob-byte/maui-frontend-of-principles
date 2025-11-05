@@ -44,6 +44,7 @@ public static class MauiProgram
             .UseLocalNotification()
             .UseMauiCommunityToolkit()
             .UseMauiCommunityToolkitMarkup()
+            .UseContextMenu()
             .ConfigureEssentials(essentials =>
             {
                 essentials.UseVersionTracking();

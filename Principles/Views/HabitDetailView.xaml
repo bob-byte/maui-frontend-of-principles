@@ -249,7 +249,7 @@
                                FontAttributes="Bold"
                                FontSize="18"
                                VerticalOptions="Center" />
-
+                        
                         <ImageButton Source="info"
                                      Command="{Binding CalendarInfoCommand}" />
                     </HorizontalStackLayout>
@@ -260,9 +260,6 @@
                         <dxe:DXCalendar.HeaderAppearance>
                             <dxe:CalendarHeaderAppearance BackgroundColor="{StaticResource Primary}" />
                         </dxe:DXCalendar.HeaderAppearance>
-                        <dxe:DXCalendar.DayCellTemplate>
-                            <templates:CalendarCellTemplateSelector />
-                        </dxe:DXCalendar.DayCellTemplate>
                     </dxe:DXCalendar>
                 </VerticalStackLayout>
             </VerticalStackLayout>
@@ -283,7 +280,7 @@
                                 Radius="12"
                                 Offset="0,6">
                             <Shadow.Brush>
-                                <Color>	#0066FF</Color>
+                                <Color>#0066FF</Color>
                             </Shadow.Brush>
                         </Shadow>
                     </Frame.Shadow>

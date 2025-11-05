@@ -581,7 +581,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private async Task LoadHabitReportReminderAsync(Action openPopup)
+    private async Task LoadHabitReportReminderAsync(System.Action openPopup)
     {
         openPopup();
         await UiBusyFor(async () =>
@@ -622,7 +622,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private async Task SaveHabitsReportReminderAsync(Action closePopup)
+    private async Task SaveHabitsReportReminderAsync(System.Action closePopup)
     {
         await GetAccessToSendNotificationsAsync();
 
@@ -677,5 +677,14 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
             LocStrings.HabitStreakExplanation,
             duration: TimeSpan.FromSeconds( 10 )
         );
+    }
+
+    [RelayCommand]
+    private async Task ShowPopupOfProgressOfHabitAsync( ProgressOfHabit progress )
+    {
+        UserHabit habit = progress.Habit;
+        var popupVM = new HabitPopupViewModel( ServiceProvider, habit );
+        var popup = new HabitPopup( popupVM );
+        Shell.Current.ShowPopup( popup );
     }
 }

@@ -685,6 +685,15 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Done?.
+        /// </summary>
+        internal static string Done {
+            get {
+                return ResourceManager.GetString("Done", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Don&apos;t remind me of it again.
         /// </summary>
         internal static string DontShowUpdateCheckBoxText {
@@ -762,6 +771,15 @@ namespace Principles.Resources.AppStrings {
         internal static string Enable {
             get {
                 return ResourceManager.GetString("Enable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a number.
+        /// </summary>
+        internal static string EnterNumber {
+            get {
+                return ResourceManager.GetString("EnterNumber", resourceCulture);
             }
         }
         
@@ -888,6 +906,15 @@ namespace Principles.Resources.AppStrings {
         internal static string FixErrorsFirst {
             get {
                 return ResourceManager.GetString("FixErrorsFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Flexible.
+        /// </summary>
+        internal static string Flexible {
+            get {
+                return ResourceManager.GetString("Flexible", resourceCulture);
             }
         }
         
@@ -1219,15 +1246,6 @@ namespace Principles.Resources.AppStrings {
         internal static string Inspect {
             get {
                 return ResourceManager.GetString("Inspect", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Flexible.
-        /// </summary>
-        internal static string IntegrallyWise {
-            get {
-                return ResourceManager.GetString("IntegrallyWise", resourceCulture);
             }
         }
         
@@ -1691,6 +1709,15 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Note.
+        /// </summary>
+        internal static string Note {
+            get {
+                return ResourceManager.GetString("Note", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Notes / How to keep habit.
         /// </summary>
         internal static string NotesOrHowToKeepHabit {
@@ -1741,6 +1768,15 @@ namespace Principles.Resources.AppStrings {
         internal static string NumericDescription {
             get {
                 return ResourceManager.GetString("NumericDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Examples: Study programming for 2 hours, Read 10 pages.
+        /// </summary>
+        internal static string NumericExample {
+            get {
+                return ResourceManager.GetString("NumericExample", resourceCulture);
             }
         }
         
@@ -1835,6 +1871,24 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Performance rating (optional).
+        /// </summary>
+        internal static string Performance {
+            get {
+                return ResourceManager.GetString("Performance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Principled.
+        /// </summary>
+        internal static string Principled {
+            get {
+                return ResourceManager.GetString("Principled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Principles.
         /// </summary>
         internal static string Principles {
@@ -1921,6 +1975,15 @@ namespace Principles.Resources.AppStrings {
         internal static string QuestionExplanation {
             get {
                 return ResourceManager.GetString("QuestionExplanation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rate performance.
+        /// </summary>
+        internal static string Rate {
+            get {
+                return ResourceManager.GetString("Rate", resourceCulture);
             }
         }
         
@@ -2182,6 +2245,15 @@ namespace Principles.Resources.AppStrings {
         internal static string SignUpWithEmail {
             get {
                 return ResourceManager.GetString("SignUpWithEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Skip a day.
+        /// </summary>
+        internal static string SkipDay {
+            get {
+                return ResourceManager.GetString("SkipDay", resourceCulture);
             }
         }
         
@@ -2663,15 +2735,6 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No exceptions.
-        /// </summary>
-        internal static string WithoutExceptions {
-            get {
-                return ResourceManager.GetString("WithoutExceptions", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to This is a habit type that a person adheres to strictly and never makes exceptions, even in emergency situations. For example, refusal to drink alcohol or tobacco, regardless of the circumstances..
         /// </summary>
         internal static string WithoutExceptionsHabitTypeShortDescription {
@@ -2749,6 +2812,15 @@ namespace Principles.Resources.AppStrings {
         internal static string YesOrNoDescription {
             get {
                 return ResourceManager.GetString("YesOrNoDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Examples: Exercise, Get up by 7:00 A.M.
+        /// </summary>
+        internal static string YesOrNoExample {
+            get {
+                return ResourceManager.GetString("YesOrNoExample", resourceCulture);
             }
         }
         

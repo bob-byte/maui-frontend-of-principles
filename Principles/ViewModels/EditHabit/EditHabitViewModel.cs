@@ -58,8 +58,23 @@ public partial class EditHabitViewModel : BaseViewModel
 
     [ObservableProperty]
     private HabitFrequencyInfo m_frequencyInfo;
+
     [ObservableProperty]
-    private List<string> m_minMaxOptions;
+    private bool m_canSelectMindType;
+    public class EnumOption<T>
+    {
+        public T Value { get; set; }
+        public string Display { get; set; }
+    }
+    public List<EnumOption<NumericalHabitType>> MinMaxOptions { get; private set; }
+    private void InitMinMaxOfHabit()
+    {
+        MinMaxOptions = new List<EnumOption<NumericalHabitType>>
+        {
+            new() { Value = NumericalHabitType.AtLeast, Display = LocStrings.Min },
+            new() { Value = NumericalHabitType.AtMost, Display = LocStrings.Max }
+        };
+    }
 
     public UserAreaOfLife AllAreasOfLifeAsOneItem { get; }
 
@@ -70,7 +85,7 @@ public partial class EditHabitViewModel : BaseViewModel
     public List<WeekDay> InactiveDaysToDelete { get; }
 
     public EditHabitViewModel( IServiceProvider serviceProvider )
-        : base(serviceProvider)
+: base( serviceProvider )
     {
         AllAreasOfLifeAsOneItem = new UserAreaOfLife
         {
@@ -126,14 +141,6 @@ public partial class EditHabitViewModel : BaseViewModel
             new PeriodOfHabit { Type = PeriodTypeOfHabit.Month, Name = LocStrings.Month.ToLower() }
         ];
     }
-    private void InitMinMaxOfHabit()
-    {
-        MinMaxOptions =
-        [
-            LocStrings.Min,
-            LocStrings.Max
-        ];
-    }
 
     //It is call on navigate to this EditHabitView
     public override void ApplyQueryAttributes( IDictionary<string, object> query )
@@ -179,6 +186,7 @@ public partial class EditHabitViewModel : BaseViewModel
         {
             Habit.Kind = kind;
         }
+        CheckHabitProgressRestriction( );
     }
 
     public override async Task InitializeAsync( object? parameter = null )
@@ -200,12 +208,13 @@ public partial class EditHabitViewModel : BaseViewModel
         if (IsNewHabit)
         {
             Habit.Id = 0;
-            Habit.Type = TypeOfHabit.IntegrallyWise;
+            Habit.Type = TypeOfHabit.Flexible;
             Habit.AreasOfLife = new ObservableCollectionEx<UserAreaOfLife>();
             Habit.Complexity = 5;
             EditedReminder = new EditedUserHabitReminder();
             Habit.MinRate = 0;
             Habit.MaxRate = 10;
+            Habit.TargetPerOneTime = 0;
             ResetDaysOfWeek();
 
             var normalTextColor = (Color)Application.Current!.Resources["LightNormalText"];
@@ -324,7 +333,7 @@ public partial class EditHabitViewModel : BaseViewModel
         Habit.Goal ??= new UserGoal();
         await ReloadGoalsAsync();
 
-        NotifyPropertyChanged( nameof(Habit) );
+        NotifyPropertyChanged( nameof( Habit ) );
 
         await base.InitializeAsync( parameter );
 
@@ -348,7 +357,7 @@ public partial class EditHabitViewModel : BaseViewModel
 
     private void NameOfHabitOnPropertyChanging( object? sender, System.ComponentModel.PropertyChangingEventArgs e )
     {
-        if (e.PropertyName == nameof(ValidatableObject<string>.Value) && Habit!.Reminders?.Any() == true)
+        if (e.PropertyName == nameof( ValidatableObject<string>.Value ) && Habit!.Reminders?.Any() == true)
         {
             foreach (UserHabitReminder reminder in Habit.Reminders.Where( r => r.Description == NameOfHabit.Value ))
             {
@@ -359,7 +368,7 @@ public partial class EditHabitViewModel : BaseViewModel
 
     private void NameOfHabitOnPropertyChanged( object? sender, PropertyChangedEventArgs e )
     {
-        if (e.PropertyName == nameof(ValidatableObject<string>.Value) && Habit!.Reminders?.Any() == true)
+        if (e.PropertyName == nameof( ValidatableObject<string>.Value ) && Habit!.Reminders?.Any() == true)
         {
             foreach (UserHabitReminder reminder in Habit.Reminders.Where( r => r.Description == "" ))
             {
@@ -393,5 +402,15 @@ public partial class EditHabitViewModel : BaseViewModel
         IsDayChecked.Add( true ); // Friday
         IsDayChecked.Add( true ); // Saturday
         IsDayChecked.Add( true ); // Sunday
+    }
+    private void CheckHabitProgressRestriction( )
+    {
+        if (Habit.IsNew() || Habit.Progresses == null)
+        {
+            CanSelectMindType = true;
+            return;
+        }
+        bool hasExistingProgress = Habit.Progresses.Any( p => p.Value != -1 && p.Value != 0);
+        CanSelectMindType = !hasExistingProgress;
     }
 }

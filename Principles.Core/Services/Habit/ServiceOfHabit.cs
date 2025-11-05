@@ -105,7 +105,7 @@ public class ServiceOfHabit : BaseRemoteService, IServiceOfHabit
             Where( p => p.Value == ProgressValue.YES_MANUAL || p.Value == ProgressValue.NO ).
             ToList();
         habit.ComputedProgresses.RecomputeFrom( knownProgresses, habit.Frequency, isNumerical: false );
-        habit.ScoreList.Recompute( habit.Complexity, habit.Frequency, habit.ComputedProgresses, from, to );
+        habit.ScoreList.Recompute( habit.Complexity, habit.Frequency, habit.ComputedProgresses, from, to, false );
 
         double result = habit.ScoreList.Get( to ).Value;
 
