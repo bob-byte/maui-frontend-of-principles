@@ -58,10 +58,13 @@ public partial class App : Application
     protected async override void OnStart()
     {
         base.OnStart();
-        
+
         m_appOpenTracker.TrackAppOpen();
-        
-        await m_adService.GetAccessToTrackAsync();
+
+        if (m_settingsService.IsAdsEnabled)
+        {
+            await m_adService.GetAccessToTrackAsync();
+        }
         
         LocalNotificationCenter.Current.ClearAll();
 
