@@ -143,7 +143,6 @@
     </Shell.TitleView>
 
     <Grid BackgroundColor="{StaticResource Background}">
-        <Grid x:Name="G_Main">
             <dxg:DataGridView x:Name="DGV_Habits"
                               ItemsSource="{Binding UserHabits}"
                               AllowDragDropRows="False"
@@ -214,7 +213,6 @@
                        TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
                                                    Dark={StaticResource DarkNormalText}}" />
             </dx:DXStackLayout>
-        </Grid>
 
         <toolkit:Expander Margin="0,0,15,15"
                           HorizontalOptions="End"
