@@ -2,7 +2,6 @@
 namespace Principles.Services;
 public class NetworkService : INetworkService
 {
-    private readonly ISyncService m_syncService;
     private readonly ITipService m_tipService;
 
     private bool m_wasConnected;
@@ -11,7 +10,6 @@ public class NetworkService : INetworkService
     {
         m_wasConnected = IsConnected;
 
-        m_syncService = serviceProvider.GetRequiredService<ISyncService>();
         m_tipService = serviceProvider.GetRequiredService<ITipService>();
 
         Connectivity.Current.ConnectivityChanged += async ( sender, e ) => await Connectivity_ConnectivityChanged( sender, e ).ConfigureAwait( false );
@@ -29,8 +27,10 @@ public class NetworkService : INetworkService
 
             if (isNowConnected)
             {
-                m_syncService.SyncAsync().GetAwaiter();
                 await ShowGreetingToastAsync().ConfigureAwait( false );
+                
+                ISyncService syncService = ServiceLocator.Current!.GetRequiredService<ISyncService>();
+                syncService.SyncAsync().GetAwaiter();
             }
             else
             {

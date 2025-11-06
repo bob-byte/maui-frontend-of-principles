@@ -4,14 +4,14 @@ namespace Principles.Core.Services;
 public class OfflineApiService<T> : IOfflineApiService<T> where T: IEntity, new()
 {
     private readonly IOfflineRepository m_localRepository;
-    private readonly IRemoteApiService<T> m_remoteApi;
+    private readonly RemoteApiService<T> m_remoteApi;
     private readonly ISyncQueueService m_syncQueue;
     private readonly INetworkService m_networkService;
 
     public OfflineApiService(IServiceProvider serviceProvider)
     {
         m_localRepository = serviceProvider.GetRequiredService<IOfflineRepository>();
-        m_remoteApi = serviceProvider.GetRequiredService<IRemoteApiService<T>>();
+        m_remoteApi = serviceProvider.GetRequiredService<RemoteApiService<T>>();
         m_syncQueue = serviceProvider.GetRequiredService<ISyncQueueService>();
         m_networkService = serviceProvider.GetRequiredService<INetworkService>();
     }

@@ -4,7 +4,7 @@ using Principles.Core.Services.AiKey;
 
 namespace Principles.Core.Services;
 
-public abstract class RemoteApiService<T> : BaseRemoteService, ISyncQueueHandler, IRemoteApiService<T>
+public abstract class RemoteApiService<T> : BaseRemoteService, ISyncQueueHandler
 {
     protected IOfflineRepository OfflineRepository { get; }
     protected ISyncQueueService SyncQueue { get; }
@@ -25,10 +25,10 @@ public abstract class RemoteApiService<T> : BaseRemoteService, ISyncQueueHandler
     
     public abstract Task<List<T>> GetAllAsync(bool forceRefresh = false);
 
-    public abstract Task SaveAsync( long entityId, long localId, string payloadJson );
+    public abstract Task SaveAsync( long entityId, long localId, string? payloadJson );
     public abstract Task SaveAsync( T item );
 
-    public abstract Task DeleteAsync( long entityId, string payloadJson );
+    public abstract Task DeleteAsync( long entityId, string? payloadJson );
 
     public abstract Task DeleteAsync( T item );
     public abstract Task ExecuteAsync( string operation, string? payloadJson );

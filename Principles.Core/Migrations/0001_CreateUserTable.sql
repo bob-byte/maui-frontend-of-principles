@@ -1,10 +1,10 @@
 CREATE TABLE IF NOT EXISTS User (
-    LocalId INTEGER PRIMARY KEY AUTOINCREMENT,
-    Id INTEGER,
-    Name TEXT,
-    MainSlogan TEXT,
-    Mission TEXT,
-    Email TEXT,
-    Gender INTEGER,
-    LastModified INTEGER
+    LocalId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    Id INTEGER NULL,
+    Name TEXT NULL,
+    MainSlogan TEXT NULL,
+    Mission TEXT NULL,
+    Email TEXT NULL,
+    Gender INTEGER NOT NULL,
+    LastModified INTEGER NULL
 );

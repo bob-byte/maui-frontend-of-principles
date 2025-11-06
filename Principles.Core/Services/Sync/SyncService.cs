@@ -31,10 +31,15 @@ public class SyncService : ISyncService
         
         m_handlers = [];
 
-        foreach (Type type in handlerTypes)
+        foreach (Type? type in handlerTypes.Select( t => t.BaseType))
         {
-            var handler = serviceProvider.GetRequiredService(type) as ISyncQueueHandler;
-            m_handlers.Add(handler!);
+            if (type is null)
+            {
+                throw new InvalidOperationException( "Handler type base is null. It should be RemoteApiService<Type>" );
+            }
+
+            ISyncQueueHandler handler = serviceProvider.GetRequiredService( type ) as ISyncQueueHandler ?? throw new InvalidOperationException( message: $"Handler \"{type.FullName}\" doens't implement interface  {nameof(ISyncQueueHandler)}" );
+            m_handlers.Add(handler);
         }
     }
 

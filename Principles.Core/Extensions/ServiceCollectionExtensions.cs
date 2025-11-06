@@ -67,6 +67,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IOfflineRepository, OfflineRepository>();
         services.AddSingleton<RemoteApiService<UserHabit>, HabitRemoteApi>();
         services.AddSingleton<IDatabaseProvider, DatabaseProvider>();
+        services.AddSingleton<IDatabaseMigrator, DatabaseMigrator>();
 
         return services;
     }
