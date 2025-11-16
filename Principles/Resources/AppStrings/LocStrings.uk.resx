@@ -1,933 +1,885 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-    <!-- 
-      Microsoft ResX Schema 
-      
-      Version 2.0
-      
-      The primary goals of this format is to allow a simple XML format 
-      that is mostly human readable. The generation and parsing of the 
-      various data types are done through the TypeConverter classes 
-      associated with the data types.
-      
-      Example:
-      
-      ... ado.net/XML headers & schema ...
-      <resheader name="resmimetype">text/microsoft-resx</resheader>
-      <resheader name="version">2.0</resheader>
-      <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
-      <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
-      <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
-      <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
-      <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
-          <value>[base64 mime encoded serialized .NET Framework object]</value>
-      </data>
-      <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-          <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
-          <comment>This is a comment</comment>
-      </data>
-                  
-      There are any number of "resheader" rows that contain simple 
-      name/value pairs.
-      
-      Each data row contains a name, and value. The row also contains a 
-      type or mimetype. Type corresponds to a .NET class that support 
-      text/value conversion through the TypeConverter architecture. 
-      Classes that don't support this are serialized and stored with the 
-      mimetype set.
-      
-      The mimetype is used for serialized objects, and tells the 
-      ResXResourceReader how to depersist the object. This is currently not 
-      extensible. For a given mimetype the value must be set accordingly:
-      
-      Note - application/x-microsoft.net.object.binary.base64 is the format 
-      that the ResXResourceWriter will generate, however the reader can 
-      read any of the formats listed below.
-      
-      mimetype: application/x-microsoft.net.object.binary.base64
-      value   : The object must be serialized with 
-              : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
-              : and then encoded with base64 encoding.
-      
-      mimetype: application/x-microsoft.net.object.soap.base64
-      value   : The object must be serialized with 
-              : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
-              : and then encoded with base64 encoding.
-  
-      mimetype: application/x-microsoft.net.object.bytearray.base64
-      value   : The object must be serialized into a byte array 
-              : using a System.ComponentModel.TypeConverter
-              : and then encoded with base64 encoding.
-      -->
-    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-        <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-        <xsd:element name="root" msdata:IsDataSet="true">
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
             <xsd:complexType>
-                <xsd:choice maxOccurs="unbounded">
-                    <xsd:element name="metadata">
-                        <xsd:complexType>
-                            <xsd:sequence>
-                                <xsd:element name="value" type="xsd:string" minOccurs="0" />
-                            </xsd:sequence>
-                            <xsd:attribute name="name" use="required" type="xsd:string" />
-                            <xsd:attribute name="type" type="xsd:string" />
-                            <xsd:attribute name="mimetype" type="xsd:string" />
-                            <xsd:attribute ref="xml:space" />
-                        </xsd:complexType>
-                    </xsd:element>
-                    <xsd:element name="assembly">
-                        <xsd:complexType>
-                            <xsd:attribute name="alias" type="xsd:string" />
-                            <xsd:attribute name="name" type="xsd:string" />
-                        </xsd:complexType>
-                    </xsd:element>
-                    <xsd:element name="data">
-                        <xsd:complexType>
-                            <xsd:sequence>
-                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-                            </xsd:sequence>
-                            <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-                            <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-                            <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-                            <xsd:attribute ref="xml:space" />
-                        </xsd:complexType>
-                    </xsd:element>
-                    <xsd:element name="resheader">
-                        <xsd:complexType>
-                            <xsd:sequence>
-                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                            </xsd:sequence>
-                            <xsd:attribute name="name" type="xsd:string" use="required" />
-                        </xsd:complexType>
-                    </xsd:element>
-                </xsd:choice>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
-        </xsd:element>
-    </xsd:schema>
-    <resheader name="resmimetype">
-        <value>text/microsoft-resx</value>
-    </resheader>
-    <resheader name="version">
-        <value>2.0</value>
-    </resheader>
-    <resheader name="reader">
-        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-    </resheader>
-    <resheader name="writer">
-        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-    </resheader>
-    <data name="CreateNewAccount" xml:space="preserve">
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="CreateNewAccount" xml:space="preserve">
     <value>Створити новий акаунт</value>
   </data>
-    <data name="Email" xml:space="preserve">
+  <data name="Email" xml:space="preserve">
     <value>Пошта</value>
   </data>
-    <data name="EmailMustHaveCorrectValue" xml:space="preserve">
+  <data name="EmailMustHaveCorrectValue" xml:space="preserve">
     <value>Пошта повинна мати коректне значення</value>
   </data>
-    <data name="Error" xml:space="preserve">
+  <data name="Error" xml:space="preserve">
     <value>Помилка</value>
   </data>
-    <data name="Login" xml:space="preserve">
+  <data name="Login" xml:space="preserve">
     <value>Вхід</value>
   </data>
-    <data name="Logout" xml:space="preserve">
+  <data name="Logout" xml:space="preserve">
     <value>Вихід</value>
   </data>
-    <data name="MainSlogan" xml:space="preserve">
+  <data name="MainSlogan" xml:space="preserve">
     <value>Основне гасло</value>
   </data>
-    <data name="Man" xml:space="preserve">
+  <data name="Man" xml:space="preserve">
     <value>Чоловік</value>
   </data>
-    <data name="Mentor" xml:space="preserve">
+  <data name="Mentor" xml:space="preserve">
     <value>Ментор</value>
   </data>
-    <data name="MyHabits" xml:space="preserve">
+  <data name="MyHabits" xml:space="preserve">
     <value>Мої Звички</value>
   </data>
-    <data name="OK" xml:space="preserve">
+  <data name="OK" xml:space="preserve">
     <value>ОК</value>
   </data>
-    <data name="OtherSex" xml:space="preserve">
+  <data name="OtherSex" xml:space="preserve">
     <value>Інша стать</value>
   </data>
-    <data name="Password" xml:space="preserve">
+  <data name="Password" xml:space="preserve">
     <value>Пароль</value>
   </data>
-    <data name="Habits" xml:space="preserve">
+  <data name="Habits" xml:space="preserve">
     <value>Звички</value>
   </data>
-    <data name="Profile" xml:space="preserve">
+  <data name="Profile" xml:space="preserve">
     <value>Профіль</value>
   </data>
-    <data name="Progress" xml:space="preserve">
+  <data name="Progress" xml:space="preserve">
     <value>Прогрес</value>
   </data>
-    <data name="ProgressOfHabits" xml:space="preserve">
+  <data name="ProgressOfHabits" xml:space="preserve">
     <value>Прогрес звичок</value>
   </data>
-    <data name="RequiredErrorText" xml:space="preserve">
+  <data name="RequiredErrorText" xml:space="preserve">
     <value>*Обовʼязкове</value>
   </data>
-    <data name="RequiredHelpText" xml:space="preserve">
+  <data name="RequiredHelpText" xml:space="preserve">
     <value>*Обовʼязкове</value>
   </data>
-    <data name="Settings" xml:space="preserve">
+  <data name="Settings" xml:space="preserve">
     <value>Налаштування</value>
   </data>
-    <data name="SignUp" xml:space="preserve">
+  <data name="SignUp" xml:space="preserve">
     <value>Зареєструватись</value>
   </data>
-    <data name="SigningUp" xml:space="preserve">
+  <data name="SigningUp" xml:space="preserve">
     <value>Реєстрація</value>
   </data>
-    <data name="UserName" xml:space="preserve">
+  <data name="UserName" xml:space="preserve">
     <value>Імʼя</value>
   </data>
-    <data name="MissionExplanation" xml:space="preserve">
+  <data name="MissionExplanation" xml:space="preserve">
     <value>Вона буде використана для створення більш доцільних для вас рекомендованих звичок. Місія - це життєва мета, яка постійно підтримує високий рівень мотивації й допомагає зробити найкращий вибір у різноманітних ситуаціях. Наприклад, місія може звучати так: “Я створюю IT-додатки, щоб робити світ кращим".</value>
   </data>
-    <data name="MainSloganExplanation" xml:space="preserve">
+  <data name="MainSloganExplanation" xml:space="preserve">
     <value>Основне гасло буде використано для формування кращих рекомендованих звичок. Воно допомагає визначити, як діяти, коли вам чогось не хочеться або виникають певні випробування чи спокуси. Приклад основного гасла: стосунки з Богом та сильний характер визначають якість життя.</value>
   </data>
-    <data name="Vision" xml:space="preserve">
+  <data name="Vision" xml:space="preserve">
     <value>Бачення</value>
   </data>
-    <data name="Visualization" xml:space="preserve">
+  <data name="Visualization" xml:space="preserve">
     <value>Візуалізація</value>
   </data>
-    <data name="Visual" xml:space="preserve">
+  <data name="Visual" xml:space="preserve">
     <value>Візуал</value>
   </data>
-    <data name="Woman" xml:space="preserve">
+  <data name="Woman" xml:space="preserve">
     <value>Жінка</value>
   </data>
-    <data name="YourMainSloganSuccessfullySaved" xml:space="preserve">
-    <value>Твоє основне гасло успішно збережене</value>
-  </data>
-    <data name="YourNameSuccessfullySaved" xml:space="preserve">
+  <data name="YourNameSuccessfullySaved" xml:space="preserve">
     <value>Твоє імʼя успішно збережене</value>
   </data>
-    <data name="YourMissionSuccessfullySaved" xml:space="preserve">
+  <data name="YourMainSloganSuccessfullySaved" xml:space="preserve">
+    <value>Твоє основне гасло успішно збережене</value>
+  </data>
+  <data name="YourMissionSuccessfullySaved" xml:space="preserve">
     <value>Твоя місія успішно збережена</value>
   </data>
-    <data name="MondayShort" xml:space="preserve">
+  <data name="MondayShort" xml:space="preserve">
     <value>Пн</value>
   </data>
-    <data name="TuesdayShort" xml:space="preserve">
+  <data name="TuesdayShort" xml:space="preserve">
     <value>Вт</value>
   </data>
-    <data name="WednesdayShort" xml:space="preserve">
+  <data name="WednesdayShort" xml:space="preserve">
     <value>Ср</value>
   </data>
-    <data name="ThursdayShort" xml:space="preserve">
+  <data name="ThursdayShort" xml:space="preserve">
     <value>Чт</value>
   </data>
-    <data name="FridayShort" xml:space="preserve">
+  <data name="FridayShort" xml:space="preserve">
     <value>Пт</value>
   </data>
-    <data name="SaturdayShort" xml:space="preserve">
+  <data name="SaturdayShort" xml:space="preserve">
     <value>Сб</value>
   </data>
-    <data name="SundayShort" xml:space="preserve">
+  <data name="SundayShort" xml:space="preserve">
     <value>Нд</value>
   </data>
-    <data name="Habit" xml:space="preserve">
+  <data name="Habit" xml:space="preserve">
     <value>Звичка</value>
   </data>
-    <data name="AreasOfHabit" xml:space="preserve">
+  <data name="AreasOfHabit" xml:space="preserve">
     <value>Сфери звички</value>
   </data>
-    <data name="HowToKeep" xml:space="preserve">
+  <data name="HowToKeep" xml:space="preserve">
     <value>Як утримувати</value>
   </data>
-    <data name="Data" xml:space="preserve">
+  <data name="Data" xml:space="preserve">
     <value>Дані</value>
   </data>
-    <data name="NotesOrHowToKeepHabit" xml:space="preserve">
+  <data name="NotesOrHowToKeepHabit" xml:space="preserve">
     <value>Помітки / Як дотримуватись звички</value>
   </data>
-    <data name="UseSubhabits" xml:space="preserve">
+  <data name="UseSubhabits" xml:space="preserve">
     <value>Використати підзвички</value>
   </data>
-    <data name="Name" xml:space="preserve">
+  <data name="Name" xml:space="preserve">
     <value>Назва</value>
   </data>
-    <data name="OptionalPlaceholder" xml:space="preserve">
+  <data name="OptionalPlaceholder" xml:space="preserve">
     <value>(Необовʼязково)</value>
   </data>
-    <data name="Question" xml:space="preserve">
+  <data name="Question" xml:space="preserve">
     <value>Питання</value>
   </data>
-    <data name="QuestionExplanation" xml:space="preserve">
+  <data name="QuestionExplanation" xml:space="preserve">
     <value>Питання надає змогу вам зрозуміти, чи ви дотримались звички в конкретний день. Наприклад, "Чи зробив я все, щоб потренуватись сьогодні, хоча б 15 хвилин?"</value>
   </data>
-    <data name="Type" xml:space="preserve">
+  <data name="Type" xml:space="preserve">
     <value>Тип</value>
   </data>
-    <data name="WithoutExceptions" xml:space="preserve">
+  <data name="WithoutExceptions" xml:space="preserve">
     <value>Без винятків</value>
   </data>
-    <data name="IntegrallyWise" xml:space="preserve">
+  <data name="IntegrallyWise" xml:space="preserve">
     <value>Гнучка</value>
   </data>
-    <data name="Frequency" xml:space="preserve">
+  <data name="Frequency" xml:space="preserve">
     <value>Частота</value>
   </data>
-    <data name="Reminder" xml:space="preserve">
+  <data name="Reminder" xml:space="preserve">
     <value>Нагадування</value>
   </data>
-    <data name="ComplexityWithRange" xml:space="preserve">
+  <data name="ComplexityWithRange" xml:space="preserve">
     <value>Складність (1 - 10)</value>
   </data>
-    <data name="Priority" xml:space="preserve">
+  <data name="Priority" xml:space="preserve">
     <value>Пріоритет</value>
   </data>
-    <data name="EveryDay" xml:space="preserve">
+  <data name="EveryDay" xml:space="preserve">
     <value>Кожного дня</value>
   </data>
-    <data name="Every" xml:space="preserve">
+  <data name="Every" xml:space="preserve">
     <value>Кожні</value>
   </data>
-    <data name="days" xml:space="preserve">
+  <data name="days" xml:space="preserve">
     <value>дні(-ів)</value>
   </data>
-    <data name="timesPer" xml:space="preserve">
+  <data name="timesPer" xml:space="preserve">
     <value>рази(-ів) на</value>
   </data>
-    <data name="Week" xml:space="preserve">
+  <data name="Week" xml:space="preserve">
     <value>Тиждень</value>
   </data>
-    <data name="Month" xml:space="preserve">
+  <data name="Month" xml:space="preserve">
     <value>Місяць</value>
   </data>
-    <data name="Year" xml:space="preserve">
+  <data name="Year" xml:space="preserve">
     <value>Рік</value>
   </data>
-    <data name="EveryWeek" xml:space="preserve">
+  <data name="EveryWeek" xml:space="preserve">
     <value>Кожного тижня</value>
   </data>
-    <data name="EveryMonth" xml:space="preserve">
+  <data name="EveryMonth" xml:space="preserve">
     <value>Кожного місяця</value>
   </data>
-    <data name="EveryYear" xml:space="preserve">
+  <data name="EveryYear" xml:space="preserve">
     <value>Кожного року</value>
   </data>
-    <data name="CannotParse" xml:space="preserve">
+  <data name="CannotParse" xml:space="preserve">
     <value>Неможливо перетворити</value>
   </data>
-    <data name="ToInteger" xml:space="preserve">
+  <data name="ToInteger" xml:space="preserve">
     <value>В ціле число</value>
   </data>
-    <data name="Close" xml:space="preserve">
+  <data name="Close" xml:space="preserve">
     <value>Закрити</value>
   </data>
-    <data name="Save" xml:space="preserve">
+  <data name="Save" xml:space="preserve">
     <value>Зберегти</value>
   </data>
-    <data name="WithoutExceptionsHabitTypeShortDescription" xml:space="preserve">
+  <data name="WithoutExceptionsHabitTypeShortDescription" xml:space="preserve">
     <value>Неухильне дотримування звички, навіть у надзвичайних ситуаціях. Наприклад, відмова від вживання алкоголю чи тютюну.</value>
   </data>
-    <data name="IntegrallyWiseHabitTypeShortDescription" xml:space="preserve">
+  <data name="IntegrallyWiseHabitTypeShortDescription" xml:space="preserve">
     <value>Зберігання у більшості випадків, але дозволено робити винятки у ситуаціях, коли існує більш важлива звичка. Наприклад, виконувати усі цілі за високим пріоритетом протягом дня, але оскільки звичка дотримання режиму є важливішою, то слід почати готуватись до сну у відмічений час. </value>
   </data>
-    <data name="MessageInDeleteHabitConfirm" xml:space="preserve">
+  <data name="MessageInDeleteHabitConfirm" xml:space="preserve">
     <value>Звичку буде видалено назавжди. Ця дія не може бути скасована.</value>
   </data>
-    <data name="DeleteHabitQuestion" xml:space="preserve">
+  <data name="DeleteHabitQuestion" xml:space="preserve">
     <value>Видалити звичку?</value>
   </data>
-    <data name="MessageInDeleteGoalConfirm" xml:space="preserve">
+  <data name="MessageInDeleteGoalConfirm" xml:space="preserve">
     <value>Ціль буде видалено назавжди. Ця дія не може бути скасована.</value>
   </data>
-    <data name="DeleteGoalQuestion" xml:space="preserve">
+  <data name="DeleteGoalQuestion" xml:space="preserve">
     <value>Видалити ціль?</value>
   </data>
-    <data name="MessageInDeleteAccountConfirm" xml:space="preserve">
+  <data name="MessageInDeleteAccountConfirm" xml:space="preserve">
     <value>Акаунт буде видалено назавжди. Ця дія не може бути скасована.</value>
   </data>
-    <data name="DeleteAccountQuestion" xml:space="preserve">
+  <data name="DeleteAccountQuestion" xml:space="preserve">
     <value>Видалити акаунт?</value>
   </data>
-    <data name="MessageInLogoutConfirm" xml:space="preserve">
+  <data name="MessageInLogoutConfirm" xml:space="preserve">
     <value>Ви дійсно хочете вийти зі свого акаунту?</value>
   </data>
-    <data name="LogoutQuestion" xml:space="preserve">
+  <data name="LogoutQuestion" xml:space="preserve">
     <value>Вийти?</value>
   </data>
-    <data name="Yes" xml:space="preserve">
+  <data name="Yes" xml:space="preserve">
     <value>Так</value>
   </data>
-    <data name="Cancel" xml:space="preserve">
+  <data name="Cancel" xml:space="preserve">
     <value>Скасувати</value>
   </data>
-    <data name="No" xml:space="preserve">
+  <data name="No" xml:space="preserve">
     <value>Ні</value>
   </data>
-    <data name="AtomicHabits" xml:space="preserve">
+  <data name="AtomicHabits" xml:space="preserve">
     <value>Атомні Звички</value>
   </data>
-    <data name="Principles" xml:space="preserve">
+  <data name="Principles" xml:space="preserve">
     <value>Principles</value>
   </data>
-    <data name="DeleteAccount" xml:space="preserve">
+  <data name="DeleteAccount" xml:space="preserve">
     <value>Видалити акаунт</value>
   </data>
-    <data name="Field" xml:space="preserve">
+  <data name="Field" xml:space="preserve">
     <value>Поле</value>
   </data>
-    <data name="isRequired" xml:space="preserve">
+  <data name="isRequired" xml:space="preserve">
     <value>є обовʼязковим</value>
   </data>
-    <data name="FixErrorsFirst" xml:space="preserve">
+  <data name="FixErrorsFirst" xml:space="preserve">
     <value>Спочатку виправте помилки</value>
   </data>
-    <data name="Helper" xml:space="preserve">
+  <data name="Helper" xml:space="preserve">
     <value>ШІ-Помічник</value>
   </data>
-    <data name="HelperName" xml:space="preserve">
+  <data name="HelperName" xml:space="preserve">
     <value>Помічник SET</value>
   </data>
-    <data name="HowCanIHelpYou" xml:space="preserve">
+  <data name="HowCanIHelpYou" xml:space="preserve">
     <value>Як я можу тобі допомогти?</value>
   </data>
-    <data name="EnterText" xml:space="preserve">
+  <data name="EnterText" xml:space="preserve">
     <value>Введіть текст...</value>
   </data>
-    <data name="SomethingWentWrong" xml:space="preserve">
+  <data name="SomethingWentWrong" xml:space="preserve">
     <value>Щось пішло не так. Ми постараємось виправити цю помилку.</value>
   </data>
-    <data name="RecommendedHabitsByAi" xml:space="preserve">
+  <data name="RecommendedHabitsByAi" xml:space="preserve">
     <value>Рекомендовані звички штучним інтелектом</value>
   </data>
-    <data name="ConfirmMessageOnRecommededHabitsView" xml:space="preserve">
+  <data name="ConfirmMessageOnRecommededHabitsView" xml:space="preserve">
     <value>Ви впевнені, що хочете завантажити звички, на основі вибраних сфер звички, цілі, місії та основного гасла?</value>
   </data>
-    <data name="ConfirmTitleOnRecommendedHabitsView" xml:space="preserve">
+  <data name="ConfirmTitleOnRecommendedHabitsView" xml:space="preserve">
     <value>На основі сфер, цілі, місії та гасла</value>
   </data>
-    <data name="DescriptionOfAiLampTap" xml:space="preserve">
+  <data name="DescriptionOfAiLampTap" xml:space="preserve">
     <value>Торкніться ШІ-лампи, щоб переглянути рекомендовані звички.</value>
   </data>
-    <data name="IfYouDontWantToWaitYouCanChangeOtherFields" xml:space="preserve">
+  <data name="IfYouDontWantToWaitYouCanChangeOtherFields" xml:space="preserve">
     <value>Якщо ви не хочете чекати, ви можете поки що змінити інші поля</value>
   </data>
-    <data name="CannotReloadHabits" xml:space="preserve">
+  <data name="CannotReloadHabits" xml:space="preserve">
     <value>Неможливо перезагрузити звички</value>
   </data>
-    <data name="RecommendedHabitsSuccessfullyLoaded" xml:space="preserve">
+  <data name="RecommendedHabitsSuccessfullyLoaded" xml:space="preserve">
     <value>Завантажено рекомендовані звички</value>
   </data>
-    <data name="Inspect" xml:space="preserve">
+  <data name="Inspect" xml:space="preserve">
     <value>Огляд</value>
   </data>
-    <data name="SelfDevelopmentAssistantShortDescription" xml:space="preserve">
+  <data name="SelfDevelopmentAssistantShortDescription" xml:space="preserve">
     <value>Я - ШІ-асистент зі саморозвитку. Ви можете звертатися до мене стосовно різних питань. Наприклад, "Як моя особистість впливає на моє життя?"</value>
   </data>
-    <data name="ChatWithHelper" xml:space="preserve">
+  <data name="ChatWithHelper" xml:space="preserve">
     <value>Чат з ШІ-Помічником</value>
   </data>
-    <data name="Mission" xml:space="preserve">
+  <data name="Mission" xml:space="preserve">
     <value>Місія</value>
   </data>
-    <data name="YourMission" xml:space="preserve">
+  <data name="YourMission" xml:space="preserve">
     <value>Твоя Місія</value>
   </data>
-    <data name="YourMainSlogan" xml:space="preserve">
+  <data name="YourMainSlogan" xml:space="preserve">
     <value>Твоє Основне Гасло</value>
   </data>
-    <data name="YourName" xml:space="preserve">
+  <data name="YourName" xml:space="preserve">
     <value>Твоє імʼя</value>
   </data>
-    <data name="Correct" xml:space="preserve">
+  <data name="Correct" xml:space="preserve">
     <value>Правильно</value>
   </data>
-    <data name="Spirituality" xml:space="preserve">
+  <data name="Spirituality" xml:space="preserve">
     <value>Духовність</value>
   </data>
-    <data name="Character" xml:space="preserve">
+  <data name="Character" xml:space="preserve">
     <value>Характер</value>
   </data>
-    <data name="Health" xml:space="preserve">
+  <data name="Health" xml:space="preserve">
     <value>Здоровʼя</value>
   </data>
-    <data name="Career" xml:space="preserve">
+  <data name="Career" xml:space="preserve">
     <value>Карʼєра</value>
   </data>
-    <data name="Family" xml:space="preserve">
+  <data name="Family" xml:space="preserve">
     <value>Сімʼя</value>
   </data>
-    <data name="Relationships" xml:space="preserve">
+  <data name="Relationships" xml:space="preserve">
     <value>Стосунки</value>
   </data>
-    <data name="Sociality" xml:space="preserve">
+  <data name="Sociality" xml:space="preserve">
     <value>Соціальність</value>
   </data>
-    <data name="Mentality" xml:space="preserve">
+  <data name="Mentality" xml:space="preserve">
     <value>Ментальність</value>
   </data>
-    <data name="Other" xml:space="preserve">
+  <data name="Other" xml:space="preserve">
     <value>Інша</value>
   </data>
-    <data name="Loading" xml:space="preserve">
+  <data name="Loading" xml:space="preserve">
     <value>Завантаження...</value>
   </data>
-    <data name="LoadingContent" xml:space="preserve">
+  <data name="LoadingContent" xml:space="preserve">
     <value>Завантаження змісту...</value>
   </data>
-    <data name="HabitCollectionIsEmptyDescription" xml:space="preserve">
+  <data name="HabitCollectionIsEmptyDescription" xml:space="preserve">
     <value>У вас ще немає звичок</value>
   </data>
-    <data name="Appearance" xml:space="preserve">
+  <data name="Appearance" xml:space="preserve">
     <value>Тема додатку</value>
   </data>
-    <data name="DescriptionOfAdviceNotToWorkOnNewHabit" xml:space="preserve">
+  <data name="DescriptionOfAdviceNotToWorkOnNewHabit" xml:space="preserve">
     <value>Порада: "почніть роботу над поточною звичкою, коли автоматизуйте інші". Це допоможе вам не перегоріти та дотримуватись інших звичок.</value>
   </data>
-    <data name="TitleOfAdviceNotToWorkOnNewHabit" xml:space="preserve">
+  <data name="TitleOfAdviceNotToWorkOnNewHabit" xml:space="preserve">
     <value>Надто багато неавтоматизованих звичок</value>
   </data>
-    <data name="CreateItAnyway" xml:space="preserve">
+  <data name="CreateItAnyway" xml:space="preserve">
     <value>Створити все одно</value>
   </data>
-    <data name="SetPriorityByDragAndDrop" xml:space="preserve">
+  <data name="SetPriorityByDragAndDrop" xml:space="preserve">
     <value>Встановіть пріоритети за допомогою перетягування</value>
   </data>
-    <data name="ComplexityCantBeChangedAfterCreationOfHabit" xml:space="preserve">
+  <data name="ComplexityCantBeChangedAfterCreationOfHabit" xml:space="preserve">
     <value>Складність неможливо буде змінити після створення звички</value>
   </data>
-    <data name="TooManyMessagesError" xml:space="preserve">
+  <data name="TooManyMessagesError" xml:space="preserve">
     <value>Ви задали максимум повідомлень в одному чаті</value>
   </data>
-    <data name="PrivacyPolicy" xml:space="preserve">
+  <data name="PrivacyPolicy" xml:space="preserve">
     <value>Політика конфіденційності</value>
   </data>
-    <data name="PrivacyPolicyTitle" xml:space="preserve">
+  <data name="PrivacyPolicyTitle" xml:space="preserve">
     <value>Політика Конфіденційності</value>
   </data>
-    <data name="UserAgreement" xml:space="preserve">
+  <data name="UserAgreement" xml:space="preserve">
     <value>Угода користувача</value>
   </data>
-    <data name="UserAgreementTitle" xml:space="preserve">
+  <data name="UserAgreementTitle" xml:space="preserve">
     <value>Угода Користувача</value>
   </data>
-    <data name="LoginAgreementText" xml:space="preserve">
+  <data name="LoginAgreementText" xml:space="preserve">
     <value>Натискаючи кнопку 'Вхід', ви погоджуєтесь з</value>
   </data>
-    <data name="LoginSignUpAgreementСonnectingText" xml:space="preserve">
+  <data name="LoginSignUpAgreementСonnectingText" xml:space="preserve">
     <value>та</value>
   </data>
-    <data name="UserAgreementStrInLoginAndSignupViews" xml:space="preserve">
+  <data name="UserAgreementStrInLoginAndSignupViews" xml:space="preserve">
     <value>Угодою Користувача</value>
   </data>
-    <data name="PrivacyPolicyStrInLoginAndSignupViews" xml:space="preserve">
+  <data name="PrivacyPolicyStrInLoginAndSignupViews" xml:space="preserve">
     <value>Політикою Конфіденційності</value>
   </data>
-    <data name="SignUpAgreementText" xml:space="preserve">
+  <data name="SignUpAgreementText" xml:space="preserve">
     <value>Натискаючи кнопку 'Зареєструватись', ви погоджуєтесь з</value>
   </data>
-    <data name="ContactEmail" xml:space="preserve">
+  <data name="ContactEmail" xml:space="preserve">
     <value>Написати до app@principles.top</value>
   </data>
-    <data name="MsgWhenCannotOpenAppToSendEmail" xml:space="preserve">
+  <data name="MsgWhenCannotOpenAppToSendEmail" xml:space="preserve">
     <value>Не вдається відкрити програму для надсилання електронного листа. Можливо, її не встановлено.</value>
   </data>
-    <data name="Delete" xml:space="preserve">
+  <data name="Delete" xml:space="preserve">
     <value>Видалити</value>
   </data>
-    <data name="NoInternetConnection" xml:space="preserve">
+  <data name="NoInternetConnection" xml:space="preserve">
     <value>Відсутнє зʼєднання з інтернетом.</value>
   </data>
-    <data name="Retry" xml:space="preserve">
+  <data name="Retry" xml:space="preserve">
     <value>Повторити</value>
   </data>
-    <data name="EmailOrPasswordIsIncorrect" xml:space="preserve">
+  <data name="EmailOrPasswordIsIncorrect" xml:space="preserve">
     <value>Пошта або пароль введений неправильно.</value>
   </data>
-    <data name="YouAreNotAuthorized" xml:space="preserve">
+  <data name="YouAreNotAuthorized" xml:space="preserve">
     <value>Ви не авторизовані.</value>
   </data>
-    <data name="TabData" xml:space="preserve">
+  <data name="TabData" xml:space="preserve">
     <value>Вкладка "Дані"</value>
   </data>
-    <data name="TabHowToKeep" xml:space="preserve">
+  <data name="TabHowToKeep" xml:space="preserve">
     <value>Вкладка "Як утримувати"</value>
   </data>
-    <data name="FieldName" xml:space="preserve">
+  <data name="FieldName" xml:space="preserve">
     <value>Поле "Назва"</value>
   </data>
-    <data name="HouseholdChores" xml:space="preserve">
+  <data name="HouseholdChores" xml:space="preserve">
     <value>Побут</value>
   </data>
-    <data name="EmailIsIncorrect" xml:space="preserve">
+  <data name="EmailIsIncorrect" xml:space="preserve">
     <value>Користувача не знайдено за вказаною поштою.</value>
   </data>
-    <data name="PasswordIsIncorrect" xml:space="preserve">
+  <data name="PasswordIsIncorrect" xml:space="preserve">
     <value>Неправильний пароль.</value>
   </data>
-    <data name="UserWithIdenticalEmailAlreadyExists" xml:space="preserve">
+  <data name="UserWithIdenticalEmailAlreadyExists" xml:space="preserve">
     <value>Користувач з ідентичною поштою вже існує. Для реєстрації змініть, будь ласка, вказану адресу.</value>
   </data>
-    <data name="TheUser" xml:space="preserve">
+  <data name="TheUser" xml:space="preserve">
     <value>Користувач</value>
   </data>
-    <data name="WithUnknownName" xml:space="preserve">
+  <data name="WithUnknownName" xml:space="preserve">
     <value>З невідомим імʼям</value>
   </data>
-    <data name="IsNotFound" xml:space="preserve">
+  <data name="IsNotFound" xml:space="preserve">
     <value>Не знайдений</value>
   </data>
-    <data name="ForgetPasswordNavigation" xml:space="preserve">
+  <data name="ForgetPasswordNavigation" xml:space="preserve">
     <value>Забули пароль?</value>
   </data>
-    <data name="ForgetPasswordTitle" xml:space="preserve">
+  <data name="ForgetPasswordTitle" xml:space="preserve">
     <value>Відновлення Паролю</value>
   </data>
-    <data name="ChangePasswordButton" xml:space="preserve">
+  <data name="ChangePasswordButton" xml:space="preserve">
     <value>Змінити пароль</value>
   </data>
-    <data name="ConfirmationPasswordChangeLabel" xml:space="preserve">
+  <data name="ConfirmationPasswordChangeLabel" xml:space="preserve">
     <value>На вашу пошту надіслано код для підтвердження зміни пароля</value>
   </data>
-    <data name="ConfirmPasswordChangeButton" xml:space="preserve">
+  <data name="ConfirmPasswordChangeButton" xml:space="preserve">
     <value>Підтвердити</value>
   </data>
-    <data name="EmailAndPasswordFieldsAreEmpty" xml:space="preserve">
+  <data name="EmailAndPasswordFieldsAreEmpty" xml:space="preserve">
     <value>Поля з поштою і паролем мають бути заповнені</value>
   </data>
-    <data name="NewPassword" xml:space="preserve">
+  <data name="NewPassword" xml:space="preserve">
     <value>Новий пароль</value>
   </data>
-    <data name="WrongConfirmationCode" xml:space="preserve">
+  <data name="WrongConfirmationCode" xml:space="preserve">
     <value>Не правильний код підтведження!</value>
   </data>
-    <data name="Success" xml:space="preserve">
+  <data name="Success" xml:space="preserve">
     <value>Успіх</value>
   </data>
-    <data name="YourPasswordSuccessfullyChanged" xml:space="preserve">
+  <data name="YourPasswordSuccessfullyChanged" xml:space="preserve">
     <value>Ваш пароль успішно змінено.</value>
   </data>
-    <data name="NewPasswordIsIncorrectError" xml:space="preserve">
+  <data name="NewPasswordIsIncorrectError" xml:space="preserve">
     <value>Пароль повинен мати 8-20 символів і містити принаймні одну малу літеру та одну цифру.</value>
   </data>
-    <data name="AllAreasOfLife" xml:space="preserve">
+  <data name="AllAreasOfLife" xml:space="preserve">
     <value>Усі сфери життя</value>
   </data>
-    <data name="RecommendedHabitsButton" xml:space="preserve">
+  <data name="RecommendedHabitsButton" xml:space="preserve">
     <value>Рекомендовані звички</value>
   </data>
-    <data name="OperationTimeoutMessage" xml:space="preserve">
+  <data name="OperationTimeoutMessage" xml:space="preserve">
     <value>Запит перевищив час очікування. Будь ласка, перевірте ваше інтернет-з'єднання та спробуйте знову.</value>
   </data>
-    <data name="Goal" xml:space="preserve">
+  <data name="Goal" xml:space="preserve">
     <value>Ціль</value>
   </data>
-    <data name="ChooseGoal" xml:space="preserve">
+  <data name="ChooseGoal" xml:space="preserve">
     <value>Оберіть Ціль</value>
   </data>
-    <data name="CreateNewGoal" xml:space="preserve">
+  <data name="CreateNewGoal" xml:space="preserve">
     <value>Додайте нову ціль</value>
   </data>
-    <data name="Be" xml:space="preserve">
+  <data name="Be" xml:space="preserve">
     <value>Бути</value>
   </data>
-    <data name="GoalLableRecommendation" xml:space="preserve">
+  <data name="GoalLableRecommendation" xml:space="preserve">
     <value>Рекомендація: виберіть конкретну ціль або ту, яка орієнтована на вашу ідентичність, оскільки вона визначає ваше життя.</value>
   </data>
-    <data name="UpdateGoal" xml:space="preserve">
+  <data name="UpdateGoal" xml:space="preserve">
     <value>Оновіть вибрану ціль</value>
   </data>
-    <data name="GoalExamples" xml:space="preserve">
+  <data name="GoalExamples" xml:space="preserve">
     <value>Приклади цілей спрямованих на вашу ідентичність: бути олімпійським чемпіоном, бути впевненим в собі, бути вільним від куріння.</value>
   </data>
-    <data name="HabitNameRecommendation" xml:space="preserve">
+  <data name="HabitNameRecommendation" xml:space="preserve">
     <value>Вкажіть назву звички та час або місце її виконання. Це збільшить ймовірність її дотримання. Приклад: я молюсь, як тільки прокинусь.</value>
   </data>
-    <data name="UnableToLoadData" xml:space="preserve">
+  <data name="UnableToLoadData" xml:space="preserve">
     <value>Не вдалось завантажити дані.</value>
   </data>
-    <data name="NoGoalSpecified" xml:space="preserve">
+  <data name="NoGoalSpecified" xml:space="preserve">
     <value>*Ціль не визначена</value>
   </data>
-    <data name="ContinueWithGoogle" xml:space="preserve">
+  <data name="ContinueWithGoogle" xml:space="preserve">
     <value>Продовжити через Google</value>
   </data>
-    <data name="ContinueWithApple" xml:space="preserve">
+  <data name="ContinueWithApple" xml:space="preserve">
     <value>Продовжити через Apple</value>
   </data>
-    <data name="SignUpWithEmail" xml:space="preserve">
+  <data name="SignUpWithEmail" xml:space="preserve">
     <value>Зареєструватись</value>
   </data>
-    <data name="LogInWithEmail" xml:space="preserve">
+  <data name="LogInWithEmail" xml:space="preserve">
     <value>Увійти</value>
   </data>
-    <data name="TransformAreasOfLifeTitle" xml:space="preserve">
+  <data name="TransformAreasOfLifeTitle" xml:space="preserve">
     <value>Покращ відстаючі сфери життя</value>
   </data>
-    <data name="TransformAreasOfLifeDescription" xml:space="preserve">
+  <data name="TransformAreasOfLifeDescription" xml:space="preserve">
     <value>Встановлюй цілі правильно та будуй свої звички.</value>
   </data>
-    <data name="GroupHabitsByGoalsTitle" xml:space="preserve">
+  <data name="GroupHabitsByGoalsTitle" xml:space="preserve">
     <value>Безперервний прогрес</value>
   </data>
-    <data name="GroupHabitsByGoalsDescription" xml:space="preserve">
+  <data name="GroupHabitsByGoalsDescription" xml:space="preserve">
     <value>Систематизуй досягнення цілей, групувавши звички за цілями.</value>
   </data>
-    <data name="GetRecommendationsByAITitle" xml:space="preserve">
+  <data name="GetRecommendationsByAITitle" xml:space="preserve">
     <value>Рекомендації</value>
   </data>
-    <data name="GetRecommendationsByAIDescription" xml:space="preserve">
+  <data name="GetRecommendationsByAIDescription" xml:space="preserve">
     <value>Отримай рекомендації, що сформовані на основі твоєї місії, гасла по життю, цілях і т.д.</value>
   </data>
-    <data name="ChatWithHelperTitle" xml:space="preserve">
+  <data name="ChatWithHelperTitle" xml:space="preserve">
     <value>Чат з помічником</value>
   </data>
-    <data name="ChatWithHelperDescription" xml:space="preserve">
+  <data name="ChatWithHelperDescription" xml:space="preserve">
     <value>Отримай відповідь на різноманітні питання від асистента, який зважає на твою місію, звички й т.д.</value>
   </data>
-    <data name="BecomeTruePersonalityTitle" xml:space="preserve">
+  <data name="BecomeTruePersonalityTitle" xml:space="preserve">
     <value>Стань справжньою особистістю</value>
   </data>
-    <data name="BecomeTruePersonalityDescription" xml:space="preserve">
+  <data name="BecomeTruePersonalityDescription" xml:space="preserve">
     <value>Встанови цілі, що орієнтовані на твою ідентичність. Вперед!</value>
   </data>
-    <data name="NotYetImplemented" xml:space="preserve">
+  <data name="NotYetImplemented" xml:space="preserve">
     <value>Ще не реалізовано.</value>
   </data>
-    <data name="ComingSoon" xml:space="preserve">
+  <data name="ComingSoon" xml:space="preserve">
     <value>Незабаром</value>
   </data>
-    <data name="ComingSoonMessage" xml:space="preserve">
+  <data name="ComingSoonMessage" xml:space="preserve">
     <value>Нові функції та покращення вже на підході!</value>
   </data>
-    <data name="YouDontHavePassword" xml:space="preserve">
+  <data name="YouDontHavePassword" xml:space="preserve">
     <value>У вас немає пароля, оскільки ви зареєструвалися за допомогою Google. Вам потрібно використовувати Google для входу або змінити пароль за допомогою опції «Забули пароль?».</value>
   </data>
-    <data name="InternalServerError" xml:space="preserve">
+  <data name="InternalServerError" xml:space="preserve">
     <value>Внутрішня помилка сервера. Ми постараємося виправити її якнайшвидше!</value>
   </data>
-    <data name="AppUpdateAvailable" xml:space="preserve">
+  <data name="AppUpdateAvailable" xml:space="preserve">
     <value>Доступне оновлення</value>
   </data>
-    <data name="GoToAppStore" xml:space="preserve">
+  <data name="GoToAppStore" xml:space="preserve">
     <value>Перейти в App Store</value>
   </data>
-    <data name="GoToGooglePlay" xml:space="preserve">
+  <data name="GoToGooglePlay" xml:space="preserve">
     <value>Перейти в Google Play</value>
   </data>
-    <data name="Update" xml:space="preserve">
+  <data name="Update" xml:space="preserve">
     <value>Оновити</value>
   </data>
-    <data name="AppUpdateCloseButton" xml:space="preserve">
+  <data name="AppUpdateCloseButton" xml:space="preserve">
     <value>Закрити</value>
   </data>
-    <data name="DontShowUpdateCheckBoxText" xml:space="preserve">
+  <data name="DontShowUpdateCheckBoxText" xml:space="preserve">
     <value>Не нагадувати більше про це</value>
   </data>
-    <data name="HelperWarning" xml:space="preserve">
+  <data name="HelperWarning" xml:space="preserve">
     <value>ШІ-помічник знає ваші звички, цілі, місію, стать та гасло. Тому можете спитати щось стосовно них. Наприклад, “Яку поставити наступну ціль?" Зауважте: він може інколи помилятись. Перевіряйте важливу інформацію!</value>
   </data>
-    <data name="Add" xml:space="preserve">
+  <data name="Add" xml:space="preserve">
     <value>Додати</value>
   </data>
-    <data name="ReminderTitle" xml:space="preserve">
+  <data name="ReminderTitle" xml:space="preserve">
     <value>Загаловок</value>
   </data>
-    <data name="ReminderDescription" xml:space="preserve">
+  <data name="ReminderDescription" xml:space="preserve">
     <value>Опис</value>
   </data>
-    <data name="ReminderTitleText" xml:space="preserve">
+  <data name="ReminderTitleText" xml:space="preserve">
     <value>Нагадайте сьогоднішні звички</value>
   </data>
-    <data name="ReminderDescriptionText" xml:space="preserve">
+  <data name="ReminderDescriptionText" xml:space="preserve">
     <value>час відзначити, які звички було виконано вчора, і нагадати про свої звички та цілі</value>
   </data>
-    <data name="Time" xml:space="preserve">
+  <data name="Time" xml:space="preserve">
     <value>Час</value>
   </data>
-    <data name="Enable" xml:space="preserve">
+  <data name="Enable" xml:space="preserve">
     <value>Увімкнути</value>
   </data>
-    <data name="EmptyReminders" xml:space="preserve">
+  <data name="EmptyReminders" xml:space="preserve">
     <value>У вас ще немає нагадувань про цю звичку</value>
   </data>
-    <data name="Monday" xml:space="preserve">
+  <data name="Monday" xml:space="preserve">
     <value>Пн</value>
   </data>
-    <data name="Tuesday" xml:space="preserve">
+  <data name="Tuesday" xml:space="preserve">
     <value>Вт</value>
   </data>
-    <data name="Wednesday" xml:space="preserve">
+  <data name="Wednesday" xml:space="preserve">
     <value>Ср</value>
   </data>
-    <data name="Thursday" xml:space="preserve">
+  <data name="Thursday" xml:space="preserve">
     <value>Чт</value>
   </data>
-    <data name="Friday" xml:space="preserve">
+  <data name="Friday" xml:space="preserve">
     <value>Пт</value>
   </data>
-    <data name="Saturday" xml:space="preserve">
+  <data name="Saturday" xml:space="preserve">
     <value>Сб</value>
   </data>
-    <data name="Sunday" xml:space="preserve">
+  <data name="Sunday" xml:space="preserve">
     <value>Нд</value>
   </data>
-    <data name="DeviceDoesNotSupportNotifications" xml:space="preserve">
+  <data name="DeviceDoesNotSupportNotifications" xml:space="preserve">
     <value>Отакої.. Схоже, що ваша операційна система не підтримує сповіщення. Будь ласка, спробуйте оновити її.</value>
   </data>
-    <data name="Title" xml:space="preserve">
+  <data name="Title" xml:space="preserve">
     <value>Заголовок</value>
   </data>
-    <data name="Description" xml:space="preserve">
+  <data name="Description" xml:space="preserve">
     <value>Опис</value>
   </data>
-    <data name="AfterLoginWhenUserAccountHaveReminders" xml:space="preserve">
+  <data name="AfterLoginWhenUserAccountHaveReminders" xml:space="preserve">
     <value>У вашого акаунта є мотивуючі нагадування. Вони можуть бути відновленні на вашому пристрої.</value>
   </data>
-    <data name="RestoreReminders" xml:space="preserve">
+  <data name="RestoreReminders" xml:space="preserve">
     <value>Відновлення нагадувань</value>
   </data>
-    <data name="HabitGoal" xml:space="preserve">
+  <data name="HabitGoal" xml:space="preserve">
     <value>Ціль звички</value>
   </data>
-    <data name="ChooseHabitGoal" xml:space="preserve">
+  <data name="ChooseHabitGoal" xml:space="preserve">
     <value>Оберіть Ціль Звички</value>
   </data>
-    <data name="IsMaxValue" xml:space="preserve">
+  <data name="IsMaxValue" xml:space="preserve">
     <value>є максимальним значенням</value>
   </data>
-    <data name="Edit" xml:space="preserve">
+  <data name="Edit" xml:space="preserve">
     <value>Змінити</value>
   </data>
-    <data name="DeleteTheHabit" xml:space="preserve">
+  <data name="DeleteTheHabit" xml:space="preserve">
     <value>Видалити звичку</value>
   </data>
-    <data name="SmthWentWrong" xml:space="preserve">
+  <data name="SmthWentWrong" xml:space="preserve">
     <value>Щось пішло не так. Можете звернутись сюди: app@principles.top</value>
   </data>
-    <data name="AppleAuthIsNotSupportedForCurrentDevice" xml:space="preserve">
+  <data name="AppleAuthIsNotSupportedForCurrentDevice" xml:space="preserve">
     <value>Наразі Apple-автентифікація підтримується тільки на iOS 13.0 або новішої версії</value>
   </data>
-    <data name="JoinOurTelegram" xml:space="preserve">
+  <data name="JoinOurTelegram" xml:space="preserve">
     <value>Приєднуйтесь до нашого Telegram-каналу</value>
   </data>
-    <data name="TryAgain" xml:space="preserve">
+  <data name="TryAgain" xml:space="preserve">
     <value>Повторіть спробу через</value>
   </data>
-    <data name="SecondsInShort" xml:space="preserve">
+  <data name="SecondsInShort" xml:space="preserve">
     <value>с</value>
   </data>
-    <data name="SomethingWentWrongWhenUserAuthsUsingExternalService" xml:space="preserve">
+  <data name="SomethingWentWrongWhenUserAuthsUsingExternalService" xml:space="preserve">
     <value>Щось пішло не так. Скористайтесь опцією "Зареєструватись" або "Вхід".</value>
   </data>
-    <data name="InvalidEmailOrPassword" xml:space="preserve">
+  <data name="InvalidEmailOrPassword" xml:space="preserve">
     <value>Неправильна пошта або пароль.</value>
   </data>
-    <data name="ErrorOccurred" xml:space="preserve">
+  <data name="ErrorOccurred" xml:space="preserve">
     <value>Сталася помилка</value>
   </data>
-    <data name="ChangeLanguage" xml:space="preserve">
+  <data name="ChangeLanguage" xml:space="preserve">
     <value>Змінити мову</value>
   </data>
-    <data name="ChooseLanguage" xml:space="preserve">
+  <data name="ChooseLanguage" xml:space="preserve">
     <value>Оберіть мову</value>
   </data>
-    <data name="FieldIsNotEditable" xml:space="preserve">
+  <data name="FieldIsNotEditable" xml:space="preserve">
     <value>Це поле не доступне для редагування.</value>
   </data>
-    <data name="CompletedDays" xml:space="preserve">
-    <value>Завершених днів</value>
-  </data>
-    <data name="TopFiveStreaks" xml:space="preserve">
-    <value>Топ-5 найтриваліших серій</value>
-  </data>
-    <data name="TopFiveStreaksExplanation" xml:space="preserve">
-    <value>Топ-5 серій виконання звички відображає найстабільніші періоди особистої дисципліни. Цей інструмент допомагає усвідомити власну здатність до послідовних дій, підтримує мотивацію в моменти сумнівів і слугує основою для формування стійких, рекомендованих звичок.</value>
-  </data>
-    <data name="StabilityExplanation" xml:space="preserve">
-    <value>Діаграма стабільності показує, наскільки послідовно ви дотримуєтеся звички без пропусків. Вона висвітлює ваші загальні патерни дотримання, допомагаючи побачити, де ви найнадійніші, а де варто звернути додаткову увагу. Відстежуючи стабільність, ви можете святкувати стабільний прогрес, виявляти моменти, які ставлять під виклик вашу рутину, та нарощувати впевненість у здатності підтримувати довгострокові зміни поведінки.</value>
-  </data>
-    <data name="OverallProgress" xml:space="preserve">
-    <value>Загальний прогрес</value>
-  </data>
-    <data name="Stability" xml:space="preserve">
-    <value>Стабільність</value>
-  </data>
-    <data name="DaysCount" xml:space="preserve">
-    <value>Кількість днів</value>
-  </data>
-    <data name="HabitByDayweeks" xml:space="preserve">
-    <value>Звичка за днями тижня</value>
-  </data>
-    <data name="HabitByDayweeksExplanation" xml:space="preserve">
-    <value>Діаграма звички за днями тижня показує, як часто ви виконуєте звичку в кожен конкретний день. Вона допомагає виявити дні, коли ви найпослідовніші, та ті, які частіше пропускаєте. Аналізуючи ці закономірності, ви можете скоригувати свій розклад, посилити слабкі сторони та вибудувати більш стабільний ритм звички протягом тижня.</value>
-  </data>
-    <data name="CalendarInfoExplanation" xml:space="preserve">
-    <value>Відображає виконання звичок за днями:
-- Синій – звичка виконана;
-- Голубий – дотримуватися звички не обов'язково.
-Ви можете змінити статус натисканням по дню.</value>
-  </data>
-    <data name="Calendar" xml:space="preserve">
-    <value>Календар</value>
-  </data>
-    <data name="LongestStreak" xml:space="preserve">
-    <value>Найдовша серія</value>
-  </data>
-    <data name="YouCannotCompleteHabitInTheFuture" xml:space="preserve">
-    <value>Неможливо позначити звичку, як виконана для майбутніх днів</value>
-  </data>
-    <data name="HabitWasntCreatedBeforeThisDay" xml:space="preserve">
-    <value>Звичка не була створена до цієї дати</value>
-  </data>
-    <data name="RefreshHabitCharts" xml:space="preserve">
-    <value>Оновити діаграми</value>
-  </data>
-    <data name="SuccessfulCopy" xml:space="preserve">
+  <data name="SuccessfulCopy" xml:space="preserve">
     <value>Текст успішно скопійовано</value>
   </data>
-    <data name="Archive" xml:space="preserve">
+  <data name="Archive" xml:space="preserve">
     <value>Архів</value>
-    </data>
-    <data name="AddToArchive" xml:space="preserve">
+  </data>
+  <data name="AddToArchive" xml:space="preserve">
     <value>В архів</value>
   </data>
-    <data name="ChooseAction" xml:space="preserve">
+  <data name="ChooseAction" xml:space="preserve">
     <value>Оберіть дію</value>
   </data>
-    <data name="RemoveFromArchive" xml:space="preserve">
+  <data name="RemoveFromArchive" xml:space="preserve">
     <value>Видалити з архіву</value>
   </data>
-    <data name="DeleteArchivedHabitConfirmationText" xml:space="preserve">
+  <data name="DeleteArchivedHabitConfirmationText" xml:space="preserve">
     <value>Ви в процесі видалення звички. Виберіть одну зі запропонованих дій.</value>
   </data>
-    <data name="RemoveHabitFromArchiveQuestion" xml:space="preserve">
+  <data name="RemoveHabitFromArchiveQuestion" xml:space="preserve">
     <value>Бажаєте видалити цю звичку з архіву?</value>
   </data>
-    <data name="MessageRemoveHabitFromArchive" xml:space="preserve">
+  <data name="MessageRemoveHabitFromArchive" xml:space="preserve">
     <value>Ця дія відновить звичку у ваш активний список.</value>
   </data>
-    <data name="ShortDescriptionOfArchivedHabits" xml:space="preserve">
-    <value>Тут відображаються твої завершені або призупинені звички.</value>
-  </data>
-    <data name="HabitArchivingInfo" xml:space="preserve">
-    <value>Ваша звичка буде збережена в архів, ви завжди зможете повернути її в основний список.</value>
-    </data>
-    <data name="ArchiveHabit" xml:space="preserve">
-    <value>Додати звичку в архів</value>
-    </data>
-    <data name="AddHabitToArchiveQuestion" xml:space="preserve">
+  <data name="AddHabitToArchiveQuestion" xml:space="preserve">
     <value>Перемістити звичку в архів?</value>
   </data>
-    <data name="MessageAddHabitToArchive" xml:space="preserve">
+  <data name="MessageAddHabitToArchive" xml:space="preserve">
     <value>Ця дія перемістить звичку в архів. Ви зможете відновити роботу над нею пізніше.</value>
   </data>
-    <data name="UnarchiveHabit" xml:space="preserve">
+  <data name="ShortDescriptionOfArchivedHabits" xml:space="preserve">
+    <value>Тут відображаються твої завершені або призупинені звички.</value>
+  </data>
+  <data name="HabitArchivingInfo" xml:space="preserve">
+    <value>Ваша звичка буде збережена в архів, ви завжди зможете повернути її в основний список.</value>
+  </data>
+  <data name="ArchiveHabit" xml:space="preserve">
+    <value>Додати звичку в архів</value>
+  </data>
+  <data name="UnarchiveHabit" xml:space="preserve">
     <value>Видалити звичку з архіву</value>
   </data>
-    <data name="FullDescriptionOfArchivedHabits" xml:space="preserve">
+  <data name="FullDescriptionOfArchivedHabits" xml:space="preserve">
     <value>Навіщо потрібен архів?
 ✅ Запланувати звички, які ви хочете додати чи змінити в майбутньому.
 🔁 Проаналізувати причини — які звички спрацювали, а які були занадто складними чи неактуальними.
@@ -937,112 +889,163 @@
 
 Підказка: перед створенням нової звички подивіться архів — можливо, щось подібне вже було, і тепер ви знаєте, як зробити краще.</value>
   </data>
-    <data name="UnarchiveHabitQuestion" xml:space="preserve">
-    <value>Видалити звичку з архіву?</value>
-  </data>
-    <data name="TheHabitWillBeArchivedAfterSaving" xml:space="preserve">
+  <data name="TheHabitWillBeArchivedAfterSaving" xml:space="preserve">
     <value>Звичку буде архівовано після збереження</value>
   </data>
-    <data name="TheHabitWillBeUnarchivedAfterSaving" xml:space="preserve">
+  <data name="TheHabitWillBeUnarchivedAfterSaving" xml:space="preserve">
     <value>Звичка буде розархівована після збереження</value>
   </data>
-    <data name="ChangePassword" xml:space="preserve">
+  <data name="ChangePassword" xml:space="preserve">
     <value>Змінити пароль</value>
   </data>
-    <data name="PasswordChange" xml:space="preserve">
+  <data name="PasswordChange" xml:space="preserve">
     <value>Зміна паролю</value>
   </data>
-    <data name="JanuaryShort" xml:space="preserve">
+  <data name="CompletedDays" xml:space="preserve">
+    <value>Завершених днів</value>
+  </data>
+  <data name="TopFiveStreaks" xml:space="preserve">
+    <value>Топ-5 найтриваліших серій</value>
+  </data>
+  <data name="TopFiveStreaksExplanation" xml:space="preserve">
+    <value>Топ-5 серій виконання звички відображає найстабільніші періоди особистої дисципліни. Цей інструмент допомагає усвідомити власну здатність до послідовних дій, підтримує мотивацію в моменти сумнівів і слугує основою для формування стійких, рекомендованих звичок.</value>
+  </data>
+  <data name="StabilityExplanation" xml:space="preserve">
+    <value>Діаграма стабільності показує, наскільки послідовно ви дотримуєтеся звички без пропусків. Вона висвітлює ваші загальні патерни дотримання, допомагаючи побачити, де ви найнадійніші, а де варто звернути додаткову увагу. Відстежуючи стабільність, ви можете святкувати стабільний прогрес, виявляти моменти, які ставлять під виклик вашу рутину, та нарощувати впевненість у здатності підтримувати довгострокові зміни поведінки.</value>
+  </data>
+  <data name="OverallProgress" xml:space="preserve">
+    <value>Загальний прогрес</value>
+  </data>
+  <data name="Stability" xml:space="preserve">
+    <value>Стабільність</value>
+  </data>
+  <data name="DaysCount" xml:space="preserve">
+    <value>Кількість днів</value>
+  </data>
+  <data name="HabitByDayweeks" xml:space="preserve">
+    <value>Звичка за днями тижня</value>
+  </data>
+  <data name="HabitByDayweeksExplanation" xml:space="preserve">
+    <value>Діаграма звички за днями тижня показує, як часто ви виконуєте звичку в кожен конкретний день. Вона допомагає виявити дні, коли ви найпослідовніші, та ті, які частіше пропускаєте. Аналізуючи ці закономірності, ви можете скоригувати свій розклад, посилити слабкі сторони та вибудувати більш стабільний ритм звички протягом тижня.</value>
+  </data>
+  <data name="CalendarInfoExplanation" xml:space="preserve">
+    <value>Відображає виконання звичок за днями:
+- Синій – звичка виконана;
+- Голубий – дотримуватися звички не обов'язково.
+Ви можете змінити статус натисканням по дню.</value>
+  </data>
+  <data name="Calendar" xml:space="preserve">
+    <value>Календар</value>
+  </data>
+  <data name="LongestStreak" xml:space="preserve">
+    <value>Найдовша серія</value>
+  </data>
+  <data name="YouCannotCompleteHabitInTheFuture" xml:space="preserve">
+    <value>Неможливо позначити звичку, як виконана для майбутніх днів</value>
+  </data>
+  <data name="HabitWasntCreatedBeforeThisDay" xml:space="preserve">
+    <value>Звичка не була створена до цієї дати</value>
+  </data>
+  <data name="RefreshHabitCharts" xml:space="preserve">
+    <value>Оновити діаграми</value>
+  </data>
+  <data name="UnarchiveHabitQuestion" xml:space="preserve">
+    <value>Видалити звичку з архіву?</value>
+  </data>
+  <data name="JanuaryShort" xml:space="preserve">
     <value>січ</value>
   </data>
-    <data name="FebruaryShort" xml:space="preserve">
+  <data name="FebruaryShort" xml:space="preserve">
     <value>лют</value>
   </data>
-    <data name="MarchShort" xml:space="preserve">
+  <data name="MarchShort" xml:space="preserve">
     <value>бер</value>
   </data>
-    <data name="AprilShort" xml:space="preserve">
+  <data name="AprilShort" xml:space="preserve">
     <value>кві</value>
   </data>
-    <data name="MayShort" xml:space="preserve">
+  <data name="MayShort" xml:space="preserve">
     <value>тра</value>
   </data>
-    <data name="NumberOfExecution" xml:space="preserve">
+  <data name="NumberOfExecution" xml:space="preserve">
     <value>Кількість виконань</value>
   </data>
-    <data name="TheHabitSuccessfullySaved" xml:space="preserve">
+  <data name="TheHabitSuccessfullySaved" xml:space="preserve">
     <value>Звичку успішно збережено</value>
   </data>
-    <data name="JuneShort" xml:space="preserve">
+  <data name="JuneShort" xml:space="preserve">
     <value>чер</value>
   </data>
-    <data name="JulyShort" xml:space="preserve">
+  <data name="JulyShort" xml:space="preserve">
     <value>лип</value>
   </data>
-    <data name="AugustShort" xml:space="preserve">
+  <data name="AugustShort" xml:space="preserve">
     <value>сер</value>
   </data>
-    <data name="SeptemberShort" xml:space="preserve">
+  <data name="SeptemberShort" xml:space="preserve">
     <value>вер</value>
   </data>
-    <data name="OctoberShort" xml:space="preserve">
+  <data name="OctoberShort" xml:space="preserve">
     <value>жов</value>
   </data>
-    <data name="NovemberShort" xml:space="preserve">
+  <data name="NovemberShort" xml:space="preserve">
     <value>лис</value>
   </data>
-    <data name="DecemberShort" xml:space="preserve">
+  <data name="DecemberShort" xml:space="preserve">
     <value>гру</value>
   </data>
-    <data name="YearShort" xml:space="preserve">
+  <data name="YearShort" xml:space="preserve">
     <value>р.</value>
   </data>
-    <data name="InterfaceLanguageSuccessfullyChanged" xml:space="preserve">
+  <data name="InterfaceLanguageSuccessfullyChanged" xml:space="preserve">
     <value>Мову інтерфейсу успішно змінено</value>
   </data>
-    <data name="HabitAutomationExplanation" xml:space="preserve">
+  <data name="HabitAutomationExplanation" xml:space="preserve">
     <value>Для автоматизації звички потрібно регулярне виконання протягом</value>
   </data>
-    <data name="Just" xml:space="preserve">
+  <data name="Just" xml:space="preserve">
     <value>Тільки</value>
   </data>
-    <data name="daysToGoUntilHabitAutomatic" xml:space="preserve">
+  <data name="daysToGoUntilHabitAutomatic" xml:space="preserve">
     <value>залишилось днів до повної автоматизації звички</value>
   </data>
-    <data name="ThereAreStill" xml:space="preserve">
+  <data name="ThereAreStill" xml:space="preserve">
     <value>Ще</value>
   </data>
-    <data name="ComplexityInfoText" xml:space="preserve">
+  <data name="ComplexityInfoText" xml:space="preserve">
     <value>Наскільки важко дотримуватися звички за зусиллями, часом і самоконтролем</value>
   </data>
-    <data name="TheHabitIsAlreadyAutomated" xml:space="preserve">
+  <data name="TheHabitIsAlreadyAutomated" xml:space="preserve">
     <value>Звичка вже автоматична</value>
   </data>
-    <data name="DescriptionWhyWeAppendedAds" xml:space="preserve">
+  <data name="DescriptionWhyWeAppendedAds" xml:space="preserve">
     <value>Ми додали рекламу, щоб «Principles» залишались безкоштовними для всіх. Завдяки цьому ми зможемо ще швидше розвивати додаток. Дякуємо, що ви з нами!</value>
   </data>
-    <data name="Message" xml:space="preserve">
+  <data name="Message" xml:space="preserve">
     <value>Повідомлення</value>
   </data>
-    <data name="YouAreWelcome" xml:space="preserve">
+  <data name="YouAreWelcome" xml:space="preserve">
     <value>Будь ласка</value>
   </data>
-    <data name="EnableIntrusiveAds" xml:space="preserve">
+  <data name="EnableIntrusiveAds" xml:space="preserve">
     <value>Увімкнути навʼязливу рекламу</value>
   </data>
-    <data name="DisableIntrusiveAds" xml:space="preserve">
+  <data name="DisableIntrusiveAds" xml:space="preserve">
     <value>Вимкнути навʼязливу рекламу</value>
   </data>
-    <data name="Warning" xml:space="preserve">
+  <data name="Warning" xml:space="preserve">
     <value>Попередження</value>
   </data>
-    <data name="DescriptionOfAdsEnabling" xml:space="preserve">
+  <data name="DescriptionOfAdsEnabling" xml:space="preserve">
     <value>Дякуємо вам за підтримку та розвиток нашого додатку! Ви найкращі!</value>
   </data>
-    <data name="DisablingAdsDescription" xml:space="preserve">
+  <data name="DisablingAdsDescription" xml:space="preserve">
     <value>Це вимкне навʼязливу рекламу й погіршить підтримку та розвиток додатку. Ви впевнені, що хочете це зробити?</value>
   </data>
   <data name="HabitStreakExplanation" xml:space="preserve">
     <value>Показує кількість днів поспіль, коли ви відкривали додаток і виконували звички. Якщо пропустити хоча б один день — серія обнуляється.</value>
+  </data>
+  <data name="AboutProgram" xml:space="preserve">
+    <value>Про програму</value>
   </data>
 </root>

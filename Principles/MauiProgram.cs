@@ -143,6 +143,7 @@ public static class MauiProgram
         services.AddSingleton<ChangePasswordViewModel>();
         services.AddSingleton<ConfirmEmailPopupViewModel>();
         services.AddSingleton<HabitDetailViewModel>();
+        services.AddSingleton<AppCarouselViewModel>();
 
         return services;
     }
@@ -160,6 +161,7 @@ public static class MauiProgram
         services.AddTransient<StartupView>();
         services.AddTransient<HabitDetailView>();
         services.AddTransient<ChangePasswordView>();
+        services.AddTransient<AppCarouselView>();
 
         return services;
     }

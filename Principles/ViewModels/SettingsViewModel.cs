@@ -94,4 +94,10 @@ public partial class SettingsViewModel : BaseViewModel
     {
         return Navigation.NavigateToAsync<ChangePasswordViewModel>();
     }
+
+    [RelayCommand]
+    public Task ShowAppCarouselrAsync()
+    {
+        return Navigation.NavigateToAsync<AppCarouselViewModel>();
+    }
 }

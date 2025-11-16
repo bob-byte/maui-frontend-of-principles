@@ -1,38 +1,43 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Shell x:Class="Principles.AppShell"
-       xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-       xmlns:app="clr-namespace:Principles"
-       xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
-       xmlns:loc="clr-namespace:Principles.Resources.AppStrings"
-       xmlns:local="clr-namespace:Principles.Views"
-       x:Name="Principles"
-       Title="AppShell"
-       Style="{StaticResource ShellStyle}"
-       ios:Page.UseSafeArea="true"
-       Shell.TabBarBackgroundColor="{StaticResource Primary}"
-       Shell.TabBarForegroundColor="{StaticResource SecondaryLight}"
-       Shell.TabBarTitleColor="{StaticResource SecondaryLight}"
-       Shell.TabBarUnselectedColor="{StaticResource GrayColor}">
+<Shell
+    x:Class="Principles.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:app="clr-namespace:Principles"
+    xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+    xmlns:loc="clr-namespace:Principles.Resources.AppStrings"
+    xmlns:local="clr-namespace:Principles.Views"
+    x:Name="Principles"
+    Title="AppShell"
+    ios:Page.UseSafeArea="true"
+    Shell.TabBarBackgroundColor="{StaticResource Primary}"
+    Shell.TabBarForegroundColor="{StaticResource SecondaryLight}"
+    Shell.TabBarTitleColor="{StaticResource SecondaryLight}"
+    Shell.TabBarUnselectedColor="{StaticResource GrayColor}"
+    Style="{StaticResource ShellStyle}">
 
     <TabBar Route="main">
-        <ShellContent x:Name="SC_Helper"
-                      Title="{Binding LocManager[Helper]}"
-                      Icon="helper"
-                      ContentTemplate="{DataTemplate local:HelperView}"
-                      Route="helper" />
+        <ShellContent
+            x:Name="SC_Helper"
+            Title="{Binding LocManager[Helper]}"
+            ContentTemplate="{DataTemplate local:HelperView}"
+            Icon="helper"
+            Route="helper" />
 
-        <ShellContent x:Name="SC_Progress"
-                      Title="{Binding LocManager[Progress]}"
-                      Icon="boost"
-                      ContentTemplate="{DataTemplate local:ProgressOfHabitsView}"
-                      Route="progressofhabits" />
+        <ShellContent
+            x:Name="SC_Progress"
+            Title="{Binding LocManager[Progress]}"
+            ContentTemplate="{DataTemplate local:ProgressOfHabitsView}"
+            Icon="boost"
+            Route="progressofhabits" />
 
-        <ShellContent x:Name="SC_Profile"
-                      Title="{Binding LocManager[Profile]}"
-                      Icon="profile"
-                      ContentTemplate="{DataTemplate local:ProfileView}"
-                      Route="profile" />
+        <ShellContent
+            x:Name="SC_Profile"
+            Title="{Binding LocManager[Profile]}"
+            ContentTemplate="{DataTemplate local:ProfileView}"
+            Icon="profile"
+            Route="profile" />
+
     </TabBar>
 
     <FlyoutItem Route="startup">

@@ -1,122 +1,146 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<v:ContentPageBase x:Class="Principles.Views.SettingsView"
-                   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                   xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
-                   xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
-                   xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
-                   xmlns:dxg="clr-namespace:DevExpress.Maui.DataGrid;assembly=DevExpress.Maui.DataGrid"
-                   xmlns:loc="clr-namespace:Principles.Resources.AppStrings"
-                   xmlns:m="clr-namespace:Principles.Core.Models;assembly=Principles.Core"
-                   xmlns:templates="clr-namespace:Principles.Views.Templates"
-                   xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-                   xmlns:v="clr-namespace:Principles.Views"
-                   xmlns:vm="clr-namespace:Principles.ViewModels"
-                   Title="{Binding LocManager[Settings]}"
-                   x:DataType="vm:SettingsViewModel"
-                   Shell.TabBarIsVisible="false">
+<v:ContentPageBase
+    x:Class="Principles.Views.SettingsView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+    xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
+    xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+    xmlns:dxg="clr-namespace:DevExpress.Maui.DataGrid;assembly=DevExpress.Maui.DataGrid"
+    xmlns:loc="clr-namespace:Principles.Resources.AppStrings"
+    xmlns:m="clr-namespace:Principles.Core.Models;assembly=Principles.Core"
+    xmlns:templates="clr-namespace:Principles.Views.Templates"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:v="clr-namespace:Principles.Views"
+    xmlns:vm="clr-namespace:Principles.ViewModels"
+    Title="{Binding LocManager[Settings]}"
+    x:DataType="vm:SettingsViewModel"
+    Shell.TabBarIsVisible="false">
     <Grid>
         <ScrollView>
-            <VerticalStackLayout Padding="15,0,15,0"
-                                 MaximumWidthRequest="500"
-                                 VerticalOptions="Center">
-                <Image Source="logolargesize"
-                       WidthRequest="180"
-                       HeightRequest="180" />
-                <Label Text="{Binding AppName}"
-                       FontFamily="CambriaBold"
-                       FontSize="40"
-                       HorizontalOptions="Center"
-                       TextColor="{StaticResource Primary}" />
-                <dxco:SimpleButton x:Name="SB_TelegramChannel"
-                                   Text="{Binding LocManager[JoinOurTelegram]}"
-                                   Command="{Binding ShowTelegramChannelCommand}"
-                                   Style="{StaticResource PrimaryButton}"
-                                   Margin="0,5,0,0" />
-                <dxco:SimpleButton x:Name="SB_ContactInfo"
-                                   Text="{Binding LocManager[ContactEmail]}"
-                                   Command="{Binding OpenEmailCommand}"
-                                   Style="{StaticResource PrimaryButton}"
-                                   Margin="0,15,0,0" />
-                <dxco:SimpleButton x:Name="SB_PrivacyPolicy"
-                                   Text="{Binding LocManager[PrivacyPolicy]}"
-                                   Command="{Binding ShowPrivacyPolicyCommand}"
-                                   Style="{StaticResource PrimaryButton}"
-                                   Margin="0,15,0,0" />
-                <dxco:SimpleButton x:Name="SB_UserAgreement"
-                                   Text="{Binding LocManager[UserAgreement]}"
-                                   Command="{Binding ShowUserAgreementCommand}"
-                                   Style="{StaticResource PrimaryButton}"
-                                   Margin="0,15,0,0" />
-                <dxco:SimpleButton x:Name="SB_ChangePassword"
-                                   Text="{Binding LocManager[ChangePassword]}"
-                                   Command="{Binding ShowChangePasswordCommand}"
-                                   Style="{StaticResource PrimaryButton}"
-                                   Margin="0,10,0,0" />
-                <dxco:SimpleButton x:Name="SB_ChangeLanguage"
-                                   Text="{Binding LocManager[ChangeLanguage]}"
-                                   Clicked="SB_ChangeLanguage_Clicked"
-                                   Style="{StaticResource PrimaryButton}"
-                                   Margin="0,15,0,0" />
-                <dxco:SimpleButton x:Name="SB_DeleteAccount"
-                                   Text="{Binding LocManager[DeleteAccount]}"
-                                   Command="{Binding DeleteAccountCommand}"
-                                   Style="{StaticResource SecondaryButton}"
-                                   Margin="0,15,0,0" />
-                <dxco:SimpleButton x:Name="SB_Logout"
-                                   Text="{Binding LocManager[Logout]}"
-                                   Command="{Binding LogoutCommand}"
-                                   Style="{StaticResource SecondaryButton}"
-                                   Margin="0,15,0,10" />
+            <VerticalStackLayout
+                Padding="15,0,15,0"
+                MaximumWidthRequest="500"
+                VerticalOptions="Center">
+                <Image
+                    HeightRequest="180"
+                    Source="logolargesize"
+                    WidthRequest="180" />
+                <Label
+                    FontFamily="CambriaBold"
+                    FontSize="40"
+                    HorizontalOptions="Center"
+                    Text="{Binding AppName}"
+                    TextColor="{StaticResource Primary}" />
+                <dxco:SimpleButton
+                    x:Name="SB_TelegramChannel"
+                    Margin="0,5,0,0"
+                    Command="{Binding ShowTelegramChannelCommand}"
+                    Style="{StaticResource PrimaryButton}"
+                    Text="{Binding LocManager[JoinOurTelegram]}" />
+                <dxco:SimpleButton
+                    x:Name="SB_ContactInfo"
+                    Margin="0,15,0,0"
+                    Command="{Binding OpenEmailCommand}"
+                    Style="{StaticResource PrimaryButton}"
+                    Text="{Binding LocManager[ContactEmail]}" />
+                <dxco:SimpleButton
+                    x:Name="SB_PrivacyPolicy"
+                    Margin="0,15,0,0"
+                    Command="{Binding ShowPrivacyPolicyCommand}"
+                    Style="{StaticResource PrimaryButton}"
+                    Text="{Binding LocManager[PrivacyPolicy]}" />
+                <dxco:SimpleButton
+                    x:Name="SB_UserAgreement"
+                    Margin="0,15,0,0"
+                    Command="{Binding ShowUserAgreementCommand}"
+                    Style="{StaticResource PrimaryButton}"
+                    Text="{Binding LocManager[UserAgreement]}" />
+                <dxco:SimpleButton
+                    x:Name="SB_ChangePassword"
+                    Margin="0,10,0,0"
+                    Command="{Binding ShowChangePasswordCommand}"
+                    Style="{StaticResource PrimaryButton}"
+                    Text="{Binding LocManager[ChangePassword]}" />
+                <dxco:SimpleButton
+                    x:Name="SB_ChangeLanguage"
+                    Margin="0,15,0,0"
+                    Clicked="SB_ChangeLanguage_Clicked"
+                    Style="{StaticResource PrimaryButton}"
+                    Text="{Binding LocManager[ChangeLanguage]}" />
+                <dxco:SimpleButton
+                    x:Name="SB_DeleteAccount"
+                    Margin="0,15,0,0"
+                    Command="{Binding DeleteAccountCommand}"
+                    Style="{StaticResource SecondaryButton}"
+                    Text="{Binding LocManager[DeleteAccount]}" />
+                <dxco:SimpleButton
+                    x:Name="SB_Logout"
+                    Margin="0,15,0,10"
+                    Command="{Binding LogoutCommand}"
+                    Style="{StaticResource SecondaryButton}"
+                    Text="{Binding LocManager[Logout]}" />
 
-                <dxco:BottomSheet x:Name="BS_ChangeLanguage"
-                                  AllowDismiss="True"
-                                  AllowedState="HalfExpanded"
-                                  BackgroundColor="{AppThemeBinding Light={StaticResource Background},
-                                                                    Dark={StaticResource DarkBackground}}"
-                                  ShowGrabber="False">
-                    <VerticalStackLayout Margin="30,0,30,20"
-                                         Spacing="7">
+                <dxco:SimpleButton
+                    x:Name="SB_AppCarousel"
+                    Command="{Binding ShowAppCarouselCommand}"
+                    Style="{StaticResource PrimaryButton}"
+                    Text="{Binding LocManager[AboutProgram]}" />
 
-                        <Label x:Name="L_ChooseLanguage"
-                               Text="{Binding LocManager[ChooseLanguage]}"
-                               Style="{StaticResource CentralHeader}"
-                               FontAttributes="Bold"
-                               FontSize="22"
-                               HorizontalOptions="Center" />
+                <dxco:BottomSheet
+                    x:Name="BS_ChangeLanguage"
+                    AllowDismiss="True"
+                    AllowedState="HalfExpanded"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Background},
+                                                      Dark={StaticResource DarkBackground}}"
+                    ShowGrabber="False">
+                    <VerticalStackLayout Margin="30,0,30,20" Spacing="7">
 
-                        <dxe:MultilineEdit x:Name="ME_English"
-                                           Text="English"
-                                           Style="{StaticResource RoundedMultilineEditStyle}"
-                                           Margin="0,10,0,0"
-                                           EndIconColor="{StaticResource LabelText}"
-                                           Tap="ME_ChooseLanguage_Tap" />
-                        <dxe:MultilineEdit x:Name="ME_Ukrainian"
-                                           Text="Українська"
-                                           Style="{StaticResource RoundedMultilineEditStyle}"
-                                           Margin="0,10,0,0"
-                                           EndIconColor="{StaticResource LabelText}"
-                                           Tap="ME_ChooseLanguage_Tap" />
-                        <Grid Margin="0,10,0,0"
-                              ColumnDefinitions="*,*"
-                              ColumnSpacing="15"
-                              HorizontalOptions="FillAndExpand">
-                            <dxco:SimpleButton x:Name="SB_ChangeLanguage_Cancel"
-                                               Text="{Binding LocManager[Cancel]}"
-                                               Clicked="SB_ChangeLanguage_Cancel_Clicked"
-                                               Icon="close"
-                                               IconHorizontalPosition="Left"
-                                               BackgroundColor="{StaticResource CancelButtonColor}"
-                                               FontSize="16"
-                                               Grid.Column="0" />
-                            <dxco:SimpleButton x:Name="SB_SaveChangeLanguage"
-                                               Text="{Binding LocManager[Save]}"
-                                               Clicked="SB_SaveChangeLanguage_Clicked"
-                                               Style="{StaticResource PrimaryButton}"
-                                               Icon="check_second"
-                                               IconHorizontalPosition="Left"
-                                               FontSize="16"
-                                               Grid.Column="1" />
+                        <Label
+                            x:Name="L_ChooseLanguage"
+                            FontAttributes="Bold"
+                            FontSize="22"
+                            HorizontalOptions="Center"
+                            Style="{StaticResource CentralHeader}"
+                            Text="{Binding LocManager[ChooseLanguage]}" />
+
+                        <dxe:MultilineEdit
+                            x:Name="ME_English"
+                            Margin="0,10,0,0"
+                            EndIconColor="{StaticResource LabelText}"
+                            Style="{StaticResource RoundedMultilineEditStyle}"
+                            Tap="ME_ChooseLanguage_Tap"
+                            Text="English" />
+                        <dxe:MultilineEdit
+                            x:Name="ME_Ukrainian"
+                            Margin="0,10,0,0"
+                            EndIconColor="{StaticResource LabelText}"
+                            Style="{StaticResource RoundedMultilineEditStyle}"
+                            Tap="ME_ChooseLanguage_Tap"
+                            Text="Українська" />
+                        <Grid
+                            Margin="0,10,0,0"
+                            ColumnDefinitions="*,*"
+                            ColumnSpacing="15"
+                            HorizontalOptions="FillAndExpand">
+                            <dxco:SimpleButton
+                                x:Name="SB_ChangeLanguage_Cancel"
+                                Grid.Column="0"
+                                BackgroundColor="{StaticResource CancelButtonColor}"
+                                Clicked="SB_ChangeLanguage_Cancel_Clicked"
+                                FontSize="16"
+                                Icon="close"
+                                IconHorizontalPosition="Left"
+                                Text="{Binding LocManager[Cancel]}" />
+                            <dxco:SimpleButton
+                                x:Name="SB_SaveChangeLanguage"
+                                Grid.Column="1"
+                                Clicked="SB_SaveChangeLanguage_Clicked"
+                                FontSize="16"
+                                Icon="check_second"
+                                IconHorizontalPosition="Left"
+                                Style="{StaticResource PrimaryButton}"
+                                Text="{Binding LocManager[Save]}" />
                         </Grid>
                     </VerticalStackLayout>
                 </dxco:BottomSheet>

@@ -122,18 +122,27 @@
 		<PackageReference Include="CommunityToolkit.Maui.Markup" Version="4.0.0" />
 		<PackageReference Include="Polly.Extensions" Version="8.4.0" />
 		<PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="2.0.0" />
-		<PackageReference Include="DevExpress.Maui.CollectionView" Version="25.1.5" />
-		<PackageReference Include="DevExpress.Maui.Controls" Version="25.1.5" />
-		<PackageReference Include="DevExpress.Maui.DataGrid" Version="25.1.5" />
-		<PackageReference Include="DevExpress.Maui.Editors" Version="25.1.5" />
+		<PackageReference Include="DevExpress.Maui.CollectionView" Version="25.1.6" />
+		<PackageReference Include="DevExpress.Maui.Controls" Version="25.1.6" />
+		<PackageReference Include="DevExpress.Maui.DataGrid" Version="25.1.6" />
+		<PackageReference Include="DevExpress.Maui.Editors" Version="25.1.6" />
 		<PackageReference Include="Azure.AI.OpenAI" Version="2.1.0" />
 		<PackageReference Include="System.Text.Json" Version="8.0.5" />
 		<PackageReference Include="LiveChartsCore.SkiaSharpView.Maui" Version="2.0.0-rc5.4" />
 	</ItemGroup>
 
+	<ItemGroup Condition="$(TargetFramework.Contains('-android'))">
+		<PackageReference Include="Xamarin.AndroidX.Lifecycle.Common" Version="2.8.7.2" />
+		<PackageReference Include="Xamarin.AndroidX.Lifecycle.Runtime" Version="2.8.7.2" />
+	</ItemGroup>
+
+
 	<ItemGroup>
 		<Compile Update="App.xaml.cs">
 			<DependentUpon>App.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\AppCarouselView.xaml.cs">
+		  <DependentUpon>AppCarouselView.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\StartupView.xaml.cs">
 			<DependentUpon>StartupView.xaml</DependentUpon>
@@ -200,6 +209,9 @@
 		</MauiXaml>
 		<MauiXaml Update="Controls\CircularProgressBar.xaml">
 			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\AppCarouselView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\StartupView.xaml">
 			<Generator>MSBuild:Compile</Generator>
@@ -277,7 +289,8 @@
 	<ItemGroup>
 		<EmbeddedResource Include="appsettings.json" />
 	</ItemGroup>
-	
+
+
 	<!-- Exclude conflicting AndroidX tracing dependencies -->
 <!--	<ItemGroup Condition="'$(TargetFramework)' == 'net9.0-android'">-->
 <!--		<PackageReference Include="Xamarin.AndroidX.Tracing.Tracing" ExcludeAssets="all" />-->
