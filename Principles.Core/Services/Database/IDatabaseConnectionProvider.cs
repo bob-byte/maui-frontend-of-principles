@@ -1,9 +1,7 @@
 namespace Principles.Core.Services;
 
-public interface IDatabaseProvider
+public interface IDatabaseConnectionProvider
 {
     SQLiteConnection SyncConnection { get; }
     SQLiteAsyncConnection AsyncConnection { get; }
-
-    string GetDatabasePath();
 }

@@ -7,10 +7,8 @@ public partial class SettingsViewModel : BaseViewModel
     public SettingsViewModel( IServiceProvider serviceProvider)
         : base(serviceProvider)
     {
-        AccountService = serviceProvider.GetRequiredService<IAccountService>();
+        //do nothing
     }
-
-    public IAccountService AccountService { get; }
 
     [RelayCommand]
     public Task ShowUserAgreementAsync()
@@ -70,7 +68,8 @@ public partial class SettingsViewModel : BaseViewModel
         {
             await UiBusyFor( async () =>
             {
-                await AccountService.DeleteAccountAsync();
+                IUserService userService = ServiceProvider.GetRequiredService<IUserService>();
+                await userService.DeleteAccountAsync();
 
                 await base.LogoutAsync().DefaultConfigureAwait();
             } );

@@ -45,7 +45,6 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<ICachingService, CachingService>();
         services.AddSingleton<IUrlBuilder, UrlBuilder>();
         services.AddSingleton<IRequestProvider, RequestProvider>();
-        services.AddSingleton<IServiceOfHabit, ServiceOfHabit>();
         services.AddSingleton<IAreaOfLifeService, AreaOfLifeService>();
         services.AddSingleton<ILoginService, LoginService>();
         services.AddSingleton<IProgressOfHabitService, ProgressOfHabitService>();
@@ -64,10 +63,21 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<ISyncService, SyncService>();
         services.AddSingleton<ISyncRetryConfig, DefaultSyncRetryConfig>();
         services.AddSingleton<ISyncQueueService, SyncQueueService>();
-        services.AddSingleton<IOfflineRepository, OfflineRepository>();
-        services.AddSingleton<RemoteApiService<UserHabit>, HabitRemoteApi>();
-        services.AddSingleton<IDatabaseProvider, DatabaseProvider>();
+        services.AddSingleton<IDatabaseConnectionProvider, DatabaseConnectionProvider>();
         services.AddSingleton<IDatabaseMigrator, DatabaseMigrator>();
+
+        services.AddSingleton<ILocalRemoteExecutor, LocalRemoteExecutor>();
+
+        services.AddSingleton<RemoteApiService<User>, UserRemoteApi>();
+        services.AddSingleton<IUserRemoteApi, UserRemoteApi>();
+        services.AddSingleton<IUserService, UserService>();
+
+        services.AddSingleton<RemoteApiService<UserHabit>, HabitRemoteApi>();
+        services.AddSingleton<IHabitRemoteApi, HabitRemoteApi>();
+        services.AddSingleton<IServiceOfHabit, ServiceOfHabit>();
+
+        services.AddSingleton<IProgressOfHabitRemoteApi, ProgressOfHabitRemoteApi>();
+        services.AddSingleton<RemoteApiService<ProgressOfHabit>, ProgressOfHabitRemoteApi>();
 
         return services;
     }

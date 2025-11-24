@@ -36,6 +36,8 @@ public partial class UserHabit : ObservableObject, ICloneable, IEntity
 
     [ObservableProperty]
     private ObservableCollectionEx<UserHabitReminder>? m_reminders;
+
+    public DateTime? ArchivingTime { get; set; }
     
     public bool IsNew()
     {
@@ -65,6 +67,8 @@ public partial class UserHabit : ObservableObject, ICloneable, IEntity
 
     [ObservableProperty]
     private FrequencyOfHabit? m_frequency;
+
+    public long FrequencyLocalId { get; set; }
 
     [ObservableProperty]
     private string? m_colorName;

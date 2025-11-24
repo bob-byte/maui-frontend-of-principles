@@ -2,28 +2,33 @@ using System.Linq.Expressions;
 
 namespace Principles.Core.Services;
 
-public class OfflineRepository : IOfflineRepository
+public class Database : IDatabase
 {
     private readonly SQLiteConnection m_syncConn;
     private readonly SQLiteAsyncConnection m_asyncConn;
     private bool m_disposed;
 
-    public OfflineRepository(IDatabaseProvider databaseProvider, IDatabaseMigrator migrator)
+    public Database(IDatabaseConnectionProvider connectionProvider, IDatabaseMigrator migrator)
     {
-        m_syncConn = databaseProvider.SyncConnection;
-        m_asyncConn = databaseProvider.AsyncConnection;
+        m_syncConn = connectionProvider.SyncConnection;
+        m_asyncConn = connectionProvider.AsyncConnection;
         
         migrator.Migrate();
     }
     
-    public Task<TField> GetFieldAsync<T, TField>( long localId, string fieldName )
+    public async Task<TField?> GetFieldAsync<T, TField>( long localId, string fieldName )
     { 
-        return m_asyncConn.ExecuteScalarAsync<TField>( $"SELECT {fieldName} FROM {typeof(T).Name} WHERE LocalId = ?;", localId);
+        List<TField>? queryResult = await m_asyncConn.QueryScalarsAsync<TField>( $"SELECT {fieldName} FROM {typeof(T).Name} WHERE LocalId = ?;", localId);
+        
+        TField? result = queryResult is null ? default : queryResult.FirstOrDefault() ?? default;
+        return result;
     }
     
-    public TField GetField<T, TField>( long localId, string fieldName )
+    public TField? GetField<T, TField>( long localId, string fieldName )
     { 
-        return m_syncConn.ExecuteScalar<TField>( $"SELECT {fieldName} FROM {typeof(T).Name} WHERE LocalId = ?;", localId);
+        List<TField> queryResult = m_syncConn.QueryScalars<TField>( $"SELECT {fieldName} FROM {typeof(T).Name} WHERE LocalId = ?;", localId);
+        TField? result = queryResult is null ? default : queryResult.FirstOrDefault() ?? default;
+        return result;
     }
     
     public void UpdateField<T, TField>( long localId, string field, TField value ) where T : IOfflineEntity, new()
@@ -244,9 +249,11 @@ public class OfflineRepository : IOfflineRepository
     // ----------------- CLEANUP -----------------
     public void Dispose()
     {
-        if (m_disposed) return;
-        m_disposed = true;
-        m_syncConn?.Close();
-        m_syncConn?.Dispose();
+        if (!m_disposed)
+        {
+            m_disposed = true;
+            m_syncConn?.Close();
+            m_syncConn?.Dispose();
+        }
     }
 }

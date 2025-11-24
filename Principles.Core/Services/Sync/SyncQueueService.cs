@@ -4,16 +4,16 @@ namespace Principles.Core.Services;
 
 public class SyncQueueService : ISyncQueueService
 {
-    private readonly IOfflineRepository m_repository;
+    private readonly IDatabase m_repository;
     private readonly ISyncRetryConfig m_retryConfig;
 
-    public SyncQueueService(IOfflineRepository repository, ISyncRetryConfig syncRetryConfig)
+    public SyncQueueService(IDatabase repository, ISyncRetryConfig syncRetryConfig)
     {
         m_repository = repository;
         m_retryConfig = syncRetryConfig;
     }
 
-    public async Task AddToQueueAsync(string handlerType, OperationType operation, IEntity payload)
+    public async Task AddToQueueAsync(string handlerType, OperationKind operation, IEntity payload)
     {
         var item = new SyncQueueItem
         {
@@ -28,12 +28,12 @@ public class SyncQueueService : ISyncQueueService
         await m_repository.InsertAsync(item);
     }
     
-    public async Task AddToQueueAsync(string handlerType, string operation, object? payload)
+    public async Task AddToQueueAsync(string handlerType, OperationKind operation, object? payload)
     {
         var item = new SyncQueueItem
         {
             HandlerType = handlerType,
-            Operation = operation,
+            Operation = operation.ToString(),
             PayloadJson = payload is null ? null : JsonSerializer.Serialize(payload),
             NextRetryAt = DateTime.UtcNow // Ready to process immediately
         };
@@ -41,19 +41,19 @@ public class SyncQueueService : ISyncQueueService
         await m_repository.InsertAsync(item);
     }
     
-    public async Task AddToQueueAsync(string handlerType, string operation)
+    public async Task AddToQueueAsync(string handlerType, OperationKind operation)
     {
         var item = new SyncQueueItem
         {
             HandlerType = handlerType,
-            Operation = operation,
+            Operation = operation.ToString(),
             NextRetryAt = DateTime.UtcNow // Ready to process immediately
         };
 
         await m_repository.InsertAsync(item);
     }
 
-    public Task AddToQueueAsync(IEntity entity, OperationType operation)
+    public Task AddToQueueAsync(IEntity entity, OperationKind operation)
     {
         return AddToQueueAsync(entity.GetType().Name, operation, entity);
     }

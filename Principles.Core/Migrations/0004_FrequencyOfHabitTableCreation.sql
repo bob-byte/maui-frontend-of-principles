@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS FrequencyOfHabit (
+    LocalId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    Id INTEGER NULL,
+    LastModified TEXT NULL,
+    Type INTEGER NOT NULL,
+    Repeats INTEGER NOT NULL,
+    IntervalLengthInDays INTEGER NOT NULL
+);

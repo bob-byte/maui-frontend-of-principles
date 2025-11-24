@@ -5,48 +5,23 @@ using System.Text;
 using System.Threading.Tasks;
 namespace Principles.Core.Services;
 
-public class ProgressOfHabitService : BaseRemoteService, IProgressOfHabitService
+public class ProgressOfHabitService : BaseEntityService<ProgressOfHabit>, IProgressOfHabitService
 {
+    private IProgressOfHabitRemoteApi m_remoteApi;
+
     public ProgressOfHabitService( IServiceProvider serviceProvider )
         : base( serviceProvider )
     {
-        
+        m_remoteApi = serviceProvider.GetRequiredService<IProgressOfHabitRemoteApi>();
     }
 
     public async Task UpdateAsync( ProgressOfHabit progressOfHabit )
     {
-        #region Check parameter
-        if(progressOfHabit.Habit == null)
-        {
-            throw new ArgumentException( message: $"{nameof( progressOfHabit )}.{nameof( progressOfHabit.Habit )} is null" );
-        }
-
-        if (progressOfHabit.Habit.Progresses == null)
-        {
-            throw new ArgumentException( message: $"{nameof( progressOfHabit )}.{nameof( progressOfHabit.Habit )}.{nameof( progressOfHabit.Habit.Progresses )} is null" );
-        }
-
-        if (progressOfHabit.Habit.Frequency == null)
-        {
-            throw new ArgumentException( message: $"{nameof( progressOfHabit )}.{nameof( progressOfHabit.Habit )}.{nameof( progressOfHabit.Habit.Frequency )} is null" );
-        }
-        #endregion
-
-        UserHabit habit = progressOfHabit.Habit;
-        
-        string url = $"{UrlBuilder.ProgressOfHabit}/{progressOfHabit.Id}";
-        UpdateProgressDto dto = new()
-        {
-            Id = progressOfHabit.Id,
-            Date = progressOfHabit.Date,
-            Value = progressOfHabit.Value,
-            HabitId = habit.Id
-        };
-        SaveProgressOfHabitResponse response = await RequestProvider.PostAsync<UpdateProgressDto, SaveProgressOfHabitResponse>(
-            url,
-            dto,
-            SettingsService.AuthAccessToken
+        await LocalRemoteExecutor.ExecuteAsync<ProgressOfHabit>(
+            localCall: () => Database.SaveAsync( progressOfHabit ),
+            remoteCall: () => m_remoteApi.SaveAsync( progressOfHabit ),
+            operation: OperationKind.Save,
+            data: progressOfHabit
         );
-        progressOfHabit.Id = response.Id;
     }
 }

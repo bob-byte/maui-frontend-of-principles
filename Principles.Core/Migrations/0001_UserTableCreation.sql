@@ -6,5 +6,5 @@ CREATE TABLE IF NOT EXISTS User (
     Mission TEXT NULL,
     Email TEXT NULL,
     Gender INTEGER NOT NULL,
-    LastModified INTEGER NULL
+    LastModified TEXT NULL
 );

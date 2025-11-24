@@ -11,6 +11,8 @@ public class ServiceOfHabit : BaseEntityService<UserHabit>, IServiceOfHabit
 
         ReminderService = serviceProvider.GetRequiredService<IReminderService>();
         NetworkService = serviceProvider.GetRequiredService<INetworkService>();
+
+        RemoteApi = serviceProvider.GetRequiredService<IHabitRemoteApi>();
     }
     
     private IReminderService ReminderService { get; }
@@ -21,6 +23,8 @@ public class ServiceOfHabit : BaseEntityService<UserHabit>, IServiceOfHabit
     public DateOnly StartProgressInterval { get; }
     
     public DateOnly EndProgressInterval { get; }
+
+    public IHabitRemoteApi RemoteApi { get; }
 
     public void InitializeHabitProgresses( UserHabit habit, DateOnly startInterval, DateOnly endInterval )
     {
@@ -106,17 +110,35 @@ public class ServiceOfHabit : BaseEntityService<UserHabit>, IServiceOfHabit
         return result;
     }
 
-    public async Task<List<UserHabit>> ActiveHabitsAsync( DateOnly startInterval, DateOnly endInterval )
+    public async Task<List<UserHabit>> ActiveHabitsAsync()
     {
-        List<UserHabit> result = await OfflineApiService.GetAllAsync();
-        result = result.Where( h => !h.IsArchived ).ToList();
-        
-        foreach (UserHabit habit in result)
+        List<UserHabit>? habits = await Database.WhereAsync<UserHabit>( h => !h.IsArchived ).ConfigureAwait( false );
+
+        if(habits is not null && habits.Count > 0)
         {
-            InitializeHabitProgresses( habit, startInterval, endInterval );
+            foreach (UserHabit habit in habits)
+            {
+                habit.Frequency = await Database.GetRequiredByIdAsync<FrequencyOfHabit>( habit.FrequencyLocalId ).ConfigureAwait( false );
+                habit.Progresses = new ObservableCollectionEx<ProgressOfHabit>(
+                    await Database.WhereAsync<ProgressOfHabit>( p => p.HabitLocalId == habit.LocalId ).ConfigureAwait( false )
+                );
+                InitializeHabitProgresses( habit, StartProgressInterval, EndProgressInterval );
+            }
         }
-        
-        return result;
+
+        if ((habits is null || habits.Count == 0) && NetworkService.IsConnected)
+        {
+            habits = await RequestProvider.GetAsync<List<UserHabit>>(
+                UrlBuilder.HabitsInProgress,
+                SettingsService.AuthAccessToken!
+            ).ConfigureAwait( false );
+
+            await Database.SaveRangeAsync( habits ).ConfigureAwait( false );
+        }
+
+        habits ??= [];
+
+        return habits;
     }
 
     public async Task<UserHabit> UserHabitAsync( long id )
@@ -126,7 +148,7 @@ public class ServiceOfHabit : BaseEntityService<UserHabit>, IServiceOfHabit
             throw new ArgumentException( message: "is zero", paramName: nameof( id ) );
         }
 
-        UserHabit result = await OfflineRepository.GetRequiredByIdAsync<UserHabit>( id );
+        UserHabit result = await Database.GetRequiredByIdAsync<UserHabit>( id );
         return result;
     }
 
@@ -134,6 +156,13 @@ public class ServiceOfHabit : BaseEntityService<UserHabit>, IServiceOfHabit
     {
         ArgumentNullException.ThrowIfNull(habit, nameof(habit));
         
+        await LocalRemoteExecutor.ExecuteAsync<UserHabit>(
+            () => Database.SaveAsync(habit),
+            () => RemoteApi.SaveAsync(habit),
+            OperationKind.Save,
+            habit
+        ).ConfigureAwait(false);
+
         if (habit.Reminders?.Any() == true)
         {
             foreach (UserHabitReminder habitReminder in habit.Reminders)
@@ -145,10 +174,7 @@ public class ServiceOfHabit : BaseEntityService<UserHabit>, IServiceOfHabit
                 }
             }
         }
-
-        await OfflineApiService.SaveAsync( habit );
     }
-    
     
     private async Task AddNotificationToDeviceAsync( UserHabit habit, UserHabitReminder reminder, WeekDay weekDay )
     {
@@ -190,15 +216,39 @@ public class ServiceOfHabit : BaseEntityService<UserHabit>, IServiceOfHabit
     public async Task SetHabitArchiveStatusAsync(UserHabit habit)
     {
         HabitArchiveStatus dto = new() { HabitId = habit.Id, IsArchived = habit.IsArchived, };
-        await OfflineApiService.ExecuteAsync(
-            () => OfflineRepository.UpdateFieldAsync<UserHabit, bool>( habit.LocalId, nameof(habit.IsArchived),
-                habit.IsArchived ), nameof(UserHabit), "SetArchiveStatus", dto );
+        
+        await LocalRemoteExecutor.ExecuteAsync<UserHabit>(
+            () => Database.UpdateFieldAsync<UserHabit, bool>( habit.LocalId, nameof( habit.IsArchived ),
+                habit.IsArchived ),
+            () => RemoteApi.SetArchiveStatusAsync( dto ),
+            new OperationKind( "SetArchiveStatus" ),
+            dto
+        ).ConfigureAwait(false);
     }
 
-    public Task<List<ArсhivedHabit>> GetArchivedHabits()
+    public async Task<List<ArсhivedHabit>> GetArchivedHabits()
     {
-        return OfflineRepository.QueryAsync<ArсhivedHabit>(
+        List<ArсhivedHabit>? archivedHabits = await Database.QueryAsync<ArсhivedHabit>(
             "SELECT Id, LocalId, Name, ArchivingTime FROM UserHabit WHERE IsArchived = true" );
+        if( (archivedHabits is null || archivedHabits.Count == 0) && NetworkService.IsConnected )
+        {
+            List<UserHabit> habits = await RequestProvider.GetAsync<List<UserHabit>>(
+                UrlBuilder.Archive,
+                SettingsService.AuthAccessToken!
+            ).ConfigureAwait( false );
+
+            await Database.SaveRangeAsync( habits ).ConfigureAwait( false );
+
+            archivedHabits = habits.Select( h => new ArсhivedHabit
+            {
+                Id = h.Id,
+                LocalId = h.LocalId,
+                Name = h.Name!,
+                ArchivingTime = h.ArchivingTime!.Value
+            } ).ToList();
+        }
+
+        return archivedHabits ?? new List<ArсhivedHabit>();
     }
 
     public bool IsItRecommendedToCreateNewHabit( UserHabit newHabit )
@@ -245,23 +295,29 @@ public class ServiceOfHabit : BaseEntityService<UserHabit>, IServiceOfHabit
         return progress.Value is not ProgressValue.YES_AUTO and ProgressValue.YES_MANUAL;
     }
 
-    public async Task DeleteAsync(UserHabit habit)
+    public async Task DeleteAsync( UserHabit habit )
     {
         long[] reminderIds =
-            (await OfflineRepository.WhereAsync<UserHabitReminder>( r => r.UserHabitId == habit.LocalId )
+            (await Database.WhereAsync<UserHabitReminder>( r => r.UserHabitLocalId == habit.LocalId )
                 .DefaultConfigureAwait()).Select( r => r.LocalId ).ToArray();
-        
+
         List<int> notificationRequests = new();
         foreach (long idOfReminder in reminderIds)
         {
-            List<WeekDay> weekDaysOfReminder = await OfflineRepository.WhereAsync<WeekDay>( w => w.UserHabitReminderId == idOfReminder ).DefaultConfigureAwait();
+            List<WeekDay> weekDaysOfReminder = await Database.WhereAsync<WeekDay>( w => w.UserHabitReminderId == idOfReminder ).DefaultConfigureAwait();
             notificationRequests.AddRange( weekDaysOfReminder.Select( w => w.UserNotificationRequestId ) );
         }
-        
-        await OfflineApiService.DeleteAsync( habit ).DefaultConfigureAwait();
+
+        await LocalRemoteExecutor.ExecuteAsync<UserHabit>(
+            () => Database.DeleteByIdAsync<UserHabit>( habit.Id ),
+            () => RemoteApi.DeleteAsync( habit.Id ),
+            OperationKind.Delete,
+            data: null
+        ).ConfigureAwait( false );
+
         foreach (int notification in notificationRequests)
         {
-            await ReminderService.CancelLocallyAsync( notification ).DefaultConfigureAwait();
+            await ReminderService.CancelLocallyAsync( notification ).ConfigureAwait( false );
         }
     }
     

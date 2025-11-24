@@ -4,16 +4,10 @@ namespace Principles.Core.Services;
 
 public class DatabaseMigrator : IDatabaseMigrator
 {
-    private readonly IDatabaseProvider m_dataBaseProvider;
-
-    public DatabaseMigrator(IDatabaseProvider dataBaseProvider)
-    {
-        m_dataBaseProvider = dataBaseProvider;
-    }
-
     public void Migrate()
     {
-        SQLiteConnection sqlConnection = m_dataBaseProvider.SyncConnection;
+        IDatabaseConnectionProvider dbConnectionProvider = ServiceLocator.Current!.GetRequiredService<IDatabaseConnectionProvider>();
+        SQLiteConnection sqlConnection = dbConnectionProvider.SyncConnection;
             
         ISettingsService settingsService = ServiceLocator.Current.GetRequiredService<ISettingsService>();
         if (settingsService.IsDebug)

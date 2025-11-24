@@ -15,7 +15,7 @@ public class UserHabitReminder : ICloneable, IEntity
     public string? Description { get; set; }
     public TimeOnly Time { get; set; }
     public bool IsEnabled { get; set; }
-    public long UserHabitId { get; set; }
+    public long UserHabitLocalId { get; set; }
     public IList<WeekDay>? DaysOfWeek { get; set; }
 
     public object Clone()

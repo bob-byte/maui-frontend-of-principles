@@ -2,10 +2,10 @@ using System.Linq.Expressions;
 
 namespace Principles.Core.Services;
 
-public interface IOfflineRepository
+public interface IDatabase
 {
-    Task<TField> GetFieldAsync<T, TField>( long localId, string fieldName );
-    TField GetField<T, TField>( long localId, string fieldName );
+    Task<TField?> GetFieldAsync<T, TField>( long localId, string fieldName );
+    TField? GetField<T, TField>( long localId, string fieldName );
     void UpdateField<T, TField>( long localId, string field, TField value ) where T : IOfflineEntity, new();
     Task UpdateFieldAsync<T, TField>( long localId, string field, TField value ) where T : IOfflineEntity, new();
     Task<T> GetRequiredByIdAsync<T>( long id ) where T : IOfflineEntity, new();

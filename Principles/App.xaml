@@ -99,8 +99,8 @@
                         Value="{AppThemeBinding Light={StaticResource DarkIconColor},
                                                 Dark={StaticResource IconColor}}" />
                 <Setter Property="PressedIconColor"
-                        Value="{AppThemeBinding Light={StaticResource DarkIconColor},
-                                                Dark={StaticResource IconColor}}" />
+                        Value="{AppThemeBinding Light={StaticResource LightNormalText},
+                                                Dark={StaticResource DarkNormalText}}" />
                 <Setter Property="BorderColor"
                         Value="{StaticResource SecondaryLight}" />
                 <Setter Property="PressedBorderColor"
@@ -119,8 +119,8 @@
                         Value="{AppThemeBinding Light={StaticResource DarkIconColor},
                                                 Dark={StaticResource IconColor}}" />
                 <Setter Property="PressedIconColor"
-                        Value="{AppThemeBinding Light={StaticResource DarkIconColor},
-                                                Dark={StaticResource IconColor}}" />
+                        Value="{AppThemeBinding Light={StaticResource DarkNormalText},
+                                                Dark={StaticResource LightNormalText}}" />
                 <Setter Property="BorderColor"
                         Value="{StaticResource TitleTextColor}" />
             </Style>

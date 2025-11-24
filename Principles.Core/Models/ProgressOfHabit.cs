@@ -8,14 +8,25 @@ public partial class ProgressOfHabit : ObservableObject, IEntity
     [ObservableProperty]
     private long m_id;
 
-    [ObservableProperty]
-    private DateOnly m_date;
+    public DateOnly Date
+    {
+        get => DateOnly.FromDayNumber(DateAsInt);
+        set
+        {
+            DateAsInt = value.DayNumber;
+            OnPropertyChanged();
+        }
+    }
+
+    public int DateAsInt { get; set; }
 
     [ObservableProperty]
     private int m_value;
 
     [ObservableProperty]
     private UserHabit? m_habit;
+
+    public long HabitLocalId { get; set; }
     
     [ObservableProperty]
     private string? m_notes;

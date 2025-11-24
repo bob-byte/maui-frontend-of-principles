@@ -99,22 +99,22 @@ public partial class App : Application
     protected override async void OnResume()
     {
         base.OnResume();
-        
+
         LocalNotificationCenter.Current.ClearAll();
-        
-        if (VersionTracking.IsFirstLaunchEver || VersionTracking.IsFirstLaunchForCurrentBuild || VersionTracking.IsFirstLaunchForCurrentVersion) 
+
+        if (VersionTracking.IsFirstLaunchEver || VersionTracking.IsFirstLaunchForCurrentBuild || VersionTracking.IsFirstLaunchForCurrentVersion)
         {
             await SecureStorage.SetAsync( PreferenceKeys.API_KEY, string.Empty );
         }
-        
+
         m_loggingService.LogInfo( "App resuming..." );
-        
+
         Task.Run( () => m_syncService.SyncAsync() ).GetAwaiter();
-        
+
         m_updatePopupViewModel.ReferenceMessenger.Send( new TryAddNewDayInHabitListMessage() );
 
-        bool shouldShowPopup = (m_updatePopup is null || !m_updatePopup.IsShown) && ( await m_updatePopupViewModel.ShouldShowPopup());
-        
+        bool shouldShowPopup = (m_updatePopup is null || !m_updatePopup.IsShown) && (await m_updatePopupViewModel.ShouldShowPopup());
+
         if (shouldShowPopup)
         {
             m_updatePopup = new UpdatePopup( m_updatePopupViewModel );

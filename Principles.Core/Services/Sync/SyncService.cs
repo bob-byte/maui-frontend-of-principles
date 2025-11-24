@@ -98,45 +98,14 @@ public class SyncService : ISyncService
             if (handler is null)
             {
                 string errorMessage = $"Handler for entity \"{item.HandlerType}\" not found";
-                m_loggingService.LogFatal(errorMessage);
+                m_loggingService.LogFatal( errorMessage );
+                IDialogService dialogService = ServiceLocator.Current!.GetRequiredService<IDialogService>();
+                await dialogService.ShowErrorAsync( errorMessage );
                 await m_queue.MarkAsFailedAsync(item.LocalId, errorMessage);
                 return;
             }
 
-            // Process the operation based on type
-            if (item.Operation == OperationType.Save.ToString())
-            {
-                if (item.EntityId.HasValue && item.EntityLocalId.HasValue)
-                {
-                    await handler.SaveAsync(item.EntityId.Value, item.EntityLocalId.Value, item.PayloadJson);
-                }
-                else
-                {
-                    string errorMessage = "Save operation missing required EntityId or EntityLocalId";
-                    m_loggingService.LogFatal(errorMessage);
-                    await m_queue.MarkAsFailedAsync(item.LocalId, errorMessage);
-                    return;
-                }
-            }
-            else if (item.Operation == OperationType.Delete.ToString())
-            {
-                if (item.EntityId.HasValue)
-                {
-                    await handler.DeleteAsync(item.EntityId.Value, item.PayloadJson);
-                }
-                else
-                {
-                    string errorMessage = "Delete operation missing required EntityId";
-                    m_loggingService.LogError(errorMessage);
-                    await m_queue.MarkAsFailedAsync(item.LocalId, errorMessage);
-                    return;
-                }
-            }
-            else
-            {
-                // Custom operation
-                await handler.ExecuteAsync(item.Operation, item.PayloadJson);
-            }
+            await handler.HandleQueueItemAsync(item);
 
             // Mark as successfully processed
             await m_queue.MarkAsProcessedAsync(item.LocalId);
@@ -172,5 +141,3 @@ public class SyncService : ISyncService
         await m_queue.CleanupOldProcessedItemsAsync(processedItemsAge);
     }
 }
-
-

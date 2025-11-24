@@ -5,14 +5,14 @@ CREATE TABLE IF NOT EXISTS SyncQueueItem (
     HandlerType TEXT NOT NULL,
     Operation TEXT NOT NULL,
     PayloadJson TEXT NULL,
-    LastModified INTEGER NULL,
+    LastModified TEXT NULL,
     IsProcessing INTEGER DEFAULT 0,
     IsProcessed INTEGER DEFAULT 0,
     RetryCount INTEGER DEFAULT 0,
-    NextRetryAt INTEGER NULL,
-    LastRetryAt INTEGER NULL,
+    NextRetryAt TEXT NULL,
+    LastRetryAt TEXT NULL,
     ErrorMessage TEXT NULL,
-    ProcessedAt INTEGER NULL,
+    ProcessedAt TEXT NULL,
     IsFailed INTEGER DEFAULT 0
 );
 

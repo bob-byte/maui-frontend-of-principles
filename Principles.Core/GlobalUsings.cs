@@ -1,4 +1,5 @@
 ﻿global using Principles.Constants;
+global using Principles.Core.Constants;
 global using Principles.Exceptions;
 global using Principles.Core.Extensions;
 global using Principles.Core.Services;

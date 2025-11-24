@@ -2,17 +2,15 @@ namespace Principles.Core.Services;
 
 public class BaseEntityService<T> : BaseRemoteService where T : IEntity, new()
 {
-    protected OfflineApiService<T> OfflineApiService { get; }
-    protected RemoteApiService<T> RemoteApiService { get; }
-    protected IOfflineRepository OfflineRepository { get; }
+    protected IDatabase Database { get; }
     protected ISyncQueueService SyncQueueService { get; }
+    protected ILocalRemoteExecutor LocalRemoteExecutor { get; }
     
     public BaseEntityService(IServiceProvider serviceProvider)
         : base(serviceProvider)
     {
-        OfflineRepository = serviceProvider.GetRequiredService<IOfflineRepository>();
-        RemoteApiService = serviceProvider.GetRequiredService<RemoteApiService<T>>();
+        Database = serviceProvider.GetRequiredService<IDatabase>();
         SyncQueueService = serviceProvider.GetRequiredService<ISyncQueueService>();
-        OfflineApiService = new OfflineApiService<T>( serviceProvider );
+        LocalRemoteExecutor = serviceProvider.GetRequiredService<ILocalRemoteExecutor>();
     }
 }

@@ -4,10 +4,10 @@ namespace Principles.Core.Services;
 
 public interface ISyncQueueService
 {
-    Task AddToQueueAsync(string handlerType, OperationType operation, IEntity entity);
-    Task AddToQueueAsync(IEntity entity, OperationType operation);
-    Task AddToQueueAsync(string handlerType, string operation, object? payload);
-    Task AddToQueueAsync(string handlerType, string operation);
+    Task AddToQueueAsync(string handlerType, OperationKind operation, IEntity entity);
+    Task AddToQueueAsync(IEntity entity, OperationKind operation);
+    Task AddToQueueAsync(string handlerType, OperationKind operation, object? payload);
+    Task AddToQueueAsync(string handlerType, OperationKind operation);
     Task<List<SyncQueueItem>> GetPendingItemsAsync();
     Task MarkAsProcessingAsync(long id);
     Task MarkAsFailedAsync(long id, string errorMessage);
