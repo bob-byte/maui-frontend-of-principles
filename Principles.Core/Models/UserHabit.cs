@@ -33,9 +33,6 @@ public partial class UserHabit : ObservableObject, ICloneable
     private ObservableCollectionEx<UserHabitReminder>? m_reminders;
 
     [ObservableProperty]
-    private HabitKind m_kind;
-
-    [ObservableProperty]
     private string? m_unit;
 
     [ObservableProperty]
@@ -86,6 +83,9 @@ public partial class UserHabit : ObservableObject, ICloneable
     
     [ObservableProperty]
     private int m_complexity;
+
+    [ObservableProperty]
+    private DefaultProgressValue m_defaultProgressValue;
 
     public UserHabit()
     {

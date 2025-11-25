@@ -143,6 +143,7 @@ public partial class EditHabitViewModel : BaseViewModel
     }
 
     //It is call on navigate to this EditHabitView
+    // add typeofhabit
     public override void ApplyQueryAttributes( IDictionary<string, object> query )
     {
         IsLoadingHabitInfo = true;
@@ -182,9 +183,13 @@ public partial class EditHabitViewModel : BaseViewModel
         {
             m_isInHabitDetails = false;
         }
-        if (query.TryGetValue( "HabitKind", out object? kindObj ) && kindObj is HabitKind kind)
+        if (query.TryGetValue( "ProgressMarkVariaty", out object? kindObj ) && kindObj is ProgressMarkVariaty kind)
         {
-            Habit.Kind = kind;
+            Habit.ProgressMarkVariaty = kind;
+        }
+        if (query.TryGetValue( "TypeOfHabit", out object? typeObj ) && typeObj is TypeOfHabit type)
+        {
+            Habit.Type = type;
         }
         CheckHabitProgressRestriction( );
     }
@@ -208,7 +213,6 @@ public partial class EditHabitViewModel : BaseViewModel
         if (IsNewHabit)
         {
             Habit.Id = 0;
-            Habit.Type = TypeOfHabit.Flexible;
             Habit.AreasOfLife = new ObservableCollectionEx<UserAreaOfLife>();
             Habit.Complexity = 5;
             EditedReminder = new EditedUserHabitReminder();

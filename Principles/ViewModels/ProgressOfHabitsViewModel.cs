@@ -291,14 +291,15 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
             locker.Release();
         }
     }
-
+    //valueTuple
     [RelayCommand]
-    private async Task AddHabitAsync( HabitKind kind )
-    {        
+    private async Task AddHabitAsync( (ProgressMarkVariaty MarkVariaty, TypeOfHabit Type) parameter)
+    {
         Dictionary<string, object> routeParams = new()
         {
             { "IsArchived", false },
-            { "HabitKind", kind }
+            { "TypeOfHabit", parameter.Type },
+            { "ProgressMarkVariaty", parameter.MarkVariaty },
         };
 
         DoShowPlusButton = false;

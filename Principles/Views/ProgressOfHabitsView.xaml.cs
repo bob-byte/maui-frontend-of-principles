@@ -433,7 +433,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
     private async void DXI_Habits_Tapped( object sender, TappedEventArgs e )
     {
-        await ChooseHabitKindAsync();
+        await ChooseProgressMarkVariatyAsync();
     }
 
     private async Task ShowArchivedHabitsAsync()
@@ -474,7 +474,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
         
     }
 
-    private async Task ChooseHabitKindAsync()
+    private async Task ChooseProgressMarkVariatyAsync()
     {
         double heightOfBottomSheet;
 
@@ -482,15 +482,15 @@ public partial class ProgressOfHabitsView : ContentPageBase
             DeviceDisplay.Current.MainDisplayInfo.Orientation == DisplayOrientation.Landscape)
         {
             heightOfBottomSheet = 300;
-            HabitKindBottomSheet.HalfExpandedRatio = heightOfBottomSheet / CPB_Page.Height;
+            ProgressMarkVariatyBottomSheet.HalfExpandedRatio = heightOfBottomSheet / CPB_Page.Height;
         }
         else
         {
             heightOfBottomSheet = 500;
 
-            HabitKindBottomSheet.HalfExpandedRatio = heightOfBottomSheet / ViewModel.SettingsService.NormalPageHeight;
+            ProgressMarkVariatyBottomSheet.HalfExpandedRatio = heightOfBottomSheet / ViewModel.SettingsService.NormalPageHeight;
         }
-            HabitKindBottomSheet.State = BottomSheetState.HalfExpanded;
+            ProgressMarkVariatyBottomSheet.State = BottomSheetState.HalfExpanded;
             //await ViewModel.GetArchivedHabitsCommand.ExecuteAsync( null );
     }
 
@@ -534,18 +534,58 @@ public partial class ProgressOfHabitsView : ContentPageBase
         }
     }
 
-    private void HabitKindButton_Clicked( object sender, EventArgs e )
+    private void PrincipleYesOrNoHabitButton_Clicked( object sender, EventArgs e )
     {
-        if (sender is DevExpress.Maui.Controls.SimpleButton button && button.CommandParameter is HabitKind kind)
+        if (sender is DevExpress.Maui.Controls.SimpleButton button)
         {
-            HabitKindBottomSheet.State = BottomSheetState.Hidden;
-
-            if (BindingContext is ProgressOfHabitsViewModel vm &&
-            vm.AddHabitCommand.CanExecute( kind ))
-            {
-                vm.AddHabitCommand.Execute( kind );
-            }
+            ProgressMarkVariatyButton_Clicked(TypeOfHabit.Principled, ProgressMarkVariaty.YesOrNo );
         }
+    }
+
+    private void PrincipleNumericHabitButton_Clicked( object sender, EventArgs e )
+    {
+        if (sender is DevExpress.Maui.Controls.SimpleButton button)
+        {
+            ProgressMarkVariatyButton_Clicked(TypeOfHabit.Principled, ProgressMarkVariaty.Numeric );
+        }
+    }
+
+    private void FlexibleYesOrNoHabitButton_Clicked( object sender, EventArgs e )
+    {
+        if (sender is DevExpress.Maui.Controls.SimpleButton button)
+        {
+            ProgressMarkVariatyButton_Clicked( TypeOfHabit.Flexible, ProgressMarkVariaty.YesOrNo );
+        }
+    }
+
+    private void FlexibleNumericHabitButton_Clicked( object sender, EventArgs e )
+    {
+        if (sender is DevExpress.Maui.Controls.SimpleButton button)
+        {
+            ProgressMarkVariatyButton_Clicked( TypeOfHabit.Flexible, ProgressMarkVariaty.Numeric );
+        }
+    }
+
+    private void MaindNumericHabitButton_Clicked( object sender, EventArgs e )
+    {
+        if (sender is DevExpress.Maui.Controls.SimpleButton button)
+        {
+            ProgressMarkVariatyButton_Clicked( TypeOfHabit.Mind , ProgressMarkVariaty.Numeric );
+        }
+    }
+
+    // main method
+    private void ProgressMarkVariatyButton_Clicked( TypeOfHabit type, ProgressMarkVariaty varianty)
+    {
+        ProgressMarkVariatyBottomSheet.State = BottomSheetState.Hidden;
+
+        (ProgressMarkVariaty Varianty, TypeOfHabit Type) parameter = ( varianty, type );
+
+        if (BindingContext is ProgressOfHabitsViewModel vm &&
+            vm.AddHabitCommand.CanExecute( parameter ))
+            {
+                vm.AddHabitCommand.Execute( parameter );
+            }
     }
     private void SortByGoal_Clicked( object sender, EventArgs e )
     {

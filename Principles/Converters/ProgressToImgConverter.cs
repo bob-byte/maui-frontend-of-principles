@@ -68,7 +68,7 @@ public class ProgressToImgConverter : BaseConverterOneWay<ProgressOfHabit, View>
                     break;
                 }
         }
-        if (computed.Habit.Kind == HabitKind.Numeric)
+        if (computed.Habit.ProgressMarkVariaty == ProgressMarkVariaty.Numeric)
         {
             bool isOverMax = computed.Habit.TargetPerOneTime >= computed.Habit.MaxRate; 
             Color textColor = isOverMax ? s_primaryColor : s_grayColor;

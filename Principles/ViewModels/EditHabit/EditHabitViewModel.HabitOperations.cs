@@ -33,7 +33,6 @@ public partial class EditHabitViewModel
                 Reminders = Habit.Reminders,
                 IsArchived = Habit.IsArchived,
                 PrioritizedHabits = new List<UserHabitWithPriority>(),
-                Kind = Habit.Kind,
                 TargetType = Habit.TargetType,
                 TargetPerOneTime = Habit.TargetPerOneTime,
                 Unit = Habit.Unit,

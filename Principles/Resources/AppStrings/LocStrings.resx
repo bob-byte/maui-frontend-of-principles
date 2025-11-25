@@ -1045,7 +1045,7 @@ You can change the status with a press.</value>
   <data name="NumericDescription" xml:space="preserve">
     <value>Habit with a measurable result</value>
   </data>
-  <data name="HabitKind" xml:space="preserve">
+  <data name="ProgressMarkVariaty" xml:space="preserve">
     <value>Choose a habit type</value>
   </data>
   <data name="Min" xml:space="preserve">

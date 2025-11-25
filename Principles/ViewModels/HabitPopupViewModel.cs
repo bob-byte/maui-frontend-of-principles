@@ -13,7 +13,7 @@ public partial class HabitPopupViewModel : BaseViewModel
     public int ValuePercent => Value * 10;
     public double? ProgressPercent => Habit.TargetPerOneTime == 0 ? 0 : (double)Value / Habit.MaxRate;
     public Action<object?>? RequestClose { get; set; }
-    public double MaxValue => (double)(Habit.Kind == HabitKind.Numeric ? Habit.MaxRate : 10);
+    public double MaxValue => (double)(Habit.ProgressMarkVariaty == ProgressMarkVariaty.Numeric ? Habit.MaxRate : 10);
     public bool IsSliderEnabled => IsYes;
     private bool _isYes = true;
     public bool IsYes

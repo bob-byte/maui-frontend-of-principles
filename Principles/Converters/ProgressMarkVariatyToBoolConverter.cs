@@ -2,14 +2,14 @@
 
 namespace Principles.Converters
 {
-    public class HabitKindToBoolConverter : IValueConverter
+    public class ProgressMarkVariatyToBoolConverter : IValueConverter
     {
-        public HabitKind TargetKind { get; set; }
+        public ProgressMarkVariaty TargetKind { get; set; }
         public object? Convert( object? value, Type targetType, object? parameter, CultureInfo culture )
         {
-            if (value is HabitKind kind && parameter is string param)
+            if (value is ProgressMarkVariaty kind && parameter is string param)
             {
-                if (Enum.TryParse( typeof( HabitKind ), param, out var enumValue ))
+                if (Enum.TryParse( typeof( ProgressMarkVariaty ), param, out var enumValue ))
                 {
                     return kind.Equals( enumValue );
                 }

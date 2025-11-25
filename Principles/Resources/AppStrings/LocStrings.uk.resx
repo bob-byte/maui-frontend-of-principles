@@ -1045,7 +1045,7 @@
   <data name="NumericDescription" xml:space="preserve">
     <value>Звичка з кількісним результатом</value>
   </data>
-  <data name="HabitKind" xml:space="preserve">
+  <data name="ProgressMarkVariaty" xml:space="preserve">
     <value>Вибери тип звички</value>
   </data>
   <data name="Min" xml:space="preserve">

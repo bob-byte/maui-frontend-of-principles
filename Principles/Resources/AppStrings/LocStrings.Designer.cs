@@ -1124,15 +1124,6 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose a habit type.
-        /// </summary>
-        internal static string HabitKind {
-            get {
-                return ResourceManager.GetString("HabitKind", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Specify a name of habit and time or place of its implementation. This will increase the probability of compliance. Example: I pray as soon as I wake up..
         /// </summary>
         internal static string HabitNameRecommendation {
@@ -1948,6 +1939,15 @@ namespace Principles.Resources.AppStrings {
         internal static string Progress {
             get {
                 return ResourceManager.GetString("Progress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose a habit type.
+        /// </summary>
+        internal static string ProgressMarkVariaty {
+            get {
+                return ResourceManager.GetString("ProgressMarkVariaty", resourceCulture);
             }
         }
         

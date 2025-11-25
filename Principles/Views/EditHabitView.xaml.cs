@@ -856,7 +856,7 @@ public partial class EditHabitView : ContentPageBase
         ViewModel.NotifyPropertyChanged( nameof(ViewModel.Habit) );
     }
 
-    private async Task ChooseHabitKindAsync()
+    private async Task ChooseProgressMarkVariatyAsync()
     {
         double heightOfBottomSheet;
 
@@ -874,9 +874,10 @@ public partial class EditHabitView : ContentPageBase
         }
         EditKindBottomSheet.State = BottomSheetState.HalfExpanded;
     }
-    private void EditHabitKindButton_Clicked( object sender, EventArgs e )
+    // there
+    private void EditProgressMarkVariatyYesOrNoButton_Clicked( object sender, EventArgs e )
     {
-        if (sender is DevExpress.Maui.Controls.SimpleButton button && button.CommandParameter is ProgressMarkVariaty mark)
+        if (sender is DevExpress.Maui.Controls.SimpleButton button)
         {
             EditKindBottomSheet.State = BottomSheetState.Hidden;
 
@@ -884,7 +885,23 @@ public partial class EditHabitView : ContentPageBase
             {
                 if (vm.Habit != null)
                 {
-                    vm.Habit.ProgressMarkVariaty = mark;
+                    vm.Habit.ProgressMarkVariaty = ProgressMarkVariaty.YesOrNo;
+                }
+            }
+        }
+    }
+
+    private void EditProgressMarkVariatyNumericButton_Clicked( object sender, EventArgs e )
+    {
+        if (sender is DevExpress.Maui.Controls.SimpleButton button)
+        {
+            EditKindBottomSheet.State = BottomSheetState.Hidden;
+
+            if (BindingContext is EditHabitViewModel vm)
+            {
+                if (vm.Habit != null)
+                {
+                    vm.Habit.ProgressMarkVariaty = ProgressMarkVariaty.Numeric;
                 }
             }
         }
@@ -892,7 +909,24 @@ public partial class EditHabitView : ContentPageBase
     private async void C_TypeOfHabit_Tap( object sender, HandledEventArgs e )
     {
         if (sender is Chip chip && chip.TapCommandParameter is TypeOfHabit type)
+        {
             ViewModel.Habit.Type = type;
-        await ChooseHabitKindAsync();
+
+            if (type == TypeOfHabit.Mind)
+            {
+
+                if (BindingContext is EditHabitViewModel vm)
+                {
+                    if (vm.Habit != null)
+                    {
+                        vm.Habit.ProgressMarkVariaty = ProgressMarkVariaty.Numeric;
+                    }
+                }
+            }
+            else
+            {
+                await ChooseProgressMarkVariatyAsync();
+            }
+        }
     }
 }
