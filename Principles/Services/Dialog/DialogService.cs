@@ -2,13 +2,6 @@
 
 public class DialogService : IDialogService
 {
-    private readonly ILoggingService m_loggingService;
-
-    public DialogService( ILoggingService loggingService )
-    {
-        m_loggingService = loggingService;
-    }
-
     public Task ShowAlertAsync( string msg, string title, string buttonLabel )
     {
         return Shell.Current.DisplayAlert( title, msg, buttonLabel );
