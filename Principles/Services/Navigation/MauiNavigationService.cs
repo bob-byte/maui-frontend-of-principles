@@ -1,33 +1,18 @@
-﻿using Microsoft.Extensions.Configuration;
-
-using Principles.ViewModels;
-using Principles.Views;
-
-using System.Globalization;
-using System.Reflection;
-using System.Web;
-
-namespace Principles.Core.Services;
+﻿namespace Principles.Core.Services;
 
 public class MauiNavigationService : INavigationService
 {
-    private readonly IConfiguration m_config;
     private readonly ISettingsService m_settingsService;
 
-    public MauiNavigationService(IConfiguration config, IUrlBuilder urlBuilder, ISettingsService settingsService)
+    public MauiNavigationService(ISettingsService settingsService)
     {
-        m_config = config;
-        UrlBuilder = urlBuilder;
         m_settingsService = settingsService;
     }
 
-    public bool IsLoggedIn => !string.IsNullOrWhiteSpace( m_settingsService.AuthAccessToken );
-
-    public IUrlBuilder UrlBuilder { get; }
-
     public Task GoToInitialViewAsync()
     {
-        return IsLoggedIn ?
+        bool isLoggedIn = !string.IsNullOrEmpty( m_settingsService.AuthAccessToken );
+        return isLoggedIn ?
             NavigateToMainAsync<ProgressOfHabitsViewModel>() :
             NavigateToAsync<StartupViewModel>( isAbsoluteRoute: true );
     }

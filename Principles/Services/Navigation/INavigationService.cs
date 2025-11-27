@@ -4,8 +4,6 @@ namespace Principles.Services
 {
     public interface INavigationService
     {
-        IUrlBuilder UrlBuilder { get; }
-
         Task NavigateToMainAsync<TViewModel>() where TViewModel : BaseViewModel;
         Task NavigateToAsync<TViewModel>() where TViewModel : BaseViewModel;
         Task NavigateToAsync<TViewModel>( long? id ) where TViewModel : BaseViewModel;

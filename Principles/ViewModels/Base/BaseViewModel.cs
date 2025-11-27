@@ -53,6 +53,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         ServiceOfHabit = serviceProvider.GetRequiredService<IServiceOfHabit>();
         AreaOfLifeService = serviceProvider.GetRequiredService<IAreaOfLifeService>();
         TipService = serviceProvider.GetRequiredService<ITipService>();
+        UrlBuilder = serviceProvider.GetRequiredService<IUrlBuilder>();
 
         ReferenceMessenger = WeakReferenceMessenger.Default;
 
@@ -108,7 +109,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
 
     public IAreaOfLifeService AreaOfLifeService { get; }
 
-    public IUrlBuilder UrlBuilder => Navigation.UrlBuilder;
+    public IUrlBuilder UrlBuilder { get; }
 
     public bool IsBusy
     {
