@@ -24,11 +24,11 @@ public partial class AppShell : Shell
 
         if (Handler is not null)
         {
-
             m_settingsService.GetAuthAccessTokenAsync().GetAwaiter().GetResult();
+            
             if (VersionTracking.IsFirstLaunchForCurrentVersion)
             {
-                m_navigationService.NavigateToAsync<AppCarouselViewModel>();
+                m_navigationService.NavigateToAsync<AppCarouselViewModel>( isAbsoluteRoute: true );
             }
             else
             {
@@ -46,7 +46,7 @@ public partial class AppShell : Shell
         RegisterRoute( typeof( ForgetPasswordView ) );
         RegisterRoute( typeof( ChangePasswordView ) );
         RegisterRoute( typeof( HabitDetailView ) );
-        RegisterRoute( typeof( AppCarouselView ) );
+        RegisterRoute( typeof( StartupView ) );
     }
 
     private static void RegisterRoute( Type viewType )

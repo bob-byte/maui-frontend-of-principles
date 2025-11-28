@@ -1,119 +1,110 @@
-﻿<v:ContentPageBase
-    x:Class="Principles.Views.AppCarouselView"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:controls="clr-namespace:Principles.Controls"
-    xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
-    xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
-    xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
-    xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
-    xmlns:loc="clr-namespace:Principles.Resources.AppStrings"
-    xmlns:m="clr-namespace:Principles.Models;assembly=Principles"
-    xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
-    xmlns:templates="clr-namespace:Principles.Views.Templates"
-    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-    xmlns:v="clr-namespace:Principles.Views"
-    xmlns:vm="clr-namespace:Principles.ViewModels"
-    Title="{Binding LocManager[Profile], Mode=OneWay}"
-    x:DataType="vm:AppCarouselViewModel"
-    Shell.NavBarIsVisible="False"
-    Shell.TabBarIsVisible="False">
-    <Grid
-        ColumnDefinitions="*"
-        HorizontalOptions="FillAndExpand"
-        RowDefinitions="60*,35*,5*"
-        VerticalOptions="FillAndExpand">
-        <CarouselView
-            x:Name="CV_Features"
-            Grid.Row="0"
-            Grid.RowSpan="2"
-            BackgroundColor="Transparent"
-            HorizontalScrollBarVisibility="Never"
-            IndicatorView="IV_AppFeatures"
-            ItemsSource="{Binding AppFeatures}"
-            Loop="False"
-            PositionChanged="CV_Features_PositionChanged"
-            VerticalOptions="FillAndExpand">
-
+﻿<v:ContentPageBase x:Class="Principles.Views.AppCarouselView"
+                   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                   xmlns:controls="clr-namespace:Principles.Controls"
+                   xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
+                   xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+                   xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
+                   xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+                   xmlns:loc="clr-namespace:Principles.Resources.AppStrings"
+                   xmlns:m="clr-namespace:Principles.Models;assembly=Principles"
+                   xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+                   xmlns:templates="clr-namespace:Principles.Views.Templates"
+                   xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+                   xmlns:v="clr-namespace:Principles.Views"
+                   xmlns:vm="clr-namespace:Principles.ViewModels"
+                   Title="{Binding LocManager[Profile],
+                                   Mode=OneWay}"
+                   x:DataType="vm:AppCarouselViewModel"
+                   Shell.NavBarIsVisible="False"
+                   Shell.TabBarIsVisible="False">
+    <Grid ColumnDefinitions="*"
+          HorizontalOptions="FillAndExpand"
+          RowDefinitions="60*,35*,5*"
+          VerticalOptions="FillAndExpand">
+        <CarouselView x:Name="CV_Features"
+                      ItemsSource="{Binding AppFeatures}"
+                      BackgroundColor="Transparent"
+                      HorizontalScrollBarVisibility="Never"
+                      IndicatorView="IV_AppFeatures"
+                      IsScrollAnimated="True"
+                      Loop="False"
+                      PositionChanged="CV_Features_PositionChanged"
+                      VerticalOptions="FillAndExpand"
+                      Grid.Row="0"
+                      Grid.RowSpan="2">
             <CarouselView.ItemTemplate>
                 <DataTemplate x:DataType="m:AppFeature">
-                    <Grid
-                        Padding="24"
-                        ColumnDefinitions="*"
-                        HorizontalOptions="FillAndExpand"
-                        RowDefinitions="60*,35*"
-                        VerticalOptions="FillAndExpand">
-                        <Grid
-                            Grid.Row="0"
-                            HorizontalOptions="FillAndExpand"
-                            VerticalOptions="FillAndExpand">
-                            <Grid HorizontalOptions="Center" VerticalOptions="End">
-                                <Frame
-                                    Padding="0"
-                                    BackgroundColor="Transparent"
-                                    CornerRadius="999"
-                                    HasShadow="False"
-                                    HeightRequest="320"
-                                    HorizontalOptions="Center"
-                                    VerticalOptions="End"
-                                    WidthRequest="320">
-                                    <Frame.Background>
-                                        <RadialGradientBrush Center="0.5,0.5" Radius="0.6">
-                                            <GradientStop Offset="0.2" Color="#EEFFFFFF" />
-                                            <GradientStop Offset="0.3" Color="#123D7FFF" />
-                                            <GradientStop Offset="0.5" Color="#CA3D7FFF" />
-                                            <GradientStop Offset="0.8" Color="#523D7FFF" />
-                                            <GradientStop Offset="0.9" Color="#00000000" />
-                                        </RadialGradientBrush>
-                                    </Frame.Background>
+                    <Grid Padding="24"
+                          ColumnDefinitions="*"
+                          HorizontalOptions="FillAndExpand"
+                          RowDefinitions="60*,35*"
+                          VerticalOptions="FillAndExpand">
+                        <Frame WidthRequest="320"
+                               HeightRequest="320"
+                               Padding="0"
+                               BackgroundColor="Transparent"
+                               CornerRadius="100"
+                               HasShadow="False"
+                               HorizontalOptions="Center"
+                               VerticalOptions="End"
+                               Grid.Row="0">
+                            <Frame.Background>
+                                <RadialGradientBrush Center="0.5,0.5"
+                                                     Radius="0.6">
+                                    <GradientStop Offset="0.2"
+                                                  Color="#EEFFFFFF" />
+                                    <GradientStop Offset="0.3"
+                                                  Color="#123D7FFF" />
+                                    <GradientStop Offset="0.5"
+                                                  Color="#CA3D7FFF" />
+                                    <GradientStop Offset="0.8"
+                                                  Color="#523D7FFF" />
+                                    <GradientStop Offset="0.9"
+                                                  Color="#00000000" />
+                                </RadialGradientBrush>
+                            </Frame.Background>
 
-                                    <skia:SKLottieView
-                                        x:Name="lottieView"
-                                        HeightRequest="160"
-                                        HorizontalOptions="Center"
-                                        IsAnimationEnabled="True"
-                                        RepeatCount="-1"
-                                        Source="{Binding Animation}"
-                                        VerticalOptions="Center"
-                                        WidthRequest="160" />
-                                </Frame>
-                            </Grid>
-                        </Grid>
+                            <skia:SKLottieView Source="{Binding Animation}"
+                                               WidthRequest="160"
+                                               HeightRequest="160"
+                                               HorizontalOptions="Center"
+                                               IsAnimationEnabled="True"
+                                               RepeatCount="-1"
+                                               VerticalOptions="Center" />
+                        </Frame>
 
-                        <StackLayout
-                            Grid.Row="1"
-                            HorizontalOptions="Center"
-                            Spacing="8"
-                            VerticalOptions="Center"
-                            WidthRequest="320">
-                            <Label
-                                FontAttributes="Bold"
-                                FontSize="32"
-                                HorizontalTextAlignment="Center"
-                                LineBreakMode="TailTruncation"
-                                MaxLines="2"
-                                Text="{Binding Title, Converter={StaticResource ToUpperCase}}"
-                                TextColor="#222" />
+                        <StackLayout WidthRequest="320"
+                                     HorizontalOptions="Center"
+                                     Spacing="8"
+                                     VerticalOptions="Center"
+                                     Grid.Row="1">
+                            <Label Text="{Binding Title,
+                                                  Converter={StaticResource ToUpperCase}}"
+                                   FontAttributes="Bold"
+                                   FontSize="32"
+                                   HorizontalTextAlignment="Center"
+                                   LineBreakMode="TailTruncation"
+                                   MaxLines="2"
+                                   TextColor="#222" />
 
-                            <Label
-                                FontSize="24"
-                                HorizontalTextAlignment="Center"
-                                LineBreakMode="WordWrap"
-                                MaxLines="6"
-                                Text="{Binding Description}"
-                                TextColor="#555" />
+                            <Label Text="{Binding Description}"
+                                   FontSize="24"
+                                   HorizontalTextAlignment="Center"
+                                   LineBreakMode="WordWrap"
+                                   MaxLines="6"
+                                   TextColor="#555" />
                         </StackLayout>
                     </Grid>
                 </DataTemplate>
             </CarouselView.ItemTemplate>
         </CarouselView>
 
-        <Grid
-            Grid.Row="2"
-            Padding="10,0,10,10"
-            HeightRequest="60"
-            HorizontalOptions="FillAndExpand"
-            VerticalOptions="End">
+        <Grid HeightRequest="60"
+              Padding="10,0,10,10"
+              HorizontalOptions="FillAndExpand"
+              VerticalOptions="End"
+              Grid.Row="2">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="40" />
@@ -121,43 +112,38 @@
                 <ColumnDefinition Width="40" />
             </Grid.ColumnDefinitions>
 
-            <Button
-                x:Name="BtnPrev"
-                Grid.Column="0"
-                BackgroundColor="{StaticResource Primary}"
-                Clicked="BtnPrev_Clicked"
-                CornerRadius="28"
-                FontSize="24"
-                HeightRequest="50"
-                HorizontalOptions="Center"
-                Text="&gt;"
-                TextColor="White"
-                VerticalOptions="Center"
-                WidthRequest="50" />
+            <Button x:Name="BtnPrev"
+                    Clicked="BtnPrev_Clicked"
+                    WidthRequest="50"
+                    HeightRequest="50"
+                    BackgroundColor="{StaticResource Primary}"
+                    CornerRadius="28"
+                    FontSize="24"
+                    HorizontalOptions="Center"
+                    TextColor="White"
+                    VerticalOptions="Center"
+                    Grid.Column="0" />
 
-            <IndicatorView
-                x:Name="IV_AppFeatures"
-                Grid.Column="1"
-                HorizontalOptions="Center"
-                IndicatorColor="#555"
-                IndicatorSize="8"
-                IndicatorsShape="Circle"
-                SelectedIndicatorColor="{StaticResource Primary}"
-                VerticalOptions="Center" />
+            <IndicatorView x:Name="IV_AppFeatures"
+                           HorizontalOptions="Center"
+                           IndicatorColor="#555"
+                           IndicatorSize="8"
+                           IndicatorsShape="Circle"
+                           SelectedIndicatorColor="{StaticResource Primary}"
+                           VerticalOptions="Center"
+                           Grid.Column="1" />
 
-            <Button
-                x:Name="BtnNext"
-                Grid.Column="2"
-                BackgroundColor="{StaticResource Primary}"
-                Clicked="BtnNext_Clicked"
-                CornerRadius="28"
-                FontSize="24"
-                HeightRequest="50"
-                HorizontalOptions="End"
-                Text="&gt;"
-                TextColor="White"
-                VerticalOptions="Center"
-                WidthRequest="50" />
+            <Button x:Name="BtnNext"
+                    Clicked="BtnNext_Clicked"
+                    WidthRequest="50"
+                    HeightRequest="50"
+                    BackgroundColor="{StaticResource Primary}"
+                    CornerRadius="28"
+                    FontSize="24"
+                    HorizontalOptions="End"
+                    TextColor="White"
+                    VerticalOptions="Center"
+                    Grid.Column="2" />
         </Grid>
 
 

@@ -1,115 +1,104 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<v:ContentPageBase
-    x:Class="Principles.Views.StartupView"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:controls="clr-namespace:Principles.Controls"
-    xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
-    xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
-    xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
-    xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
-    xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
-    xmlns:loc="clr-namespace:Principles.Resources.AppStrings"
-    xmlns:m="clr-namespace:Principles.Core.Models;assembly=Principles.Core"
-    xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
-    xmlns:templates="clr-namespace:Principles.Views.Templates"
-    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-    xmlns:v="clr-namespace:Principles.Views"
-    xmlns:vm="clr-namespace:Principles.ViewModels"
-    ios:Page.UseSafeArea="True"
-    x:DataType="vm:StartupViewModel"
-    BackgroundColor="#1C1C1C"
-    Shell.FlyoutBehavior="Disabled"
-    Shell.NavBarIsVisible="False"
-    Shell.TabBarIsVisible="False">
-    <Grid BackgroundColor="White" RowDefinitions="2.5*, Auto">
-
-        <VerticalStackLayout
-            Grid.Row="0"
-            HorizontalOptions="Center"
-            Spacing="0"
-            VerticalOptions="End">
-
-            <Grid
-                HeightRequest="320"
-                VerticalOptions="Center"
-                WidthRequest="320">
+<v:ContentPageBase x:Class="Principles.Views.StartupView"
+                   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                   xmlns:controls="clr-namespace:Principles.Controls"
+                   xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
+                   xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+                   xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
+                   xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+                   xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+                   xmlns:loc="clr-namespace:Principles.Resources.AppStrings"
+                   xmlns:m="clr-namespace:Principles.Core.Models;assembly=Principles.Core"
+                   xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+                   xmlns:templates="clr-namespace:Principles.Views.Templates"
+                   xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+                   xmlns:v="clr-namespace:Principles.Views"
+                   xmlns:vm="clr-namespace:Principles.ViewModels"
+                   ios:Page.UseSafeArea="True"
+                   x:DataType="vm:StartupViewModel"
+                   BackgroundColor="#1C1C1C"
+                   Shell.FlyoutBehavior="Disabled"
+                   Shell.NavBarIsVisible="False"
+                   Shell.TabBarIsVisible="False">
+    <Grid BackgroundColor="White"
+          RowDefinitions="2.5*, Auto">
+        <VerticalStackLayout HorizontalOptions="Center"
+                             Spacing="0"
+                             VerticalOptions="End"
+                             Grid.Row="0">
+            <Grid WidthRequest="320"
+                  HeightRequest="320"
+                  VerticalOptions="Center">
                 <Grid.Background>
-                    <RadialGradientBrush Center="0.5,0.5" Radius="0.6">
-                        <GradientStop Offset="0.2" Color="#EEFFFFFF" />
-                        <GradientStop Offset="0.3" Color="#523D7FFF" />
-                        <GradientStop Offset="0.4" Color="#B63D7FFF" />
-                        <GradientStop Offset="0.6" Color="#623D7FFF" />
-                        <GradientStop Offset="0.8" Color="#12E3F9FF" />
-                        <GradientStop Offset="0.9" Color="#00000000" />
+                    <RadialGradientBrush Center="0.5,0.5"
+                                         Radius="0.6">
+                        <GradientStop Offset="0.2"
+                                      Color="#EEFFFFFF" />
+                        <GradientStop Offset="0.3"
+                                      Color="#523D7FFF" />
+                        <GradientStop Offset="0.4"
+                                      Color="#B63D7FFF" />
+                        <GradientStop Offset="0.6"
+                                      Color="#623D7FFF" />
+                        <GradientStop Offset="0.8"
+                                      Color="#12E3F9FF" />
+                        <GradientStop Offset="0.9"
+                                      Color="#00000000" />
                     </RadialGradientBrush>
                 </Grid.Background>
-
-                <skia:SKLottieView
-                    HeightRequest="200"
-                    HorizontalOptions="Center"
-                    IsAnimationEnabled="True"
-                    RepeatCount="-1"
-                    Source="fire_loading.json"
-                    VerticalOptions="Center"
-                    WidthRequest="200" />
+                <skia:SKLottieView Source="fire_loading.json"
+                                   WidthRequest="200"
+                                   HeightRequest="200"
+                                   HorizontalOptions="Center"
+                                   IsAnimationEnabled="True"
+                                   x:Name="hello"
+                                   RepeatCount="-1"
+                                   VerticalOptions="Center" />
             </Grid>
-
-            <Label
-                Margin="0,0,0,20"
-                FontAttributes="Bold"
-                FontSize="32"
-                HorizontalOptions="Center"
-                Text="Lets start now"
-                TextColor="Black" />
-
+            <Label Text="{Binding LocManager[LetsStartNow]}"
+                   Margin="0,0,0,20"
+                   FontAttributes="Bold"
+                   FontSize="32"
+                   HorizontalOptions="Center"
+                   TextColor="Black" />
         </VerticalStackLayout>
-
-        <VerticalStackLayout
-            Grid.Row="1"
-            Padding="30,0,30,20"
-            Spacing="15"
-            VerticalOptions="Start">
-
-            <dxco:SimpleButton
-                Background="{StaticResource PrimaryButton}"
-                Command="{Binding ContinueWithGoogleCommand}"
-                CornerRadius="25"
-                HeightRequest="50"
-                Icon="google"
-                Style="{StaticResource PrimaryButton}"
-                Text="{Binding LocManager[ContinueWithGoogle]}"
-                TextColor="White" />
-
-            <dxco:SimpleButton
-                Background="{StaticResource PrimaryButton}"
-                Command="{Binding ContinueWithAppleCommand}"
-                CornerRadius="25"
-                HeightRequest="50"
-                Icon="cloud"
-                Style="{StaticResource PrimaryButton}"
-                Text="continue with icloud"
-                TextColor="White" />
-
-            <dxco:SimpleButton
-                Background="{StaticResource PrimaryButton}"
-                Command="{Binding OpenLoginViewCommand}"
-                CornerRadius="25"
-                HeightRequest="50"
-                Style="{StaticResource PrimaryButton}"
-                Text="Log in"
-                TextColor="White" />
-
-            <dxco:SimpleButton
-                Background="Transparent"
-                BorderColor="{StaticResource Primary}"
-                BorderThickness="2"
-                Command="{Binding OpenSignUpViewCommand}"
-                CornerRadius="25"
-                HeightRequest="50"
-                Text="Sing up"
-                TextColor="{StaticResource Primary}" />
-
+        <VerticalStackLayout Padding="30,0,30,20"
+                             Spacing="15"
+                             VerticalOptions="Start"
+                             Grid.Row="1">
+            <dxco:SimpleButton Text="{Binding LocManager[ContinueWithGoogle]}"
+                               Command="{Binding ContinueWithGoogleCommand}"
+                               Style="{StaticResource PrimaryButton}"
+                               Icon="google"
+                               HeightRequest="50"
+                               CornerRadius="25"
+                               TextColor="White" />
+            <OnPlatform x:TypeArguments="View">
+                <On Platform="iOS">
+                    <dxco:SimpleButton Text="{Binding LocManager[ContinueWithApple]}"
+                                       Command="{Binding ContinueWithAppleCommand}"
+                                       Style="{StaticResource PrimaryButton}"
+                                       Icon="apple"
+                                       HeightRequest="50"
+                                       CornerRadius="25" />
+                </On>
+            </OnPlatform>
+            <dxco:SimpleButton Text="{Binding LocManager[SignUpWithEmail]}"
+                               Command="{Binding OpenSignUpViewCommand}"
+                               Style="{StaticResource PrimaryButton}"
+                               Icon="email"
+                               HeightRequest="50"
+                               CornerRadius="25" />
+            <dxco:SimpleButton Text="{Binding LocManager[Login]}"
+                               Command="{Binding OpenLoginViewCommand}"
+                               PressedBorderColor="{StaticResource Primary}"
+                               HeightRequest="50"
+                               Background="Transparent"
+                               BorderColor="{StaticResource Primary}"
+                               BorderThickness="2"
+                               CornerRadius="25"
+                               TextColor="{StaticResource Primary}" />
         </VerticalStackLayout>
     </Grid>
 </v:ContentPageBase>

@@ -1,4 +1,5 @@
 namespace Principles.Views;
+
 public partial class AppCarouselView : ContentPageBase
 {
 
@@ -8,12 +9,8 @@ public partial class AppCarouselView : ContentPageBase
         ViewModel = viewModel;
         InitializeComponent();
 
-        CV_Features.PositionChanged += CV_Features_PositionChanged;
-
-        this.Appearing += async ( s, e ) =>
-        {
-            await Task.Delay( 100 ); // невелика затримка, щоб рендер завершився
-        };
+        BtnPrev.Text = "<";
+        BtnNext.Text = ">";
 
         UpdateButtons();
     }
@@ -34,7 +31,16 @@ public partial class AppCarouselView : ContentPageBase
 
         if (CV_Features.Position == CV_Features.ItemsSource.Cast<object>().Count() - 1)
         {
-            await ViewModel.Navigation.GoToInitialViewAsync();
+            ISettingsService settingsService = ServiceLocator.Current!.GetRequiredService<ISettingsService>();
+            bool isLoggedIn = !string.IsNullOrWhiteSpace( settingsService.AuthAccessToken );
+            if (isLoggedIn)
+            {
+                await ViewModel.Navigation.GoToInitialViewAsync();
+            }
+            else
+            {
+                await ViewModel.Navigation.NavigateToAsync<StartupViewModel>();
+            }
         }
         else if (CV_Features.Position < CV_Features.ItemsSource.Cast<object>().Count() - 1)
         {
@@ -42,25 +48,36 @@ public partial class AppCarouselView : ContentPageBase
         }
     }
 
-    private async void CV_Features_PositionChanged( object sender, PositionChangedEventArgs e )
-    {
+    private void CV_Features_PositionChanged( object sender, PositionChangedEventArgs e )
+    {        
         if( CV_Features.Position == CV_Features.ItemsSource.Cast<object>().Count() - 1 )
         {
-            BtnNext.WidthRequest = 320;
-            BtnNext.Text = "Start";
+            BtnNext.Text = LocStrings.Ahead;
+            Animation animation = new (
+                v => BtnNext.WidthRequest = v,
+                BtnNext.WidthRequest,
+                320,
+                Easing.Default 
+            );
+            animation.Commit( BtnNext, "WidthAnimation", 16, 500 );
         }
         else
         {
-            BtnNext.WidthRequest = 50;
             BtnNext.Text = ">";
+            Animation animation = new (
+                v => BtnNext.WidthRequest = v,
+                BtnNext.WidthRequest,
+                50,
+                Easing.Default 
+            );
+            animation.Commit( BtnNext, "WidthAnimation2", 16, 500 );
         }
+        
         UpdateButtons();
     }
 
     private void UpdateButtons()
     {
-        var count = CV_Features.ItemsSource.Cast<object>().Count();
-
         BtnPrev.IsVisible = CV_Features.Position > 0;
     }
 }

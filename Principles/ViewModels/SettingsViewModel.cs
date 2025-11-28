@@ -96,8 +96,8 @@ public partial class SettingsViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    public Task ShowAppCarouselrAsync()
+    public Task ShowAppCarouselAsync()
     {
-        return Navigation.NavigateToAsync<AppCarouselViewModel>();
+        return Navigation.NavigateToAsync<AppCarouselViewModel>(isAbsoluteRoute: true);
     }
 }

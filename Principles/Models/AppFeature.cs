@@ -2,14 +2,11 @@
 
 namespace Principles.Models;
 
-public partial class AppFeature : ObservableObject
+public partial class AppFeature
 {
-    [ObservableProperty]
-    private string? m_title;
+    public string? Title { get; set; }
 
-    [ObservableProperty]
-    private string? m_description;
+    public string? Description { get; set; }
 
-    [ObservableProperty]
-    private SKLottieImageSource? m_animation;
+    public SKLottieImageSource? Animation { get; set; }
 }
