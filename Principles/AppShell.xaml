@@ -33,11 +33,10 @@
                       Icon="profile"
                       ContentTemplate="{DataTemplate local:ProfileView}"
                       Route="profile" />
-
     </TabBar>
 
-    <FlyoutItem Route="appcarousel" 
+    <FlyoutItem Route="appbenefits" 
                 FlyoutItemIsVisible="False">
-        <ShellContent ContentTemplate="{DataTemplate local:AppCarouselView}" />
+        <ShellContent ContentTemplate="{DataTemplate local:AppBenefitsView}" />
     </FlyoutItem>
 </Shell>

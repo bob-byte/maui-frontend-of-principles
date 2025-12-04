@@ -1,4 +1,4 @@
-﻿<v:ContentPageBase x:Class="Principles.Views.AppCarouselView"
+﻿<v:ContentPageBase x:Class="Principles.Views.AppBenefitsView"
                    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                    xmlns:controls="clr-namespace:Principles.Controls"
@@ -13,28 +13,26 @@
                    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                    xmlns:v="clr-namespace:Principles.Views"
                    xmlns:vm="clr-namespace:Principles.ViewModels"
-                   Title="{Binding LocManager[Profile],
-                                   Mode=OneWay}"
-                   x:DataType="vm:AppCarouselViewModel"
+                   x:DataType="vm:AppBenefitsViewModel"
                    Shell.NavBarIsVisible="False"
                    Shell.TabBarIsVisible="False">
     <Grid ColumnDefinitions="*"
           HorizontalOptions="FillAndExpand"
           RowDefinitions="60*,35*,5*"
           VerticalOptions="FillAndExpand">
-        <CarouselView x:Name="CV_Features"
-                      ItemsSource="{Binding AppFeatures}"
+        <CarouselView x:Name="CV_Benefits"
+                      ItemsSource="{Binding AppBenefits}"
                       BackgroundColor="Transparent"
                       HorizontalScrollBarVisibility="Never"
-                      IndicatorView="IV_AppFeatures"
+                      IndicatorView="IV_AppBenefits"
                       IsScrollAnimated="True"
                       Loop="False"
-                      PositionChanged="CV_Features_PositionChanged"
+                      PositionChanged="CV_Benefits_PositionChanged"
                       VerticalOptions="FillAndExpand"
                       Grid.Row="0"
                       Grid.RowSpan="2">
             <CarouselView.ItemTemplate>
-                <DataTemplate x:DataType="m:AppFeature">
+                <DataTemplate x:DataType="m:AppBenefit">
                     <Grid Padding="24"
                           ColumnDefinitions="*"
                           HorizontalOptions="FillAndExpand"
@@ -44,7 +42,7 @@
                                HeightRequest="320"
                                Padding="0"
                                BackgroundColor="Transparent"
-                               CornerRadius="100"
+                               CornerRadius="165"
                                HasShadow="False"
                                HorizontalOptions="Center"
                                VerticalOptions="End"
@@ -52,16 +50,16 @@
                             <Frame.Background>
                                 <RadialGradientBrush Center="0.5,0.5"
                                                      Radius="0.6">
-                                    <GradientStop Offset="0.2"
-                                                  Color="#EEFFFFFF" />
+                                    <GradientStop Offset="0.1"
+                                                  Color="#ffffffff" />
                                     <GradientStop Offset="0.3"
-                                                  Color="#123D7FFF" />
+                                                  Color="#ffffffff" />
                                     <GradientStop Offset="0.5"
                                                   Color="#CA3D7FFF" />
                                     <GradientStop Offset="0.8"
-                                                  Color="#523D7FFF" />
+                                                  Color="#4700e0ff" />
                                     <GradientStop Offset="0.9"
-                                                  Color="#00000000" />
+                                                  Color="#ffffffff" />
                                 </RadialGradientBrush>
                             </Frame.Background>
 
@@ -114,17 +112,17 @@
 
             <Button x:Name="BtnPrev"
                     Clicked="BtnPrev_Clicked"
-                    WidthRequest="50"
+                    WidthRequest="50" 
                     HeightRequest="50"
                     BackgroundColor="{StaticResource Primary}"
-                    CornerRadius="28"
+                    CornerRadius="25"
                     FontSize="24"
                     HorizontalOptions="Center"
                     TextColor="White"
                     VerticalOptions="Center"
                     Grid.Column="0" />
 
-            <IndicatorView x:Name="IV_AppFeatures"
+            <IndicatorView x:Name="IV_AppBenefits"
                            HorizontalOptions="Center"
                            IndicatorColor="#555"
                            IndicatorSize="8"
@@ -138,7 +136,7 @@
                     WidthRequest="50"
                     HeightRequest="50"
                     BackgroundColor="{StaticResource Primary}"
-                    CornerRadius="28"
+                    CornerRadius="25"
                     FontSize="24"
                     HorizontalOptions="End"
                     TextColor="White"

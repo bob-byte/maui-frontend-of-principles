@@ -2,7 +2,7 @@
 
 namespace Principles.Models;
 
-public partial class AppFeature
+public partial class AppBenefit
 {
     public string? Title { get; set; }
 

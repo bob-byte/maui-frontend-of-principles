@@ -1,9 +1,8 @@
 namespace Principles.Views;
 
-public partial class AppCarouselView : ContentPageBase
+public partial class AppBenefitsView : ContentPageBase
 {
-
-    public AppCarouselView( AppCarouselViewModel viewModel )
+    public AppBenefitsView( AppBenefitsViewModel viewModel )
     {
         BindingContext = viewModel;
         ViewModel = viewModel;
@@ -15,21 +14,19 @@ public partial class AppCarouselView : ContentPageBase
         UpdateButtons();
     }
 
-    private AppCarouselViewModel ViewModel { get; }
+    private AppBenefitsViewModel ViewModel { get; }
 
     private void BtnPrev_Clicked( object sender, EventArgs e )
     {
-
-        if (CV_Features.Position > 0)
+        if (CV_Benefits.Position > 0)
         {
-            CV_Features.Position--;
+            CV_Benefits.S;
         }
     }
 
     private async void BtnNext_Clicked( object sender, EventArgs e )
     {
-
-        if (CV_Features.Position == CV_Features.ItemsSource.Cast<object>().Count() - 1)
+        if (CV_Benefits.Position == CV_Benefits.ItemsSource.Cast<object>().Count() - 1)
         {
             ISettingsService settingsService = ServiceLocator.Current!.GetRequiredService<ISettingsService>();
             bool isLoggedIn = !string.IsNullOrWhiteSpace( settingsService.AuthAccessToken );
@@ -42,26 +39,34 @@ public partial class AppCarouselView : ContentPageBase
                 await ViewModel.Navigation.NavigateToAsync<StartupViewModel>();
             }
         }
-        else if (CV_Features.Position < CV_Features.ItemsSource.Cast<object>().Count() - 1)
+        else if (CV_Benefits.Position < CV_Benefits.ItemsSource.Cast<object>().Count() - 1)
         {
-            CV_Features.Position++;
+            CV_Benefits.Position++;
         }
     }
 
-    private void CV_Features_PositionChanged( object sender, PositionChangedEventArgs e )
+    private void CV_Benefits_PositionChanged( object sender, PositionChangedEventArgs e )
     {        
-        if( CV_Features.Position == CV_Features.ItemsSource.Cast<object>().Count() - 1 )
+        if( CV_Benefits.Position == CV_Benefits.ItemsSource.Cast<object>().Count() - 1 )
         {
             BtnNext.Text = LocStrings.Ahead;
+            double targetWidth = PageWidth - 50 - 30;
             Animation animation = new (
                 v => BtnNext.WidthRequest = v,
                 BtnNext.WidthRequest,
-                320,
+                targetWidth,
                 Easing.Default 
             );
-            animation.Commit( BtnNext, "WidthAnimation", 16, 500 );
+
+            uint duration;
+            #if IOS
+                duration = 1000;
+            #else
+                duration = 500;
+            #endif
+            animation.Commit( BtnNext, "WidthAnimation", rate: 16, duration );
         }
-        else
+        else if( BtnNext.WidthRequest != 50 )
         {
             BtnNext.Text = ">";
             Animation animation = new (
@@ -70,7 +75,7 @@ public partial class AppCarouselView : ContentPageBase
                 50,
                 Easing.Default 
             );
-            animation.Commit( BtnNext, "WidthAnimation2", 16, 500 );
+            animation.Commit( BtnNext, "WidthAnimation2", rate: 16, length: 500 );
         }
         
         UpdateButtons();
@@ -78,6 +83,6 @@ public partial class AppCarouselView : ContentPageBase
 
     private void UpdateButtons()
     {
-        BtnPrev.IsVisible = CV_Features.Position > 0;
+        BtnPrev.IsVisible = CV_Benefits.Position > 0;
     }
 }

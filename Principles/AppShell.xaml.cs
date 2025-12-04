@@ -28,7 +28,7 @@ public partial class AppShell : Shell
             
             if (VersionTracking.IsFirstLaunchForCurrentVersion)
             {
-                m_navigationService.NavigateToAsync<AppCarouselViewModel>( isAbsoluteRoute: true );
+                m_navigationService.NavigateToAsync<AppBenefitsViewModel>( isAbsoluteRoute: true );
             }
             else
             {

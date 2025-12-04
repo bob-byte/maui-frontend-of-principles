@@ -54,5 +54,13 @@ public class ObservableCollectionEx<T> : ObservableCollection<T>
         OnPropertyChanged( new PropertyChangedEventArgs( "Items[]" ) );
         OnCollectionChanged( new NotifyCollectionChangedEventArgs( NotifyCollectionChangedAction.Reset ) );
     }
+
+    public void AddRange( IEnumerable<T> items )
+    {
+        foreach (T item in items)
+        {
+            Add( item );
+        }
+    }
 }
 

@@ -29,7 +29,7 @@ public class MauiNavigationService : INavigationService
     {
         return IsLoggedIn
             ? NavigateToMainAsync<ProgressOfHabitsViewModel>()
-            : NavigateToAsync<AppCarouselViewModel>( isAbsoluteRoute: true );
+            : NavigateToAsync<AppBenefitsViewModel>( isAbsoluteRoute: true );
     }
 
     public async Task NavigateToMainAsync<TViewModel>() where TViewModel : BaseViewModel

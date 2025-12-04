@@ -700,7 +700,7 @@
     <value>Coming Soon</value>
   </data>
   <data name="ComingSoonMessage" xml:space="preserve">
-    <value>New features and improvements are on the way!</value>
+    <value>New benefits and improvements are on the way!</value>
   </data>
   <data name="YouDontHavePassword" xml:space="preserve">
     <value>You do not have a password because you signed up with Google. You need to use Google to sign in or change your password using "Forget password?" option.</value>
