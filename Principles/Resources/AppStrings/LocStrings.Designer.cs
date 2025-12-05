@@ -2824,6 +2824,24 @@ namespace Principles.Resources.AppStrings {
             }
         }
         
+        internal static string AboutProgram {
+            get {
+                return ResourceManager.GetString("AboutProgram", resourceCulture);
+            }
+        }
+        
+        internal static string Ahead {
+            get {
+                return ResourceManager.GetString("Ahead", resourceCulture);
+            }
+        }
+        
+        internal static string LetsStartNow {
+            get {
+                return ResourceManager.GetString("LetsStartNow", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to The habit is archived..
         /// </summary>

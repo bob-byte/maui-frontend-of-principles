@@ -13,18 +13,19 @@ public partial class ConfirmEmailPopup : Popup
 
         m_settingsService = ServiceLocator.Current!.GetRequiredService<ISettingsService>();
         InitializeComponent();
+
         SetPopupWidth();
 
         Opened += ChangePasswordPopup_Opened;
         Closed += ChangePasswordPopup_Closed;
     }
 
-    private void ChangePasswordPopup_Closed( object? sender, PopupClosedEventArgs e )
+    private void ChangePasswordPopup_Closed( object? sender, EventArgs e )
     {
         IsShown = false;
     }
 
-    private void ChangePasswordPopup_Opened( object? sender, PopupOpenedEventArgs e )
+    private void ChangePasswordPopup_Opened( object? sender, EventArgs e )
     {
         IsShown = true;
     }

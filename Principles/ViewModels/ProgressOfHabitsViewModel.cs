@@ -8,6 +8,7 @@ using Plugin.LocalNotification;
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Maui.Extensions;
 
 namespace Principles.ViewModels;
 

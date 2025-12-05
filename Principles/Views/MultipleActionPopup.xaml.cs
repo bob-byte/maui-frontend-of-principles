@@ -22,15 +22,14 @@ public partial class MultipleActionPopup : Popup
         
         viewModel.ReferenceMessenger.Register<CloseMultipleActionPopupMsg>( this, ( _, _ ) =>
         {
-            Close();
+            CloseAsync();
         } );
     }
 
-    protected override async Task OnClosed( object? result, bool wasDismissedByTappingOutsideOfPopup,
-        CancellationToken token = new() )
+    public override Task CloseAsync( CancellationToken token = default )
     {
         ViewModel.ReferenceMessenger.Unregister<CloseMultipleActionPopupMsg>( this );
-        await base.OnClosed(result, wasDismissedByTappingOutsideOfPopup, token);
+        return base.CloseAsync( token );
     }
     
     private void SetPopupWidth()
@@ -48,6 +47,6 @@ public partial class MultipleActionPopup : Popup
 
     private void SB_Cancel_OnClicked( object? sender, EventArgs e )
     {
-        Close();
+        CloseAsync();
     }
 }

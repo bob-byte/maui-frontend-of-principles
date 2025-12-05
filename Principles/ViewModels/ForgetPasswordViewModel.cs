@@ -1,4 +1,5 @@
 ﻿
+using CommunityToolkit.Maui.Extensions;
 using CommunityToolkit.Maui.Views;
 
 namespace Principles.ViewModels;
@@ -58,7 +59,7 @@ public partial class ForgetPasswordViewModel : BaseViewModel
             await UiBusyFor( async () =>
             {
                 m_validConfirmationCode = await ChangePasswordService.GeneratedCodeAsync( Email.Value );
-                Page? currentPage = Application.Current.MainPage.Navigation?.NavigationStack.LastOrDefault();
+                Page currentPage = Application.Current.MainPage.Navigation?.NavigationStack.LastOrDefault()!;
 
                 m_confirmEmailPopupViewModel.SetData( NewPassword.Value, m_validConfirmationCode, Email.Value );
                 m_confirmEmailPopup = new ConfirmEmailPopup( m_confirmEmailPopupViewModel );

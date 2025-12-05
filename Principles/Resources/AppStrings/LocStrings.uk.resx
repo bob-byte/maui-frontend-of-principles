@@ -1054,4 +1054,13 @@
     <data name="ServerTechnicalWorkIsInProgress" xml:space="preserve">
         <value>Ведуться технічні роботи над сервером. Спробуйте, будь ласка, пізніше.</value>
     </data>
+    <data name="AboutProgram" xml:space="preserve">
+      <value>Про програму</value>
+    </data>
+    <data name="Ahead" xml:space="preserve">
+      <value>Вперед</value>
+    </data>
+    <data name="LetsStartNow" xml:space="preserve">
+      <value>Давай почнемо зараз!</value>
+    </data>
 </root>

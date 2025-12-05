@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>net9.0-android;net9.0-ios</TargetFrameworks>
-
+        <RestoreConfigFile>nuget.config</RestoreConfigFile>
 		<OutputType>Exe</OutputType>
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
@@ -109,30 +109,39 @@
 		</ItemGroup>
 	</Target>
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Maui" Version="9.0.0" />
-		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="12.3.0" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
-		<PackageReference Include="Plugin.AdMob" Version="2.3.1" />
 		<PackageReference Include="Plugin.LocalNotification" Version="11.1.4" />
 		<PackageReference Include="Serilog" Version="3.1.1" />
 		<PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
 		<PackageReference Include="Serilog.Sinks.Xamarin" Version="1.0.0" />
 		<PackageReference Include="System.Net.Http" Version="4.3.4" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.51" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.120" />
 		<PackageReference Include="CommunityToolkit.Maui.Markup" Version="4.0.0" />
-		<PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="2.0.0" />
-		<PackageReference Include="DevExpress.Maui.CollectionView" Version="25.1.6" />
-		<PackageReference Include="DevExpress.Maui.Controls" Version="25.1.6" />
-		<PackageReference Include="DevExpress.Maui.DataGrid" Version="25.1.6" />
-		<PackageReference Include="DevExpress.Maui.Editors" Version="25.1.6" />
+		<PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="3.1.0-preview.3" />
+		<PackageReference Include="DevExpress.Maui.CollectionView" Version="25.1.7" />
+		<PackageReference Include="DevExpress.Maui.Controls" Version="25.1.7" />
+		<PackageReference Include="DevExpress.Maui.DataGrid" Version="25.1.7" />
+		<PackageReference Include="DevExpress.Maui.Editors" Version="25.1.7" />
 		<PackageReference Include="Azure.AI.OpenAI" Version="2.1.0" />
 		<PackageReference Include="System.Text.Json" Version="8.0.5" />
 		<PackageReference Include="LiveChartsCore.SkiaSharpView.Maui" Version="2.0.0-rc5.4" />
+		<PackageReference Include="Plugin.AdMob" Version="2.3.1" />
+	</ItemGroup>
+
+	<ItemGroup Condition="$(TargetFramework.Contains('-android'))">
+		<PackageReference Include="Xamarin.AndroidX.Lifecycle.Common" Version="2.8.7.3" />
+		<PackageReference Include="Xamarin.AndroidX.Lifecycle.Runtime" Version="2.8.7.3" />
+		<PackageReference Include="Xamarin.AndroidX.Lifecycle.Service" Version="2.8.7.3" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<Compile Update="App.xaml.cs">
 			<DependentUpon>App.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\AppBenefitsView.xaml.cs">
+		  <DependentUpon>AppBenefitsView.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\StartupView.xaml.cs">
 			<DependentUpon>StartupView.xaml</DependentUpon>
@@ -199,6 +208,9 @@
 		</MauiXaml>
 		<MauiXaml Update="Controls\CircularProgressBar.xaml">
 			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\AppBenefitsView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\StartupView.xaml">
 			<Generator>MSBuild:Compile</Generator>
@@ -276,7 +288,8 @@
 	<ItemGroup>
 		<EmbeddedResource Include="appsettings.json" />
 	</ItemGroup>
-	
+
+
 	<!-- Exclude conflicting AndroidX tracing dependencies -->
 <!--	<ItemGroup Condition="'$(TargetFramework)' == 'net9.0-android'">-->
 <!--		<PackageReference Include="Xamarin.AndroidX.Tracing.Tracing" ExcludeAssets="all" />-->

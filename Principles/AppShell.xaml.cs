@@ -16,6 +16,10 @@ public partial class AppShell : Shell
         InitRouting();
         InitializeComponent();
         ReferenceMessenger = WeakReferenceMessenger.Default;
+        ReferenceMessenger.Register<NewCultureMessage>( this, ( sender, msg ) =>
+        {
+            OnPropertyChanged( nameof( LocManager ) );
+        } );
     }
 
     protected override void OnHandlerChanged()
@@ -24,9 +28,16 @@ public partial class AppShell : Shell
 
         if (Handler is not null)
         {
-            //we don't await execution because otherwise helper view will be shown for 1 second
             m_settingsService.GetAuthAccessTokenAsync().GetAwaiter().GetResult();
-            m_navigationService.GoToInitialViewAsync();
+            
+            if (VersionTracking.IsFirstLaunchForCurrentVersion)
+            {
+                m_navigationService.NavigateToAsync<AppBenefitsViewModel>( isAbsoluteRoute: true );
+            }
+            else
+            {
+                m_navigationService.GoToInitialViewAsync();
+            }
         }
     }
 
@@ -39,6 +50,7 @@ public partial class AppShell : Shell
         RegisterRoute( typeof( ForgetPasswordView ) );
         RegisterRoute( typeof( ChangePasswordView ) );
         RegisterRoute( typeof( HabitDetailView ) );
+        RegisterRoute( typeof( StartupView ) );
     }
 
     private static void RegisterRoute( Type viewType )

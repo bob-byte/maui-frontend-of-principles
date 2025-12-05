@@ -317,7 +317,7 @@ public partial class EditHabitViewModel : BaseViewModel
         IsLoadingHabitInfo = false;
     }
 
-    public override Task OnDisappearingAsync( object? parameter = null )
+    public override Task OnDisappearedAsync( object? parameter = null )
     {
         EditedReminder = new EditedUserHabitReminder();
         EditedGoal = new UserGoal();

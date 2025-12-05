@@ -10,6 +10,7 @@ using System;
 using System.Collections.ObjectModel;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.Drawing;
+using CommunityToolkit.Maui.Extensions;
 
 namespace Principles.ViewModels;
 
@@ -878,9 +879,9 @@ public partial class HabitDetailViewModel : BaseViewModel
         }
     }
 
-    public override async Task OnDisappearingAsync( object? parameter = null )
+    public override async Task OnDisappearedAsync( object? parameter = null )
     {
-        await base.OnDisappearingAsync(parameter);
+        await base.OnDisappearedAsync(parameter);
 
         Streaks = new ObservableCollection<StreakData>();
         Series = [];

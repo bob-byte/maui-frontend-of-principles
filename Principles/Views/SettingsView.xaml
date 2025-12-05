@@ -58,6 +58,11 @@
                                    Clicked="SB_ChangeLanguage_Clicked"
                                    Style="{StaticResource PrimaryButton}"
                                    Margin="0,15,0,0" />
+                <dxco:SimpleButton x:Name="SB_AppBenefits"
+                                   Text="{Binding LocManager[AboutProgram]}"
+                                   Command="{Binding ShowAppBenefitsCommand}"
+                                   Style="{StaticResource PrimaryButton}"
+                                   Margin="0,15,0,0" />
                 <dxco:SimpleButton x:Name="SB_DeleteAccount"
                                    Text="{Binding LocManager[DeleteAccount]}"
                                    Command="{Binding DeleteAccountCommand}"

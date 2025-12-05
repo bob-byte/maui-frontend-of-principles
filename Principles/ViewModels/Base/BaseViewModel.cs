@@ -74,7 +74,11 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
             } );
         } );
 
-        OnDisappearingCommand = new AsyncRelayCommand( async () => await OnDisappearingAsync() );
+        OnDisappearingCommand = new AsyncRelayCommand( async () => 
+        {
+            await Task.Delay(1000);
+            await OnDisappearedAsync();
+        } );
 
         if (GetType() != typeof( ProfileViewModel ))
         {
@@ -196,7 +200,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         return Task.CompletedTask;
     }
 
-    public virtual Task OnDisappearingAsync( object? parameter = null )
+    public virtual Task OnDisappearedAsync( object? parameter = null )
     {
         return Task.CompletedTask;
     }

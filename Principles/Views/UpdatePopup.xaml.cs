@@ -21,12 +21,12 @@ public partial class UpdatePopup : Popup
         Closed += UpdatePopup_Closed;
     }
 
-    private void UpdatePopup_Closed( object? sender, PopupClosedEventArgs e )
+    private void UpdatePopup_Closed( object? sender, EventArgs e )
     {
         IsShown = false;
     }
 
-    private void UpdatePopup_Opened( object? sender, PopupOpenedEventArgs e )
+    private void UpdatePopup_Opened( object? sender, EventArgs e )
     {
         IsShown = true;
     }
@@ -48,12 +48,12 @@ public partial class UpdatePopup : Popup
     }
     private void SB_AppUpdate_Clicked( object sender, EventArgs e )
     {
-        Close();
+        CloseAsync();
     }
 
     private void SB_CancelAppUpdate_Clicked( object sender, EventArgs e )
     {
-        Close();
+        CloseAsync();
     }
 
     void TGR_ToggleDontShowAgain_Tapped( object sender, TappedEventArgs e )

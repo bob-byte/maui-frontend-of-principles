@@ -10,6 +10,11 @@ public partial class ProfileView : ContentPageBase
         ViewModel = viewModel;
         BindingContext = viewModel;
 
+        ViewModel.ReferenceMessenger.Register<NewCultureMessage>( this, ( sender, msg ) =>
+        {
+            L_Profile.Text = LocStrings.Profile;
+        } );
+
         InitializeComponent();
     }
 

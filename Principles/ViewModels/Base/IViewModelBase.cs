@@ -12,5 +12,5 @@ public interface IViewModelBase : IQueryAttributable
     public bool IsInitialized { get; }
 
     Task InitializeAsync(object? parameter = null);
-    Task OnDisappearingAsync( object? parameter = null );
+    Task OnDisappearedAsync( object? parameter = null );
 }

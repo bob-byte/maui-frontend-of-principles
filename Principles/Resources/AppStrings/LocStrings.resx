@@ -1054,4 +1054,13 @@ You can change the status with a press.</value>
     <data name="ServerTechnicalWorkIsInProgress" xml:space="preserve">
         <value>Technical work on our server is in progress. Please try again later.</value>
     </data>
+    <data name="AboutProgram" xml:space="preserve">
+      <value>About program</value>
+    </data>
+    <data name="Ahead" xml:space="preserve">
+      <value>Ahead</value>
+    </data>
+    <data name="LetsStartNow" xml:space="preserve">
+      <value>Let's start now!</value>
+    </data>
 </root>

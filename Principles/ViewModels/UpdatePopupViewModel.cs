@@ -21,6 +21,11 @@ public partial class UpdatePopupViewModel : BaseViewModel
 
     public async Task<bool> ShouldShowPopup()
     {
+        if (SettingsService.IsDebug)
+        {
+            return false;
+        }
+        
         bool? result = null;
 
         try

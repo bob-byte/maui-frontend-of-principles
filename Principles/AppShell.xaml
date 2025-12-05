@@ -35,7 +35,8 @@
                       Route="profile" />
     </TabBar>
 
-    <FlyoutItem Route="startup">
-        <ShellContent ContentTemplate="{DataTemplate local:StartupView}" />
+    <FlyoutItem Route="appbenefits" 
+                FlyoutItemIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate local:AppBenefitsView}" />
     </FlyoutItem>
 </Shell>
