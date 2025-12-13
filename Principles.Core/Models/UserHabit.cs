@@ -85,7 +85,7 @@ public partial class UserHabit : ObservableObject, ICloneable
     private int m_complexity;
 
     [ObservableProperty]
-    private DefaultProgressValue m_defaultProgressValue;
+    private int m_defaultProgressValue;
 
     public UserHabit()
     {

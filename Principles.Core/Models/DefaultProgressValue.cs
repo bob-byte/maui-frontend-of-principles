@@ -1,7 +1,8 @@
 ﻿namespace Principles.Core.Models;
 
-public enum DefaultProgressValue
+public class DefaultProgressValue
 {
-    Unknown = 0,
-    Skip = 1
+    public string? Name { get; set; }
+    public string? Icon {get; set; }
+    public int Value { get; set; }
 }

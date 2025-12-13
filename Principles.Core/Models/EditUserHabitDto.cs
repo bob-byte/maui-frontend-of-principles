@@ -24,5 +24,5 @@ public class EditUserHabitDto
     public double? MinRate { get; set; }
     public double? MaxRate { get; set; }
     public ProgressMarkVariaty ProgressMarkVariaty { get; set; }
-    public DefaultProgressValue DefaultProgressValue{ get; set; }
+    public int DefaultProgressValue{ get; set; }
 }

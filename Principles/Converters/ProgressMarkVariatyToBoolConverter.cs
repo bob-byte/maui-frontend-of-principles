@@ -2,22 +2,22 @@
 
 namespace Principles.Converters
 {
-    public class ProgressMarkVariatyToBoolConverter : IValueConverter
+    public class ProgressMarkVariatyToBoolConverter : BaseConverterOneWay<UserHabit, bool>
     {
-        public ProgressMarkVariaty TargetKind { get; set; }
-        public object? Convert( object? value, Type targetType, object? parameter, CultureInfo culture )
+
+        public override bool DefaultConvertReturnValue { get; set; } = false;
+
+        public override bool ConvertFrom( UserHabit value, CultureInfo? culture )
         {
-            if (value is ProgressMarkVariaty kind && parameter is string param)
+            if(value is not null)
             {
-                if (Enum.TryParse( typeof( ProgressMarkVariaty ), param, out var enumValue ))
+                if(value.Type != TypeOfHabit.Mind && value.ProgressMarkVariaty == ProgressMarkVariaty.Numeric)
                 {
-                    return kind.Equals( enumValue );
+                    return true;
                 }
+                return false;
             }
             return false;
         }
-
-        public object ConvertBack( object value, Type targetType, object parameter, CultureInfo culture )
-            => throw new NotImplementedException();
     }
 }
