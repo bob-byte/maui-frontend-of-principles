@@ -503,7 +503,7 @@ namespace Principles.Resources.AppStrings {
                 return ResourceManager.GetString("ContinueWithGoogle", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Correct.
         /// </summary>
@@ -2929,6 +2929,70 @@ namespace Principles.Resources.AppStrings {
         internal static string YourPasswordSuccessfullyChanged {
             get {
                 return ResourceManager.GetString("YourPasswordSuccessfullyChanged", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to ComboBox default progress.
+        /// </summary>
+        internal static string ComboBoxDefaultProgresValue {
+            get {
+                return ResourceManager.GetString("ComboBoxDefaultProgresValue", resourceCulture);
+            }
+        }
+        
+
+         /// <summary>
+        ///   Looks up a localized string similar to Unknown
+        /// </summary>
+        internal static string UnknownValue {
+            get {
+                return ResourceManager.GetString("UnknownValue", resourceCulture);
+            }
+        }
+
+         /// <summary>
+        ///   Looks up a localized string similar to Skip
+        /// </summary>
+        internal static string SkipValue {
+            get {
+                return ResourceManager.GetString("SkipValue", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to information about principle
+        /// </summary>
+        internal static string PrincipleInfo {
+            get {
+                return ResourceManager.GetString("PrincipleInfo", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to information about flexible
+        /// </summary>
+        internal static string FlexibleInfo {
+            get {
+                return ResourceManager.GetString("FlexibleInfo", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to information about mind
+        /// </summary>
+        internal static string MindInfo {
+            get {
+                return ResourceManager.GetString("MindInfo", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to default progress
+        /// </summary>
+        internal static string DefaultProgress {
+            get {
+                return ResourceManager.GetString("DefaultProgress", resourceCulture);
             }
         }
     }

@@ -1081,4 +1081,25 @@
   <data name="NumericExample" xml:space="preserve">
     <value>Приклади: Вивчати програмування 2 год, Прочитати 10 сторінок</value>
   </data>
+  <data name="ComboBoxDefaultProgresValue" xml:space="preserve">
+    <value>Виберіть значення за замовченням</value>
+  </data>
+    <data name="UnknownValue" xml:space="preserve">
+    <value>Невідоме значення дня</value>
+  </data>
+  <data name="SkipValue" xml:space="preserve">
+    <value>Пропустити невідмічений день</value>
+  </data>
+    <data name="PrincipleInfo" xml:space="preserve">
+    <value>Про Principle</value>
+  </data>
+  <data name="FlexibleInfo" xml:space="preserve">
+    <value>Про Flexible</value>
+  </data>
+  <data name="MindInfo" xml:space="preserve">
+    <value>Про Mind</value>
+  </data>
+  <data name="DefaultProgress" xml:space="preserve">
+    <value>Стандартне значення прогресу</value>
+  </data>
 </root>

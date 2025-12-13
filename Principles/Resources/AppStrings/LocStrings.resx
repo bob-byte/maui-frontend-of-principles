@@ -1081,4 +1081,25 @@ You can change the status with a press.</value>
   <data name="NumericExample" xml:space="preserve">
     <value>Examples: Study programming for 2 hours, Read 10 pages</value>
   </data>
+  <data name="ComboBoxDefaultProgresValue" xml:space="preserve">
+    <value>Select default value</value>
+  </data>
+  <data name="UnknownValue" xml:space="preserve">
+    <value>Unknown meaning of the day</value>
+  </data>
+  <data name="SkipValue" xml:space="preserve">
+    <value>Skip unmarked day</value>
+  </data>
+  <data name="PrincipleInfo" xml:space="preserve">
+    <value>About Principle</value>
+  </data>
+  <data name="FlexibleInfo" xml:space="preserve">
+    <value>About Flexible</value>
+  </data>
+  <data name="MindInfo" xml:space="preserve">
+    <value>About Mind</value>
+  </data>
+  <data name="DefaultProgress" xml:space="preserve">
+    <value>Default progress Variable</value>
+  </data>
 </root>
