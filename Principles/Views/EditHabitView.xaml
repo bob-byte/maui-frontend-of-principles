@@ -21,6 +21,7 @@
     <v:ContentPageBase.Resources>
         <converters:ReminderTimeAndDaysToStringConverter x:Key="ReminderValueToString" />
         <converters:GoalToEndIconConverter x:Key="GoalToEndIcon" />
+        <converters:ProgressMarkVariatyToBoolConverter x:Key="ProgressMarkVariatyToBool" />
         <Style x:Key="WeekDayButton" TargetType="dx:DXToggleButton">
             <Setter Property="Padding" Value="0" />
             <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -156,68 +157,27 @@
                                 <dxe:Chip
                                     x:Name="C_PrincipledType"
                                     Icon="info"
-                                    Tap="C_TypeOfHabit_Tap"
-                                    TapCommandParameter="{x:Static m:TypeOfHabit.Principled}"
+                                    Tap="PrincipledTypeTapped"
                                     Text="{x:Static loc:LocStrings.Principled}" />
                                 <dxe:Chip
                                     x:Name="C_FlexibleType"
                                     Icon="info"
-                                    Tap="C_TypeOfHabit_Tap"
-                                    TapCommandParameter="{x:Static m:TypeOfHabit.Flexible}"
+                                    Tap="FlexibleTypeTapped"
                                     Text="{x:Static loc:LocStrings.Flexible}" />
                                 <dxe:Chip
                                     x:Name="C_MindType"
                                     Icon="info"
                                     IsVisible="{Binding CanSelectMindType, Source={RelativeSource AncestorType={x:Type vm:EditHabitViewModel}}}"
-                                    Tap="C_TypeOfHabit_Tap"
-                                    TapCommandParameter="{x:Static m:TypeOfHabit.Mind}"
+                                    Tap="MindTypeTapped"
                                     Text="{x:Static loc:LocStrings.Mind}" />
+                            
                             </dxe:ChoiceChipGroup>
-                            <Grid
-                                x:Name="G_MindProgressMarkVariaty"
-                                ColumnDefinitions="*, *"
-                                ColumnSpacing="10"
-                                HorizontalOptions="FillAndExpand"
-                                IsVisible="{Binding Habit.ProgressMarkVariaty, Converter={StaticResource ProgressMarkVariatyToBool}, ConverterParameter=Mind}">
-                                <dxe:MultilineEdit
-                                    x:Name="ME_MinRateOfHabit"
-                                    Grid.Column="0"
-                                    ClearIconVisibility="Never"
-                                    EndIcon="info"
-                                    EndIconCommand="{Binding TapHabitNameInfoCommand}"
-                                    EndIconCommandParameter="{OnPlatform iOS={x:Reference ME_NameOfHabit},
-                                                                         Android={x:Reference ME_HabitGoal}}"
-                                    HasError="{Binding NameOfHabit.IsValid, Converter={StaticResource IsFalse}}"
-                                    IsErrorIconVisible="True"
-                                    LabelText="{Binding LocManager[Min]}"
-                                    MaxLineCount="5"
-                                    ReturnType="Done"
-                                    StartIcon="fire_first"
-                                    Text="{Binding Habit.MinRate, Mode=TwoWay}"
-                                    TextChangedCommand="{Binding ValidateHabitNameCommand}" />
-                                <dxe:MultilineEdit
-                                    x:Name="ME_MaxRateOfHabit"
-                                    Grid.Column="1"
-                                    ClearIconVisibility="Never"
-                                    EndIcon="info"
-                                    EndIconCommand="{Binding TapHabitNameInfoCommand}"
-                                    EndIconCommandParameter="{OnPlatform iOS={x:Reference ME_NameOfHabit},
-                                                                         Android={x:Reference ME_HabitGoal}}"
-                                    HasError="{Binding NameOfHabit.IsValid, Converter={StaticResource IsFalse}}"
-                                    IsErrorIconVisible="True"
-                                    LabelText="{Binding LocManager[Max]}"
-                                    MaxLineCount="5"
-                                    ReturnType="Done"
-                                    StartIcon="fire_first"
-                                    Text="{Binding Habit.MaxRate, Mode=TwoWay}"
-                                    TextChangedCommand="{Binding ValidateHabitNameCommand}" />
-                            </Grid>
                             <Grid
                                 x:Name="G_NumericProgressMarkVariaty"
                                 ColumnDefinitions="*,*,*"
                                 ColumnSpacing="10"
                                 HorizontalOptions="FillAndExpand"
-                                IsVisible="{Binding Habit.ProgressMarkVariaty, Converter={StaticResource ProgressMarkVariatyToBool}, ConverterParameter=Numeric}"
+                                IsVisible="{Binding Habit, Converter={StaticResource ProgressMarkVariatyToBool}}"
                                 RowDefinitions="Auto, *"
                                 RowSpacing="10">
                                 <Label
@@ -304,8 +264,6 @@
                                 IsVisible="{Binding IsNewHabit}"
                                 Style="{StaticResource PrimaryButton}"
                                 Text="{Binding LocManager[RecommendedHabitsButton]}" />
-
-
                             <dxco:BottomSheet
                                 x:Name="GoalsBottomSheet"
                                 AllowDismiss="True"
@@ -901,6 +859,15 @@
                             LabelText="{Binding LocManager[NotesOrHowToKeepHabit]}"
                             StartIcon="notes"
                             Text="{Binding Habit.Description}" />
+                        <dxe:ComboBoxEdit
+                            x:Name="CBE_DefaultProgress"
+                            DisplayMember="Name"
+                            IsDropDownIconVisible="True"
+                            LabelText="{Binding LocManager[DefaultProgress]}"
+                            SelectionChangedCommand="{Binding SetDefaultProgressValueCommand}"
+                            ItemsSource="{Binding DefaultProgressValues}"
+                            SelectedItem="{Binding SelectedDefaultProgressValue}"
+                            StartIcon="{Binding SelectedDefaultProgressValue.Icon}"/>
                         <dxe:NumericEdit
                             x:Name="NE_Complexity"
                             EndIcon="info"
@@ -1018,6 +985,14 @@
                                 TextColor="Gray" />
                         </Grid>
                     </dxco:SimpleButton>
+                    <Label
+                        x:Name="TypeInfo"
+                        FontSize="16"
+                        LineBreakMode="WordWrap"
+                        Text="{Binding TypeOfHabitInfo}"
+                        TextColor="Gray"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Start" />
                 </dx:DXStackLayout>
                 <templates:DefaultActivityIndicator />
             </Grid>

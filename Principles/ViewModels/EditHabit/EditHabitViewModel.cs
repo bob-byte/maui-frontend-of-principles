@@ -83,6 +83,14 @@ public partial class EditHabitViewModel : BaseViewModel
     public IReminderService ReminderService { get; }
 
     public List<WeekDay> InactiveDaysToDelete { get; }
+    [ObservableProperty]
+    private DefaultProgressValue m_selectedDefaultProgressValue;
+
+    [ObservableProperty]
+    private ObservableCollectionEx<DefaultProgressValue> m_defaultProgressValues;
+
+     [ObservableProperty]
+    private String m_typeOfHabitInfo;
 
     public EditHabitViewModel( IServiceProvider serviceProvider )
 : base( serviceProvider )
@@ -93,6 +101,7 @@ public partial class EditHabitViewModel : BaseViewModel
             Name = LocStrings.AllAreasOfLife
         };
 
+        InitDefaultProgerssValues();
         InitPeriodsOfHabit();
         InitMinMaxOfHabit();
 
@@ -114,8 +123,10 @@ public partial class EditHabitViewModel : BaseViewModel
 
         ReferenceMessenger.Register<NewCultureMessage>( this, async ( sender, msg ) =>
         {
+            InitDefaultProgerssValues();
             InitPeriodsOfHabit();
             InitMinMaxOfHabit();
+            ChangeTypeOfHabitInfo(TypeOfHabit.Flexible);
 
             AiRecommenderOfHabits.RecreateSystemMessage();
 
@@ -133,12 +144,28 @@ public partial class EditHabitViewModel : BaseViewModel
         InactiveDaysToDelete = new List<WeekDay>();
     }
 
+    // private void SelectedDefaultProgressValue
+    [RelayCommand]
+    private void SetDefaultProgressValue(DefaultProgressValue defaultValue)
+    {
+        Habit.DefaultProgressValue = defaultValue.Value;
+    }
+
     private void InitPeriodsOfHabit()
     {
         PeriodsOfHabit =
         [
             new PeriodOfHabit { Type = PeriodTypeOfHabit.Week, Name = LocStrings.Week.ToLower() },
             new PeriodOfHabit { Type = PeriodTypeOfHabit.Month, Name = LocStrings.Month.ToLower() }
+        ];
+    }
+
+    private void InitDefaultProgerssValues()
+    {
+        DefaultProgressValues =
+        [
+            new DefaultProgressValue { Value = ProgressValue.UNKNOWN, Name = LocStrings.UnknownValue, Icon = "question" },
+            new DefaultProgressValue { Value = ProgressValue.SKIP, Name = LocStrings.SkipValue, Icon = "fire_fifth" }
         ];
     }
 
@@ -223,6 +250,15 @@ public partial class EditHabitViewModel : BaseViewModel
 
             var normalTextColor = (Color)Application.Current!.Resources["LightNormalText"];
             Habit.ColorName = normalTextColor.ToArgbHex();
+
+            if (Habit.Type == TypeOfHabit.Flexible )
+            {
+                SelectedDefaultProgressValue = DefaultProgressValues.First( p => p.Value == 3 );
+            }
+            else
+            {
+                SelectedDefaultProgressValue = DefaultProgressValues.First( p => p.Value == -1 );
+            }
         }
         else
         {
@@ -291,11 +327,19 @@ public partial class EditHabitViewModel : BaseViewModel
             {
                 Habit.AreasOfLife.Add( AllAreasOfLifeAsOneItem );
             }
+
+            foreach (DefaultProgressValue el in DefaultProgressValues)
+            {
+                if(el.Value == Habit.DefaultProgressValue)
+                    {
+                        SelectedDefaultProgressValue = el;
+                        break;
+                    }
+            }
         }
 
         OnPropertyChanged( nameof( EditedReminder ) );
         OnPropertyChanged( nameof( IsDayChecked ) );
-
         InitValidations();
 
         switch (Habit.Frequency!.IntervalLengthInDays)
@@ -417,4 +461,17 @@ public partial class EditHabitViewModel : BaseViewModel
         bool hasExistingProgress = Habit.Progresses.Any( p => p.Value != -1 && p.Value != 0);
         CanSelectMindType = !hasExistingProgress;
     }
+
+    public void ChangeTypeOfHabitInfo(TypeOfHabit type)
+    {
+        if (type == TypeOfHabit.Principled)
+        {
+            TypeOfHabitInfo = LocStrings.PrincipleInfo;
+        }
+        else if(type == TypeOfHabit.Flexible)
+        {
+            TypeOfHabitInfo = LocStrings.FlexibleInfo;
+        }
+    }
+
 }

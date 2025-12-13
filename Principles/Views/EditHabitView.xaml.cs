@@ -856,6 +856,16 @@ public partial class EditHabitView : ContentPageBase
         ViewModel.NotifyPropertyChanged( nameof(ViewModel.Habit) );
     }
 
+        private void NE_ProgressMarkVariaty_OnUpIconClicked( object? sender, HandledEventArgs e )
+    {
+        ViewModel.NotifyPropertyChanged( nameof(ViewModel.Habit) );
+    }
+
+    private void NE_ProgressMarkVariaty_OnDownIconClicked( object? sender, HandledEventArgs e )
+    {
+        ViewModel.NotifyPropertyChanged( nameof(ViewModel.Habit) );
+    }
+
     private async Task ChooseProgressMarkVariatyAsync()
     {
         double heightOfBottomSheet;
@@ -886,9 +896,12 @@ public partial class EditHabitView : ContentPageBase
                 if (vm.Habit != null)
                 {
                     vm.Habit.ProgressMarkVariaty = ProgressMarkVariaty.YesOrNo;
+                    vm.NotifyPropertyChanged( nameof( vm.Habit ));
                 }
             }
+            
         }
+        
     }
 
     private void EditProgressMarkVariatyNumericButton_Clicked( object sender, EventArgs e )
@@ -902,31 +915,46 @@ public partial class EditHabitView : ContentPageBase
                 if (vm.Habit != null)
                 {
                     vm.Habit.ProgressMarkVariaty = ProgressMarkVariaty.Numeric;
+                    vm.NotifyPropertyChanged( nameof( vm.Habit ));
                 }
             }
         }
     }
-    private async void C_TypeOfHabit_Tap( object sender, HandledEventArgs e )
+
+    private async void PrincipledTypeTapped(object sender, EventArgs eventArgs)
     {
-        if (sender is Chip chip && chip.TapCommandParameter is TypeOfHabit type)
-        {
-            ViewModel.Habit.Type = type;
 
-            if (type == TypeOfHabit.Mind)
-            {
+        ViewModel.Habit.Type = TypeOfHabit.Principled;
+        ViewModel.ChangeTypeOfHabitInfo(TypeOfHabit.Principled);
+        
+        await ChooseProgressMarkVariatyAsync();
+        ViewModel.InitializeAsync();
 
-                if (BindingContext is EditHabitViewModel vm)
-                {
-                    if (vm.Habit != null)
-                    {
-                        vm.Habit.ProgressMarkVariaty = ProgressMarkVariaty.Numeric;
-                    }
-                }
-            }
-            else
-            {
-                await ChooseProgressMarkVariatyAsync();
-            }
-        }
+    }
+
+    private async void FlexibleTypeTapped(object sender, EventArgs eventArgs)
+    {
+        ViewModel.Habit.Type = TypeOfHabit.Flexible;
+        ViewModel.ChangeTypeOfHabitInfo(TypeOfHabit.Flexible);
+        
+        await ChooseProgressMarkVariatyAsync();
+        ViewModel.InitializeAsync();
+        
+    }
+
+    private void MindTypeTapped(object sender, EventArgs eventArgs)
+    {
+        ViewModel.Habit.Type = TypeOfHabit.Mind;
+        ViewModel.Habit.ProgressMarkVariaty = ProgressMarkVariaty.Numeric;
+
+        ViewModel.Habit.MinRate = 0;
+        ViewModel.Habit.MaxRate = 10;
+        ViewModel.Habit.TargetPerOneTime = 0;
+
+        Snackbar.Make(
+                LocStrings.MindInfo,
+                visualOptions: SnackbarHelper.DefaultOptions()
+            ).Show();
+        
     }
 }
