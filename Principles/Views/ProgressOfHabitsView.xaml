@@ -541,7 +541,6 @@
                     ItemSpacing="12"
                     Orientation="Vertical">
 
-                    <!--  Header  -->
                     <Label
                         x:Name="L_ProgressMarkVariatyCenralHeader"
                         HeightRequest="40"
@@ -551,11 +550,34 @@
                         VerticalOptions="Center" />
 
                     <!--  PRINCIPLE  -->
-                    <Label
-                        FontSize="16"
-                        LineBreakMode="WordWrap"
-                        Text="Principle"
-                        TextColor="Gray" />
+                    <Grid ColumnDefinitions="Auto,Auto"
+                          ColumnSpacing="8">
+
+                        <Label
+                            Grid.Column="0"
+                            FontSize="16"
+                            LineBreakMode="WordWrap"
+                            Text="Principle"
+                            TextColor="Gray"
+                            VerticalOptions="Center" />
+                        <Grid Grid.Column="1"
+                            HeightRequest="24"
+                            WidthRequest="24">
+                            <dx:DXImage
+                                x:Name="InfoImagePrinciple"
+                                Grid.Column="1"
+                                HeightRequest="24"
+                                WidthRequest="24"
+                                Source="info.png"
+                                TintColor="Gray"
+                                VerticalOptions="Center" />
+
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="ShowPrincipleInfo"/>
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                    </Grid>
+
 
                     <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
 
@@ -567,7 +589,7 @@
                             BorderThickness="1"
                             Clicked="PrincipleYesOrNoHabitButton_Clicked"
                             CornerRadius="12">
-                            <!--  CONTENT UNCHANGED  -->
+
                             <Grid
                                 ColumnDefinitions="Auto, *"
                                 ColumnSpacing="16"
@@ -605,7 +627,7 @@
                             BorderThickness="1"
                             Clicked="PrincipleNumericHabitButton_Clicked"
                             CornerRadius="12">
-                            <!--  CONTENT UNCHANGED  -->
+
                             <Grid
                                 ColumnDefinitions="Auto, *"
                                 ColumnSpacing="16"
@@ -638,11 +660,35 @@
                     </Grid>
 
                     <!--  FLEXIBLE  -->
-                    <Label
-                        FontSize="16"
-                        LineBreakMode="WordWrap"
-                        Text="Flexible"
-                        TextColor="Gray" />
+                    <Grid ColumnDefinitions="Auto,Auto"
+                          ColumnSpacing="8">
+                        
+                        <Label
+                            Grid.Column="0"
+                            FontSize="16"
+                            LineBreakMode="WordWrap"
+                            Text="Flexible"
+                            TextColor="Gray"
+                            VerticalOptions="Center" />
+                    
+                       <Grid Grid.Column="1"
+                            HeightRequest="24"
+                            WidthRequest="24">
+                            <dx:DXImage
+                                x:Name="InfoImageFlexible"
+                                Grid.Column="1"
+                                HeightRequest="24"
+                                WidthRequest="24"
+                                Source="info.png"
+                                TintColor="Gray"
+                                VerticalOptions="Center" />
+
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="ShowFlexibleInfo"/>
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                    
+                    </Grid>
 
                     <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
 
@@ -654,7 +700,7 @@
                             BorderThickness="1"
                             Clicked="FlexibleYesOrNoHabitButton_Clicked"
                             CornerRadius="12">
-                            <!--  CONTENT UNCHANGED  -->
+
                             <Grid
                                 ColumnDefinitions="Auto, *"
                                 ColumnSpacing="16"
@@ -692,7 +738,7 @@
                             BorderThickness="1"
                             Clicked="FlexibleNumericHabitButton_Clicked"
                             CornerRadius="12">
-                            <!--  CONTENT UNCHANGED  -->
+
                             <Grid
                                 ColumnDefinitions="Auto, *"
                                 ColumnSpacing="16"
@@ -725,13 +771,36 @@
                     </Grid>
 
                     <!--  MIND  -->
-                    <Label
-                        FontSize="16"
-                        LineBreakMode="WordWrap"
-                        Text="Mind"
-                        TextColor="Gray" />
+                    <Grid ColumnDefinitions="Auto,Auto"
+                          ColumnSpacing="8">
+                        
+                        <Label
+                            Grid.Column="0"
+                            FontSize="16"
+                            LineBreakMode="WordWrap"
+                            Text="Mind"
+                            TextColor="Gray"
+                            VerticalOptions="Center" />
+                    
+                       <Grid Grid.Column="1"
+                        HeightRequest="24"
+                        WidthRequest="24">
+                            <dx:DXImage
+                                x:Name="InfoImageMind"
+                                Grid.Column="1"
+                                HeightRequest="24"
+                                WidthRequest="24"
+                                Source="info.png"
+                                TintColor="Gray"
+                                VerticalOptions="Center" />
 
-                    <!--  MIND BUTTONS (GRID ADDED — even if one button only)  -->
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="ShowMindInfo"/>
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                    
+                    </Grid>
+
                     <Grid ColumnDefinitions="*" ColumnSpacing="16">
 
                         <dxco:SimpleButton
@@ -776,7 +845,7 @@
                 </dx:DXStackLayout>
 
                 <templates:DefaultActivityIndicator />
-            </Grid>
+                </Grid>
         </dxco:BottomSheet>
 
         <templates:DefaultActivityIndicator />

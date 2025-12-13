@@ -612,5 +612,28 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
         DGV_Habits.EndUpdate();
     }
+    public void ShowPrincipleInfo( object sender, EventArgs e )
+    {
+        Snackbar.Make(
+                LocStrings.PrincipleInfo,
+                visualOptions: SnackbarHelper.DefaultOptions()
+            ).Show();
+    }
+
+    public void ShowFlexibleInfo( object sender, EventArgs e )
+    {
+        Snackbar.Make(
+                LocStrings.FlexibleInfo,
+                visualOptions: SnackbarHelper.DefaultOptions()
+            ).Show();
+    }
+
+    public void ShowMindInfo( object sender, EventArgs e )
+    {
+        Snackbar.Make(
+                LocStrings.MindInfo,
+                visualOptions: SnackbarHelper.DefaultOptions()
+            ).Show();
+    }
 
 }
