@@ -139,7 +139,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
                         habit.Progresses!.Insert( index: 0,
                             new ProgressOfHabit
                             {
-                                Id = 0, Date = today, Habit = habit, Value = ProgressValue.UNKNOWN
+                                Id = 0, Date = today, Habit = habit, Value = habit.DefaultProgressValue
                             } );
 
                         ViewModel.ServiceOfHabit.Recompute( habit );
