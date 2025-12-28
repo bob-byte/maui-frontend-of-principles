@@ -252,7 +252,7 @@ public class ServiceOfHabit : BaseRemoteService, IServiceOfHabit
             extraDays++;
 
             // endless cycle without a limit is dangerous
-            if (extraDays > 365)
+            if (extraDays > 1000)
             {
                 throw new InvalidOperationException("Cannot define days until the habit is complete.");
             }
