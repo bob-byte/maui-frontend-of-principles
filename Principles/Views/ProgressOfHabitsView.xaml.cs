@@ -82,6 +82,9 @@ public partial class ProgressOfHabitsView : ContentPageBase
             VerticalOptions = LayoutOptions.Start
         };
         bannerAd.OnAdFailedToLoad += BA_Ad_OnAdFailedToLoad;
+
+        G_Main.Children.Add( bannerAd );
+        G_Main.SetRow( bannerAd, 2 );
     }
 
     private void UpdateLocalizedStrings()

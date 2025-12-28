@@ -53,5 +53,5 @@ public class SettingsService : ISettingsService
     }
     public string? CurrentCulture { get; set; }
 
-    public bool IsAdsEnabled => false;
+    public bool IsAdsEnabled => !IsDebug;
 }
