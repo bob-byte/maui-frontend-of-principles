@@ -1,4 +1,3 @@
-
 using DevExpress.Maui.Controls;
 using DevExpress.Maui.Core;
 using DevExpress.Maui.Editors;
@@ -40,12 +39,21 @@ public partial class EditHabitView : ContentPageBase
     {
         base.OnAppearing();
         m_deviceOrientationService.LockOrientation( DeviceOrientation.Portrait );
+
+        //fix scroll for tabs
+#if IOS
+        Microsoft.Maui.Platform.KeyboardAutoManagerScroll.Disconnect();
+#endif
     }
 
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
         m_deviceOrientationService.UnlockOrientation();
+
+#if IOS
+        Microsoft.Maui.Platform.KeyboardAutoManagerScroll.Connect();
+#endif
     }
 
     private void ViewModel_HabitPropertyChanged( object? sender, PropertyChangedEventArgs e )
