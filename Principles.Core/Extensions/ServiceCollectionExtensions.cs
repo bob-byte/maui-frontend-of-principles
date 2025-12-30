@@ -57,7 +57,6 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<ISignupService, SignupService>();
         services.AddSingleton<IGoalService, GoalService>();
         services.AddSingleton<IGoogleAuthService, GoogleAuthService>();
-        services.AddSingleton<IVersionCheckerService, VersionCheckerService>();
         services.AddSingleton<IAppleAuthService, AppleAuthService>();
         services.AddSingleton<IApiKeyService, ApiKeyService>();
 

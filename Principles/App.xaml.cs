@@ -79,6 +79,7 @@ public partial class App : Application
             }
         }
         
+        #if IOS
         bool shouldShowPopup = await m_updatePopupViewModel.ShouldShowPopup();
         
         if (shouldShowPopup)
@@ -86,6 +87,7 @@ public partial class App : Application
             m_updatePopup ??= new UpdatePopup( m_updatePopupViewModel );
             Windows[0].Page!.ShowPopup( m_updatePopup );
         }
+        #endif
     }
 
     protected override async void OnResume()
@@ -103,6 +105,7 @@ public partial class App : Application
         
         m_updatePopupViewModel.ReferenceMessenger.Send( new TryAddNewDayInHabitListMessage() );
 
+        #if IOS 
         bool shouldShowPopup = (m_updatePopup is null || !m_updatePopup.IsShown) && ( await m_updatePopupViewModel.ShouldShowPopup());
         
         if (shouldShowPopup)
@@ -110,7 +113,9 @@ public partial class App : Application
             m_updatePopup = new UpdatePopup( m_updatePopupViewModel );
             Windows[0].Page!.ShowPopup( m_updatePopup );
         }
+        #endif
     }
+
 
     private void CurrentDomain_UnhandledException( object sender, UnhandledExceptionEventArgs e )
     {

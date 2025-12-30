@@ -14,6 +14,9 @@ using System.Reflection;
 using LiveChartsCore.SkiaSharpView.Maui;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
+using Maui.Android.InAppUpdates;
+
+
 
 #if IOS
 using Microsoft.Maui.Platform;
@@ -26,6 +29,19 @@ namespace Principles;
 
 public static class MauiProgram
 {
+    public static MauiAppBuilder UseAppStoreInfo(
+        this MauiAppBuilder builder,
+        Action<AppStoreInfoOptions>? setupAction = null) 
+    {
+        builder = builder ?? throw new ArgumentNullException(nameof(builder));
+        
+        setupAction?.Invoke(AppStoreInfo.Options);
+        
+        builder.Services.AddSingleton<IAppStoreInfo>(static _ => AppStoreInfo.Current);
+        
+        return builder;
+    }
+    
     public static MauiApp CreateMauiApp()
     {
         MauiAppBuilder builder = MauiApp.CreateBuilder();
@@ -34,6 +50,10 @@ public static class MauiProgram
 
         builder
             .UseMauiApp<App>()
+            .UseAppStoreInfo()
+            #if ANDROID
+            .UseAndroidInAppUpdates()
+            #endif
             .UseSkiaSharp()
             .UseLiveCharts()
             .UseDevExpressControls()
@@ -69,6 +89,7 @@ public static class MauiProgram
             .RegisterMauiServices()
             .RegisterViewModels()
             .RegisterViews();
+            
 
         var assembly = Assembly.GetExecutingAssembly();
 

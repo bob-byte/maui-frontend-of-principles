@@ -15,6 +15,7 @@ public class AppDelegate : MauiUIApplicationDelegate
     {
         DependencyService.RegisterSingleton<IDeviceOrientation>( new DeviceOrientationForIos() );
         DependencyService.RegisterSingleton<ILockDeviceOrientation>( new LockDeviceOrientationForIos() );
+        DependencyService.RegisterSingleton<IAppStoreInfo>( new AppStoreInfoImplementation());
 
         return MauiProgram.CreateMauiApp();
     }
