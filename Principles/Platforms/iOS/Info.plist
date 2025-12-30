@@ -36,13 +36,13 @@
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/appicon.appiconset</string>
 	<key>MinimumOSVersion</key>
-	<string>14.2</string>
+	<string>15.0</string>
 	<key>CFBundleDisplayName</key>
 	<string>Principles</string>
 	<key>NSUserTrackingUsageDescription</key>
 	<string>We use your device identifier to show relevant ads and support the app.</string>
 	<key>CFBundleVersion</key>
-	<string>3.1.9</string>
+	<string>3.2.0</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -77,6 +77,8 @@
 	<array>
 		<string>https</string>
 	</array>
+	<key>UIUserInterfaceStyle</key>
+    <string>Light</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsLocalNetworking</key>
