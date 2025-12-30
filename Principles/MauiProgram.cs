@@ -1,22 +1,19 @@
 ﻿
 using Serilog.Events;
 using Serilog;
-using Microsoft.Extensions.DependencyInjection;
-using System.Net.Http;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Maui.Handlers;
-using DevExpress.Maui.Editors;
-using Microsoft.Maui;
-using SkiaSharp.Views.Maui.Controls.Hosting;
-using DevExpress.Maui.Editors.Internal;
 
 using System.Reflection;
-using LiveChartsCore.SkiaSharpView.Maui;
-using LiveChartsCore;
-using LiveChartsCore.SkiaSharpView;
 
+using SkiaSharp.Views.Maui.Controls.Hosting;
+using LiveChartsCore.SkiaSharpView.Maui;
 using Plugin.AdMob;
-using Plugin.AdMob.Configuration;
+using The49.Maui.ContextMenu;
+using Microsoft.Maui.LifecycleEvents;
+
+
 
 #if IOS
 using Microsoft.Maui.Platform;
@@ -43,6 +40,7 @@ public static class MauiProgram
                 automaticallyAskForConsent: false )
             .UseSkiaSharp()
             .UseLiveCharts()
+            .UseContextMenu()
             .UseDevExpressControls()
             .UseDevExpressEditors()
             .UseDevExpressCollectionView()
@@ -76,7 +74,27 @@ public static class MauiProgram
             .RegisterMauiServices()
             .RegisterViewModels()
             .RegisterViews();
-        
+
+#if IOS
+        //Force Light theme on iOS
+        builder.ConfigureLifecycleEvents( events =>
+        {
+            events.AddiOS( ios =>
+            {
+                ios.SceneWillConnect( ( scene, session, options ) =>
+                {
+                    if (scene is UIWindowScene windowScene)
+                    {
+                        foreach (UIWindow window in windowScene.Windows)
+                        {
+                            window.OverrideUserInterfaceStyle = UIUserInterfaceStyle.Light;
+                        }
+                    }
+                } );
+            } );
+        } );
+#endif
+
         var assembly = Assembly.GetExecutingAssembly();
 
         //TODO: replace appsettings.json and implementation of the config to Principles.Core project

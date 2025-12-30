@@ -317,8 +317,9 @@ public partial class EditHabitViewModel : BaseViewModel
         IsLoadingHabitInfo = false;
     }
 
-    public override Task OnDisappearedAsync( object? parameter = null )
+    public override async Task OnDisappearingAsync( object? parameter = null )
     {
+        await Task.Delay(1000);
         EditedReminder = new EditedUserHabitReminder();
         EditedGoal = new UserGoal();
         Habit = new UserHabit();
@@ -328,8 +329,6 @@ public partial class EditHabitViewModel : BaseViewModel
         UserGoals = new ObservableCollectionEx<UserGoal>();
         AllUserAreasOfLife = new ObservableCollectionEx<UserAreaOfLife>();
 #endif
-        
-        return Task.CompletedTask;
     }
 
     private void NameOfHabitOnPropertyChanging( object? sender, System.ComponentModel.PropertyChangingEventArgs e )

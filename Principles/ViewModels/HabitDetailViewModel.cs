@@ -879,9 +879,9 @@ public partial class HabitDetailViewModel : BaseViewModel
         }
     }
 
-    public override async Task OnDisappearedAsync( object? parameter = null )
+    public override async Task OnDisappearingAsync( object? parameter = null )
     {
-        await base.OnDisappearedAsync(parameter);
+        await base.OnDisappearingAsync(parameter);
 
         Streaks = new ObservableCollection<StreakData>();
         Series = [];

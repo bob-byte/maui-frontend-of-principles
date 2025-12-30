@@ -1,11 +1,17 @@
+
+using CommunityToolkit.Maui.Extensions;
+
 using DevExpress.Maui.Controls;
 using DevExpress.Maui.Core;
 using DevExpress.Maui.DataGrid;
+
+using Microsoft.Maui.Controls.Shapes;
 
 using Plugin.AdMob;
 
 using Principles.Controls;
 using System.Windows.Input;
+using The49.Maui.ContextMenu;
 
 using Application = Microsoft.Maui.Controls.Application;
 
@@ -302,15 +308,16 @@ public partial class ProgressOfHabitsView : ContentPageBase
                 HorizontalStackLayout stack = new()
                 {
                     VerticalOptions = LayoutOptions.Center,
+                    Background = Colors.White,
                     Spacing = 4
                 };
 
-                stack.BindTapGesture( "HabitDetailCommand", commandSource: ViewModel, parameterPath: "Item", numberOfTapsRequired: 1 );
 
                 CircularProgressBar progressBar = new();
                 IValueConverter progressConverter = new ProgressOfHabitToInt32Converter();
                 progressBar.Bind( CircularProgressBar.ProgressProperty, path: "Item.PercentageAchieved", converter: progressConverter );
 
+                progressBar.Background = Colors.White;
                 progressBar.ProgressColor = primaryColor;
                 progressBar.TextColor = primaryColor;
                 progressBar.ProgressLeftColor = (Application.Current!.Resources["GrayColor"] as Color)!;
@@ -323,6 +330,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
                     VerticalOptions = LayoutOptions.Center,
                     VerticalTextAlignment = TextAlignment.Center,
                     LineBreakMode = LineBreakMode.TailTruncation,
+                    Background = Colors.White,
                     MaxLines = 2,
                     HeightRequest = 45,
 #if IOS17_0_OR_GREATER
@@ -339,8 +347,46 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
                 habitName.TextColor = normalTextColor;
                 habitName.WidthRequest = 145;
+                
                 stack.Add( progressBar );
                 stack.Add( habitName );
+
+                ContextMenu.SetMenu(stack, new DataTemplate( () =>
+                {
+                    Menu contextMenu = new();
+                    List<The49.Maui.ContextMenu.Action> menuItems = new()
+                    {
+                        new The49.Maui.ContextMenu.Action()
+                        {
+                            Icon = "edit_solid",
+                            Title = LocStrings.Edit,
+                            Command = ViewModel.EditHabitCommand,
+                        },
+                        new The49.Maui.ContextMenu.Action()
+                        {
+                            Icon = "archive_habit",
+                            Title = LocStrings.Archive,
+                            Command = ViewModel.ArchiveHabitCommand,
+                        },
+                        new The49.Maui.ContextMenu.Action()
+                        {
+                            Icon = "delete_solid",
+                            Title = LocStrings.Delete,
+                            Command = ViewModel.DeleteHabitCommand,
+                            IsDestructive = true,
+                        },
+                    };
+
+                    foreach (The49.Maui.ContextMenu.Action item in menuItems)
+                    {
+                        item.SetBinding( The49.Maui.ContextMenu.Action.CommandParameterProperty, new Binding( path: "Item" ) );
+                        contextMenu.Children.Add( item );
+                    }
+    
+                    return contextMenu;
+                } ) );
+             
+                ContextMenu.SetClickCommand(stack, ViewModel.HabitDetailCommand );
 
                 return stack;
             } )
@@ -427,7 +473,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
     {
         if (LocalNotificationCenter.Current.IsSupported)
         {
-            Action openPopup = () => DXP_Reminder.IsOpen = true;
+            System.Action openPopup = () => DXP_Reminder.IsOpen = true;
             if (ViewModel.LoadHabitReportReminderCommand.CanExecute( openPopup ))
             {
                 await ViewModel.LoadHabitReportReminderCommand.ExecuteAsync( openPopup ).DefaultConfigureAwait();
@@ -446,7 +492,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
     private async void SB_Save_Clicked( object sender, EventArgs e )
     {
-        Action closePopup = () => DXP_Reminder.IsOpen = false;
+        System.Action closePopup = () => DXP_Reminder.IsOpen = false;
         
         if (ViewModel.SaveHabitsReportReminderCommand.CanExecute( closePopup ))
         {

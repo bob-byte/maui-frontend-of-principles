@@ -169,6 +169,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     public IProgressOfHabitService ProgressOfHabitService { get; }
     public IReminderService ReminderService { get; }
 
+    //TODO: remove it
     internal DataGridView? DataGridViewWithHabits { get; set; }
 
     internal bool IsProgressesInitialized { get; set; }
@@ -499,8 +500,17 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private async Task HabitDetailAsync( UserHabit? habit )
+    private async Task HabitDetailAsync( object? habitObj )
     {
+        UserHabit? habit = habitObj is CellData cellData ? 
+            cellData.Item as UserHabit : 
+            habitObj as UserHabit;
+
+        if(habit is null && habitObj is HorizontalStackLayout stackLayout)
+        {
+            habit = (stackLayout.BindingContext as CellData)?.Item as UserHabit;
+        }
+        
         if (habit != null)
         {
             Dictionary<string, object> routeParams = new()

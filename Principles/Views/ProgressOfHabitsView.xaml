@@ -157,10 +157,7 @@
                               FullSwipeMode="Start"
                               IsHorizontalScrollBarVisible="False"
                               IsLoadMoreEnabled="False"
-                              RowLongPressCommand="{OnPlatform iOS={Binding SelectRowCommand}}"
-                              SelectedItem="{OnPlatform iOS={Binding SelectedHabit}}"
-                              SelectionMode="{OnPlatform iOS=Single,
-                                                         Android=None}"
+                              SelectionMode="None"
                               VerticalLineThickness="0"
                               Grid.Row="0">
                 <dxg:DataGridView.ColumnHeaderAppearance>

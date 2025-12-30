@@ -25,9 +25,10 @@ public partial class AppBenefitsViewModel : BaseViewModel
         AppBenefits.Reload(GetAppBenefits());
     }
 
-    public override async Task OnDisappearedAsync( object? parameter = null )
+    public override async Task OnDisappearingAsync( object? parameter = null )
     {
-        await base.OnDisappearedAsync( parameter );
+        await base.OnDisappearingAsync( parameter );
+        await Task.Delay(1000);
         AppBenefits.Clear();
     }
 
