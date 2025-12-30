@@ -68,15 +68,16 @@ public class ProgressToImgConverter : BaseConverterOneWay<ProgressOfHabit, View>
                     break;
                 }
         }
-        if (computed.Habit.ProgressMarkVariaty == ProgressMarkVariaty.Numeric)
+        UserHabit habit = value.Habit!;
+        if (habit.ProgressMarkVariaty == ProgressMarkVariaty.Numeric)
         {
-            bool isOverMax = computed.Habit.TargetPerOneTime >= computed.Habit.MaxRate; 
+            bool isOverMax = habit.TargetPerOneTime >= habit.MaxRate; 
             Color textColor = isOverMax ? s_primaryColor : s_grayColor;
             FontAttributes fontWeight = isOverMax ? FontAttributes.Bold : FontAttributes.None;
 
             var valueLabel = new Label
             {
-                Text = computed.Habit.TargetPerOneTime.ToString(),
+                Text = computed.Value.ToString(),
                 FontSize = 16,
                 FontAttributes = fontWeight,
                 TextColor = textColor,
@@ -88,7 +89,7 @@ public class ProgressToImgConverter : BaseConverterOneWay<ProgressOfHabit, View>
 
             var unitLabel = new Label
             {
-                Text = computed.Habit.Unit,
+                Text = habit.Unit,
                 FontSize = 12,
                 TextColor = textColor,
                 HorizontalOptions = LayoutOptions.Center,
