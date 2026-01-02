@@ -1,4 +1,6 @@
 
+using DevExpress.Maui.Core;
+
 namespace Principles.Views;
 
 public partial class StartupView : ContentPageBase
@@ -20,7 +22,7 @@ public partial class StartupView : ContentPageBase
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        m_deviceOrientationService.LockOrientation( DeviceOrientation.Portrait );
+        m_deviceOrientationService.LockOrientation( DeviceOrientation.Portrait );        
     }
 
     protected override void OnDisappearing()

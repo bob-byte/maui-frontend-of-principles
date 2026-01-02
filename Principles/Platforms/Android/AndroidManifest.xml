@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.set.principles" android:versionName="3.2.0" android:versionCode="74">
-	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="35" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.set.principles" android:versionName="3.2.1" android:versionCode="75">
+	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="36" />
 	<uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />

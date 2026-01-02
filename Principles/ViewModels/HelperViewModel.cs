@@ -45,11 +45,6 @@ public partial class HelperViewModel : BaseViewModel
         } );
     }
 
-    public override async Task InitializeAsync( object? parameter = null )
-    {
-        await base.InitializeAsync( parameter );
-    }
-
     private void AddUserMessage(string msg)
     {
         if(DisplayMessages.Count == 0)

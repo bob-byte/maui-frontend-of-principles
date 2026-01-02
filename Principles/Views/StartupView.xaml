@@ -15,7 +15,6 @@
                    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                    xmlns:v="clr-namespace:Principles.Views"
                    xmlns:vm="clr-namespace:Principles.ViewModels"
-                   ios:Page.UseSafeArea="True"
                    x:DataType="vm:StartupViewModel"
                    BackgroundColor="#1C1C1C"
                    Shell.FlyoutBehavior="Disabled"
@@ -59,6 +58,7 @@
             <Label Text="{Binding LocManager[LetsStartNow]}"
                    Margin="0,0,0,20"
                    FontAttributes="Bold"
+                   HorizontalTextAlignment="Center"
                    FontSize="32"
                    HorizontalOptions="Center"
                    TextColor="Black" />
@@ -74,16 +74,13 @@
                                HeightRequest="50"
                                CornerRadius="25"
                                TextColor="White" />
-            <OnPlatform x:TypeArguments="View">
-                <On Platform="iOS">
-                    <dxco:SimpleButton Text="{Binding LocManager[ContinueWithApple]}"
-                                       Command="{Binding ContinueWithAppleCommand}"
-                                       Style="{StaticResource PrimaryButton}"
-                                       Icon="apple"
-                                       HeightRequest="50"
-                                       CornerRadius="25" />
-                </On>
-            </OnPlatform>
+            <dxco:SimpleButton Text="{Binding LocManager[ContinueWithApple]}"
+                               Command="{Binding ContinueWithAppleCommand}"
+                               Style="{StaticResource PrimaryButton}"
+                               IsVisible="{Binding IsiOS}"
+                               Icon="apple"
+                               HeightRequest="50"
+                               CornerRadius="25" />
             <dxco:SimpleButton Text="{Binding LocManager[SignUpWithEmail]}"
                                Command="{Binding OpenSignUpViewCommand}"
                                Style="{StaticResource PrimaryButton}"

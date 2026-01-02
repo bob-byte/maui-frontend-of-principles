@@ -8,11 +8,12 @@ namespace Principles.ViewModels;
 public partial class EditHabitViewModel
 {
     [RelayCommand]
-    private Task BackAsync()
+    private async Task BackAsync()
     {
-        IDictionary<string, object> routeParams = new Dictionary<string, object>();
-        routeParams.Add( "ShowAd", false );
-        return Navigation.GoBackAsync(routeParams);
+        Dictionary<string, object> routeParams = [];
+        routeParams["ShowAd"] = false;
+
+        await Navigation.GoBackAsync(routeParams);
     }
 
     [RelayCommand]

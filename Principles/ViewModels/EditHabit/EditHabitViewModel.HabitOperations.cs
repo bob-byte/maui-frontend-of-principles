@@ -47,10 +47,8 @@ public partial class EditHabitViewModel
 
             bool isHabitSaved = false;
             
-            IDictionary<string, object> routeParams = new Dictionary<string, object>
-            {
-                { "ShowAd", false }
-            };
+            Dictionary<string, object> routeParams = [];
+            routeParams["ShowAd"] = false;
             
             await UiBusyFor( async () =>
             {
@@ -126,11 +124,13 @@ public partial class EditHabitViewModel
                         }
                     )
                 ];
-                
-                var multipleActionPopup = new MultipleActionPopup( availableActions,
-                    LocStrings.DescriptionOfAdviceNotToWorkOnNewHabit, LocStrings.TitleOfAdviceNotToWorkOnNewHabit );
 
-                await Shell.Current.ShowPopupAsync( multipleActionPopup );
+                await DialogService.ShowPopupAsync<MultipleActionPopupViewModel>(parameters: new Dictionary<string, object>
+                {
+                    ["AvailableActions"] = availableActions,
+                    ["Description"] = LocStrings.DescriptionOfAdviceNotToWorkOnNewHabit,
+                    ["Title"] = LocStrings.TitleOfAdviceNotToWorkOnNewHabit
+                });
             }
         }
         else

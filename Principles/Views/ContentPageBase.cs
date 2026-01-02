@@ -45,19 +45,19 @@ public class ContentPageBase : ContentPage
     {
         base.OnAppearing();
 
-        if (BindingContext is IViewModelBase viewModel)
+        if (BindingContext is IViewModelBase viewModel && !viewModel.DialogService.IsPopupOpen)
         {
-            await viewModel.InitializeAsyncCommand.ExecuteAsync( parameter: null );
+            await viewModel.HandlePageAppearingAsync();
         }
     }
 
     protected override async void OnDisappearing()
     {
         base.OnDisappearing();
-        if (BindingContext is IViewModelBase viewModel &&
-            viewModel.OnDisappearingCommand.CanExecute( parameter: null ))
+        
+        if (BindingContext is IViewModelBase viewModel && !viewModel.DialogService.IsPopupOpen)
         {
-            await viewModel.OnDisappearingCommand.ExecuteAsync( parameter: null );
+            await viewModel.HandleDisappearingOfPageAsync();
         }
     }
 }

@@ -8,4 +8,7 @@ namespace Principles.Core.Services;
 public interface IVersionCheckerService
 {
     Task<AppVersionInfo> GetAppVersionAsync( string language );
+    Task<bool> ShouldShowPopup();
+    string VersionDescription { get; }
+    Version LatestAppVersion { get; }
 }

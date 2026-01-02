@@ -122,9 +122,9 @@ public partial class ProfileViewModel : BaseViewModel
         return Navigation.NavigateToAsync<SettingsViewModel>( isAbsoluteRoute: false );
     }
 
-    public override async Task InitializeAsync( object? parameter = null )
+    public override async Task InitializePageAsync( IDictionary<string, object> query )
     {
-        await base.InitializeAsync( parameter );
+        await base.InitializePageAsync( query );
         await InitUserInfoAsync();
         ValidateUserName();
     }

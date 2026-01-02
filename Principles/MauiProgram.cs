@@ -114,8 +114,6 @@ public static class MauiProgram
             builder.Configuration.AddConfiguration( configuration );
             builder.Services.AddSingleton<IConfiguration>( configuration );
         }
-
-        AllowMultiLineTruncation();
         
 #if IOS
         //hide Done button above keyboard for Editor control
@@ -157,9 +155,7 @@ public static class MauiProgram
         services.AddSingleton<ProfileViewModel>();
         services.AddSingleton<ForgetPasswordViewModel>();
         services.AddSingleton<StartupViewModel>();
-        services.AddSingleton<MultipleActionPopupViewModel>();
         services.AddSingleton<ChangePasswordViewModel>();
-        services.AddSingleton<ConfirmEmailPopupViewModel>();
         services.AddSingleton<HabitDetailViewModel>();
         services.AddSingleton<AppBenefitsViewModel>();
 
@@ -180,6 +176,10 @@ public static class MauiProgram
         services.AddTransient<HabitDetailView>();
         services.AddTransient<ChangePasswordView>();
         services.AddTransient<AppBenefitsView>();
+        
+        services.AddTransientPopup<MultipleActionPopup, MultipleActionPopupViewModel>();
+        services.AddTransientPopup<UpdatePopup, UpdatePopupViewModel>();
+        services.AddTransientPopup<ConfirmEmailPopup, ConfirmEmailPopupViewModel>();
 
         return services;
     }
@@ -226,35 +226,4 @@ public static class MauiProgram
         return result;
     }
 #endif
-
-    private static void AllowMultiLineTruncation()
-    {
-        static void UpdateMaxLines( ILabelHandler handler, ILabel label )
-        {
-#if ANDROID
-            AppCompatTextView textView = handler.PlatformView;
-
-            if (label is Label controlsLabel
-                && textView.Ellipsize == Android.Text.TextUtils.TruncateAt.End
-                && controlsLabel.MaxLines != -1)
-            {
-                textView.SetMaxLines( controlsLabel.MaxLines );
-            }
-#elif IOS
-            MauiLabel textView = handler.PlatformView;
-            if( label is Label controlsLabel
-                && textView.LineBreakMode == UILineBreakMode.TailTruncation
-                && controlsLabel.MaxLines != -1 )
-            {
-              textView.Lines = controlsLabel.MaxLines;
-            }  
-#endif
-        }
-        
-        LabelHandler.Mapper.AppendToMapping(
-           nameof( Label.LineBreakMode ), UpdateMaxLines );
-
-        LabelHandler.Mapper.AppendToMapping(
-          nameof( Label.MaxLines ), UpdateMaxLines );
-    }
 }

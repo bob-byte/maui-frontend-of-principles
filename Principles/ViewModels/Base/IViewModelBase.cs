@@ -4,13 +4,11 @@ public interface IViewModelBase : IQueryAttributable
 {
     public INavigationService Navigation { get; }
 
-    public IAsyncRelayCommand InitializeAsyncCommand { get; }
-    public IAsyncRelayCommand OnDisappearingCommand { get; }
+    public IDialogService DialogService { get; }
 
     public bool IsBusy { get; }
 
     public bool IsInitialized { get; }
-
-    Task InitializeAsync(object? parameter = null);
-    Task OnDisappearingAsync( object? parameter = null );
+    Task HandlePageAppearingAsync( object? parameter = null );
+    Task HandleDisappearingOfPageAsync( object? parameter = null );
 }

@@ -34,10 +34,8 @@ public partial class ForgetPasswordViewModel : BaseViewModel
 
     public ILoginService LoginService { get; }
 
-    public override void ApplyQueryAttributes( IDictionary<string, object> query )
+    private void ApplyQuery( IDictionary<string, object> query )
     {
-        base.ApplyQueryAttributes( query );
-
         if (query.TryGetValue( "Email", out object? value ))
         {
             Email = (ValidatableObject<string>)value;
@@ -46,6 +44,12 @@ public partial class ForgetPasswordViewModel : BaseViewModel
         NewPassword = new ValidatableObject<string>();
         NewPassword.Validations.Add( new IsNotNullOrWhiteSpaceRule() );
         NewPassword.Validations.Add( new NewPasswordRule() );
+    }
+
+    public override async Task InitializePopupAsync( IDictionary<string, object> query )
+    {
+        ApplyQuery( query );
+        await base.InitializePopupAsync( query );
     }
 
     [RelayCommand]
@@ -59,12 +63,14 @@ public partial class ForgetPasswordViewModel : BaseViewModel
             await UiBusyFor( async () =>
             {
                 m_validConfirmationCode = await ChangePasswordService.GeneratedCodeAsync( Email.Value );
-                Page currentPage = Application.Current.MainPage.Navigation?.NavigationStack.LastOrDefault()!;
 
-                m_confirmEmailPopupViewModel.SetData( NewPassword.Value, m_validConfirmationCode, Email.Value );
-                m_confirmEmailPopup = new ConfirmEmailPopup( m_confirmEmailPopupViewModel );
-
-                currentPage.ShowPopup( m_confirmEmailPopup );
+                Dictionary<string, object> parameters = new()
+                    {
+                        { "NewPassword", NewPassword.Value },
+                        { "ConfirmationCode", m_validConfirmationCode },
+                        { "Email", Email }
+                    };
+                await DialogService.ShowPopupAsync<ConfirmEmailPopupViewModel>( parameters );
             } );
         }
     }

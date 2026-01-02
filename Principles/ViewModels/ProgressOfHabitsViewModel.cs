@@ -206,9 +206,9 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
         }
     }
 
-    public override async Task InitializeAsync( object? parameter = null )
+    public override async Task InitializePageAsync( IDictionary<string, object> query )
     {
-        await base.InitializeAsync( parameter );
+        await base.InitializePageAsync( query );
 
         if (!m_isInitialized)
         {
@@ -437,8 +437,13 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
             )
         ];
         
-        MultipleActionPopup popup = new( availableActions, description: LocStrings.DeleteArchivedHabitConfirmationText );
-        await Shell.Current.ShowPopupAsync( popup );
+        await DialogService.ShowPopupAsync<MultipleActionPopupViewModel>(
+            new Dictionary<string, object>
+            {
+                { "AvailableActions", availableActions },
+                { "Description", LocStrings.DeleteArchivedHabitConfirmationText }
+            }
+        );
     }
 
     private async Task DeleteArchivedHabitInServerAsync( ArсhivedHabitDto habit )

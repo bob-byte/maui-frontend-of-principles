@@ -676,16 +676,16 @@
         <value>Systematise the achievement of your goals by grouping your habits by goal.</value>
     </data>
     <data name="GetRecommendationsByAITitle" xml:space="preserve">
-        <value>Recommendations</value>
+        <value>AI-Recommendations</value>
     </data>
     <data name="GetRecommendationsByAIDescription" xml:space="preserve">
-        <value>Generate recommendations based on your mission, goals etc.</value>
+        <value>Generate AI-recommendations based on your mission, goals etc.</value>
     </data>
     <data name="ChatWithHelperTitle" xml:space="preserve">
-        <value>Chat with helper</value>
+        <value>Chat with AI-Helper</value>
     </data>
     <data name="ChatWithHelperDescription" xml:space="preserve">
-        <value>Get answers to various questions from an assistant who will take into account your mission, habits etc.</value>
+        <value>Get answers to various questions from an AI-Assistant who will take into account your mission, habits etc.</value>
     </data>
     <data name="BecomeTruePersonalityTitle" xml:space="preserve">
         <value>Become a real personality</value>
@@ -874,7 +874,7 @@
         <value>Your habit will be archived, and you can always return it to the main list.</value>
     </data>
     <data name="ArchiveHabit" xml:space="preserve">
-        <value>Add the habit to archive</value>
+        <value>Archive</value>
     </data>
     <data name="UnarchiveHabit" xml:space="preserve">
         <value>Remove the habit from archieve</value>

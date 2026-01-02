@@ -1,26 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net9.0-android;net9.0-ios</TargetFrameworks>
+		<TargetFrameworks>net10.0-android;net10.0-ios</TargetFrameworks>
 		<OutputType>Exe</OutputType>
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<RootNamespace>Principles</RootNamespace>
 		<NeutralLanguage>en</NeutralLanguage>
-		<Nullable>enable</Nullable>
+		<Nullable>disable</Nullable>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.set.principles</ApplicationId>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>3.2.0</ApplicationDisplayVersion>
-		<ApplicationVersion>62</ApplicationVersion>
+		<ApplicationDisplayVersion>3.2.4</ApplicationDisplayVersion>
+		<ApplicationVersion>66</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net9.0-android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net10.0-android'">21.0</SupportedOSPlatformVersion>
 		<ApplicationTitle>Principles</ApplicationTitle>
 		<Configurations>Debug;Release;LocalDebug</Configurations>
+		<MauiXamlInflator>SourceGen</MauiXamlInflator> 
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -31,7 +32,7 @@
 <!--		<MtouchNoSymbolStrip Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">True</MtouchNoSymbolStrip>-->
 <!--	</PropertyGroup>-->
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-ios|AnyCPU'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-ios|AnyCPU'">
 		<NoWarn>1701;1702;8632</NoWarn>
 		<ArchiveOnBuild>true</ArchiveOnBuild>
 		<RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
@@ -43,7 +44,7 @@
 	</PropertyGroup>
 
 	<!--Comment it out when behavior of the published Android app doesn't work as expected-->
-	<!-- <PropertyGroup Condition="'$(TargetFramework)' == 'net9.0-android'">
+	<!-- <PropertyGroup Condition="'$(TargetFramework)' == 'net10.0-android'">
         <RunAOTCompilation>false</RunAOTCompilation>
 		<PublishTrimmed>false</PublishTrimmed>
     </PropertyGroup> -->
@@ -93,7 +94,7 @@
 		<None Remove="Platforms\Android\Resources\values-ru\Strings.xml" />
 		<None Remove="Platforms\Android\Resources\values-ru\styles.xml" />
 	</ItemGroup>
-	<Target Condition="'$(TargetFramework)' == 'net9.0-ios'" Name="LinkWithSwift" DependsOnTargets="_ParseBundlerArguments;_DetectSdkLocations" BeforeTargets="_LinkNativeExecutable">
+	<Target Condition="'$(TargetFramework)' == 'net10.0-ios'" Name="LinkWithSwift" DependsOnTargets="_ParseBundlerArguments;_DetectSdkLocations" BeforeTargets="_LinkNativeExecutable">
 		<PropertyGroup>
 			<_SwiftPlatform Condition="$(RuntimeIdentifier.StartsWith('iossimulator-'))">iphonesimulator</_SwiftPlatform>
 			<_SwiftPlatform Condition="$(RuntimeIdentifier.StartsWith('ios-'))">iphoneos</_SwiftPlatform>
@@ -108,32 +109,30 @@
 		</ItemGroup>
 	</Target>
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Maui" Version="12.3.0" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="13.0.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="DSoft.Maui.ContextMenu" Version="1.0.2510.71" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.1" />
 		<PackageReference Include="Plugin.LocalNotification" Version="11.1.4" />
 		<PackageReference Include="Serilog" Version="3.1.1" />
 		<PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
 		<PackageReference Include="Serilog.Sinks.Xamarin" Version="1.0.0" />
 		<PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="2.0.0" />
-		<PackageReference Include="System.Net.Http" Version="4.3.4" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.120" />
-		<PackageReference Include="CommunityToolkit.Maui.Markup" Version="4.0.0" />
-		<PackageReference Include="DevExpress.Maui.CollectionView" Version="25.1.7" />
-		<PackageReference Include="DevExpress.Maui.Controls" Version="25.1.7" />
-		<PackageReference Include="DevExpress.Maui.DataGrid" Version="25.1.7" />
-		<PackageReference Include="DevExpress.Maui.Editors" Version="25.1.7" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="10.0.20" />
+		<PackageReference Include="CommunityToolkit.Maui.Markup" Version="7.0.0" />
+		<PackageReference Include="DevExpress.Maui.CollectionView" Version="25.2.3" />
+		<PackageReference Include="DevExpress.Maui.Controls" Version="25.2.3" />
+		<PackageReference Include="DevExpress.Maui.DataGrid" Version="25.2.3" />
+		<PackageReference Include="DevExpress.Maui.Editors" Version="25.2.3" />
 		<PackageReference Include="Azure.AI.OpenAI" Version="2.1.0" />
-		<PackageReference Include="System.Text.Json" Version="8.0.5" />
-		<PackageReference Include="LiveChartsCore.SkiaSharpView.Maui" Version="2.0.0-rc5.4" />
+		<PackageReference Include="LiveChartsCore.SkiaSharpView.Maui" Version="2.0.0-rc6" />
 		<PackageReference Include="Plugin.AdMob" Version="2.3.1" />
 	</ItemGroup>
 
 	<ItemGroup Condition="$(TargetFramework.Contains('-android'))">
-		<PackageReference Include="Xamarin.AndroidX.Lifecycle.Common" Version="2.8.7.3" />
-		<PackageReference Include="Xamarin.AndroidX.Lifecycle.Runtime" Version="2.8.7.3" />
-		<PackageReference Include="Xamarin.AndroidX.Lifecycle.Service" Version="2.8.7.3" />
+		<PackageReference Include="Xamarin.AndroidX.Lifecycle.Common" Version="2.9.2.1" />
+		<PackageReference Include="Xamarin.AndroidX.Lifecycle.Runtime" Version="2.9.2.1" />
+		<PackageReference Include="Xamarin.AndroidX.Lifecycle.Service" Version="2.9.2.1" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -291,7 +290,7 @@
 
 
 	<!-- Exclude conflicting AndroidX tracing dependencies -->
-<!--	<ItemGroup Condition="'$(TargetFramework)' == 'net9.0-android'">-->
+<!--	<ItemGroup Condition="'$(TargetFramework)' == 'net10.0-android'">-->
 <!--		<PackageReference Include="Xamarin.AndroidX.Tracing.Tracing" ExcludeAssets="all" />-->
 <!--		<PackageReference Include="Xamarin.AndroidX.Tracing.Tracing.Ktx" ExcludeAssets="all" />-->
 <!--	</ItemGroup>-->

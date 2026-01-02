@@ -25,11 +25,16 @@ public class MauiNavigationService : INavigationService
 
     public IUrlBuilder UrlBuilder { get; }
 
-    public Task GoToInitialViewAsync()
+    public async Task GoToInitialViewAsync()
     {
-        return IsLoggedIn
-            ? NavigateToMainAsync<ProgressOfHabitsViewModel>()
-            : NavigateToAsync<AppBenefitsViewModel>( isAbsoluteRoute: true );
+        if (IsLoggedIn)
+        {
+            await NavigateToMainAsync<ProgressOfHabitsViewModel>();
+        }
+        else
+        {
+            await NavigateToAsync<StartupViewModel>(isAbsoluteRoute: true);
+        }
     }
 
     public async Task NavigateToMainAsync<TViewModel>() where TViewModel : BaseViewModel

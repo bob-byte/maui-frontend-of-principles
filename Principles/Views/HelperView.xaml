@@ -13,7 +13,6 @@
                    xmlns:v="clr-namespace:Principles.Views"
                    xmlns:viewmodels="clr-namespace:Principles.ViewModels"
                    x:Name="CPB_Helper"
-                   ios:Page.UseSafeArea="False"
                    x:DataType="viewmodels:HelperViewModel"
                    SizeChanged="CPB_Helper_SizeChanged">
     <v:ContentPageBase.Resources>
@@ -32,7 +31,7 @@
             <dx:DXImage x:Name="DXI_Help"
                         Source="larger_help"
                         SizeChanged="G_Title_SizeChanged"
-                        TintColor="{StaticResource DarkIconColor}"
+                        TintColor="{StaticResource IconColor}"
                         Grid.Column="0" />
             <Label x:Name="L_TitleText"
                    Text="{Binding LocManager[ChatWithHelper]}"
@@ -50,12 +49,11 @@
                         HeightRequest="40"
                         HorizontalOptions="End"
                         SizeChanged="G_Title_SizeChanged"
-                        TintColor="{StaticResource DarkIconColor}"
+                        TintColor="{StaticResource IconColor}"
                         Grid.Column="3">
                 <dx:DXImage.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding ShowHelperInfoSnackbarCommand}"
-                                          CommandParameter="{OnPlatform Android={x:Reference L_ShortDescriptionOfAssistant},
-                                                                        iOS={x:Reference E_ShortDescriptionOfAssistant}}"
+                                          CommandParameter="{x:Reference L_ShortDescriptionOfAssistant}"
                                           NumberOfTapsRequired="1" />
                 </dx:DXImage.GestureRecognizers>
             </dx:DXImage>
@@ -93,31 +91,15 @@
                                Grid.Column="1" />
             <Grid Grid.Row="2"
                   Grid.ColumnSpan="3">
-                <OnPlatform x:TypeArguments="View">
-                    <On Platform="Android">
-                        <Label x:Name="L_ShortDescriptionOfAssistant"
-                               Text="{Binding LocManager[SelfDevelopmentAssistantShortDescription]}"
-                               Padding="15,0,15,0"
-                               FontFamily="MonaSansMedium"
-                               FontSize="13"
-                               HorizontalTextAlignment="Center"
-                               LineBreakMode="WordWrap"
-                               TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
-                                                           Dark={StaticResource DarkNormalText}}" />
-                    </On>
-                    <On Platform="iOS">
-                        <Editor x:Name="E_ShortDescriptionOfAssistant"
-                                Text="{Binding LocManager[SelfDevelopmentAssistantShortDescription]}"
-                                HeightRequest="{OnPlatform iOS=90}"
-                                Margin="15,0,15,0"
-                                FontFamily="MonaSansMedium"
-                                FontSize="13"
-                                HorizontalTextAlignment="Center"
-                                IsReadOnly="True"
-                                TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
-                                                            Dark={StaticResource DarkNormalText}}" />
-                    </On>
-                </OnPlatform>
+                <Label x:Name="L_ShortDescriptionOfAssistant"
+                       Text="{Binding LocManager[SelfDevelopmentAssistantShortDescription]}"
+                       Padding="15,0,15,0"
+                       FontFamily="MonaSansMedium"
+                       FontSize="13"
+                       HorizontalTextAlignment="Center"
+                       LineBreakMode="WordWrap"
+                       TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
+                                                   Dark={StaticResource DarkNormalText}}" />
             </Grid>
         </Grid>
         <Grid Padding="5,0,5,0"

@@ -6,7 +6,11 @@ public class ActionData
 {
     public string Text { get; }
     public Func<Task> AsyncFunc { get; }
-    public ICommand? Command { get; set; }
+
+    /// <summary>
+    /// This property is initiaized by MultipleActionPopupViewModel
+    /// </summary>
+    public ICommand Command { get; set; }
     
     public ActionData( string text, Func<Task> command )
     {

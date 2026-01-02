@@ -82,7 +82,10 @@ public class AdService : IAdService
             m_interstitialAd = adService.CreateAd( AdConfig.DefaultInterstitialAdUnitId );
             m_interstitialAd.OnAdFailedToLoad += ( _, error ) =>
             {
-                m_loggingService.LogError( $"Failed to load interstitial ad: {error.Message}" );
+                if(m_settingsService.IsDebug)
+                {
+                    m_loggingService.LogError( $"Failed to load interstitial ad: {error.Message}" );
+                }
             };
 
             m_interstitialAd.Load();
@@ -137,7 +140,10 @@ public class AdService : IAdService
             IInterstitialAd interstitialAd = m_interstitialAd;
             interstitialAd.OnAdFailedToShow += ( _, error ) =>
             {
-                m_loggingService.LogError( $"Failed to show interstitial ad: {error.Message}" );
+                if(m_settingsService.IsDebug)
+                {
+                    m_loggingService.LogError( $"Failed to show interstitial ad: {error.Message}" );
+                }
                 
                 taskCompletionSource.SetResult();
             };
@@ -162,14 +168,20 @@ public class AdService : IAdService
             };
             m_interstitialAd.OnAdFailedToLoad += ( _, error ) =>
             {
-                m_loggingService.LogError( $"Failed to load interstitial ad: {error.Message}" );
+                if(m_settingsService.IsDebug)
+                {
+                    m_loggingService.LogError( $"Failed to load interstitial ad: {error.Message}" );
+                }
                 
                 taskCompletionSource.SetResult();
             };
             
             m_interstitialAd.OnAdFailedToShow += ( _, error ) =>
             {
-                m_loggingService.LogError( $"Failed to show interstitial ad: {error.Message}" );
+                if(m_settingsService.IsDebug)
+                {
+                    m_loggingService.LogError( $"Failed to show interstitial ad: {error.Message}" );
+                }
                 
                 taskCompletionSource.SetResult();
             };

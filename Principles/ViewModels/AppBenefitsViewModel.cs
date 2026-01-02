@@ -14,61 +14,80 @@ public partial class AppBenefitsViewModel : BaseViewModel
     {
         ReferenceMessenger.Register<NewCultureMessage>( this, ( sender, msg ) =>
         {
-            UpdateAppBenefits();
+            ReloadAppBenefits();
         } );
+
         AppBenefits = [];
+        ReloadAppBenefits();
     }
 
-    public override async Task InitializeAsync( object? parameter = null )
+    public override async Task InitializePageAsync( IDictionary<string, object> query )
     {
-        await base.InitializeAsync( parameter );
-        AppBenefits.Reload(GetAppBenefits());
+        await base.InitializePageAsync( query );
+        ReloadAppBenefits();
     }
 
-    public override async Task OnDisappearingAsync( object? parameter = null )
+    public override async Task HandleDisappearingOfPageAsync( object? parameter = null )
     {
-        await base.OnDisappearingAsync( parameter );
-        await Task.Delay(1000);
+        await base.HandleDisappearingOfPageAsync( parameter );
+
+        //delay to not show use clearing
+        await Task.Delay( 1000 );
         AppBenefits.Clear();
     }
 
-    private IEnumerable<AppBenefit> GetAppBenefits()
+    public async Task NavigateToNextViewAsync()
     {
-        yield return new()
+        if (IsLoggedIn)
         {
-            Title = LocStrings.TransformAreasOfLifeTitle,
-            Description = LocStrings.TransformAreasOfLifeDescription,
-            Animation = SKLottieImageSource.FromFile( "transform_areas_carousel.json" ) as SKLottieImageSource
-        };
-        yield return new() 
-        { 
-            Title = LocStrings.ChatWithHelperTitle, 
-            Description = LocStrings.ChatWithHelperDescription, 
-            Animation = SKLottieImageSource.FromFile( "chat_ai_carousel.json" ) as SKLottieImageSource 
-        };
-        yield return new() 
-        { 
-            Title = LocStrings.GroupHabitsByGoalsTitle, 
-            Description = LocStrings.GroupHabitsByGoalsDescription,
-             Animation = SKLottieImageSource.FromFile( "group_habits_carousel.json" ) as SKLottieImageSource 
-        };
-        yield return new() 
-        { 
-            Title = LocStrings.GetRecommendationsByAITitle, 
-            Description = LocStrings.GetRecommendationsByAIDescription, 
-            Animation = SKLottieImageSource.FromFile( "get_recommendations_carousel.json" ) as SKLottieImageSource 
-        };
-        yield return new() 
+            await Navigation.GoBackAsync();
+        }
+        else
         {
-            Title = LocStrings.BecomeTruePersonalityTitle, 
-            Description = LocStrings.BecomeTruePersonalityDescription, 
-            Animation = SKLottieImageSource.FromFile( "become_personality_carousel.json" ) as SKLottieImageSource
-        };
+            await Navigation.NavigateToAsync<StartupViewModel>( isAbsoluteRoute: true );
+        }
     }
 
-    private void UpdateAppBenefits()
+    private List<AppBenefit> GetAppBenefits()
     {
-        AppBenefits.Clear();
-        AppBenefits.AddRange(GetAppBenefits());
+        List<AppBenefit> result =
+        [ 
+            new()
+            {
+                Title = LocStrings.TransformAreasOfLifeTitle,
+                Description = LocStrings.TransformAreasOfLifeDescription,
+                Animation = SKLottieImageSource.FromFile( "transform_areas_carousel.json" ) as SKLottieImageSource
+            },
+            new()
+            {
+                Title = LocStrings.ChatWithHelperTitle,
+                Description = LocStrings.ChatWithHelperDescription,
+                Animation = SKLottieImageSource.FromFile( "chat_ai_carousel.json" ) as SKLottieImageSource
+            },
+            new()
+            {
+                Title = LocStrings.GroupHabitsByGoalsTitle,
+                Description = LocStrings.GroupHabitsByGoalsDescription,
+                 Animation = SKLottieImageSource.FromFile( "group_habits_carousel.json" ) as SKLottieImageSource
+            },
+            new()
+            {
+                Title = LocStrings.GetRecommendationsByAITitle,
+                Description = LocStrings.GetRecommendationsByAIDescription,
+                Animation = SKLottieImageSource.FromFile( "get_recommendations_carousel.json" ) as SKLottieImageSource
+            },
+            new()
+            {
+                Title = LocStrings.BecomeTruePersonalityTitle,
+                Description = LocStrings.BecomeTruePersonalityDescription,
+                Animation = SKLottieImageSource.FromFile( "become_personality_carousel.json" ) as SKLottieImageSource
+            }
+        ];
+        return result;
+    }
+
+    public void ReloadAppBenefits()
+    {
+        AppBenefits.Reload( GetAppBenefits() );
     }
 }

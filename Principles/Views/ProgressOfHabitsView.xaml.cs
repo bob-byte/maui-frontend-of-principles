@@ -365,7 +365,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
                         new The49.Maui.ContextMenu.Action()
                         {
                             Icon = "archive_habit",
-                            Title = LocStrings.Archive,
+                            Title = LocStrings.ArchiveHabit,
                             Command = ViewModel.ArchiveHabitCommand,
                         },
                         new The49.Maui.ContextMenu.Action()
@@ -598,6 +598,9 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
     private void BA_Ad_OnAdFailedToLoad( object? sender, IAdError e )
     {
-        ViewModel.LoggingService.LogError( $"Failed to load banner ad: {e.Message}" );
+        if (ViewModel.SettingsService.IsDebug)
+        {
+            ViewModel.LoggingService.LogError( $"Failed to load banner ad: {e.Message}" );
+        }
     }
 }

@@ -28,16 +28,7 @@ public partial class AppBenefitsView : ContentPageBase
     {
         if (CV_Benefits.Position == CV_Benefits.ItemsSource.Cast<object>().Count() - 1)
         {
-            ISettingsService settingsService = ServiceLocator.Current!.GetRequiredService<ISettingsService>();
-            bool isLoggedIn = !string.IsNullOrWhiteSpace( settingsService.AuthAccessToken );
-            if (isLoggedIn)
-            {
-                await ViewModel.Navigation.GoToInitialViewAsync();
-            }
-            else
-            {
-                await ViewModel.Navigation.NavigateToAsync<StartupViewModel>();
-            }
+            await ViewModel.NavigateToNextViewAsync();
         }
         else if (CV_Benefits.Position < CV_Benefits.ItemsSource.Cast<object>().Count() - 1)
         {

@@ -123,13 +123,8 @@ public partial class EditHabitViewModel : BaseViewModel
         ];
     }
 
-    //It is call on navigate to this EditHabitView
-    public override void ApplyQueryAttributes( IDictionary<string, object> query )
+    private void ApplyQuery( IDictionary<string, object> query )
     {
-        IsLoadingHabitInfo = true;
-
-        base.ApplyQueryAttributes( query );
-
         Habit = new UserHabit();
 
         if (query.TryGetValue( "Habit", out object? value ) && value is UserHabit habit)
@@ -169,8 +164,12 @@ public partial class EditHabitViewModel : BaseViewModel
         AdService.IfRequiredShowInterstitialAdAsync();
     }
 
-    public override async Task InitializeAsync( object? parameter = null )
+    public override async Task InitializePageAsync( IDictionary<string, object> query )
     {
+        IsLoadingHabitInfo = true;
+
+        ApplyQuery( query );
+
         IsDayChecked =
         [
             true, // Sunday
@@ -312,23 +311,18 @@ public partial class EditHabitViewModel : BaseViewModel
 
         NotifyPropertyChanged( nameof(Habit) );
 
-        await base.InitializeAsync( parameter );
+        await base.InitializePageAsync( query );
 
         IsLoadingHabitInfo = false;
     }
 
-    public override async Task OnDisappearingAsync( object? parameter = null )
+    public override async Task HandleDisappearingOfPageAsync( object parameter = null )
     {
+        await base.HandleDisappearingOfPageAsync( parameter );
+
+        //delay to not show user clearing
         await Task.Delay(1000);
-        EditedReminder = new EditedUserHabitReminder();
-        EditedGoal = new UserGoal();
-        Habit = new UserHabit();
-        RecommendedHabits = new ObservableCollectionEx<RecommendedHabit>();
-        
-#if ANDROID
-        UserGoals = new ObservableCollectionEx<UserGoal>();
-        AllUserAreasOfLife = new ObservableCollectionEx<UserAreaOfLife>();
-#endif
+        ClearViewModelData();
     }
 
     private void NameOfHabitOnPropertyChanging( object? sender, System.ComponentModel.PropertyChangingEventArgs e )
@@ -378,5 +372,18 @@ public partial class EditHabitViewModel : BaseViewModel
         IsDayChecked.Add( true ); // Friday
         IsDayChecked.Add( true ); // Saturday
         IsDayChecked.Add( true ); // Sunday
+    }
+
+    private void ClearViewModelData()
+    {
+        EditedReminder = new EditedUserHabitReminder();
+        EditedGoal = new UserGoal();
+        Habit = new UserHabit();
+        RecommendedHabits = new ObservableCollectionEx<RecommendedHabit>();
+        
+#if ANDROID
+        UserGoals = new ObservableCollectionEx<UserGoal>();
+        AllUserAreasOfLife = new ObservableCollectionEx<UserAreaOfLife>();
+#endif
     }
 }

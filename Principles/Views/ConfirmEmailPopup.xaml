@@ -1,4 +1,5 @@
-﻿<toolkit:Popup x:Class="Principles.Views.ConfirmEmailPopup"
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<toolkit:Popup x:Class="Principles.Views.ConfirmEmailPopup"
                xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                xmlns:controls="clr-namespace:Principles.Controls"
@@ -34,15 +35,13 @@
                                        MaxLineCount="1"
                                        TextFontSize="16"
                                        TextHorizontalAlignment="Center" />
-                    <dxco:SimpleButton x:Name="SB_ChangePassword"
-                                       Text="{Binding LocManager[ConfirmPasswordChangeButton]}"
-                                       Clicked="SB_ChangePassword_Clicked"
-                                       Style="{StaticResource PrimaryButton}"
-                                       Margin="0,0,0,0"
-                                       FontSize="16"
-                                       HorizontalOptions="End" />
+                    <dx:DXButton x:Name="SB_ChangePassword"
+                                 Content="{Binding LocManager[ConfirmPasswordChangeButton]}"
+                                 Command="{Binding ConfirmPasswordChangeCommand}"
+                                 Style="{StaticResource PrimaryButton}"
+                                 Margin="0,0,0,0"
+                                 HorizontalOptions="End" />
                 </VerticalStackLayout>
-
                 <templates:DefaultActivityIndicator />
             </Grid>
         </Frame>

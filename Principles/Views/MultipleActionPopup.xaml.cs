@@ -6,30 +6,15 @@ public partial class MultipleActionPopup : Popup
 {
     private MultipleActionPopupViewModel ViewModel { get; }
 
-    public MultipleActionPopup( List<ActionData> actions, string description, string? title = null )
+    public MultipleActionPopup( MultipleActionPopupViewModel viewModel )
     {
         KeyboardHelper.HideKeyboard();
-
-        MultipleActionPopupViewModel viewModel =
-            ServiceLocator.Current!.GetRequiredService<MultipleActionPopupViewModel>();
-        viewModel.Configure( actions, description, title );
         
         BindingContext = viewModel;
         ViewModel = viewModel;
 
         InitializeComponent();
         SetPopupWidth();
-        
-        viewModel.ReferenceMessenger.Register<CloseMultipleActionPopupMsg>( this, ( _, _ ) =>
-        {
-            CloseAsync();
-        } );
-    }
-
-    public override Task CloseAsync( CancellationToken token = default )
-    {
-        ViewModel.ReferenceMessenger.Unregister<CloseMultipleActionPopupMsg>( this );
-        return base.CloseAsync( token );
     }
     
     private void SetPopupWidth()
@@ -43,10 +28,5 @@ public partial class MultipleActionPopup : Popup
         {
             G_Popup.WidthRequest = settingsService.NormalPageWidth - 10;
         }
-    }
-
-    private void SB_Cancel_OnClicked( object? sender, EventArgs e )
-    {
-        CloseAsync();
     }
 }

@@ -47,8 +47,8 @@
             <Color x:Key="CursorColor">#007BFF</Color>
             <Color x:Key="DarkCursorColor">Black</Color>
 
-            <Color x:Key="IconColor">#1F1F1F</Color>
-            <Color x:Key="DarkIconColor">White</Color>
+            <Color x:Key="IconColor">White</Color>
+            <Color x:Key="DarkIconColor">#1C1C1C</Color>
 
             <Color x:Key="LightNormalText">#1C1C1C</Color>
             <Color x:Key="DarkNormalText">White</Color>
@@ -71,6 +71,7 @@
             <Color x:Key="NavigationBarColorDark">#111111</Color>
             <Color x:Key="OrangeColor">Orange</Color>
             <Color x:Key="GrayColor">#d9d4d4</Color>
+            <Color x:Key="DarkGray">#18191A</Color>
 
             <Style ApplyToDerivedTypes="True"
                    TargetType="Page">
@@ -96,17 +97,61 @@
                 <Setter Property="TextColor"
                         Value="White" />
                 <Setter Property="IconColor"
+                        Value="{AppThemeBinding Light={StaticResource IconColor},
+                                                Dark={StaticResource DarkIconColor}}" />
+                <Setter Property="PressedIconColor"
+                        Value="{AppThemeBinding Light={StaticResource IconColor},
+                                                Dark={StaticResource DarkIconColor}}" />
+                <Setter Property="BorderColor"
+                        Value="{StaticResource SecondaryLight}" />
+                <Setter Property="PressedBorderColor"
+                        Value="{StaticResource SecondaryLight}" />
+            </Style>
+            <Style TargetType="dx:DXButton">
+                <Setter Property="FontAttributes"
+                        Value="Bold" />
+                <Setter Property="FontSize"
+                        Value="16" />
+            </Style>
+            <Style x:Key="DXPrimaryButton"
+                   TargetType="dx:DXButton">
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Light={StaticResource Primary},
+                                                Dark={StaticResource DarkPrimary}}" />
+                <Setter Property="PressedBackgroundColor"
+                        Value="LightGray" />
+                <Setter Property="TextColor"
+                        Value="White" />
+                <Setter Property="IconColor"
+                        Value="{AppThemeBinding Light={StaticResource IconColor},
+                                                Dark={StaticResource DarkIconColor}}" />
+                <Setter Property="PressedIconColor"
+                        Value="{AppThemeBinding Light={StaticResource IconColor},
+                                                Dark={StaticResource DarkIconColor}}" />
+                <Setter Property="BorderColor"
+                        Value="{StaticResource SecondaryLight}" />
+                <Setter Property="PressedBorderColor"
+                        Value="{StaticResource SecondaryLight}" />
+            </Style>
+            <Style x:Key="DXSecondaryButton"
+                   TargetType="dx:DXButton">
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Light={StaticResource DarkGray},
+                                                Dark={StaticResource Primary}}" />
+                <Setter Property="PressedBackgroundColor"
+                        Value="LightGray" />
+                <Setter Property="TextColor"
+                        Value="{AppThemeBinding Light={StaticResource Primary},
+                                                Dark={StaticResource DarkPrimary}}" />
+                <Setter Property="IconColor"
                         Value="{AppThemeBinding Light={StaticResource DarkIconColor},
                                                 Dark={StaticResource IconColor}}" />
                 <Setter Property="PressedIconColor"
                         Value="{AppThemeBinding Light={StaticResource DarkIconColor},
                                                 Dark={StaticResource IconColor}}" />
                 <Setter Property="BorderColor"
-                        Value="{StaticResource SecondaryLight}" />
-                <Setter Property="PressedBorderColor"
-                        Value="{StaticResource SecondaryLight}" />
+                        Value="{StaticResource TitleTextColor}" />
             </Style>
-            <Color x:Key="DarkGray">#18191A</Color>
             <Style x:Key="SecondaryButton"
                    TargetType="dxco:SimpleButton">
                 <Setter Property="BackgroundColor"
@@ -152,13 +197,13 @@
                 <Setter Property="Shell.ForegroundColor"
                         Value="{StaticResource TitleTextColor}" />
                 <Setter Property="Shell.TabBarBackgroundColor"
-                        Value="{StaticResource Background}" />
+                        Value="{StaticResource Primary}" />
                 <Setter Property="Shell.TabBarForegroundColor"
-                        Value="{StaticResource Primary}" />
+                        Value="{StaticResource SecondaryLight}" />
                 <Setter Property="Shell.TabBarTitleColor"
-                        Value="{StaticResource Primary}" />
+                        Value="{StaticResource SecondaryLight}" />
                 <Setter Property="Shell.TabBarUnselectedColor"
-                        Value="{StaticResource LightNormalText}" />
+                        Value="{StaticResource GrayColor}" />
             </Style>
             <Style x:Key="DefaultHorizonalSeparator"
                    TargetType="BoxView">
@@ -317,8 +362,11 @@
             </Style>
             <Style TargetType="dxe:Chip">
                 <Setter Property="IconColor"
-                        Value="{AppThemeBinding Light={StaticResource IconColor},
-                                                Dark={StaticResource DarkIconColor}}" />
+                        Value="{AppThemeBinding Light={StaticResource DarkIconColor},
+                                                Dark={StaticResource IconColor}}" />
+                <Setter Property="SelectedIconColor"
+                        Value="{AppThemeBinding Light={StaticResource DarkIconColor},
+                                                Dark={StaticResource IconColor}}" />
                 <Setter Property="IsIconVisible"
                         Value="True" />
                 <Setter Property="SelectedBackgroundColor"

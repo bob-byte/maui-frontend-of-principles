@@ -676,16 +676,16 @@
         <value>Систематизуй досягнення цілей, групувавши звички за цілями.</value>
     </data>
     <data name="GetRecommendationsByAITitle" xml:space="preserve">
-        <value>Рекомендації</value>
+        <value>ШІ-Рекомендації</value>
     </data>
     <data name="GetRecommendationsByAIDescription" xml:space="preserve">
-        <value>Отримай рекомендації, що сформовані на основі твоєї місії, гасла по життю, цілях і т.д.</value>
+        <value>Отримай ШІ-рекомендації, що сформовані на основі твоєї місії, гасла по життю, цілях і т.д.</value>
     </data>
     <data name="ChatWithHelperTitle" xml:space="preserve">
-        <value>Чат з помічником</value>
+        <value>Чат з ШІ-помічником</value>
     </data>
     <data name="ChatWithHelperDescription" xml:space="preserve">
-        <value>Отримай відповідь на різноманітні питання від асистента, який зважає на твою місію, звички й т.д.</value>
+        <value>Отримай відповідь на різноманітні питання від ШІ-асистента, який зважає на твою місію, звички й т.д.</value>
     </data>
     <data name="BecomeTruePersonalityTitle" xml:space="preserve">
         <value>Стань справжньою особистістю</value>
@@ -916,7 +916,7 @@
         <value>Ваша звичка буде збережена в архів, ви завжди зможете повернути її в основний список.</value>
     </data>
     <data name="ArchiveHabit" xml:space="preserve">
-        <value>Додати звичку в архів</value>
+        <value>Архівувати</value>
     </data>
     <data name="AddHabitToArchiveQuestion" xml:space="preserve">
         <value>Перемістити звичку в архів?</value>

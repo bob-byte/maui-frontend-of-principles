@@ -18,9 +18,9 @@ public partial class ChangePasswordViewModel : BaseViewModel
         ChangePasswordService = serviceProvider.GetRequiredService<IChangePasswordService>();
     }
 
-    public override async Task InitializeAsync( object? parameter = null )
+    public override async Task InitializePageAsync( IDictionary<string, object> query )
     {
-        await base.InitializeAsync(parameter);
+        await base.InitializePageAsync(query);
         
         Email = CachingService.GetStoredValue( CacheKeys.USER_EMAIL );
 
@@ -45,21 +45,18 @@ public partial class ChangePasswordViewModel : BaseViewModel
             await UiBusyFor( async () =>
             {
                 m_validConfirmationCode = await ChangePasswordService.GeneratedCodeAsync( Email );
-                Page? currentPage = Shell.Current.Navigation.NavigationStack.LastOrDefault();
 
-                if (currentPage is not null)
-                {
-                    ConfirmEmailPopupViewModel confirmEmailPopupViewModel = ServiceProvider.GetRequiredService<ConfirmEmailPopupViewModel>();
-                
-                    confirmEmailPopupViewModel.SetData( NewPassword.Value, m_validConfirmationCode, Email );
-                    ConfirmEmailPopup confirmEmailPopup = new( confirmEmailPopupViewModel );
+                Dictionary<string, object> parameters = new()
+                    {
+                        { "NewPassword", NewPassword.Value },
+                        { "ConfirmationCode", m_validConfirmationCode },
+                        { "Email", Email }
+                    };
+                await DialogService.ShowPopupAsync<ConfirmEmailPopupViewModel>( parameters );
 
-                    currentPage.ShowPopup( confirmEmailPopup );
-                    
-                    NewPassword = new ValidatableObject<string>();
-                    NewPassword.Validations.Add( new IsNotNullOrWhiteSpaceRule() );
-                    NewPassword.Validations.Add( new NewPasswordRule() );
-                }
+                NewPassword = new ValidatableObject<string>();
+                NewPassword.Validations.Add( new IsNotNullOrWhiteSpaceRule() );
+                NewPassword.Validations.Add( new NewPasswordRule() );
             } );
         }
     }

@@ -1,9 +1,4 @@
 ﻿using CommunityToolkit.Maui.Extensions;
-using CommunityToolkit.Maui.Views;
-
-using Plugin.AdMob.Services;
-
-using Principles.Core.Services.AiKey;
 
 using Application = Microsoft.Maui.Controls.Application;
 
@@ -11,13 +6,10 @@ namespace Principles;
 
 public partial class App : Application
 {
-    private readonly UpdatePopupViewModel m_updatePopupViewModel;
     private readonly ISettingsService m_settingsService;
     private readonly ILoggingService m_loggingService;
     private readonly IAdService m_adService;
     private readonly IAppOpenTrackerService m_appOpenTracker;
-
-    private UpdatePopup? m_updatePopup;
     
     public App( IServiceProvider serviceProvider )
     {
@@ -30,8 +22,6 @@ public partial class App : Application
         m_loggingService = serviceProvider.GetRequiredService<ILoggingService>();
         m_adService = serviceProvider.GetRequiredService<IAdService>();
         m_appOpenTracker = serviceProvider.GetRequiredService<IAppOpenTrackerService>();
-
-        m_updatePopupViewModel = new UpdatePopupViewModel( serviceProvider );
 
         UserAppTheme = AppTheme.Light;
 
@@ -61,45 +51,10 @@ public partial class App : Application
         base.OnStart();
 
         m_appOpenTracker.TrackAppOpen();
-
-        if (m_settingsService.IsAdsEnabled)
-        {
-            await m_adService.GetAccessToTrackAsync();
-        }
         
         LocalNotificationCenter.Current.ClearAll();
-
-        if (VersionTracking.IsFirstLaunchEver || VersionTracking.IsFirstLaunchForCurrentBuild || VersionTracking.IsFirstLaunchForCurrentVersion) 
-        {
-            await SecureStorage.SetAsync( CacheKeys.API_KEY, string.Empty );
-        }
         
         m_loggingService.LogInfo( "App starting..." );
-        
-        if (VersionTracking.IsFirstLaunchEver)
-        {
-            try
-            {
-                string token = await m_settingsService.GetAuthAccessTokenAsync();
-                if (!string.IsNullOrWhiteSpace( token ))
-                {
-                    IReminderService reminderService = ServiceLocator.Current!.GetRequiredService<IReminderService>();
-                    await reminderService.TryToRecoverAllUserRemindersAsync();
-                }
-            }
-            catch (Exception ex)
-            {
-                m_loggingService.LogError( ex, ex.Message );
-            }
-        }
-        
-        bool shouldShowPopup = await m_updatePopupViewModel.ShouldShowPopup();
-        
-        if (shouldShowPopup)
-        {
-            m_updatePopup ??= new UpdatePopup( m_updatePopupViewModel );
-            await Shell.Current.ShowPopupAsync( m_updatePopup );
-        }
     }
 
     protected override async void OnResume()
@@ -119,15 +74,7 @@ public partial class App : Application
             await SecureStorage.SetAsync( CacheKeys.API_KEY, string.Empty );
         }
         
-        m_updatePopupViewModel.ReferenceMessenger.Send( new TryAddNewDayInHabitListMessage() );
-
-        bool shouldShowPopup = (m_updatePopup is null || !m_updatePopup.IsShown) && ( await m_updatePopupViewModel.ShouldShowPopup());
-        
-        if (shouldShowPopup)
-        {
-            m_updatePopup = new UpdatePopup( m_updatePopupViewModel );
-            await Shell.Current!.ShowPopupAsync( m_updatePopup );
-        }
+        WeakReferenceMessenger.Default.Send( new TryAddNewDayInHabitListMessage() );
     }
 
     protected override void OnSleep()

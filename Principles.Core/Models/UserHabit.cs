@@ -7,7 +7,7 @@ public partial class UserHabit : ObservableObject
     [ObservableProperty]
     private long m_id;
     [ObservableProperty]
-    private string? m_name;
+    private string m_name;
 
     [ObservableProperty]
     private TypeOfHabit m_type;
@@ -16,7 +16,7 @@ public partial class UserHabit : ObservableObject
     private StatusOfHabit m_status;
 
     [ObservableProperty]
-    private ObservableCollectionEx<UserAreaOfLife>? m_areasOfLife;
+    private ObservableCollectionEx<UserAreaOfLife> m_areasOfLife;
 
     [ObservableProperty]
     private int m_priority;
@@ -27,7 +27,7 @@ public partial class UserHabit : ObservableObject
     [ObservableProperty]
     private string? m_description;
     [ObservableProperty]
-    private UserGoal? m_goal;
+    private UserGoal m_goal;
 
     [ObservableProperty]
     private ObservableCollectionEx<UserHabitReminder>? m_reminders;
@@ -37,14 +37,13 @@ public partial class UserHabit : ObservableObject
         return Id == 0;
     }
 
-    private double m_percentageAchieved;
     public double PercentageAchieved
     {
-        get => m_percentageAchieved;
+        get => field;
         set
         {
             OnPropertyChanging();
-            m_percentageAchieved = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -59,10 +58,10 @@ public partial class UserHabit : ObservableObject
     private ScoreList m_scoreList;
 
     [ObservableProperty]
-    private FrequencyOfHabit? m_frequency;
+    private FrequencyOfHabit m_frequency;
 
     [ObservableProperty]
-    private string? m_colorName;
+    private string m_colorName;
     
     [ObservableProperty]
     private int m_complexity;

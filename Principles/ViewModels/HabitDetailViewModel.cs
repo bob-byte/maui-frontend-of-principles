@@ -94,7 +94,7 @@ public partial class HabitDetailViewModel : BaseViewModel
     public IProgressOfHabitService ProgressOfHabitService { get; }
     public HabitFrequencyInfo FrequencyInfo { get; set; }
 
-    public override void ApplyQueryAttributes( IDictionary<string, object> query )
+    private void ApplyQuery( IDictionary<string, object> query )
     {
         if (query.TryGetValue( "Habit", out object? habitObj ) && habitObj is UserHabit habit)
         {
@@ -116,13 +116,13 @@ public partial class HabitDetailViewModel : BaseViewModel
         {
             AdService.IfRequiredShowInterstitialAdAsync();
         }
-
-        base.ApplyQueryAttributes( query );
     }
 
-    public override async Task InitializeAsync( object? parameter = null )
+    public override async Task InitializePageAsync( IDictionary<string, object> query )
     {
-        await base.InitializeAsync( parameter );
+        ApplyQuery( query );
+        
+        await base.InitializePageAsync( query );
 
         SetEditedRemider();
 
@@ -787,9 +787,14 @@ public partial class HabitDetailViewModel : BaseViewModel
                     DeleteHabitFromServerAsync
                 )
             ];
-            MultipleActionPopup popup = new( availableActions, LocStrings.DeleteArchivedHabitConfirmationText );
             
-            await Shell.Current.ShowPopupAsync( popup );
+            await DialogService.ShowPopupAsync<MultipleActionPopupViewModel>(
+                new Dictionary<string, object>
+                {
+                    { "AvailableActions", availableActions },
+                    { "Description", LocStrings.DeleteArchivedHabitConfirmationText }
+                }
+            );
         }
         else
         {
@@ -879,9 +884,9 @@ public partial class HabitDetailViewModel : BaseViewModel
         }
     }
 
-    public override async Task OnDisappearingAsync( object? parameter = null )
+    public override async Task HandleDisappearingOfPageAsync( object? parameter = null )
     {
-        await base.OnDisappearingAsync(parameter);
+        await base.HandleDisappearingOfPageAsync(parameter);
 
         Streaks = new ObservableCollection<StreakData>();
         Series = [];

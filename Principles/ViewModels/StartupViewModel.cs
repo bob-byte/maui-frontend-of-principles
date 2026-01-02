@@ -19,8 +19,6 @@ public partial class StartupViewModel : BaseViewModel
         m_appleAuthService = serviceProvider.GetRequiredService<IAppleAuthService>();
     }
 
-
-
     [RelayCommand]
     public async Task ContinueWithGoogleAsync()
     {
@@ -38,12 +36,17 @@ public partial class StartupViewModel : BaseViewModel
         
         try
         {
-            await Navigation.GoToInitialViewAsync();
+            await GoToInitialViewAsync();
         }
         catch(Exception ex)
         {
             LoggingService.LogError( ex, ex.Message );
         }
+    }
+
+    private async Task GoToInitialViewAsync()
+    {
+        await Navigation.GoToInitialViewAsync();
     }
 
     private async Task HandleExceptionWhenGoogleAuthAsync(Exception ex)
@@ -64,7 +67,7 @@ public partial class StartupViewModel : BaseViewModel
         {
             errorMsg = LocStrings.NoInternetConnection;
         }
-        else if (ex is not TaskCanceledException)
+        else if (ex is not TaskCanceledException && ex.Message != "access_denied")
         {
             errorMsg = LocStrings.SomethingWentWrong;
             LoggingService.LogError( ex, ex.Message );
@@ -73,7 +76,10 @@ public partial class StartupViewModel : BaseViewModel
         bool doShowAlert = !string.IsNullOrWhiteSpace( errorMsg );
         if (doShowAlert)
         {
-            await DialogService.ShowErrorAsync( errorMsg! );
+            await MainThread.InvokeOnMainThreadAsync( async () =>
+            {
+                await DialogService.ShowErrorAsync( errorMsg! );
+            } );
         }
     }
 
@@ -94,7 +100,7 @@ public partial class StartupViewModel : BaseViewModel
 
         try
         {
-            await Navigation.GoToInitialViewAsync();
+            await GoToInitialViewAsync();
         }
         catch(Exception ex)
         {
@@ -144,7 +150,10 @@ public partial class StartupViewModel : BaseViewModel
             bool doShowAlert = !string.IsNullOrWhiteSpace( errorMsg );
             if (doShowAlert)
             {
-                await DialogService.ShowErrorAsync( errorMsg! );
+                await MainThread.InvokeOnMainThreadAsync( async () =>
+                {
+                    await DialogService.ShowErrorAsync( errorMsg! );
+                } );
             }
         }
     }

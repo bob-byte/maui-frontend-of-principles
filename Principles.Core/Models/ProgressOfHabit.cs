@@ -9,13 +9,13 @@ public partial class ProgressOfHabit : ObservableObject
     [ObservableProperty]
     private int m_value;
     [ObservableProperty]
-    private UserHabit? m_habit;
+    private UserHabit m_habit;
     [ObservableProperty]
-    private string? m_notes;
+    private string m_notes;
 
     public bool IsCompleted()
     {
-        return m_value == ProgressValue.YES_MANUAL;
+        return Value == ProgressValue.YES_MANUAL;
     }
 
     public override string ToString()

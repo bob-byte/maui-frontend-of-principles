@@ -16,26 +16,48 @@ public partial class MultipleActionPopupViewModel : BaseViewModel
         //do nothing
     }
 
-    public void Configure( List<ActionData> actions, string description, string? title = null )
+    private void ApplyQuery( IDictionary<string, object> query )
     {
-        Title = string.IsNullOrWhiteSpace( title ) ? 
-            LocStrings.ChooseAction : 
-            title;
-        
-        TextOfLabel = description;
-        Buttons.Clear();
-
-        foreach (ActionData action in actions)
+        if (query.TryGetValue( "AvailableActions", out object? availableActions ) && availableActions is List<ActionData> actions)
         {
-            action.Command = new AsyncRelayCommand(
-                async () =>
-                {
-                    await action.AsyncFunc();
-                    ReferenceMessenger.Send( new CloseMultipleActionPopupMsg() );
-                }
-            );
+            string? description = query.TryGetValue( "Description", out object? descObj ) && descObj is string descStr
+                ? descStr
+                : null;
+            string? title = query.TryGetValue( "Title", out object? titleObj ) && titleObj is string titleStr
+                ? titleStr
+                : null;
 
-            Buttons.Add( action );
+            Title = string.IsNullOrWhiteSpace( title ) ?
+                LocStrings.ChooseAction :
+                title;
+
+            TextOfLabel = description;
+            Buttons.Clear();
+
+            foreach (ActionData action in actions)
+            {
+                action.Command = new AsyncRelayCommand(
+                    async () =>
+                    {
+                        await action.AsyncFunc();
+                        await DialogService.ClosePopupAsync();
+                    }
+                );
+
+                Buttons.Add( action );
+            }
         }
+    }
+
+    public override async Task InitializePopupAsync( IDictionary<string, object> query )
+    {
+        ApplyQuery( query );
+        await base.InitializePopupAsync( query );
+    }
+
+    [RelayCommand]
+    private async Task CancelAsync()
+    {
+        await DialogService.ClosePopupAsync();
     }
 }
