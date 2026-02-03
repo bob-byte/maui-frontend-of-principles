@@ -153,7 +153,7 @@
                         Value="{StaticResource TitleTextColor}" />
             </Style>
             <Style x:Key="SecondaryButton"
-                   TargetType="dxco:SimpleButton">
+                   TargetType="dx:DXButton">
                 <Setter Property="BackgroundColor"
                         Value="{AppThemeBinding Light={StaticResource DarkGray},
                                                 Dark={StaticResource Primary}}" />
@@ -170,7 +170,7 @@
                         Value="{StaticResource TitleTextColor}" />
             </Style>
             <Style x:Key="TitlePrimaryButton"
-                   TargetType="dxco:SimpleButton">
+                   TargetType="dx:DXButton">
                 <Setter Property="BackgroundColor"
                         Value="{AppThemeBinding Light={StaticResource Primary},
                                                 Dark={StaticResource DarkPrimary}}" />

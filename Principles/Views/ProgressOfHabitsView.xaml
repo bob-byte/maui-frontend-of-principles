@@ -292,22 +292,22 @@
 
                     <HorizontalStackLayout Padding="0"
                                            HorizontalOptions="End">
-                        <dxco:SimpleButton x:Name="SB_ReminderReport_Cancel"
-                                           Text="{Binding LocManager[Cancel]}"
+                        <dx:DXButton x:Name="SB_ReminderReport_Cancel"
+                                           Content="{Binding LocManager[Cancel]}"
                                            Icon="close"
                                            Margin="0,0,5,5"
                                            BackgroundColor="{StaticResource CancelButtonColor}"
                                            Clicked="SB_ReminderReport_Cancel_Clicked"
                                            FontSize="16"
-                                           IconHorizontalPosition="Left" />
-                        <dxco:SimpleButton x:Name="SB_Save"
-                                           Text="{Binding LocManager[Save]}"
+                                           IconPlacement="Left" />
+                        <dx:DXButton x:Name="SB_Save"
+                                           Content="{Binding LocManager[Save]}"
                                            Style="{StaticResource PrimaryButton}"
                                            Icon="check_second"
                                            Margin="0,0,0,5"
                                            Clicked="SB_Save_Clicked"
                                            FontSize="16"
-                                           IconHorizontalPosition="Left" />
+                                           IconPlacement="Left" />
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
                 <templates:DefaultActivityIndicator />

@@ -155,9 +155,9 @@
                                        Grid.Column="0" />
                 </Grid>
             </Frame>
-            <dxc:SimpleButton x:Name="SB_AskQuestion"
+            <dx:DXButton x:Name="SB_AskQuestion"
                               Clicked="SB_AskQuestion_Clicked"
-                              Style="{StaticResource PrimaryButton}"
+                              Style="{StaticResource DXPrimaryButton}"
                               IsVisible="{Binding IsBusy,
                                                   Converter={StaticResource IsFalse}}"
                               Icon="send_message"

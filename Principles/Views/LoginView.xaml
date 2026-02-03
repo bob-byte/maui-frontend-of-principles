@@ -2,6 +2,7 @@
 <v:ContentPageBase x:Class="Principles.Views.LoginView"
                    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                   xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
                    xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
                    xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
                    xmlns:loc="clr-namespace:Principles.Resources.AppStrings"
@@ -52,11 +53,11 @@
                                   StartIcon="password"
                                   TextChangedCommand="{Binding ValidatePasswordCommand}" />
 
-                <dxco:SimpleButton Text="{Binding LocManager[Login]}"
+                <dx:DXButton Content="{Binding LocManager[Login]}"
                                    Command="{Binding LoginCommand}"
-                                   Style="{StaticResource PrimaryButton}"
+                                   Style="{StaticResource DXPrimaryButton}"
                                    Margin="0,5,0,0" />
-                <dxco:SimpleButton Text="{Binding LocManager[SignUp]}"
+                <dx:DXButton Content="{Binding LocManager[SignUp]}"
                                    Command="{Binding SignupCommand}"
                                    Margin="0,15,0,0"
                                    BackgroundColor="{AppThemeBinding Light={StaticResource DarkPrimary},

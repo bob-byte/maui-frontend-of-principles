@@ -2,6 +2,7 @@
 <v:ContentPageBase x:Class="Principles.Views.SignupView"
                    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                   xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
                    xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
                    xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
                    xmlns:loc="clr-namespace:Principles.Resources.AppStrings"
@@ -91,9 +92,9 @@
                                    PlaceholderText="{Binding LocManager[OptionalPlaceholder]}"
                                    ReturnType="Done"
                                    StartIcon="slogan" />
-                <dxco:SimpleButton Text="{Binding LocManager[SignUp]}"
+                <dx:DXButton Content="{Binding LocManager[SignUp]}"
                                    Command="{Binding SignupCommand}"
-                                   Style="{StaticResource PrimaryButton}"
+                                   Style="{StaticResource DXPrimaryButton}"
                                    Margin="0,15,0,0" />
 
                 <Grid Margin="0,10,0,0"

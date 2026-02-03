@@ -69,8 +69,8 @@
                   SizeChanged="G_SaveHabit_SizeChanged"
                   VerticalOptions="CenterAndExpand"
                   Grid.Column="2">
-                <dxco:SimpleButton x:Name="SB_SaveHabit"
-                                   Text="{Binding LocManager[Save],
+                <dx:DXButton x:Name="SB_SaveHabit"
+                                   Content="{Binding LocManager[Save],
                                                   Converter={StaticResource ToUpperCase}}"
                                    Clicked="SB_Save_Clicked"
                                    Style="{StaticResource TitlePrimaryButton}"
@@ -172,7 +172,7 @@
                                                    StartIcon="reminder"
                                                    StartIconClicked="ME_HabitReminder_IconClicked"
                                                    Tap="ME_HabitReminder_Tap" />
-                                <dxco:SimpleButton Text="{Binding LocManager[RecommendedHabitsButton]}"
+                                <dx:DXButton Content="{Binding LocManager[RecommendedHabitsButton]}"
                                                    Clicked="SB_RecomendedHabit_Clicked"
                                                    Style="{StaticResource PrimaryButton}"
                                                    IsVisible="{Binding IsNewHabit}"
@@ -318,22 +318,22 @@
                                                         <ColumnDefinition Width="Auto" />
                                                         <ColumnDefinition Width="Auto" />
                                                     </Grid.ColumnDefinitions>
-                                                    <dxco:SimpleButton x:Name="SB_GoalAdd_Cancel"
-                                                                       Text="{Binding LocManager[Cancel]}"
+                                                    <dx:DXButton x:Name="SB_GoalAdd_Cancel"
+                                                                       Content="{Binding LocManager[Cancel]}"
                                                                        Clicked="SB_GoalAdd_Cancel_Clicked"
                                                                        Icon="close"
-                                                                       IconHorizontalPosition="Left"
+                                                                       IconPlacement="Left"
                                                                        Margin="0,10,0,0"
                                                                        BackgroundColor="{StaticResource CancelButtonColor}"
                                                                        FontSize="16"
                                                                        Grid.Column="0" />
 
-                                                    <dxco:SimpleButton x:Name="SB_Save"
-                                                                       Text="{Binding LocManager[Save]}"
+                                                    <dx:DXButton x:Name="SB_Save"
+                                                                       Content="{Binding LocManager[Save]}"
                                                                        Clicked="Sb_SaveGoal_Clicked"
                                                                        Style="{StaticResource PrimaryButton}"
                                                                        Icon="check_second"
-                                                                       IconHorizontalPosition="Left"
+                                                                       IconPlacement="Left"
                                                                        Margin="0,10,0,0"
                                                                        FontSize="16"
                                                                        Grid.Column="1" />
@@ -450,10 +450,10 @@
                                                   ColumnDefinitions="*,*"
                                                   ColumnSpacing="15"
                                                   HorizontalOptions="FillAndExpand">
-                                                <dxco:SimpleButton Text="{Binding LocManager[Cancel]}"
+                                                <dx:DXButton Content="{Binding LocManager[Cancel]}"
                                                                    Clicked="SB_Reminder_Cancel_Clicked"
                                                                    Icon="close"
-                                                                   IconHorizontalPosition="Left"
+                                                                   IconPlacement="Left"
                                                                    HeightRequest="50"
                                                                    BackgroundColor="{StaticResource CancelButtonColor}"
                                                                    FontSize="16"
@@ -461,11 +461,11 @@
                                                                    VerticalOptions="Center"
                                                                    Grid.Column="0" />
 
-                                                <dxco:SimpleButton Text="{Binding LocManager[Save]}"
+                                                <dx:DXButton Content="{Binding LocManager[Save]}"
                                                                    Clicked="SB_ReminderSave_Clicked"
                                                                    Style="{StaticResource PrimaryButton}"
                                                                    Icon="check_second"
-                                                                   IconHorizontalPosition="Left"
+                                                                   IconPlacement="Left"
                                                                    HeightRequest="50"
                                                                    FontSize="16"
                                                                    HorizontalOptions="FillAndExpand"
@@ -502,8 +502,8 @@
                                                   RowSpacing="7"
                                                   VerticalOptions="Center" />
                                         </dx:DXStackLayout>
-                                        <dxco:SimpleButton x:Name="SB_CloseErrorsPopup"
-                                                           Text="{Binding LocManager[OK]}"
+                                        <dx:DXButton x:Name="SB_CloseErrorsPopup"
+                                                           Content="{Binding LocManager[OK]}"
                                                            Clicked="SB_CloseErrorsPopup_Clicked"
                                                            Style="{StaticResource PrimaryButton}"
                                                            Margin="0,5,5,5"
@@ -611,19 +611,19 @@
                                         <HorizontalStackLayout Margin="0,10,0,0"
                                                                HorizontalOptions="End"
                                                                Spacing="10">
-                                            <dxco:SimpleButton x:Name="SB_Frequency_Cancel"
-                                                               Text="{Binding LocManager[Cancel]}"
+                                            <dx:DXButton x:Name="SB_Frequency_Cancel"
+                                                               Content="{Binding LocManager[Cancel]}"
                                                                Clicked="SB_Frequency_Cancel_Clicked"
                                                                Icon="close"
-                                                               IconHorizontalPosition="Left"
+                                                               IconPlacement="Left"
                                                                BackgroundColor="{StaticResource CancelButtonColor}"
                                                                FontSize="16" />
-                                            <dxco:SimpleButton x:Name="SB_SaveFrequencyPopup"
-                                                               Text="{Binding LocManager[Save]}"
+                                            <dx:DXButton x:Name="SB_SaveFrequencyPopup"
+                                                               Content="{Binding LocManager[Save]}"
                                                                Clicked="SB_SaveFrequencyPopup_Clicked"
                                                                Style="{StaticResource PrimaryButton}"
                                                                Icon="check_second"
-                                                               IconHorizontalPosition="Left"
+                                                               IconPlacement="Left"
                                                                FontSize="16" />
                                         </HorizontalStackLayout>
                                     </VerticalStackLayout>
