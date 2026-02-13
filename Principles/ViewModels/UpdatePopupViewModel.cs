@@ -5,71 +5,26 @@ public partial class UpdatePopupViewModel : BaseViewModel
     private const string KEY_TO_STORE_DONT_SHOW_AGAIN_FOR_SOME_VERSION = "DontShowUpdatePopupAgainForVersion";
 
     [ObservableProperty]
-    private string? m_versionDescription;
-
-    [ObservableProperty]
     private bool m_dontShowAgain;
 
-    private readonly IVersionCheckerService m_versionCheckerService;
-    private AppVersionInfo? m_appVersionInfo;
+    [ObservableProperty]
+    private string m_versionDescription;
+
+    private IVersionCheckerService m_versionCheckerService;
 
     public UpdatePopupViewModel( IServiceProvider serviceProvider )
         : base( serviceProvider )
     {
         m_versionCheckerService = serviceProvider.GetRequiredService<IVersionCheckerService>();
-    }
-
-    public async Task<bool> ShouldShowPopup()
-    {
-        bool? result = null;
-
-        try
-        {
-            string language = LocManager.CurrentCulture.Name;
-
-            m_appVersionInfo = await m_versionCheckerService.GetAppVersionAsync( language );
-            VersionDescription = m_appVersionInfo.VersionDescription;
-        }
-        catch
-        {
-            result = false;
-        }
-
-        if (result is null)
-        {
-            Version currentVersion = AppInfo.Version;
-            Version newAvailableAppVersion = new( m_appVersionInfo!.AppVersion );
-
-            bool isAvailableNewerVersion = newAvailableAppVersion > currentVersion;
-
-            if (isAvailableNewerVersion)
-            {
-                string strVersionForWhichDontShowPopup = Preferences.Get( KEY_TO_STORE_DONT_SHOW_AGAIN_FOR_SOME_VERSION, defaultValue: string.Empty );
-                if (string.IsNullOrWhiteSpace( strVersionForWhichDontShowPopup ))
-                {
-                    result = true;
-                }
-                else
-                {
-                    Version versionForWhichDontShowPopup = new( strVersionForWhichDontShowPopup );
-                    result = versionForWhichDontShowPopup < newAvailableAppVersion;
-                }
-            }
-            else
-            {
-                result = false;
-            }
-        }
-
-        return result.Value;
+        VersionDescription = m_versionCheckerService.VersionDescription;
     }
 
     [RelayCommand]
-    private void OpenStore()
+    private async Task OpenStoreAsync()
     {
         if (DontShowAgain)
         {
-            Preferences.Set( KEY_TO_STORE_DONT_SHOW_AGAIN_FOR_SOME_VERSION, m_appVersionInfo!.AppVersion );
+            Preferences.Set( KEY_TO_STORE_DONT_SHOW_AGAIN_FOR_SOME_VERSION, m_versionCheckerService.LatestAppVersion.ToString() );
         }
 
         string url;
@@ -85,15 +40,19 @@ public partial class UpdatePopupViewModel : BaseViewModel
         url = googlePlayUrl;
 #endif
 
-        BrowserHelper.OpenUrl( url ).GetAwaiter();
+        await BrowserHelper.OpenUrl( url );
+
+        await DialogService.ClosePopupAsync();
     }
 
     [RelayCommand]
-    private void CancelUpdate()
+    private async Task CancelUpdateAsync()
     {
         if (DontShowAgain)
         {
-            Preferences.Set( KEY_TO_STORE_DONT_SHOW_AGAIN_FOR_SOME_VERSION, m_appVersionInfo!.AppVersion );
+            Preferences.Set( KEY_TO_STORE_DONT_SHOW_AGAIN_FOR_SOME_VERSION, m_versionCheckerService.LatestAppVersion.ToString() );
         }
+
+        await DialogService.ClosePopupAsync();
     }
 }

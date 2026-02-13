@@ -1,61 +1,75 @@
 ﻿using CommunityToolkit.Maui.Converters;
 using System.Collections;
 
-
 namespace Principles.Converters;
+
 public class UserHabitsToStreakConverter : BaseConverterOneWay<ObservableCollectionEx<UserHabit>, int>
 {
     public override int DefaultConvertReturnValue { get; set; } = 0;
-    public override int ConvertFrom( ObservableCollectionEx<UserHabit> habits, CultureInfo? culture )
+    
+    public override int ConvertFrom( ObservableCollectionEx<UserHabit>? habits, CultureInfo? culture )
     {
-        if (habits == null || habits.Count == 0)
+        if (habits is null || habits.Count == 0)
+        {
             return 0;
+        }
+        
+        IAppOpenTrackerService appOpenTracker = ServiceLocator.Current!.GetRequiredService<IAppOpenTrackerService>();
 
-        Dictionary<DateOnly, int> progressesByDate = new Dictionary<DateOnly, int>();
+        DateTime? dateTimeLastMissedAppOpen = appOpenTracker.GetLastMissedDate();
+       
+        DateOnly? lastMissedAppOpen = null;
+        if (dateTimeLastMissedAppOpen.HasValue)
+        {
+            lastMissedAppOpen = DateOnly.FromDateTime(dateTimeLastMissedAppOpen.Value);
+        }
+
+        Dictionary<DateOnly, List<int>> progressesByDate = new();
 
         foreach (UserHabit habit in habits)
         {
-            if (habit.Progresses == null)
+            if (habit.Progresses is null)
+            {
                 continue;
+            }
 
             foreach (ProgressOfHabit progress in habit.Progresses)
-            {   
-                if (!progressesByDate.ContainsKey( progress.Date ))
+            {
+                if (lastMissedAppOpen is null || lastMissedAppOpen.Value < progress.Date)
                 {
-                    progressesByDate[progress.Date] = progress.Value;
-                }
-                else
-                {
-                    if (progress.Value == ProgressValue.YES_MANUAL)
-                        progressesByDate[progress.Date] = ProgressValue.YES_MANUAL;
+                    if (progressesByDate.TryGetValue( progress.Date, out List<int>? value ))
+                    {
+                        value.Add( progress.Value );
+                    }
+                    else
+                    {
+                        progressesByDate[progress.Date] = [progress.Value];
+                    }
                 }
             }
         }
 
         int streak = 0;
-        DateOnly currentDate = DateOnly.FromDateTime( DateTime.Today );
         List<DateOnly> sortedDates = progressesByDate.Keys.OrderBy( d => d ).ToList();
 
         foreach (DateOnly date in sortedDates)
         {
-            if (!progressesByDate.TryGetValue( date, out int value ))
-                continue;
-
-            if (value == ProgressValue.YES_MANUAL)
+            if (!progressesByDate.TryGetValue( date, out List<int>? values ))
             {
-                streak++;
+                continue;
             }
-            else if (value == ProgressValue.NO || value == ProgressValue.UNKNOWN)
+
+            if (values.All( v => v is ProgressValue.UNKNOWN or ProgressValue.NO ))
             {
                 streak = 0;
             }
             else
             {
-                continue;
+                streak += values.Count( progressValue => progressValue == ProgressValue.YES_MANUAL );
             }
         }
+
         return streak;
     }
-
 }
 

@@ -27,27 +27,28 @@
               VerticalOptions="Center">
             <Label x:Name="L_TitleText"
                    Text="{Binding Habit.Name}"
+                   HeightRequest="50"
                    FontAttributes="Bold"
                    FontSize="20"
-                   Grid.Column="0"
-                   HeightRequest="50"
                    HorizontalOptions="Start"
                    LineBreakMode="TailTruncation"
                    MaxLines="1"
                    TextColor="{StaticResource TitleTextColor}"
                    VerticalOptions="Center"
-                   VerticalTextAlignment="Center" />
+                   VerticalTextAlignment="Center"
+                   Grid.Column="0" />
 
             <dx:DXImage x:Name="DXI_ArchiveHabit"
                         Source="archive_habit"
-                        Margin="3,0,0,0"
-                        Grid.Column="1"
+                        IsVisible="{Binding Habit.IsArchived,
+                                            Converter={StaticResource IsFalse}}"
+                        WidthRequest="35"
                         HeightRequest="35"
+                        Margin="3,0,0,0"
                         HorizontalOptions="End"
-                        IsVisible="{Binding Habit.IsArchived, Converter={StaticResource IsFalse}}"
                         TintColor="{StaticResource TitleTextColor}"
                         VerticalOptions="Center"
-                        WidthRequest="35">
+                        Grid.Column="1">
                 <dx:DXImage.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding ArchiveHabitCommand}"
                                           NumberOfTapsRequired="1" />
@@ -56,13 +57,13 @@
 
             <dx:DXImage x:Name="DXI_DeleteHabit"
                         Source="delete_solid"
-                        Margin="3,0,0,0"
-                        Grid.Column="2"
+                        WidthRequest="40"
                         HeightRequest="30"
+                        Margin="3,0,0,0"
                         HorizontalOptions="End"
                         TintColor="{StaticResource TitleTextColor}"
                         VerticalOptions="Center"
-                        WidthRequest="40">
+                        Grid.Column="2">
                 <dx:DXImage.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding DeleteHabitCommand}"
                                           NumberOfTapsRequired="1" />
@@ -75,13 +76,13 @@
         <ScrollView>
             <VerticalStackLayout>
                 <ScrollView Orientation="Horizontal"
-                            HorizontalScrollBarVisibility="Never"
-                            HorizontalOptions="Center">
+                            HorizontalOptions="Center"
+                            HorizontalScrollBarVisibility="Never">
                     <HorizontalStackLayout Margin="5,15,5,0"
-                                      Padding="0"
-                                      HorizontalOptions="Center"
-                                      Spacing="5"
-                                      VerticalOptions="Center">
+                                           Padding="0"
+                                           HorizontalOptions="Center"
+                                           Spacing="5"
+                                           VerticalOptions="Center">
                         <Frame Padding="14,8"
                                BackgroundColor="{StaticResource LightPrimary}"
                                CornerRadius="{OnPlatform Android=24,
@@ -91,11 +92,11 @@
                             <HorizontalStackLayout Spacing="10"
                                                    VerticalOptions="Center">
                                 <dx:DXImage Source="scheduler"
+                                            WidthRequest="24"
                                             HeightRequest="24"
                                             TintColor="{StaticResource TitleTextColor}"
-                                            VerticalOptions="Center"
-                                            WidthRequest="24" />
-                                <Label Text="{Binding FrequencyRepresentation}"
+                                            VerticalOptions="Center" />
+                                <Label Text="{Binding FrequencyInfo, Converter={StaticResource FrequencyToString}}"
                                        FontAttributes="Bold"
                                        FontSize="14"
                                        TextColor="White"
@@ -103,21 +104,23 @@
                             </HorizontalStackLayout>
                         </Frame>
 
-                        <Frame Padding="14,8"
+                        <Frame IsVisible="{Binding EditedReminder,
+                                                   Converter={StaticResource IsReminderNotEmpty}}"
+                               Padding="14,8"
                                BackgroundColor="{StaticResource LightPrimary}"
                                CornerRadius="{OnPlatform Android=24,
                                                          iOS=17}"
                                HasShadow="False"
-                               IsVisible="{Binding EditedReminder.IsEnabled}"
                                VerticalOptions="Center">
                             <HorizontalStackLayout Spacing="10"
                                                    VerticalOptions="Center">
                                 <dx:DXImage Source="clock"
+                                            WidthRequest="24"
                                             HeightRequest="24"
                                             TintColor="{StaticResource TitleTextColor}"
-                                            VerticalOptions="Center"
-                                            WidthRequest="24" />
-                                <Label Text="{Binding EditedReminder, Converter={StaticResource ReminderValueToString}}"
+                                            VerticalOptions="Center" />
+                                <Label Text="{Binding EditedReminder,
+                                                      Converter={StaticResource ReminderValueToString}}"
                                        FontAttributes="Bold"
                                        FontSize="14"
                                        TextColor="White"
@@ -137,54 +140,56 @@
                            BorderColor="Gray"
                            CornerRadius="10">
                         <VerticalStackLayout Spacing="5">
-                            <Label Text="{Binding Habit.PercentageAchieved, Converter={StaticResource ProgressToInt32}, StringFormat='{0}%'}"
+                            <Label Text="{Binding Habit.PercentageAchieved,
+                                                  Converter={StaticResource ProgressToInt32},
+                                                  StringFormat='{0}%'}"
                                    FontAttributes="Bold"
                                    FontSize="22" />
 
-                            <ProgressBar BackgroundColor="LightGray"
-                                         HeightRequest="8"
+                            <ProgressBar HeightRequest="8"
+                                         BackgroundColor="LightGray"
                                          Progress="{Binding Habit.PercentageAchieved}"
                                          ProgressColor="{StaticResource Primary}" />
 
                             <Grid Padding="5"
                                   ColumnDefinitions="*,*">
-                                <HorizontalStackLayout Grid.Column="0"
-                                                       HorizontalOptions="Start"
-                                                       Spacing="4">
+                                <HorizontalStackLayout HorizontalOptions="Start"
+                                                       Spacing="4"
+                                                       Grid.Column="0">
                                     <Label>
                                         <Label.FormattedText>
                                             <FormattedString>
                                                 <Span Text="{Binding LocManager[NumberOfExecution]}"
-                                                      FontSize="12"
-                                                      FontAttributes="Bold" />
+                                                      FontAttributes="Bold"
+                                                      FontSize="12" />
                                                 <Span Text=":"
-                                                      FontSize="12"
-                                                      FontAttributes="Bold" />
+                                                      FontAttributes="Bold"
+                                                      FontSize="12" />
                                             </FormattedString>
                                         </Label.FormattedText>
                                     </Label>
                                     <Label Text="{Binding CompletedDays}"
-                                           FontSize="12"
-                                           FontAttributes="Bold" />
+                                           FontAttributes="Bold"
+                                           FontSize="12" />
                                 </HorizontalStackLayout>
-                                <HorizontalStackLayout Grid.Column="1"
-                                                       HorizontalOptions="End"
-                                                       Spacing="4">
+                                <HorizontalStackLayout HorizontalOptions="End"
+                                                       Spacing="4"
+                                                       Grid.Column="1">
                                     <Label>
                                         <Label.FormattedText>
                                             <FormattedString>
                                                 <Span Text="{Binding LocManager[LongestStreak]}"
-                                                      FontSize="12"
-                                                      FontAttributes="Bold" />
+                                                      FontAttributes="Bold"
+                                                      FontSize="12" />
                                                 <Span Text=":"
-                                                      FontSize="12"
-                                                      FontAttributes="Bold" />
+                                                      FontAttributes="Bold"
+                                                      FontSize="12" />
                                             </FormattedString>
                                         </Label.FormattedText>
                                     </Label>
                                     <Label Text="{Binding LongestStreak}"
-                                           FontSize="12"
-                                           FontAttributes="Bold" />
+                                           FontAttributes="Bold"
+                                           FontSize="12" />
                                 </HorizontalStackLayout>
                             </Grid>
                         </VerticalStackLayout>
@@ -192,9 +197,10 @@
                 </VerticalStackLayout>
 
                 <VerticalStackLayout x:Name="VSL_WithCalendar"
-                                     Padding="10"
+                                     Padding="0, 0, 0, 10"
                                      Spacing="10">
-                    <HorizontalStackLayout Spacing="8"
+                    <HorizontalStackLayout Padding="10, 10, 0, 0"
+                                           Spacing="8"
                                            VerticalOptions="Center">
                         <Label Text="{Binding LocManager[TopFiveStreaks]}"
                                FontAttributes="Bold"
@@ -210,7 +216,8 @@
                                         XAxes="{Binding StreakXAxes}"
                                         YAxes="{Binding StreakYAxes}" />
 
-                    <HorizontalStackLayout Spacing="8"
+                    <HorizontalStackLayout Padding="10, 0"
+                                           Spacing="8"
                                            VerticalOptions="Center">
                         <Label Text="{Binding LocManager[Stability]}"
                                FontAttributes="Bold"
@@ -222,13 +229,13 @@
                     </HorizontalStackLayout>
 
                     <lvc:CartesianChart x:Name="CC_Stability"
-                                        Padding="0"
                                         HeightRequest="300"
                                         Series="{Binding Series}"
                                         XAxes="{Binding XAxes}"
                                         YAxes="{Binding YAxes}" />
 
-                    <HorizontalStackLayout Spacing="8"
+                    <HorizontalStackLayout Padding="10, 0"
+                                           Spacing="8"
                                            VerticalOptions="Center">
                         <Label Text="{Binding LocManager[HabitByDayweeks]}"
                                FontAttributes="Bold"
@@ -244,7 +251,8 @@
                                         XAxes="{Binding HabitExecutionXAxes}"
                                         YAxes="{Binding HabitExecutionYAxes}" />
 
-                    <HorizontalStackLayout Spacing="8">
+                    <HorizontalStackLayout Padding="10, 0"
+                                           Spacing="8">
                         <Label Text="{Binding LocManager[Calendar]}"
                                FontAttributes="Bold"
                                FontSize="18"
@@ -254,13 +262,15 @@
                                      Command="{Binding CalendarInfoCommand}" />
                     </HorizontalStackLayout>
 
-                    <dxe:DXCalendar x:Name="DX_Calendar"
-                                    Background="#F0F0F0"
-                                    FirstDayOfWeek="Monday">
-                        <dxe:DXCalendar.HeaderAppearance>
-                            <dxe:CalendarHeaderAppearance BackgroundColor="{StaticResource Primary}" />
-                        </dxe:DXCalendar.HeaderAppearance>
-                    </dxe:DXCalendar>
+                    <Grid Padding="10, 0">
+                        <dxe:DXCalendar x:Name="DX_Calendar"
+                                        Background="#F0F0F0"
+                                        FirstDayOfWeek="Monday">
+                            <dxe:DXCalendar.HeaderAppearance>
+                                <dxe:CalendarHeaderAppearance BackgroundColor="{StaticResource Primary}" />
+                            </dxe:DXCalendar.HeaderAppearance>
+                        </dxe:DXCalendar>
+                    </Grid>
                 </VerticalStackLayout>
             </VerticalStackLayout>
         </ScrollView>
@@ -269,12 +279,12 @@
                           HorizontalOptions="End"
                           VerticalOptions="End">
             <toolkit:Expander.Header>
-                <Frame Padding="0"
+                <Frame WidthRequest="55"
+                       HeightRequest="55"
+                       Padding="0"
                        BackgroundColor="{StaticResource Primary}"
                        CornerRadius="{OnPlatform Android=35,
-                                                 iOS=25}"
-                       HeightRequest="55"
-                       WidthRequest="55">
+                                                 iOS=25}">
                     <Frame.Shadow>
                         <Shadow Opacity="0.3"
                                 Radius="12"
@@ -289,9 +299,9 @@
                                               NumberOfTapsRequired="1" />
                     </Frame.GestureRecognizers>
                     <dx:DXImage Source="edit"
+                                WidthRequest="30"
                                 HeightRequest="30"
-                                TintColor="White"
-                                WidthRequest="30">
+                                TintColor="White">
                         <dx:DXImage.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding EditHabitCommand}"
                                                   NumberOfTapsRequired="1" />

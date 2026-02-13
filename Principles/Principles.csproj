@@ -1,27 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net9.0-android;net9.0-ios</TargetFrameworks>
-
+		<TargetFrameworks>net10.0-android;net10.0-ios</TargetFrameworks>
 		<OutputType>Exe</OutputType>
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<RootNamespace>Principles</RootNamespace>
 		<NeutralLanguage>en</NeutralLanguage>
-		<Nullable>enable</Nullable>
+		<Nullable>disable</Nullable>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.set.principles</ApplicationId>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>3.0.8</ApplicationDisplayVersion>
-		<ApplicationVersion>51</ApplicationVersion>
+		<ApplicationDisplayVersion>3.2.4</ApplicationDisplayVersion>
+		<ApplicationVersion>66</ApplicationVersion>
 
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net9.0-android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net10.0-android'">21.0</SupportedOSPlatformVersion>
 		<ApplicationTitle>Principles</ApplicationTitle>
 		<Configurations>Debug;Release;LocalDebug</Configurations>
+		<!-- <MauiXamlInflator>SourceGen</MauiXamlInflator>  -->
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -32,7 +32,7 @@
 <!--		<MtouchNoSymbolStrip Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">True</MtouchNoSymbolStrip>-->
 <!--	</PropertyGroup>-->
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-ios|AnyCPU'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-ios|AnyCPU'">
 		<NoWarn>1701;1702;8632</NoWarn>
 		<ArchiveOnBuild>true</ArchiveOnBuild>
 		<RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
@@ -44,10 +44,10 @@
 	</PropertyGroup>
 
 	<!--Comment it out when behavior of the published Android app doesn't work as expected-->
-	<!--<PropertyGroup Condition="'$(TargetFramework)' == 'net9.0-android'">
+	<!-- <PropertyGroup Condition="'$(TargetFramework)' == 'net10.0-android'">
         <RunAOTCompilation>false</RunAOTCompilation>
 		<PublishTrimmed>false</PublishTrimmed>
-    </PropertyGroup>-->
+    </PropertyGroup> -->
 
 	<!-- App Icon -->
 	<ItemGroup Condition="$(TargetFramework.Contains('-android'))">
@@ -69,10 +69,6 @@
 		<MauiImage Update="Resources\Images\reminder_first.svg" BaseSize="40, 40" />
 		<MauiImage Update="Resources\Images\reminder_second.svg" BaseSize="60, 60" />
 		<MauiImage Update="Resources\Images\reminder_third.svg" BaseSize="40, 40" />
-<!--		<MauiImage Update="Resources\Images\edit.png" BaseSize="40, 40" />-->
-<!--		<MauiImage Update="Resources\Images\delete.png" BaseSize="40, 40" />-->
-<!--		<MauiImage Update="Resources\Images\edit_solid.svg" BaseSize="40, 40" />-->
-<!--		<MauiImage Update="Resources\Images\delete_solid.svg" BaseSize="40, 40" />-->
 		<MauiImage Update="Resources\Images\logolargesize.png" BaseSize="200, 200" />
 		<MauiImage Update="Resources\Images\larger_help.png" BaseSize="40, 40" />
 		<MauiImage Include="Resources\Images\*jpg" BaseSize="23, 23" />
@@ -98,34 +94,53 @@
 		<None Remove="Platforms\Android\Resources\values-ru\Strings.xml" />
 		<None Remove="Platforms\Android\Resources\values-ru\styles.xml" />
 	</ItemGroup>
-
+	<Target Condition="'$(TargetFramework)' == 'net10.0-ios'" Name="LinkWithSwift" DependsOnTargets="_ParseBundlerArguments;_DetectSdkLocations" BeforeTargets="_LinkNativeExecutable">
+		<PropertyGroup>
+			<_SwiftPlatform Condition="$(RuntimeIdentifier.StartsWith('iossimulator-'))">iphonesimulator</_SwiftPlatform>
+			<_SwiftPlatform Condition="$(RuntimeIdentifier.StartsWith('ios-'))">iphoneos</_SwiftPlatform>
+		</PropertyGroup>
+		<ItemGroup>
+			<_CustomLinkFlags Include="-L" />
+			<_CustomLinkFlags Include="/usr/lib/swift" />
+			<_CustomLinkFlags Include="-L" />
+			<_CustomLinkFlags Include="$(_SdkDevPath)/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/$(_SwiftPlatform)" />
+			<_CustomLinkFlags Include="-Wl,-rpath" />
+			<_CustomLinkFlags Include="-Wl,/usr/lib/swift" />
+		</ItemGroup>
+	</Target>
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Maui" Version="9.0.0" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="13.0.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-		<PackageReference Include="DSoft.Maui.ContextMenu" Version="1.0.2510.71" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
+		<PackageReference Include="DIPS.Mobile.UI" Version="55.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.1" />
 		<PackageReference Include="Plugin.LocalNotification" Version="11.1.4" />
 		<PackageReference Include="Serilog" Version="3.1.1" />
 		<PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
 		<PackageReference Include="Serilog.Sinks.Xamarin" Version="1.0.0" />
-		<PackageReference Include="System.Net.Http" Version="4.3.4" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.111" />
-		<PackageReference Include="CommunityToolkit.Maui.Markup" Version="4.0.0" />
-		<PackageReference Include="Polly.Extensions" Version="8.4.0" />
-		<PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="2.0.0" />
-		<PackageReference Include="DevExpress.Maui.CollectionView" Version="25.1.6" />
-		<PackageReference Include="DevExpress.Maui.Controls" Version="25.1.6" />
-		<PackageReference Include="DevExpress.Maui.DataGrid" Version="25.1.6" />
-		<PackageReference Include="DevExpress.Maui.Editors" Version="25.1.6" />
+		<PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="3.0.0-preview.18" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="10.0.30" />
+		<PackageReference Include="CommunityToolkit.Maui.Markup" Version="7.0.0" />
+		<PackageReference Include="DevExpress.Maui.CollectionView" Version="25.2.3" />
+		<PackageReference Include="DevExpress.Maui.Controls" Version="25.2.3" />
+		<PackageReference Include="DevExpress.Maui.DataGrid" Version="25.2.3" />
+		<PackageReference Include="DevExpress.Maui.Editors" Version="25.2.3" />
 		<PackageReference Include="Azure.AI.OpenAI" Version="2.1.0" />
-<!--		<PackageReference Include="System.Private.Uri" Version="4.3.2" />-->
-		<PackageReference Include="System.Text.Json" Version="8.0.5" />
-		<PackageReference Include="LiveChartsCore.SkiaSharpView.Maui" Version="2.0.0-rc5.4" />
+		<PackageReference Include="LiveChartsCore.SkiaSharpView.Maui" Version="2.0.0-rc6" />
+		<PackageReference Include="Plugin.AdMob" Version="2.3.1" />
+	</ItemGroup>
+
+	<ItemGroup Condition="$(TargetFramework.Contains('-android'))">
+		<PackageReference Include="Xamarin.AndroidX.Lifecycle.Common" Version="2.9.2.1" />
+		<PackageReference Include="Xamarin.AndroidX.Lifecycle.Runtime" Version="2.9.2.1" />
+		<PackageReference Include="Xamarin.AndroidX.Lifecycle.Service" Version="2.9.2.1" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<Compile Update="App.xaml.cs">
 			<DependentUpon>App.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\AppBenefitsView.xaml.cs">
+		  <DependentUpon>AppBenefitsView.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\StartupView.xaml.cs">
 			<DependentUpon>StartupView.xaml</DependentUpon>
@@ -193,7 +208,7 @@
 		<MauiXaml Update="Controls\CircularProgressBar.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Views\HabitPopup.xaml">
+		<MauiXaml Update="Views\AppBenefitsView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\StartupView.xaml">
@@ -272,6 +287,13 @@
 	<ItemGroup>
 		<EmbeddedResource Include="appsettings.json" />
 	</ItemGroup>
+
+
+	<!-- Exclude conflicting AndroidX tracing dependencies -->
+<!--	<ItemGroup Condition="'$(TargetFramework)' == 'net10.0-android'">-->
+<!--		<PackageReference Include="Xamarin.AndroidX.Tracing.Tracing" ExcludeAssets="all" />-->
+<!--		<PackageReference Include="Xamarin.AndroidX.Tracing.Tracing.Ktx" ExcludeAssets="all" />-->
+<!--	</ItemGroup>-->
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 		<WarningLevel>4</WarningLevel>
 		<NoWarn>1701;1702;CS1573;CS1591;CS8632</NoWarn>

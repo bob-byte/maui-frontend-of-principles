@@ -7,7 +7,7 @@ namespace Principles.Core.Extensions;
 
 public static class ObjectExtensions
 {
-    public static void MergeFrom(this object target, object source)
+    public static void MergeFrom(this object target, object source, params string[] exceptProps)
     {
         if (target == null || source == null)
         {
@@ -15,10 +15,11 @@ public static class ObjectExtensions
         }
 
         var visited = new HashSet<(object, object)>();
-        MergeInternal(target, source, visited);
+        var excludedProperties = new HashSet<string>(exceptProps ?? Array.Empty<string>());
+        MergeInternal(target, source, visited, excludedProperties);
     }
 
-    private static void MergeInternal(object target, object source, HashSet<(object, object)> visited)
+    private static void MergeInternal(object target, object source, HashSet<(object, object)> visited, HashSet<string> excludedProperties)
     {
         if (!visited.Add((target, source)))
         {
@@ -42,8 +43,10 @@ public static class ObjectExtensions
             }
 
             object? sourceValue = sourceProp.GetValue(source);
-            if (sourceValue == null)
+
+            if (excludedProperties.Contains(sourceProp.Name) || sourceValue is null)
             {
+                targetProp.SetValue( target, sourceValue );
                 continue;
             }
 
@@ -60,23 +63,23 @@ public static class ObjectExtensions
                 var convertedValue = Convert.ChangeType( sourceValue, underlyingType );
                 targetProp.SetValue( target, convertedValue );
             }
-            else if (typeof( IEnumerable ).IsAssignableFrom( sourcePropType ) && sourcePropType != typeof( string ))
+            else if (typeof( IEnumerable ).IsAssignableFrom(  sourcePropType  ) && sourcePropType != typeof( string ))
             {
                 if (sourceProp.Name is "Progresses" or "ComputedProgresses")
                 {
-                    targetProp.SetValue( target, sourceValue );
+                    targetProp.SetValue(target, sourceValue);
                 }
                 else
                 {
-                    object? targetValue = targetProp.GetValue( target );
-                    object merged = MergeEnumerables( targetValue, sourceValue, targetPropType );
-                    targetProp.SetValue( target, merged );
+                    object? targetValue = targetProp.GetValue(target);
+                    object merged = MergeEnumerables(targetValue, sourceValue, targetPropType);
+                    targetProp.SetValue(target, merged);
                 }
             }
             else
             {
                 object? targetValue = targetProp.GetValue( target );
-                if (targetValue == null)
+                if (targetValue is null)
                 {
                     try
                     {
@@ -89,7 +92,10 @@ public static class ObjectExtensions
                     }
                 }
 
-                MergeInternal( targetValue, sourceValue, visited );
+                if (targetValue is not null)
+                {
+                    MergeInternal(targetValue, sourceValue, visited, excludedProperties);
+                }
             }
         }
     }
@@ -121,6 +127,21 @@ public static class ObjectExtensions
             return sourceValue;
         }
 
+        // Check if source collection is empty
+        bool sourceIsEmpty = true;
+        foreach (object? _ in sourceList)
+        {
+            sourceIsEmpty = false;
+            break;
+        }
+
+        // If source collection is empty, clear the target collection
+        if (sourceIsEmpty)
+        {
+            targetList.Clear();
+            return targetList;
+        }
+
         int i = 0;
         foreach (object? sourceItem in sourceList)
         {
@@ -131,7 +152,7 @@ public static class ObjectExtensions
                     !IsSimpleType(sourceItem.GetType()) &&
                     targetItem.GetType() == sourceItem.GetType())
                 {
-                    MergeInternal(targetItem, sourceItem, new HashSet<(object, object)>());
+                    MergeInternal(targetItem, sourceItem, new HashSet<(object, object)>(), new HashSet<string>());
                 }
                 else if (sourceItem != null)
                 {

@@ -25,11 +25,16 @@ public class MauiNavigationService : INavigationService
 
     public IUrlBuilder UrlBuilder { get; }
 
-    public Task GoToInitialViewAsync()
+    public async Task GoToInitialViewAsync()
     {
-        return IsLoggedIn ?
-            NavigateToMainAsync<ProgressOfHabitsViewModel>() :
-            NavigateToAsync<StartupViewModel>( isAbsoluteRoute: true );
+        if (IsLoggedIn)
+        {
+            await NavigateToMainAsync<ProgressOfHabitsViewModel>();
+        }
+        else
+        {
+            await NavigateToAsync<StartupViewModel>(isAbsoluteRoute: true);
+        }
     }
 
     public async Task NavigateToMainAsync<TViewModel>() where TViewModel : BaseViewModel
@@ -77,6 +82,11 @@ public class MauiNavigationService : INavigationService
     public Task GoBackAsync()
     {
         return Shell.Current.GoToAsync(state: "..", animate: true);
+    }
+
+    public Task GoBackAsync(IDictionary<string, object> routeParameters)
+    {
+        return Shell.Current.GoToAsync(state: "..", animate: true, routeParameters);
     }
 
     private static Task InternalNavigateToAsync( Type viewModelType, IDictionary<string, object> routeParameters, bool isMainRoute, bool isAbsoluteRoute )

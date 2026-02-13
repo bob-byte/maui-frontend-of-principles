@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -40,7 +41,7 @@ namespace Principles
             CultureInfo.CurrentUICulture = culture;
             m_settingsService.CurrentCulture = culture.ThreeLetterISOLanguageName;
 
-            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( null ) );
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
         }
     }
 }

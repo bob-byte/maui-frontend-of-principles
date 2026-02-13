@@ -14,9 +14,10 @@
                xmlns:v="clr-namespace:Principles.Views"
                xmlns:vm="clr-namespace:Principles.ViewModels"
                x:DataType="vm:MultipleActionPopupViewModel"
-               Color="Transparent">
+               Background="Transparent">
 
-    <Grid x:Name="G_Popup">
+    <Grid x:Name="G_Popup" 
+          Background="Transparent">
         <Frame Padding="10"
                BackgroundColor="White"
                CornerRadius="20"
@@ -32,18 +33,18 @@
                 <VerticalStackLayout BindableLayout.ItemsSource="{Binding Buttons}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="m:ActionData">
-                            <dxco:SimpleButton Text="{Binding Text}"
-                                               Command="{Binding Command}"
-                                               Style="{StaticResource PrimaryButton}"
-                                               Margin="0,0,0,7" />
+                            <dx:DXButton Content="{Binding Text}"
+                                         Command="{Binding Command}"
+                                         Style="{StaticResource DXPrimaryButton}"
+                                         Margin="0,0,0,7" />
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </VerticalStackLayout>
-                <dxco:SimpleButton x:Name="SB_Cancel"
-                                   Text="{Binding LocManager[Cancel]}"
-                                   Style="{StaticResource SecondaryButton}"
-                                   Clicked="SB_Cancel_OnClicked"
-                                   TextColor="{StaticResource SecondaryLight}" />
+                <dx:DXButton x:Name="SB_Cancel"
+                             Content="{Binding LocManager[Cancel]}"
+                             Style="{StaticResource DXSecondaryButton}"
+                             TextColor="{StaticResource SecondaryLight}"
+                             Command="{Binding CancelCommand}" />
             </VerticalStackLayout>
         </Frame>
     </Grid>

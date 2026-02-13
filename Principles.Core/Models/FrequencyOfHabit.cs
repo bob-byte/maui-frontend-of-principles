@@ -30,7 +30,7 @@ public partial class FrequencyOfHabit : ObservableObject, ICloneable
     {
         get
         {
-            var result = (IntervalType)m_intervalLengthInDays;
+            var result = (IntervalType)IntervalLengthInDays;
             if (result != IntervalType.Day && result != IntervalType.Week && result != IntervalType.Month && result != IntervalType.Year)
             {
                 result = IntervalType.Other;

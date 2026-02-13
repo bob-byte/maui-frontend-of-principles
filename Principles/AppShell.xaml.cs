@@ -16,17 +16,68 @@ public partial class AppShell : Shell
         InitRouting();
         InitializeComponent();
         ReferenceMessenger = WeakReferenceMessenger.Default;
+        ReferenceMessenger.Register<NewCultureMessage>( this, ( sender, msg ) =>
+        {
+            OnPropertyChanged( nameof( LocManager ) );
+        } );
     }
 
-    protected override void OnHandlerChanged()
+    protected async override void OnHandlerChanged()
     {
         base.OnHandlerChanged();
 
         if (Handler is not null)
         {
-            //we don't await execution because otherwise helper view will be shown for 1 second
-            m_settingsService.GetAuthAccessTokenAsync().GetAwaiter().GetResult();
-            m_navigationService.GoToInitialViewAsync();
+            await InitializeAppAsync();
+        }
+    }
+
+    private async Task InitializeAppAsync()
+    {
+        await m_settingsService.GetAuthAccessTokenAsync();
+
+        bool isLoggedIn = !string.IsNullOrWhiteSpace( m_settingsService.AuthAccessToken );
+        if (isLoggedIn)
+        {
+            await m_navigationService.NavigateToMainAsync<ProgressOfHabitsViewModel>();
+        }
+        else
+        {
+            await m_navigationService.NavigateToAsync<StartupViewModel>( isAbsoluteRoute: true );
+            await m_navigationService.NavigateToAsync<AppBenefitsViewModel>();
+        }
+
+        IVersionCheckerService versionCheckerService = ServiceLocator.Current!.GetRequiredService<IVersionCheckerService>();
+        bool shouldShowPopup = await versionCheckerService.ShouldShowPopup();
+
+        if (shouldShowPopup)
+        {
+            IDialogService dialogService = ServiceLocator.Current!.GetRequiredService<IDialogService>();
+            await dialogService.ShowPopupAsync<UpdatePopupViewModel>();
+        }
+
+        if (VersionTracking.IsFirstLaunchEver)
+        {
+            try
+            {
+                string token = await m_settingsService.GetAuthAccessTokenAsync();
+                if (!string.IsNullOrWhiteSpace( token ))
+                {
+                    IReminderService reminderService = ServiceLocator.Current!.GetRequiredService<IReminderService>();
+                    await reminderService.TryToRecoverAllUserRemindersAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                ILoggingService loggingService = ServiceLocator.Current!.GetRequiredService<ILoggingService>();
+                loggingService.LogError( ex, ex.Message );
+            }
+        }
+
+        if (m_settingsService.IsAdsEnabled)
+        {
+            IAdService adService = ServiceLocator.Current!.GetRequiredService<IAdService>();
+            await adService.GetAccessToTrackAsync();
         }
     }
 
@@ -39,6 +90,8 @@ public partial class AppShell : Shell
         RegisterRoute( typeof( ForgetPasswordView ) );
         RegisterRoute( typeof( ChangePasswordView ) );
         RegisterRoute( typeof( HabitDetailView ) );
+        RegisterRoute( typeof( StartupView ) );
+        RegisterRoute( typeof( AppBenefitsView ) );
     }
 
     private static void RegisterRoute( Type viewType )

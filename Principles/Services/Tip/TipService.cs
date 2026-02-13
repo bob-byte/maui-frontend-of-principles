@@ -35,6 +35,9 @@ public class TipService : ITipService
 #else
         KeyboardHelper.HideKeyboard();
 
+        //wait keyboard hidding
+        await Task.Delay(500);
+
         ToastDuration toastDuration = duration switch
         {
             TipDuration.Short => ToastDuration.Short,
@@ -50,6 +53,9 @@ public class TipService : ITipService
         await ShowSnackbarAsync( message, TimeSpan.FromSeconds( 2 ) );
 #else
         KeyboardHelper.HideKeyboard();
+
+        //wait keyboard hidding
+        await Task.Delay(500);
 
         await Toast.Make( message, ToastDuration.Short ).Show();
 #endif

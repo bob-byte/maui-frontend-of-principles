@@ -1,8 +1,5 @@
 ﻿using CommunityToolkit.Maui.Converters;
 
-using System.Collections;
-using System.Text;
-
 namespace Principles.Converters;
 
 public class ReminderTimeAndDaysToStringConverter : BaseConverterOneWay<EditedUserHabitReminder, string>
@@ -11,8 +8,10 @@ public class ReminderTimeAndDaysToStringConverter : BaseConverterOneWay<EditedUs
     
     public override string ConvertFrom( EditedUserHabitReminder reminder, CultureInfo? culture )
     {
-        if (reminder == null || reminder.DaysOfWeek == null || reminder.DaysOfWeek.Count == 0)
+        if (reminder == null || reminder.DaysOfWeek == null || reminder.DaysOfWeek.Count == 0 || !reminder.IsEnabled)
+        {
             return DefaultConvertReturnValue;
+        }
 
         string timeStr = reminder.Time.ToString( "H:mm", culture );
 
@@ -22,8 +21,10 @@ public class ReminderTimeAndDaysToStringConverter : BaseConverterOneWay<EditedUs
             .ToList();
 
         if (sortedDays.Count == 7)
+        {
             return $"{timeStr} {LocStrings.EveryDay}";
-        
+        }
+
         string[] daysOfWeekNames =
         [
             LocStrings.Sunday, LocStrings.Monday, LocStrings.Tuesday, LocStrings.Wednesday,
@@ -31,11 +32,11 @@ public class ReminderTimeAndDaysToStringConverter : BaseConverterOneWay<EditedUs
         ];
 
         List<string> periodStrings = new List<string>();
-        int i = 0;
-        while (i < sortedDays.Count)
+        int numDay = 0;
+        while (numDay < sortedDays.Count)
         {
-            int startIndex = i;
-            int endIndex = i;
+            int startIndex = numDay;
+            int endIndex = numDay;
 
             while (endIndex + 1 < sortedDays.Count &&
                    sortedDays[endIndex + 1].Order == sortedDays[endIndex].Order + 1)
@@ -52,7 +53,7 @@ public class ReminderTimeAndDaysToStringConverter : BaseConverterOneWay<EditedUs
                 periodStrings.Add( $"{daysOfWeekNames[sortedDays[startIndex].Original]}-{daysOfWeekNames[sortedDays[endIndex].Original]}" );
             }
 
-            i = endIndex + 1;
+            numDay = endIndex + 1;
         }
 
         return $"{timeStr} {string.Join( ", ", periodStrings )}";

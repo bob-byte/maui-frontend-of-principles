@@ -2,12 +2,12 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Principles.Core.Models;
 
-public partial class UserHabit : ObservableObject, ICloneable
+public partial class UserHabit : ObservableObject
 {
     [ObservableProperty]
     private long m_id;
     [ObservableProperty]
-    private string? m_name;
+    private string m_name;
 
     [ObservableProperty]
     private TypeOfHabit m_type;
@@ -16,7 +16,7 @@ public partial class UserHabit : ObservableObject, ICloneable
     private StatusOfHabit m_status;
 
     [ObservableProperty]
-    private ObservableCollectionEx<UserAreaOfLife>? m_areasOfLife;
+    private ObservableCollectionEx<UserAreaOfLife> m_areasOfLife;
 
     [ObservableProperty]
     private int m_priority;
@@ -27,7 +27,7 @@ public partial class UserHabit : ObservableObject, ICloneable
     [ObservableProperty]
     private string? m_description;
     [ObservableProperty]
-    private UserGoal? m_goal;
+    private UserGoal m_goal;
 
     [ObservableProperty]
     private ObservableCollectionEx<UserHabitReminder>? m_reminders;
@@ -54,14 +54,13 @@ public partial class UserHabit : ObservableObject, ICloneable
         return Id == 0;
     }
 
-    private double m_percentageAchieved;
     public double PercentageAchieved
     {
-        get => m_percentageAchieved;
+        get => field;
         set
         {
             OnPropertyChanging();
-            m_percentageAchieved = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -76,10 +75,10 @@ public partial class UserHabit : ObservableObject, ICloneable
     private ScoreList m_scoreList;
 
     [ObservableProperty]
-    private FrequencyOfHabit? m_frequency;
+    private FrequencyOfHabit m_frequency;
 
     [ObservableProperty]
-    private string? m_colorName;
+    private string m_colorName;
     
     [ObservableProperty]
     private int m_complexity;
@@ -108,24 +107,50 @@ public partial class UserHabit : ObservableObject, ICloneable
         return Id.GetHashCode();
     }
 
-    public object Clone()
+    public void MergeFrom(UserHabit userHabit)
     {
-        var habit = MemberwiseClone() as UserHabit;
-        habit!.Frequency = Frequency?.Clone() as FrequencyOfHabit;
-
-        if (Reminders is not null)
+        Id = userHabit.Id;
+        Name = userHabit.Name;
+        Type = userHabit.Type;
+        Status = userHabit.Status;
+        if (userHabit.AreasOfLife is null)
         {
-            habit.Reminders = new ObservableCollectionEx<UserHabitReminder>();
-
-            foreach (UserHabitReminder reminder in Reminders)
+            AreasOfLife = null;
+        }
+        else
+        {
+            AreasOfLife = [];
+            foreach (UserAreaOfLife areaOfLife in userHabit.AreasOfLife)
             {
-                habit.Reminders.Add((reminder.Clone() as UserHabitReminder)!);
+                AreasOfLife.Add( areaOfLife );
             }
         }
-        
-        habit.Goal = habit.Goal?.Clone() as UserGoal;
-        
-        return habit;
+
+        Priority = userHabit.Priority;
+        IsArchived = userHabit.IsArchived;
+        Description = userHabit.Description;
+        Goal = userHabit.Goal?.Clone() as UserGoal;
+
+        if (userHabit.Reminders is null)
+        {
+            Reminders = null;
+        }
+        else
+        {
+            Reminders = [];
+            foreach (UserHabitReminder reminder in userHabit.Reminders)
+            {
+                Reminders.Add( (reminder.Clone() as UserHabitReminder)! );
+            }
+        }
+
+        PercentageAchieved = userHabit.PercentageAchieved;
+        Progresses = userHabit.Progresses;
+        ComputedProgresses = userHabit.ComputedProgresses;
+        ScoreList = userHabit.ScoreList;
+        Frequency = userHabit.Frequency?.Clone() as FrequencyOfHabit;
+        ColorName = userHabit.ColorName;
+        Complexity = userHabit.Complexity;
     }
 
     public void NotifyPropertyChanged( string propertyName )

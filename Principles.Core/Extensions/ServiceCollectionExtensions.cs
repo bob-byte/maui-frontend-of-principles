@@ -42,7 +42,6 @@ public static class ServiceCollectionExtensions
                 } );
 #endif
 
-        services.AddSingleton<ICachingService, CachingService>();
         services.AddSingleton<IUrlBuilder, UrlBuilder>();
         services.AddSingleton<IRequestProvider, RequestProvider>();
         services.AddSingleton<IServiceOfHabit, ServiceOfHabit>();

@@ -18,14 +18,25 @@ public partial class ConfirmEmailPopupViewModel : BaseViewModel
         ChangePasswordService = serviceProvider.GetRequiredService<IChangePasswordService>();
     }
 
-    public void SetData( string newPassword, int confirmationCode, string email )
+    public override async Task InitializePopupAsync( IDictionary<string, object> query )
     {
-        m_password = newPassword;
-        ValidConfirmationCode = confirmationCode;
-        m_email = email;
+        await base.InitializePopupAsync( query );
+        if (query.TryGetValue( "NewPassword", out object? newPasswordObj ) && newPasswordObj is string newPassword)
+        {
+            m_password = newPassword;
+        }
+        if (query.TryGetValue( "ConfirmationCode", out object? confirmationCodeObj ) && confirmationCodeObj is int confirmationCode)
+        {
+            ValidConfirmationCode = confirmationCode;
+        }
+        if (query.TryGetValue( "Email", out object? emailObj ) && emailObj is string email)
+        {
+            m_email = email;
+        }
     }
 
-    internal async Task ConfirmPasswordChangeAsync( Func<Task> closePopupTask )
+    [RelayCommand]
+    private async Task ConfirmPasswordChangeAsync()
     {
         _ = int.TryParse( ConfirmationCodeByUser, out int setCodeByUser );
 
@@ -43,7 +54,7 @@ public partial class ConfirmEmailPopupViewModel : BaseViewModel
 
             if (isSuccessfullyChangedPassword)
             {
-                await closePopupTask();
+                await DialogService.ClosePopupAsync();
 
                 await DialogService.ShowAlertAsync(
                     LocStrings.YourPasswordSuccessfullyChanged,
@@ -56,7 +67,7 @@ public partial class ConfirmEmailPopupViewModel : BaseViewModel
         }
         else
         {
-            await closePopupTask();
+            await DialogService.ClosePopupAsync();
             await DialogService.ShowErrorAsync( LocStrings.WrongConfirmationCode );
         }
     }

@@ -15,6 +15,7 @@ namespace Principles.Services
         Task NavigateToAsync<TViewModel>(bool isAbsoluteRoute, IDictionary<string, object> routeParameters) where TViewModel : BaseViewModel;
 
         Task GoBackAsync();
+        Task GoBackAsync(IDictionary<string, object> routeParameters);
         Task GoToInitialViewAsync();
     }
 }

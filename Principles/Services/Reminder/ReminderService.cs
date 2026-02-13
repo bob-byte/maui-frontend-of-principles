@@ -154,4 +154,45 @@ public class ReminderService : BaseRemoteService, IReminderService
         string url = $"{UrlBuilder.AllReminders}";
         return await RequestProvider.GetAsync<AllRemindersResponse>( url, SettingsService.AuthAccessToken );
     }
+
+    public void Cancel( int id )
+    {
+        LocalNotificationCenter.Current.Cancel( id );
+    }
+    
+    public async Task AddNotificationToDeviceAsync( bool isNewHabit, UserHabitReminder reminder, WeekDay weekDay )
+    {
+        if (reminder.IsEnabled)
+        {
+            DateTime currentDate = DateTime.Now;
+            TimeSpan currentTime = currentDate.TimeOfDay;
+
+            int reminderDayIndex = (int)weekDay.Type;
+
+            int currentDayIndex = (int)currentDate.DayOfWeek;
+
+            int daysUntilNextReminder = (reminderDayIndex - currentDayIndex + 7) % 7;
+
+            if (daysUntilNextReminder == 0 && reminder.Time.ToTimeSpan() < currentTime)
+            {
+                daysUntilNextReminder = 7;
+            }
+
+            DateTime notifyDateTime = currentDate.Date
+                .AddDays( daysUntilNextReminder )
+                .Add( reminder.Time.ToTimeSpan() );
+
+            await SaveLocallyAsync(
+                weekDay.UserNotificationRequestId,
+                reminder.Title,
+                reminder.Description,
+                notifyDateTime,
+                ReminderRepeat.Weekly
+            );
+        }
+        else if (!isNewHabit && weekDay.UserNotificationRequestId != 0)
+        {
+            LocalNotificationCenter.Current.Cancel( weekDay.UserNotificationRequestId );
+        }
+    }
 }

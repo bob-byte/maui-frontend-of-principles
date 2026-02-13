@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Maui.Views;
-
-using Principles.Core.Services.AiKey;
+﻿using CommunityToolkit.Maui.Extensions;
 
 using Application = Microsoft.Maui.Controls.Application;
 
@@ -8,11 +6,10 @@ namespace Principles;
 
 public partial class App : Application
 {
-    private readonly UpdatePopupViewModel m_updatePopupViewModel;
     private readonly ISettingsService m_settingsService;
     private readonly ILoggingService m_loggingService;
-
-    private UpdatePopup? m_updatePopup;
+    private readonly IAdService m_adService;
+    private readonly IAppOpenTrackerService m_appOpenTracker;
     
     public App( IServiceProvider serviceProvider )
     {
@@ -23,8 +20,8 @@ public partial class App : Application
         
         m_settingsService = serviceProvider.GetRequiredService<ISettingsService>();
         m_loggingService = serviceProvider.GetRequiredService<ILoggingService>();
-
-        m_updatePopupViewModel = new UpdatePopupViewModel( serviceProvider );
+        m_adService = serviceProvider.GetRequiredService<IAdService>();
+        m_appOpenTracker = serviceProvider.GetRequiredService<IAppOpenTrackerService>();
 
         UserAppTheme = AppTheme.Light;
 
@@ -52,46 +49,24 @@ public partial class App : Application
     protected async override void OnStart()
     {
         base.OnStart();
+
+        m_appOpenTracker.TrackAppOpen();
         
         LocalNotificationCenter.Current.ClearAll();
-
-        if (VersionTracking.IsFirstLaunchEver || VersionTracking.IsFirstLaunchForCurrentBuild || VersionTracking.IsFirstLaunchForCurrentVersion) 
-        {
-            await SecureStorage.SetAsync( CacheKeys.API_KEY, string.Empty );
-        }
         
         m_loggingService.LogInfo( "App starting..." );
-        
-        if (VersionTracking.IsFirstLaunchEver)
-        {
-            try
-            {
-                string token = await m_settingsService.GetAuthAccessTokenAsync();
-                if (!string.IsNullOrWhiteSpace( token ))
-                {
-                    IReminderService reminderService = ServiceLocator.Current!.GetRequiredService<IReminderService>();
-                    await reminderService.TryToRecoverAllUserRemindersAsync();
-                }
-            }
-            catch (Exception ex)
-            {
-                m_loggingService.LogError( ex, ex.Message );
-            }
-        }
-        
-        bool shouldShowPopup = await m_updatePopupViewModel.ShouldShowPopup();
-        
-        if (shouldShowPopup)
-        {
-            m_updatePopup ??= new UpdatePopup( m_updatePopupViewModel );
-            Windows[0].Page!.ShowPopup( m_updatePopup );
-        }
     }
 
     protected override async void OnResume()
     {
         base.OnResume();
         
+        m_appOpenTracker.TrackAppOpen();
+        
+        m_adService.LoadInterstitialAd();
+        
+        m_loggingService.LogInfo( "App resuming..." );
+        
         LocalNotificationCenter.Current.ClearAll();
         
         if (VersionTracking.IsFirstLaunchEver || VersionTracking.IsFirstLaunchForCurrentBuild || VersionTracking.IsFirstLaunchForCurrentVersion) 
@@ -99,17 +74,14 @@ public partial class App : Application
             await SecureStorage.SetAsync( CacheKeys.API_KEY, string.Empty );
         }
         
-        m_loggingService.LogInfo( "App resuming..." );
-        
-        m_updatePopupViewModel.ReferenceMessenger.Send( new TryAddNewDayInHabitListMessage() );
+        WeakReferenceMessenger.Default.Send( new TryAddNewDayInHabitListMessage() );
+    }
 
-        bool shouldShowPopup = (m_updatePopup is null || !m_updatePopup.IsShown) && ( await m_updatePopupViewModel.ShouldShowPopup());
+    protected override void OnSleep()
+    {
+        m_adService.CleanupAds();
         
-        if (shouldShowPopup)
-        {
-            m_updatePopup = new UpdatePopup( m_updatePopupViewModel );
-            Windows[0].Page!.ShowPopup( m_updatePopup );
-        }
+        base.OnSleep();
     }
 
     private void CurrentDomain_UnhandledException( object sender, UnhandledExceptionEventArgs e )

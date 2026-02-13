@@ -5,8 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Principles.Core.Models;
-public class HabitFrequencyInfo
+public partial class HabitFrequencyInfo : ObservableObject
 {
-    public FrequencyOfHabit Frequency { get; set; }
-    public PeriodOfHabit Period { get; set; }
+    [ObservableProperty]
+    private FrequencyOfHabit? m_frequency;
+    [ObservableProperty]
+    private PeriodOfHabit? m_period;
+
+    public void NotifyPropertyChanged(string propertyName )
+    {
+        OnPropertyChanged( propertyName );
+    }
 }

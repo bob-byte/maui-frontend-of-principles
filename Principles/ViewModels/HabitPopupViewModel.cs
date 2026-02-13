@@ -8,7 +8,7 @@ using Microsoft.Maui.Controls;
 namespace Principles.ViewModels;
 public partial class HabitPopupViewModel : BaseViewModel
 {
-    public UserHabit Habit { get; }
+    public UserHabit Habit { get; private set; }
     public DateTime Day { get; }
     public int ValuePercent => Value * 10;
     public double? ProgressPercent => Habit.TargetPerOneTime == 0 ? 0 : (double)Value / Habit.MaxRate;
@@ -39,12 +39,23 @@ public partial class HabitPopupViewModel : BaseViewModel
             OnPropertyChanged( nameof( ValuePercent ) );
         }
     }
-    public HabitPopupViewModel( IServiceProvider serviceProvider, UserHabit habit )
+    public HabitPopupViewModel( IServiceProvider serviceProvider )
         : base( serviceProvider )
     {
-        Habit = habit;
-        Value = (int)habit.TargetPerOneTime; 
+        
     }
+
+    public override async Task InitializePopupAsync( IDictionary<string, object> query )
+    {
+        await base.InitializePopupAsync( query );
+        
+        if ( query.TryGetValue( "habit", out object? habitObj ) && habitObj is UserHabit habit )
+        {
+            Habit = habit;
+            Value = (int)habit.TargetPerOneTime;
+        }
+    }
+
     [RelayCommand]
     private async Task SaveAsync( )
     {

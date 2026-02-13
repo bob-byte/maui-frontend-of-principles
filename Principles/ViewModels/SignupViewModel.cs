@@ -50,9 +50,9 @@ public partial class SignupViewModel : BaseViewModel
 
     public string LocSigningUp { get; set; }
 
-    public override Task InitializeAsync( object? parameter = null )
+    public override Task InitializePageAsync( IDictionary<string, object> query )
     {
-        return base.InitializeAsync( parameter );
+        return base.InitializePageAsync( query );
     }
 
     [RelayCommand]

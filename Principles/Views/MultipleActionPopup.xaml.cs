@@ -15,18 +15,6 @@ public partial class MultipleActionPopup : Popup
 
         InitializeComponent();
         SetPopupWidth();
-        
-        viewModel.ReferenceMessenger.Register<CloseMultipleActionPopupMsg>( this, ( _, _ ) =>
-        {
-            Close();
-        } );
-    }
-
-    protected override async Task OnClosed( object? result, bool wasDismissedByTappingOutsideOfPopup,
-        CancellationToken token = new() )
-    {
-        ViewModel.ReferenceMessenger.Unregister<CloseMultipleActionPopupMsg>( this );
-        await base.OnClosed(result, wasDismissedByTappingOutsideOfPopup, token);
     }
     
     private void SetPopupWidth()
@@ -40,10 +28,5 @@ public partial class MultipleActionPopup : Popup
         {
             G_Popup.WidthRequest = settingsService.NormalPageWidth - 10;
         }
-    }
-
-    private void SB_Cancel_OnClicked( object? sender, EventArgs e )
-    {
-        Close();
     }
 }

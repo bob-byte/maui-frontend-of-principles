@@ -188,25 +188,12 @@
                       VerticalOptions="Center">
                     <Grid VerticalOptions="Center"
                           Grid.Column="0">
-                        <OnPlatform x:TypeArguments="View">
-                            <On Platform="iOS">
-                                <Editor x:Name="E_TipText"
-                                        Margin="10"
-                                        BackgroundColor="{StaticResource LightPrimary}"
-                                        IsReadOnly="True"
-                                        TextColor="Black"
-                                        VerticalOptions="Center"
-                                        VerticalTextAlignment="Center" />
-                            </On>
-                            <On Platform="Android">
-                                <Label x:Name="L_TipText"
-                                       Padding="10"
-                                       BackgroundColor="{StaticResource LightPrimary}"
-                                       TextColor="Black"
-                                       VerticalOptions="Center"
-                                       VerticalTextAlignment="Center" />
-                            </On>
-                        </OnPlatform>
+                        <Label x:Name="L_TipText"
+                               Padding="10"
+                               BackgroundColor="{StaticResource LightPrimary}"
+                               TextColor="Black"
+                               VerticalOptions="Center"
+                               VerticalTextAlignment="Center" />
                     </Grid>
                     <Button Text="{Binding LocManager[OK],
                                            Mode=OneWay}"
@@ -232,9 +219,9 @@
                     <Label x:Name="L_CantEdit"
                            Text="{Binding LocManager[FieldIsNotEditable]}"
                            Margin="10,10,0,0"
+                           FontSize="20"
                            LineBreakMode="TailTruncation"
                            MaxLines="10"
-                           FontSize="20"
                            VerticalOptions="Center" />
                     <dxco:SimpleButton x:Name="SB_ChangeEmail"
                                        Text="{Binding LocManager[OK]}"

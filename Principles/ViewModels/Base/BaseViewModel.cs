@@ -1,5 +1,7 @@
 using Principles.Exceptions;
+
 using Plugin.LocalNotification;
+
 using System.Net;
 using System.Net.Sockets;
 
@@ -53,6 +55,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         ServiceOfHabit = serviceProvider.GetRequiredService<IServiceOfHabit>();
         AreaOfLifeService = serviceProvider.GetRequiredService<IAreaOfLifeService>();
         TipService = serviceProvider.GetRequiredService<ITipService>();
+        AdService = serviceProvider.GetRequiredService<IAdService>();
 
         ReferenceMessenger = WeakReferenceMessenger.Default;
 
@@ -62,18 +65,6 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
 
         AppName = LocStrings.Principles;
         LocSave = LocStrings.Save;
-
-        InitializeAsyncCommand = new AsyncRelayCommand( async () =>
-        {
-            await UiBusyFor( async () =>
-            {
-                await InitializeAsync();
-                
-                IsInitialized = true;
-            } );
-        } );
-
-        OnDisappearingCommand = new AsyncRelayCommand( async () => await OnDisappearingAsync() );
 
         if (GetType() != typeof( ProfileViewModel ))
         {
@@ -106,6 +97,8 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
 
     public IServiceOfHabit ServiceOfHabit { get; }
 
+    public IAdService AdService { get; }
+
     public IAreaOfLifeService AreaOfLifeService { get; }
 
     public IUrlBuilder UrlBuilder => Navigation.UrlBuilder;
@@ -117,7 +110,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         {
             OnPropertyChanging( nameof( IsBusy ) );
 
-            if ( value )
+            if (value)
             {
                 Interlocked.Increment( ref m_isBusy );
             }
@@ -138,10 +131,15 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     public ICachingService CachingService { get; }
     public ITipService TipService { get; }
 
-    protected void DefaultHandleLogout(UserLoggedOutMessage message)
+    public bool IsiOS => DeviceInfo.Platform == DevicePlatform.iOS;
+    public bool IsAndroid => DeviceInfo.Platform == DevicePlatform.Android;
+
+    private IDictionary<string, object> Query { get; set; }
+
+    protected void DefaultHandleLogout( UserLoggedOutMessage message )
     {
         IsInitialized = false;
-        
+
         if (UserName != null)
         {
             UserName.Value = string.Empty;
@@ -183,17 +181,41 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         CachingService.SetForever( CacheKeys.USER_GENDER, value.ToString() );
     }
 
-    public virtual void ApplyQueryAttributes(IDictionary<string, object> query )
+    public virtual async void ApplyQueryAttributes( IDictionary<string, object> query )
     {
         IsInitialized = false;
+        Query = query;
+
+        if (DialogService.IsPopupOpen)
+        {
+            await InitializePopupAsync( query );
+        }
+        else
+        {
+            //InitializePageAsync is called in HandlePageAppearingAsync
+        }
     }
 
-    public virtual Task InitializeAsync(object? parameter = null)
+    public async Task HandlePageAppearingAsync( object? parameter = null )
+    {
+        await UiBusyFor( async () =>
+        {
+            await InitializePageAsync( Query );
+            IsInitialized = true;
+        } );
+    }
+
+    public virtual Task InitializePopupAsync( IDictionary<string, object> query )
     {
         return Task.CompletedTask;
     }
 
-    public virtual Task OnDisappearingAsync( object? parameter = null )
+    public virtual Task InitializePageAsync( IDictionary<string, object> query )
+    {
+        return Task.CompletedTask;
+    }
+
+    public virtual Task HandleDisappearingOfPageAsync( object? parameter = null )
     {
         return Task.CompletedTask;
     }
@@ -205,7 +227,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
             Email = CachingService.GetStoredValue( CacheKeys.USER_EMAIL );
 
             UserInfo userInfo;
-            
+
             //we use Email to check whether user info is stored, because it (email) was recently added
             if (string.IsNullOrEmpty( Email ))
             {
@@ -216,7 +238,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
                 Mission = userInfo.Mission;
                 Email = userInfo.Email;
                 Gender = userInfo.Gender;
-                
+
                 //Gender.Man is default value, so OnGenderChanged won't be called is Gender = Gender.Man
                 if (Gender == Gender.Man)
                 {
@@ -229,7 +251,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
             {
                 userInfo = new UserInfo();
                 userInfo.Email = Email;
-                
+
                 UserName.Value = CachingService.GetStoredValue( CacheKeys.USER_NAME );
                 userInfo.Name = UserName.Value;
 
@@ -250,9 +272,9 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
             UserInfoChangedMessage userInfoChangedMsg = new( userInfo );
             ReferenceMessenger.Send( userInfoChangedMsg );
         }
-        
+
     }
-    
+
 
     private void AddValidators()
     {
@@ -262,9 +284,9 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     protected async Task UiBusyFor( Func<Task> unitOfWork )
     {
         IsBusy = true;
-        
+
         await ExecuteWithRetryAsync( unitOfWork );
-        
+
         IsBusy = false;
     }
 
@@ -287,7 +309,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
                 doTryAgain = await DoRetryOperationOnErrorAsync( ex );
             }
         }
-        while ( doTryAgain );
+        while (doTryAgain);
     }
 
     protected async Task<bool> DoRetryOperationOnErrorAsync( Exception ex )
@@ -341,6 +363,10 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
                 {
                     errorMsg = LocStrings.InternalServerError;
                 }
+                else if (extendedEx.HttpCode is HttpStatusCode.ServiceUnavailable or HttpStatusCode.NotFound)
+                {
+                    errorMsg = LocStrings.ServerTechnicalWorkIsInProgress;
+                }
                 else
                 {
                     LoggingService.LogCriticalError( ex );
@@ -350,12 +376,12 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
             else if (ex is ServiceAuthenticationException)
             {
                 await SettingsService.SetAuthAccessTokenAsync( "" );
-                
+
                 errorMsg = LocStrings.YouAreNotAuthorized;
                 await DialogService.ShowErrorAsync( errorMsg );
-                
+
                 await LogoutAsync();
-                
+
                 showPopupWithRetry = false;
             }
             else if (ex is TaskCanceledException or TimeoutException)
@@ -385,13 +411,13 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
 
     protected async Task LogoutAsync()
     {
-        await SettingsService.SetAuthAccessTokenAsync(string.Empty);
+        await SettingsService.SetAuthAccessTokenAsync( string.Empty );
 
         if (LocalNotificationCenter.Current.IsSupported)
         {
             LocalNotificationCenter.Current.CancelAll();
         }
-        
+
         if (UserName != null)
         {
             UserName.Value = string.Empty;
@@ -401,7 +427,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         Mission = string.Empty;
         Gender = Gender.Man;
         UserIcon = null;
-        
+
         CachingService.Remove( CacheKeys.USER_EMAIL );
 
         ReferenceMessenger.Send( new UserLoggedOutMessage() );
@@ -414,16 +440,16 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         OnPropertyChanged( propertyName );
     }
 
-    protected bool SetProperty<T>(ref T backingStore, T value,
+    protected bool SetProperty<T>( ref T backingStore, T value,
         [CallerMemberName] string propertyName = "",
         System.Action onChanged = null)
     {
-        if ( EqualityComparer<T>.Default.Equals(backingStore, value) )
+        if (EqualityComparer<T>.Default.Equals( backingStore, value ))
             return false;
 
         backingStore = value;
         onChanged?.Invoke();
-        OnPropertyChanged(propertyName);
+        OnPropertyChanged( propertyName );
         return true;
     }
 }

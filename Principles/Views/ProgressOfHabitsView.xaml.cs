@@ -1,20 +1,27 @@
-using CommunityToolkit.Maui.Behaviors;
+
+using CommunityToolkit.Maui.Extensions;
 
 using DevExpress.Maui.Controls;
 using DevExpress.Maui.Core;
 using DevExpress.Maui.DataGrid;
-using Plugin.LocalNotification;
+
+using DIPS.Mobile.UI.Components.ContextMenus;
+
+using Microsoft.Maui.Controls.Shapes;
+
+using Plugin.AdMob;
+
 using Principles.Controls;
+
 using System.Windows.Input;
 
 using Application = Microsoft.Maui.Controls.Application;
-using SwipeItem = DevExpress.Maui.DataGrid.SwipeItem;
 
 namespace Principles.Views;
 
 public partial class ProgressOfHabitsView : ContentPageBase
 {
-    private static readonly SemaphoreSlim s_lockerOfAddingNewDayColumn = new ( initialCount: 1, maxCount: 1 );
+    private static readonly SemaphoreSlim s_lockerOfAddingNewDayColumn = new( initialCount: 1, maxCount: 1 );
 
     private Timer? m_newDayEventTimer;
 
@@ -24,12 +31,25 @@ public partial class ProgressOfHabitsView : ContentPageBase
     private TimeZoneChangedReceiver? m_timeZoneChangeReceiver;
 #endif
 
-    public ProgressOfHabitsView(ProgressOfHabitsViewModel viewModel)
-	{
+    public ProgressOfHabitsView( ProgressOfHabitsViewModel viewModel )
+    {
         BindingContext = viewModel;
         ViewModel = viewModel;
 
         InitializeComponent();
+
+        if (ViewModel.SettingsService.IsAdsEnabled)
+        {
+            IAdService adService = ServiceLocator.Current!.GetRequiredService<IAdService>();
+            if (adService.IsConsentConfigured)
+            {
+                AppendBannerAd();
+            }
+            else
+            {
+                adService.ConsentIsConfigured += ( _, _ ) => AppendBannerAd();
+            }
+        }
 
 #if ANDROID31_0_OR_GREATER || IOS16_0_OR_GREATER
         SwipeItemInitialize();
@@ -46,11 +66,37 @@ public partial class ProgressOfHabitsView : ContentPageBase
         {
             UpdateLocalizedStrings();
         } );
-        
+
         ViewModel.ReferenceMessenger.Register<ShowAllArchivedHabitsMsg>( this, async ( _, _ ) =>
         {
             await ShowArchivedHabitsAsync();
-        });
+        } );
+
+        
+    }
+
+    // public IAsyncRelayCommand OpenArchiveCommand {get; set;}
+
+    private void AppendBannerAd()
+    {
+        BannerAd bannerAd = new()
+        {
+            Margin = new Thickness( 0, 0, 0, 10 ),
+            AdSize = AdSize.Custom,
+#if ANDROID
+            AdUnitId = "ca-app-pub-6307192789973793/8957186556",
+#else
+            AdUnitId = "ca-app-pub-6307192789973793/4995365596",
+#endif
+            CustomAdHeight = 50,
+            CustomAdWidth = 320,
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Start
+        };
+        bannerAd.OnAdFailedToLoad += BA_Ad_OnAdFailedToLoad;
+
+        G_Main.Children.Add( bannerAd );
+        G_Main.SetRow( bannerAd, 2 );
     }
 
     private void UpdateLocalizedStrings()
@@ -69,7 +115,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
         SwipeItemInitialize();
 #endif
     }
-    
+
     ~ProgressOfHabitsView()
     {
 #if IOS
@@ -106,7 +152,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
 #endif
         }
     }
-    
+
     private async void TryAddNewDayColumn( object? state )
     {
         await s_lockerOfAddingNewDayColumn.WaitAsync();
@@ -121,11 +167,11 @@ public partial class ProgressOfHabitsView : ContentPageBase
             int dayOfMonth = today.Day;
             string colCaption = $"{dayOfWeek}{Environment.NewLine}{dayOfMonth}";
 
-            bool isAlreadyAddedCol = DGV_Habits.Columns[1].Caption.Equals( colCaption, StringComparison.CurrentCultureIgnoreCase )  ||
+            bool isAlreadyAddedCol = DGV_Habits.Columns[1].Caption.Equals( colCaption, StringComparison.CurrentCultureIgnoreCase ) ||
                                      DGV_Habits.Columns[2].Caption.Equals( colCaption, StringComparison.CurrentCultureIgnoreCase ) ||
                                      DGV_Habits.Columns[3].Caption.Equals( colCaption, StringComparison.CurrentCultureIgnoreCase ) ||
-                                     (ViewModel.UserHabits?.Count > 0 && ViewModel.UserHabits[0].Progresses!.Any(p => p.Date == today) );
-            
+                                     (ViewModel.UserHabits?.Count > 0 && ViewModel.UserHabits[0].Progresses!.Any( p => p.Date == today ));
+
             if (!isAlreadyAddedCol && ViewModel.UserHabits is not null)
             {
                 ViewModel.IsProgressesInitialized = false;
@@ -133,18 +179,21 @@ public partial class ProgressOfHabitsView : ContentPageBase
                 await MainThread.InvokeOnMainThreadAsync( () =>
                 {
                     ViewModel.EndProgressInterval = today;
-                    
+
                     foreach (UserHabit habit in ViewModel.UserHabits)
                     {
                         habit.Progresses!.Insert( index: 0,
                             new ProgressOfHabit
                             {
-                                Id = 0, Date = today, Habit = habit, Value = habit.DefaultProgressValue
+                                Id = 0,
+                                Date = today,
+                                Habit = habit,
+                                Value = habit.DefaultProgressValue
                             } );
 
                         ViewModel.ServiceOfHabit.Recompute( habit );
                     }
-                    
+
 #if IOS
                     DGV_Habits.Columns.Clear();
 
@@ -243,15 +292,16 @@ public partial class ProgressOfHabitsView : ContentPageBase
                 HorizontalStackLayout stack = new()
                 {
                     VerticalOptions = LayoutOptions.Center,
+                    Background = Colors.White,
                     Spacing = 4
                 };
 
-                stack.BindTapGesture( "HabitDetailCommand", commandSource: ViewModel, parameterPath: "Item", numberOfTapsRequired: 1 );
 
                 CircularProgressBar progressBar = new();
                 IValueConverter progressConverter = new ProgressOfHabitToInt32Converter();
                 progressBar.Bind( CircularProgressBar.ProgressProperty, path: "Item.PercentageAchieved", converter: progressConverter );
 
+                progressBar.Background = Colors.White;
                 progressBar.ProgressColor = primaryColor;
                 progressBar.TextColor = primaryColor;
                 progressBar.ProgressLeftColor = (Application.Current!.Resources["GrayColor"] as Color)!;
@@ -264,6 +314,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
                     VerticalOptions = LayoutOptions.Center,
                     VerticalTextAlignment = TextAlignment.Center,
                     LineBreakMode = LineBreakMode.TailTruncation,
+                    Background = Colors.White,
                     MaxLines = 2,
                     HeightRequest = 45,
 #if IOS17_0_OR_GREATER
@@ -280,8 +331,53 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
                 habitName.TextColor = normalTextColor;
                 habitName.WidthRequest = 145;
+
                 stack.Add( progressBar );
                 stack.Add( habitName );
+
+                stack.BindTapGesture("HabitDetailCommand", ViewModel, parameterPath: "Item", numberOfTapsRequired: 1);
+
+                ContextMenu contextMenu = new();
+                List<IContextMenuItem> menuItems = new()
+                {
+                    new ContextMenuItem()
+                    {
+                        Icon = "edit_solid",
+                        Title = LocStrings.Edit,
+                        Command = ViewModel.EditHabitCommand,
+                    },
+                    new ContextMenuItem()
+                    {
+                        Icon = "archive_habit",
+                        Title = LocStrings.ArchiveHabit,
+                        Command = ViewModel.ArchiveHabitCommand,
+                    },
+                    new ContextMenuSeparatorItem(),
+                    new ContextMenuItem()
+                    {
+                        Icon = "delete_solid",
+                        Title = LocStrings.Delete,
+                        Command = ViewModel.DeleteHabitCommand,
+                        IsDestructive = true,
+                    },
+                };
+
+                foreach (IContextMenuItem item in menuItems)
+                {
+                    if(item is ContextMenuItem contextMenuItem)
+                    {
+                        contextMenuItem.SetBinding( ContextMenuItem.CommandParameterProperty, new Binding( path: "Item" ) );
+                    }
+                    
+                    contextMenu.ItemsSource.Add( item );
+                }
+
+                contextMenu.BindCommand("HabitDetailCommand", ViewModel, parameterPath: "Item");
+
+                ContextMenuEffect.SetMenu( stack, contextMenu );
+                ContextMenuEffect.SetMenuBindingContext(stack, ViewModel);
+
+                ContextMenuEffect.SetMode( stack, ContextMenuEffect.ContextMenuMode.LongPressed );
 
                 return stack;
             } )
@@ -291,7 +387,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
     }
 
 #if ANDROID31_0_OR_GREATER || IOS16_0_OR_GREATER
-    private void SwipeItemInitialize() 
+    private void SwipeItemInitialize()
     {
         LocalizationResourceManager.Initialize( ViewModel.SettingsService );
 
@@ -307,10 +403,10 @@ public partial class ProgressOfHabitsView : ContentPageBase
         {
             BackgroundColor = Application.Current!.Resources["LightPrimary"] as Color,
             Image = ImageSource.FromFile( "archive_habit" )
-        }; 
+        };
         archiveOnSwipe.SetBinding( GridSwipeItem.CommandProperty, new Binding( nameof( ProgressOfHabitsViewModel.ArchiveHabitCommand ) ) );
         DGV_Habits.StartSwipeItems.Add( archiveOnSwipe );
-        
+
         GridSwipeItem swipeForDeletion = new()
         {
             BackgroundColor = Application.Current!.Resources["RedColor"] as Color,
@@ -322,7 +418,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
 #endif
 
 #if ANDROID31_0_OR_GREATER || IOS16_0_OR_GREATER
-    private void SwipeItem_Invoked(object sender, EventArgs e )
+    private void SwipeItem_Invoked( object sender, EventArgs e )
     {
         ICommand command = ViewModel.DeleteHabitCommand;
         var swipeItem = sender as SwipeItemView;
@@ -395,7 +491,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
         else
         {
             DXP_Reminder.IsOpen = false;
-            
+
             await Snackbar.Make(
                 LocStrings.DeviceDoesNotSupportNotifications,
                 visualOptions: SnackbarHelper.DefaultOptions()
@@ -406,7 +502,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
     private async void SB_Save_Clicked( object sender, EventArgs e )
     {
         System.Action closePopup = () => DXP_Reminder.IsOpen = false;
-        
+
         if (ViewModel.SaveHabitsReportReminderCommand.CanExecute( closePopup ))
         {
             await ViewModel.SaveHabitsReportReminderCommand.ExecuteAsync( closePopup ).DefaultConfigureAwait();
@@ -420,15 +516,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
     private async void DXI_Archive_Tapped( object sender, EventArgs e )
     {
-        if (ViewModel.SelectedHabit is null && ViewModel.GetArchivedHabitsCommand.CanExecute( null ))
-        {
-            await ShowArchivedHabitsAsync();
-        }
-        else if (ViewModel.SelectedHabit is not null &&
-                 ViewModel.ArchiveHabitCommand.CanExecute( ViewModel.SelectedHabit ))
-        {
-            await ViewModel.ArchiveHabitCommand.ExecuteAsync( ViewModel.SelectedHabit );
-        }
+        await ShowArchivedHabitsAsync();
     }
 
     private async void DXI_Habits_Tapped( object sender, TappedEventArgs e )
@@ -436,6 +524,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
         await ChooseProgressMarkVariatyAsync();
     }
 
+    [RelayCommand]
     private async Task ShowArchivedHabitsAsync()
     {
         if (ViewModel.GetArchivedHabitsCommand.CanExecute( null ))
@@ -468,10 +557,10 @@ public partial class ProgressOfHabitsView : ContentPageBase
             DXCV_Archive.HeightRequest = height;
 
             ArchiveBottomSheet.State = BottomSheetState.HalfExpanded;
-            
+
             await ViewModel.GetArchivedHabitsCommand.ExecuteAsync( null );
         }
-        
+
     }
 
     private async Task ChooseProgressMarkVariatyAsync()
@@ -490,8 +579,8 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
             ProgressMarkVariatyBottomSheet.HalfExpandedRatio = heightOfBottomSheet / ViewModel.SettingsService.NormalPageHeight;
         }
-            ProgressMarkVariatyBottomSheet.State = BottomSheetState.HalfExpanded;
-            //await ViewModel.GetArchivedHabitsCommand.ExecuteAsync( null );
+        ProgressMarkVariatyBottomSheet.State = BottomSheetState.HalfExpanded;
+        //await ViewModel.GetArchivedHabitsCommand.ExecuteAsync( null );
     }
 
     private void ME_ArchivedHabitEndIconClicked( object sender, EventArgs e )
@@ -519,7 +608,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
             ViewModel.CreateArchivedHabitCommand.Execute( null );
         }
     }
-    
+
     private void ArchivedHabitButton_Clicked( object sender, EventArgs e )
     {
         if (sender is Button button && button.CommandParameter is ArсhivedHabitDto archivedHabit)
@@ -534,11 +623,19 @@ public partial class ProgressOfHabitsView : ContentPageBase
         }
     }
 
+    private void BA_Ad_OnAdFailedToLoad( object? sender, IAdError e )
+    {
+        if (ViewModel.SettingsService.IsDebug)
+        {
+            ViewModel.LoggingService.LogError( $"Failed to load banner ad: {e.Message}" );
+        }
+    }
+
     private void PrincipleYesOrNoHabitButton_Clicked( object sender, EventArgs e )
     {
         if (sender is DevExpress.Maui.Controls.SimpleButton button)
         {
-            ProgressMarkVariatyButton_Clicked(TypeOfHabit.Principled, ProgressMarkVariaty.YesOrNo );
+            ProgressMarkVariatyButton_Clicked( TypeOfHabit.Principled, ProgressMarkVariaty.YesOrNo );
         }
     }
 
@@ -546,7 +643,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
     {
         if (sender is DevExpress.Maui.Controls.SimpleButton button)
         {
-            ProgressMarkVariatyButton_Clicked(TypeOfHabit.Principled, ProgressMarkVariaty.Numeric );
+            ProgressMarkVariatyButton_Clicked( TypeOfHabit.Principled, ProgressMarkVariaty.Numeric );
         }
     }
 
@@ -570,22 +667,22 @@ public partial class ProgressOfHabitsView : ContentPageBase
     {
         if (sender is DevExpress.Maui.Controls.SimpleButton button)
         {
-            ProgressMarkVariatyButton_Clicked( TypeOfHabit.Mind , ProgressMarkVariaty.Numeric );
+            ProgressMarkVariatyButton_Clicked( TypeOfHabit.Mind, ProgressMarkVariaty.Numeric );
         }
     }
 
     // main method
-    private void ProgressMarkVariatyButton_Clicked( TypeOfHabit type, ProgressMarkVariaty varianty)
+    private void ProgressMarkVariatyButton_Clicked( TypeOfHabit type, ProgressMarkVariaty varianty )
     {
         ProgressMarkVariatyBottomSheet.State = BottomSheetState.Hidden;
 
-        (ProgressMarkVariaty Varianty, TypeOfHabit Type) parameter = ( varianty, type );
+        (ProgressMarkVariaty Varianty, TypeOfHabit Type) parameter = (varianty, type);
 
         if (BindingContext is ProgressOfHabitsViewModel vm &&
             vm.AddHabitCommand.CanExecute( parameter ))
-            {
-                vm.AddHabitCommand.Execute( parameter );
-            }
+        {
+            vm.AddHabitCommand.Execute( parameter );
+        }
     }
     private void SortByGoal_Clicked( object sender, EventArgs e )
     {
@@ -635,5 +732,4 @@ public partial class ProgressOfHabitsView : ContentPageBase
                 visualOptions: SnackbarHelper.DefaultOptions()
             ).Show();
     }
-
 }

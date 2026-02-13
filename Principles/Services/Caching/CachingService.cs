@@ -1,5 +1,4 @@
-﻿using System;
-namespace Principles.Core.Services;
+namespace Principles.Services;
 
 //TODO: use Redis DB to store data
 public class CachingService : ICachingService
@@ -10,7 +9,17 @@ public class CachingService : ICachingService
         return result;
     }
 
+    public bool GetStoredValueOrDefault( string key, bool defaultValue = false )
+    {
+        return Preferences.Get( key, defaultValue );
+    }
+
     public void SetForever( string key, string value )
+    {
+        Preferences.Set( key, value );
+    }
+    
+    public void SetForever( string key, bool value )
     {
         Preferences.Set( key, value );
     }
@@ -20,4 +29,3 @@ public class CachingService : ICachingService
         Preferences.Remove( key );
     }
 }
-

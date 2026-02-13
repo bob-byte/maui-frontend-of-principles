@@ -169,20 +169,15 @@ public partial class EditHabitViewModel : BaseViewModel
         ];
     }
 
-    //It is call on navigate to this EditHabitView
-    // add typeofhabit
-    public override void ApplyQueryAttributes( IDictionary<string, object> query )
+    private void ApplyQuery( IDictionary<string, object> query )
     {
-        IsLoadingHabitInfo = true;
-
-        base.ApplyQueryAttributes( query );
-
         Habit = new UserHabit();
         InitValidations();
-
+        
         if (query.TryGetValue( "Habit", out object? value ) && value is UserHabit habit)
         {
             Habit.MergeFrom( habit );
+            
             ServiceOfHabit.Recompute( Habit );
             if (Habit.Goal is not null && Habit.Goal.Id == 0)
             {
@@ -195,7 +190,7 @@ public partial class EditHabitViewModel : BaseViewModel
         {
             IsNewHabit = true;
         }
-
+        
         if (query.TryGetValue( "IsArchived", out object? isArchivedValue ) && isArchivedValue is bool archived)
         {
             Habit.IsArchived = archived;
@@ -210,6 +205,7 @@ public partial class EditHabitViewModel : BaseViewModel
         {
             m_isInHabitDetails = false;
         }
+
         if (query.TryGetValue( "ProgressMarkVariaty", out object? kindObj ) && kindObj is ProgressMarkVariaty kind)
         {
             Habit.ProgressMarkVariaty = kind;
@@ -218,11 +214,17 @@ public partial class EditHabitViewModel : BaseViewModel
         {
             Habit.Type = type;
         }
-        CheckHabitProgressRestriction( );
+        CheckHabitProgressRestriction();
+
+        AdService.IfRequiredShowInterstitialAdAsync();
     }
 
-    public override async Task InitializeAsync( object? parameter = null )
+    public override async Task InitializePageAsync( IDictionary<string, object> query )
     {
+        IsLoadingHabitInfo = true;
+
+        ApplyQuery( query );
+
         IsDayChecked =
         [
             true, // Sunday
@@ -253,11 +255,11 @@ public partial class EditHabitViewModel : BaseViewModel
 
             if (Habit.Type == TypeOfHabit.Flexible )
             {
-                SelectedDefaultProgressValue = DefaultProgressValues.First( p => p.Value == 3 );
+                SelectedDefaultProgressValue = DefaultProgressValues.First( p => p.Value == ProgressValue.SKIP );
             }
             else
             {
-                SelectedDefaultProgressValue = DefaultProgressValues.First( p => p.Value == -1 );
+                SelectedDefaultProgressValue = DefaultProgressValues.First( p => p.Value == ProgressValue.UNKNOWN );
             }
         }
         else
@@ -306,27 +308,6 @@ public partial class EditHabitViewModel : BaseViewModel
             }
 
             Habit.AreasOfLife ??= new ObservableCollectionEx<UserAreaOfLife>();
-            List<UserAreaOfLife> habitAreas = new( Habit.AreasOfLife.Count );
-
-            foreach (UserAreaOfLife area in Habit.AreasOfLife!)
-            {
-                //localize names
-                string? locName = LocManager[area.Name!];
-                if (!string.IsNullOrWhiteSpace( locName ))
-                {
-                    area.Name = locName;
-                }
-
-                habitAreas.Add( area );
-            }
-
-            //otherwise, the areas are not localised for some reason
-            Habit.AreasOfLife.Reload( habitAreas );
-
-            if (Habit.AreasOfLife.Count == 0)
-            {
-                Habit.AreasOfLife.Add( AllAreasOfLifeAsOneItem );
-            }
 
             foreach (DefaultProgressValue el in DefaultProgressValues)
             {
@@ -367,40 +348,23 @@ public partial class EditHabitViewModel : BaseViewModel
             Period = SelectedPeriodOfHabit
         };
 
-        Habit.AreasOfLife.CollectionChanged += AreasOfLife_CollectionChanged;
-
-        if (AllUserAreasOfLife.Count == 0)
-        {
-            await ReloadAllAreasOfLifeAsync();
-        }
-        else
-        {
-            AllUserAreasOfLife.Reload( AllUserAreasOfLife.ToList() );
-        }
-
         Habit.Goal ??= new UserGoal();
         await ReloadGoalsAsync();
 
         NotifyPropertyChanged( nameof( Habit ) );
 
-        await base.InitializeAsync( parameter );
+        await base.InitializePageAsync( query );
 
         IsLoadingHabitInfo = false;
     }
 
-    public override Task OnDisappearingAsync( object? parameter = null )
+    public override async Task HandleDisappearingOfPageAsync( object parameter = null )
     {
-        EditedReminder = new EditedUserHabitReminder();
-        EditedGoal = new UserGoal();
-        Habit = new UserHabit();
-        RecommendedHabits = new ObservableCollectionEx<RecommendedHabit>();
+        await base.HandleDisappearingOfPageAsync( parameter );
 
-#if ANDROID
-        UserGoals = new ObservableCollectionEx<UserGoal>();
-        AllUserAreasOfLife = new ObservableCollectionEx<UserAreaOfLife>();
-#endif
-
-        return Task.CompletedTask;
+        //delay to not show user clearing
+        await Task.Delay(1000);
+        ClearViewModelData();
     }
 
     private void NameOfHabitOnPropertyChanging( object? sender, System.ComponentModel.PropertyChangingEventArgs e )
@@ -474,4 +438,16 @@ public partial class EditHabitViewModel : BaseViewModel
         }
     }
 
+    private void ClearViewModelData()
+    {
+        EditedReminder = new EditedUserHabitReminder();
+        EditedGoal = new UserGoal();
+        Habit = new UserHabit();
+        RecommendedHabits = new ObservableCollectionEx<RecommendedHabit>();
+        
+#if ANDROID
+        UserGoals = new ObservableCollectionEx<UserGoal>();
+        AllUserAreasOfLife = new ObservableCollectionEx<UserAreaOfLife>();
+#endif
+    }
 }

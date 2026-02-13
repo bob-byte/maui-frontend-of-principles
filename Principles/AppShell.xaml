@@ -9,7 +9,6 @@
        x:Name="Principles"
        Title="AppShell"
        Style="{StaticResource ShellStyle}"
-       ios:Page.UseSafeArea="true"
        Shell.TabBarBackgroundColor="{StaticResource Primary}"
        Shell.TabBarForegroundColor="{StaticResource SecondaryLight}"
        Shell.TabBarTitleColor="{StaticResource SecondaryLight}"
@@ -35,7 +34,8 @@
                       Route="profile" />
     </TabBar>
 
-    <FlyoutItem Route="startup">
+    <FlyoutItem Route="startup" 
+                FlyoutItemIsVisible="False">
         <ShellContent ContentTemplate="{DataTemplate local:StartupView}" />
     </FlyoutItem>
 </Shell>

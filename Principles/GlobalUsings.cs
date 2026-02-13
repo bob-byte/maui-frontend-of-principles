@@ -25,7 +25,6 @@ global using Principles.Resources.AppStrings;
 global using System.ComponentModel;
 global using System;
 global using System.Collections.Generic;
-global using System.Diagnostics;
 global using System.Globalization;
 global using System.Runtime.CompilerServices;
 global using System.Threading;
@@ -34,7 +33,6 @@ global using System.Linq;
 global using DevExpress.Maui;
 global using CommunityToolkit.Mvvm.Messaging;
 global using Plugin.LocalNotification;
-global using The49.Maui.ContextMenu;
 #if IOS
 global using UIKit;
 #endif

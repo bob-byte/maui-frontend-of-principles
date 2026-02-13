@@ -61,653 +61,11 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add.
-        /// </summary>
-        internal static string Add {
-            get {
-                return ResourceManager.GetString("Add", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Do you want to archive this habit?.
-        /// </summary>
-        internal static string AddHabitToArchiveQuestion {
-            get {
-                return ResourceManager.GetString("AddHabitToArchiveQuestion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to To archive.
-        /// </summary>
-        internal static string AddToArchive {
-            get {
-                return ResourceManager.GetString("AddToArchive", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Your account has motivating reminders. They can be restore on your device..
-        /// </summary>
-        internal static string AfterLoginWhenUserAccountHaveReminders {
-            get {
-                return ResourceManager.GetString("AfterLoginWhenUserAccountHaveReminders", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to All areas of life.
-        /// </summary>
-        internal static string AllAreasOfLife {
-            get {
-                return ResourceManager.GetString("AllAreasOfLife", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Appearance.
-        /// </summary>
-        internal static string Appearance {
-            get {
-                return ResourceManager.GetString("Appearance", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Currently Apple authentication is only supported on iOS 13.0 or higher.
-        /// </summary>
-        internal static string AppleAuthIsNotSupportedForCurrentDevice {
-            get {
-                return ResourceManager.GetString("AppleAuthIsNotSupportedForCurrentDevice", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Update Available.
-        /// </summary>
-        internal static string AppUpdateAvailable {
-            get {
-                return ResourceManager.GetString("AppUpdateAvailable", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Close.
-        /// </summary>
-        internal static string AppUpdateCloseButton {
-            get {
-                return ResourceManager.GetString("AppUpdateCloseButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Apr.
-        /// </summary>
-        internal static string AprilShort {
-            get {
-                return ResourceManager.GetString("AprilShort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Archive.
-        /// </summary>
-        internal static string Archive {
-            get {
-                return ResourceManager.GetString("Archive", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add the habit to archive.
-        /// </summary>
-        internal static string ArchiveHabit {
-            get {
-                return ResourceManager.GetString("ArchiveHabit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Areas of habit.
-        /// </summary>
-        internal static string AreasOfHabit {
-            get {
-                return ResourceManager.GetString("AreasOfHabit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Atomic Habits.
-        /// </summary>
-        internal static string AtomicHabits {
-            get {
-                return ResourceManager.GetString("AtomicHabits", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Aug.
-        /// </summary>
-        internal static string AugustShort {
-            get {
-                return ResourceManager.GetString("AugustShort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Be.
-        /// </summary>
-        internal static string Be {
-            get {
-                return ResourceManager.GetString("Be", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Set goals that focus on your identity. Let&apos;s go!.
-        /// </summary>
-        internal static string BecomeTruePersonalityDescription {
-            get {
-                return ResourceManager.GetString("BecomeTruePersonalityDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Become a real personality.
-        /// </summary>
-        internal static string BecomeTruePersonalityTitle {
-            get {
-                return ResourceManager.GetString("BecomeTruePersonalityTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Calendar.
-        /// </summary>
-        internal static string Calendar {
-            get {
-                return ResourceManager.GetString("Calendar", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The execution of habits by day is displayed:
-        ///- Blue - habit completed;
-        ///- Cyan - it is not necessary to follow the habit.
-        ///You can change the status with a press..
-        /// </summary>
-        internal static string CalendarInfoExplanation {
-            get {
-                return ResourceManager.GetString("CalendarInfoExplanation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cancel.
-        /// </summary>
-        internal static string Cancel {
-            get {
-                return ResourceManager.GetString("Cancel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to It is impossible to parse.
-        /// </summary>
-        internal static string CannotParse {
-            get {
-                return ResourceManager.GetString("CannotParse", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to It is impossible to reload habits.
-        /// </summary>
-        internal static string CannotReloadHabits {
-            get {
-                return ResourceManager.GetString("CannotReloadHabits", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Career.
-        /// </summary>
-        internal static string Career {
-            get {
-                return ResourceManager.GetString("Career", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Change language.
-        /// </summary>
-        internal static string ChangeLanguage {
-            get {
-                return ResourceManager.GetString("ChangeLanguage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Change password.
-        /// </summary>
-        internal static string ChangePassword {
-            get {
-                return ResourceManager.GetString("ChangePassword", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Change password.
-        /// </summary>
-        internal static string ChangePasswordButton {
-            get {
-                return ResourceManager.GetString("ChangePasswordButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Character.
-        /// </summary>
-        internal static string Character {
-            get {
-                return ResourceManager.GetString("Character", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Chat With AI-Helper.
-        /// </summary>
-        internal static string ChatWithHelper {
-            get {
-                return ResourceManager.GetString("ChatWithHelper", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Get answers to various questions from an assistant who will take into account your mission, habits etc..
-        /// </summary>
-        internal static string ChatWithHelperDescription {
-            get {
-                return ResourceManager.GetString("ChatWithHelperDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Chat with helper.
-        /// </summary>
-        internal static string ChatWithHelperTitle {
-            get {
-                return ResourceManager.GetString("ChatWithHelperTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Choose action.
-        /// </summary>
-        internal static string ChooseAction {
-            get {
-                return ResourceManager.GetString("ChooseAction", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Choose a Goal.
-        /// </summary>
-        internal static string ChooseGoal {
-            get {
-                return ResourceManager.GetString("ChooseGoal", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Choose a Habit Goal.
-        /// </summary>
-        internal static string ChooseHabitGoal {
-            get {
-                return ResourceManager.GetString("ChooseHabitGoal", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Choose language.
-        /// </summary>
-        internal static string ChooseLanguage {
-            get {
-                return ResourceManager.GetString("ChooseLanguage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Close.
-        /// </summary>
-        internal static string Close {
-            get {
-                return ResourceManager.GetString("Close", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Coming Soon.
-        /// </summary>
-        internal static string ComingSoon {
-            get {
-                return ResourceManager.GetString("ComingSoon", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to New features and improvements are on the way!.
-        /// </summary>
-        internal static string ComingSoonMessage {
-            get {
-                return ResourceManager.GetString("ComingSoonMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Completed days.
-        /// </summary>
-        internal static string CompletedDays {
-            get {
-                return ResourceManager.GetString("CompletedDays", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Complexity can&apos;t be changed after creation of a habit.
-        /// </summary>
-        internal static string ComplexityCantBeChangedAfterCreationOfHabit {
-            get {
-                return ResourceManager.GetString("ComplexityCantBeChangedAfterCreationOfHabit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to How difficult is it to stick to the habit in terms of effort, time and self-control.
-        /// </summary>
-        internal static string ComplexityInfoText {
-            get {
-                return ResourceManager.GetString("ComplexityInfoText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Complexity (1 - 10).
-        /// </summary>
-        internal static string ComplexityWithRange {
-            get {
-                return ResourceManager.GetString("ComplexityWithRange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to A confirmation code for password change has been sent to your email.
-        /// </summary>
-        internal static string ConfirmationPasswordChangeLabel {
-            get {
-                return ResourceManager.GetString("ConfirmationPasswordChangeLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to load recommended habits based on your chosen areas, goal, mission and main slogan?.
-        /// </summary>
-        internal static string ConfirmMessageOnRecommededHabitsView {
-            get {
-                return ResourceManager.GetString("ConfirmMessageOnRecommededHabitsView", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Confirm.
-        /// </summary>
-        internal static string ConfirmPasswordChangeButton {
-            get {
-                return ResourceManager.GetString("ConfirmPasswordChangeButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Based on areas, goal, mission and slogan.
-        /// </summary>
-        internal static string ConfirmTitleOnRecommendedHabitsView {
-            get {
-                return ResourceManager.GetString("ConfirmTitleOnRecommendedHabitsView", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Send an email to us.
-        /// </summary>
-        internal static string ContactEmail {
-            get {
-                return ResourceManager.GetString("ContactEmail", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Continue with Apple.
-        /// </summary>
-        internal static string ContinueWithApple {
-            get {
-                return ResourceManager.GetString("ContinueWithApple", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Continue with Google.
-        /// </summary>
-        internal static string ContinueWithGoogle {
-            get {
-                return ResourceManager.GetString("ContinueWithGoogle", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Correct.
-        /// </summary>
-        internal static string Correct {
-            get {
-                return ResourceManager.GetString("Correct", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Create it anyway.
-        /// </summary>
-        internal static string CreateItAnyway {
-            get {
-                return ResourceManager.GetString("CreateItAnyway", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Create a new account.
         /// </summary>
         internal static string CreateNewAccount {
             get {
                 return ResourceManager.GetString("CreateNewAccount", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Create new goal.
-        /// </summary>
-        internal static string CreateNewGoal {
-            get {
-                return ResourceManager.GetString("CreateNewGoal", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Data.
-        /// </summary>
-        internal static string Data {
-            get {
-                return ResourceManager.GetString("Data", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to days.
-        /// </summary>
-        internal static string days {
-            get {
-                return ResourceManager.GetString("days", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Days completed.
-        /// </summary>
-        internal static string DaysCount {
-            get {
-                return ResourceManager.GetString("DaysCount", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to days to go until your habit becomes fully automatic.
-        /// </summary>
-        internal static string daysToGoUntilHabitAutomatic {
-            get {
-                return ResourceManager.GetString("daysToGoUntilHabitAutomatic", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Dec.
-        /// </summary>
-        internal static string DecemberShort {
-            get {
-                return ResourceManager.GetString("DecemberShort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Delete.
-        /// </summary>
-        internal static string Delete {
-            get {
-                return ResourceManager.GetString("Delete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Delete account.
-        /// </summary>
-        internal static string DeleteAccount {
-            get {
-                return ResourceManager.GetString("DeleteAccount", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Delete account?.
-        /// </summary>
-        internal static string DeleteAccountQuestion {
-            get {
-                return ResourceManager.GetString("DeleteAccountQuestion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You are in the process of deleting a habit. Please choose one of the suggested actions..
-        /// </summary>
-        internal static string DeleteArchivedHabitConfirmationText {
-            get {
-                return ResourceManager.GetString("DeleteArchivedHabitConfirmationText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Delete goal?.
-        /// </summary>
-        internal static string DeleteGoalQuestion {
-            get {
-                return ResourceManager.GetString("DeleteGoalQuestion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Delete habit?.
-        /// </summary>
-        internal static string DeleteHabitQuestion {
-            get {
-                return ResourceManager.GetString("DeleteHabitQuestion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Delete the habit.
-        /// </summary>
-        internal static string DeleteTheHabit {
-            get {
-                return ResourceManager.GetString("DeleteTheHabit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Description.
-        /// </summary>
-        internal static string Description {
-            get {
-                return ResourceManager.GetString("Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tip: &quot;start working on the current habit when you automate others&quot;. It will help you not to burn out and keep your other habits going..
-        /// </summary>
-        internal static string DescriptionOfAdviceNotToWorkOnNewHabit {
-            get {
-                return ResourceManager.GetString("DescriptionOfAdviceNotToWorkOnNewHabit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tap the AI-lamp to get recommended habits..
-        /// </summary>
-        internal static string DescriptionOfAiLampTap {
-            get {
-                return ResourceManager.GetString("DescriptionOfAiLampTap", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Oops.. It looks like your operating system doesn&apos;t support notifications. Please try updating it..
-        /// </summary>
-        internal static string DeviceDoesNotSupportNotifications {
-            get {
-                return ResourceManager.GetString("DeviceDoesNotSupportNotifications", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Done?.
-        /// </summary>
-        internal static string Done {
-            get {
-                return ResourceManager.GetString("Done", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Don&apos;t remind me of it again.
-        /// </summary>
-        internal static string DontShowUpdateCheckBoxText {
-            get {
-                return ResourceManager.GetString("DontShowUpdateCheckBoxText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Edit.
-        /// </summary>
-        internal static string Edit {
-            get {
-                return ResourceManager.GetString("Edit", resourceCulture);
             }
         }
         
@@ -721,74 +79,11 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You should fill email and password fields.
-        /// </summary>
-        internal static string EmailAndPasswordFieldsAreEmpty {
-            get {
-                return ResourceManager.GetString("EmailAndPasswordFieldsAreEmpty", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The user not found at the specified email address..
-        /// </summary>
-        internal static string EmailIsIncorrect {
-            get {
-                return ResourceManager.GetString("EmailIsIncorrect", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Email must have correct value.
         /// </summary>
         internal static string EmailMustHaveCorrectValue {
             get {
                 return ResourceManager.GetString("EmailMustHaveCorrectValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Email or password is incorrect..
-        /// </summary>
-        internal static string EmailOrPasswordIsIncorrect {
-            get {
-                return ResourceManager.GetString("EmailOrPasswordIsIncorrect", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You don&apos;t have any reminders for this habit yet.
-        /// </summary>
-        internal static string EmptyReminders {
-            get {
-                return ResourceManager.GetString("EmptyReminders", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enable.
-        /// </summary>
-        internal static string Enable {
-            get {
-                return ResourceManager.GetString("Enable", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enter a number.
-        /// </summary>
-        internal static string EnterNumber {
-            get {
-                return ResourceManager.GetString("EnterNumber", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enter text....
-        /// </summary>
-        internal static string EnterText {
-            get {
-                return ResourceManager.GetString("EnterText", resourceCulture);
             }
         }
         
@@ -802,603 +97,11 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An error occurred.
-        /// </summary>
-        internal static string ErrorOccurred {
-            get {
-                return ResourceManager.GetString("ErrorOccurred", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Every.
-        /// </summary>
-        internal static string Every {
-            get {
-                return ResourceManager.GetString("Every", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Every day.
-        /// </summary>
-        internal static string EveryDay {
-            get {
-                return ResourceManager.GetString("EveryDay", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Every month.
-        /// </summary>
-        internal static string EveryMonth {
-            get {
-                return ResourceManager.GetString("EveryMonth", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Every week.
-        /// </summary>
-        internal static string EveryWeek {
-            get {
-                return ResourceManager.GetString("EveryWeek", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Every year.
-        /// </summary>
-        internal static string EveryYear {
-            get {
-                return ResourceManager.GetString("EveryYear", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Family.
-        /// </summary>
-        internal static string Family {
-            get {
-                return ResourceManager.GetString("Family", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Feb.
-        /// </summary>
-        internal static string FebruaryShort {
-            get {
-                return ResourceManager.GetString("FebruaryShort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Field.
-        /// </summary>
-        internal static string Field {
-            get {
-                return ResourceManager.GetString("Field", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This field is not editable..
-        /// </summary>
-        internal static string FieldIsNotEditable {
-            get {
-                return ResourceManager.GetString("FieldIsNotEditable", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The field &quot;Name&quot;.
-        /// </summary>
-        internal static string FieldName {
-            get {
-                return ResourceManager.GetString("FieldName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Fix the errors first.
-        /// </summary>
-        internal static string FixErrorsFirst {
-            get {
-                return ResourceManager.GetString("FixErrorsFirst", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Flexible.
-        /// </summary>
-        internal static string Flexible {
-            get {
-                return ResourceManager.GetString("Flexible", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Forget password?.
-        /// </summary>
-        internal static string ForgetPasswordNavigation {
-            get {
-                return ResourceManager.GetString("ForgetPasswordNavigation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Password Recovery.
-        /// </summary>
-        internal static string ForgetPasswordTitle {
-            get {
-                return ResourceManager.GetString("ForgetPasswordTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Frequency.
-        /// </summary>
-        internal static string Frequency {
-            get {
-                return ResourceManager.GetString("Frequency", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Fri.
-        /// </summary>
-        internal static string Friday {
-            get {
-                return ResourceManager.GetString("Friday", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Fri.
-        /// </summary>
-        internal static string FridayShort {
-            get {
-                return ResourceManager.GetString("FridayShort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Why do you need an archive?
-        ///✅ Plan habits you want to add or change in the future.
-        ///🔁 Analyze reasons - which habits worked and which ones were too complicated or irrelevant.
-        ///🌱 Try again - sometimes it&apos;s good to go back to an old habit by changing the difficulty or approach. For example, train in the morning instead of the evening.
-        ///
-        ///⸻
-        ///
-        ///Tip: before creating a new habit, look at the archive - maybe something similar has already happened, and now you know how to do it better..
-        /// </summary>
-        internal static string FullDescriptionOfArchivedHabits {
-            get {
-                return ResourceManager.GetString("FullDescriptionOfArchivedHabits", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Generate recommendations based on your mission, goals etc..
-        /// </summary>
-        internal static string GetRecommendationsByAIDescription {
-            get {
-                return ResourceManager.GetString("GetRecommendationsByAIDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Recommendations.
-        /// </summary>
-        internal static string GetRecommendationsByAITitle {
-            get {
-                return ResourceManager.GetString("GetRecommendationsByAITitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Goal.
-        /// </summary>
-        internal static string Goal {
-            get {
-                return ResourceManager.GetString("Goal", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Examples of goals aimed at your identity are: be an Olympic champion, be an athlete, be confident, be smoke free..
-        /// </summary>
-        internal static string GoalExamples {
-            get {
-                return ResourceManager.GetString("GoalExamples", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Recommendation: &quot;Choose a goal that is concrete or based on your identity because it defines your life&quot;..
-        /// </summary>
-        internal static string GoalLableRecommendation {
-            get {
-                return ResourceManager.GetString("GoalLableRecommendation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Go to App Store.
-        /// </summary>
-        internal static string GoToAppStore {
-            get {
-                return ResourceManager.GetString("GoToAppStore", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Go to Google Play.
-        /// </summary>
-        internal static string GoToGooglePlay {
-            get {
-                return ResourceManager.GetString("GoToGooglePlay", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Systematise the achievement of your goals by grouping your habits by goal..
-        /// </summary>
-        internal static string GroupHabitsByGoalsDescription {
-            get {
-                return ResourceManager.GetString("GroupHabitsByGoalsDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Constant progress.
-        /// </summary>
-        internal static string GroupHabitsByGoalsTitle {
-            get {
-                return ResourceManager.GetString("GroupHabitsByGoalsTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Habit.
-        /// </summary>
-        internal static string Habit {
-            get {
-                return ResourceManager.GetString("Habit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Your habit will be archived, and you can always return it to the main list..
-        /// </summary>
-        internal static string HabitArchivingInfo {
-            get {
-                return ResourceManager.GetString("HabitArchivingInfo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Habit automation requires regular performance for.
-        /// </summary>
-        internal static string HabitAutomationExplanation {
-            get {
-                return ResourceManager.GetString("HabitAutomationExplanation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Habit by dayweeks.
-        /// </summary>
-        internal static string HabitByDayweeks {
-            get {
-                return ResourceManager.GetString("HabitByDayweeks", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The Habit by Day of the Week chart shows how often you complete your habit on each day. It helps you spot which days you&apos;re most consistent and which ones tend to be missed. By understanding these patterns, you can adjust your routine, address weak spots, and create a more balanced and sustainable habit rhythm throughout the week..
-        /// </summary>
-        internal static string HabitByDayweeksExplanation {
-            get {
-                return ResourceManager.GetString("HabitByDayweeksExplanation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You don&apos;t have any habits yet.
-        /// </summary>
-        internal static string HabitCollectionIsEmptyDescription {
-            get {
-                return ResourceManager.GetString("HabitCollectionIsEmptyDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Habit goal.
-        /// </summary>
-        internal static string HabitGoal {
-            get {
-                return ResourceManager.GetString("HabitGoal", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Specify a name of habit and time or place of its implementation. This will increase the probability of compliance. Example: I pray as soon as I wake up..
-        /// </summary>
-        internal static string HabitNameRecommendation {
-            get {
-                return ResourceManager.GetString("HabitNameRecommendation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Habits.
-        /// </summary>
-        internal static string Habits {
-            get {
-                return ResourceManager.GetString("Habits", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Shows how many days in a row you&apos;ve opened the app and completed your habits. Missing even one day resets the streak.
-        /// </summary>
-        internal static string HabitStreakExplanation {
-            get {
-                return ResourceManager.GetString("HabitStreakExplanation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The habit was not created before this date.
-        /// </summary>
-        internal static string HabitWasntCreatedBeforeThisDay {
-            get {
-                return ResourceManager.GetString("HabitWasntCreatedBeforeThisDay", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Health.
-        /// </summary>
-        internal static string Health {
-            get {
-                return ResourceManager.GetString("Health", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to AI-Helper.
-        /// </summary>
-        internal static string Helper {
-            get {
-                return ResourceManager.GetString("Helper", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Helper SET.
-        /// </summary>
-        internal static string HelperName {
-            get {
-                return ResourceManager.GetString("HelperName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The AI-assistant knows your habits, goals, mission, gender, and slogan. So you can ask anything about them. For example, “What should I set as my next goal?” Note that it can sometimes make mistakes. Check important information!.
-        /// </summary>
-        internal static string HelperWarning {
-            get {
-                return ResourceManager.GetString("HelperWarning", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Household chores.
-        /// </summary>
-        internal static string HouseholdChores {
-            get {
-                return ResourceManager.GetString("HouseholdChores", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to How can I help you?.
-        /// </summary>
-        internal static string HowCanIHelpYou {
-            get {
-                return ResourceManager.GetString("HowCanIHelpYou", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to How to keep.
-        /// </summary>
-        internal static string HowToKeep {
-            get {
-                return ResourceManager.GetString("HowToKeep", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to If you don&apos;t want to wait, you can change the other fields for now..
-        /// </summary>
-        internal static string IfYouDontWantToWaitYouCanChangeOtherFields {
-            get {
-                return ResourceManager.GetString("IfYouDontWantToWaitYouCanChangeOtherFields", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Inspect.
-        /// </summary>
-        internal static string Inspect {
-            get {
-                return ResourceManager.GetString("Inspect", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This is a habit type that a person follows most of the time, but may make exceptions in special situations. For example, it may be the habit of telling the truth but being able to keep silent or deceive when it could cause serious harm to others..
-        /// </summary>
-        internal static string IntegrallyWiseHabitTypeShortDescription {
-            get {
-                return ResourceManager.GetString("IntegrallyWiseHabitTypeShortDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The interface language has been successfully changed.
-        /// </summary>
-        internal static string InterfaceLanguageSuccessfullyChanged {
-            get {
-                return ResourceManager.GetString("InterfaceLanguageSuccessfullyChanged", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Internal server error. We will try to fix it as soon as possible!.
-        /// </summary>
-        internal static string InternalServerError {
-            get {
-                return ResourceManager.GetString("InternalServerError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid email or password..
-        /// </summary>
-        internal static string InvalidEmailOrPassword {
-            get {
-                return ResourceManager.GetString("InvalidEmailOrPassword", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to is the maximum value.
-        /// </summary>
-        internal static string IsMaxValue {
-            get {
-                return ResourceManager.GetString("IsMaxValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Is not found.
-        /// </summary>
-        internal static string IsNotFound {
-            get {
-                return ResourceManager.GetString("IsNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to is required.
-        /// </summary>
-        internal static string isRequired {
-            get {
-                return ResourceManager.GetString("isRequired", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Jan.
-        /// </summary>
-        internal static string JanuaryShort {
-            get {
-                return ResourceManager.GetString("JanuaryShort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Join our Telegram channel.
-        /// </summary>
-        internal static string JoinOurTelegram {
-            get {
-                return ResourceManager.GetString("JoinOurTelegram", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Jul.
-        /// </summary>
-        internal static string JulyShort {
-            get {
-                return ResourceManager.GetString("JulyShort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Jun.
-        /// </summary>
-        internal static string JuneShort {
-            get {
-                return ResourceManager.GetString("JuneShort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Just.
-        /// </summary>
-        internal static string Just {
-            get {
-                return ResourceManager.GetString("Just", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Loading....
-        /// </summary>
-        internal static string Loading {
-            get {
-                return ResourceManager.GetString("Loading", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Loading content....
-        /// </summary>
-        internal static string LoadingContent {
-            get {
-                return ResourceManager.GetString("LoadingContent", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Log in.
         /// </summary>
         internal static string Login {
             get {
                 return ResourceManager.GetString("Login", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to By clicking the &apos;Log in&apos; button, you agree to.
-        /// </summary>
-        internal static string LoginAgreementText {
-            get {
-                return ResourceManager.GetString("LoginAgreementText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to and.
-        /// </summary>
-        internal static string LoginSignUpAgreementСonnectingText {
-            get {
-                return ResourceManager.GetString("LoginSignUpAgreementСonnectingText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Log in with email.
-        /// </summary>
-        internal static string LogInWithEmail {
-            get {
-                return ResourceManager.GetString("LogInWithEmail", resourceCulture);
             }
         }
         
@@ -1412,38 +115,11 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Logout?.
-        /// </summary>
-        internal static string LogoutQuestion {
-            get {
-                return ResourceManager.GetString("LogoutQuestion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Longest streak.
-        /// </summary>
-        internal static string LongestStreak {
-            get {
-                return ResourceManager.GetString("LongestStreak", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Main slogan.
         /// </summary>
         internal static string MainSlogan {
             get {
                 return ResourceManager.GetString("MainSlogan", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The main slogan will be used to form better recommended habits. It helps you determine how to act when you don&apos;t want to do something or when you are faced with a challenge or temptation. An example of the main slogan: a relationship with God and a strong character determine the quality of life..
-        /// </summary>
-        internal static string MainSloganExplanation {
-            get {
-                return ResourceManager.GetString("MainSloganExplanation", resourceCulture);
             }
         }
         
@@ -1457,182 +133,11 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mar.
-        /// </summary>
-        internal static string MarchShort {
-            get {
-                return ResourceManager.GetString("MarchShort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Max.
-        /// </summary>
-        internal static string Max {
-            get {
-                return ResourceManager.GetString("Max", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to May.
-        /// </summary>
-        internal static string MayShort {
-            get {
-                return ResourceManager.GetString("MayShort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Mentality.
-        /// </summary>
-        internal static string Mentality {
-            get {
-                return ResourceManager.GetString("Mentality", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Mentor.
         /// </summary>
         internal static string Mentor {
             get {
                 return ResourceManager.GetString("Mentor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This action will move the habit to the archive. You can resume working on it later..
-        /// </summary>
-        internal static string MessageAddHabitToArchive {
-            get {
-                return ResourceManager.GetString("MessageAddHabitToArchive", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Once you delete, it&apos;s gone for good..
-        /// </summary>
-        internal static string MessageInDeleteAccountConfirm {
-            get {
-                return ResourceManager.GetString("MessageInDeleteAccountConfirm", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Once you delete, it&apos;s gone for good..
-        /// </summary>
-        internal static string MessageInDeleteGoalConfirm {
-            get {
-                return ResourceManager.GetString("MessageInDeleteGoalConfirm", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Once you delete, it&apos;s gone for good..
-        /// </summary>
-        internal static string MessageInDeleteHabitConfirm {
-            get {
-                return ResourceManager.GetString("MessageInDeleteHabitConfirm", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Do you really want to log out of your account?.
-        /// </summary>
-        internal static string MessageInLogoutConfirm {
-            get {
-                return ResourceManager.GetString("MessageInLogoutConfirm", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This action will restore the habit to your active list..
-        /// </summary>
-        internal static string MessageRemoveHabitFromArchive {
-            get {
-                return ResourceManager.GetString("MessageRemoveHabitFromArchive", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Min.
-        /// </summary>
-        internal static string Min {
-            get {
-                return ResourceManager.GetString("Min", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Mind.
-        /// </summary>
-        internal static string Mind {
-            get {
-                return ResourceManager.GetString("Mind", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Reminder of an important idea or mindset.
-        /// </summary>
-        internal static string MindDescription {
-            get {
-                return ResourceManager.GetString("MindDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Mission.
-        /// </summary>
-        internal static string Mission {
-            get {
-                return ResourceManager.GetString("Mission", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to It will be used to create more appropriate recommended habits for you. A mission is a life goal that keeps you motivated and helps you make the best choices in a variety of situations. For example, a mission might be to become the best and most moral entrepreneur in the world..
-        /// </summary>
-        internal static string MissionExplanation {
-            get {
-                return ResourceManager.GetString("MissionExplanation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Mon.
-        /// </summary>
-        internal static string Monday {
-            get {
-                return ResourceManager.GetString("Monday", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Mon.
-        /// </summary>
-        internal static string MondayShort {
-            get {
-                return ResourceManager.GetString("MondayShort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Month.
-        /// </summary>
-        internal static string Month {
-            get {
-                return ResourceManager.GetString("Month", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cannot open app to send an email. Maybe this program is not installed..
-        /// </summary>
-        internal static string MsgWhenCannotOpenAppToSendEmail {
-            get {
-                return ResourceManager.GetString("MsgWhenCannotOpenAppToSendEmail", resourceCulture);
             }
         }
         
@@ -1646,173 +151,11 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name.
-        /// </summary>
-        internal static string Name {
-            get {
-                return ResourceManager.GetString("Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to New password.
-        /// </summary>
-        internal static string NewPassword {
-            get {
-                return ResourceManager.GetString("NewPassword", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Password must be 8-20 characters long and contain at least one lowercase letter and one digit..
-        /// </summary>
-        internal static string NewPasswordIsIncorrectError {
-            get {
-                return ResourceManager.GetString("NewPasswordIsIncorrectError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No.
-        /// </summary>
-        internal static string No {
-            get {
-                return ResourceManager.GetString("No", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to *No goal specified.
-        /// </summary>
-        internal static string NoGoalSpecified {
-            get {
-                return ResourceManager.GetString("NoGoalSpecified", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No internet connection..
-        /// </summary>
-        internal static string NoInternetConnection {
-            get {
-                return ResourceManager.GetString("NoInternetConnection", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Note.
-        /// </summary>
-        internal static string Note {
-            get {
-                return ResourceManager.GetString("Note", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Notes / How to keep habit.
-        /// </summary>
-        internal static string NotesOrHowToKeepHabit {
-            get {
-                return ResourceManager.GetString("NotesOrHowToKeepHabit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Not yet implemented..
-        /// </summary>
-        internal static string NotYetImplemented {
-            get {
-                return ResourceManager.GetString("NotYetImplemented", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Nov.
-        /// </summary>
-        internal static string NovemberShort {
-            get {
-                return ResourceManager.GetString("NovemberShort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Number of executions.
-        /// </summary>
-        internal static string NumberOfExecution {
-            get {
-                return ResourceManager.GetString("NumberOfExecution", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Numeric.
-        /// </summary>
-        internal static string Numeric {
-            get {
-                return ResourceManager.GetString("Numeric", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Habit with a measurable result.
-        /// </summary>
-        internal static string NumericDescription {
-            get {
-                return ResourceManager.GetString("NumericDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Examples: Study programming for 2 hours, Read 10 pages.
-        /// </summary>
-        internal static string NumericExample {
-            get {
-                return ResourceManager.GetString("NumericExample", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Oct.
-        /// </summary>
-        internal static string OctoberShort {
-            get {
-                return ResourceManager.GetString("OctoberShort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to OK.
         /// </summary>
         internal static string OK {
             get {
                 return ResourceManager.GetString("OK", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The request has timed out. Please check your network connection and try again..
-        /// </summary>
-        internal static string OperationTimeoutMessage {
-            get {
-                return ResourceManager.GetString("OperationTimeoutMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to (Optional).
-        /// </summary>
-        internal static string OptionalPlaceholder {
-            get {
-                return ResourceManager.GetString("OptionalPlaceholder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Other.
-        /// </summary>
-        internal static string Other {
-            get {
-                return ResourceManager.GetString("Other", resourceCulture);
             }
         }
         
@@ -1826,15 +169,6 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Overall Progress.
-        /// </summary>
-        internal static string OverallProgress {
-            get {
-                return ResourceManager.GetString("OverallProgress", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Password.
         /// </summary>
         internal static string Password {
@@ -1844,83 +178,11 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password change.
+        ///   Looks up a localized string similar to Habits.
         /// </summary>
-        internal static string PasswordChange {
+        internal static string Habits {
             get {
-                return ResourceManager.GetString("PasswordChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Incorrect password..
-        /// </summary>
-        internal static string PasswordIsIncorrect {
-            get {
-                return ResourceManager.GetString("PasswordIsIncorrect", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Performance rating (optional).
-        /// </summary>
-        internal static string Performance {
-            get {
-                return ResourceManager.GetString("Performance", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Principled.
-        /// </summary>
-        internal static string Principled {
-            get {
-                return ResourceManager.GetString("Principled", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Principles.
-        /// </summary>
-        internal static string Principles {
-            get {
-                return ResourceManager.GetString("Principles", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Priority.
-        /// </summary>
-        internal static string Priority {
-            get {
-                return ResourceManager.GetString("Priority", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Our privacy policy.
-        /// </summary>
-        internal static string PrivacyPolicy {
-            get {
-                return ResourceManager.GetString("PrivacyPolicy", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Privacy Policy.
-        /// </summary>
-        internal static string PrivacyPolicyStrInLoginAndSignupViews {
-            get {
-                return ResourceManager.GetString("PrivacyPolicyStrInLoginAndSignupViews", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Privacy Policy.
-        /// </summary>
-        internal static string PrivacyPolicyTitle {
-            get {
-                return ResourceManager.GetString("PrivacyPolicyTitle", resourceCulture);
+                return ResourceManager.GetString("Habits", resourceCulture);
             }
         }
         
@@ -1961,141 +223,6 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Question.
-        /// </summary>
-        internal static string Question {
-            get {
-                return ResourceManager.GetString("Question", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The question helps you to understand whether you have followed the habit on a particular day. For example, &quot;Did I do my best to exercise today, at least 15 minutes?&quot;.
-        /// </summary>
-        internal static string QuestionExplanation {
-            get {
-                return ResourceManager.GetString("QuestionExplanation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Rate performance.
-        /// </summary>
-        internal static string Rate {
-            get {
-                return ResourceManager.GetString("Rate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Recommended habits.
-        /// </summary>
-        internal static string RecommendedHabitsButton {
-            get {
-                return ResourceManager.GetString("RecommendedHabitsButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Recommended habits by AI.
-        /// </summary>
-        internal static string RecommendedHabitsByAi {
-            get {
-                return ResourceManager.GetString("RecommendedHabitsByAi", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Recommended habits are loaded.
-        /// </summary>
-        internal static string RecommendedHabitsSuccessfullyLoaded {
-            get {
-                return ResourceManager.GetString("RecommendedHabitsSuccessfullyLoaded", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Refresh charts.
-        /// </summary>
-        internal static string RefreshHabitCharts {
-            get {
-                return ResourceManager.GetString("RefreshHabitCharts", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Relationships.
-        /// </summary>
-        internal static string Relationships {
-            get {
-                return ResourceManager.GetString("Relationships", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Reminder.
-        /// </summary>
-        internal static string Reminder {
-            get {
-                return ResourceManager.GetString("Reminder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Description.
-        /// </summary>
-        internal static string ReminderDescription {
-            get {
-                return ResourceManager.GetString("ReminderDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to time to note what habits were accomplished yesterday and remind yourself of habits and goals.
-        /// </summary>
-        internal static string ReminderDescriptionText {
-            get {
-                return ResourceManager.GetString("ReminderDescriptionText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Title.
-        /// </summary>
-        internal static string ReminderTitle {
-            get {
-                return ResourceManager.GetString("ReminderTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Remember today&apos;s habits.
-        /// </summary>
-        internal static string ReminderTitleText {
-            get {
-                return ResourceManager.GetString("ReminderTitleText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Remove from archive.
-        /// </summary>
-        internal static string RemoveFromArchive {
-            get {
-                return ResourceManager.GetString("RemoveFromArchive", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Do you want to remove this habit from the archive?.
-        /// </summary>
-        internal static string RemoveHabitFromArchiveQuestion {
-            get {
-                return ResourceManager.GetString("RemoveHabitFromArchiveQuestion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to *Required.
         /// </summary>
         internal static string RequiredErrorText {
@@ -2114,110 +241,11 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Restore reminders.
-        /// </summary>
-        internal static string RestoreReminders {
-            get {
-                return ResourceManager.GetString("RestoreReminders", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Retry.
-        /// </summary>
-        internal static string Retry {
-            get {
-                return ResourceManager.GetString("Retry", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sat.
-        /// </summary>
-        internal static string Saturday {
-            get {
-                return ResourceManager.GetString("Saturday", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sat.
-        /// </summary>
-        internal static string SaturdayShort {
-            get {
-                return ResourceManager.GetString("SaturdayShort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Save.
-        /// </summary>
-        internal static string Save {
-            get {
-                return ResourceManager.GetString("Save", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to s.
-        /// </summary>
-        internal static string SecondsInShort {
-            get {
-                return ResourceManager.GetString("SecondsInShort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to I am an AI self-development assistant. You can ask me different questions. For example, &quot;How does my personality affect my life?&quot;.
-        /// </summary>
-        internal static string SelfDevelopmentAssistantShortDescription {
-            get {
-                return ResourceManager.GetString("SelfDevelopmentAssistantShortDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sep.
-        /// </summary>
-        internal static string SeptemberShort {
-            get {
-                return ResourceManager.GetString("SeptemberShort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Set the priorities with drag and drop.
-        /// </summary>
-        internal static string SetPriorityByDragAndDrop {
-            get {
-                return ResourceManager.GetString("SetPriorityByDragAndDrop", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         internal static string Settings {
             get {
                 return ResourceManager.GetString("Settings", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This section displays the habits you have archived. You can return to them whenever you are ready to work on them again..
-        /// </summary>
-        internal static string ShortDescriptionOfArchivedHabits {
-            get {
-                return ResourceManager.GetString("ShortDescriptionOfArchivedHabits", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Signing up.
-        /// </summary>
-        internal static string SigningUp {
-            get {
-                return ResourceManager.GetString("SigningUp", resourceCulture);
             }
         }
         
@@ -2231,119 +259,155 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to By clicking the &apos;Sign Up&apos; button, you agree to.
+        ///   Looks up a localized string similar to Signing up.
         /// </summary>
-        internal static string SignUpAgreementText {
+        internal static string SigningUp {
             get {
-                return ResourceManager.GetString("SignUpAgreementText", resourceCulture);
+                return ResourceManager.GetString("SigningUp", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sign up with email.
+        ///   Looks up a localized string similar to Name.
         /// </summary>
-        internal static string SignUpWithEmail {
+        internal static string UserName {
             get {
-                return ResourceManager.GetString("SignUpWithEmail", resourceCulture);
+                return ResourceManager.GetString("UserName", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Skip a day.
+        ///   Looks up a localized string similar to It will be used to create more appropriate recommended habits for you. A mission is a life goal that keeps you motivated and helps you make the best choices in a variety of situations. For example, a mission might be to become the best and most moral entrepreneur in the world..
         /// </summary>
-        internal static string SkipDay {
+        internal static string MissionExplanation {
             get {
-                return ResourceManager.GetString("SkipDay", resourceCulture);
+                return ResourceManager.GetString("MissionExplanation", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Something went wrong. You can write to support: app@principles.top.
+        ///   Looks up a localized string similar to The main slogan will be used to form better recommended habits. It helps you determine how to act when you don't want to do something or when you are faced with a challenge or temptation. An example of the main slogan: a relationship with God and a strong character determine the quality of life..
         /// </summary>
-        internal static string SmthWentWrong {
+        internal static string MainSloganExplanation {
             get {
-                return ResourceManager.GetString("SmthWentWrong", resourceCulture);
+                return ResourceManager.GetString("MainSloganExplanation", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sociality.
+        ///   Looks up a localized string similar to Vision.
         /// </summary>
-        internal static string Sociality {
+        internal static string Vision {
             get {
-                return ResourceManager.GetString("Sociality", resourceCulture);
+                return ResourceManager.GetString("Vision", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Something went wrong. We will try to fix this error.
+        ///   Looks up a localized string similar to Visualization.
         /// </summary>
-        internal static string SomethingWentWrong {
+        internal static string Visualization {
             get {
-                return ResourceManager.GetString("SomethingWentWrong", resourceCulture);
+                return ResourceManager.GetString("Visualization", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Something went wrong. Please use the &quot;Sign up with email&quot; or &quot;Log in&quot; option..
+        ///   Looks up a localized string similar to Visual.
         /// </summary>
-        internal static string SomethingWentWrongWhenUserAuthsUsingExternalService {
+        internal static string Visual {
             get {
-                return ResourceManager.GetString("SomethingWentWrongWhenUserAuthsUsingExternalService", resourceCulture);
+                return ResourceManager.GetString("Visual", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spirituality.
+        ///   Looks up a localized string similar to Woman.
         /// </summary>
-        internal static string Spirituality {
+        internal static string Woman {
             get {
-                return ResourceManager.GetString("Spirituality", resourceCulture);
+                return ResourceManager.GetString("Woman", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stability.
+        ///   Looks up a localized string similar to Your name successfully saved.
         /// </summary>
-        internal static string Stability {
+        internal static string YourNameSuccessfullySaved {
             get {
-                return ResourceManager.GetString("Stability", resourceCulture);
+                return ResourceManager.GetString("YourNameSuccessfullySaved", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Stability chart measures how consistently you maintain your habit without missing days. It highlights your overall adherence patterns, helping you see where you’re most reliable and where you might need extra focus. By tracking stability, you can celebrate steady progress, identify moments that challenge your routine, and build confidence in sustaining long‑term behavior change..
+        ///   Looks up a localized string similar to Your main slogan successfully saved.
         /// </summary>
-        internal static string StabilityExplanation {
+        internal static string YourMainSloganSuccessfullySaved {
             get {
-                return ResourceManager.GetString("StabilityExplanation", resourceCulture);
+                return ResourceManager.GetString("YourMainSloganSuccessfullySaved", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Success.
+        ///   Looks up a localized string similar to Your mission successfully saved.
         /// </summary>
-        internal static string Success {
+        internal static string YourMissionSuccessfullySaved {
             get {
-                return ResourceManager.GetString("Success", resourceCulture);
+                return ResourceManager.GetString("YourMissionSuccessfullySaved", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Text successfully copied.
+        ///   Looks up a localized string similar to Mon.
         /// </summary>
-        internal static string SuccessfulCopy {
+        internal static string MondayShort {
             get {
-                return ResourceManager.GetString("SuccessfulCopy", resourceCulture);
+                return ResourceManager.GetString("MondayShort", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sun.
+        ///   Looks up a localized string similar to Tue.
         /// </summary>
-        internal static string Sunday {
+        internal static string TuesdayShort {
             get {
-                return ResourceManager.GetString("Sunday", resourceCulture);
+                return ResourceManager.GetString("TuesdayShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wed.
+        /// </summary>
+        internal static string WednesdayShort {
+            get {
+                return ResourceManager.GetString("WednesdayShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thu.
+        /// </summary>
+        internal static string ThursdayShort {
+            get {
+                return ResourceManager.GetString("ThursdayShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fri.
+        /// </summary>
+        internal static string FridayShort {
+            get {
+                return ResourceManager.GetString("FridayShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sat.
+        /// </summary>
+        internal static string SaturdayShort {
+            get {
+                return ResourceManager.GetString("SaturdayShort", resourceCulture);
             }
         }
         
@@ -2357,7 +421,952 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The tab &quot;Data&quot;.
+        ///   Looks up a localized string similar to Habit.
+        /// </summary>
+        internal static string Habit {
+            get {
+                return ResourceManager.GetString("Habit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Areas of habit.
+        /// </summary>
+        internal static string AreasOfHabit {
+            get {
+                return ResourceManager.GetString("AreasOfHabit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How to keep.
+        /// </summary>
+        internal static string HowToKeep {
+            get {
+                return ResourceManager.GetString("HowToKeep", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data.
+        /// </summary>
+        internal static string Data {
+            get {
+                return ResourceManager.GetString("Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notes.
+        /// </summary>
+        internal static string Notes {
+            get {
+                return ResourceManager.GetString("Notes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use subhabits.
+        /// </summary>
+        internal static string UseSubhabits {
+            get {
+                return ResourceManager.GetString("UseSubhabits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        internal static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (Optional).
+        /// </summary>
+        internal static string OptionalPlaceholder {
+            get {
+                return ResourceManager.GetString("OptionalPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Question.
+        /// </summary>
+        internal static string Question {
+            get {
+                return ResourceManager.GetString("Question", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The question helps you to understand whether you have followed the habit on a particular day. For example, "Did I do my best to exercise today, at least 15 minutes?".
+        /// </summary>
+        internal static string QuestionExplanation {
+            get {
+                return ResourceManager.GetString("QuestionExplanation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        internal static string Type {
+            get {
+                return ResourceManager.GetString("Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No exceptions.
+        /// </summary>
+        internal static string WithoutExceptions {
+            get {
+                return ResourceManager.GetString("WithoutExceptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Flexible.
+        /// </summary>
+        internal static string IntegrallyWise {
+            get {
+                return ResourceManager.GetString("IntegrallyWise", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Frequency.
+        /// </summary>
+        internal static string Frequency {
+            get {
+                return ResourceManager.GetString("Frequency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reminder.
+        /// </summary>
+        internal static string Reminder {
+            get {
+                return ResourceManager.GetString("Reminder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Complexity (1 - 10).
+        /// </summary>
+        internal static string ComplexityWithRange {
+            get {
+                return ResourceManager.GetString("ComplexityWithRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Priority.
+        /// </summary>
+        internal static string Priority {
+            get {
+                return ResourceManager.GetString("Priority", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Every day.
+        /// </summary>
+        internal static string EveryDay {
+            get {
+                return ResourceManager.GetString("EveryDay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Every.
+        /// </summary>
+        internal static string Every {
+            get {
+                return ResourceManager.GetString("Every", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to days.
+        /// </summary>
+        internal static string days {
+            get {
+                return ResourceManager.GetString("days", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to time(-s) per.
+        /// </summary>
+        internal static string timesPer {
+            get {
+                return ResourceManager.GetString("timesPer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Week.
+        /// </summary>
+        internal static string Week {
+            get {
+                return ResourceManager.GetString("Week", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Month.
+        /// </summary>
+        internal static string Month {
+            get {
+                return ResourceManager.GetString("Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Year.
+        /// </summary>
+        internal static string Year {
+            get {
+                return ResourceManager.GetString("Year", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Every week.
+        /// </summary>
+        internal static string EveryWeek {
+            get {
+                return ResourceManager.GetString("EveryWeek", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Every month.
+        /// </summary>
+        internal static string EveryMonth {
+            get {
+                return ResourceManager.GetString("EveryMonth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Every year.
+        /// </summary>
+        internal static string EveryYear {
+            get {
+                return ResourceManager.GetString("EveryYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to It is impossible to parse.
+        /// </summary>
+        internal static string CannotParse {
+            get {
+                return ResourceManager.GetString("CannotParse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To integer.
+        /// </summary>
+        internal static string ToInteger {
+            get {
+                return ResourceManager.GetString("ToInteger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        internal static string Close {
+            get {
+                return ResourceManager.GetString("Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        internal static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is a habit type that a person adheres to strictly and never makes exceptions, even in emergency situations. For example, refusal to drink alcohol or tobacco, regardless of the circumstances..
+        /// </summary>
+        internal static string WithoutExceptionsHabitTypeShortDescription {
+            get {
+                return ResourceManager.GetString("WithoutExceptionsHabitTypeShortDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is a habit type that a person follows most of the time, but may make exceptions in special situations. For example, it may be the habit of telling the truth but being able to keep silent or deceive when it could cause serious harm to others..
+        /// </summary>
+        internal static string IntegrallyWiseHabitTypeShortDescription {
+            get {
+                return ResourceManager.GetString("IntegrallyWiseHabitTypeShortDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Once you delete, it's gone for good..
+        /// </summary>
+        internal static string MessageInDeleteHabitConfirm {
+            get {
+                return ResourceManager.GetString("MessageInDeleteHabitConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete habit?.
+        /// </summary>
+        internal static string DeleteHabitQuestion {
+            get {
+                return ResourceManager.GetString("DeleteHabitQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Once you delete, it's gone for good..
+        /// </summary>
+        internal static string MessageInDeleteGoalConfirm {
+            get {
+                return ResourceManager.GetString("MessageInDeleteGoalConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete goal?.
+        /// </summary>
+        internal static string DeleteGoalQuestion {
+            get {
+                return ResourceManager.GetString("DeleteGoalQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Once you delete, it's gone for good..
+        /// </summary>
+        internal static string MessageInDeleteAccountConfirm {
+            get {
+                return ResourceManager.GetString("MessageInDeleteAccountConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete account?.
+        /// </summary>
+        internal static string DeleteAccountQuestion {
+            get {
+                return ResourceManager.GetString("DeleteAccountQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you really want to log out of your account?.
+        /// </summary>
+        internal static string MessageInLogoutConfirm {
+            get {
+                return ResourceManager.GetString("MessageInLogoutConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logout?.
+        /// </summary>
+        internal static string LogoutQuestion {
+            get {
+                return ResourceManager.GetString("LogoutQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        internal static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        internal static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        internal static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Atomic Habits.
+        /// </summary>
+        internal static string AtomicHabits {
+            get {
+                return ResourceManager.GetString("AtomicHabits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Principles.
+        /// </summary>
+        internal static string Principles {
+            get {
+                return ResourceManager.GetString("Principles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete account.
+        /// </summary>
+        internal static string DeleteAccount {
+            get {
+                return ResourceManager.GetString("DeleteAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Field.
+        /// </summary>
+        internal static string Field {
+            get {
+                return ResourceManager.GetString("Field", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to is required.
+        /// </summary>
+        internal static string isRequired {
+            get {
+                return ResourceManager.GetString("isRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fix the errors first.
+        /// </summary>
+        internal static string FixErrorsFirst {
+            get {
+                return ResourceManager.GetString("FixErrorsFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AI-Helper.
+        /// </summary>
+        internal static string Helper {
+            get {
+                return ResourceManager.GetString("Helper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Helper SET.
+        /// </summary>
+        internal static string HelperName {
+            get {
+                return ResourceManager.GetString("HelperName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How can I help you?.
+        /// </summary>
+        internal static string HowCanIHelpYou {
+            get {
+                return ResourceManager.GetString("HowCanIHelpYou", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter text....
+        /// </summary>
+        internal static string EnterText {
+            get {
+                return ResourceManager.GetString("EnterText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Something went wrong. We will try to fix this error.
+        /// </summary>
+        internal static string SomethingWentWrong {
+            get {
+                return ResourceManager.GetString("SomethingWentWrong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recommended habits by AI.
+        /// </summary>
+        internal static string RecommendedHabitsByAi {
+            get {
+                return ResourceManager.GetString("RecommendedHabitsByAi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to load recommended habits based on your chosen areas, goal, mission and main slogan?.
+        /// </summary>
+        internal static string ConfirmMessageOnRecommededHabitsView {
+            get {
+                return ResourceManager.GetString("ConfirmMessageOnRecommededHabitsView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Based on areas, goal, mission and slogan.
+        /// </summary>
+        internal static string ConfirmTitleOnRecommendedHabitsView {
+            get {
+                return ResourceManager.GetString("ConfirmTitleOnRecommendedHabitsView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tap the AI-lamp to get recommended habits..
+        /// </summary>
+        internal static string DescriptionOfAiLampTap {
+            get {
+                return ResourceManager.GetString("DescriptionOfAiLampTap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If you don't want to wait, you can change the other fields for now..
+        /// </summary>
+        internal static string IfYouDontWantToWaitYouCanChangeOtherFields {
+            get {
+                return ResourceManager.GetString("IfYouDontWantToWaitYouCanChangeOtherFields", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to It is impossible to reload habits.
+        /// </summary>
+        internal static string CannotReloadHabits {
+            get {
+                return ResourceManager.GetString("CannotReloadHabits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recommended habits are loaded.
+        /// </summary>
+        internal static string RecommendedHabitsSuccessfullyLoaded {
+            get {
+                return ResourceManager.GetString("RecommendedHabitsSuccessfullyLoaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inspect.
+        /// </summary>
+        internal static string Inspect {
+            get {
+                return ResourceManager.GetString("Inspect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I am an AI self-development assistant. You can ask me different questions. For example, "How does my personality affect my life?".
+        /// </summary>
+        internal static string SelfDevelopmentAssistantShortDescription {
+            get {
+                return ResourceManager.GetString("SelfDevelopmentAssistantShortDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chat With AI-Helper.
+        /// </summary>
+        internal static string ChatWithHelper {
+            get {
+                return ResourceManager.GetString("ChatWithHelper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mission.
+        /// </summary>
+        internal static string Mission {
+            get {
+                return ResourceManager.GetString("Mission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your Mission.
+        /// </summary>
+        internal static string YourMission {
+            get {
+                return ResourceManager.GetString("YourMission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your Main Slogan.
+        /// </summary>
+        internal static string YourMainSlogan {
+            get {
+                return ResourceManager.GetString("YourMainSlogan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your Name.
+        /// </summary>
+        internal static string YourName {
+            get {
+                return ResourceManager.GetString("YourName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Correct.
+        /// </summary>
+        internal static string Correct {
+            get {
+                return ResourceManager.GetString("Correct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spirituality.
+        /// </summary>
+        internal static string Spirituality {
+            get {
+                return ResourceManager.GetString("Spirituality", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Character.
+        /// </summary>
+        internal static string Character {
+            get {
+                return ResourceManager.GetString("Character", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Health.
+        /// </summary>
+        internal static string Health {
+            get {
+                return ResourceManager.GetString("Health", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Career.
+        /// </summary>
+        internal static string Career {
+            get {
+                return ResourceManager.GetString("Career", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Family.
+        /// </summary>
+        internal static string Family {
+            get {
+                return ResourceManager.GetString("Family", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Relationships.
+        /// </summary>
+        internal static string Relationships {
+            get {
+                return ResourceManager.GetString("Relationships", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sociality.
+        /// </summary>
+        internal static string Sociality {
+            get {
+                return ResourceManager.GetString("Sociality", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mentality.
+        /// </summary>
+        internal static string Mentality {
+            get {
+                return ResourceManager.GetString("Mentality", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Other.
+        /// </summary>
+        internal static string Other {
+            get {
+                return ResourceManager.GetString("Other", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading....
+        /// </summary>
+        internal static string Loading {
+            get {
+                return ResourceManager.GetString("Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading content....
+        /// </summary>
+        internal static string LoadingContent {
+            get {
+                return ResourceManager.GetString("LoadingContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You don't have any habits yet.
+        /// </summary>
+        internal static string HabitCollectionIsEmptyDescription {
+            get {
+                return ResourceManager.GetString("HabitCollectionIsEmptyDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Appearance.
+        /// </summary>
+        internal static string Appearance {
+            get {
+                return ResourceManager.GetString("Appearance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tip: "start working on the current habit when you automate others". It will help you not to burn out and keep your other habits going..
+        /// </summary>
+        internal static string DescriptionOfAdviceNotToWorkOnNewHabit {
+            get {
+                return ResourceManager.GetString("DescriptionOfAdviceNotToWorkOnNewHabit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Too many non-automated habits.
+        /// </summary>
+        internal static string TitleOfAdviceNotToWorkOnNewHabit {
+            get {
+                return ResourceManager.GetString("TitleOfAdviceNotToWorkOnNewHabit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create it anyway.
+        /// </summary>
+        internal static string CreateItAnyway {
+            get {
+                return ResourceManager.GetString("CreateItAnyway", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set the priorities with drag and drop.
+        /// </summary>
+        internal static string SetPriorityByDragAndDrop {
+            get {
+                return ResourceManager.GetString("SetPriorityByDragAndDrop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Complexity can't be changed after creation of a habit.
+        /// </summary>
+        internal static string ComplexityCantBeChangedAfterCreationOfHabit {
+            get {
+                return ResourceManager.GetString("ComplexityCantBeChangedAfterCreationOfHabit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have sent the maximum number of messages in one chat.
+        /// </summary>
+        internal static string TooManyMessagesError {
+            get {
+                return ResourceManager.GetString("TooManyMessagesError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Our privacy policy.
+        /// </summary>
+        internal static string PrivacyPolicy {
+            get {
+                return ResourceManager.GetString("PrivacyPolicy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Privacy Policy.
+        /// </summary>
+        internal static string PrivacyPolicyTitle {
+            get {
+                return ResourceManager.GetString("PrivacyPolicyTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User agreement.
+        /// </summary>
+        internal static string UserAgreement {
+            get {
+                return ResourceManager.GetString("UserAgreement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Agreement.
+        /// </summary>
+        internal static string UserAgreementTitle {
+            get {
+                return ResourceManager.GetString("UserAgreementTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to By clicking the 'Log in' button, you agree to.
+        /// </summary>
+        internal static string LoginAgreementText {
+            get {
+                return ResourceManager.GetString("LoginAgreementText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to and.
+        /// </summary>
+        internal static string LoginSignUpAgreementСonnectingText {
+            get {
+                return ResourceManager.GetString("LoginSignUpAgreementСonnectingText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Agreement.
+        /// </summary>
+        internal static string UserAgreementStrInLoginAndSignupViews {
+            get {
+                return ResourceManager.GetString("UserAgreementStrInLoginAndSignupViews", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Privacy Policy.
+        /// </summary>
+        internal static string PrivacyPolicyStrInLoginAndSignupViews {
+            get {
+                return ResourceManager.GetString("PrivacyPolicyStrInLoginAndSignupViews", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to By clicking the 'Sign Up' button, you agree to.
+        /// </summary>
+        internal static string SignUpAgreementText {
+            get {
+                return ResourceManager.GetString("SignUpAgreementText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send an email to us.
+        /// </summary>
+        internal static string ContactEmail {
+            get {
+                return ResourceManager.GetString("ContactEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot open app to send an email. Maybe this program is not installed..
+        /// </summary>
+        internal static string MsgWhenCannotOpenAppToSendEmail {
+            get {
+                return ResourceManager.GetString("MsgWhenCannotOpenAppToSendEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        internal static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No internet connection..
+        /// </summary>
+        internal static string NoInternetConnection {
+            get {
+                return ResourceManager.GetString("NoInternetConnection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Retry.
+        /// </summary>
+        internal static string Retry {
+            get {
+                return ResourceManager.GetString("Retry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email or password is incorrect..
+        /// </summary>
+        internal static string EmailOrPasswordIsIncorrect {
+            get {
+                return ResourceManager.GetString("EmailOrPasswordIsIncorrect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You are not authorized..
+        /// </summary>
+        internal static string YouAreNotAuthorized {
+            get {
+                return ResourceManager.GetString("YouAreNotAuthorized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The tab "Data".
         /// </summary>
         internal static string TabData {
             get {
@@ -2366,7 +1375,7 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The tab &quot;How to keep&quot;.
+        ///   Looks up a localized string similar to The tab "How to keep".
         /// </summary>
         internal static string TabHowToKeep {
             get {
@@ -2375,29 +1384,990 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Target per one execution.
+        ///   Looks up a localized string similar to The field "Name".
         /// </summary>
-        internal static string TargetPerOneExecution {
+        internal static string FieldName {
             get {
-                return ResourceManager.GetString("TargetPerOneExecution", resourceCulture);
+                return ResourceManager.GetString("FieldName", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The habit is already automated.
+        ///   Looks up a localized string similar to Household chores.
         /// </summary>
-        internal static string TheHabitIsAlreadyAutomated {
+        internal static string HouseholdChores {
             get {
-                return ResourceManager.GetString("TheHabitIsAlreadyAutomated", resourceCulture);
+                return ResourceManager.GetString("HouseholdChores", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The habit successfully saved.
+        ///   Looks up a localized string similar to The user not found at the specified email address..
         /// </summary>
-        internal static string TheHabitSuccessfullySaved {
+        internal static string EmailIsIncorrect {
             get {
-                return ResourceManager.GetString("TheHabitSuccessfullySaved", resourceCulture);
+                return ResourceManager.GetString("EmailIsIncorrect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Incorrect password..
+        /// </summary>
+        internal static string PasswordIsIncorrect {
+            get {
+                return ResourceManager.GetString("PasswordIsIncorrect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A user with an identical email already exists. To register, please change specified email address..
+        /// </summary>
+        internal static string UserWithIdenticalEmailAlreadyExists {
+            get {
+                return ResourceManager.GetString("UserWithIdenticalEmailAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The user.
+        /// </summary>
+        internal static string TheUser {
+            get {
+                return ResourceManager.GetString("TheUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to With unknown name.
+        /// </summary>
+        internal static string WithUnknownName {
+            get {
+                return ResourceManager.GetString("WithUnknownName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is not found.
+        /// </summary>
+        internal static string IsNotFound {
+            get {
+                return ResourceManager.GetString("IsNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Forget password?.
+        /// </summary>
+        internal static string ForgetPasswordNavigation {
+            get {
+                return ResourceManager.GetString("ForgetPasswordNavigation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password Recovery.
+        /// </summary>
+        internal static string ForgetPasswordTitle {
+            get {
+                return ResourceManager.GetString("ForgetPasswordTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change password.
+        /// </summary>
+        internal static string ChangePasswordButton {
+            get {
+                return ResourceManager.GetString("ChangePasswordButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A confirmation code for password change has been sent to your email.
+        /// </summary>
+        internal static string ConfirmationPasswordChangeLabel {
+            get {
+                return ResourceManager.GetString("ConfirmationPasswordChangeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm.
+        /// </summary>
+        internal static string ConfirmPasswordChangeButton {
+            get {
+                return ResourceManager.GetString("ConfirmPasswordChangeButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You should fill email and password fields.
+        /// </summary>
+        internal static string EmailAndPasswordFieldsAreEmpty {
+            get {
+                return ResourceManager.GetString("EmailAndPasswordFieldsAreEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New password.
+        /// </summary>
+        internal static string NewPassword {
+            get {
+                return ResourceManager.GetString("NewPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wrong confirmation code!.
+        /// </summary>
+        internal static string WrongConfirmationCode {
+            get {
+                return ResourceManager.GetString("WrongConfirmationCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Success.
+        /// </summary>
+        internal static string Success {
+            get {
+                return ResourceManager.GetString("Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your password successfully changed..
+        /// </summary>
+        internal static string YourPasswordSuccessfullyChanged {
+            get {
+                return ResourceManager.GetString("YourPasswordSuccessfullyChanged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password must be 8-20 characters long and contain at least one lowercase letter and one digit..
+        /// </summary>
+        internal static string NewPasswordIsIncorrectError {
+            get {
+                return ResourceManager.GetString("NewPasswordIsIncorrectError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All areas of life.
+        /// </summary>
+        internal static string AllAreasOfLife {
+            get {
+                return ResourceManager.GetString("AllAreasOfLife", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recommended habits.
+        /// </summary>
+        internal static string RecommendedHabitsButton {
+            get {
+                return ResourceManager.GetString("RecommendedHabitsButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The request has timed out. Please check your network connection and try again..
+        /// </summary>
+        internal static string OperationTimeoutMessage {
+            get {
+                return ResourceManager.GetString("OperationTimeoutMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Goal.
+        /// </summary>
+        internal static string Goal {
+            get {
+                return ResourceManager.GetString("Goal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose a Goal.
+        /// </summary>
+        internal static string ChooseGoal {
+            get {
+                return ResourceManager.GetString("ChooseGoal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create new goal.
+        /// </summary>
+        internal static string CreateNewGoal {
+            get {
+                return ResourceManager.GetString("CreateNewGoal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Be.
+        /// </summary>
+        internal static string Be {
+            get {
+                return ResourceManager.GetString("Be", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recommendation: "Choose a goal that is concrete or based on your identity because it defines your life"..
+        /// </summary>
+        internal static string GoalLableRecommendation {
+            get {
+                return ResourceManager.GetString("GoalLableRecommendation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update chosen goal.
+        /// </summary>
+        internal static string UpdateGoal {
+            get {
+                return ResourceManager.GetString("UpdateGoal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Examples of goals aimed at your identity are: be an Olympic champion, be an athlete, be confident, be smoke free..
+        /// </summary>
+        internal static string GoalExamples {
+            get {
+                return ResourceManager.GetString("GoalExamples", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specify a name of habit and time or place of its implementation. This will increase the probability of compliance. Example: I pray as soon as I wake up..
+        /// </summary>
+        internal static string HabitNameRecommendation {
+            get {
+                return ResourceManager.GetString("HabitNameRecommendation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to load data..
+        /// </summary>
+        internal static string UnableToLoadData {
+            get {
+                return ResourceManager.GetString("UnableToLoadData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to *No goal specified.
+        /// </summary>
+        internal static string NoGoalSpecified {
+            get {
+                return ResourceManager.GetString("NoGoalSpecified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Continue with Google.
+        /// </summary>
+        internal static string ContinueWithGoogle {
+            get {
+                return ResourceManager.GetString("ContinueWithGoogle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Continue with Apple.
+        /// </summary>
+        internal static string ContinueWithApple {
+            get {
+                return ResourceManager.GetString("ContinueWithApple", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sign up with email.
+        /// </summary>
+        internal static string SignUpWithEmail {
+            get {
+                return ResourceManager.GetString("SignUpWithEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log in with email.
+        /// </summary>
+        internal static string LogInWithEmail {
+            get {
+                return ResourceManager.GetString("LogInWithEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Improve lagging areas of life.
+        /// </summary>
+        internal static string TransformAreasOfLifeTitle {
+            get {
+                return ResourceManager.GetString("TransformAreasOfLifeTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set goals correctly and build your habits..
+        /// </summary>
+        internal static string TransformAreasOfLifeDescription {
+            get {
+                return ResourceManager.GetString("TransformAreasOfLifeDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Constant progress.
+        /// </summary>
+        internal static string GroupHabitsByGoalsTitle {
+            get {
+                return ResourceManager.GetString("GroupHabitsByGoalsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Systematise the achievement of your goals by grouping your habits by goal..
+        /// </summary>
+        internal static string GroupHabitsByGoalsDescription {
+            get {
+                return ResourceManager.GetString("GroupHabitsByGoalsDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recommendations.
+        /// </summary>
+        internal static string GetRecommendationsByAITitle {
+            get {
+                return ResourceManager.GetString("GetRecommendationsByAITitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Generate recommendations based on your mission, goals etc..
+        /// </summary>
+        internal static string GetRecommendationsByAIDescription {
+            get {
+                return ResourceManager.GetString("GetRecommendationsByAIDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chat with helper.
+        /// </summary>
+        internal static string ChatWithHelperTitle {
+            get {
+                return ResourceManager.GetString("ChatWithHelperTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get answers to various questions from an assistant who will take into account your mission, habits etc..
+        /// </summary>
+        internal static string ChatWithHelperDescription {
+            get {
+                return ResourceManager.GetString("ChatWithHelperDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Become a real personality.
+        /// </summary>
+        internal static string BecomeTruePersonalityTitle {
+            get {
+                return ResourceManager.GetString("BecomeTruePersonalityTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set goals that focus on your identity. Let's go!.
+        /// </summary>
+        internal static string BecomeTruePersonalityDescription {
+            get {
+                return ResourceManager.GetString("BecomeTruePersonalityDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not yet implemented..
+        /// </summary>
+        internal static string NotYetImplemented {
+            get {
+                return ResourceManager.GetString("NotYetImplemented", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Coming Soon.
+        /// </summary>
+        internal static string ComingSoon {
+            get {
+                return ResourceManager.GetString("ComingSoon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New features and improvements are on the way!.
+        /// </summary>
+        internal static string ComingSoonMessage {
+            get {
+                return ResourceManager.GetString("ComingSoonMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You do not have a password because you signed up with Google. You need to use Google to sign in or change your password using "Forget password?" option..
+        /// </summary>
+        internal static string YouDontHavePassword {
+            get {
+                return ResourceManager.GetString("YouDontHavePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Internal server error. We will try to fix it as soon as possible!.
+        /// </summary>
+        internal static string InternalServerError {
+            get {
+                return ResourceManager.GetString("InternalServerError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update Available.
+        /// </summary>
+        internal static string AppUpdateAvailable {
+            get {
+                return ResourceManager.GetString("AppUpdateAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go to App Store.
+        /// </summary>
+        internal static string GoToAppStore {
+            get {
+                return ResourceManager.GetString("GoToAppStore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go to Google Play.
+        /// </summary>
+        internal static string GoToGooglePlay {
+            get {
+                return ResourceManager.GetString("GoToGooglePlay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        internal static string Update {
+            get {
+                return ResourceManager.GetString("Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        internal static string AppUpdateCloseButton {
+            get {
+                return ResourceManager.GetString("AppUpdateCloseButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Don't remind me of it again.
+        /// </summary>
+        internal static string DontShowUpdateCheckBoxText {
+            get {
+                return ResourceManager.GetString("DontShowUpdateCheckBoxText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The AI-assistant knows your habits, goals, mission, gender, and slogan. So you can ask anything about them. For example, “What should I set as my next goal?” Note that it can sometimes make mistakes. Check important information!.
+        /// </summary>
+        internal static string HelperWarning {
+            get {
+                return ResourceManager.GetString("HelperWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        internal static string Add {
+            get {
+                return ResourceManager.GetString("Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        internal static string ReminderTitle {
+            get {
+                return ResourceManager.GetString("ReminderTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        internal static string ReminderDescription {
+            get {
+                return ResourceManager.GetString("ReminderDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remember today's habits.
+        /// </summary>
+        internal static string ReminderTitleText {
+            get {
+                return ResourceManager.GetString("ReminderTitleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to time to note what habits were accomplished yesterday and remind yourself of habits and goals.
+        /// </summary>
+        internal static string ReminderDescriptionText {
+            get {
+                return ResourceManager.GetString("ReminderDescriptionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time.
+        /// </summary>
+        internal static string Time {
+            get {
+                return ResourceManager.GetString("Time", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable.
+        /// </summary>
+        internal static string Enable {
+            get {
+                return ResourceManager.GetString("Enable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You don't have any reminders for this habit yet.
+        /// </summary>
+        internal static string EmptyReminders {
+            get {
+                return ResourceManager.GetString("EmptyReminders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mon.
+        /// </summary>
+        internal static string Monday {
+            get {
+                return ResourceManager.GetString("Monday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tue.
+        /// </summary>
+        internal static string Tuesday {
+            get {
+                return ResourceManager.GetString("Tuesday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wed.
+        /// </summary>
+        internal static string Wednesday {
+            get {
+                return ResourceManager.GetString("Wednesday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thu.
+        /// </summary>
+        internal static string Thursday {
+            get {
+                return ResourceManager.GetString("Thursday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fri.
+        /// </summary>
+        internal static string Friday {
+            get {
+                return ResourceManager.GetString("Friday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sat.
+        /// </summary>
+        internal static string Saturday {
+            get {
+                return ResourceManager.GetString("Saturday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sun.
+        /// </summary>
+        internal static string Sunday {
+            get {
+                return ResourceManager.GetString("Sunday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oops.. It looks like your operating system doesn't support notifications. Please try updating it..
+        /// </summary>
+        internal static string DeviceDoesNotSupportNotifications {
+            get {
+                return ResourceManager.GetString("DeviceDoesNotSupportNotifications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        internal static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        internal static string Description {
+            get {
+                return ResourceManager.GetString("Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your account has motivating reminders. They can be restore on your device..
+        /// </summary>
+        internal static string AfterLoginWhenUserAccountHaveReminders {
+            get {
+                return ResourceManager.GetString("AfterLoginWhenUserAccountHaveReminders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restore reminders.
+        /// </summary>
+        internal static string RestoreReminders {
+            get {
+                return ResourceManager.GetString("RestoreReminders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Habit goal.
+        /// </summary>
+        internal static string HabitGoal {
+            get {
+                return ResourceManager.GetString("HabitGoal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose a Habit Goal.
+        /// </summary>
+        internal static string ChooseHabitGoal {
+            get {
+                return ResourceManager.GetString("ChooseHabitGoal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to is the maximum value.
+        /// </summary>
+        internal static string IsMaxValue {
+            get {
+                return ResourceManager.GetString("IsMaxValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        internal static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete the habit.
+        /// </summary>
+        internal static string DeleteTheHabit {
+            get {
+                return ResourceManager.GetString("DeleteTheHabit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Something went wrong. You can write to support: app@principles.top.
+        /// </summary>
+        internal static string SmthWentWrong {
+            get {
+                return ResourceManager.GetString("SmthWentWrong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Currently Apple authentication is only supported on iOS 13.0 or higher.
+        /// </summary>
+        internal static string AppleAuthIsNotSupportedForCurrentDevice {
+            get {
+                return ResourceManager.GetString("AppleAuthIsNotSupportedForCurrentDevice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Join our Telegram channel.
+        /// </summary>
+        internal static string JoinOurTelegram {
+            get {
+                return ResourceManager.GetString("JoinOurTelegram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Try again in.
+        /// </summary>
+        internal static string TryAgain {
+            get {
+                return ResourceManager.GetString("TryAgain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to s.
+        /// </summary>
+        internal static string SecondsInShort {
+            get {
+                return ResourceManager.GetString("SecondsInShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Something went wrong. Please use the "Sign up with email" or "Log in" option..
+        /// </summary>
+        internal static string SomethingWentWrongWhenUserAuthsUsingExternalService {
+            get {
+                return ResourceManager.GetString("SomethingWentWrongWhenUserAuthsUsingExternalService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid email or password..
+        /// </summary>
+        internal static string InvalidEmailOrPassword {
+            get {
+                return ResourceManager.GetString("InvalidEmailOrPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occurred.
+        /// </summary>
+        internal static string ErrorOccurred {
+            get {
+                return ResourceManager.GetString("ErrorOccurred", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change language.
+        /// </summary>
+        internal static string ChangeLanguage {
+            get {
+                return ResourceManager.GetString("ChangeLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose language.
+        /// </summary>
+        internal static string ChooseLanguage {
+            get {
+                return ResourceManager.GetString("ChooseLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This field is not editable..
+        /// </summary>
+        internal static string FieldIsNotEditable {
+            get {
+                return ResourceManager.GetString("FieldIsNotEditable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text successfully copied.
+        /// </summary>
+        internal static string SuccessfulCopy {
+            get {
+                return ResourceManager.GetString("SuccessfulCopy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Archive.
+        /// </summary>
+        internal static string Archive {
+            get {
+                return ResourceManager.GetString("Archive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To archive.
+        /// </summary>
+        internal static string AddToArchive {
+            get {
+                return ResourceManager.GetString("AddToArchive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose action.
+        /// </summary>
+        internal static string ChooseAction {
+            get {
+                return ResourceManager.GetString("ChooseAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove from archive.
+        /// </summary>
+        internal static string RemoveFromArchive {
+            get {
+                return ResourceManager.GetString("RemoveFromArchive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You are in the process of deleting a habit. Please choose one of the suggested actions..
+        /// </summary>
+        internal static string DeleteArchivedHabitConfirmationText {
+            get {
+                return ResourceManager.GetString("DeleteArchivedHabitConfirmationText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to remove this habit from the archive?.
+        /// </summary>
+        internal static string RemoveHabitFromArchiveQuestion {
+            get {
+                return ResourceManager.GetString("RemoveHabitFromArchiveQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This action will restore the habit to your active list..
+        /// </summary>
+        internal static string MessageRemoveHabitFromArchive {
+            get {
+                return ResourceManager.GetString("MessageRemoveHabitFromArchive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to archive this habit?.
+        /// </summary>
+        internal static string AddHabitToArchiveQuestion {
+            get {
+                return ResourceManager.GetString("AddHabitToArchiveQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This action will move the habit to the archive. You can resume working on it later..
+        /// </summary>
+        internal static string MessageAddHabitToArchive {
+            get {
+                return ResourceManager.GetString("MessageAddHabitToArchive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This section displays the habits you have archived. You can return to them whenever you are ready to work on them again..
+        /// </summary>
+        internal static string ShortDescriptionOfArchivedHabits {
+            get {
+                return ResourceManager.GetString("ShortDescriptionOfArchivedHabits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your habit will be archived, and you can always return it to the main list..
+        /// </summary>
+        internal static string HabitArchivingInfo {
+            get {
+                return ResourceManager.GetString("HabitArchivingInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add the habit to archive.
+        /// </summary>
+        internal static string ArchiveHabit {
+            get {
+                return ResourceManager.GetString("ArchiveHabit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove the habit from archieve.
+        /// </summary>
+        internal static string UnarchiveHabit {
+            get {
+                return ResourceManager.GetString("UnarchiveHabit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Why do you need an archive?
+        ///✅ Plan habits you want to add or change in the future.
+        ///🔁 Analyze reasons - which habits worked and which ones were too complicated or irrelevant.
+        ///🌱 Try again - sometimes it's good to go back to an old habit by changing the difficulty or approach. For example, train in the morning instead of the evening.
+        ///
+        ///⸻
+        ///
+        ///Tip: before creating a new habit, look at the archive - maybe something similar has already happened, and now you know how to do it better..
+        /// </summary>
+        internal static string FullDescriptionOfArchivedHabits {
+            get {
+                return ResourceManager.GetString("FullDescriptionOfArchivedHabits", resourceCulture);
             }
         }
         
@@ -2420,92 +2390,29 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There are still.
+        ///   Looks up a localized string similar to Change password.
         /// </summary>
-        internal static string ThereAreStill {
+        internal static string ChangePassword {
             get {
-                return ResourceManager.GetString("ThereAreStill", resourceCulture);
+                return ResourceManager.GetString("ChangePassword", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The user.
+        ///   Looks up a localized string similar to Password change.
         /// </summary>
-        internal static string TheUser {
+        internal static string PasswordChange {
             get {
-                return ResourceManager.GetString("TheUser", resourceCulture);
+                return ResourceManager.GetString("PasswordChange", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Thu.
+        ///   Looks up a localized string similar to Completed days.
         /// </summary>
-        internal static string Thursday {
+        internal static string CompletedDays {
             get {
-                return ResourceManager.GetString("Thursday", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Thu.
-        /// </summary>
-        internal static string ThursdayShort {
-            get {
-                return ResourceManager.GetString("ThursdayShort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Time.
-        /// </summary>
-        internal static string Time {
-            get {
-                return ResourceManager.GetString("Time", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to time(-s) per.
-        /// </summary>
-        internal static string timesPer {
-            get {
-                return ResourceManager.GetString("timesPer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Title.
-        /// </summary>
-        internal static string Title {
-            get {
-                return ResourceManager.GetString("Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Too many non-automated habits.
-        /// </summary>
-        internal static string TitleOfAdviceNotToWorkOnNewHabit {
-            get {
-                return ResourceManager.GetString("TitleOfAdviceNotToWorkOnNewHabit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to To integer.
-        /// </summary>
-        internal static string ToInteger {
-            get {
-                return ResourceManager.GetString("ToInteger", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You have sent the maximum number of messages in one chat.
-        /// </summary>
-        internal static string TooManyMessagesError {
-            get {
-                return ResourceManager.GetString("TooManyMessagesError", resourceCulture);
+                return ResourceManager.GetString("CompletedDays", resourceCulture);
             }
         }
         
@@ -2528,74 +2435,113 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Set goals correctly and build your habits..
+        ///   Looks up a localized string similar to The Stability chart measures how consistently you maintain your habit without missing days. It highlights your overall adherence patterns, helping you see where you’re most reliable and where you might need extra focus. By tracking stability, you can celebrate steady progress, identify moments that challenge your routine, and build confidence in sustaining long‑term behavior change..
         /// </summary>
-        internal static string TransformAreasOfLifeDescription {
+        internal static string StabilityExplanation {
             get {
-                return ResourceManager.GetString("TransformAreasOfLifeDescription", resourceCulture);
+                return ResourceManager.GetString("StabilityExplanation", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Improve lagging areas of life.
+        ///   Looks up a localized string similar to Overall Progress.
         /// </summary>
-        internal static string TransformAreasOfLifeTitle {
+        internal static string OverallProgress {
             get {
-                return ResourceManager.GetString("TransformAreasOfLifeTitle", resourceCulture);
+                return ResourceManager.GetString("OverallProgress", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Try again in.
+        ///   Looks up a localized string similar to Stability.
         /// </summary>
-        internal static string TryAgain {
+        internal static string Stability {
             get {
-                return ResourceManager.GetString("TryAgain", resourceCulture);
+                return ResourceManager.GetString("Stability", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tue.
+        ///   Looks up a localized string similar to Days completed.
         /// </summary>
-        internal static string Tuesday {
+        internal static string DaysCount {
             get {
-                return ResourceManager.GetString("Tuesday", resourceCulture);
+                return ResourceManager.GetString("DaysCount", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tue.
+        ///   Looks up a localized string similar to Habit by dayweeks.
         /// </summary>
-        internal static string TuesdayShort {
+        internal static string HabitByDayweeks {
             get {
-                return ResourceManager.GetString("TuesdayShort", resourceCulture);
+                return ResourceManager.GetString("HabitByDayweeks", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Type.
+        ///   Looks up a localized string similar to The Habit by Day of the Week chart shows how often you complete your habit on each day. It helps you spot which days you're most consistent and which ones tend to be missed. By understanding these patterns, you can adjust your routine, address weak spots, and create a more balanced and sustainable habit rhythm throughout the week..
         /// </summary>
-        internal static string Type {
+        internal static string HabitByDayweeksExplanation {
             get {
-                return ResourceManager.GetString("Type", resourceCulture);
+                return ResourceManager.GetString("HabitByDayweeksExplanation", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unable to load data..
+        ///   Looks up a localized string similar to The execution of habits by day is displayed:
+        ///- Blue - habit completed;
+        ///- Cyan - it is not necessary to follow the habit.
+        ///You can change the status with a press..
         /// </summary>
-        internal static string UnableToLoadData {
+        internal static string CalendarInfoExplanation {
             get {
-                return ResourceManager.GetString("UnableToLoadData", resourceCulture);
+                return ResourceManager.GetString("CalendarInfoExplanation", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remove the habit from archieve.
+        ///   Looks up a localized string similar to Calendar.
         /// </summary>
-        internal static string UnarchiveHabit {
+        internal static string Calendar {
             get {
-                return ResourceManager.GetString("UnarchiveHabit", resourceCulture);
+                return ResourceManager.GetString("Calendar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Longest streak.
+        /// </summary>
+        internal static string LongestStreak {
+            get {
+                return ResourceManager.GetString("LongestStreak", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can't mark a habit as done for future days.
+        /// </summary>
+        internal static string YouCannotCompleteHabitInTheFuture {
+            get {
+                return ResourceManager.GetString("YouCannotCompleteHabitInTheFuture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The habit was not created before this date.
+        /// </summary>
+        internal static string HabitWasntCreatedBeforeThisDay {
+            get {
+                return ResourceManager.GetString("HabitWasntCreatedBeforeThisDay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refresh charts.
+        /// </summary>
+        internal static string RefreshHabitCharts {
+            get {
+                return ResourceManager.GetString("RefreshHabitCharts", resourceCulture);
             }
         }
         
@@ -2609,173 +2555,128 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update.
+        ///   Looks up a localized string similar to Jan.
         /// </summary>
-        internal static string Update {
+        internal static string JanuaryShort {
             get {
-                return ResourceManager.GetString("Update", resourceCulture);
+                return ResourceManager.GetString("JanuaryShort", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update chosen goal.
+        ///   Looks up a localized string similar to Feb.
         /// </summary>
-        internal static string UpdateGoal {
+        internal static string FebruaryShort {
             get {
-                return ResourceManager.GetString("UpdateGoal", resourceCulture);
+                return ResourceManager.GetString("FebruaryShort", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User agreement.
+        ///   Looks up a localized string similar to Mar.
         /// </summary>
-        internal static string UserAgreement {
+        internal static string MarchShort {
             get {
-                return ResourceManager.GetString("UserAgreement", resourceCulture);
+                return ResourceManager.GetString("MarchShort", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User Agreement.
+        ///   Looks up a localized string similar to Apr.
         /// </summary>
-        internal static string UserAgreementStrInLoginAndSignupViews {
+        internal static string AprilShort {
             get {
-                return ResourceManager.GetString("UserAgreementStrInLoginAndSignupViews", resourceCulture);
+                return ResourceManager.GetString("AprilShort", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User Agreement.
+        ///   Looks up a localized string similar to May.
         /// </summary>
-        internal static string UserAgreementTitle {
+        internal static string MayShort {
             get {
-                return ResourceManager.GetString("UserAgreementTitle", resourceCulture);
+                return ResourceManager.GetString("MayShort", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name.
+        ///   Looks up a localized string similar to Number of executions.
         /// </summary>
-        internal static string UserName {
+        internal static string NumberOfExecution {
             get {
-                return ResourceManager.GetString("UserName", resourceCulture);
+                return ResourceManager.GetString("NumberOfExecution", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A user with an identical email already exists. To register, please change specified email address..
+        ///   Looks up a localized string similar to The habit successfully saved.
         /// </summary>
-        internal static string UserWithIdenticalEmailAlreadyExists {
+        internal static string TheHabitSuccessfullySaved {
             get {
-                return ResourceManager.GetString("UserWithIdenticalEmailAlreadyExists", resourceCulture);
+                return ResourceManager.GetString("TheHabitSuccessfullySaved", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use subhabits.
+        ///   Looks up a localized string similar to Jun.
         /// </summary>
-        internal static string UseSubhabits {
+        internal static string JuneShort {
             get {
-                return ResourceManager.GetString("UseSubhabits", resourceCulture);
+                return ResourceManager.GetString("JuneShort", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vision.
+        ///   Looks up a localized string similar to Jul.
         /// </summary>
-        internal static string Vision {
+        internal static string JulyShort {
             get {
-                return ResourceManager.GetString("Vision", resourceCulture);
+                return ResourceManager.GetString("JulyShort", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Visual.
+        ///   Looks up a localized string similar to Aug.
         /// </summary>
-        internal static string Visual {
+        internal static string AugustShort {
             get {
-                return ResourceManager.GetString("Visual", resourceCulture);
+                return ResourceManager.GetString("AugustShort", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Visualization.
+        ///   Looks up a localized string similar to Sep.
         /// </summary>
-        internal static string Visualization {
+        internal static string SeptemberShort {
             get {
-                return ResourceManager.GetString("Visualization", resourceCulture);
+                return ResourceManager.GetString("SeptemberShort", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wed.
+        ///   Looks up a localized string similar to Oct.
         /// </summary>
-        internal static string Wednesday {
+        internal static string OctoberShort {
             get {
-                return ResourceManager.GetString("Wednesday", resourceCulture);
+                return ResourceManager.GetString("OctoberShort", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wed.
+        ///   Looks up a localized string similar to Nov.
         /// </summary>
-        internal static string WednesdayShort {
+        internal static string NovemberShort {
             get {
-                return ResourceManager.GetString("WednesdayShort", resourceCulture);
+                return ResourceManager.GetString("NovemberShort", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Week.
+        ///   Looks up a localized string similar to Dec.
         /// </summary>
-        internal static string Week {
+        internal static string DecemberShort {
             get {
-                return ResourceManager.GetString("Week", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This is a habit type that a person adheres to strictly and never makes exceptions, even in emergency situations. For example, refusal to drink alcohol or tobacco, regardless of the circumstances..
-        /// </summary>
-        internal static string WithoutExceptionsHabitTypeShortDescription {
-            get {
-                return ResourceManager.GetString("WithoutExceptionsHabitTypeShortDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to With unknown name.
-        /// </summary>
-        internal static string WithUnknownName {
-            get {
-                return ResourceManager.GetString("WithUnknownName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Woman.
-        /// </summary>
-        internal static string Woman {
-            get {
-                return ResourceManager.GetString("Woman", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Wrong confirmation code!.
-        /// </summary>
-        internal static string WrongConfirmationCode {
-            get {
-                return ResourceManager.GetString("WrongConfirmationCode", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Year.
-        /// </summary>
-        internal static string Year {
-            get {
-                return ResourceManager.GetString("Year", resourceCulture);
+                return ResourceManager.GetString("DecemberShort", resourceCulture);
             }
         }
         
@@ -2789,146 +2690,200 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Yes.
+        ///   Looks up a localized string similar to The interface language has been successfully changed.
         /// </summary>
-        internal static string Yes {
+        internal static string InterfaceLanguageSuccessfullyChanged {
             get {
-                return ResourceManager.GetString("Yes", resourceCulture);
+                return ResourceManager.GetString("InterfaceLanguageSuccessfullyChanged", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Yes or No.
+        ///   Looks up a localized string similar to Habit automation requires regular performance for.
         /// </summary>
-        internal static string YesOrNo {
+        internal static string HabitAutomationExplanation {
             get {
-                return ResourceManager.GetString("YesOrNo", resourceCulture);
+                return ResourceManager.GetString("HabitAutomationExplanation", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Do / skip an action on a specific day.
+        ///   Looks up a localized string similar to Just.
         /// </summary>
-        internal static string YesOrNoDescription {
+        internal static string Just {
             get {
-                return ResourceManager.GetString("YesOrNoDescription", resourceCulture);
+                return ResourceManager.GetString("Just", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Examples: Exercise, Get up by 7:00 A.M.
+        ///   Looks up a localized string similar to days to go until your habit becomes fully automatic.
         /// </summary>
-        internal static string YesOrNoExample {
+        internal static string daysToGoUntilHabitAutomatic {
             get {
-                return ResourceManager.GetString("YesOrNoExample", resourceCulture);
+                return ResourceManager.GetString("daysToGoUntilHabitAutomatic", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Yes or No with rate.
+        ///   Looks up a localized string similar to There are still.
         /// </summary>
-        internal static string YesOrNoWithRate {
+        internal static string ThereAreStill {
             get {
-                return ResourceManager.GetString("YesOrNoWithRate", resourceCulture);
+                return ResourceManager.GetString("ThereAreStill", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Same, but measures habit effectiveness when completed.
+        ///   Looks up a localized string similar to How difficult is it to stick to the habit in terms of effort, time and self-control.
         /// </summary>
-        internal static string YesOrNoWithRateDescription {
+        internal static string ComplexityInfoText {
             get {
-                return ResourceManager.GetString("YesOrNoWithRateDescription", resourceCulture);
+                return ResourceManager.GetString("ComplexityInfoText", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You are not authorized..
+        ///   Looks up a localized string similar to The habit is already automated.
         /// </summary>
-        internal static string YouAreNotAuthorized {
+        internal static string TheHabitIsAlreadyAutomated {
             get {
-                return ResourceManager.GetString("YouAreNotAuthorized", resourceCulture);
+                return ResourceManager.GetString("TheHabitIsAlreadyAutomated", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You can&apos;t mark a habit as done for future days.
+        ///   Looks up a localized string similar to We have added advertising so that Principles remains free for everyone. This will allow us to develop the app even faster. Thank you for being with us!.
         /// </summary>
-        internal static string YouCannotCompleteHabitInTheFuture {
+        internal static string DescriptionWhyWeAppendedAds {
             get {
-                return ResourceManager.GetString("YouCannotCompleteHabitInTheFuture", resourceCulture);
+                return ResourceManager.GetString("DescriptionWhyWeAppendedAds", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You do not have a password because you signed up with Google. You need to use Google to sign in or change your password using &quot;Forget password?&quot; option..
+        ///   Looks up a localized string similar to Message.
         /// </summary>
-        internal static string YouDontHavePassword {
+        internal static string Message {
             get {
-                return ResourceManager.GetString("YouDontHavePassword", resourceCulture);
+                return ResourceManager.GetString("Message", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your Main Slogan.
+        ///   Looks up a localized string similar to You are welcome.
         /// </summary>
-        internal static string YourMainSlogan {
+        internal static string YouAreWelcome {
             get {
-                return ResourceManager.GetString("YourMainSlogan", resourceCulture);
+                return ResourceManager.GetString("YouAreWelcome", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your main slogan successfully saved.
+        ///   Looks up a localized string similar to Enable intrusive ads.
         /// </summary>
-        internal static string YourMainSloganSuccessfullySaved {
+        internal static string EnableIntrusiveAds {
             get {
-                return ResourceManager.GetString("YourMainSloganSuccessfullySaved", resourceCulture);
+                return ResourceManager.GetString("EnableIntrusiveAds", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your Mission.
+        ///   Looks up a localized string similar to Disable intrusive ads.
         /// </summary>
-        internal static string YourMission {
+        internal static string DisableIntrusiveAds {
             get {
-                return ResourceManager.GetString("YourMission", resourceCulture);
+                return ResourceManager.GetString("DisableIntrusiveAds", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your mission successfully saved.
+        ///   Looks up a localized string similar to Warning.
         /// </summary>
-        internal static string YourMissionSuccessfullySaved {
+        internal static string Warning {
             get {
-                return ResourceManager.GetString("YourMissionSuccessfullySaved", resourceCulture);
+                return ResourceManager.GetString("Warning", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your Name.
+        ///   Looks up a localized string similar to Thank you for supporting and developing our app! You are the best!.
         /// </summary>
-        internal static string YourName {
+        internal static string DescriptionOfAdsEnabling {
             get {
-                return ResourceManager.GetString("YourName", resourceCulture);
+                return ResourceManager.GetString("DescriptionOfAdsEnabling", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your name successfully saved.
+        ///   Looks up a localized string similar to This will disable intrusive ads and impair the support and development of the app. Are you sure you want to do this?.
         /// </summary>
-        internal static string YourNameSuccessfullySaved {
+        internal static string DisablingAdsDescription {
             get {
-                return ResourceManager.GetString("YourNameSuccessfullySaved", resourceCulture);
+                return ResourceManager.GetString("DisablingAdsDescription", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your password successfully changed..
+        ///   Looks up a localized string similar to Shows how many days in a row you've opened the app and completed your habits. Missing even one day resets the streak..
         /// </summary>
-        internal static string YourPasswordSuccessfullyChanged {
+        internal static string HabitStreakExplanation {
             get {
-                return ResourceManager.GetString("YourPasswordSuccessfullyChanged", resourceCulture);
+                return ResourceManager.GetString("HabitStreakExplanation", resourceCulture);
+            }
+        }
+        
+        internal static string AboutProgram {
+            get {
+                return ResourceManager.GetString("AboutProgram", resourceCulture);
+            }
+        }
+        
+        internal static string Ahead {
+            get {
+                return ResourceManager.GetString("Ahead", resourceCulture);
+            }
+        }
+        
+        internal static string LetsStartNow {
+            get {
+                return ResourceManager.GetString("LetsStartNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The habit is archived..
+        /// </summary>
+        internal static string TheHabitIsArchived {
+            get {
+                return ResourceManager.GetString("TheHabitIsArchived", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The habit is unarchived..
+        /// </summary>
+        internal static string TheHabitIsUnarchived {
+            get {
+                return ResourceManager.GetString("TheHabitIsUnarchived", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Technical work on our server is in progress. Please try again later..
+        /// </summary>
+        internal static string ServerTechnicalWorkIsInProgress {
+            get {
+                return ResourceManager.GetString("ServerTechnicalWorkIsInProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sign in with Apple is unavailable. Please sign in to iCloud and try again..
+        /// </summary>
+        internal static string AppleAuthUnavailableOnDevice {
+            get {
+                return ResourceManager.GetString("AppleAuthUnavailableOnDevice", resourceCulture);
             }
         }
 
@@ -2957,6 +2912,24 @@ namespace Principles.Resources.AppStrings {
         internal static string SkipValue {
             get {
                 return ResourceManager.GetString("SkipValue", resourceCulture);
+            }
+        }
+
+         /// <summary>
+        ///   Looks up a localized string similar to Max
+        /// </summary>
+        internal static string Max {
+            get {
+                return ResourceManager.GetString("Max", resourceCulture);
+            }
+        }
+
+         /// <summary>
+        ///   Looks up a localized string similar to Min
+        /// </summary>
+        internal static string Min {
+            get {
+                return ResourceManager.GetString("Min", resourceCulture);
             }
         }
 

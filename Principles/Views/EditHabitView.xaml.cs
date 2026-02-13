@@ -1,9 +1,6 @@
-
 using DevExpress.Maui.Controls;
 using DevExpress.Maui.Core;
 using DevExpress.Maui.Editors;
-
-using Plugin.LocalNotification;
 
 namespace Principles.Views;
 
@@ -42,12 +39,21 @@ public partial class EditHabitView : ContentPageBase
     {
         base.OnAppearing();
         m_deviceOrientationService.LockOrientation( DeviceOrientation.Portrait );
+
+        //fix scroll for tabs
+#if IOS
+        Microsoft.Maui.Platform.KeyboardAutoManagerScroll.Disconnect();
+#endif
     }
 
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
         m_deviceOrientationService.UnlockOrientation();
+
+#if IOS
+        Microsoft.Maui.Platform.KeyboardAutoManagerScroll.Connect();
+#endif
     }
 
     private void ViewModel_HabitPropertyChanged( object? sender, PropertyChangedEventArgs e )
@@ -289,31 +295,6 @@ public partial class EditHabitView : ContentPageBase
         );
     }
 
-    void TE_AreasOfLife_EndIconClicked( System.Object sender, System.EventArgs e )
-    {
-        TE_AreasOfLife.IsDropDownOpen = !TE_AreasOfLife.IsDropDownOpen;
-    }
-
-    void TE_AreasOfLife_SelectionChanged( object sender, EventArgs e )
-    {
-        TE_AreasOfLife.Text = string.Empty;
-        TE_AreasOfLife.IsLabelFloating = TE_AreasOfLife.SelectedItems?.Count == 0;
-
-        m_doExecuteReloadOfRecommendedHabits = true;
-    }
-
-    private void TE_AreasOfLife_Tap( object sender, HandledEventArgs e )
-    {
-        try
-        {
-            TE_AreasOfLife.IsDropDownOpen = !TE_AreasOfLife.IsDropDownOpen;
-        }
-        catch (Exception ex)
-        {
-            ViewModel.LoggingService.LogError( ex, ex.Message );
-        }
-    }
-
     void RepeatsOfSeveralDays_Focused( System.Object sender, Microsoft.Maui.Controls.FocusEventArgs e )
     {
         if (e.IsFocused)
@@ -473,11 +454,6 @@ public partial class EditHabitView : ContentPageBase
             L_TitleText.MaximumWidthRequest = titleLabelWidth;
 #endif
         }
-    }
-
-    void TGR_AreasOfHabit_Tapped( System.Object sender, Microsoft.Maui.Controls.TappedEventArgs e )
-    {
-        TE_AreasOfLife.IsDropDownOpen = !TE_AreasOfLife.IsDropDownOpen;
     }
 
     private void OnCheckEditChangedInFrequencyPopup( object sender, EventArgs e )
@@ -733,14 +709,14 @@ public partial class EditHabitView : ContentPageBase
             EditedUserHabitReminder reminder = ViewModel.EditedReminder;
             if (string.IsNullOrWhiteSpace( reminder.Title ))
             {
-                if (ViewModel.Habit.Goal.Name is not null)
+                if (ViewModel.Habit.Goal?.Name is not null)
                 {
                     ME_ReminderTitle.Text = ViewModel.Habit.Goal.Name;
                 }
                 else
                 {
                     string mission = ViewModel.CachingService.GetStoredValue( CacheKeys.USER_MISSION );
-                    ME_ReminderTitle.Text = string.IsNullOrWhiteSpace( mission )
+                    ME_ReminderTitle.Text = string.IsNullOrWhiteSpace( mission ) || mission.Length > 35
                         ? LocStrings.BecomeTruePersonalityTitle
                         : mission;
                 }
@@ -825,17 +801,6 @@ public partial class EditHabitView : ContentPageBase
     private void SB_Reminder_Cancel_Clicked( object sender, EventArgs e )
     {
         BS_EditReminder.State = BottomSheetState.Hidden;
-    }
-
-    private void AISP_AreasRequested( object? sender, ItemsRequestEventArgs e )
-    {
-        e.Request = () =>
-        {
-            return string.IsNullOrWhiteSpace( TE_AreasOfLife.Text )
-                ? ViewModel.AllUserAreasOfLife
-                : ViewModel.AllUserAreasOfLife.Where( a =>
-                    a.Name!.StartsWith( TE_AreasOfLife.Text, StringComparison.CurrentCultureIgnoreCase ) ).ToList();
-        };
     }
 
     private void GoalsBottomSheet_OnStateChanged( object? sender, ValueChangedEventArgs<BottomSheetState> e )
@@ -928,7 +893,7 @@ public partial class EditHabitView : ContentPageBase
         ViewModel.ChangeTypeOfHabitInfo(TypeOfHabit.Principled);
         
         await ChooseProgressMarkVariatyAsync();
-        ViewModel.InitializeAsync();
+        await ViewModel.InitializeAsyncCommand.ExecuteAsync(null);
 
     }
 
@@ -938,11 +903,11 @@ public partial class EditHabitView : ContentPageBase
         ViewModel.ChangeTypeOfHabitInfo(TypeOfHabit.Flexible);
         
         await ChooseProgressMarkVariatyAsync();
-        ViewModel.InitializeAsync();
+        await ViewModel.InitializeAsyncCommand.ExecuteAsync(null);
         
     }
 
-    private void MindTypeTapped(object sender, EventArgs eventArgs)
+    private async void MindTypeTapped(object sender, EventArgs eventArgs)
     {
         ViewModel.Habit.Type = TypeOfHabit.Mind;
         ViewModel.Habit.ProgressMarkVariaty = ProgressMarkVariaty.Numeric;
@@ -951,10 +916,6 @@ public partial class EditHabitView : ContentPageBase
         ViewModel.Habit.MaxRate = 10;
         ViewModel.Habit.TargetPerOneTime = 0;
 
-        Snackbar.Make(
-                LocStrings.MindInfo,
-                visualOptions: SnackbarHelper.DefaultOptions()
-            ).Show();
-        
+        await ViewModel.TipService.ShowSnackbarAsync(LocStrings.MindInfo);
     }
 }

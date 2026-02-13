@@ -1,19 +1,19 @@
 ﻿
 using Serilog.Events;
 using Serilog;
-using Microsoft.Extensions.DependencyInjection;
-using System.Net.Http;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Maui.Handlers;
-using DevExpress.Maui.Editors;
-using Microsoft.Maui;
-using SkiaSharp.Views.Maui.Controls.Hosting;
-using DevExpress.Maui.Editors.Internal;
 
 using System.Reflection;
+
+using SkiaSharp.Views.Maui.Controls.Hosting;
 using LiveChartsCore.SkiaSharpView.Maui;
-using LiveChartsCore;
-using LiveChartsCore.SkiaSharpView;
+using Plugin.AdMob;
+using Microsoft.Maui.LifecycleEvents;
+using DIPS.Mobile.UI.API.Builder;
+using DIPS.Mobile.UI.API.Library;
+
 
 #if IOS
 using Microsoft.Maui.Platform;
@@ -29,13 +29,18 @@ public static class MauiProgram
     public static MauiApp CreateMauiApp()
     {
         MauiAppBuilder builder = MauiApp.CreateBuilder();
-         
-        SetupSerilog();
 
+        SetupSerilog();
+    
         builder
             .UseMauiApp<App>()
+            .UseAdMob(
+                androidDefaultInterstitialAdUnitId: "ca-app-pub-6307192789973793/7567835848",
+                iosDefaultInterstitialAdUnitId: "ca-app-pub-6307192789973793/6132315308",
+                automaticallyAskForConsent: false )
             .UseSkiaSharp()
             .UseLiveCharts()
+            .UseDIPSUI()
             .UseDevExpressControls()
             .UseDevExpressEditors()
             .UseDevExpressCollectionView()
@@ -44,11 +49,10 @@ public static class MauiProgram
             .UseLocalNotification()
             .UseMauiCommunityToolkit()
             .UseMauiCommunityToolkitMarkup()
-            .UseContextMenu()
-            .ConfigureEssentials(essentials =>
+            .ConfigureEssentials( essentials =>
             {
                 essentials.UseVersionTracking();
-            })
+            } )
             .ConfigureFonts( fonts =>
             {
                 fonts.AddFont( "FontAwesome6FreeBrands.otf", "FontAwesomeBrands" );
@@ -71,6 +75,30 @@ public static class MauiProgram
             .RegisterViewModels()
             .RegisterViews();
 
+#if DEBUG || LOCALDEBUG
+        DUI.IsDebug = true;
+#endif
+
+#if IOS
+        //Force Light theme on iOS
+        builder.ConfigureLifecycleEvents( events =>
+        {
+            events.AddiOS( ios =>
+            {
+                ios.SceneWillConnect( ( scene, session, options ) =>
+                {
+                    if (scene is UIWindowScene windowScene)
+                    {
+                        foreach (UIWindow window in windowScene.Windows)
+                        {
+                            window.OverrideUserInterfaceStyle = UIUserInterfaceStyle.Light;
+                        }
+                    }
+                } );
+            } );
+        } );
+#endif
+
         var assembly = Assembly.GetExecutingAssembly();
 
         //TODO: replace appsettings.json and implementation of the config to Principles.Core project
@@ -90,8 +118,6 @@ public static class MauiProgram
             builder.Configuration.AddConfiguration( configuration );
             builder.Services.AddSingleton<IConfiguration>( configuration );
         }
-
-        AllowMultiLineTruncation();
         
 #if IOS
         //hide Done button above keyboard for Editor control
@@ -109,12 +135,15 @@ public static class MauiProgram
 
     public static IServiceCollection RegisterMauiServices( this IServiceCollection services )
     {
+        services.AddSingleton<ICachingService, CachingService>();
         services.AddSingleton<ISettingsService, SettingsService>();
         services.AddSingleton<INavigationService, MauiNavigationService>();
         services.AddSingleton<IDialogService, DialogService>();
         services.AddSingleton<ILaunchUriHelper, LaunchUriHelper>();
         services.AddSingleton<IReminderService, ReminderService>();
         services.AddSingleton<ITipService, TipService>();
+        services.AddSingleton<IAdService, AdService>();
+        services.AddSingleton<IAppOpenTrackerService, AppOpenTrackerService>();
 
         return services;
     }
@@ -130,10 +159,9 @@ public static class MauiProgram
         services.AddSingleton<ProfileViewModel>();
         services.AddSingleton<ForgetPasswordViewModel>();
         services.AddSingleton<StartupViewModel>();
-        services.AddSingleton<MultipleActionPopupViewModel>();
         services.AddSingleton<ChangePasswordViewModel>();
-        services.AddSingleton<ConfirmEmailPopupViewModel>();
         services.AddSingleton<HabitDetailViewModel>();
+        services.AddSingleton<AppBenefitsViewModel>();
 
         return services;
     }
@@ -151,6 +179,12 @@ public static class MauiProgram
         services.AddTransient<StartupView>();
         services.AddTransient<HabitDetailView>();
         services.AddTransient<ChangePasswordView>();
+        services.AddTransient<AppBenefitsView>();
+        
+        services.AddTransientPopup<MultipleActionPopup, MultipleActionPopupViewModel>();
+        services.AddTransientPopup<UpdatePopup, UpdatePopupViewModel>();
+        services.AddTransientPopup<ConfirmEmailPopup, ConfirmEmailPopupViewModel>();
+        services.AddTransientPopup<HabitPopup, HabitPopupViewModel>();
 
         return services;
     }
@@ -181,9 +215,7 @@ public static class MauiProgram
         string? stackTrace = null;
         if (logEvent.Exception is not null)
         {
-            string exception = logEvent.Exception.ToString();
-            int indexOfFirstNewLine = exception.IndexOf( Environment.NewLine, StringComparison.Ordinal );
-            stackTrace = exception.Substring( indexOfFirstNewLine );
+            stackTrace = logEvent.Exception.ToString();
         }
 
         SaveLogRequest result = new(
@@ -199,35 +231,4 @@ public static class MauiProgram
         return result;
     }
 #endif
-
-    private static void AllowMultiLineTruncation()
-    {
-        static void UpdateMaxLines( ILabelHandler handler, ILabel label )
-        {
-#if ANDROID
-            AppCompatTextView textView = handler.PlatformView;
-
-            if (label is Label controlsLabel
-                && textView.Ellipsize == Android.Text.TextUtils.TruncateAt.End
-                && controlsLabel.MaxLines != -1)
-            {
-                textView.SetMaxLines( controlsLabel.MaxLines );
-            }
-#elif IOS
-            MauiLabel textView = handler.PlatformView;
-            if( label is Label controlsLabel
-                && textView.LineBreakMode == UILineBreakMode.TailTruncation
-                && controlsLabel.MaxLines != -1 )
-            {
-              textView.Lines = controlsLabel.MaxLines;
-            }  
-#endif
-        }
-        
-        LabelHandler.Mapper.AppendToMapping(
-           nameof( Label.LineBreakMode ), UpdateMaxLines );
-
-        LabelHandler.Mapper.AppendToMapping(
-          nameof( Label.MaxLines ), UpdateMaxLines );
-    }
 }

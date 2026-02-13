@@ -2,30 +2,79 @@
 
 public class DialogService : IDialogService
 {
-    private readonly ILoggingService m_loggingService;
-
-    public DialogService( ILoggingService loggingService )
-    {
-        m_loggingService = loggingService;
-    }
+    public bool IsPopupOpen { get; private set; }
 
     public Task ShowAlertAsync( string msg, string title, string buttonLabel )
     {
-        return Shell.Current.DisplayAlert( title, msg, buttonLabel );
+        return Shell.Current.DisplayAlertAsync( title, msg, buttonLabel );
     }
 
     public Task ShowErrorAsync( string msg )
     {
-        return Shell.Current.DisplayAlert( title: LocStrings.Error, msg, cancel: LocStrings.OK );
+        return Shell.Current.DisplayAlertAsync( title: LocStrings.Error, msg, cancel: LocStrings.OK );
     }
 
     public Task<bool> ShowAlertWithTwoBtnsAsync( string msg, string title, string accept, string cancel )
     {
-        return Shell.Current.DisplayAlert( title, msg, accept, cancel );
+        return Shell.Current.DisplayAlertAsync( title, msg, accept, cancel );
     }
 
     public Task<bool> ShowConfirmAsync( string msg, string title )
     {
-        return Shell.Current.DisplayAlert( title, msg, LocStrings.Yes, LocStrings.No );
+        return Shell.Current.DisplayAlertAsync( title, msg, LocStrings.Yes, LocStrings.No );
+    }
+
+    public Task<IPopupResult> ShowPopupAsync<TPopupViewModel>(
+        IDictionary<string, object>? parameters = null, 
+        PopupOptions options = null
+    ) where TPopupViewModel : BaseViewModel
+    {
+        IPopupService popupService = ServiceLocator.Current.GetRequiredService<IPopupService>();
+        options ??= new()
+        {
+            Shape = null,
+            CanBeDismissedByTappingOutsideOfPopup = true
+        };
+        
+        //to not trigger HandleDisappearingOfPageAsync of current page
+        IsPopupOpen = true;
+        return popupService.ShowPopupAsync<TPopupViewModel>( Shell.Current, options, parameters );
+    }
+
+    public Task<IPopupResult<TResult>> ShowPopupAsync<TPopupViewModel, TResult>(
+        IDictionary<string, object>? parameters = null, 
+        PopupOptions options = null
+    ) where TPopupViewModel : BaseViewModel
+    {
+        IPopupService popupService = ServiceLocator.Current.GetRequiredService<IPopupService>();
+        options ??= new()
+        {
+            Shape = null,
+            CanBeDismissedByTappingOutsideOfPopup = true
+        };
+
+        //to not trigger HandleDisappearingOfPageAsync of current page
+        IsPopupOpen = true;
+
+        return popupService.ShowPopupAsync<TPopupViewModel, TResult>( Shell.Current, options, parameters );
+    }
+
+    public async Task ClosePopupAsync()
+    {
+        IPopupService popupService = ServiceLocator.Current.GetRequiredService<IPopupService>();
+        
+        await popupService.ClosePopupAsync(Shell.Current);
+
+        //to trigger HandlePageAppearingAsync of next pages
+        IsPopupOpen = false;
+    }
+
+    public async Task ClosePopupAsync<TResult>(TResult result)
+    {
+        IPopupService popupService = ServiceLocator.Current.GetRequiredService<IPopupService>();
+        await popupService.ClosePopupAsync(Shell.Current, result);
+
+        //to trigger HandlePageAppearingAsync of next pages
+        IsPopupOpen = false;
     }
 }
