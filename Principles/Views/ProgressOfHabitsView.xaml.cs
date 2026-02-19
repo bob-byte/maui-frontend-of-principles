@@ -25,6 +25,9 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
     private Timer? m_newDayEventTimer;
 
+    public ICommand SortByGoalCommand { get; }
+    public ICommand SortByHabitTypeCommand { get; }
+
 #if IOS
     private TimeZoneChangeObserver? m_timeZoneChangeObserver;
 #elif ANDROID
@@ -37,6 +40,9 @@ public partial class ProgressOfHabitsView : ContentPageBase
         ViewModel = viewModel;
 
         InitializeComponent();
+
+        SortByGoalCommand = new Command(SortByGoal);
+        SortByHabitTypeCommand = new Command(SortByHabitType);
 
         if (ViewModel.SettingsService.IsAdsEnabled)
         {
@@ -684,7 +690,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
             vm.AddHabitCommand.Execute( parameter );
         }
     }
-    private void SortByGoal_Clicked( object sender, EventArgs e )
+    private void SortByGoal()
     {
         DGV_Habits.BeginUpdate();
 
@@ -697,7 +703,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
         DGV_Habits.EndUpdate();
     }
 
-    private void SortByHabitType_Clicked( object sender, EventArgs e )
+    private void SortByHabitType()
     {
         DGV_Habits.BeginUpdate();
 
@@ -709,6 +715,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
         DGV_Habits.EndUpdate();
     }
+
     public void ShowPrincipleInfo( object sender, EventArgs e )
     {
         Snackbar.Make(

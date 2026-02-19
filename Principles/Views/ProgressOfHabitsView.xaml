@@ -86,15 +86,21 @@
                         WidthRequest="35">
                 <dui:ContextMenuEffect.Menu>
                     <dui:ContextMenu>
-                        <dui:ContextMenuGroup Title="Архів">
-                            <dui:ContextMenuItem Title="Архів"
+                        <dui:ContextMenuGroup Title="{Binding LocManager[Arhive]}">
+                            <dui:ContextMenuItem Title="{Binding LocManager[Arhive]}"
                                                  x:DataType="v:ProgressOfHabitsView"
                                                  Command="{Binding ShowArchivedHabitsCommand, Source={x:Reference CPB_Page}}" />
                         </dui:ContextMenuGroup>
-                        <!-- <dui:ContextMenuItem Title="Групувати за метою"
-                                             Clicked="SortByGoal_Clicked" />
-                        <dui:ContextMenuItem Title="Групувати за типом звички"
-                                             Clicked="SortByHabitType_Clicked" /> -->
+                            <dui:ContextMenuItem
+                                Title="{Binding LocManager[SortByGoal]}"
+                                x:DataType="v:ProgressOfHabitsView"
+                                Command="{Binding SortByGoalCommand, Source={x:Reference CPB_Page}}" />
+
+                            <dui:ContextMenuItem
+                                Title="{Binding LocManager[SortByType]}"
+                                x:DataType="v:ProgressOfHabitsView"
+                                Command="{Binding SortByHabitTypeCommand, Source={x:Reference CPB_Page}}" />
+
                     </dui:ContextMenu>
                 </dui:ContextMenuEffect.Menu>
             </dx:DXImage>

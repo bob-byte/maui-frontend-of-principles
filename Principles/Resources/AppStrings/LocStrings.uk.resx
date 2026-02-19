@@ -1144,4 +1144,10 @@
   <data name="timesPer" xml:space="preserve">
     <value>рази(-ів) на</value>
   </data>
+    <data name="SortByType" xml:space="preserve">
+    <value>сортувати за типом</value>
+  </data>
+  <data name="SortByGoal" xml:space="preserve">
+    <value>сортувати за метою</value>
+  </data>
 </root>

@@ -6,7 +6,7 @@ using CommunityToolkit.Maui.Markup;
 using Microsoft.Maui.Controls;
 
 namespace Principles.ViewModels;
-public partial class HabitPopupViewModel : BaseViewModel
+public partial class HabitProgressPopupViewModel : BaseViewModel
 {
     public UserHabit Habit { get; private set; }
     public DateTime Day { get; }
@@ -39,7 +39,7 @@ public partial class HabitPopupViewModel : BaseViewModel
             OnPropertyChanged( nameof( ValuePercent ) );
         }
     }
-    public HabitPopupViewModel( IServiceProvider serviceProvider )
+    public HabitProgressPopupViewModel( IServiceProvider serviceProvider )
         : base( serviceProvider )
     {
         
@@ -49,10 +49,10 @@ public partial class HabitPopupViewModel : BaseViewModel
     {
         await base.InitializePopupAsync( query );
         
-        if ( query.TryGetValue( "habit", out object? habitObj ) && habitObj is UserHabit habit )
+        if ( query.TryGetValue( "Habit", out object? habitObj ) && habitObj is UserHabit habit && query.TryGetValue( "Habit", out object? progerssObj ) && progerssObj is ProgressOfHabit progress )
         {
             Habit = habit;
-            Value = (int)habit.TargetPerOneTime;
+            Value = progress.Value;
         }
     }
 

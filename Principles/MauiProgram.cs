@@ -184,7 +184,7 @@ public static class MauiProgram
         services.AddTransientPopup<MultipleActionPopup, MultipleActionPopupViewModel>();
         services.AddTransientPopup<UpdatePopup, UpdatePopupViewModel>();
         services.AddTransientPopup<ConfirmEmailPopup, ConfirmEmailPopupViewModel>();
-        services.AddTransientPopup<HabitPopup, HabitPopupViewModel>();
+        services.AddTransientPopup<HabitProgressPopup, HabitProgressPopupViewModel>();
 
         return services;
     }

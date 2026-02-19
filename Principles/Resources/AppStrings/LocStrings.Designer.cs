@@ -2968,5 +2968,23 @@ namespace Principles.Resources.AppStrings {
                 return ResourceManager.GetString("DefaultProgress", resourceCulture);
             }
         }
+
+         /// <summary>
+        ///   SortByType
+        /// </summary>
+        internal static string SortByType {
+            get {
+                return ResourceManager.GetString("SortByType", resourceCulture);
+            }
+        }
+
+         /// <summary>
+        ///   SortByGroup
+        /// </summary>
+        internal static string SortByGroup {
+            get {
+                return ResourceManager.GetString("SortByGroup", resourceCulture);
+            }
+        }
     }
 }

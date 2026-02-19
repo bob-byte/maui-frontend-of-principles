@@ -954,9 +954,10 @@ public partial class HabitDetailViewModel : BaseViewModel
         {
             Dictionary<string, object> parameters = new()
             {
-                {"ProgressOfHabit", progressOfHabit}
+                {"ProgressOfHabit", progressOfHabit},
+                {"Habit", Habit}
             };
-            await DialogService.ShowPopupAsync<HabitPopupViewModel>(parameters);
+            await DialogService.ShowPopupAsync<HabitProgressPopupViewModel>(parameters);
         }
     }
 }

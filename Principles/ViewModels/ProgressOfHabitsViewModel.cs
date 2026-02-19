@@ -20,7 +20,6 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
 
     [ObservableProperty]
     private UserHabit? m_selectedHabit;
-
     [ObservableProperty]
     private DateOnly m_startProgressInterval;
 
@@ -713,8 +712,9 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     {
         Dictionary<string, object> parameters = new()
         {
-            {"ProgressOfHabit", progress}
+            {"ProgressOfHabit", progress},
+            {"Habit", progress.Habit}
         };
-        await DialogService.ShowPopupAsync<HabitPopupViewModel>(parameters);
+        await DialogService.ShowPopupAsync<HabitProgressPopupViewModel>(parameters);
     }
 }

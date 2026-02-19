@@ -1144,4 +1144,10 @@ Tip: before creating a new habit, look at the archive - maybe something similar 
   <data name="timesPer" xml:space="preserve">
     <value>time(-s) per</value>
   </data>
+  <data name="SortByType" xml:space="preserve">
+    <value>sort by type</value>
+  </data>
+  <data name="SortByGoal" xml:space="preserve">
+    <value>sort by goal</value>
+  </data>
 </root>

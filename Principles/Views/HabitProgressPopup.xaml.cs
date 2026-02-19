@@ -2,11 +2,11 @@ using CommunityToolkit.Maui.Views;
 
 namespace Principles.Views;
 
-public partial class HabitPopup : Popup
+public partial class HabitProgressPopup : Popup
 {
-    public HabitPopupViewModel ViewModel { get; }
+    public HabitProgressPopupViewModel ViewModel { get; }
     
-    public HabitPopup( HabitPopupViewModel viewModel )
+    public HabitProgressPopup( HabitProgressPopupViewModel viewModel )
     {        
         InitializeComponent();
 
