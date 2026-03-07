@@ -41,6 +41,11 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
         InitializeComponent();
 
+        if(ViewModel.IsInitialized)
+        {
+            InitDayChangeObserver();
+        }
+
         SortByGoalCommand = new Command(SortByGoal);
         SortByHabitTypeCommand = new Command(SortByHabitType);
 
@@ -125,38 +130,44 @@ public partial class ProgressOfHabitsView : ContentPageBase
     ~ProgressOfHabitsView()
     {
 #if IOS
-
         m_timeZoneChangeObserver?.StopObservingTimeZoneChanges();
 #elif ANDROID
         m_timeZoneChangeReceiver?.Dispose();
 #endif
+
+        m_newDayEventTimer?.Dispose();
     }
 
     private ProgressOfHabitsViewModel ViewModel { get; }
 
     private void ViewModel_PropertyChanged( object? sender, PropertyChangedEventArgs e )
     {
-        if (e.PropertyName == nameof( ViewModel.IsInitialized ) && ViewModel.IsInitialized && m_newDayEventTimer is null)
+        if (e.PropertyName == nameof( ViewModel.IsInitialized ) && ViewModel.IsInitialized)
         {
-            TimeSpan timeUntilMidnight = TimeUntilMidnight();
-            TimeSpan period = TimeSpan.FromHours( 24 );
-            m_newDayEventTimer = new Timer( TryAddNewDayColumn, state: null, dueTime: timeUntilMidnight, period );
+            InitDayChangeObserver();
+        }
+    }
+
+    private void InitDayChangeObserver()
+    {
+        TimeSpan timeUntilMidnight = TimeUntilMidnight();
+        TimeSpan period = TimeSpan.FromHours( 24 );
+        m_newDayEventTimer = new Timer( TryAddNewDayColumn, state: null, dueTime: timeUntilMidnight, period );
 
 #if IOS
-            m_timeZoneChangeObserver = new TimeZoneChangeObserver();
-            m_timeZoneChangeObserver.StartObservingTimeZoneChanges( ( notification ) =>
-            {
-                TimeSpan timeUntilMidnight = TimeUntilMidnight();
-                m_newDayEventTimer!.Change( timeUntilMidnight, period );
-            } );
+        m_timeZoneChangeObserver = new TimeZoneChangeObserver();
+        m_timeZoneChangeObserver.StartObservingTimeZoneChanges( ( notification ) =>
+        {
+            TimeSpan timeUntilMidnight = TimeUntilMidnight();
+            m_newDayEventTimer!.Change( timeUntilMidnight, period );
+        } );
 #elif ANDROID
-            m_timeZoneChangeReceiver = new TimeZoneChangedReceiver( ( context, intent ) =>
-            {
-                TimeSpan timeUntilMidnight = TimeUntilMidnight();
-                m_newDayEventTimer!.Change( timeUntilMidnight, period );
-            } );
+        m_timeZoneChangeReceiver = new TimeZoneChangedReceiver( ( context, intent ) =>
+        {
+            TimeSpan timeUntilMidnight = TimeUntilMidnight();
+            m_newDayEventTimer!.Change( timeUntilMidnight, period );
+        } );
 #endif
-        }
     }
 
     private async void TryAddNewDayColumn( object? state )
