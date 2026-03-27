@@ -208,7 +208,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
                 {
                     await InitUserInfoAsync();
 
-                    List<UserHabit> habits = await ServiceOfHabit.ActiveHabitsAsync( StartProgressInterval, EndProgressInterval );
+                    List<UserHabit> habits = await ServiceOfHabit.ActiveHabitsAsync();
 
                     foreach (UserHabit habit in habits)
                     {
