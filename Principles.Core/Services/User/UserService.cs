@@ -2,9 +2,7 @@ using System;
 
 namespace Principles.Core.Services;
 
-
 public class UserService : BaseEntityService<User>, IUserService
-
 {
     public UserService( IServiceProvider serviceProvider ) : base( serviceProvider )
     {
@@ -27,46 +25,58 @@ public class UserService : BaseEntityService<User>, IUserService
 
     public Task SaveUserNameAsync( string userName )
     {
+        var saveRequest = new { UserName = userName };
         return LocalRemoteExecutor.ExecuteAsync<User>(
             localCall: async () =>
             {
+                // TODO: just save user name without loading user, because we don't need 
+                // other user data here. But for that we need to implement partial update 
+                // in database.
                 User user = await GetCurrentUserAsync().ConfigureAwait( false );
                 user.Name = userName;
                 await Database.SaveAsync( user ).ConfigureAwait( false );
             },
             remoteCall: () => RemoteApi.SaveUserNameAsync( userName ),
             operation: OperationKind.Save,
-            data: userName
+            data: saveRequest
         );
     }
 
     public Task SaveMainSloganAsync( string mainSlogan )
     {
+        var saveRequest = new { MainSlogan = mainSlogan };
         return LocalRemoteExecutor.ExecuteAsync<User>(
             localCall: async () =>
             {
+                // TODO: just save main slogan without loading user, because we don't need 
+                // other user data here. But for that we need to implement partial update 
+                // in database.
                 User user = await GetCurrentUserAsync().ConfigureAwait( false );
                 user.MainSlogan = mainSlogan;
                 await Database.SaveAsync( user ).ConfigureAwait( false );
             },
             remoteCall: () => RemoteApi.SaveMainSloganAsync( mainSlogan ),
             operation: OperationKind.Save,
-            data: mainSlogan
+            data: saveRequest
         );
     }
 
     public Task SaveMissionAsync( string mission )
     {
+        var saveRequest = new { Mission = mission };
         return LocalRemoteExecutor.ExecuteAsync<User>(
             localCall: async () =>
             {
+                // TODO: just save mission without loading user, because we don't need 
+                // other user data here. But for that we need to implement partial update 
+                // in database.
                 User user = await GetCurrentUserAsync().ConfigureAwait( false );
                 user.Mission = mission;
                 await Database.SaveAsync( user ).ConfigureAwait( false );
             },
             remoteCall: () => RemoteApi.SaveMissionAsync( mission ),
             operation: OperationKind.Save,
-            data: mission
+            data: saveRequest
         );
     }
 
