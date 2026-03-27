@@ -24,6 +24,9 @@ public class LocalRemoteExecutor : ILocalRemoteExecutor
 
         if (m_networkService.IsConnected)
         {
+            // We don't await remote call, because we don't want to make 
+            // user wait for it. But we want to catch exception if it 
+            // happens and add operation to sync queue.
             remoteCall().ContinueWith(async t =>
             {
                 if (t.IsFaulted)
