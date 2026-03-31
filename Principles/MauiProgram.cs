@@ -15,6 +15,8 @@ using Microsoft.Maui.LifecycleEvents;
 
 
 
+
+
 #if IOS
 using Microsoft.Maui.Platform;
 #endif
@@ -68,8 +70,7 @@ public static class MauiProgram
                 fonts.AddFont( "univia-pro-regular.ttf", "Univia-Pro" );
                 fonts.AddFont( "univia-pro-medium.ttf", "Univia-Pro Medium" );
                 fonts.AddFont( "CambriaBold.ttf", "CambriaBold" );
-            } )
-            .Services
+            } ).Services
             .RegisterAppCore()
             .RegisterMauiServices()
             .RegisterViewModels()
@@ -140,6 +141,7 @@ public static class MauiProgram
         services.AddSingleton<ITipService, TipService>();
         services.AddSingleton<IAdService, AdService>();
         services.AddSingleton<IAppOpenTrackerService, AppOpenTrackerService>();
+        services.AddSingleton<IServiceOfTask, ServiceOfTask>();
 
         return services;
     }
@@ -158,6 +160,7 @@ public static class MauiProgram
         services.AddSingleton<ChangePasswordViewModel>();
         services.AddSingleton<HabitDetailViewModel>();
         services.AddSingleton<AppBenefitsViewModel>();
+        services.AddSingleton<TasksViewModel>();
 
         return services;
     }
@@ -180,6 +183,8 @@ public static class MauiProgram
         services.AddTransientPopup<MultipleActionPopup, MultipleActionPopupViewModel>();
         services.AddTransientPopup<UpdatePopup, UpdatePopupViewModel>();
         services.AddTransientPopup<ConfirmEmailPopup, ConfirmEmailPopupViewModel>();
+        services.AddTransient<TasksPageView>();
+        services.AddSingleton<TasksPageView>();
 
         return services;
     }

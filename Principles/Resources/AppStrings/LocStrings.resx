@@ -1063,4 +1063,52 @@ You can change the status with a press.</value>
     <data name="LetsStartNow" xml:space="preserve">
       <value>Let's start now!</value>
     </data>
+    <data name="Tasks" xml:space="preserve">
+      <value>Tasks</value>
+    </data>
+    <data name="Today" xml:space="preserve">
+      <value>Today</value>
+    </data>
+    <data name="Inbox" xml:space="preserve">
+      <value>Inbox</value>
+    </data>
+    <data name="Upcoming" xml:space="preserve">
+      <value>Upcoming</value>
+    </data>
+    <data name="WhatNeedsToBeDone" xml:space="preserve">
+      <value>WhatNeedsToBeDone</value>
+    </data>
+    <data name="AddDescription" xml:space="preserve">
+      <value>AddDescription</value>
+    </data>
+    <data name="Tomorrow" xml:space="preserve">
+      <value>Tomorrow</value>
+    </data>
+    <data name="AddDate" xml:space="preserve">
+      <value>AddDate</value>
+    </data>
+    <data name="AddTime" xml:space="preserve">
+      <value>AddTime</value>
+    </data>
+    <data name="Description" xml:space="preserve">
+      <value>Description</value>
+    </data>
+    <data name="SaveChanges" xml:space="preserve">
+      <value>SaveChanges</value>
+    </data>
+    <data name="DeleteTask" xml:space="preserve">
+      <value>DeleteTask</value>
+    </data>
+    <data name="DeleteTaskTitle" xml:space="preserve">
+      <value>DeleteTaskTitle</value>
+    </data>
+    <data name="AreYouSureDelete" xml:space="preserve">
+      <value>AreYouSureDelete</value>
+    </data>
+    <data name="YesDelete" xml:space="preserve">
+      <value>YesDelete</value>
+    </data>
+    <data name="Cancel" xml:space="preserve">
+      <value>Cancel</value>
+    </data>
 </root>
