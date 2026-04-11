@@ -135,6 +135,11 @@
 		<PackageReference Include="Xamarin.AndroidX.Lifecycle.Service" Version="2.9.2.1" />
 	</ItemGroup>
 
+	<ItemGroup Condition="$(TargetFramework.Contains('-android'))">
+        <PackageReference Include="Oscore.Maui.Android.InAppUpdates" Version="1.2.0" />
+    </ItemGroup>
+
+	
 	<ItemGroup>
 		<Compile Update="App.xaml.cs">
 			<DependentUpon>App.xaml</DependentUpon>

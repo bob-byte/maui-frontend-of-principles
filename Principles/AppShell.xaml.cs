@@ -47,14 +47,15 @@ public partial class AppShell : Shell
             await m_navigationService.NavigateToAsync<AppBenefitsViewModel>();
         }
 
-        IVersionCheckerService versionCheckerService = ServiceLocator.Current!.GetRequiredService<IVersionCheckerService>();
-        bool shouldShowPopup = await versionCheckerService.ShouldShowPopup();
+#if IOS
+        bool shouldShowPopup = await UpdatePopupViewModel.ShouldShowUpdatePopup();
 
         if (shouldShowPopup)
         {
             IDialogService dialogService = ServiceLocator.Current!.GetRequiredService<IDialogService>();
             await dialogService.ShowPopupAsync<UpdatePopupViewModel>();
         }
+#endif
 
         if (VersionTracking.IsFirstLaunchEver)
         {

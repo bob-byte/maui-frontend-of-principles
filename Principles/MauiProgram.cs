@@ -13,6 +13,9 @@ using Plugin.AdMob;
 using The49.Maui.ContextMenu;
 using Microsoft.Maui.LifecycleEvents;
 
+#if ANDROID
+using Maui.Android.InAppUpdates;
+#endif
 
 
 #if IOS
@@ -38,6 +41,9 @@ public static class MauiProgram
                 androidDefaultInterstitialAdUnitId: "ca-app-pub-6307192789973793/7567835848",
                 iosDefaultInterstitialAdUnitId: "ca-app-pub-6307192789973793/6132315308",
                 automaticallyAskForConsent: false )
+            #if ANDROID
+            .UseAndroidInAppUpdates()
+            #endif
             .UseSkiaSharp()
             .UseLiveCharts()
             .UseContextMenu()

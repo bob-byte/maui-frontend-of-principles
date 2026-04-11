@@ -3,11 +3,6 @@ using Plugin.LocalNotification;
 
 using Principles.Exceptions;
 
-using System;
-using System.Net.Mime;
-using System.Text;
-using System.Text.Json.Serialization;
-
 namespace Principles.ViewModels;
 
 public partial class LoginViewModel : BaseViewModel
