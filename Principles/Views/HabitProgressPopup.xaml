@@ -1,0 +1,202 @@
+<toolkit:Popup x:Class="Principles.Views.HabitProgressPopup"
+               xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:controls="clr-namespace:Principles.Controls"
+               xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
+               xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+               xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
+               xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+               xmlns:loc="clr-namespace:Principles.Resources.AppStrings"
+               xmlns:m="clr-namespace:Principles.Core.Models;assembly=Principles.Core"
+               xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+               xmlns:templates="clr-namespace:Principles.Views.Templates"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               xmlns:v="clr-namespace:Principles.Views"
+               xmlns:vm="clr-namespace:Principles.ViewModels"
+               x:DataType="vm:HabitProgressPopupViewModel">
+    <Grid x:Name="G_Popup">
+        <Frame Padding="15"
+               CornerRadius="20"
+               HasShadow="True">
+            <VerticalStackLayout Spacing="15">
+                <Label FontAttributes="Bold"
+                       FontSize="24"
+                       HorizontalOptions="Center">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label"
+                                     Binding="{Binding Habit.Kind}"
+                                     Value="YesOrNo">
+                            <Setter Property="Text" Value="{Binding LocManager[Done]}" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="Label"
+                                     Binding="{Binding Habit.Kind}"
+                                     Value="Mind">
+                            <Setter Property="Text" Value="{Binding LocManager[Rate]}" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="Label"
+                                     Binding="{Binding Habit.Kind}"
+                                     Value="Numeric">
+                            <Setter Property="Text" Value="{Binding LocManager[EnterNumber]}" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+
+                <!--YesOrNo & Mind-->
+                <HorizontalStackLayout Spacing="10"
+                                       IsVisible="False"
+                                       HorizontalOptions="CenterAndExpand">
+                    <HorizontalStackLayout.Triggers>
+                        <DataTrigger TargetType="HorizontalStackLayout"
+                                     Binding="{Binding Habit.Kind}"
+                                     Value="YesOrNo">
+                            <Setter Property="IsVisible" 
+                                    Value="True" />
+                        </DataTrigger>
+                    </HorizontalStackLayout.Triggers>
+                    <RadioButton Content="{Binding LocManager[Yes]}" 
+                                 IsChecked="{Binding IsYes}" />
+                    <RadioButton Content="{Binding LocManager[No]}" />
+                </HorizontalStackLayout>
+
+                <VerticalStackLayout IsVisible="True">
+                    <VerticalStackLayout.Triggers>
+                        <DataTrigger TargetType="VerticalStackLayout"
+                                     Binding="{Binding Habit.Kind}"
+                                     Value="Numeric">
+                            <Setter Property="IsVisible" 
+                                    Value="False" />
+                        </DataTrigger>
+                    </VerticalStackLayout.Triggers>
+                    <Label Text="{Binding LocManager[Performance]}" 
+                           HorizontalOptions="Center" />
+                    <dxe:DXSlider 
+                                  Value="{Binding Value, Mode=TwoWay}" 
+                                  MinValue="0" 
+                                  MaxValue="{Binding MaxValue}" 
+                                  ValueStep="1"
+                                  IsEnabled="{Binding IsSliderEnabled}">
+                        <dxe:DXSlider.TrackAppearance>
+                            <dxe:DXSliderTrackAppearance ActiveBackgroundColor="{StaticResource Primary}"
+                                                         BackgroundColor="{StaticResource LightPrimary}" 
+                                                         DisabledActiveBackgroundColor="{StaticResource SecondaryLight}" 
+                                                         DisabledBackgroundColor="{StaticResource GrayColor}"
+                                                         CornerRadius="10"/>
+                        </dxe:DXSlider.TrackAppearance>
+                        <dxe:DXSlider.ThumbAppearance>
+                            <dxe:DXSliderThumbAppearance BackgroundColor="{StaticResource Primary}" 
+                                                         BorderColor="{StaticResource LightPrimary}"
+                                                         DisabledBackgroundColor="{StaticResource GrayColor}"
+                                                         DisabledBorderColor="{StaticResource SecondaryLight}"
+                                                         BorderThickness="1"
+                                                         CornerRadius="1"/>
+                        </dxe:DXSlider.ThumbAppearance>
+                    </dxe:DXSlider>
+                    <Label Text="{Binding Value, StringFormat='{0}/10'}" 
+                           HorizontalOptions="Center" />
+                    <Label HorizontalOptions="Center">
+                        <Label.Text>
+                            <MultiBinding StringFormat="{}{0}: {1}%">
+                                <Binding Path="LocManager[Progress]"/>
+                                <Binding Path="ValuePercent"/>
+                            </MultiBinding>
+                        </Label.Text>
+                    </Label>
+                </VerticalStackLayout>
+
+                <!--Numeric-->
+                <VerticalStackLayout Padding="20" 
+                                     Spacing="15" 
+                                     IsVisible="False">
+                    <VerticalStackLayout.Triggers>
+                        <DataTrigger TargetType="VerticalStackLayout"
+                                     Binding="{Binding Habit.Kind}"
+                                     Value="Numeric">
+                            <Setter Property="IsVisible" 
+                                    Value="True" />
+                        </DataTrigger>
+                    </VerticalStackLayout.Triggers>
+                    <Grid ColumnDefinitions="Auto,*,Auto" 
+                          VerticalOptions="Center">
+                        <dxco:SimpleButton Text="-" 
+                                           Padding="0,-4,0,0"
+                                           BackgroundColor="{StaticResource GrayColor}"
+                                           TextColor="{StaticResource SecondaryDark}"
+                                           Command="{Binding DecreaseNumericValueCommand}"
+                                           WidthRequest="50" 
+                                           HeightRequest="50"
+                                           FontSize="24"/>
+                        <Entry Grid.Column="1"
+                               Text="{Binding Value, Mode=TwoWay}"
+                               FontSize="48"
+                               HorizontalTextAlignment="Center"
+                               Keyboard="Numeric"
+                               VerticalOptions="Center" />
+                        <dxco:SimpleButton Text="+" 
+                                           Padding="0,-4,0,0"
+                                           Grid.Column="2"
+                                           BackgroundColor="{StaticResource Primary}"
+                                           TextColor="{StaticResource SecondaryDark}"
+                                           Command="{Binding IncreaseNumericValueCommand}"
+                                           WidthRequest="50" HeightRequest="50"
+                                           FontSize="24" />
+                    </Grid>
+                    <Grid HorizontalOptions="Fill" 
+                      ColumnDefinitions="*,*,*">
+                        <Label Text="{Binding Habit.Unit}" 
+                               Grid.Column="2"
+                               HorizontalOptions="Center" />
+                    </Grid>
+
+                    <Label HorizontalOptions="Center">
+                        <Label.Text>
+                            <MultiBinding StringFormat="{}{0} / {1}">
+                                <Binding Path="Value"/>
+                                <Binding Path="MaxValue"/>
+                            </MultiBinding>
+                        </Label.Text>
+                    </Label>
+
+                    <Grid ColumnDefinitions="*,Auto" 
+                          VerticalOptions="Center">
+                        <ProgressBar Progress="{Binding ProgressPercent}"
+                                     HeightRequest="20"
+                                     VerticalOptions="Center"
+                                     Grid.Column="0" />
+                        <Label Text="{Binding ProgressPercent, StringFormat='{0:P0}'}"
+                               Grid.Column="1"
+                               FontSize="16"
+                               Margin="10,0,0,0"
+                               VerticalOptions="Center" />
+                    </Grid>
+                </VerticalStackLayout>
+
+                <!--Shared-->
+                <VerticalStackLayout>
+                    <Label Text="{Binding LocManager[Note]}" />
+                    <Entry Text="{Binding Note}" />
+                </VerticalStackLayout>
+                <dxco:SimpleButton HorizontalOptions="Fill"
+                                   Text="{Binding LocManager[SkipDay]}"
+                                   Command="{Binding SkipDayCommand}"
+                                   BackgroundColor="{StaticResource CancelButtonColor}"/>
+
+
+                <Grid HorizontalOptions="Fill" 
+                      ColumnDefinitions="*,*"
+                      ColumnSpacing="10">
+                    <dxco:SimpleButton Text="{Binding LocManager[Cancel]}"
+                                       Command="{Binding CancelCommand}"
+                                       BackgroundColor="{StaticResource CancelButtonColor}" 
+                                       Icon="close"
+                                       Grid.Column="0"/>
+                    <dxco:SimpleButton Text="{Binding LocManager[Save]}"
+                                       Command="{Binding SaveCommand}"
+                                       BackgroundColor="{StaticResource Primary}"
+                                       Icon="check_second"
+                                       TextColor="White" 
+                                       Grid.Column="1"/>
+                </Grid>
+            </VerticalStackLayout>
+        </Frame>
+    </Grid>
+</toolkit:Popup>

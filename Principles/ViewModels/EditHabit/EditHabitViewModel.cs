@@ -47,28 +47,53 @@ public partial class EditHabitViewModel : BaseViewModel
 
     [ObservableProperty]
     private bool m_isRecommendedHabitsLoading;
-    
+
     private bool m_isInHabitDetails;
-    
+
     [ObservableProperty]
     private ObservableCollectionEx<PeriodOfHabit> m_periodsOfHabit;
-    
+
     [ObservableProperty]
     private ObservableCollectionEx<UserAreaOfLife> m_allUserAreasOfLife;
 
     [ObservableProperty]
     private HabitFrequencyInfo m_frequencyInfo;
-    
+
+    [ObservableProperty]
+    private bool m_canSelectMindType;
+    public class EnumOption<T>
+    {
+        public T Value { get; set; }
+        public string Display { get; set; }
+    }
+    public List<EnumOption<NumericalHabitType>> MinMaxOptions { get; private set; }
+    private void InitMinMaxOfHabit()
+    {
+        MinMaxOptions = new List<EnumOption<NumericalHabitType>>
+        {
+            new() { Value = NumericalHabitType.AtLeast, Display = LocStrings.Min },
+            new() { Value = NumericalHabitType.AtMost, Display = LocStrings.Max }
+        };
+    }
+
     public UserAreaOfLife AllAreasOfLifeAsOneItem { get; }
 
     public IAiRecommenderOfHabitsService AiRecommenderOfHabits { get; }
     public IGoalService GoalService { get; }
     public IReminderService ReminderService { get; }
-    
+
     public List<WeekDay> InactiveDaysToDelete { get; }
+    [ObservableProperty]
+    private DefaultProgressValue m_selectedDefaultProgressValue;
+
+    [ObservableProperty]
+    private ObservableCollectionEx<DefaultProgressValue> m_defaultProgressValues;
+
+     [ObservableProperty]
+    private String m_typeOfHabitInfo;
 
     public EditHabitViewModel( IServiceProvider serviceProvider )
-        : base(serviceProvider)
+: base( serviceProvider )
     {
         AllAreasOfLifeAsOneItem = new UserAreaOfLife
         {
@@ -76,7 +101,9 @@ public partial class EditHabitViewModel : BaseViewModel
             Name = LocStrings.AllAreasOfLife
         };
 
+        InitDefaultProgerssValues();
         InitPeriodsOfHabit();
+        InitMinMaxOfHabit();
 
         AiRecommenderOfHabits = serviceProvider.GetRequiredService<IAiRecommenderOfHabitsService>();
 
@@ -96,10 +123,13 @@ public partial class EditHabitViewModel : BaseViewModel
 
         ReferenceMessenger.Register<NewCultureMessage>( this, async ( sender, msg ) =>
         {
+            InitDefaultProgerssValues();
             InitPeriodsOfHabit();
-            
+            InitMinMaxOfHabit();
+            ChangeTypeOfHabitInfo(TypeOfHabit.Flexible);
+
             AiRecommenderOfHabits.RecreateSystemMessage();
-            
+
             AllAreasOfLifeAsOneItem.Name = LocStrings.AllAreasOfLife;
             try
             {
@@ -114,6 +144,13 @@ public partial class EditHabitViewModel : BaseViewModel
         InactiveDaysToDelete = new List<WeekDay>();
     }
 
+    // private void SelectedDefaultProgressValue
+    [RelayCommand]
+    private void SetDefaultProgressValue(DefaultProgressValue defaultValue)
+    {
+        Habit.DefaultProgressValue = defaultValue.Value;
+    }
+
     private void InitPeriodsOfHabit()
     {
         PeriodsOfHabit =
@@ -123,10 +160,20 @@ public partial class EditHabitViewModel : BaseViewModel
         ];
     }
 
+    private void InitDefaultProgerssValues()
+    {
+        DefaultProgressValues =
+        [
+            new DefaultProgressValue { Value = ProgressValue.UNKNOWN, Name = LocStrings.UnknownValue, Icon = "question" },
+            new DefaultProgressValue { Value = ProgressValue.SKIP, Name = LocStrings.SkipValue, Icon = "fire_fifth" }
+        ];
+    }
+
     private void ApplyQuery( IDictionary<string, object> query )
     {
         Habit = new UserHabit();
-
+        InitValidations();
+        
         if (query.TryGetValue( "Habit", out object? value ) && value is UserHabit habit)
         {
             Habit.MergeFrom( habit );
@@ -143,9 +190,7 @@ public partial class EditHabitViewModel : BaseViewModel
         {
             IsNewHabit = true;
         }
-
-        InitValidations();
-
+        
         if (query.TryGetValue( "IsArchived", out object? isArchivedValue ) && isArchivedValue is bool archived)
         {
             Habit.IsArchived = archived;
@@ -160,6 +205,16 @@ public partial class EditHabitViewModel : BaseViewModel
         {
             m_isInHabitDetails = false;
         }
+
+        if (query.TryGetValue( "ProgressMarkVariaty", out object? kindObj ) && kindObj is ProgressMarkVariaty kind)
+        {
+            Habit.ProgressMarkVariaty = kind;
+        }
+        if (query.TryGetValue( "TypeOfHabit", out object? typeObj ) && typeObj is TypeOfHabit type)
+        {
+            Habit.Type = type;
+        }
+        CheckHabitProgressRestriction();
 
         AdService.IfRequiredShowInterstitialAdAsync();
     }
@@ -180,21 +235,32 @@ public partial class EditHabitViewModel : BaseViewModel
             true, // Friday
             true, // Saturday
         ];
-        
+
         RecommendedHabits = new ObservableCollectionEx<RecommendedHabit>();
         Habit.Frequency ??= new FrequencyOfHabit();
 
         if (IsNewHabit)
         {
             Habit.Id = 0;
-            Habit.Type = TypeOfHabit.IntegrallyWise;
             Habit.AreasOfLife = new ObservableCollectionEx<UserAreaOfLife>();
             Habit.Complexity = 5;
             EditedReminder = new EditedUserHabitReminder();
+            Habit.MinRate = 0;
+            Habit.MaxRate = 10;
+            Habit.TargetPerOneTime = 0;
             ResetDaysOfWeek();
 
             var normalTextColor = (Color)Application.Current!.Resources["LightNormalText"];
             Habit.ColorName = normalTextColor.ToArgbHex();
+
+            if (Habit.Type == TypeOfHabit.Flexible )
+            {
+                SelectedDefaultProgressValue = DefaultProgressValues.First( p => p.Value == ProgressValue.SKIP );
+            }
+            else
+            {
+                SelectedDefaultProgressValue = DefaultProgressValues.First( p => p.Value == ProgressValue.UNKNOWN );
+            }
         }
         else
         {
@@ -202,7 +268,7 @@ public partial class EditHabitViewModel : BaseViewModel
             {
                 Habit.Complexity = HabitConstants.DEFAULT_HABIT_COMPLEXITY;
             }
-            
+
             EditedReminder = new EditedUserHabitReminder();
 
             if (Habit.Reminders != null && Habit.Reminders.Count > 0)
@@ -238,36 +304,23 @@ public partial class EditHabitViewModel : BaseViewModel
                         UserNotificationRequestId = d.UserNotificationRequestId
                     } ).ToList();
                 }
-                
+
             }
-            
+
             Habit.AreasOfLife ??= new ObservableCollectionEx<UserAreaOfLife>();
-            List<UserAreaOfLife> habitAreas = new( Habit.AreasOfLife.Count );
 
-            foreach (UserAreaOfLife area in Habit.AreasOfLife!)
+            foreach (DefaultProgressValue el in DefaultProgressValues)
             {
-                //localize names
-                string? locName = LocManager[area.Name!];
-                if (!string.IsNullOrWhiteSpace( locName ))
-                {
-                    area.Name = locName;
-                }
-
-                habitAreas.Add( area );
-            }
-
-            //otherwise, the areas are not localised for some reason
-            Habit.AreasOfLife.Reload( habitAreas );
-
-            if (Habit.AreasOfLife.Count == 0)
-            {
-                Habit.AreasOfLife.Add( AllAreasOfLifeAsOneItem );
+                if(el.Value == Habit.DefaultProgressValue)
+                    {
+                        SelectedDefaultProgressValue = el;
+                        break;
+                    }
             }
         }
-            
+
         OnPropertyChanged( nameof( EditedReminder ) );
         OnPropertyChanged( nameof( IsDayChecked ) );
-
         InitValidations();
 
         switch (Habit.Frequency!.IntervalLengthInDays)
@@ -295,21 +348,10 @@ public partial class EditHabitViewModel : BaseViewModel
             Period = SelectedPeriodOfHabit
         };
 
-        // Habit.AreasOfLife.CollectionChanged += AreasOfLife_CollectionChanged;
-
-        if (AllUserAreasOfLife.Count == 0)
-        {
-            await ReloadAllAreasOfLifeAsync();
-        }
-        else
-        {
-            AllUserAreasOfLife.Reload( AllUserAreasOfLife.ToList() );
-        }
-
         Habit.Goal ??= new UserGoal();
         await ReloadGoalsAsync();
 
-        NotifyPropertyChanged( nameof(Habit) );
+        NotifyPropertyChanged( nameof( Habit ) );
 
         await base.InitializePageAsync( query );
 
@@ -327,7 +369,7 @@ public partial class EditHabitViewModel : BaseViewModel
 
     private void NameOfHabitOnPropertyChanging( object? sender, System.ComponentModel.PropertyChangingEventArgs e )
     {
-        if (e.PropertyName == nameof(ValidatableObject<string>.Value) && Habit!.Reminders?.Any() == true)
+        if (e.PropertyName == nameof( ValidatableObject<string>.Value ) && Habit!.Reminders?.Any() == true)
         {
             foreach (UserHabitReminder reminder in Habit.Reminders.Where( r => r.Description == NameOfHabit.Value ))
             {
@@ -338,7 +380,7 @@ public partial class EditHabitViewModel : BaseViewModel
 
     private void NameOfHabitOnPropertyChanged( object? sender, PropertyChangedEventArgs e )
     {
-        if (e.PropertyName == nameof(ValidatableObject<string>.Value) && Habit!.Reminders?.Any() == true)
+        if (e.PropertyName == nameof( ValidatableObject<string>.Value ) && Habit!.Reminders?.Any() == true)
         {
             foreach (UserHabitReminder reminder in Habit.Reminders.Where( r => r.Description == "" ))
             {
@@ -361,7 +403,7 @@ public partial class EditHabitViewModel : BaseViewModel
 
         return selectedDaysIndexes;
     }
-    
+
     public void ResetDaysOfWeek()
     {
         IsDayChecked.Clear();
@@ -372,6 +414,28 @@ public partial class EditHabitViewModel : BaseViewModel
         IsDayChecked.Add( true ); // Friday
         IsDayChecked.Add( true ); // Saturday
         IsDayChecked.Add( true ); // Sunday
+    }
+    private void CheckHabitProgressRestriction( )
+    {
+        if (Habit.IsNew() || Habit.Progresses == null)
+        {
+            CanSelectMindType = true;
+            return;
+        }
+        bool hasExistingProgress = Habit.Progresses.Any( p => p.Value != -1 && p.Value != 0);
+        CanSelectMindType = !hasExistingProgress;
+    }
+
+    public void ChangeTypeOfHabitInfo(TypeOfHabit type)
+    {
+        if (type == TypeOfHabit.Principled)
+        {
+            TypeOfHabitInfo = LocStrings.PrincipleInfo;
+        }
+        else if(type == TypeOfHabit.Flexible)
+        {
+            TypeOfHabitInfo = LocStrings.FlexibleInfo;
+        }
     }
 
     private void ClearViewModelData()

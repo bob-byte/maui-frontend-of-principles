@@ -53,7 +53,7 @@ public class ServiceOfHabit : BaseRemoteService, IServiceOfHabit
                     {
                         Id = 0,
                         Date = date,
-                        Value = ProgressValue.UNKNOWN,
+                        Value = habit.DefaultProgressValue,
                         Habit = habit
                     };
                     habit.Progresses.Add( progress );
@@ -110,7 +110,7 @@ public class ServiceOfHabit : BaseRemoteService, IServiceOfHabit
             Where( p => p.Value == ProgressValue.YES_MANUAL || p.Value == ProgressValue.NO ).
             ToList();
         habit.ComputedProgresses.RecomputeFrom( knownProgresses, habit.Frequency, isNumerical: false );
-        habit.ScoreList.Recompute( habit.Complexity, habit.Frequency, habit.ComputedProgresses, from, to );
+        habit.ScoreList.Recompute( habit.Complexity, habit.Frequency, habit.ComputedProgresses, from, to, false );
 
         double result = habit.ScoreList.Get( to ).Value;
 

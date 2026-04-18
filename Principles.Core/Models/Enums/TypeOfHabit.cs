@@ -3,6 +3,7 @@
 public enum TypeOfHabit
 {
     None,
-    WithoutExceptions,
-    IntegrallyWise
+    Principled,
+    Flexible,
+    Mind
 }

@@ -42,7 +42,13 @@ public class HabitWithProgressTemplateSelector : DataTemplateSelector
                 parameterPath: $"Item.Progresses[{progressIndex}]",
                 numberOfTapsRequired: 1
             );
+            TouchBehavior longPress = new();
+            longPress.Bind( TouchBehavior.LongPressCommandParameterProperty,
+                path: $"Item.Progresses[{progressIndex}]" );
+            longPress.Bind( TouchBehavior.LongPressCommandProperty, path: "ShowPopupOfProgressOfHabitCommand",
+                source: m_progressOfHabitsViewModel );
 
+            contentView.Behaviors.Add( longPress );
             return contentView;
         } );
     }

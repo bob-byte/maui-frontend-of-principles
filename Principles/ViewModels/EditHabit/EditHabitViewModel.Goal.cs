@@ -8,7 +8,7 @@ namespace Principles.ViewModels;
 public partial class EditHabitViewModel
 {
     [RelayCommand( CanExecute = nameof( CanSaveGoal ) )]
-    private async Task SaveGoalAsync( Action afterAction )
+    private async Task SaveGoalAsync( System.Action afterAction )
     {
         bool isNewGoal = EditedGoal.Id == 0;
 

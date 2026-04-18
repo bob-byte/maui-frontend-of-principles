@@ -57,21 +57,34 @@ public static class ObjectExtensions
             {
                 targetProp.SetValue(target, sourceValue);
             }
-            else if (typeof(IEnumerable).IsAssignableFrom( sourcePropType ) && sourcePropType != typeof(string))
+            else if (Nullable.GetUnderlyingType( targetPropType ) != null)
             {
-                object? targetValue = targetProp.GetValue( target );
-                object merged = MergeEnumerables( targetValue, sourceValue, targetPropType );
-                targetProp.SetValue( target, merged );
+                var underlyingType = Nullable.GetUnderlyingType( targetPropType )!;
+                var convertedValue = Convert.ChangeType( sourceValue, underlyingType );
+                targetProp.SetValue( target, convertedValue );
+            }
+            else if (typeof( IEnumerable ).IsAssignableFrom(  sourcePropType  ) && sourcePropType != typeof( string ))
+            {
+                if (sourceProp.Name is "Progresses" or "ComputedProgresses")
+                {
+                    targetProp.SetValue(target, sourceValue);
+                }
+                else
+                {
+                    object? targetValue = targetProp.GetValue(target);
+                    object merged = MergeEnumerables(targetValue, sourceValue, targetPropType);
+                    targetProp.SetValue(target, merged);
+                }
             }
             else
             {
-                object? targetValue = targetProp.GetValue(target);
+                object? targetValue = targetProp.GetValue( target );
                 if (targetValue is null)
                 {
                     try
                     {
-                        targetValue = Activator.CreateInstance(targetPropType);
-                        targetProp.SetValue(target, targetValue);
+                        targetValue = Activator.CreateInstance( targetPropType );
+                        targetProp.SetValue( target, targetValue );
                     }
                     catch
                     {

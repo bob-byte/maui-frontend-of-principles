@@ -1106,9 +1106,54 @@
       <value>Ви впевнені, що хочете видалити</value>
     </data>
     <data name="YesDelete" xml:space="preserve">
-      <value>ВидТак, видалити</value>
+      <value>Так, видалити</value>
     </data>
     <data name="Cancel" xml:space="preserve">
       <value>Скасувати</value>
     </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Так</value>
+  </data>
+  <data name="YesOrNo" xml:space="preserve">
+    <value>Так або Ні</value>
+  </data>
+  <data name="YesOrNoDescription" xml:space="preserve">
+    <value>Зробити / не зробити дію в конкретний день</value>
+  </data>
+  <data name="YesOrNoExample" xml:space="preserve">
+    <value>Приклади: Потренуватись, Встати до 07:00</value>
+  </data>
+  <data name="YesOrNoWithRate" xml:space="preserve">
+    <value>Так або Ні з оцінкою</value>
+  </data>
+  <data name="YesOrNoWithRateDescription" xml:space="preserve">
+    <value>Ідентичне тільки оцінюється ефективність звички при виконанні</value>
+  </data>
+  <data name="PrincipleInfo" xml:space="preserve">
+    <value>Про Principle</value>
+  </data>
+  <data name="Numeric" xml:space="preserve">
+    <value>Числова</value>
+  </data>
+  <data name="NumericDescription" xml:space="preserve">
+    <value>Звичка з кількісним результатом</value>
+  </data>
+  <data name="NumericExample" xml:space="preserve">
+    <value>Приклади: Вивчати програмування 2 год, Прочитати 10 сторінок</value>
+  </data>
+  <data name="Mind" xml:space="preserve">
+    <value>Розумова</value>
+  </data>
+  <data name="MindDescription" xml:space="preserve">
+    <value>Нагадування про важливу думку або ставлення</value>
+  </data>
+  <data name="MindInfo" xml:space="preserve">
+    <value>Про Mind</value>
+  </data>
+  <data name="SkipDay" xml:space="preserve">
+    <value>Пропустити день</value>
+  </data>
+  <data name="SkipValue" xml:space="preserve">
+    <value>Пропустити невідмічений день</value>
+  </data>
 </root>

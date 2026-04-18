@@ -602,6 +602,7 @@
             <converters:DateToTextDecorationsConverter x:Key="DateToTextDecorations" />
             <converters:UserHabitsToStreakConverter x:Key="UserHabitsToStreak" />
             <converters:ReminderToIsNotEmptyConverter x:Key="IsReminderNotEmpty" />
+            <converters:ProgressMarkVariatyToBoolConverter x:Key="ProgressMarkVariatyToBool" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

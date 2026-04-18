@@ -10,21 +10,16 @@ using System.Reflection;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using LiveChartsCore.SkiaSharpView.Maui;
 using Plugin.AdMob;
-using The49.Maui.ContextMenu;
 using Microsoft.Maui.LifecycleEvents;
-
-#if ANDROID
-using Maui.Android.InAppUpdates;
-#endif
-
-
-
+using DIPS.Mobile.UI.API.Builder;
+using DIPS.Mobile.UI.API.Library;
 
 #if IOS
 using Microsoft.Maui.Platform;
 #endif
 #if ANDROID
 using AndroidX.AppCompat.Widget;
+using Maui.Android.InAppUpdates;
 #endif
 
 namespace Principles;
@@ -48,7 +43,7 @@ public static class MauiProgram
             #endif
             .UseSkiaSharp()
             .UseLiveCharts()
-            .UseContextMenu()
+            .UseDIPSUI()
             .UseDevExpressControls()
             .UseDevExpressEditors()
             .UseDevExpressCollectionView()
@@ -81,6 +76,10 @@ public static class MauiProgram
             .RegisterMauiServices()
             .RegisterViewModels()
             .RegisterViews();
+
+#if DEBUG || LOCALDEBUG
+        DUI.IsDebug = true;
+#endif
 
 #if IOS
         //Force Light theme on iOS
@@ -189,8 +188,8 @@ public static class MauiProgram
         services.AddTransientPopup<MultipleActionPopup, MultipleActionPopupViewModel>();
         services.AddTransientPopup<UpdatePopup, UpdatePopupViewModel>();
         services.AddTransientPopup<ConfirmEmailPopup, ConfirmEmailPopupViewModel>();
+        services.AddTransientPopup<HabitProgressPopup, HabitProgressPopupViewModel>();
         services.AddTransient<TasksPageView>();
-        services.AddSingleton<TasksPageView>();
 
         return services;
     }

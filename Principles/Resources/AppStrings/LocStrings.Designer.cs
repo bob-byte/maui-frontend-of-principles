@@ -205,6 +205,15 @@ namespace Principles.Resources.AppStrings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Choose a habit type.
+        /// </summary>
+        internal static string ProgressMarkVariaty {
+            get {
+                return ResourceManager.GetString("ProgressMarkVariaty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Progress of habits.
         /// </summary>
         internal static string ProgressOfHabits {
@@ -2875,6 +2884,106 @@ namespace Principles.Resources.AppStrings {
         internal static string AppleAuthUnavailableOnDevice {
             get {
                 return ResourceManager.GetString("AppleAuthUnavailableOnDevice", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to ComboBox default progress.
+        /// </summary>
+        internal static string ComboBoxDefaultProgresValue {
+            get {
+                return ResourceManager.GetString("ComboBoxDefaultProgresValue", resourceCulture);
+            }
+        }
+        
+
+         /// <summary>
+        ///   Looks up a localized string similar to Unknown
+        /// </summary>
+        internal static string UnknownValue {
+            get {
+                return ResourceManager.GetString("UnknownValue", resourceCulture);
+            }
+        }
+
+         /// <summary>
+        ///   Looks up a localized string similar to Skip
+        /// </summary>
+        internal static string SkipValue {
+            get {
+                return ResourceManager.GetString("SkipValue", resourceCulture);
+            }
+        }
+
+         /// <summary>
+        ///   Looks up a localized string similar to Max
+        /// </summary>
+        internal static string Max {
+            get {
+                return ResourceManager.GetString("Max", resourceCulture);
+            }
+        }
+
+         /// <summary>
+        ///   Looks up a localized string similar to Min
+        /// </summary>
+        internal static string Min {
+            get {
+                return ResourceManager.GetString("Min", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to information about principle
+        /// </summary>
+        internal static string PrincipleInfo {
+            get {
+                return ResourceManager.GetString("PrincipleInfo", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to information about flexible
+        /// </summary>
+        internal static string FlexibleInfo {
+            get {
+                return ResourceManager.GetString("FlexibleInfo", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to information about mind
+        /// </summary>
+        internal static string MindInfo {
+            get {
+                return ResourceManager.GetString("MindInfo", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to default progress
+        /// </summary>
+        internal static string DefaultProgress {
+            get {
+                return ResourceManager.GetString("DefaultProgress", resourceCulture);
+            }
+        }
+
+         /// <summary>
+        ///   SortByType
+        /// </summary>
+        internal static string SortByType {
+            get {
+                return ResourceManager.GetString("SortByType", resourceCulture);
+            }
+        }
+
+         /// <summary>
+        ///   SortByGroup
+        /// </summary>
+        internal static string SortByGroup {
+            get {
+                return ResourceManager.GetString("SortByGroup", resourceCulture);
             }
         }
     }

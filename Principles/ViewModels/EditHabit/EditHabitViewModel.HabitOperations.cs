@@ -33,7 +33,14 @@ public partial class EditHabitViewModel
                 Type = Habit.Type,
                 Reminders = Habit.Reminders,
                 IsArchived = Habit.IsArchived,
-                PrioritizedHabits = new List<UserHabitWithPriority>()
+                PrioritizedHabits = new List<UserHabitWithPriority>(),
+                TargetType = Habit.TargetType,
+                TargetPerOneTime = Habit.TargetPerOneTime,
+                Unit = Habit.Unit,
+                MinRate = Habit.MinRate,
+                MaxRate = Habit.MaxRate,
+                ProgressMarkVariaty = Habit.ProgressMarkVariaty,
+                DefaultProgressValue = Habit.DefaultProgressValue
             };
 
             dto.AreasOfLife!.Remove( AllAreasOfLifeAsOneItem );

@@ -67,12 +67,17 @@ public partial class EditHabitView : ContentPageBase
             {
                 default:
                     {
-                        CCG_Types.SelectChip( C_WithoutExceptionsType );
+                        CCG_Types.SelectChip( C_PrincipledType );
                         break;
                     }
-                case TypeOfHabit.IntegrallyWise:
+                case TypeOfHabit.Flexible:
                     {
-                        CCG_Types.SelectChip( C_IntegrallyWiseType );
+                        CCG_Types.SelectChip( C_FlexibleType );
+                        break;
+                    }
+                case TypeOfHabit.Mind:
+                    {
+                        CCG_Types.SelectChip( C_MindType );
                         break;
                     }
             }
@@ -87,12 +92,17 @@ public partial class EditHabitView : ContentPageBase
             {
                 default:
                     {
-                        CCG_Types.SelectChip( C_WithoutExceptionsType );
+                        CCG_Types.SelectChip( C_PrincipledType );
                         break;
                     }
-                case TypeOfHabit.IntegrallyWise:
+                case TypeOfHabit.Flexible:
                     {
-                        CCG_Types.SelectChip( C_IntegrallyWiseType );
+                        CCG_Types.SelectChip( C_FlexibleType );
+                        break;
+                    }
+                case TypeOfHabit.Mind:
+                    {
+                        CCG_Types.SelectChip( C_MindType );
                         break;
                     }
             }
@@ -262,6 +272,27 @@ public partial class EditHabitView : ContentPageBase
             
             DXP_Frequency.IsOpen = false;
         }
+    }
+
+    //TODO: replace to ViewModel
+    void C_WithoutExceptionsType_Tap( System.Object sender, System.ComponentModel.HandledEventArgs e )
+    {
+        ViewModel.Habit.Type = TypeOfHabit.Principled;
+        C_PrincipledType.DisplaySnackbar(
+            LocStrings.WithoutExceptionsHabitTypeShortDescription,
+            duration: Timeout.InfiniteTimeSpan,
+            visualOptions: SnackbarHelper.DefaultOptions()
+        );
+    }
+
+    void C_IntegrallyWiseType_Tap( System.Object sender, System.ComponentModel.HandledEventArgs e )
+    {
+        ViewModel.Habit.Type = TypeOfHabit.Flexible;
+        C_FlexibleType.DisplaySnackbar(
+            LocStrings.IntegrallyWiseHabitTypeShortDescription,
+            duration: Timeout.InfiniteTimeSpan,
+            visualOptions: SnackbarHelper.DefaultOptions()
+        );
     }
 
     void RepeatsOfSeveralDays_Focused( System.Object sender, Microsoft.Maui.Controls.FocusEventArgs e )
@@ -788,5 +819,103 @@ public partial class EditHabitView : ContentPageBase
     private void NE_Complexity_OnDownIconClicked( object? sender, HandledEventArgs e )
     {
         ViewModel.NotifyPropertyChanged( nameof(ViewModel.Habit) );
+    }
+
+        private void NE_ProgressMarkVariaty_OnUpIconClicked( object? sender, HandledEventArgs e )
+    {
+        ViewModel.NotifyPropertyChanged( nameof(ViewModel.Habit) );
+    }
+
+    private void NE_ProgressMarkVariaty_OnDownIconClicked( object? sender, HandledEventArgs e )
+    {
+        ViewModel.NotifyPropertyChanged( nameof(ViewModel.Habit) );
+    }
+
+    private async Task ChooseProgressMarkVariatyAsync()
+    {
+        double heightOfBottomSheet;
+
+        if (ViewModel.SettingsService.NormalPageHeight == 0 ||
+            DeviceDisplay.Current.MainDisplayInfo.Orientation == DisplayOrientation.Landscape)
+        {
+            heightOfBottomSheet = 300;
+            EditKindBottomSheet.HalfExpandedRatio = heightOfBottomSheet / CPB_EditHabit.Height;
+        }
+        else
+        {
+            heightOfBottomSheet = 500;
+
+            EditKindBottomSheet.HalfExpandedRatio = heightOfBottomSheet / ViewModel.SettingsService.NormalPageHeight;
+        }
+        EditKindBottomSheet.State = BottomSheetState.HalfExpanded;
+    }
+    // there
+    private void EditProgressMarkVariatyYesOrNoButton_Clicked( object sender, EventArgs e )
+    {
+        if (sender is DevExpress.Maui.Controls.SimpleButton button)
+        {
+            EditKindBottomSheet.State = BottomSheetState.Hidden;
+
+            if (BindingContext is EditHabitViewModel vm)
+            {
+                if (vm.Habit != null)
+                {
+                    vm.Habit.ProgressMarkVariaty = ProgressMarkVariaty.YesOrNo;
+                    vm.NotifyPropertyChanged( nameof( vm.Habit ));
+                }
+            }
+            
+        }
+        
+    }
+
+    private void EditProgressMarkVariatyNumericButton_Clicked( object sender, EventArgs e )
+    {
+        if (sender is DevExpress.Maui.Controls.SimpleButton button)
+        {
+            EditKindBottomSheet.State = BottomSheetState.Hidden;
+
+            if (BindingContext is EditHabitViewModel vm)
+            {
+                if (vm.Habit != null)
+                {
+                    vm.Habit.ProgressMarkVariaty = ProgressMarkVariaty.Numeric;
+                    vm.NotifyPropertyChanged( nameof( vm.Habit ));
+                }
+            }
+        }
+    }
+
+    private async void PrincipledTypeTapped(object sender, EventArgs eventArgs)
+    {
+
+        ViewModel.Habit.Type = TypeOfHabit.Principled;
+        ViewModel.ChangeTypeOfHabitInfo(TypeOfHabit.Principled);
+        
+        await ChooseProgressMarkVariatyAsync();
+        await ViewModel.InitializeAsyncCommand.ExecuteAsync(null);
+
+    }
+
+    private async void FlexibleTypeTapped(object sender, EventArgs eventArgs)
+    {
+        ViewModel.Habit.Type = TypeOfHabit.Flexible;
+        ViewModel.ChangeTypeOfHabitInfo(TypeOfHabit.Flexible);
+        
+        await ChooseProgressMarkVariatyAsync();
+        await ViewModel.InitializeAsyncCommand.ExecuteAsync(null);
+        
+    }
+
+    private async void MindTypeTapped(object sender, EventArgs eventArgs)
+    {
+        ViewModel.Habit.Type = TypeOfHabit.Mind;
+        ViewModel.Habit.ProgressMarkVariaty = ProgressMarkVariaty.Numeric;
+
+        ViewModel.Habit.MinRate = 0;
+        ViewModel.Habit.MaxRate = 10;
+        ViewModel.Habit.TargetPerOneTime = 0;
+
+        await ViewModel.TipService.ShowSnackbarAsync(LocStrings.MindInfo);
     }
 }

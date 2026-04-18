@@ -935,4 +935,29 @@ public partial class HabitDetailViewModel : BaseViewModel
             duration: TimeSpan.FromSeconds( 10 ) 
         );
     }
+
+    [RelayCommand]
+    private async Task ShowPopupOfProgressOfHabitAsync( DateTime? selectedDateTime )
+    {
+        if (selectedDateTime == null)
+        {
+            return;
+        }
+
+        var date = DateOnly.FromDateTime( selectedDateTime.Value );
+        ProgressOfHabit? progressOfHabit = Habit!.Progresses!.FirstOrDefault( h => h.Date == date );
+        if (selectedDateTime.Value.Date > DateTime.Today.Date)
+        {
+            await DialogService.ShowErrorAsync( LocStrings.YouCannotCompleteHabitInTheFuture );
+        }
+        else
+        {
+            Dictionary<string, object> parameters = new()
+            {
+                {"ProgressOfHabit", progressOfHabit},
+                {"Habit", Habit}
+            };
+            await DialogService.ShowPopupAsync<HabitProgressPopupViewModel>(parameters);
+        }
+    }
 }

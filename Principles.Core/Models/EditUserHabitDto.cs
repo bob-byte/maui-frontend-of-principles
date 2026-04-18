@@ -18,4 +18,11 @@ public class EditUserHabitDto
     public string? ColorName { get; set; }
     public ICollection<UserHabitReminder>? Reminders { get; set; }
     public List<UserHabitWithPriority>? PrioritizedHabits { get; set; }
+    public string? Unit { get; set; }
+    public double? TargetPerOneTime { get; set; }
+    public NumericalHabitType TargetType { get; set; }
+    public double? MinRate { get; set; }
+    public double? MaxRate { get; set; }
+    public ProgressMarkVariaty ProgressMarkVariaty { get; set; }
+    public int DefaultProgressValue{ get; set; }
 }
