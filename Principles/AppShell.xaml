@@ -12,7 +12,13 @@
        Shell.TabBarBackgroundColor="{StaticResource Primary}"
        Shell.TabBarForegroundColor="{StaticResource SecondaryLight}"
        Shell.TabBarTitleColor="{StaticResource SecondaryLight}"
-       Shell.TabBarUnselectedColor="{StaticResource GrayColor}">
+       Shell.TabBarUnselectedColor="{StaticResource GrayColor}"
+       FlyoutBehavior="Disabled"> <MenuItem Text="Inbox" CommandParameter="Inbox" Clicked="OnMenuFilterClicked" />
+    <MenuItem Text="Today" CommandParameter="Today" Clicked="OnMenuFilterClicked" />
+    <MenuItem Text="Upcoming" CommandParameter="Upcoming" Clicked="OnMenuFilterClicked" />
+    <MenuItem Text="Overdue" CommandParameter="Overdue" Clicked="OnMenuFilterClicked" />
+    <MenuItem Text="Someday" CommandParameter="Someday" Clicked="OnMenuFilterClicked" />
+    <MenuItem Text="Completed" CommandParameter="Completed" Clicked="OnMenuFilterClicked" />
 
     <TabBar Route="main">
         <ShellContent x:Name="SC_Helper"
@@ -26,6 +32,12 @@
                       Icon="boost"
                       ContentTemplate="{DataTemplate local:ProgressOfHabitsView}"
                       Route="progressofhabits" />
+
+        <ShellContent x:Name="SC_Tasks"
+                      Title="{Binding LocManager[Tasks]}"
+                      Icon="tasks"
+                      ContentTemplate="{DataTemplate local:TasksPageView}"
+                      Route="tasks"/>
 
         <ShellContent x:Name="SC_Profile"
                       Title="{Binding LocManager[Profile]}"

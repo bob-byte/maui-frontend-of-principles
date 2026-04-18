@@ -21,7 +21,7 @@
 		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net10.0-android'">21.0</SupportedOSPlatformVersion>
 		<ApplicationTitle>Principles</ApplicationTitle>
 		<Configurations>Debug;Release;LocalDebug</Configurations>
-		<MauiXamlInflator>SourceGen</MauiXamlInflator> 
+		<!-- <MauiXamlInflator>SourceGen</MauiXamlInflator>  -->
 	</PropertyGroup>
 
 	<PropertyGroup>

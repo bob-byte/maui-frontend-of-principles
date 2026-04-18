@@ -36,6 +36,22 @@ public class UrlBuilder : IUrlBuilder
     private string? m_archive;
     private string? m_progresses;
 
+    private string? m_tasks;
+
+    public string Tasks
+    {
+        get
+        {
+            m_tasks ??= Combine(BaseApiUrl, "tasks");
+            return m_tasks;
+        }
+    }
+
+    public string TasksByDate(DateOnly date)
+    {
+        return $"{Tasks}?date={date:yyyy-MM-dd}";
+    }
+
     public string BaseUrl
     {
         get

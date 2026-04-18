@@ -30,5 +30,8 @@ public interface IUrlBuilder
     string Archive {  get; }
     string Progresses { get; }
 
+    string Tasks { get; }
+    string TasksByDate(DateOnly date);
+
     string Combine( params string[] uri );
 }

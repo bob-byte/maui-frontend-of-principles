@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="Principles.Views.TasksPageView"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dx="http://schemas.devexpress.com/maui"
+             xmlns:vm="clr-namespace:Principles.ViewModels"
+             xmlns:models="clr-namespace:Principles.Core.Models;assembly=Principles.Core"
+             x:DataType="vm:TasksViewModel"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             Title="{Binding PageTitle}"
+             BackgroundColor="#F7F7F7"
+             Shell.FlyoutBehavior="Flyout">
+
+    <Grid RowDefinitions="Auto, *">
+        
+        <VerticalStackLayout Grid.Row="0" Padding="20,15,20,5" Spacing="8">
+            <Label Text="{Binding HeaderText}" FontSize="14" TextColor="Gray"/>
+            <ProgressBar Progress="{Binding ProgressValue}" ProgressColor="#2D68C4" HeightRequest="6" Margin="0,5,0,10"/>
+        </VerticalStackLayout>
+
+        <CollectionView Grid.Row="1" ItemsSource="{Binding DisplayedTasks}" Margin="15,0">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:TaskItem">
+                    <Border Stroke="#F0F0F0" StrokeShape="RoundRectangle 10" Padding="10" Margin="0,0,0,10">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnTaskTapped" />
+                        </Border.GestureRecognizers>
+                        
+                        <Grid ColumnDefinitions="Auto, *, Auto">
+                            <CheckBox IsChecked="{Binding IsCompleted}" 
+                                VerticalOptions="Center" 
+                                CheckedChanged="OnTaskCompletionChanged"
+                                Color="{Binding StateColor}" />
+                            
+                            <VerticalStackLayout Grid.Column="1" Margin="12,0" VerticalOptions="Center">
+                                <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
+                                <HorizontalStackLayout Spacing="10">
+                                    <Label Text="{Binding Date, StringFormat='{0:MMM dd}'}" TextColor="{Binding StateColor}" FontSize="12"/>
+                                    <Label Text="{Binding Time, StringFormat='{0:hh\\:mm}'}" TextColor="Gray" FontSize="12"/>
+                                    <Label Text="{Binding Notes}" TextColor="Silver" FontSize="12" LineBreakMode="TailTruncation"/>
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <dx:BottomSheet x:Name="AddTaskSheet" 
+                CornerRadius="24" 
+                BackgroundColor="White"
+                Padding="0"
+                ShowGrabber="True"
+                HalfExpandedRatio="0.3">
+    
+    <Grid RowDefinitions="Auto, Auto, Auto" Padding="20,10,20,15">
+        
+        <Entry x:Name="NewTaskNameEntry"
+               Grid.Row="0"
+               Placeholder="{Binding LocManager[WhatNeedsToBeDone]}"
+               Text="{Binding CurrentTask.Name}"
+               FontSize="18"
+               TextColor="Black"
+               PlaceholderColor="#999999"
+               BackgroundColor="Transparent"
+               Margin="0" />
+
+        <Editor Grid.Row="1"
+                Placeholder="{Binding LocManager[AddDescription]}"
+                Text="{Binding CurrentTask.Notes}"
+                FontSize="14"
+                TextColor="#666666"
+                PlaceholderColor="#CCCCCC"
+                AutoSize="TextChanges"
+                MinimumHeightRequest="40"
+                BackgroundColor="Transparent"
+                Margin="0,0,0,10" />
+
+        <Grid Grid.Row="2" ColumnDefinitions="*, Auto" VerticalOptions="Center">
+            
+            <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                
+                <Grid>
+                    <Border StrokeShape="RoundRectangle 8" StrokeThickness="0" BackgroundColor="#F5F5F7" Padding="10,6">
+                        <HorizontalStackLayout Spacing="6">
+                            <Image Source="calendar_icon.png" HeightRequest="15" WidthRequest="15">
+                                <Image.Behaviors>
+                                    <toolkit:IconTintColorBehavior TintColor="#2196F3"/> </Image.Behaviors>
+                            </Image>
+                            <Label Text="{Binding SelectedDateText}" FontSize="13" TextColor="#444444" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+                    </Border>
+                    <DatePicker Date="{Binding SelectedDate, Mode=TwoWay}" Opacity="0.01"/>
+                </Grid>
+
+                <Grid>
+                    <Border StrokeShape="RoundRectangle 8" StrokeThickness="0" BackgroundColor="#F5F5F7" Padding="10,6">
+                        <HorizontalStackLayout Spacing="6">
+                            <Image Source="clock.png" HeightRequest="15" WidthRequest="15">
+                                <Image.Behaviors>
+                                    <toolkit:IconTintColorBehavior TintColor="#666666"/>
+                                </Image.Behaviors>
+                            </Image>
+                            <Label Text="{Binding SelectedTimeText}" FontSize="13" TextColor="#444444" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+                    </Border>
+                    <TimePicker Time="{Binding SelectedTime, Mode=TwoWay}" Opacity="0.01"/>
+                </Grid>
+            </HorizontalStackLayout>
+
+            <dx:DXButton Grid.Column="1" 
+                         Command="{Binding SaveTaskCommand}"
+                         Icon="arrow_up_icon" 
+                         IconColor="White"
+                         BackgroundColor="#2196F3" 
+                         HeightRequest="36" 
+                         WidthRequest="36" 
+                         CornerRadius="18"
+                         Padding="0"
+                         VerticalOptions="Center">
+                <dx:DXButton.Shadow>
+                    <Shadow Brush="#2196F3" Offset="0,3" Radius="5" Opacity="0.2" />
+                </dx:DXButton.Shadow>
+            </dx:DXButton>
+        </Grid>
+    </Grid>
+</dx:BottomSheet>
+
+        <dx:BottomSheet x:Name="EditTaskSheet" CornerRadius="20" Padding="20">
+            <ScrollView VerticalScrollBarVisibility="Never">
+                <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto" RowSpacing="20">
+                    
+                    <ImageButton Grid.Row="0" Source="close_icon.png" WidthRequest="30" HeightRequest="30" 
+                                 BackgroundColor="#F5F5F5" CornerRadius="15" Padding="5" 
+                                 HorizontalOptions="Start" Clicked="OnCloseEditSheetClicked"/>
+
+                    <Grid Grid.Row="1" ColumnDefinitions="Auto, *">
+                        <CheckBox IsChecked="{Binding EditingTask.IsCompleted}" VerticalOptions="Center" Color="Gray"/>  
+                        <Entry x:Name="EditTaskNameEntry" Text="{Binding EditingTask.Name}" FontSize="20" FontAttributes="Bold" TextColor="Black" VerticalOptions="Center" Margin="10,0,0,0"/>
+                    </Grid>
+
+                    <Grid Grid.Row="2" HeightRequest="45">
+                        <HorizontalStackLayout Spacing="10" VerticalOptions="Center" InputTransparent="True">
+                            <Image Source="calendar_icon.png" WidthRequest="22" HeightRequest="22"/>
+                            <Label x:Name="EditDateLabel" Text="{Binding LocManager[Today]}" TextColor="Black" VerticalOptions="Center" FontSize="16"/>
+                        </HorizontalStackLayout>
+                        <DatePicker x:Name="EditHiddenDatePicker" DateSelected="OnHiddenDateSelected" Opacity="0.01" BackgroundColor="Transparent"/>
+                    </Grid>
+
+                    <Grid Grid.Row="3" HeightRequest="45">
+                        <HorizontalStackLayout Spacing="10" VerticalOptions="Center" InputTransparent="True">
+                            <Image Source="clock.png" WidthRequest="22" HeightRequest="22"/>
+                            <Label x:Name="EditTimeLabel" Text="{Binding LocManager[AddTime]}" TextColor="Gray" VerticalOptions="Center" FontSize="16"/>
+                        </HorizontalStackLayout>
+                        <TimePicker x:Name="EditHiddenTimePicker" PropertyChanged="OnHiddenTimeChanged" Opacity="0.01" BackgroundColor="Transparent"/>
+                    </Grid>
+
+                    <VerticalStackLayout Grid.Row="4" Spacing="10">
+                        <Button Text="{Binding LocManager[Description]}" ImageSource="description_icon.png" Clicked="OnEditDescriptionClicked" HorizontalOptions="Start" BackgroundColor="#E8F0FE" TextColor="#1A73E8" CornerRadius="15" HeightRequest="35" Padding="15,0"/>
+                        <Border StrokeThickness="0" BackgroundColor="#F5F5F0" Padding="15" StrokeShape="RoundRectangle 10">
+                            <Editor x:Name="EditNotesEditor" Text="{Binding EditingTask.Notes}" AutoSize="TextChanges" MinimumHeightRequest="80" BackgroundColor="Transparent" TextColor="Black"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <Button Grid.Row="5" Text="{Binding LocManager[SaveChanges]}" Command="{Binding SaveChangesCommand}" BackgroundColor="#2D68C4" TextColor="White" CornerRadius="10" HeightRequest="50" Margin="0,10,0,10"/>
+                    <Button Grid.Row="6" Text="{Binding LocManager[DeleteTask]}" Clicked="OnDeleteTaskClicked" BackgroundColor="#F44336" TextColor="White" CornerRadius="10" FontAttributes="Bold" HeightRequest="50" Margin="0,0,0,40"/>
+                </Grid>
+            </ScrollView>
+        </dx:BottomSheet>
+
+        <toolkit:Expander Margin="0,0,15,70"
+                  HorizontalOptions="End"
+                  IsVisible="{Binding DoShowPlusButton}"
+                  VerticalOptions="End"
+                  Grid.RowSpan="10">
+    <toolkit:Expander.Header>
+        <Frame Padding="0"
+               BackgroundColor="{StaticResource Primary}"
+               CornerRadius="{OnPlatform Android=35, iOS=25}"
+               HeightRequest="55"
+               WidthRequest="55">
+            <Frame.Shadow>
+                <Shadow Opacity="0.3"
+                        Radius="12"
+                        Offset="0,6">
+                    <Shadow.Brush>
+                        <Color>#0066FF</Color>
+                    </Shadow.Brush>
+                </Shadow>
+            </Frame.Shadow>
+            
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnAddButtonTapped"
+                                      NumberOfTapsRequired="1" />
+            </Frame.GestureRecognizers>
+
+            <dx:DXImage Source="small_plus"
+                        HeightRequest="30"
+                        TintColor="White"
+                        WidthRequest="30">
+                <dx:DXImage.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnAddButtonTapped"
+                                          NumberOfTapsRequired="1" />
+                </dx:DXImage.GestureRecognizers>
+            </dx:DXImage>
+        </Frame>
+    </toolkit:Expander.Header>
+</toolkit:Expander>
+
+    </Grid>
+</ContentPage>

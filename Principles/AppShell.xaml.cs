@@ -93,6 +93,7 @@ public partial class AppShell : Shell
         RegisterRoute( typeof( HabitDetailView ) );
         RegisterRoute( typeof( StartupView ) );
         RegisterRoute( typeof( AppBenefitsView ) );
+        RegisterRoute( typeof( TasksPageView ) );
     }
 
     private static void RegisterRoute( Type viewType )
@@ -103,5 +104,19 @@ public partial class AppShell : Shell
             .ToLower( CultureInfo.GetCultureInfo( name: "en" ) );
 
         Routing.RegisterRoute( route, viewType );
+    }
+
+    private async void OnMenuFilterClicked(object sender, EventArgs e)
+    {
+        if (sender is MenuItem menuItem)
+        {
+            string filterName = menuItem.CommandParameter?.ToString();
+
+            if (!string.IsNullOrEmpty(filterName))
+            {
+                Current.FlyoutIsPresented = false;
+                await Current.GoToAsync($"//tasks?filter={filterName}");
+            }
+        }
     }
 }
