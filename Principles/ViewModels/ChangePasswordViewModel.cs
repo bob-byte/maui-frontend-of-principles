@@ -20,8 +20,7 @@ public partial class ChangePasswordViewModel : BaseViewModel
     public override async Task InitializeAsync( object? parameter = null )
     {
         await base.InitializeAsync(parameter);
-        
-        Email = CachingService.GetStoredValue( CacheKeys.USER_EMAIL );
+        await InitUserInfoAsync();
 
         NewPassword = new ValidatableObject<string>();
         NewPassword.Validations.Add( new IsNotNullOrWhiteSpaceRule() );
@@ -49,12 +48,12 @@ public partial class ChangePasswordViewModel : BaseViewModel
                 if (currentPage is not null)
                 {
                     ConfirmEmailPopupViewModel confirmEmailPopupViewModel = ServiceProvider.GetRequiredService<ConfirmEmailPopupViewModel>();
-                
+
                     confirmEmailPopupViewModel.SetData( NewPassword.Value, m_validConfirmationCode, Email );
                     ConfirmEmailPopup confirmEmailPopup = new( confirmEmailPopupViewModel );
 
                     currentPage.ShowPopup( confirmEmailPopup );
-                    
+
                     NewPassword = new ValidatableObject<string>();
                     NewPassword.Validations.Add( new IsNotNullOrWhiteSpaceRule() );
                     NewPassword.Validations.Add( new NewPasswordRule() );

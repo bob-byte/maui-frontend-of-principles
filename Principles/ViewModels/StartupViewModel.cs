@@ -1,3 +1,4 @@
+using Principles.Core.Models;
 
 using System.Net;
 
@@ -24,28 +25,28 @@ public partial class StartupViewModel : BaseViewModel
             UpdateAppFeatures();
         } );
 
-        m_appFeatures = InitializeAppFeatures();
+        AppFeatures = InitializeAppFeatures();
     }
 
     private ObservableCollectionEx<AppFeature> InitializeAppFeatures()
     {
         return new ObservableCollectionEx<AppFeature>
-    {
-        new() { Title = LocStrings.TransformAreasOfLifeTitle, Description = LocStrings.TransformAreasOfLifeDescription },
-        new() { Title = LocStrings.ChatWithHelperTitle, Description = LocStrings.ChatWithHelperDescription },
-        new() { Title = LocStrings.GroupHabitsByGoalsTitle, Description = LocStrings.GroupHabitsByGoalsDescription },
-        new() { Title = LocStrings.GetRecommendationsByAITitle, Description = LocStrings.GetRecommendationsByAIDescription },
-        new() { Title = LocStrings.BecomeTruePersonalityTitle, Description = LocStrings.BecomeTruePersonalityDescription }
-    };
+        {
+            new() { Title = LocStrings.TransformAreasOfLifeTitle, Description = LocStrings.TransformAreasOfLifeDescription },
+            new() { Title = LocStrings.ChatWithHelperTitle, Description = LocStrings.ChatWithHelperDescription },
+            new() { Title = LocStrings.GroupHabitsByGoalsTitle, Description = LocStrings.GroupHabitsByGoalsDescription },
+            new() { Title = LocStrings.GetRecommendationsByAITitle, Description = LocStrings.GetRecommendationsByAIDescription },
+            new() { Title = LocStrings.BecomeTruePersonalityTitle, Description = LocStrings.BecomeTruePersonalityDescription }
+        };
     }
 
     private void UpdateAppFeatures()
     {
-        m_appFeatures.Clear();
+        AppFeatures.Clear();
         ObservableCollectionEx<AppFeature> updatedFeatures = InitializeAppFeatures();
         foreach (AppFeature feature in updatedFeatures)
         {
-            m_appFeatures.Add( feature );
+            AppFeatures.Add( feature );
         }
     }
 
@@ -63,26 +64,26 @@ public partial class StartupViewModel : BaseViewModel
         }
 
         await ExecuteWithRetryAsync( m_reminderService.TryToRecoverAllUserRemindersAsync );
-        
+
         try
         {
-            await Navigation.GoToInitialViewAsync();
+            await Navigation.GoToInitialViewAsync( SyncTrigger.AuthCompleted );
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             LoggingService.LogError( ex, ex.Message );
         }
     }
 
-    private async Task HandleExceptionWhenGoogleAuthAsync(Exception ex)
+    private async Task HandleExceptionWhenGoogleAuthAsync( Exception ex )
     {
         string? errorMsg = null;
-            
+
         if (ex is TimeoutException || ex.InnerException is TimeoutException)
         {
             errorMsg = LocStrings.OperationTimeoutMessage;
         }
-        else if (ex is HttpRequestException or AggregateException or WebException)
+        else if (ConnectivityExceptionClassifier.IsConnectivityFailure( ex ))
         {
             errorMsg = LocStrings.NoInternetConnection;
         }
@@ -91,11 +92,10 @@ public partial class StartupViewModel : BaseViewModel
             errorMsg = LocStrings.SomethingWentWrong;
             LoggingService.LogError( ex, ex.Message );
         }
-        
-        bool doShowAlert = !string.IsNullOrWhiteSpace( errorMsg );
-        if (doShowAlert)
+
+        if (!string.IsNullOrWhiteSpace( errorMsg ))
         {
-            await DialogService.ShowErrorAsync( errorMsg! );
+            await DialogService.ShowErrorAsync( errorMsg );
         }
     }
 
@@ -116,9 +116,9 @@ public partial class StartupViewModel : BaseViewModel
 
         try
         {
-            await Navigation.GoToInitialViewAsync();
+            await Navigation.GoToInitialViewAsync( SyncTrigger.AuthCompleted );
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             LoggingService.LogError( ex, ex.Message );
         }
@@ -127,29 +127,30 @@ public partial class StartupViewModel : BaseViewModel
     private async Task HandleExceptionWhenAppleAuthAsync( Exception ex )
     {
         bool isCancelledByUser = ex.Message.Contains( "1001" );
-        if (!isCancelledByUser)
+        if (isCancelledByUser)
         {
-            string? errorMsg = null;
-                
-            if (ex is TimeoutException || ex.InnerException is TimeoutException)
-            {
-                errorMsg = LocStrings.OperationTimeoutMessage;
-            }
-            else if (ex is HttpRequestException or AggregateException or WebException)
-            {
-                errorMsg = LocStrings.NoInternetConnection;
-            }
-            else if (ex is not TaskCanceledException)
-            {
-                errorMsg = LocStrings.SomethingWentWrong;
-                LoggingService.LogError( ex, ex.Message );
-            }
-                
-            bool doShowAlert = !string.IsNullOrWhiteSpace( errorMsg );
-            if (doShowAlert)
-            {
-                await DialogService.ShowErrorAsync( errorMsg! );
-            }
+            return;
+        }
+
+        string? errorMsg = null;
+
+        if (ex is TimeoutException || ex.InnerException is TimeoutException)
+        {
+            errorMsg = LocStrings.OperationTimeoutMessage;
+        }
+        else if (ConnectivityExceptionClassifier.IsConnectivityFailure( ex ))
+        {
+            errorMsg = LocStrings.NoInternetConnection;
+        }
+        else if (ex is not TaskCanceledException)
+        {
+            errorMsg = LocStrings.SomethingWentWrong;
+            LoggingService.LogError( ex, ex.Message );
+        }
+
+        if (!string.IsNullOrWhiteSpace( errorMsg ))
+        {
+            await DialogService.ShowErrorAsync( errorMsg );
         }
     }
 

@@ -8,6 +8,7 @@ namespace Principles.Core.Models;
 public class ArсhivedHabitDto
 {
     public long Id { get; set; }
+    public long LocalId { get; set; }
     public string Name { get; set; }
     public DateTime ArchivingTime { get; set; }
 }

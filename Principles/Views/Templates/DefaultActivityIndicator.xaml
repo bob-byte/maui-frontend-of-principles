@@ -1,30 +1,53 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<Frame x:Class="Principles.Views.Templates.DefaultActivityIndicator"
-       xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-       xmlns:vm="clr-namespace:Principles.ViewModels"
-       IsVisible="{Binding IsBusy}"
-       WidthRequest="{OnPlatform iOS=60,
-                                 Android=70}"
-       HeightRequest="{OnPlatform iOS=60,
-                                  Android=70}"
-       Padding="0"
-       x:DataType="vm:BaseViewModel"
-       BackgroundColor="{StaticResource LightEditControlBackColor}"
-       CornerRadius="{OnPlatform Android=35,
-                                 iOS=25}"
-       HorizontalOptions="Center"
-       VerticalOptions="Center">
-    <Frame.Shadow>
-        <Shadow Brush="Black"
-                Opacity="0.3"
-                Radius="12"
-                Offset="0,6" />
-    </Frame.Shadow>
-    <ActivityIndicator WidthRequest="{OnPlatform Android=45}"
-                       HeightRequest="{OnPlatform Android=45}"
-                       HorizontalOptions="Center"
-                       IsRunning="{Binding IsBusy}"
-                       VerticalOptions="Center"
-                       Color="{StaticResource Primary}" />
-</Frame>
+<?xml version="1.0" encoding="utf-8" ?>
+<Grid x:Class="Principles.Views.Templates.DefaultActivityIndicator"
+      xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+      xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+      xmlns:vm="clr-namespace:Principles.ViewModels"
+      IsVisible="{Binding IsBusy}"
+      x:DataType="vm:BaseViewModel"
+      BackgroundColor="#66000000"
+      HorizontalOptions="Fill"
+      InputTransparent="False"
+      VerticalOptions="Fill"
+      ZIndex="99">
+    <Border Padding="18,16,18,18"
+            BackgroundColor="{AppThemeBinding Light={StaticResource Background},
+                                              Dark={StaticResource DarkCardBackground}}"
+            HorizontalOptions="Center"
+            StrokeThickness="0"
+            StrokeShape="RoundRectangle 24"
+            VerticalOptions="Center"
+            WidthRequest="{OnPlatform iOS=210,
+                                      Android=220}">
+        <Border.Shadow>
+            <Shadow Brush="Black"
+                    Opacity="0.28"
+                    Radius="18"
+                    Offset="0,8" />
+        </Border.Shadow>
+
+        <VerticalStackLayout Spacing="2"
+                             HorizontalOptions="Center"
+                             VerticalOptions="Center">
+            <skia:SKLottieView Source="fire_loading.json"
+                               HeightRequest="{OnPlatform iOS=125,
+                                                          Android=135}"
+                               HorizontalOptions="Center"
+                               IsAnimationEnabled="{Binding IsBusy}"
+                               RepeatCount="-1"
+                               WidthRequest="{OnPlatform iOS=125,
+                                                         Android=135}" />
+            <Label Text="{Binding LocManager[Loading],
+                                  FallbackValue=Loading...}"
+                   FontAttributes="Bold"
+                   FontFamily="MonaSansMedium"
+                   FontSize="16"
+                   HorizontalTextAlignment="Center"
+                   LineBreakMode="TailTruncation"
+                   MaxLines="1"
+                   TextColor="{AppThemeBinding Light={StaticResource LightNormalText},
+                                               Dark=White}" />
+        </VerticalStackLayout>
+    </Border>
+</Grid>

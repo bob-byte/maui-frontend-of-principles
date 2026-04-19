@@ -17,7 +17,7 @@ namespace Principles.Views;
 
 public partial class HabitDetailView : ContentPageBase
 {
-    private readonly ILockDeviceOrientation m_deviceOrientationService;
+    private readonly ILockDeviceOrientation? m_deviceOrientationService;
     public HabitDetailView( HabitDetailViewModel viewModel )
 	{
         BindingContext = viewModel;
@@ -27,13 +27,13 @@ public partial class HabitDetailView : ContentPageBase
         m_deviceOrientationService = DependencyService.Get<ILockDeviceOrientation>();
 
         InitializeComponent();
-        
+
         var animationSpeed = TimeSpan.FromSeconds( 1.5 );
-        
+
         CC_Streaks.AnimationsSpeed = animationSpeed;
         CC_Stability.AnimationsSpeed = animationSpeed;
         CC_HabitByWeekDays.AnimationsSpeed = animationSpeed;
-        
+
         viewModel.ReferenceMessenger.Register<MsgThatProgressOfHabitUpdated>( this, async ( _, _ ) =>
         {
             try
@@ -50,14 +50,14 @@ public partial class HabitDetailView : ContentPageBase
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        
-        m_deviceOrientationService.LockOrientation( DeviceOrientation.Portrait );
+
+        m_deviceOrientationService?.LockOrientation( DeviceOrientation.Portrait );
     }
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
-        
-        m_deviceOrientationService.UnlockOrientation();
+
+        m_deviceOrientationService?.UnlockOrientation();
     }
 
     private void ViewModelOnPropertyChanged( object? sender, PropertyChangedEventArgs e )

@@ -3,7 +3,6 @@ using CommunityToolkit.Maui.Behaviors;
 using DevExpress.Maui.Controls;
 using DevExpress.Maui.Core;
 using DevExpress.Maui.DataGrid;
-using Plugin.LocalNotification;
 using Principles.Controls;
 using System.Windows.Input;
 
@@ -46,7 +45,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
         {
             UpdateLocalizedStrings();
         } );
-        
+
         ViewModel.ReferenceMessenger.Register<ShowAllArchivedHabitsMsg>( this, async ( _, _ ) =>
         {
             await ShowArchivedHabitsAsync();
@@ -61,7 +60,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
     private void RebuildViewOfActiveHabits()
     {
         DGV_Habits.Columns.Clear();
-        
+
         AddGroupingColumn();
         AddFirstCol();
         AddColumns();
@@ -70,7 +69,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
         SwipeItemInitialize();
 #endif
     }
-    
+
     ~ProgressOfHabitsView()
     {
 #if IOS
@@ -107,7 +106,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
 #endif
         }
     }
-    
+
     private async void TryAddNewDayColumn( object? state )
     {
         await s_lockerOfAddingNewDayColumn.WaitAsync();
@@ -126,7 +125,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
                                      DGV_Habits.Columns[2].Caption.Equals( colCaption, StringComparison.CurrentCultureIgnoreCase ) ||
                                      DGV_Habits.Columns[3].Caption.Equals( colCaption, StringComparison.CurrentCultureIgnoreCase ) ||
                                      (ViewModel.UserHabits?.Count > 0 && ViewModel.UserHabits[0].Progresses!.Any(p => p.Date == today) );
-            
+
             if (!isAlreadyAddedCol && ViewModel.UserHabits is not null)
             {
                 ViewModel.IsProgressesInitialized = false;
@@ -134,7 +133,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
                 await MainThread.InvokeOnMainThreadAsync( () =>
                 {
                     ViewModel.EndProgressInterval = today;
-                    
+
                     foreach (UserHabit habit in ViewModel.UserHabits)
                     {
                         habit.Progresses!.Insert( index: 0,
@@ -145,7 +144,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
                         ViewModel.ServiceOfHabit.Recompute( habit );
                     }
-                    
+
 #if IOS
                     DGV_Habits.Columns.Clear();
 
@@ -316,7 +315,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
     }
 
 #if ANDROID31_0_OR_GREATER || IOS16_0_OR_GREATER
-    private void SwipeItemInitialize() 
+    private void SwipeItemInitialize()
     {
         LocalizationResourceManager.Initialize( ViewModel.SettingsService );
 
@@ -332,10 +331,10 @@ public partial class ProgressOfHabitsView : ContentPageBase
         {
             BackgroundColor = Application.Current!.Resources["LightPrimary"] as Color,
             Image = ImageSource.FromFile( "archive_habit" )
-        }; 
+        };
         archiveOnSwipe.SetBinding( GridSwipeItem.CommandProperty, new Binding( nameof( ProgressOfHabitsViewModel.ArchiveHabitCommand ) ) );
         DGV_Habits.StartSwipeItems.Add( archiveOnSwipe );
-        
+
         GridSwipeItem swipeForDeletion = new()
         {
             BackgroundColor = Application.Current!.Resources["RedColor"] as Color,
@@ -385,24 +384,24 @@ public partial class ProgressOfHabitsView : ContentPageBase
         }
         else
         {
-            
+
         }
     }
 
     private async void DXI_Reminder_Tapped( object sender, TappedEventArgs e )
     {
-        if (LocalNotificationCenter.Current.IsSupported)
+        if (ViewModel.ReminderService.IsLocalNotificationSupported())
         {
             Action openPopup = () => DXP_Reminder.IsOpen = true;
             if (ViewModel.LoadHabitReportReminderCommand.CanExecute( openPopup ))
             {
-                await ViewModel.LoadHabitReportReminderCommand.ExecuteAsync( openPopup ).DefaultConfigureAwait();
+                await ViewModel.LoadHabitReportReminderCommand.ExecuteAsync( openPopup );
             }
         }
         else
         {
             DXP_Reminder.IsOpen = false;
-            
+
             await Snackbar.Make(
                 LocStrings.DeviceDoesNotSupportNotifications,
                 visualOptions: SnackbarHelper.DefaultOptions()
@@ -413,10 +412,10 @@ public partial class ProgressOfHabitsView : ContentPageBase
     private async void SB_Save_Clicked( object sender, EventArgs e )
     {
         Action closePopup = () => DXP_Reminder.IsOpen = false;
-        
+
         if (ViewModel.SaveHabitsReportReminderCommand.CanExecute( closePopup ))
         {
-            await ViewModel.SaveHabitsReportReminderCommand.ExecuteAsync( closePopup ).DefaultConfigureAwait();
+            await ViewModel.SaveHabitsReportReminderCommand.ExecuteAsync( closePopup );
         }
     }
 
@@ -470,10 +469,10 @@ public partial class ProgressOfHabitsView : ContentPageBase
             DXCV_Archive.HeightRequest = height;
 
             ArchiveBottomSheet.State = BottomSheetState.HalfExpanded;
-            
+
             await ViewModel.GetArchivedHabitsCommand.ExecuteAsync( null );
         }
-        
+
     }
 
     private void ME_ArchivedHabitEndIconClicked( object sender, EventArgs e )
@@ -501,7 +500,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
             ViewModel.CreateArchivedHabitCommand.Execute( null );
         }
     }
-    
+
     private void ArchivedHabitButton_Clicked( object sender, EventArgs e )
     {
         if (sender is Button button && button.CommandParameter is ArсhivedHabitDto archivedHabit)

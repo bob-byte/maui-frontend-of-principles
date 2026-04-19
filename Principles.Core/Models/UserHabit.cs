@@ -1,11 +1,18 @@
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Principles.Core.Models;
 
-public partial class UserHabit : ObservableObject, ICloneable
+[Table( "UserHabit" )]
+public partial class UserHabit : ObservableObject, ICloneable, IEntity
 {
     [ObservableProperty]
     private long m_id;
+
+    [PrimaryKey, AutoIncrement]
+    public long LocalId { get; set; }
+
+    public DateTime LastModified { get; set; }
+
     [ObservableProperty]
     private string? m_name;
 
@@ -16,6 +23,7 @@ public partial class UserHabit : ObservableObject, ICloneable
     private StatusOfHabit m_status;
 
     [ObservableProperty]
+    [property: Ignore]
     private ObservableCollectionEx<UserAreaOfLife>? m_areasOfLife;
 
     [ObservableProperty]
@@ -27,17 +35,24 @@ public partial class UserHabit : ObservableObject, ICloneable
     [ObservableProperty]
     private string? m_description;
     [ObservableProperty]
+    [property: Ignore]
     private UserGoal? m_goal;
 
+    public long? GoalLocalId { get; set; }
+
     [ObservableProperty]
+    [property: Ignore]
     private ObservableCollectionEx<UserHabitReminder>? m_reminders;
-    
+
+    public DateTime? ArchivingTime { get; set; }
+
     public bool IsNew()
     {
-        return Id == 0;
+        return LocalId == 0;
     }
 
     private double m_percentageAchieved;
+    [Ignore]
     public double PercentageAchieved
     {
         get => m_percentageAchieved;
@@ -50,20 +65,26 @@ public partial class UserHabit : ObservableObject, ICloneable
     }
 
     [ObservableProperty]
+    [property: Ignore]
     private ObservableCollectionEx<ProgressOfHabit>? m_progresses;
 
     [ObservableProperty]
+    [property: Ignore]
     private ListOfProgressOfHabit m_computedProgresses;
 
     [ObservableProperty]
+    [property: Ignore]
     private ScoreList m_scoreList;
 
     [ObservableProperty]
+    [property: Ignore]
     private FrequencyOfHabit? m_frequency;
+
+    public long FrequencyLocalId { get; set; }
 
     [ObservableProperty]
     private string? m_colorName;
-    
+
     [ObservableProperty]
     private int m_complexity;
 
@@ -75,17 +96,18 @@ public partial class UserHabit : ObservableObject, ICloneable
 
     public override string ToString()
     {
-        return Name ?? "NULL";
+        return Name ?? string.Empty;
     }
 
     public override bool Equals( object? obj )
     {
-        return obj is UserHabit habit && habit.Id == Id;
+        return obj is UserHabit habit &&
+               ((Id != 0 && habit.Id == Id) || (Id == 0 && LocalId != 0 && habit.LocalId == LocalId));
     }
 
     public override int GetHashCode()
     {
-        return Id.GetHashCode();
+        return Id != 0 ? Id.GetHashCode() : LocalId.GetHashCode();
     }
 
     public object Clone()
@@ -102,9 +124,9 @@ public partial class UserHabit : ObservableObject, ICloneable
                 habit.Reminders.Add((reminder.Clone() as UserHabitReminder)!);
             }
         }
-        
+
         habit.Goal = habit.Goal?.Clone() as UserGoal;
-        
+
         return habit;
     }
 

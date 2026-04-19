@@ -1,0 +1,11 @@
+﻿CREATE TABLE IF NOT EXISTS User (
+    LocalId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    Id INTEGER NULL,
+    Name TEXT NULL,
+    MainSlogan TEXT NULL,
+    Mission TEXT NULL,
+    Email TEXT NULL,
+    Gender INTEGER NOT NULL,
+    LastModified TEXT NULL,
+    IsAllDataSyncedOnFirstStart INTEGER NOT NULL DEFAULT 0
+);

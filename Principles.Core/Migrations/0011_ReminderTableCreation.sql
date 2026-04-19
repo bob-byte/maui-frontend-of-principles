@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS Reminder (
+    LocalId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    Id INTEGER NULL,
+    LastModified TEXT NULL,
+    Title TEXT NOT NULL,
+    Description TEXT NULL,
+    Time TEXT NOT NULL,
+    IsEnabled INTEGER NOT NULL,
+    UserNotificationRequestId INTEGER NOT NULL
+);

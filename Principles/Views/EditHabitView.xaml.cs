@@ -3,13 +3,11 @@ using DevExpress.Maui.Controls;
 using DevExpress.Maui.Core;
 using DevExpress.Maui.Editors;
 
-using Plugin.LocalNotification;
-
 namespace Principles.Views;
 
 public partial class EditHabitView : ContentPageBase
 {
-    private readonly ILockDeviceOrientation m_deviceOrientationService;
+    private readonly ILockDeviceOrientation? m_deviceOrientationService;
     private bool m_doExecuteReloadOfRecommendedHabits;
 
     public EditHabitView( EditHabitViewModel viewModel )
@@ -41,13 +39,13 @@ public partial class EditHabitView : ContentPageBase
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        m_deviceOrientationService.LockOrientation( DeviceOrientation.Portrait );
+        m_deviceOrientationService?.LockOrientation( DeviceOrientation.Portrait );
     }
 
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
-        m_deviceOrientationService.UnlockOrientation();
+        m_deviceOrientationService?.UnlockOrientation();
     }
 
     private void ViewModel_HabitPropertyChanged( object? sender, PropertyChangedEventArgs e )
@@ -110,6 +108,7 @@ public partial class EditHabitView : ContentPageBase
 
     private void OpenFrequencyPopup()
     {
+        ViewModel.Habit.Frequency ??= new FrequencyOfHabit();
         FrequencyOfHabit frequency = ViewModel.Habit.Frequency;
         switch (frequency.Type)
         {
@@ -253,7 +252,7 @@ public partial class EditHabitView : ContentPageBase
 
             OnPropertyChanged( nameof(ViewModel.FrequencyInfo) );
             ViewModel.Habit.NotifyPropertyChanged( nameof(UserHabit.Complexity) );
-            
+
             DXP_Frequency.IsOpen = false;
         }
     }
@@ -663,7 +662,7 @@ public partial class EditHabitView : ContentPageBase
 
     private void ME_HabitReminder_Tap( object sender, HandledEventArgs e )
     {
-        if (LocalNotificationCenter.Current.IsSupported)
+        if (AreLocalNotificationsSupported())
         {
             OpenReminderBottomSheet();
         }
@@ -705,7 +704,7 @@ public partial class EditHabitView : ContentPageBase
 
     private void OpenReminderBottomSheet()
     {
-        if (!LocalNotificationCenter.Current.IsSupported)
+        if (!AreLocalNotificationsSupported())
         {
             Snackbar.Make(
                 LocStrings.DeviceDoesNotSupportNotifications,
@@ -723,13 +722,13 @@ public partial class EditHabitView : ContentPageBase
             EditedUserHabitReminder reminder = ViewModel.EditedReminder;
             if (string.IsNullOrWhiteSpace( reminder.Title ))
             {
-                if (ViewModel.Habit.Goal.Name is not null)
+                if (!string.IsNullOrWhiteSpace( ViewModel.Habit.Goal?.Name ))
                 {
-                    ME_ReminderTitle.Text = ViewModel.Habit.Goal.Name;
+                    ME_ReminderTitle.Text = ViewModel.Habit.Goal.Name.Trim();
                 }
                 else
                 {
-                    string mission = ViewModel.CachingService.GetStoredValue( CacheKeys.USER_MISSION );
+                    string? mission = ViewModel.Mission;
                     ME_ReminderTitle.Text = string.IsNullOrWhiteSpace( mission )
                         ? LocStrings.BecomeTruePersonalityTitle
                         : mission;
@@ -738,7 +737,7 @@ public partial class EditHabitView : ContentPageBase
 
             if (string.IsNullOrWhiteSpace( reminder.Description ))
             {
-                ME_ReminderDescription.Text = ViewModel.NameOfHabit.Value;
+                ME_ReminderDescription.Text = ViewModel.NameOfHabit?.Value ?? ViewModel.Habit.Name ?? string.Empty;
             }
 
             DXS_IsReminderEnabled.IsChecked = true;
@@ -748,9 +747,16 @@ public partial class EditHabitView : ContentPageBase
         }
         else
         {
-            UserHabitReminder reminder = ViewModel.Habit.Reminders[0];
-            ME_ReminderTitle.Text = reminder.Title;
-            ME_ReminderDescription.Text = reminder.Description;
+            UserHabitReminder? reminder = ViewModel.Habit.Reminders.FirstOrDefault();
+            if (reminder is null)
+            {
+                ViewModel.Habit.Reminders.Clear();
+                OpenReminderBottomSheet();
+                return;
+            }
+
+            ME_ReminderTitle.Text = reminder.Title ?? string.Empty;
+            ME_ReminderDescription.Text = reminder.Description ?? string.Empty;
             DXS_IsReminderEnabled.IsChecked = reminder.IsEnabled;
 
             TimeSpan? time = reminder.Time.ToTimeSpan();
@@ -762,59 +768,83 @@ public partial class EditHabitView : ContentPageBase
 
     private async void SB_ReminderSave_Clicked( object sender, EventArgs e )
     {
-        if (ViewModel.EditedReminder == null)
+        try
         {
-            ViewModel.EditedReminder = new EditedUserHabitReminder();
-        }
-
-        EditedUserHabitReminder? reminder = ViewModel.EditedReminder;
-        reminder.Title = ME_ReminderTitle.Text;
-        reminder.Description = ME_ReminderDescription.Text;
-        reminder.IsEnabled = DXS_IsReminderEnabled.IsChecked;
-        reminder.Time = TE_ReminderTime.Time!.Value;
-
-        if (reminder.DaysOfWeek is null || !reminder.DaysOfWeek.Any())
-        {
-            reminder.DaysOfWeek = ViewModel.GetSelectedDaysIndexes()
-                .Select( index => new WeekDay { Type = (DayOfWeek)index } ).ToList();
-        }
-        else
-        {
-            List<WeekDay> selectedDaysOfWeek = ViewModel.GetSelectedDaysIndexes()
-                .Select( index => new WeekDay { Type = (DayOfWeek)index } ).ToList();
-
-            List<WeekDay> reminderDaysOfWeek = reminder.DaysOfWeek.ToList();
-            foreach (WeekDay weekDay in selectedDaysOfWeek)
+            if (ViewModel.EditedReminder == null)
             {
-                if (reminderDaysOfWeek.All( d => d.Type != weekDay.Type ))
-                {
-                    reminder.DaysOfWeek.Add( weekDay );
-                }
+                ViewModel.EditedReminder = new EditedUserHabitReminder();
             }
 
-            foreach (WeekDay weekDay in reminderDaysOfWeek)
-            {
-                if (selectedDaysOfWeek.All( d => d.Type != weekDay.Type ))
-                {
-                    reminder.DaysOfWeek.Remove( weekDay );
+            EditedUserHabitReminder? reminder = ViewModel.EditedReminder;
+            reminder.Title = ME_ReminderTitle.Text?.Trim() ?? string.Empty;
+            reminder.Description = ME_ReminderDescription.Text?.Trim() ?? string.Empty;
+            reminder.IsEnabled = DXS_IsReminderEnabled.IsChecked;
+            reminder.Time = TE_ReminderTime.Time ?? DateTime.Today.AddHours( 8 );
 
-                    if (weekDay.UserNotificationRequestId != 0 && ViewModel.InactiveDaysToDelete.All( d =>
-                            d.UserNotificationRequestId != weekDay.UserNotificationRequestId ))
+            List<WeekDay> selectedDaysOfWeek = ViewModel.GetSelectedDaysIndexes()
+                .Select( index => new WeekDay { Type = (DayOfWeek)index } )
+                .ToList();
+
+            if (reminder.IsEnabled && selectedDaysOfWeek.Count == 0)
+            {
+                await ViewModel.DialogService.ShowErrorAsync( $"{LocStrings.Reminder}: {LocStrings.days} {LocStrings.isRequired}." );
+                return;
+            }
+
+            if (reminder.DaysOfWeek is null || !reminder.DaysOfWeek.Any())
+            {
+                reminder.DaysOfWeek = selectedDaysOfWeek;
+            }
+            else
+            {
+                List<WeekDay> reminderDaysOfWeek = reminder.DaysOfWeek
+                    .Where( day => day is not null && (int)day.Type is >= 0 and <= 6 )
+                    .ToList();
+                foreach (WeekDay weekDay in selectedDaysOfWeek)
+                {
+                    if (reminderDaysOfWeek.All( d => d.Type != weekDay.Type ))
                     {
-                        ViewModel.InactiveDaysToDelete.Add( weekDay );
+                        reminder.DaysOfWeek.Add( weekDay );
+                    }
+                }
+
+                foreach (WeekDay weekDay in reminderDaysOfWeek)
+                {
+                    if (selectedDaysOfWeek.All( d => d.Type != weekDay.Type ))
+                    {
+                        reminder.DaysOfWeek.Remove( weekDay );
+
+                        if (weekDay.UserNotificationRequestId != 0 && ViewModel.InactiveDaysToDelete.All( d =>
+                                d.UserNotificationRequestId != weekDay.UserNotificationRequestId ))
+                        {
+                            ViewModel.InactiveDaysToDelete.Add( weekDay );
+                        }
                     }
                 }
             }
+
+            if (await ViewModel.AddReminderAsync())
+            {
+                BS_EditReminder.State = BottomSheetState.Hidden;
+            }
         }
-
-        await ViewModel.AddReminderAsync();
-
-        BS_EditReminder.State = BottomSheetState.Hidden;
+        catch (Exception ex)
+        {
+            ViewModel.LoggingService.LogError( ex, "Failed to save habit reminder." );
+            await ViewModel.DialogService.ShowErrorAsync(
+                ViewModel.SettingsService.IsDebug ? ex.ToString() : LocStrings.SomethingWentWrong
+            );
+        }
     }
 
     private void SB_Reminder_Cancel_Clicked( object sender, EventArgs e )
     {
         BS_EditReminder.State = BottomSheetState.Hidden;
+    }
+
+    private bool AreLocalNotificationsSupported()
+    {
+        return ViewModel.ReminderService.IsLocalNotificationSupported();
     }
 
     private void AISP_AreasRequested( object? sender, ItemsRequestEventArgs e )

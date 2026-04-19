@@ -9,6 +9,7 @@ public class AppleAuthService : IAppleAuthService
     private readonly ISettingsService m_settingsService;
     private readonly IUrlBuilder m_urlBuilder;
     private readonly ILoggingService m_loggingService;
+    private readonly IUserService m_userService;
 
     public AppleAuthService( IServiceProvider serviceProvider )
     {
@@ -17,6 +18,7 @@ public class AppleAuthService : IAppleAuthService
         m_settingsService = serviceProvider.GetRequiredService<ISettingsService>();
         m_urlBuilder = serviceProvider.GetRequiredService<IUrlBuilder>();
         m_loggingService = serviceProvider.GetRequiredService<ILoggingService>();
+        m_userService = serviceProvider.GetRequiredService<IUserService>();
     }
 
     public async Task AuthorizeAsync()
@@ -25,7 +27,7 @@ public class AppleAuthService : IAppleAuthService
         {
             var options = new AppleSignInAuthenticator.Options
             {
-                IncludeEmailScope = true, 
+                IncludeEmailScope = true,
                 IncludeFullNameScope = true,
             };
             WebAuthenticatorResult webAuthResult = await AppleSignInAuthenticator.AuthenticateAsync( options );
@@ -42,6 +44,7 @@ public class AppleAuthService : IAppleAuthService
             LoginResponse loginResponse = await m_requestProvider
                 .PostAsync<AppleAuthRequest, LoginResponse>( m_urlBuilder.AppleAuth, request ).DefaultConfigureAwait();
 
+            await m_userService.ClearLocalDataAsync().ConfigureAwait( false );
             await m_settingsService.SetAuthAccessTokenAsync( loginResponse.Token ).DefaultConfigureAwait();
         }
         else
@@ -71,11 +74,12 @@ public class AppleAuthService : IAppleAuthService
             if (appToken is null)
             {
                 throw new AuthenticationException(
-                    "Failed to authenticate to apple, because app token could not be retrieved." 
+                    "Failed to authenticate to apple, because app token could not be retrieved."
                 );
             }
             else
             {
+                await m_userService.ClearLocalDataAsync().ConfigureAwait( false );
                 await m_settingsService.SetAuthAccessTokenAsync( appToken );
             }
         }

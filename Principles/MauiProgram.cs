@@ -1,4 +1,4 @@
-﻿
+
 using Serilog.Events;
 using Serilog;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,8 +28,9 @@ public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
     {
+        SQLitePCL.Batteries_V2.Init();
         MauiAppBuilder builder = MauiApp.CreateBuilder();
-         
+
         SetupSerilog();
 
         builder
@@ -91,7 +92,7 @@ public static class MauiProgram
         }
 
         AllowMultiLineTruncation();
-        
+
 #if IOS
         //hide Done button above keyboard for Editor control
         EditorHandler.Mapper.AppendToMapping("NoAccessoryView", (handler, view) =>
@@ -114,6 +115,10 @@ public static class MauiProgram
         services.AddSingleton<ILaunchUriHelper, LaunchUriHelper>();
         services.AddSingleton<IReminderService, ReminderService>();
         services.AddSingleton<ITipService, TipService>();
+        services.AddSingleton<INetworkService, NetworkService>();
+        services.AddSingleton<ISyncStateNotifier, SyncStateNotifier>();
+        services.AddSingleton<IDatabasePathProvider, DatabasePathProvider>();
+        services.AddSingleton<IDatabaseKeyProvider, DatabaseKeyProvider>();
 
         return services;
     }
@@ -129,6 +134,7 @@ public static class MauiProgram
         services.AddSingleton<ProfileViewModel>();
         services.AddSingleton<ForgetPasswordViewModel>();
         services.AddSingleton<StartupViewModel>();
+        services.AddSingleton<SyncGateViewModel>();
         services.AddSingleton<MultipleActionPopupViewModel>();
         services.AddSingleton<ChangePasswordViewModel>();
         services.AddSingleton<ConfirmEmailPopupViewModel>();
@@ -148,6 +154,7 @@ public static class MauiProgram
         services.AddTransient<ProfileView>();
         services.AddTransient<ForgetPasswordView>();
         services.AddTransient<StartupView>();
+        services.AddTransient<SyncGateView>();
         services.AddTransient<HabitDetailView>();
         services.AddTransient<ChangePasswordView>();
 
@@ -176,7 +183,7 @@ public static class MauiProgram
     {
         IDeviceInfo deviceInfo = DeviceInfo.Current;
         IAppInfo appInfo = AppInfo.Current;
-        
+
         string? stackTrace = null;
         if (logEvent.Exception is not null)
         {
@@ -219,10 +226,10 @@ public static class MauiProgram
                 && controlsLabel.MaxLines != -1 )
             {
               textView.Lines = controlsLabel.MaxLines;
-            }  
+            }
 #endif
         }
-        
+
         LabelHandler.Mapper.AppendToMapping(
            nameof( Label.LineBreakMode ), UpdateMaxLines );
 

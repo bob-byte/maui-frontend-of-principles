@@ -9,21 +9,21 @@
 
 namespace Principles.Resources.AppStrings {
     using System;
-    
-    
+
+
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class LocStrings {
-        
+
         private static System.Resources.ResourceManager resourceMan;
-        
+
         private static System.Globalization.CultureInfo resourceCulture;
-        
+
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal LocStrings() {
         }
-        
+
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static System.Resources.ResourceManager ResourceManager {
             get {
@@ -34,7 +34,7 @@ namespace Principles.Resources.AppStrings {
                 return resourceMan;
             }
         }
-        
+
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static System.Globalization.CultureInfo Culture {
             get {
@@ -44,1783 +44,1789 @@ namespace Principles.Resources.AppStrings {
                 resourceCulture = value;
             }
         }
-        
+
         internal static string CreateNewAccount {
             get {
                 return ResourceManager.GetString("CreateNewAccount", resourceCulture);
             }
         }
-        
+
         internal static string Email {
             get {
                 return ResourceManager.GetString("Email", resourceCulture);
             }
         }
-        
+
         internal static string EmailMustHaveCorrectValue {
             get {
                 return ResourceManager.GetString("EmailMustHaveCorrectValue", resourceCulture);
             }
         }
-        
+
         internal static string Error {
             get {
                 return ResourceManager.GetString("Error", resourceCulture);
             }
         }
-        
+
         internal static string Login {
             get {
                 return ResourceManager.GetString("Login", resourceCulture);
             }
         }
-        
+
         internal static string Logout {
             get {
                 return ResourceManager.GetString("Logout", resourceCulture);
             }
         }
-        
+
         internal static string MainSlogan {
             get {
                 return ResourceManager.GetString("MainSlogan", resourceCulture);
             }
         }
-        
+
         internal static string Man {
             get {
                 return ResourceManager.GetString("Man", resourceCulture);
             }
         }
-        
+
         internal static string Mentor {
             get {
                 return ResourceManager.GetString("Mentor", resourceCulture);
             }
         }
-        
+
         internal static string MyHabits {
             get {
                 return ResourceManager.GetString("MyHabits", resourceCulture);
             }
         }
-        
+
         internal static string OK {
             get {
                 return ResourceManager.GetString("OK", resourceCulture);
             }
         }
-        
+
         internal static string OtherSex {
             get {
                 return ResourceManager.GetString("OtherSex", resourceCulture);
             }
         }
-        
+
         internal static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
             }
         }
-        
+
         internal static string Habits {
             get {
                 return ResourceManager.GetString("Habits", resourceCulture);
             }
         }
-        
+
         internal static string Profile {
             get {
                 return ResourceManager.GetString("Profile", resourceCulture);
             }
         }
-        
+
         internal static string Progress {
             get {
                 return ResourceManager.GetString("Progress", resourceCulture);
             }
         }
-        
+
         internal static string ProgressOfHabits {
             get {
                 return ResourceManager.GetString("ProgressOfHabits", resourceCulture);
             }
         }
-        
+
         internal static string RequiredErrorText {
             get {
                 return ResourceManager.GetString("RequiredErrorText", resourceCulture);
             }
         }
-        
+
         internal static string RequiredHelpText {
             get {
                 return ResourceManager.GetString("RequiredHelpText", resourceCulture);
             }
         }
-        
+
         internal static string Settings {
             get {
                 return ResourceManager.GetString("Settings", resourceCulture);
             }
         }
-        
+
         internal static string SignUp {
             get {
                 return ResourceManager.GetString("SignUp", resourceCulture);
             }
         }
-        
+
         internal static string SigningUp {
             get {
                 return ResourceManager.GetString("SigningUp", resourceCulture);
             }
         }
-        
+
         internal static string UserName {
             get {
                 return ResourceManager.GetString("UserName", resourceCulture);
             }
         }
-        
+
         internal static string MissionExplanation {
             get {
                 return ResourceManager.GetString("MissionExplanation", resourceCulture);
             }
         }
-        
+
         internal static string MainSloganExplanation {
             get {
                 return ResourceManager.GetString("MainSloganExplanation", resourceCulture);
             }
         }
-        
+
         internal static string Vision {
             get {
                 return ResourceManager.GetString("Vision", resourceCulture);
             }
         }
-        
+
         internal static string Visualization {
             get {
                 return ResourceManager.GetString("Visualization", resourceCulture);
             }
         }
-        
+
         internal static string Visual {
             get {
                 return ResourceManager.GetString("Visual", resourceCulture);
             }
         }
-        
+
         internal static string Woman {
             get {
                 return ResourceManager.GetString("Woman", resourceCulture);
             }
         }
-        
+
         internal static string YourNameSuccessfullySaved {
             get {
                 return ResourceManager.GetString("YourNameSuccessfullySaved", resourceCulture);
             }
         }
-        
+
         internal static string YourMainSloganSuccessfullySaved {
             get {
                 return ResourceManager.GetString("YourMainSloganSuccessfullySaved", resourceCulture);
             }
         }
-        
+
         internal static string YourMissionSuccessfullySaved {
             get {
                 return ResourceManager.GetString("YourMissionSuccessfullySaved", resourceCulture);
             }
         }
-        
+
         internal static string MondayShort {
             get {
                 return ResourceManager.GetString("MondayShort", resourceCulture);
             }
         }
-        
+
         internal static string TuesdayShort {
             get {
                 return ResourceManager.GetString("TuesdayShort", resourceCulture);
             }
         }
-        
+
         internal static string WednesdayShort {
             get {
                 return ResourceManager.GetString("WednesdayShort", resourceCulture);
             }
         }
-        
+
         internal static string ThursdayShort {
             get {
                 return ResourceManager.GetString("ThursdayShort", resourceCulture);
             }
         }
-        
+
         internal static string FridayShort {
             get {
                 return ResourceManager.GetString("FridayShort", resourceCulture);
             }
         }
-        
+
         internal static string SaturdayShort {
             get {
                 return ResourceManager.GetString("SaturdayShort", resourceCulture);
             }
         }
-        
+
         internal static string SundayShort {
             get {
                 return ResourceManager.GetString("SundayShort", resourceCulture);
             }
         }
-        
+
         internal static string Habit {
             get {
                 return ResourceManager.GetString("Habit", resourceCulture);
             }
         }
-        
+
         internal static string AreasOfHabit {
             get {
                 return ResourceManager.GetString("AreasOfHabit", resourceCulture);
             }
         }
-        
+
         internal static string HowToKeep {
             get {
                 return ResourceManager.GetString("HowToKeep", resourceCulture);
             }
         }
-        
+
         internal static string Data {
             get {
                 return ResourceManager.GetString("Data", resourceCulture);
             }
         }
-        
+
         internal static string NotesOrHowToKeepHabit {
             get {
                 return ResourceManager.GetString("NotesOrHowToKeepHabit", resourceCulture);
             }
         }
-        
+
         internal static string UseSubhabits {
             get {
                 return ResourceManager.GetString("UseSubhabits", resourceCulture);
             }
         }
-        
+
         internal static string Name {
             get {
                 return ResourceManager.GetString("Name", resourceCulture);
             }
         }
-        
+
         internal static string OptionalPlaceholder {
             get {
                 return ResourceManager.GetString("OptionalPlaceholder", resourceCulture);
             }
         }
-        
+
         internal static string Question {
             get {
                 return ResourceManager.GetString("Question", resourceCulture);
             }
         }
-        
+
         internal static string QuestionExplanation {
             get {
                 return ResourceManager.GetString("QuestionExplanation", resourceCulture);
             }
         }
-        
+
         internal static string Type {
             get {
                 return ResourceManager.GetString("Type", resourceCulture);
             }
         }
-        
+
         internal static string WithoutExceptions {
             get {
                 return ResourceManager.GetString("WithoutExceptions", resourceCulture);
             }
         }
-        
+
         internal static string IntegrallyWise {
             get {
                 return ResourceManager.GetString("IntegrallyWise", resourceCulture);
             }
         }
-        
+
         internal static string Frequency {
             get {
                 return ResourceManager.GetString("Frequency", resourceCulture);
             }
         }
-        
+
         internal static string Reminder {
             get {
                 return ResourceManager.GetString("Reminder", resourceCulture);
             }
         }
-        
+
         internal static string ComplexityWithRange {
             get {
                 return ResourceManager.GetString("ComplexityWithRange", resourceCulture);
             }
         }
-        
+
         internal static string Priority {
             get {
                 return ResourceManager.GetString("Priority", resourceCulture);
             }
         }
-        
+
         internal static string EveryDay {
             get {
                 return ResourceManager.GetString("EveryDay", resourceCulture);
             }
         }
-        
+
         internal static string Every {
             get {
                 return ResourceManager.GetString("Every", resourceCulture);
             }
         }
-        
+
         internal static string days {
             get {
                 return ResourceManager.GetString("days", resourceCulture);
             }
         }
-        
+
         internal static string timesPer {
             get {
                 return ResourceManager.GetString("timesPer", resourceCulture);
             }
         }
-        
+
         internal static string Week {
             get {
                 return ResourceManager.GetString("Week", resourceCulture);
             }
         }
-        
+
         internal static string Month {
             get {
                 return ResourceManager.GetString("Month", resourceCulture);
             }
         }
-        
+
         internal static string Year {
             get {
                 return ResourceManager.GetString("Year", resourceCulture);
             }
         }
-        
+
         internal static string EveryWeek {
             get {
                 return ResourceManager.GetString("EveryWeek", resourceCulture);
             }
         }
-        
+
         internal static string EveryMonth {
             get {
                 return ResourceManager.GetString("EveryMonth", resourceCulture);
             }
         }
-        
+
         internal static string EveryYear {
             get {
                 return ResourceManager.GetString("EveryYear", resourceCulture);
             }
         }
-        
+
         internal static string CannotParse {
             get {
                 return ResourceManager.GetString("CannotParse", resourceCulture);
             }
         }
-        
+
         internal static string ToInteger {
             get {
                 return ResourceManager.GetString("ToInteger", resourceCulture);
             }
         }
-        
+
         internal static string Close {
             get {
                 return ResourceManager.GetString("Close", resourceCulture);
             }
         }
-        
+
         internal static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
             }
         }
-        
+
         internal static string WithoutExceptionsHabitTypeShortDescription {
             get {
                 return ResourceManager.GetString("WithoutExceptionsHabitTypeShortDescription", resourceCulture);
             }
         }
-        
+
         internal static string IntegrallyWiseHabitTypeShortDescription {
             get {
                 return ResourceManager.GetString("IntegrallyWiseHabitTypeShortDescription", resourceCulture);
             }
         }
-        
+
         internal static string MessageInDeleteHabitConfirm {
             get {
                 return ResourceManager.GetString("MessageInDeleteHabitConfirm", resourceCulture);
             }
         }
-        
+
         internal static string DeleteHabitQuestion {
             get {
                 return ResourceManager.GetString("DeleteHabitQuestion", resourceCulture);
             }
         }
-        
+
         internal static string MessageInDeleteGoalConfirm {
             get {
                 return ResourceManager.GetString("MessageInDeleteGoalConfirm", resourceCulture);
             }
         }
-        
+
         internal static string DeleteGoalQuestion {
             get {
                 return ResourceManager.GetString("DeleteGoalQuestion", resourceCulture);
             }
         }
-        
+
         internal static string MessageInDeleteAccountConfirm {
             get {
                 return ResourceManager.GetString("MessageInDeleteAccountConfirm", resourceCulture);
             }
         }
-        
+
         internal static string DeleteAccountQuestion {
             get {
                 return ResourceManager.GetString("DeleteAccountQuestion", resourceCulture);
             }
         }
-        
+
         internal static string MessageInLogoutConfirm {
             get {
                 return ResourceManager.GetString("MessageInLogoutConfirm", resourceCulture);
             }
         }
-        
+
         internal static string LogoutQuestion {
             get {
                 return ResourceManager.GetString("LogoutQuestion", resourceCulture);
             }
         }
-        
+
         internal static string Yes {
             get {
                 return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
-        
+
         internal static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);
             }
         }
-        
+
         internal static string No {
             get {
                 return ResourceManager.GetString("No", resourceCulture);
             }
         }
-        
+
         internal static string AtomicHabits {
             get {
                 return ResourceManager.GetString("AtomicHabits", resourceCulture);
             }
         }
-        
+
         internal static string Principles {
             get {
                 return ResourceManager.GetString("Principles", resourceCulture);
             }
         }
-        
+
         internal static string DeleteAccount {
             get {
                 return ResourceManager.GetString("DeleteAccount", resourceCulture);
             }
         }
-        
+
         internal static string Field {
             get {
                 return ResourceManager.GetString("Field", resourceCulture);
             }
         }
-        
+
         internal static string isRequired {
             get {
                 return ResourceManager.GetString("isRequired", resourceCulture);
             }
         }
-        
+
         internal static string FixErrorsFirst {
             get {
                 return ResourceManager.GetString("FixErrorsFirst", resourceCulture);
             }
         }
-        
+
         internal static string Helper {
             get {
                 return ResourceManager.GetString("Helper", resourceCulture);
             }
         }
-        
+
         internal static string HelperName {
             get {
                 return ResourceManager.GetString("HelperName", resourceCulture);
             }
         }
-        
+
         internal static string HowCanIHelpYou {
             get {
                 return ResourceManager.GetString("HowCanIHelpYou", resourceCulture);
             }
         }
-        
+
         internal static string EnterText {
             get {
                 return ResourceManager.GetString("EnterText", resourceCulture);
             }
         }
-        
+
         internal static string SomethingWentWrong {
             get {
                 return ResourceManager.GetString("SomethingWentWrong", resourceCulture);
             }
         }
-        
+
         internal static string RecommendedHabitsByAi {
             get {
                 return ResourceManager.GetString("RecommendedHabitsByAi", resourceCulture);
             }
         }
-        
+
         internal static string ConfirmMessageOnRecommededHabitsView {
             get {
                 return ResourceManager.GetString("ConfirmMessageOnRecommededHabitsView", resourceCulture);
             }
         }
-        
+
         internal static string ConfirmTitleOnRecommendedHabitsView {
             get {
                 return ResourceManager.GetString("ConfirmTitleOnRecommendedHabitsView", resourceCulture);
             }
         }
-        
+
         internal static string DescriptionOfAiLampTap {
             get {
                 return ResourceManager.GetString("DescriptionOfAiLampTap", resourceCulture);
             }
         }
-        
+
         internal static string IfYouDontWantToWaitYouCanChangeOtherFields {
             get {
                 return ResourceManager.GetString("IfYouDontWantToWaitYouCanChangeOtherFields", resourceCulture);
             }
         }
-        
+
         internal static string CannotReloadHabits {
             get {
                 return ResourceManager.GetString("CannotReloadHabits", resourceCulture);
             }
         }
-        
+
         internal static string RecommendedHabitsSuccessfullyLoaded {
             get {
                 return ResourceManager.GetString("RecommendedHabitsSuccessfullyLoaded", resourceCulture);
             }
         }
-        
+
         internal static string Inspect {
             get {
                 return ResourceManager.GetString("Inspect", resourceCulture);
             }
         }
-        
+
         internal static string SelfDevelopmentAssistantShortDescription {
             get {
                 return ResourceManager.GetString("SelfDevelopmentAssistantShortDescription", resourceCulture);
             }
         }
-        
+
         internal static string ChatWithHelper {
             get {
                 return ResourceManager.GetString("ChatWithHelper", resourceCulture);
             }
         }
-        
+
         internal static string Mission {
             get {
                 return ResourceManager.GetString("Mission", resourceCulture);
             }
         }
-        
+
         internal static string YourMission {
             get {
                 return ResourceManager.GetString("YourMission", resourceCulture);
             }
         }
-        
+
         internal static string YourMainSlogan {
             get {
                 return ResourceManager.GetString("YourMainSlogan", resourceCulture);
             }
         }
-        
+
         internal static string YourName {
             get {
                 return ResourceManager.GetString("YourName", resourceCulture);
             }
         }
-        
+
         internal static string Correct {
             get {
                 return ResourceManager.GetString("Correct", resourceCulture);
             }
         }
-        
+
         internal static string Spirituality {
             get {
                 return ResourceManager.GetString("Spirituality", resourceCulture);
             }
         }
-        
+
         internal static string Character {
             get {
                 return ResourceManager.GetString("Character", resourceCulture);
             }
         }
-        
+
         internal static string Health {
             get {
                 return ResourceManager.GetString("Health", resourceCulture);
             }
         }
-        
+
         internal static string Career {
             get {
                 return ResourceManager.GetString("Career", resourceCulture);
             }
         }
-        
+
         internal static string Family {
             get {
                 return ResourceManager.GetString("Family", resourceCulture);
             }
         }
-        
+
         internal static string Relationships {
             get {
                 return ResourceManager.GetString("Relationships", resourceCulture);
             }
         }
-        
+
         internal static string Sociality {
             get {
                 return ResourceManager.GetString("Sociality", resourceCulture);
             }
         }
-        
+
         internal static string Mentality {
             get {
                 return ResourceManager.GetString("Mentality", resourceCulture);
             }
         }
-        
+
         internal static string Other {
             get {
                 return ResourceManager.GetString("Other", resourceCulture);
             }
         }
-        
+
         internal static string Loading {
             get {
                 return ResourceManager.GetString("Loading", resourceCulture);
             }
         }
-        
+
         internal static string LoadingContent {
             get {
                 return ResourceManager.GetString("LoadingContent", resourceCulture);
             }
         }
-        
+
         internal static string HabitCollectionIsEmptyDescription {
             get {
                 return ResourceManager.GetString("HabitCollectionIsEmptyDescription", resourceCulture);
             }
         }
-        
+
         internal static string Appearance {
             get {
                 return ResourceManager.GetString("Appearance", resourceCulture);
             }
         }
-        
+
         internal static string DescriptionOfAdviceNotToWorkOnNewHabit {
             get {
                 return ResourceManager.GetString("DescriptionOfAdviceNotToWorkOnNewHabit", resourceCulture);
             }
         }
-        
+
         internal static string TitleOfAdviceNotToWorkOnNewHabit {
             get {
                 return ResourceManager.GetString("TitleOfAdviceNotToWorkOnNewHabit", resourceCulture);
             }
         }
-        
+
         internal static string CreateItAnyway {
             get {
                 return ResourceManager.GetString("CreateItAnyway", resourceCulture);
             }
         }
-        
+
         internal static string SetPriorityByDragAndDrop {
             get {
                 return ResourceManager.GetString("SetPriorityByDragAndDrop", resourceCulture);
             }
         }
-        
+
         internal static string ComplexityCantBeChangedAfterCreationOfHabit {
             get {
                 return ResourceManager.GetString("ComplexityCantBeChangedAfterCreationOfHabit", resourceCulture);
             }
         }
-        
+
         internal static string TooManyMessagesError {
             get {
                 return ResourceManager.GetString("TooManyMessagesError", resourceCulture);
             }
         }
-        
+
         internal static string PrivacyPolicy {
             get {
                 return ResourceManager.GetString("PrivacyPolicy", resourceCulture);
             }
         }
-        
+
         internal static string PrivacyPolicyTitle {
             get {
                 return ResourceManager.GetString("PrivacyPolicyTitle", resourceCulture);
             }
         }
-        
+
         internal static string UserAgreement {
             get {
                 return ResourceManager.GetString("UserAgreement", resourceCulture);
             }
         }
-        
+
         internal static string UserAgreementTitle {
             get {
                 return ResourceManager.GetString("UserAgreementTitle", resourceCulture);
             }
         }
-        
+
         internal static string LoginAgreementText {
             get {
                 return ResourceManager.GetString("LoginAgreementText", resourceCulture);
             }
         }
-        
+
         internal static string LoginSignUpAgreementСonnectingText {
             get {
                 return ResourceManager.GetString("LoginSignUpAgreementСonnectingText", resourceCulture);
             }
         }
-        
+
         internal static string UserAgreementStrInLoginAndSignupViews {
             get {
                 return ResourceManager.GetString("UserAgreementStrInLoginAndSignupViews", resourceCulture);
             }
         }
-        
+
         internal static string PrivacyPolicyStrInLoginAndSignupViews {
             get {
                 return ResourceManager.GetString("PrivacyPolicyStrInLoginAndSignupViews", resourceCulture);
             }
         }
-        
+
         internal static string SignUpAgreementText {
             get {
                 return ResourceManager.GetString("SignUpAgreementText", resourceCulture);
             }
         }
-        
+
         internal static string ContactEmail {
             get {
                 return ResourceManager.GetString("ContactEmail", resourceCulture);
             }
         }
-        
+
         internal static string MsgWhenCannotOpenAppToSendEmail {
             get {
                 return ResourceManager.GetString("MsgWhenCannotOpenAppToSendEmail", resourceCulture);
             }
         }
-        
+
         internal static string Delete {
             get {
                 return ResourceManager.GetString("Delete", resourceCulture);
             }
         }
-        
+
         internal static string NoInternetConnection {
             get {
                 return ResourceManager.GetString("NoInternetConnection", resourceCulture);
             }
         }
-        
+
         internal static string Retry {
             get {
                 return ResourceManager.GetString("Retry", resourceCulture);
             }
         }
-        
+
         internal static string EmailOrPasswordIsIncorrect {
             get {
                 return ResourceManager.GetString("EmailOrPasswordIsIncorrect", resourceCulture);
             }
         }
-        
+
         internal static string YouAreNotAuthorized {
             get {
                 return ResourceManager.GetString("YouAreNotAuthorized", resourceCulture);
             }
         }
-        
+
         internal static string TabData {
             get {
                 return ResourceManager.GetString("TabData", resourceCulture);
             }
         }
-        
+
         internal static string TabHowToKeep {
             get {
                 return ResourceManager.GetString("TabHowToKeep", resourceCulture);
             }
         }
-        
+
         internal static string FieldName {
             get {
                 return ResourceManager.GetString("FieldName", resourceCulture);
             }
         }
-        
+
         internal static string HouseholdChores {
             get {
                 return ResourceManager.GetString("HouseholdChores", resourceCulture);
             }
         }
-        
+
         internal static string EmailIsIncorrect {
             get {
                 return ResourceManager.GetString("EmailIsIncorrect", resourceCulture);
             }
         }
-        
+
         internal static string PasswordIsIncorrect {
             get {
                 return ResourceManager.GetString("PasswordIsIncorrect", resourceCulture);
             }
         }
-        
+
         internal static string UserWithIdenticalEmailAlreadyExists {
             get {
                 return ResourceManager.GetString("UserWithIdenticalEmailAlreadyExists", resourceCulture);
             }
         }
-        
+
         internal static string TheUser {
             get {
                 return ResourceManager.GetString("TheUser", resourceCulture);
             }
         }
-        
+
         internal static string WithUnknownName {
             get {
                 return ResourceManager.GetString("WithUnknownName", resourceCulture);
             }
         }
-        
+
         internal static string IsNotFound {
             get {
                 return ResourceManager.GetString("IsNotFound", resourceCulture);
             }
         }
-        
+
         internal static string ForgetPasswordNavigation {
             get {
                 return ResourceManager.GetString("ForgetPasswordNavigation", resourceCulture);
             }
         }
-        
+
         internal static string ForgetPasswordTitle {
             get {
                 return ResourceManager.GetString("ForgetPasswordTitle", resourceCulture);
             }
         }
-        
+
         internal static string ChangePasswordButton {
             get {
                 return ResourceManager.GetString("ChangePasswordButton", resourceCulture);
             }
         }
-        
+
         internal static string ConfirmationPasswordChangeLabel {
             get {
                 return ResourceManager.GetString("ConfirmationPasswordChangeLabel", resourceCulture);
             }
         }
-        
+
         internal static string ConfirmPasswordChangeButton {
             get {
                 return ResourceManager.GetString("ConfirmPasswordChangeButton", resourceCulture);
             }
         }
-        
+
         internal static string EmailAndPasswordFieldsAreEmpty {
             get {
                 return ResourceManager.GetString("EmailAndPasswordFieldsAreEmpty", resourceCulture);
             }
         }
-        
+
         internal static string NewPassword {
             get {
                 return ResourceManager.GetString("NewPassword", resourceCulture);
             }
         }
-        
+
         internal static string WrongConfirmationCode {
             get {
                 return ResourceManager.GetString("WrongConfirmationCode", resourceCulture);
             }
         }
-        
+
         internal static string Success {
             get {
                 return ResourceManager.GetString("Success", resourceCulture);
             }
         }
-        
+
         internal static string YourPasswordSuccessfullyChanged {
             get {
                 return ResourceManager.GetString("YourPasswordSuccessfullyChanged", resourceCulture);
             }
         }
-        
+
         internal static string NewPasswordIsIncorrectError {
             get {
                 return ResourceManager.GetString("NewPasswordIsIncorrectError", resourceCulture);
             }
         }
-        
+
         internal static string AllAreasOfLife {
             get {
                 return ResourceManager.GetString("AllAreasOfLife", resourceCulture);
             }
         }
-        
+
         internal static string RecommendedHabitsButton {
             get {
                 return ResourceManager.GetString("RecommendedHabitsButton", resourceCulture);
             }
         }
-        
+
         internal static string OperationTimeoutMessage {
             get {
                 return ResourceManager.GetString("OperationTimeoutMessage", resourceCulture);
             }
         }
-        
+
         internal static string Goal {
             get {
                 return ResourceManager.GetString("Goal", resourceCulture);
             }
         }
-        
+
         internal static string ChooseGoal {
             get {
                 return ResourceManager.GetString("ChooseGoal", resourceCulture);
             }
         }
-        
+
         internal static string CreateNewGoal {
             get {
                 return ResourceManager.GetString("CreateNewGoal", resourceCulture);
             }
         }
-        
+
         internal static string Be {
             get {
                 return ResourceManager.GetString("Be", resourceCulture);
             }
         }
-        
+
         internal static string GoalLableRecommendation {
             get {
                 return ResourceManager.GetString("GoalLableRecommendation", resourceCulture);
             }
         }
-        
+
         internal static string UpdateGoal {
             get {
                 return ResourceManager.GetString("UpdateGoal", resourceCulture);
             }
         }
-        
+
         internal static string GoalExamples {
             get {
                 return ResourceManager.GetString("GoalExamples", resourceCulture);
             }
         }
-        
+
         internal static string HabitNameRecommendation {
             get {
                 return ResourceManager.GetString("HabitNameRecommendation", resourceCulture);
             }
         }
-        
+
         internal static string UnableToLoadData {
             get {
                 return ResourceManager.GetString("UnableToLoadData", resourceCulture);
             }
         }
-        
+
         internal static string NoGoalSpecified {
             get {
                 return ResourceManager.GetString("NoGoalSpecified", resourceCulture);
             }
         }
-        
+
         internal static string ContinueWithGoogle {
             get {
                 return ResourceManager.GetString("ContinueWithGoogle", resourceCulture);
             }
         }
-        
+
         internal static string ContinueWithApple {
             get {
                 return ResourceManager.GetString("ContinueWithApple", resourceCulture);
             }
         }
-        
+
         internal static string SignUpWithEmail {
             get {
                 return ResourceManager.GetString("SignUpWithEmail", resourceCulture);
             }
         }
-        
+
         internal static string LogInWithEmail {
             get {
                 return ResourceManager.GetString("LogInWithEmail", resourceCulture);
             }
         }
-        
+
         internal static string TransformAreasOfLifeTitle {
             get {
                 return ResourceManager.GetString("TransformAreasOfLifeTitle", resourceCulture);
             }
         }
-        
+
         internal static string TransformAreasOfLifeDescription {
             get {
                 return ResourceManager.GetString("TransformAreasOfLifeDescription", resourceCulture);
             }
         }
-        
+
         internal static string GroupHabitsByGoalsTitle {
             get {
                 return ResourceManager.GetString("GroupHabitsByGoalsTitle", resourceCulture);
             }
         }
-        
+
         internal static string GroupHabitsByGoalsDescription {
             get {
                 return ResourceManager.GetString("GroupHabitsByGoalsDescription", resourceCulture);
             }
         }
-        
+
         internal static string GetRecommendationsByAITitle {
             get {
                 return ResourceManager.GetString("GetRecommendationsByAITitle", resourceCulture);
             }
         }
-        
+
         internal static string GetRecommendationsByAIDescription {
             get {
                 return ResourceManager.GetString("GetRecommendationsByAIDescription", resourceCulture);
             }
         }
-        
+
         internal static string ChatWithHelperTitle {
             get {
                 return ResourceManager.GetString("ChatWithHelperTitle", resourceCulture);
             }
         }
-        
+
         internal static string ChatWithHelperDescription {
             get {
                 return ResourceManager.GetString("ChatWithHelperDescription", resourceCulture);
             }
         }
-        
+
         internal static string BecomeTruePersonalityTitle {
             get {
                 return ResourceManager.GetString("BecomeTruePersonalityTitle", resourceCulture);
             }
         }
-        
+
         internal static string BecomeTruePersonalityDescription {
             get {
                 return ResourceManager.GetString("BecomeTruePersonalityDescription", resourceCulture);
             }
         }
-        
+
         internal static string NotYetImplemented {
             get {
                 return ResourceManager.GetString("NotYetImplemented", resourceCulture);
             }
         }
-        
+
         internal static string ComingSoon {
             get {
                 return ResourceManager.GetString("ComingSoon", resourceCulture);
             }
         }
-        
+
         internal static string ComingSoonMessage {
             get {
                 return ResourceManager.GetString("ComingSoonMessage", resourceCulture);
             }
         }
-        
+
         internal static string YouDontHavePassword {
             get {
                 return ResourceManager.GetString("YouDontHavePassword", resourceCulture);
             }
         }
-        
+
         internal static string InternalServerError {
             get {
                 return ResourceManager.GetString("InternalServerError", resourceCulture);
             }
         }
-        
+
         internal static string AppUpdateAvailable {
             get {
                 return ResourceManager.GetString("AppUpdateAvailable", resourceCulture);
             }
         }
-        
+
         internal static string GoToAppStore {
             get {
                 return ResourceManager.GetString("GoToAppStore", resourceCulture);
             }
         }
-        
+
         internal static string GoToGooglePlay {
             get {
                 return ResourceManager.GetString("GoToGooglePlay", resourceCulture);
             }
         }
-        
+
         internal static string Update {
             get {
                 return ResourceManager.GetString("Update", resourceCulture);
             }
         }
-        
+
         internal static string AppUpdateCloseButton {
             get {
                 return ResourceManager.GetString("AppUpdateCloseButton", resourceCulture);
             }
         }
-        
+
         internal static string DontShowUpdateCheckBoxText {
             get {
                 return ResourceManager.GetString("DontShowUpdateCheckBoxText", resourceCulture);
             }
         }
-        
+
         internal static string HelperWarning {
             get {
                 return ResourceManager.GetString("HelperWarning", resourceCulture);
             }
         }
-        
+
         internal static string Add {
             get {
                 return ResourceManager.GetString("Add", resourceCulture);
             }
         }
-        
+
         internal static string ReminderTitle {
             get {
                 return ResourceManager.GetString("ReminderTitle", resourceCulture);
             }
         }
-        
+
         internal static string ReminderDescription {
             get {
                 return ResourceManager.GetString("ReminderDescription", resourceCulture);
             }
         }
-        
+
         internal static string ReminderTitleText {
             get {
                 return ResourceManager.GetString("ReminderTitleText", resourceCulture);
             }
         }
-        
+
         internal static string ReminderDescriptionText {
             get {
                 return ResourceManager.GetString("ReminderDescriptionText", resourceCulture);
             }
         }
-        
+
         internal static string Time {
             get {
                 return ResourceManager.GetString("Time", resourceCulture);
             }
         }
-        
+
         internal static string Enable {
             get {
                 return ResourceManager.GetString("Enable", resourceCulture);
             }
         }
-        
+
         internal static string EmptyReminders {
             get {
                 return ResourceManager.GetString("EmptyReminders", resourceCulture);
             }
         }
-        
+
         internal static string Monday {
             get {
                 return ResourceManager.GetString("Monday", resourceCulture);
             }
         }
-        
+
         internal static string Tuesday {
             get {
                 return ResourceManager.GetString("Tuesday", resourceCulture);
             }
         }
-        
+
         internal static string Wednesday {
             get {
                 return ResourceManager.GetString("Wednesday", resourceCulture);
             }
         }
-        
+
         internal static string Thursday {
             get {
                 return ResourceManager.GetString("Thursday", resourceCulture);
             }
         }
-        
+
         internal static string Friday {
             get {
                 return ResourceManager.GetString("Friday", resourceCulture);
             }
         }
-        
+
         internal static string Saturday {
             get {
                 return ResourceManager.GetString("Saturday", resourceCulture);
             }
         }
-        
+
         internal static string Sunday {
             get {
                 return ResourceManager.GetString("Sunday", resourceCulture);
             }
         }
-        
+
         internal static string DeviceDoesNotSupportNotifications {
             get {
                 return ResourceManager.GetString("DeviceDoesNotSupportNotifications", resourceCulture);
             }
         }
-        
+
+        internal static string NotificationsPermissionRequired {
+            get {
+                return ResourceManager.GetString("NotificationsPermissionRequired", resourceCulture);
+            }
+        }
+
         internal static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
             }
         }
-        
+
         internal static string Description {
             get {
                 return ResourceManager.GetString("Description", resourceCulture);
             }
         }
-        
+
         internal static string AfterLoginWhenUserAccountHaveReminders {
             get {
                 return ResourceManager.GetString("AfterLoginWhenUserAccountHaveReminders", resourceCulture);
             }
         }
-        
+
         internal static string RestoreReminders {
             get {
                 return ResourceManager.GetString("RestoreReminders", resourceCulture);
             }
         }
-        
+
         internal static string HabitGoal {
             get {
                 return ResourceManager.GetString("HabitGoal", resourceCulture);
             }
         }
-        
+
         internal static string ChooseHabitGoal {
             get {
                 return ResourceManager.GetString("ChooseHabitGoal", resourceCulture);
             }
         }
-        
+
         internal static string IsMaxValue {
             get {
                 return ResourceManager.GetString("IsMaxValue", resourceCulture);
             }
         }
-        
+
         internal static string Edit {
             get {
                 return ResourceManager.GetString("Edit", resourceCulture);
             }
         }
-        
+
         internal static string DeleteTheHabit {
             get {
                 return ResourceManager.GetString("DeleteTheHabit", resourceCulture);
             }
         }
-        
+
         internal static string SmthWentWrong {
             get {
                 return ResourceManager.GetString("SmthWentWrong", resourceCulture);
             }
         }
-        
+
         internal static string AppleAuthIsNotSupportedForCurrentDevice {
             get {
                 return ResourceManager.GetString("AppleAuthIsNotSupportedForCurrentDevice", resourceCulture);
             }
         }
-        
+
         internal static string JoinOurTelegram {
             get {
                 return ResourceManager.GetString("JoinOurTelegram", resourceCulture);
             }
         }
-        
+
         internal static string TryAgain {
             get {
                 return ResourceManager.GetString("TryAgain", resourceCulture);
             }
         }
-        
+
         internal static string SecondsInShort {
             get {
                 return ResourceManager.GetString("SecondsInShort", resourceCulture);
             }
         }
-        
+
         internal static string SomethingWentWrongWhenUserAuthsUsingExternalService {
             get {
                 return ResourceManager.GetString("SomethingWentWrongWhenUserAuthsUsingExternalService", resourceCulture);
             }
         }
-        
+
         internal static string InvalidEmailOrPassword {
             get {
                 return ResourceManager.GetString("InvalidEmailOrPassword", resourceCulture);
             }
         }
-        
+
         internal static string ErrorOccurred {
             get {
                 return ResourceManager.GetString("ErrorOccurred", resourceCulture);
             }
         }
-        
+
         internal static string ChangeLanguage {
             get {
                 return ResourceManager.GetString("ChangeLanguage", resourceCulture);
             }
         }
-        
+
         internal static string ChooseLanguage {
             get {
                 return ResourceManager.GetString("ChooseLanguage", resourceCulture);
             }
         }
-        
+
         internal static string FieldIsNotEditable {
             get {
                 return ResourceManager.GetString("FieldIsNotEditable", resourceCulture);
             }
         }
-        
+
         internal static string SuccessfulCopy {
             get {
                 return ResourceManager.GetString("SuccessfulCopy", resourceCulture);
             }
         }
-        
+
         internal static string Archive {
             get {
                 return ResourceManager.GetString("Archive", resourceCulture);
             }
         }
-        
+
         internal static string AddToArchive {
             get {
                 return ResourceManager.GetString("AddToArchive", resourceCulture);
             }
         }
-        
+
         internal static string ChooseAction {
             get {
                 return ResourceManager.GetString("ChooseAction", resourceCulture);
             }
         }
-        
+
         internal static string RemoveFromArchive {
             get {
                 return ResourceManager.GetString("RemoveFromArchive", resourceCulture);
             }
         }
-        
+
         internal static string DeleteArchivedHabitConfirmationText {
             get {
                 return ResourceManager.GetString("DeleteArchivedHabitConfirmationText", resourceCulture);
             }
         }
-        
+
         internal static string RemoveHabitFromArchiveQuestion {
             get {
                 return ResourceManager.GetString("RemoveHabitFromArchiveQuestion", resourceCulture);
             }
         }
-        
+
         internal static string MessageRemoveHabitFromArchive {
             get {
                 return ResourceManager.GetString("MessageRemoveHabitFromArchive", resourceCulture);
             }
         }
-        
+
         internal static string AddHabitToArchiveQuestion {
             get {
                 return ResourceManager.GetString("AddHabitToArchiveQuestion", resourceCulture);
             }
         }
-        
+
         internal static string MessageAddHabitToArchive {
             get {
                 return ResourceManager.GetString("MessageAddHabitToArchive", resourceCulture);
             }
         }
-        
+
         internal static string ShortDescriptionOfArchivedHabits {
             get {
                 return ResourceManager.GetString("ShortDescriptionOfArchivedHabits", resourceCulture);
             }
         }
-        
+
         internal static string HabitArchivingInfo {
             get {
                 return ResourceManager.GetString("HabitArchivingInfo", resourceCulture);
             }
         }
-        
+
         internal static string ArchiveHabit {
             get {
                 return ResourceManager.GetString("ArchiveHabit", resourceCulture);
             }
         }
-        
+
         internal static string UnarchiveHabit {
             get {
                 return ResourceManager.GetString("UnarchiveHabit", resourceCulture);
             }
         }
-        
+
         internal static string FullDescriptionOfArchivedHabits {
             get {
                 return ResourceManager.GetString("FullDescriptionOfArchivedHabits", resourceCulture);
             }
         }
-        
+
         internal static string TheHabitWillBeArchivedAfterSaving {
             get {
                 return ResourceManager.GetString("TheHabitWillBeArchivedAfterSaving", resourceCulture);
             }
         }
-        
+
         internal static string TheHabitWillBeUnarchivedAfterSaving {
             get {
                 return ResourceManager.GetString("TheHabitWillBeUnarchivedAfterSaving", resourceCulture);
             }
         }
-        
+
         internal static string ChangePassword {
             get {
                 return ResourceManager.GetString("ChangePassword", resourceCulture);
             }
         }
-        
+
         internal static string PasswordChange {
             get {
                 return ResourceManager.GetString("PasswordChange", resourceCulture);
             }
         }
-        
+
         internal static string CompletedDays {
             get {
                 return ResourceManager.GetString("CompletedDays", resourceCulture);
             }
         }
-        
+
         internal static string TopFiveStreaks {
             get {
                 return ResourceManager.GetString("TopFiveStreaks", resourceCulture);
             }
         }
-        
+
         internal static string TopFiveStreaksExplanation {
             get {
                 return ResourceManager.GetString("TopFiveStreaksExplanation", resourceCulture);
             }
         }
-        
+
         internal static string StabilityExplanation {
             get {
                 return ResourceManager.GetString("StabilityExplanation", resourceCulture);
             }
         }
-        
+
         internal static string OverallProgress {
             get {
                 return ResourceManager.GetString("OverallProgress", resourceCulture);
             }
         }
-        
+
         internal static string Stability {
             get {
                 return ResourceManager.GetString("Stability", resourceCulture);
             }
         }
-        
+
         internal static string DaysCount {
             get {
                 return ResourceManager.GetString("DaysCount", resourceCulture);
             }
         }
-        
+
         internal static string HabitByDayweeks {
             get {
                 return ResourceManager.GetString("HabitByDayweeks", resourceCulture);
             }
         }
-        
+
         internal static string HabitByDayweeksExplanation {
             get {
                 return ResourceManager.GetString("HabitByDayweeksExplanation", resourceCulture);
             }
         }
-        
+
         internal static string CalendarInfoExplanation {
             get {
                 return ResourceManager.GetString("CalendarInfoExplanation", resourceCulture);
             }
         }
-        
+
         internal static string Calendar {
             get {
                 return ResourceManager.GetString("Calendar", resourceCulture);
             }
         }
-        
+
         internal static string LongestStreak {
             get {
                 return ResourceManager.GetString("LongestStreak", resourceCulture);
             }
         }
-        
+
         internal static string YouCannotCompleteHabitInTheFuture {
             get {
                 return ResourceManager.GetString("YouCannotCompleteHabitInTheFuture", resourceCulture);
             }
         }
-        
+
         internal static string HabitWasntCreatedBeforeThisDay {
             get {
                 return ResourceManager.GetString("HabitWasntCreatedBeforeThisDay", resourceCulture);
             }
         }
-        
+
         internal static string RefreshHabitCharts {
             get {
                 return ResourceManager.GetString("RefreshHabitCharts", resourceCulture);
             }
         }
-        
+
         internal static string UnarchiveHabitQuestion {
             get {
                 return ResourceManager.GetString("UnarchiveHabitQuestion", resourceCulture);
             }
         }
-        
+
         internal static string JanuaryShort {
             get {
                 return ResourceManager.GetString("JanuaryShort", resourceCulture);
             }
         }
-        
+
         internal static string FebruaryShort {
             get {
                 return ResourceManager.GetString("FebruaryShort", resourceCulture);
             }
         }
-        
+
         internal static string MarchShort {
             get {
                 return ResourceManager.GetString("MarchShort", resourceCulture);
             }
         }
-        
+
         internal static string AprilShort {
             get {
                 return ResourceManager.GetString("AprilShort", resourceCulture);
             }
         }
-        
+
         internal static string MayShort {
             get {
                 return ResourceManager.GetString("MayShort", resourceCulture);
             }
         }
-        
+
         internal static string NumberOfExecution {
             get {
                 return ResourceManager.GetString("NumberOfExecution", resourceCulture);
             }
         }
-        
+
         internal static string TheHabitSuccessfullySaved {
             get {
                 return ResourceManager.GetString("TheHabitSuccessfullySaved", resourceCulture);
             }
         }
-        
+
         internal static string JuneShort {
             get {
                 return ResourceManager.GetString("JuneShort", resourceCulture);
             }
         }
-        
+
         internal static string JulyShort {
             get {
                 return ResourceManager.GetString("JulyShort", resourceCulture);
             }
         }
-        
+
         internal static string AugustShort {
             get {
                 return ResourceManager.GetString("AugustShort", resourceCulture);
             }
         }
-        
+
         internal static string SeptemberShort {
             get {
                 return ResourceManager.GetString("SeptemberShort", resourceCulture);
             }
         }
-        
+
         internal static string OctoberShort {
             get {
                 return ResourceManager.GetString("OctoberShort", resourceCulture);
             }
         }
-        
+
         internal static string NovemberShort {
             get {
                 return ResourceManager.GetString("NovemberShort", resourceCulture);
             }
         }
-        
+
         internal static string DecemberShort {
             get {
                 return ResourceManager.GetString("DecemberShort", resourceCulture);
             }
         }
-        
+
         internal static string YearShort {
             get {
                 return ResourceManager.GetString("YearShort", resourceCulture);
             }
         }
-        
+
         internal static string InterfaceLanguageSuccessfullyChanged {
             get {
                 return ResourceManager.GetString("InterfaceLanguageSuccessfullyChanged", resourceCulture);
             }
         }
-        
+
         internal static string HabitAutomationExplanation {
             get {
                 return ResourceManager.GetString("HabitAutomationExplanation", resourceCulture);
             }
         }
-        
+
         internal static string Just {
             get {
                 return ResourceManager.GetString("Just", resourceCulture);
             }
         }
-        
+
         internal static string daysToGoUntilHabitAutomatic {
             get {
                 return ResourceManager.GetString("daysToGoUntilHabitAutomatic", resourceCulture);
             }
         }
-        
+
         internal static string ThereAreStill {
             get {
                 return ResourceManager.GetString("ThereAreStill", resourceCulture);
             }
         }
-        
+
         internal static string ComplexityInfoText {
             get {
                 return ResourceManager.GetString("ComplexityInfoText", resourceCulture);
             }
         }
-        
+
         internal static string TheHabitIsAlreadyAutomated {
             get {
                 return ResourceManager.GetString("TheHabitIsAlreadyAutomated", resourceCulture);

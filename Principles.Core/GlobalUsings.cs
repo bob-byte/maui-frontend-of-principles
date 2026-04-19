@@ -1,4 +1,5 @@
 ﻿global using Principles.Constants;
+global using Principles.Core.Constants;
 global using Principles.Exceptions;
 global using Principles.Core.Extensions;
 global using Principles.Core.Services;
@@ -23,4 +24,4 @@ global using CommunityToolkit.Mvvm.ComponentModel;
 
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Configuration;
-
+global using SQLite;

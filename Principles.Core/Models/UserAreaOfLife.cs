@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Principles.Core.Models;
 
-namespace Principles.Core.Models;
-
-public partial class UserAreaOfLife
+[Table( "UserAreaOfLife" )]
+public partial class UserAreaOfLife : IEntity
 {
+    [PrimaryKey, AutoIncrement]
+    public long LocalId { get; set; }
     public long Id { get; set; }
     public string? Name { get; set; }
+    public DateTime LastModified { get; set; }
 
     public override string ToString()
     {
-        return Name;
+        return Name ?? string.Empty;
     }
 
     public override int GetHashCode()

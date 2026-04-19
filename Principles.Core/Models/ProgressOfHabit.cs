@@ -1,15 +1,37 @@
 ﻿namespace Principles.Core.Models;
 
-public partial class ProgressOfHabit : ObservableObject
+[Table( "ProgressOfHabit" )]
+public partial class ProgressOfHabit : ObservableObject, IEntity
 {
+    [PrimaryKey, AutoIncrement]
+    public long LocalId { get; set; }
+    public DateTime LastModified { get; set; }
+
     [ObservableProperty]
     private long m_id;
-    [ObservableProperty]
-    private DateOnly m_date;
+
+    [Ignore]
+    public DateOnly Date
+    {
+        get => DateOnly.FromDayNumber(DateAsInt);
+        set
+        {
+            DateAsInt = value.DayNumber;
+            OnPropertyChanged();
+        }
+    }
+
+    public int DateAsInt { get; set; }
+
     [ObservableProperty]
     private int m_value;
+
     [ObservableProperty]
+    [property: Ignore]
     private UserHabit? m_habit;
+
+    public long UserHabitLocalId { get; set; }
+
     [ObservableProperty]
     private string? m_notes;
 

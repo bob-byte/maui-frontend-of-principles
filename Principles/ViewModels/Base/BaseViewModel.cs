@@ -1,7 +1,5 @@
 using Principles.Exceptions;
-using Plugin.LocalNotification;
 using System.Net;
-using System.Net.Sockets;
 
 namespace Principles.ViewModels;
 
@@ -30,7 +28,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     private Gender m_gender;
 
     [ObservableProperty]
-    private CachedValidatableObject m_userName;
+    private ValidatableObject<string> m_userName;
 
     [ObservableProperty]
     private bool m_isInitialized;
@@ -43,7 +41,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     public BaseViewModel( IServiceProvider serviceProvider )
     {
         CachingService = serviceProvider.GetRequiredService<ICachingService>();
-        m_userName = new CachedValidatableObject( CacheKeys.USER_NAME, CachingService );
+        m_userName = new ValidatableObject<string>();
 
         Navigation = serviceProvider.GetRequiredService<INavigationService>();
         RequestProvider = serviceProvider.GetRequiredService<IRequestProvider>();
@@ -53,6 +51,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         ServiceOfHabit = serviceProvider.GetRequiredService<IServiceOfHabit>();
         AreaOfLifeService = serviceProvider.GetRequiredService<IAreaOfLifeService>();
         TipService = serviceProvider.GetRequiredService<ITipService>();
+        UserService = serviceProvider.GetRequiredService<IUserService>();
 
         ReferenceMessenger = WeakReferenceMessenger.Default;
 
@@ -68,7 +67,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
             await UiBusyFor( async () =>
             {
                 await InitializeAsync();
-                
+
                 IsInitialized = true;
             } );
         } );
@@ -137,11 +136,12 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     public ISettingsService SettingsService { get; }
     public ICachingService CachingService { get; }
     public ITipService TipService { get; }
+    public IUserService UserService { get; }
 
     protected void DefaultHandleLogout(UserLoggedOutMessage message)
     {
         IsInitialized = false;
-        
+
         if (UserName != null)
         {
             UserName.Value = string.Empty;
@@ -154,34 +154,11 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         UserIcon = null;
     }
 
-    partial void OnMissionChanged( string? value )
-    {
-        if (string.IsNullOrWhiteSpace( value ))
-        {
-            CachingService.Remove( CacheKeys.USER_MISSION );
-        }
-        else
-        {
-            CachingService.SetForever( CacheKeys.USER_MISSION, value );
-        }
-    }
+    partial void OnMissionChanged( string? value ) { }
 
-    partial void OnMainSloganChanged( string? value )
-    {
-        if (string.IsNullOrWhiteSpace( value ))
-        {
-            CachingService.Remove( CacheKeys.USER_MAIN_SLOGAN );
-        }
-        else
-        {
-            CachingService.SetForever( CacheKeys.USER_MAIN_SLOGAN, value );
-        }
-    }
+    partial void OnMainSloganChanged( string? value ) { }
 
-    partial void OnGenderChanged( Gender value )
-    {
-        CachingService.SetForever( CacheKeys.USER_GENDER, value.ToString() );
-    }
+    partial void OnGenderChanged( Gender value ) { }
 
     public virtual void ApplyQueryAttributes(IDictionary<string, object> query )
     {
@@ -202,69 +179,43 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     {
         if (IsLoggedIn)
         {
-            Email = CachingService.GetStoredValue( CacheKeys.USER_EMAIL );
-
-            UserInfo userInfo;
-            
-            //we use Email to check whether user info is stored, because it (email) was recently added
-            if (string.IsNullOrEmpty( Email ))
+            User currentUser = await UserService.GetCurrentUserAsync();
+            UserInfo userInfo = new()
             {
-                string url = $"{UrlBuilder.Profile}";
-                userInfo = await RequestProvider.GetAsync<UserInfo>( url, SettingsService.AuthAccessToken );
-                UserName.Value = userInfo.Name;
-                MainSlogan = userInfo.MainSlogan;
-                Mission = userInfo.Mission;
-                Email = userInfo.Email;
-                Gender = userInfo.Gender;
-                
-                //Gender.Man is default value, so OnGenderChanged won't be called is Gender = Gender.Man
-                if (Gender == Gender.Man)
-                {
-                    CachingService.SetForever( CacheKeys.USER_GENDER, Gender.ToString() );
-                }
+                Name = currentUser.Name ?? string.Empty,
+                MainSlogan = currentUser.MainSlogan,
+                Mission = currentUser.Mission,
+                Email = currentUser.Email,
+                Gender = currentUser.Gender
+            };
 
-                CachingService.SetForever( CacheKeys.USER_EMAIL, Email );
-            }
-            else
-            {
-                userInfo = new UserInfo();
-                userInfo.Email = Email;
-                
-                UserName.Value = CachingService.GetStoredValue( CacheKeys.USER_NAME );
-                userInfo.Name = UserName.Value;
-
-                MainSlogan = CachingService.GetStoredValue( CacheKeys.USER_MAIN_SLOGAN );
-                userInfo.MainSlogan = MainSlogan;
-
-                Mission = CachingService.GetStoredValue( CacheKeys.USER_MISSION );
-                userInfo.Mission = Mission;
-
-                //if gender is not parsed then it will set zero value
-                _ = Enum.TryParse( CachingService.GetStoredValue( CacheKeys.USER_GENDER ), out Gender gender );
-                Gender = gender;
-                userInfo.Gender = Gender;
-            }
+            UserName.Value = userInfo.Name;
+            MainSlogan = userInfo.MainSlogan;
+            Mission = userInfo.Mission;
+            Email = userInfo.Email;
+            Gender = userInfo.Gender;
 
             AddValidators();
 
             UserInfoChangedMessage userInfoChangedMsg = new( userInfo );
             ReferenceMessenger.Send( userInfoChangedMsg );
         }
-        
+
     }
-    
+
 
     private void AddValidators()
     {
+        UserName.Validations.Clear();
         UserName.Validations.Add( new IsNotNullOrWhiteSpaceRule { ValidationMessage = LocStrings.RequiredErrorText } );
     }
 
     protected async Task UiBusyFor( Func<Task> unitOfWork )
     {
         IsBusy = true;
-        
+
         await ExecuteWithRetryAsync( unitOfWork );
-        
+
         IsBusy = false;
     }
 
@@ -295,7 +246,13 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         bool showPopupWithRetry = true;
 
         string errorMsg;
-        if (SettingsService.IsDebug)
+        if (ex is HabitSaveValidationException validationException)
+        {
+            showPopupWithRetry = false;
+            errorMsg = validationException.Message;
+            await DialogService.ShowErrorAsync( errorMsg );
+        }
+        else if (SettingsService.IsDebug)
         {
             errorMsg = ex.ToString();
             LoggingService.LogError( ex, ex.Message );
@@ -350,19 +307,19 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
             else if (ex is ServiceAuthenticationException)
             {
                 await SettingsService.SetAuthAccessTokenAsync( "" );
-                
+
                 errorMsg = LocStrings.YouAreNotAuthorized;
                 await DialogService.ShowErrorAsync( errorMsg );
-                
+
                 await LogoutAsync();
-                
+
                 showPopupWithRetry = false;
             }
             else if (ex is TaskCanceledException or TimeoutException)
             {
                 errorMsg = LocStrings.OperationTimeoutMessage;
             }
-            else if (ex is HttpRequestException or AggregateException or WebException)
+            else if (ConnectivityExceptionClassifier.IsConnectivityFailure( ex ))
             {
                 errorMsg = LocStrings.NoInternetConnection;
             }
@@ -386,12 +343,11 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     protected async Task LogoutAsync()
     {
         await SettingsService.SetAuthAccessTokenAsync(string.Empty);
+        await UserService.ClearLocalDataAsync();
 
-        if (LocalNotificationCenter.Current.IsSupported)
-        {
-            LocalNotificationCenter.Current.CancelAll();
-        }
-        
+        IReminderService reminderService = ServiceProvider.GetRequiredService<IReminderService>();
+        await reminderService.CancelAllLocallyAsync();
+
         if (UserName != null)
         {
             UserName.Value = string.Empty;
@@ -401,8 +357,6 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         Mission = string.Empty;
         Gender = Gender.Man;
         UserIcon = null;
-        
-        CachingService.Remove( CacheKeys.USER_EMAIL );
 
         ReferenceMessenger.Send( new UserLoggedOutMessage() );
 

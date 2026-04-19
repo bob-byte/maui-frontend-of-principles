@@ -1,4 +1,4 @@
-﻿namespace Principles.Core;
+namespace Principles.Core;
 
 public interface IUrlBuilder
 {
@@ -29,6 +29,8 @@ public interface IUrlBuilder
     string HabitArchiveStatus { get; }
     string Archive {  get; }
     string Progresses { get; }
+    string SyncBootstrap { get; }
+    string SyncPing { get; }
 
     string Combine( params string[] uri );
 }

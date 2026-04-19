@@ -13,17 +13,17 @@ namespace Principles.Core.Services;
 
 public class AiChatService : BaseRemoteService, IAiChatService
 {
-    private readonly ICachingService m_cachingService;
     private readonly IServiceOfHabit m_serviceOfHabit;
     private readonly IGoalService m_goalService;
+    private readonly IUserService m_userService;
     private readonly List<ChatMessage> m_chatMessages;
 
     public AiChatService( IServiceProvider serviceProvider )
         : base( serviceProvider )
     {
-        m_cachingService = serviceProvider.GetRequiredService<ICachingService>();
         m_serviceOfHabit = serviceProvider.GetRequiredService<IServiceOfHabit>();
         m_goalService = serviceProvider.GetRequiredService<IGoalService>();
+        m_userService = serviceProvider.GetRequiredService<IUserService>();
 
         m_chatMessages = new List<ChatMessage>();
     }
@@ -43,11 +43,11 @@ public class AiChatService : BaseRemoteService, IAiChatService
         ChatMessage newMessage = ChatMessage.CreateUserMessage( prompt );
         m_chatMessages.Add( newMessage );
         ChatClient client = await LazyAiClient;
-        
+
         ChatCompletionOptions options = new() { ResponseFormat = ChatResponseFormat.CreateTextFormat() };
         AsyncCollectionResult<StreamingChatCompletionUpdate>? response =
             client.CompleteChatStreamingAsync( m_chatMessages, options, cancellationToken );
-        
+
         return response;
     }
 
@@ -71,28 +71,35 @@ public class AiChatService : BaseRemoteService, IAiChatService
         systemMessageBuilder.Append( "You shouldn't advise a user when he or she doesn't ask for it" );
 
         string newLine = Environment.NewLine;
-        string userGender = m_cachingService.GetStoredValue( CacheKeys.USER_GENDER ).ToLower(new CultureInfo( "en" ));
+        User? currentUser = null;
+        try
+        {
+            currentUser = await m_userService.GetCurrentUserAsync().ConfigureAwait( false );
+        }
+        catch
+        {
+            // Ignore missing profile data and continue with available local context.
+        }
+
+        string? userGender = currentUser?.Gender.ToString().ToLower( new CultureInfo( "en" ) );
         if (!string.IsNullOrWhiteSpace( userGender ))
         {
             systemMessageBuilder.Append( $"{newLine}User gender is {userGender}." );
         }
 
-        string userName = m_cachingService.GetStoredValue( CacheKeys.USER_NAME );
-        if (!string.IsNullOrWhiteSpace( userName ))
+        if (!string.IsNullOrWhiteSpace( currentUser?.Name ))
         {
-            systemMessageBuilder.Append( $"{newLine}User name is \"{userName}\". You should use his/her name frequently." );
+            systemMessageBuilder.Append( $"{newLine}User name is \"{currentUser.Name}\". You should use his/her name frequently." );
         }
 
-        string userMission = m_cachingService.GetStoredValue( CacheKeys.USER_MISSION );
-        if (!string.IsNullOrWhiteSpace( userMission ))
+        if (!string.IsNullOrWhiteSpace( currentUser?.Mission ))
         {
-            systemMessageBuilder.Append( $"{newLine}User mission is \"{userMission}\"." );
+            systemMessageBuilder.Append( $"{newLine}User mission is \"{currentUser.Mission}\"." );
         }
 
-        string userMainSlogan = m_cachingService.GetStoredValue( CacheKeys.USER_MAIN_SLOGAN );
-        if (!string.IsNullOrWhiteSpace( userMainSlogan ))
+        if (!string.IsNullOrWhiteSpace( currentUser?.MainSlogan ))
         {
-            systemMessageBuilder.Append( $"{newLine}User main slogan is: \"{userMainSlogan}\"." );
+            systemMessageBuilder.Append( $"{newLine}User main slogan is: \"{currentUser.MainSlogan}\"." );
         }
 
         IEnumerable<UserHabit>? currentUserHabits = m_serviceOfHabit.StoredUserHabits;

@@ -16,7 +16,7 @@ namespace Principles.ViewModels;
 public partial class HabitDetailViewModel : BaseViewModel
 {
     [ObservableProperty]
-    private UserHabit m_habit;
+    private UserHabit m_habit = new();
     [ObservableProperty]
     private string m_frequencyRepresentation;
     [ObservableProperty]
@@ -26,7 +26,7 @@ public partial class HabitDetailViewModel : BaseViewModel
     [ObservableProperty]
     private EditedUserHabitReminder? m_editedReminder;
     [ObservableProperty]
-    private ObservableCollectionEx<bool> m_isDayChecked = new();
+    private ObservableCollectionEx<bool> m_isDayChecked = CreateDefaultDayChecks();
     [ObservableProperty]
     private int m_completedDays;
     [ObservableProperty]
@@ -96,26 +96,10 @@ public partial class HabitDetailViewModel : BaseViewModel
 
     public override Task InitializeAsync( object? parameter = null )
     {
+        PrepareHabitForDisplay();
         SetEditedRemider();
 
-        switch (Habit.Frequency!.IntervalLengthInDays)
-        {
-            default:
-                {
-                    SelectedPeriodOfHabit = PeriodsOfHabit.First( p => p.Type == PeriodTypeOfHabit.Week );
-                    break;
-                }
-            case 30:
-                {
-                    SelectedPeriodOfHabit = PeriodsOfHabit.First( p => p.Type == PeriodTypeOfHabit.Month );
-                    break;
-                }
-            case 365:
-                {
-                    SelectedPeriodOfHabit = PeriodsOfHabit.First( p => p.Type == PeriodTypeOfHabit.Year );
-                    break;
-                }
-        }
+        SelectedPeriodOfHabit = GetPeriodForFrequency( Habit.Frequency! );
 
         UpdateFrequencyRepresentation( Habit.Frequency, SelectedPeriodOfHabit );
         SetCharts();
@@ -242,7 +226,7 @@ public partial class HabitDetailViewModel : BaseViewModel
             if (progressOfHabit is null)
             {
                 previousValueOfProgress = ProgressValue.NO;
-                
+
                 progressOfHabit = new ProgressOfHabit
                 {
                     Date = date,
@@ -257,7 +241,7 @@ public partial class HabitDetailViewModel : BaseViewModel
             {
                 previousValueOfProgress = progressOfHabit.Value;
                 progressOfHabit.Value = ProgressValue.NextToggled( progressOfHabit.Value );
-                
+
                 progressOfHabit.Habit = Habit;
             }
 
@@ -292,7 +276,7 @@ public partial class HabitDetailViewModel : BaseViewModel
                     if (!doTryAgain)
                     {
                         progressOfHabit.Value = previousValueOfProgress;
-                        
+
                         await m_lockerOfHabitProgressUpdate.WaitAsync();
 
                         try
@@ -320,14 +304,60 @@ public partial class HabitDetailViewModel : BaseViewModel
         PeriodsOfHabit =
         [
             new PeriodOfHabit { Type = PeriodTypeOfHabit.Week, Name = LocStrings.Week.ToLower() },
-            new PeriodOfHabit { Type = PeriodTypeOfHabit.Month, Name = LocStrings.Month.ToLower() }
+            new PeriodOfHabit { Type = PeriodTypeOfHabit.Month, Name = LocStrings.Month.ToLower() },
+            new PeriodOfHabit { Type = PeriodTypeOfHabit.Year, Name = LocStrings.Year.ToLower() }
         ];
+    }
+
+    private static ObservableCollectionEx<bool> CreateDefaultDayChecks()
+    {
+        return
+        [
+            true, // Sunday
+            true, // Monday
+            true, // Tuesday
+            true, // Wednesday
+            true, // Thursday
+            true, // Friday
+            true, // Saturday
+        ];
+    }
+
+    private PeriodOfHabit GetPeriodForFrequency( FrequencyOfHabit frequency )
+    {
+        PeriodTypeOfHabit periodType = frequency.IntervalLengthInDays switch
+        {
+            30 => PeriodTypeOfHabit.Month,
+            365 => PeriodTypeOfHabit.Year,
+            _ => PeriodTypeOfHabit.Week
+        };
+
+        return PeriodsOfHabit.FirstOrDefault( p => p.Type == periodType )
+            ?? PeriodsOfHabit.FirstOrDefault( p => p.Type == PeriodTypeOfHabit.Week )
+            ?? new PeriodOfHabit { Type = PeriodTypeOfHabit.Week, Name = LocStrings.Week.ToLower() };
+    }
+
+    private void PrepareHabitForDisplay()
+    {
+        if (Habit.Complexity < HabitConstants.MIN_HABIT_COMPLEXITY || Habit.Complexity > HabitConstants.MAX_HABIT_COMPLEXITY)
+        {
+            Habit.Complexity = HabitConstants.DEFAULT_HABIT_COMPLEXITY;
+        }
+
+        Habit.Frequency ??= new FrequencyOfHabit();
+        Habit.Progresses ??= new ObservableCollectionEx<ProgressOfHabit>();
+        Habit.ComputedProgresses ??= new ListOfProgressOfHabit( Habit );
+        Habit.ScoreList ??= new ScoreList();
+
+        DateOnly endProgressInterval = DateOnly.FromDateTime( DateTime.Today );
+        DateOnly startProgressInterval = endProgressInterval.AddDays( -HabitConstants.NUMBER_OF_DAYS_IN_PROGRESS + 1 );
+        ServiceOfHabit.InitializeHabitProgresses( Habit, startProgressInterval, endProgressInterval );
     }
 
     private void LoadProgressChartData()
     {
         ScoreList? scoreList = Habit.ScoreList;
-        
+
         if (Habit.Progresses!.Count(p => p.Value == ProgressValue.YES_MANUAL) < 2)
         {
             Series = new ISeries[]
@@ -425,13 +455,13 @@ public partial class HabitDetailViewModel : BaseViewModel
         List<double?> xLabelsPositions = events.Select( e => (double?)e.point.X ).ToList();
 
         List<ProgressOfHabit> progresses = Habit.ComputedProgresses.GetKnown().ToList();
-        ProgressOfHabit? firstExecuted = progresses.LastOrDefault(p => p.Value == ProgressValue.YES_MANUAL); 
-        
+        ProgressOfHabit? firstExecuted = progresses.LastOrDefault(p => p.Value == ProgressValue.YES_MANUAL);
+
         //TODO: scores are wider than progresses. We should make them shorter
-        DateTime minDate = firstExecuted is null 
-            ? DateTime.Today.Subtract( TimeSpan.FromDays( 1 ) ) 
+        DateTime minDate = firstExecuted is null
+            ? DateTime.Today.Subtract( TimeSpan.FromDays( 1 ) )
             : firstExecuted.Date.ToDateTime( TimeOnly.MinValue );
-        
+
         DateTime maxDate = progresses[0].Date.ToDateTime( TimeOnly.MinValue );
 
         TimeSpan totalRange = maxDate - minDate;
@@ -443,7 +473,7 @@ public partial class HabitDetailViewModel : BaseViewModel
             // Кількість бажаних дат + 1 (4 дат = 4 + 1)
             int segmentCount = 4;
             TimeSpan segment = TimeSpan.FromTicks( totalRange.Ticks / segmentCount );
-            
+
             for (int i = 0; i < segmentCount; i++)
             {
                 DateTime labelDate = minDate.AddTicks( segment.Ticks * i );
@@ -454,9 +484,9 @@ public partial class HabitDetailViewModel : BaseViewModel
         {
             customSeparators.Add( minDate.ToOADate() );
         }
-        
+
         customSeparators.Add( maxDate.ToOADate() );
-        
+
         XAxes = new[]
         {
             new Axis
@@ -494,14 +524,14 @@ public partial class HabitDetailViewModel : BaseViewModel
     public void CalculateStreaks()
     {
         UserHabit? storedHabit = Habit;
-        
+
         List<ProgressOfHabit> completedDates = storedHabit.ComputedProgresses.GetKnown()
             .Where( p => p.Value is ProgressValue.YES_MANUAL or ProgressValue.YES_AUTO)
             .OrderBy( d => d.Date )
             .ToList();
 
         CompletedDays = completedDates.Count( p => p.Value is ProgressValue.YES_MANUAL );
-        
+
         Streaks.Clear();
 
         List<StreakData> streakList = new();
@@ -603,7 +633,7 @@ public partial class HabitDetailViewModel : BaseViewModel
             11 => LocStrings.NovemberShort,
             _ => LocStrings.DecemberShort,
         };
-        
+
         return result;
     }
 
@@ -675,25 +705,21 @@ public partial class HabitDetailViewModel : BaseViewModel
 
     private void SetEditedRemider()
     {
-        IsDayChecked =
-        [
-            true, // Sunday
-            true, // Monday
-            true, // Tuesday
-            true, // Wednesday
-            true, // Thursday
-            true, // Friday
-            true, // Saturday
-        ];
+        IsDayChecked = CreateDefaultDayChecks();
 
         EditedReminder = new EditedUserHabitReminder();
 
         if (Habit.Reminders != null && Habit.Reminders.Count > 0)
         {
-            UserHabitReminder reminder = Habit.Reminders.First();
+            UserHabitReminder? reminder = Habit.Reminders.FirstOrDefault();
+            if (reminder is null)
+            {
+                OnPropertyChanged( nameof( EditedReminder ) );
+                return;
+            }
 
-            EditedReminder.Title = reminder.Title;
-            EditedReminder.Description = reminder.Description;
+            EditedReminder.Title = reminder.Title ?? string.Empty;
+            EditedReminder.Description = reminder.Description ?? string.Empty;
 
             EditedReminder.Time = DateTime.Today.Add( reminder.Time.ToTimeSpan() );
             EditedReminder.IsEnabled = reminder.IsEnabled;
@@ -705,7 +731,7 @@ public partial class HabitDetailViewModel : BaseViewModel
                     IsDayChecked[i] = false;
                 }
 
-                foreach (WeekDay day in reminder.DaysOfWeek)
+                foreach (WeekDay day in reminder.DaysOfWeek.Where( d => d is not null ))
                 {
                     int dayIndex = (int)day.Type;
                     if (dayIndex >= 0 && dayIndex < IsDayChecked.Count)
@@ -714,12 +740,15 @@ public partial class HabitDetailViewModel : BaseViewModel
                     }
                 }
 
-                EditedReminder.DaysOfWeek = reminder.DaysOfWeek.Select( d => new WeekDay
-                {
-                    Id = d.Id,
-                    Type = d.Type,
-                    UserNotificationRequestId = d.UserNotificationRequestId
-                } ).ToList();
+                EditedReminder.DaysOfWeek = reminder.DaysOfWeek
+                    .Where( d => d is not null && (int)d.Type is >= 0 and <= 6 )
+                    .Select( d => new WeekDay
+                    {
+                        Id = d.Id,
+                        Type = d.Type,
+                        UserNotificationRequestId = d.UserNotificationRequestId
+                    } )
+                    .ToList();
             }
 
         }
@@ -769,13 +798,23 @@ public partial class HabitDetailViewModel : BaseViewModel
     [RelayCommand]
     private async Task EditHabitAsync()
     {
-        Dictionary<string, object> routeParams = new()
+        try
         {
-            { "Habit", Habit },
-            { "IsInHabitDetails", true }
-        };
-        
-        await Navigation.NavigateToAsync<EditHabitViewModel>( routeParams );
+            Dictionary<string, object> routeParams = new()
+            {
+                { "Habit", Habit },
+                { "IsInHabitDetails", true }
+            };
+
+            await Navigation.NavigateToAsync<EditHabitViewModel>( routeParams );
+        }
+        catch (Exception ex)
+        {
+            LoggingService.LogError( ex, "Failed to open habit editor." );
+            await DialogService.ShowErrorAsync(
+                SettingsService.IsDebug ? ex.ToString() : LocStrings.SomethingWentWrong
+            );
+        }
     }
 
     [RelayCommand]
@@ -818,15 +857,7 @@ public partial class HabitDetailViewModel : BaseViewModel
     {
         await UiBusyFor( async () =>
         {
-            HabitDeletionResponse? response = await ServiceOfHabit.DeleteAsync( Habit.Id );
-
-            if (response != null)
-            {
-                foreach (HabitDeletionResponse.NotificationRequest notification in response.DeletedNotifications)
-                {
-                    LocalNotificationCenter.Current.Cancel( notification.Id );
-                }
-            }
+            await ServiceOfHabit.DeleteAsync( Habit );
 
             await Navigation.GoBackAsync();
             ReferenceMessenger.Send( new HabitsDeletedMessege( Habit ) );
@@ -838,13 +869,10 @@ public partial class HabitDetailViewModel : BaseViewModel
     {
         await UiBusyFor( async () =>
         {
-            await ServiceOfHabit.SetHabitArchiveStatusAsync( new HabitArchiveStatus
-            {
-                HabitId = Habit.Id, 
-                IsArchived = false
-            } );
             Habit.IsArchived = false;
-            
+            await ServiceOfHabit.SetHabitArchiveStatusAsync( Habit );
+            Habit.IsArchived = false;
+
             ReferenceMessenger.Send( new HabitSavedMessage( Habit ) );
         } );
     }
@@ -853,24 +881,19 @@ public partial class HabitDetailViewModel : BaseViewModel
     private async Task ArchiveHabit()
     {
         bool newValueOfIsArchived = !Habit.IsArchived;
-        
+
         string confirmMsg = newValueOfIsArchived ? LocStrings.MessageAddHabitToArchive : LocStrings.MessageRemoveHabitFromArchive;
         string confirmTitle = newValueOfIsArchived ? LocStrings.AddHabitToArchiveQuestion : LocStrings.UnarchiveHabitQuestion;
-        
+
         bool isConfirmed = await DialogService.ShowConfirmAsync(confirmMsg, confirmTitle);
-        
+
         if (isConfirmed)
         {
             await UiBusyFor(async () =>
             {
-                await ServiceOfHabit.SetHabitArchiveStatusAsync( new HabitArchiveStatus
-                {
-                    HabitId = Habit.Id, 
-                    IsArchived = newValueOfIsArchived
-                } );
-                
                 Habit.IsArchived = newValueOfIsArchived;
-                
+                await ServiceOfHabit.SetHabitArchiveStatusAsync( Habit );
+
                 if (Habit.IsArchived)
                 {
                     ReferenceMessenger.Send( new ArchiveHabitMessage( Habit, doShowAllArchivedHabits: false ) );
@@ -913,7 +936,7 @@ public partial class HabitDetailViewModel : BaseViewModel
     {
         await TipService.ShowSnackbarAsync(
             LocStrings.StabilityExplanation,
-            duration: TimeSpan.FromSeconds( 10 ) 
+            duration: TimeSpan.FromSeconds( 10 )
         );
     }
 
@@ -922,7 +945,7 @@ public partial class HabitDetailViewModel : BaseViewModel
     {
         await TipService.ShowSnackbarAsync(
             LocStrings.HabitByDayweeksExplanation,
-            duration: TimeSpan.FromSeconds( 10 ) 
+            duration: TimeSpan.FromSeconds( 10 )
         );
     }
 
@@ -931,7 +954,7 @@ public partial class HabitDetailViewModel : BaseViewModel
     {
         await TipService.ShowSnackbarAsync(
             LocStrings.CalendarInfoExplanation,
-            duration: TimeSpan.FromSeconds( 10 ) 
+            duration: TimeSpan.FromSeconds( 10 )
         );
     }
 }

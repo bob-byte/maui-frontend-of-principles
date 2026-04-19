@@ -18,4 +18,5 @@ public class EditUserHabitDto
     public string? ColorName { get; set; }
     public ICollection<UserHabitReminder>? Reminders { get; set; }
     public List<UserHabitWithPriority>? PrioritizedHabits { get; set; }
+    public DateTime LastModified { get; set; }
 }

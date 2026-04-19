@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,12 +10,18 @@ public partial class EditHabitViewModel
     [RelayCommand( CanExecute = nameof( CanSaveGoal ) )]
     private async Task SaveGoalAsync( Action afterAction )
     {
-        bool isNewGoal = EditedGoal.Id == 0;
+        bool isNewGoal = EditedGoal.Id == 0 && EditedGoal.LocalId == 0;
 
         await UiBusyFor( async () =>
         {
-            DtoWithId response = await GoalService.SaveGoalAsync( EditedGoal );
-            EditedGoal.Id = response.Id;
+            string? oldGoalName = null;
+            UserGoal? foundGoalInCollection = UserGoals!.FirstOrDefault( g => g.Equals( EditedGoal ) || g.LocalId == EditedGoal.LocalId );
+            if (foundGoalInCollection != null)
+            {
+                oldGoalName = foundGoalInCollection.Name;
+            }
+
+            await GoalService.SaveGoalAsync( EditedGoal );
 
             if (isNewGoal)
             {
@@ -23,43 +29,31 @@ public partial class EditHabitViewModel
             }
             else
             {
-                // Store the old goal name before local saving changes
-                string? oldGoalName = null;
-                UserGoal? foundGoalInCollection = UserGoals!.FirstOrDefault( g => g.Id == EditedGoal.Id );
-                if (foundGoalInCollection != null)
+                if (foundGoalInCollection != null && oldGoalName != EditedGoal.Name)
                 {
-                    oldGoalName = foundGoalInCollection.Name;
+                    foundGoalInCollection.Name = EditedGoal.Name;
+                    ReferenceMessenger.Send( new ChangedGoalMessage( EditedGoal ) );
 
-                    if (oldGoalName != EditedGoal.Name)
+                    if (Habit.Goal is not null && (Habit.Goal.Equals( EditedGoal ) || Habit.Goal.LocalId == EditedGoal.LocalId))
                     {
-                        foundGoalInCollection.Name = EditedGoal.Name;
-                        ReferenceMessenger.Send( new ChangedGoalMessage( EditedGoal ) );
+                        Habit.Goal.Name = EditedGoal.Name;
+                    }
 
-                        if (Habit.Goal?.Id == EditedGoal.Id)
+                    IList<NotificationRequest> notifications = await ReminderService.GetPendingLocallyAsync();
+                    if (!string.IsNullOrWhiteSpace( oldGoalName ))
+                    {
+                        if (Habit.Reminders is not null)
                         {
-                            Habit.Goal.Name = EditedGoal.Name;
+                            foreach (UserHabitReminder reminder in Habit.Reminders.Where( r => r.Title == oldGoalName ))
+                            {
+                                reminder.Title = EditedGoal.Name!;
+                            }
                         }
 
-                        // Get all notifications and update the relevant ones
-                        IList<NotificationRequest> notifications =
-                            await LocalNotificationCenter.Current.GetPendingNotificationList();
-                        if (!string.IsNullOrWhiteSpace( oldGoalName ))
+                        foreach (NotificationRequest notification in notifications.Where( n => n.Title == oldGoalName ))
                         {
-                            if (Habit.Reminders is not null)
-                            {
-                                foreach (UserHabitReminder reminder in
-                                             Habit.Reminders.Where( r => r.Title == oldGoalName ))
-                                {
-                                    reminder.Title = EditedGoal.Name!;
-                                }
-                            }
-
-                            foreach (NotificationRequest? notification in notifications.Where( n =>
-                                         n.Title == oldGoalName ))
-                            {
-                                notification.Title = EditedGoal.Name!;
-                                await ReminderService.SaveLocallyAsync( notification );
-                            }
+                            notification.Title = EditedGoal.Name!;
+                            await ReminderService.SaveLocallyAsync( notification );
                         }
                     }
                 }
@@ -93,7 +87,8 @@ public partial class EditHabitViewModel
                 UserGoals!.Remove( goal );
                 ReferenceMessenger.Send( new GoalIsDeletedMessage( goal ) );
 
-                if (Habit.Goal?.Id > 0 && Habit.Goal.Id == goal.Id && ClearHabitGoalCommand.CanExecute( null ))
+                if (Habit.Goal is not null && (Habit.Goal.Equals( goal ) || Habit.Goal.LocalId == goal.LocalId) &&
+                    ClearHabitGoalCommand.CanExecute( null ))
                 {
                     ClearHabitGoalCommand.Execute( null );
                 }
@@ -104,11 +99,7 @@ public partial class EditHabitViewModel
     [RelayCommand]
     private void ClearHabitGoal()
     {
-        if (Habit.Goal is not null)
-        {
-            Habit.Goal.Id = 0;
-            Habit.Goal.Name = null;
-        }
+        Habit.Goal = null;
     }
 
     [RelayCommand]
@@ -118,6 +109,7 @@ public partial class EditHabitViewModel
         {
             EditedGoal = new UserGoal
             {
+                LocalId = goal.LocalId,
                 Id = goal.Id,
                 Name = goal.Name
             };
@@ -130,6 +122,7 @@ public partial class EditHabitViewModel
     {
         EditedGoal = new UserGoal
         {
+            LocalId = goal.LocalId,
             Id = goal.Id,
             Name = goal.Name
         };
