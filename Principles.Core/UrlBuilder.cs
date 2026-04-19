@@ -45,7 +45,7 @@ public class UrlBuilder : IUrlBuilder
 #if LOCALDEBUG && IOS
             m_baseUrl ??= "https://localhost:6001/";
 #elif LOCALDEBUG
-            m_baseUrl ??= "https://localhost:6001/";                                        //D:\VS\VSSDK\Android\android-sdk\platform-tools\adb.exe reverse tcp:6001 tcp:6001
+            m_baseUrl ??= "https://10.0.2.2:6001/";
 
 #else
             m_baseUrl ??= "https://principles-server.ckwavh.easypanel.host/";
