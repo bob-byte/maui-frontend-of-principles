@@ -7,14 +7,14 @@ public interface IDialogService
     Task<bool> ShowAlertWithTwoBtnsAsync( string msg, string title, string accept, string cancel );
     Task<bool> ShowConfirmAsync( string msg, string title );
     Task ShowErrorAsync( string msg );
-    Task<IPopupResult> ShowPopupAsync<TPopupViewModel>(
+    Task<object?> ShowPopupAsync<TPopupViewModel>(
         IDictionary<string, object>? parameters = null, 
-        PopupOptions options = null
-    ) where TPopupViewModel : BaseViewModel;
-    Task<IPopupResult<TResult>> ShowPopupAsync<TPopupViewModel, TResult>(
+        object? options = null
+    );
+    Task<object?> ShowPopupAsync<TPopupViewModel, TResult>(
         IDictionary<string, object>? parameters = null, 
-        PopupOptions options = null
-    ) where TPopupViewModel : BaseViewModel;
+        object? options = null
+    );
     /// <summary>
     /// Closes current popup
     /// </summary>

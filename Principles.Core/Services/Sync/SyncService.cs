@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Threading;
 using System.Net;
+using Principles.Services;
 
 namespace Principles.Core.Services;
 
@@ -314,8 +315,13 @@ public class SyncService : ISyncService
             {
                 string errorMessage = $"Handler for entity \"{item.HandlerType}\" not found";
                 m_loggingService.LogFatal( errorMessage );
-                IDialogService dialogService = ServiceLocator.Current!.GetRequiredService<IDialogService>();
-                await dialogService.ShowErrorAsync( errorMessage );
+
+                if(m_settingsService.IsDebug)
+                {
+                    IDialogService dialogService = ServiceLocator.Current!.GetRequiredService<IDialogService>();
+                    await dialogService.ShowErrorAsync( errorMessage );
+                }
+                
                 await m_queue.MarkAsFailedAsync(item.LocalId, errorMessage);
                 return false;
             }

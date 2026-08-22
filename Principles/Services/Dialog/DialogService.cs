@@ -24,13 +24,13 @@ public class DialogService : IDialogService
         return Shell.Current.DisplayAlertAsync( title, msg, LocStrings.Yes, LocStrings.No );
     }
 
-    public Task<IPopupResult> ShowPopupAsync<TPopupViewModel>(
+    public Task<object?> ShowPopupAsync<TPopupViewModel>(
         IDictionary<string, object>? parameters = null, 
-        PopupOptions options = null
-    ) where TPopupViewModel : BaseViewModel
+        object? options = null
+    )
     {
         IPopupService popupService = ServiceLocator.Current.GetRequiredService<IPopupService>();
-        options ??= new()
+        PopupOptions popupOptions = options as PopupOptions ?? new()
         {
             Shape = null,
             CanBeDismissedByTappingOutsideOfPopup = true
@@ -38,16 +38,17 @@ public class DialogService : IDialogService
         
         //to not trigger HandleDisappearingOfPageAsync of current page
         IsPopupOpen = true;
-        return popupService.ShowPopupAsync<TPopupViewModel>( Shell.Current, options, parameters );
+        return popupService.ShowPopupAsync<TPopupViewModel>( Shell.Current, popupOptions, parameters )
+            .ContinueWith( t => (object?)t.Result );
     }
 
-    public Task<IPopupResult<TResult>> ShowPopupAsync<TPopupViewModel, TResult>(
+    public Task<object?> ShowPopupAsync<TPopupViewModel, TResult>(
         IDictionary<string, object>? parameters = null, 
-        PopupOptions options = null
-    ) where TPopupViewModel : BaseViewModel
+        object? options = null
+    )
     {
         IPopupService popupService = ServiceLocator.Current.GetRequiredService<IPopupService>();
-        options ??= new()
+        PopupOptions popupOptions = options as PopupOptions ?? new()
         {
             Shape = null,
             CanBeDismissedByTappingOutsideOfPopup = true
@@ -56,7 +57,8 @@ public class DialogService : IDialogService
         //to not trigger HandleDisappearingOfPageAsync of current page
         IsPopupOpen = true;
 
-        return popupService.ShowPopupAsync<TPopupViewModel, TResult>( Shell.Current, options, parameters );
+        return popupService.ShowPopupAsync<TPopupViewModel, TResult>( Shell.Current, popupOptions, parameters )
+            .ContinueWith( t => (object?)t.Result );
     }
 
     public async Task ClosePopupAsync()

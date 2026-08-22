@@ -399,16 +399,17 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
     [RelayCommand]
     private async Task DeleteArchivedHabitAsync( ArсhivedHabitDto archivedHabit )
     {
-        MultipleActionPopupViewModel multipleActionViewModel = ServiceProvider.GetRequiredService<MultipleActionPopupViewModel>();
-        MultipleActionPopup popup = new( multipleActionViewModel );
-
         List<ActionData> availableActions =
         [
             new( LocStrings.RemoveFromArchive, () => RemoveHabitFromArchiveAsync( archivedHabit ) ),
             new( LocStrings.DeleteTheHabit, () => DeleteArchivedHabitInServerAsync( archivedHabit ) )
         ];
-        multipleActionViewModel.Configure( availableActions, LocStrings.DeleteArchivedHabitConfirmationText );
-        await Shell.Current.ShowPopupAsync( popup );
+        Dictionary<string, object> popupParameters = new()
+        {
+            ["AvailableActions"] = availableActions,
+            ["Description"] = LocStrings.DeleteArchivedHabitConfirmationText
+        };
+        await DialogService.ShowPopupAsync<MultipleActionPopupViewModel>( popupParameters );
     }
 
     private async Task DeleteArchivedHabitInServerAsync( ArсhivedHabitDto habit )
@@ -591,7 +592,7 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
             bool canSendNotifications = await GetAccessToSendNotificationsAsync();
             if (!canSendNotifications)
             {
-                await DialogService.ShowErrorAsync( LocStrings.NotificationsPermissionRequired );
+                await DialogService.ShowErrorAsync( LocStrings.DeviceDoesNotSupportNotifications );
                 return;
             }
         }
