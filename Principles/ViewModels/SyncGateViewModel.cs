@@ -40,7 +40,7 @@ public class SyncGateViewModel : BaseViewModel
         m_trigger = SyncTrigger.Startup;
     }
 
-    public override async Task InitializeAsync( object? parameter = null )
+    public override async Task InitializePageAsync( IDictionary<string, object> query )
     {
         string authToken = SettingsService.AuthAccessToken ?? await SettingsService.GetAuthAccessTokenAsync();
         if (string.IsNullOrWhiteSpace( authToken ))

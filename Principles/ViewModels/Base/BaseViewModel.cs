@@ -66,13 +66,13 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         {
             await UiBusyFor( async () =>
             {
-                await InitializeAsync();
+                await InitializePageAsync( Query ?? new Dictionary<string, object>() );
 
                 IsInitialized = true;
             } );
         } );
 
-        OnDisappearingCommand = new AsyncRelayCommand( async () => await OnDisappearingAsync() );
+        OnDisappearingCommand = new AsyncRelayCommand( async () => await HandleDisappearingOfPageAsync() );
 
         if (GetType() != typeof( ProfileViewModel ))
         {
