@@ -32,6 +32,7 @@ public class ReminderTimeAndDaysToStringConverter : BaseConverterOneWay<EditedUs
         if (sortedDays.Count == 7)
         {
             return $"{timeStr} {LocStrings.EveryDay}";
+        }
 
         string[] daysOfWeekNames =
         [

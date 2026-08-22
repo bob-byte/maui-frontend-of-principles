@@ -98,7 +98,7 @@ public class ServiceOfHabit : BaseEntityService<UserHabit>, IServiceOfHabit
             .ToList();
 
         habit.ComputedProgresses.RecomputeFrom( knownProgresses, frequency, isNumerical: false );
-        habit.ScoreList.Recompute( habit.Complexity, frequency, habit.ComputedProgresses, from, to );
+        habit.ScoreList.Recompute( habit.Complexity, frequency, habit.ComputedProgresses, from, to, habit.IsNumerical, habit.TargetPerOneTime, habit.TargetType );
 
         return habit.ScoreList.Get( to ).Value;
     }
@@ -373,7 +373,7 @@ public class ServiceOfHabit : BaseEntityService<UserHabit>, IServiceOfHabit
             values.Insert( 0, ProgressValue.YES_MANUAL );
             extraDays++;
 
-            if (extraDays > 365)
+            if (extraDays > 1000)
             {
                 throw new InvalidOperationException( "Cannot define days until the habit is complete." );
             }
@@ -381,6 +381,44 @@ public class ServiceOfHabit : BaseEntityService<UserHabit>, IServiceOfHabit
 
         return extraDays;
     }
+    public async Task RestoreRemindersOfHabit( UserHabit habit )
+    {
+        if (habit.Reminders?.Any() == true)
+        {
+            await ReminderService.RequestAccessToSendNotificationsAsync();
+
+            for (int numReminder = 0; numReminder < habit.Reminders.Count; numReminder++)
+            {
+                UserHabitReminder habitReminder = habit.Reminders[numReminder];
+
+                for (int numWeekDay = 0; numWeekDay < habitReminder.DaysOfWeek?.Count; numWeekDay++)
+                {
+                    WeekDay weekDay = habitReminder.DaysOfWeek[numWeekDay];
+                    bool isNewHabit = false;
+                    await ReminderService.AddNotificationToDeviceAsync( isNewHabit, habitReminder, weekDay );
+                }
+            }
+        }
+    }
+
+    public void CancelAllRemindersOfHabit( UserHabit habit )
+    {
+        if (habit.Reminders is not null)
+        {
+            foreach (UserHabitReminder reminder in habit.Reminders)
+            {
+                reminder.IsEnabled = false;
+                if (reminder.DaysOfWeek is not null)
+                {
+                    foreach (WeekDay weekDay in reminder.DaysOfWeek)
+                    {
+                        ReminderService.Cancel( weekDay.UserNotificationRequestId );
+                    }
+                }
+            }
+        }
+    }
+
     private async Task<List<UserHabit>> LoadHabitsAsync( bool isArchived )
     {
         List<UserHabit> habits = await Database.WhereAsync<UserHabit>( h => h.IsArchived == isArchived ).ConfigureAwait( false );

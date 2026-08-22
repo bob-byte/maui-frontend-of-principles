@@ -19,4 +19,6 @@ public interface IServiceOfHabit
     bool ShouldHabitBeFollowed( ProgressOfHabit progress, UserHabit habit );
 
     int GetDaysUntilFullAutomation( UserHabit habit );
+    Task RestoreRemindersOfHabit( UserHabit habit );
+    void CancelAllRemindersOfHabit( UserHabit habit );
 }

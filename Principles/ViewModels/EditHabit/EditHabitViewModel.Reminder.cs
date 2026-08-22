@@ -15,7 +15,7 @@ public partial class EditHabitViewModel
             bool canSendNotifications = await ReminderService.RequestAccessToSendNotificationsAsync();
             if (!canSendNotifications)
             {
-                await DialogService.ShowErrorAsync( LocStrings.NotificationsPermissionRequired );
+                await DialogService.ShowErrorAsync( LocStrings.DeviceDoesNotSupportNotifications );
                 return false;
             }
         }
