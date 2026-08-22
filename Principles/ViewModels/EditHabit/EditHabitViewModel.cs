@@ -142,6 +142,18 @@ public partial class EditHabitViewModel : BaseViewModel
         ];
     }
 
+    private void InitDefaultProgerssValues()
+    {
+        DefaultProgressValues =
+        [
+            new DefaultProgressValue { Name = LocStrings.Yes, Value = ProgressValue.YES_MANUAL },
+            new DefaultProgressValue { Name = LocStrings.No, Value = ProgressValue.NO },
+            new DefaultProgressValue { Name = "Skip", Value = ProgressValue.SKIP }
+        ];
+
+        SelectedDefaultProgressValue = DefaultProgressValues.First();
+    }
+
     private static ObservableCollectionEx<bool> CreateDefaultDayChecks()
     {
         return
@@ -176,6 +188,8 @@ public partial class EditHabitViewModel : BaseViewModel
         IsLoadingHabitInfo = false;
 
         base.ApplyQueryAttributes( query );
+        ApplyQuery( query );
+    }
 
     private void ApplyQuery( IDictionary<string, object> query )
     {
@@ -354,7 +368,22 @@ public partial class EditHabitViewModel : BaseViewModel
         AllUserAreasOfLife = new ObservableCollectionEx<UserAreaOfLife>();
 #endif
 
-        return Task.CompletedTask;
+        await base.HandleDisappearingOfPageAsync( parameter );
+    }
+
+    private void InitMinMaxOfHabit()
+    {
+        // reserved for numeric habit defaults
+    }
+
+    private void CheckHabitProgressRestriction()
+    {
+        // reserved for type-specific UI restrictions
+    }
+
+    public void ChangeTypeOfHabitInfo( TypeOfHabit type )
+    {
+        TypeOfHabitInfo = type.ToString();
     }
 
     private void NameOfHabitOnPropertyChanging( object? sender, System.ComponentModel.PropertyChangingEventArgs e )

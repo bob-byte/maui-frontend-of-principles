@@ -33,7 +33,7 @@ public partial class ProgressOfHabit : ObservableObject, IEntity
     public long UserHabitLocalId { get; set; }
 
     [ObservableProperty]
-    private string m_notes;
+    private string m_notes = string.Empty;
 
     public bool IsCompleted()
     {

@@ -94,6 +94,12 @@ public partial class HabitDetailViewModel : BaseViewModel
     public IProgressOfHabitService ProgressOfHabitService { get; }
     public HabitFrequencyInfo FrequencyInfo { get; set; }
 
+    private void SetFrequency()
+    {
+        FrequencyInfo ??= new HabitFrequencyInfo();
+        FrequencyInfo.Frequency = Habit?.Frequency;
+    }
+
     private void ApplyQuery( IDictionary<string, object> query )
     {
         if (query.TryGetValue( "Habit", out object? habitObj ) && habitObj is UserHabit habit)

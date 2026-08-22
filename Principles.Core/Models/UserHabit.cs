@@ -71,11 +71,11 @@ public partial class UserHabit : ObservableObject, ICloneable, IEntity
     [Ignore]
     public double PercentageAchieved
     {
-        get => field;
+        get => m_percentageAchieved;
         set
         {
             OnPropertyChanging();
-            field = value;
+            m_percentageAchieved = value;
             OnPropertyChanged();
         }
     }
@@ -112,6 +112,8 @@ public partial class UserHabit : ObservableObject, ICloneable, IEntity
         m_computedProgresses = new ListOfProgressOfHabit( this );
     }
 
+    public bool IsNumerical => ProgressMarkVariaty == ProgressMarkVariaty.Numeric;
+    
     public override string ToString()
     {
         return Name ?? string.Empty;
