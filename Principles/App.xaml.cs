@@ -1,3 +1,4 @@
+using CommunityToolkit.Maui.Extensions;
 using CommunityToolkit.Maui.Views;
 
 using Principles.Core.Services.AiKey;
@@ -8,12 +9,15 @@ namespace Principles;
 
 public partial class App : Application
 {
+    private readonly IServiceProvider m_serviceProvider;
     private readonly ISettingsService m_settingsService;
     private readonly ILoggingService m_loggingService;
     private readonly ISyncOrchestrator m_syncOrchestrator;
     private readonly IReminderService m_reminderService;
     private readonly IAdService m_adService;
     private readonly IAppOpenTrackerService m_appOpenTracker;
+    private readonly UpdatePopupViewModel m_updatePopupViewModel;
+    private UpdatePopup? m_updatePopup;
 
     public App( IServiceProvider serviceProvider )
     {
@@ -30,6 +34,7 @@ public partial class App : Application
         m_reminderService = serviceProvider.GetRequiredService<IReminderService>();
         m_adService = serviceProvider.GetRequiredService<IAdService>();
         m_appOpenTracker = serviceProvider.GetRequiredService<IAppOpenTrackerService>();
+        m_updatePopupViewModel = serviceProvider.GetRequiredService<UpdatePopupViewModel>();
 
         UserAppTheme = AppTheme.Light;
 
@@ -87,7 +92,7 @@ public partial class App : Application
             }
         }
         
-        bool shouldShowPopup = await m_updatePopupViewModel.ShouldShowPopup();
+        bool shouldShowPopup = await UpdatePopupViewModel.ShouldShowUpdatePopup();
         
         if (shouldShowPopup)
         {
@@ -111,7 +116,7 @@ public partial class App : Application
         
         m_updatePopupViewModel.ReferenceMessenger.Send( new TryAddNewDayInHabitListMessage() );
 
-        bool shouldShowPopup = (m_updatePopup is null || !m_updatePopup.IsShown) && ( await m_updatePopupViewModel.ShouldShowPopup());
+        bool shouldShowPopup = m_updatePopup is null && await UpdatePopupViewModel.ShouldShowUpdatePopup();
         
         if (shouldShowPopup)
         {

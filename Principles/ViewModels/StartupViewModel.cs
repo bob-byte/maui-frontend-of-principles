@@ -12,6 +12,9 @@ public partial class StartupViewModel : BaseViewModel
     private readonly IAppleAuthService m_appleAuthService;
     private readonly IReminderService m_reminderService;
 
+    [ObservableProperty]
+    private ObservableCollectionEx<AppFeature> m_appFeatures = new();
+
     public StartupViewModel( IServiceProvider serviceProvider )
         : base( serviceProvider )
     {

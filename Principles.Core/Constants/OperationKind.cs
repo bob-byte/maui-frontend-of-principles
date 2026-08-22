@@ -1,14 +1,11 @@
 ﻿
 namespace Principles.Core.Constants;
 
-public sealed record OperationKind
+public sealed class OperationKind
 {
-    private const string RecordToStringPrefix = "OperationKind { Name = ";
-    private const string RecordToStringSuffix = " }";
-
     public OperationKind( string name )
     {
-        Name = NormalizeName( name );
+        Name = name;
     }
 
     public string Name { get; init; }
@@ -26,20 +23,9 @@ public sealed record OperationKind
         return Name;
     }
 
-    public static bool operator ==( OperationKind left, string right ) => left.Name == NormalizeName( right );
-    public static bool operator !=( OperationKind left, string right ) => left.Name != NormalizeName( right );
+    public static bool operator ==( OperationKind left, string right ) => left.Name == right;
+    public static bool operator !=( OperationKind left, string right ) => left.Name != right;
 
     public static bool operator ==( string left, OperationKind right ) => right == left;
     public static bool operator !=( string left, OperationKind right ) => right != left;
-
-    private static string NormalizeName( string name )
-    {
-        if (name.StartsWith( RecordToStringPrefix, StringComparison.Ordinal ) &&
-            name.EndsWith( RecordToStringSuffix, StringComparison.Ordinal ))
-        {
-            return name[RecordToStringPrefix.Length..^RecordToStringSuffix.Length];
-        }
-
-        return name;
-    }
 }

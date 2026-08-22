@@ -1,4 +1,6 @@
-﻿public class DatabasePathProvider : IDatabasePathProvider
+﻿namespace Principles.Services;
+
+public class DatabasePathProvider : IDatabasePathProvider
 {
     public string GetDatabasePath()
     {

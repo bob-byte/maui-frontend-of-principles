@@ -37,6 +37,7 @@ public class SimpleSettingsService : ISettingsService
 
     public double NormalPageHeight { get; set; }
     public string CurrentCulture { get; set; }
+    public bool IsAdsEnabled => !IsDebug;
 
     public Task<string> GetAuthAccessTokenAsync()
     {

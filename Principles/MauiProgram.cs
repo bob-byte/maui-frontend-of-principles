@@ -30,7 +30,6 @@ public static class MauiProgram
     {
         SQLitePCL.Batteries_V2.Init();
         MauiAppBuilder builder = MauiApp.CreateBuilder();
-        SetupSerilog();
 
         SetupSerilog();
     
@@ -151,6 +150,9 @@ public static class MauiProgram
         services.AddSingleton<ISyncStateNotifier, SyncStateNotifier>();
         services.AddSingleton<IDatabasePathProvider, DatabasePathProvider>();
         services.AddSingleton<IDatabaseKeyProvider, DatabaseKeyProvider>();
+        services.AddSingleton<IAdService, AdService>();
+        services.AddSingleton<IAppOpenTrackerService, AppOpenTrackerService>();
+        services.AddSingleton<IServiceOfTask, ServiceOfTask>();
 
         return services;
     }

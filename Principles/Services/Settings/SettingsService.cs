@@ -40,6 +40,8 @@ public class SettingsService : ISettingsService
         set => SetStoredDateTime( LAST_FAILED_SYNC_AT_KEY, value );
     }
 
+    public bool IsAdsEnabled => !IsDebug;
+
     public async Task<string> GetAuthAccessTokenAsync()
     {
         string? token = await SecureStorage.GetAsync( key: ACCESS_TOKEN_KEY ).DefaultConfigureAwait();
