@@ -4,13 +4,6 @@ using CommunityToolkit.Maui.Extensions;
 using DevExpress.Maui.Controls;
 using DevExpress.Maui.Core;
 using DevExpress.Maui.DataGrid;
-
-using DIPS.Mobile.UI.Components.ContextMenus;
-
-using Microsoft.Maui.Controls.Shapes;
-
-using Plugin.AdMob;
-
 using Principles.Controls;
 
 using System.Windows.Input;
@@ -118,7 +111,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
     private void RebuildViewOfActiveHabits()
     {
         DGV_Habits.Columns.Clear();
-        
+        AddGroupingColumn();
         AddFirstCol();
         AddColumns();
 #if ANDROID31_0_OR_GREATER || IOS16_0_OR_GREATER
@@ -148,28 +141,6 @@ public partial class ProgressOfHabitsView : ContentPageBase
         }
     }
 
-    private void InitDayChangeObserver()
-    {
-        TimeSpan timeUntilMidnight = TimeUntilMidnight();
-        TimeSpan period = TimeSpan.FromHours( 24 );
-        m_newDayEventTimer = new Timer( TryAddNewDayColumn, state: null, dueTime: timeUntilMidnight, period );
-
-#if IOS
-        m_timeZoneChangeObserver = new TimeZoneChangeObserver();
-        m_timeZoneChangeObserver.StartObservingTimeZoneChanges( ( notification ) =>
-        {
-            TimeSpan timeUntilMidnight = TimeUntilMidnight();
-            m_newDayEventTimer!.Change( timeUntilMidnight, period );
-        } );
-#elif ANDROID
-        m_timeZoneChangeReceiver = new TimeZoneChangedReceiver( ( context, intent ) =>
-        {
-            TimeSpan timeUntilMidnight = TimeUntilMidnight();
-            m_newDayEventTimer!.Change( timeUntilMidnight, period );
-        } );
-#endif
-    }
-
     private async void TryAddNewDayColumn( object? state )
     {
         await s_lockerOfAddingNewDayColumn.WaitAsync();
@@ -187,7 +158,7 @@ public partial class ProgressOfHabitsView : ContentPageBase
             bool isAlreadyAddedCol = DGV_Habits.Columns[1].Caption.Equals( colCaption, StringComparison.CurrentCultureIgnoreCase ) ||
                                      DGV_Habits.Columns[2].Caption.Equals( colCaption, StringComparison.CurrentCultureIgnoreCase ) ||
                                      DGV_Habits.Columns[3].Caption.Equals( colCaption, StringComparison.CurrentCultureIgnoreCase ) ||
-                                     (ViewModel.UserHabits?.Count > 0 && ViewModel.UserHabits[0].Progresses!.Any( p => p.Date == today ));
+                                     (ViewModel.UserHabits?.Count > 0 && ViewModel.UserHabits[0].Progresses!.Any(p => p.Date == today) );
 
             if (!isAlreadyAddedCol && ViewModel.UserHabits is not null)
             {
@@ -497,12 +468,12 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
     private async void DXI_Reminder_Tapped( object sender, TappedEventArgs e )
     {
-        if (LocalNotificationCenter.Current.IsSupported)
+        if (ViewModel.ReminderService.IsLocalNotificationSupported())
         {
             System.Action openPopup = () => DXP_Reminder.IsOpen = true;
             if (ViewModel.LoadHabitReportReminderCommand.CanExecute( openPopup ))
             {
-                await ViewModel.LoadHabitReportReminderCommand.ExecuteAsync( openPopup ).DefaultConfigureAwait();
+                await ViewModel.LoadHabitReportReminderCommand.ExecuteAsync( openPopup );
             }
         }
         else
@@ -518,11 +489,11 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
     private async void SB_Save_Clicked( object sender, EventArgs e )
     {
-        System.Action closePopup = () => DXP_Reminder.IsOpen = false;
+        Action closePopup = () => DXP_Reminder.IsOpen = false;
 
         if (ViewModel.SaveHabitsReportReminderCommand.CanExecute( closePopup ))
         {
-            await ViewModel.SaveHabitsReportReminderCommand.ExecuteAsync( closePopup ).DefaultConfigureAwait();
+            await ViewModel.SaveHabitsReportReminderCommand.ExecuteAsync( closePopup );
         }
     }
 
@@ -580,26 +551,6 @@ public partial class ProgressOfHabitsView : ContentPageBase
 
     }
 
-    private async Task ChooseProgressMarkVariatyAsync()
-    {
-        double heightOfBottomSheet;
-
-        if (ViewModel.SettingsService.NormalPageHeight == 0 ||
-            DeviceDisplay.Current.MainDisplayInfo.Orientation == DisplayOrientation.Landscape)
-        {
-            heightOfBottomSheet = 300;
-            ProgressMarkVariatyBottomSheet.HalfExpandedRatio = heightOfBottomSheet / CPB_Page.Height;
-        }
-        else
-        {
-            heightOfBottomSheet = 500;
-
-            ProgressMarkVariatyBottomSheet.HalfExpandedRatio = heightOfBottomSheet / ViewModel.SettingsService.NormalPageHeight;
-        }
-        ProgressMarkVariatyBottomSheet.State = BottomSheetState.HalfExpanded;
-        //await ViewModel.GetArchivedHabitsCommand.ExecuteAsync( null );
-    }
-
     private void ME_ArchivedHabitEndIconClicked( object sender, EventArgs e )
     {
         ArchiveBottomSheet.State = BottomSheetState.Hidden;
@@ -638,116 +589,5 @@ public partial class ProgressOfHabitsView : ContentPageBase
                 vm.ArchivedHabitDetailCommand.Execute( archivedHabit );
             }
         }
-    }
-
-    private void BA_Ad_OnAdFailedToLoad( object? sender, IAdError e )
-    {
-        if (ViewModel.SettingsService.IsDebug)
-        {
-            ViewModel.LoggingService.LogError( $"Failed to load banner ad: {e.Message}" );
-        }
-    }
-
-    private void PrincipleYesOrNoHabitButton_Clicked( object sender, EventArgs e )
-    {
-        if (sender is DevExpress.Maui.Controls.SimpleButton button)
-        {
-            ProgressMarkVariatyButton_Clicked( TypeOfHabit.Principled, ProgressMarkVariaty.YesOrNo );
-        }
-    }
-
-    private void PrincipleNumericHabitButton_Clicked( object sender, EventArgs e )
-    {
-        if (sender is DevExpress.Maui.Controls.SimpleButton button)
-        {
-            ProgressMarkVariatyButton_Clicked( TypeOfHabit.Principled, ProgressMarkVariaty.Numeric );
-        }
-    }
-
-    private void FlexibleYesOrNoHabitButton_Clicked( object sender, EventArgs e )
-    {
-        if (sender is DevExpress.Maui.Controls.SimpleButton button)
-        {
-            ProgressMarkVariatyButton_Clicked( TypeOfHabit.Flexible, ProgressMarkVariaty.YesOrNo );
-        }
-    }
-
-    private void FlexibleNumericHabitButton_Clicked( object sender, EventArgs e )
-    {
-        if (sender is DevExpress.Maui.Controls.SimpleButton button)
-        {
-            ProgressMarkVariatyButton_Clicked( TypeOfHabit.Flexible, ProgressMarkVariaty.Numeric );
-        }
-    }
-
-    private void MaindNumericHabitButton_Clicked( object sender, EventArgs e )
-    {
-        if (sender is DevExpress.Maui.Controls.SimpleButton button)
-        {
-            ProgressMarkVariatyButton_Clicked( TypeOfHabit.Mind, ProgressMarkVariaty.Numeric );
-        }
-    }
-
-    // main method
-    private void ProgressMarkVariatyButton_Clicked( TypeOfHabit type, ProgressMarkVariaty varianty )
-    {
-        ProgressMarkVariatyBottomSheet.State = BottomSheetState.Hidden;
-
-        (ProgressMarkVariaty Varianty, TypeOfHabit Type) parameter = (varianty, type);
-
-        if (BindingContext is ProgressOfHabitsViewModel vm &&
-            vm.AddHabitCommand.CanExecute( parameter ))
-        {
-            vm.AddHabitCommand.Execute( parameter );
-        }
-    }
-    private void SortByGoal()
-    {
-        DGV_Habits.BeginUpdate();
-
-        TypeColumn.IsGrouped = false;
-        GoalColumn.IsGrouped = true;
-
-        TypeColumn.IsVisible = false;
-        GoalColumn.IsVisible = true;
-
-        DGV_Habits.EndUpdate();
-    }
-
-    private void SortByHabitType()
-    {
-        DGV_Habits.BeginUpdate();
-
-        TypeColumn.IsGrouped = true;
-        GoalColumn.IsGrouped = false;
-
-        TypeColumn.IsVisible = true;
-        GoalColumn.IsVisible = false;
-
-        DGV_Habits.EndUpdate();
-    }
-
-    public void ShowPrincipleInfo( object sender, EventArgs e )
-    {
-        Snackbar.Make(
-                LocStrings.PrincipleInfo,
-                visualOptions: SnackbarHelper.DefaultOptions()
-            ).Show();
-    }
-
-    public void ShowFlexibleInfo( object sender, EventArgs e )
-    {
-        Snackbar.Make(
-                LocStrings.FlexibleInfo,
-                visualOptions: SnackbarHelper.DefaultOptions()
-            ).Show();
-    }
-
-    public void ShowMindInfo( object sender, EventArgs e )
-    {
-        Snackbar.Make(
-                LocStrings.MindInfo,
-                visualOptions: SnackbarHelper.DefaultOptions()
-            ).Show();
     }
 }

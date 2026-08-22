@@ -9,6 +9,7 @@ public class GoogleAuthService : IGoogleAuthService
     private readonly IRequestProvider m_requestProvider;
     private readonly ISettingsService m_settingsService;
     private readonly IUrlBuilder m_urlBuilder;
+    private readonly IUserService m_userService;
 
     public GoogleAuthService( IServiceProvider serviceProvider )
     {
@@ -16,6 +17,7 @@ public class GoogleAuthService : IGoogleAuthService
         m_requestProvider = serviceProvider.GetRequiredService<IRequestProvider>();
         m_settingsService = serviceProvider.GetRequiredService<ISettingsService>();
         m_urlBuilder = serviceProvider.GetRequiredService<IUrlBuilder>();
+        m_userService = serviceProvider.GetRequiredService<IUserService>();
     }
 
     public async Task AuthorizeAsync()
@@ -94,6 +96,7 @@ public class GoogleAuthService : IGoogleAuthService
         };
         GoogleAuthResponse response = await m_requestProvider.PostAsync<GoogleAuthRequest, GoogleAuthResponse>( url, request ).DefaultConfigureAwait();
 
+        await m_userService.ClearLocalDataAsync().ConfigureAwait( false );
         await m_settingsService.SetAuthAccessTokenAsync( response.Token ).DefaultConfigureAwait();
     }
 
@@ -119,4 +122,3 @@ public class GoogleAuthService : IGoogleAuthService
         return result;
     }
 }
-

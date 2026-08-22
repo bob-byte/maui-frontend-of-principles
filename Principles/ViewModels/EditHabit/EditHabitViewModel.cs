@@ -13,10 +13,10 @@ namespace Principles.ViewModels;
 public partial class EditHabitViewModel : BaseViewModel
 {
     [ObservableProperty]
-    private UserHabit m_habit;
+    private UserHabit m_habit = new();
 
     [ObservableProperty]
-    private ObservableCollectionEx<bool> m_isDayChecked = new();
+    private ObservableCollectionEx<bool> m_isDayChecked = CreateDefaultDayChecks();
 
     [ObservableProperty]
     private ValidatableObject<string> m_nameOfHabit;
@@ -58,23 +58,6 @@ public partial class EditHabitViewModel : BaseViewModel
 
     [ObservableProperty]
     private HabitFrequencyInfo m_frequencyInfo;
-
-    [ObservableProperty]
-    private bool m_canSelectMindType;
-    public class EnumOption<T>
-    {
-        public T Value { get; set; }
-        public string Display { get; set; }
-    }
-    public List<EnumOption<NumericalHabitType>> MinMaxOptions { get; private set; }
-    private void InitMinMaxOfHabit()
-    {
-        MinMaxOptions = new List<EnumOption<NumericalHabitType>>
-        {
-            new() { Value = NumericalHabitType.AtLeast, Display = LocStrings.Min },
-            new() { Value = NumericalHabitType.AtMost, Display = LocStrings.Max }
-        };
-    }
 
     public UserAreaOfLife AllAreasOfLifeAsOneItem { get; }
 
@@ -125,8 +108,6 @@ public partial class EditHabitViewModel : BaseViewModel
         {
             InitDefaultProgerssValues();
             InitPeriodsOfHabit();
-            InitMinMaxOfHabit();
-            ChangeTypeOfHabitInfo(TypeOfHabit.Flexible);
 
             AiRecommenderOfHabits.RecreateSystemMessage();
 
@@ -156,24 +137,51 @@ public partial class EditHabitViewModel : BaseViewModel
         PeriodsOfHabit =
         [
             new PeriodOfHabit { Type = PeriodTypeOfHabit.Week, Name = LocStrings.Week.ToLower() },
-            new PeriodOfHabit { Type = PeriodTypeOfHabit.Month, Name = LocStrings.Month.ToLower() }
+            new PeriodOfHabit { Type = PeriodTypeOfHabit.Month, Name = LocStrings.Month.ToLower() },
+            new PeriodOfHabit { Type = PeriodTypeOfHabit.Year, Name = LocStrings.Year.ToLower() }
         ];
     }
 
-    private void InitDefaultProgerssValues()
+    private static ObservableCollectionEx<bool> CreateDefaultDayChecks()
     {
-        DefaultProgressValues =
+        return
         [
-            new DefaultProgressValue { Value = ProgressValue.UNKNOWN, Name = LocStrings.UnknownValue, Icon = "question" },
-            new DefaultProgressValue { Value = ProgressValue.SKIP, Name = LocStrings.SkipValue, Icon = "fire_fifth" }
+            true, // Sunday
+            true, // Monday
+            true, // Tuesday
+            true, // Wednesday
+            true, // Thursday
+            true, // Friday
+            true, // Saturday
         ];
     }
+
+    private PeriodOfHabit GetPeriodForFrequency( FrequencyOfHabit frequency )
+    {
+        PeriodTypeOfHabit periodType = frequency.IntervalLengthInDays switch
+        {
+            30 => PeriodTypeOfHabit.Month,
+            365 => PeriodTypeOfHabit.Year,
+            _ => PeriodTypeOfHabit.Week
+        };
+
+        return PeriodsOfHabit.FirstOrDefault( p => p.Type == periodType )
+            ?? PeriodsOfHabit.FirstOrDefault( p => p.Type == PeriodTypeOfHabit.Week )
+            ?? new PeriodOfHabit { Type = PeriodTypeOfHabit.Week, Name = LocStrings.Week.ToLower() };
+    }
+
+    //It is call on navigate to this EditHabitView
+    public override void ApplyQueryAttributes( IDictionary<string, object> query )
+    {
+        IsLoadingHabitInfo = false;
+
+        base.ApplyQueryAttributes( query );
 
     private void ApplyQuery( IDictionary<string, object> query )
     {
         Habit = new UserHabit();
         InitValidations();
-        
+
         if (query.TryGetValue( "Habit", out object? value ) && value is UserHabit habit)
         {
             Habit.MergeFrom( habit );
@@ -190,7 +198,7 @@ public partial class EditHabitViewModel : BaseViewModel
         {
             IsNewHabit = true;
         }
-        
+
         if (query.TryGetValue( "IsArchived", out object? isArchivedValue ) && isArchivedValue is bool archived)
         {
             Habit.IsArchived = archived;
@@ -221,20 +229,9 @@ public partial class EditHabitViewModel : BaseViewModel
 
     public override async Task InitializePageAsync( IDictionary<string, object> query )
     {
-        IsLoadingHabitInfo = true;
+        await InitUserInfoAsync();
 
-        ApplyQuery( query );
-
-        IsDayChecked =
-        [
-            true, // Sunday
-            true, // Monday
-            true, // Tuesday
-            true, // Wednesday
-            true, // Thursday
-            true, // Friday
-            true, // Saturday
-        ];
+        IsDayChecked = CreateDefaultDayChecks();
 
         RecommendedHabits = new ObservableCollectionEx<RecommendedHabit>();
         Habit.Frequency ??= new FrequencyOfHabit();
@@ -273,38 +270,42 @@ public partial class EditHabitViewModel : BaseViewModel
 
             if (Habit.Reminders != null && Habit.Reminders.Count > 0)
             {
-                UserHabitReminder reminder = Habit.Reminders.First();
-
-                EditedReminder.Title = reminder.Title;
-                EditedReminder.Description = reminder.Description;
-
-                EditedReminder.Time = DateTime.Today.Add( reminder.Time.ToTimeSpan() );
-                EditedReminder.IsEnabled = reminder.IsEnabled;
-
-                if (reminder.DaysOfWeek != null)
+                UserHabitReminder? reminder = Habit.Reminders.FirstOrDefault();
+                if (reminder is not null)
                 {
-                    for (int i = 0; i < IsDayChecked.Count; i++)
-                    {
-                        IsDayChecked[i] = false;
-                    }
+                    EditedReminder.Title = reminder.Title ?? string.Empty;
+                    EditedReminder.Description = reminder.Description ?? string.Empty;
 
-                    foreach (WeekDay day in reminder.DaysOfWeek)
+                    EditedReminder.Time = DateTime.Today.Add( reminder.Time.ToTimeSpan() );
+                    EditedReminder.IsEnabled = reminder.IsEnabled;
+
+                    if (reminder.DaysOfWeek != null)
                     {
-                        int dayIndex = (int)day.Type;
-                        if (dayIndex >= 0 && dayIndex < IsDayChecked.Count)
+                        for (int i = 0; i < IsDayChecked.Count; i++)
                         {
-                            IsDayChecked[dayIndex] = true;
+                            IsDayChecked[i] = false;
                         }
+
+                        foreach (WeekDay day in reminder.DaysOfWeek.Where( d => d is not null ))
+                        {
+                            int dayIndex = (int)day.Type;
+                            if (dayIndex >= 0 && dayIndex < IsDayChecked.Count)
+                            {
+                                IsDayChecked[dayIndex] = true;
+                            }
+                        }
+
+                        EditedReminder.DaysOfWeek = reminder.DaysOfWeek
+                            .Where( d => d is not null && (int)d.Type is >= 0 and <= 6 )
+                            .Select( d => new WeekDay
+                            {
+                                Id = d.Id,
+                                Type = d.Type,
+                                UserNotificationRequestId = d.UserNotificationRequestId
+                            } )
+                            .ToList();
                     }
-
-                    EditedReminder.DaysOfWeek = reminder.DaysOfWeek.Select( d => new WeekDay
-                    {
-                        Id = d.Id,
-                        Type = d.Type,
-                        UserNotificationRequestId = d.UserNotificationRequestId
-                    } ).ToList();
                 }
-
             }
 
             Habit.AreasOfLife ??= new ObservableCollectionEx<UserAreaOfLife>();
@@ -323,24 +324,7 @@ public partial class EditHabitViewModel : BaseViewModel
         OnPropertyChanged( nameof( IsDayChecked ) );
         InitValidations();
 
-        switch (Habit.Frequency!.IntervalLengthInDays)
-        {
-            default:
-                {
-                    SelectedPeriodOfHabit = PeriodsOfHabit.First( p => p.Type == PeriodTypeOfHabit.Week );
-                    break;
-                }
-            case 30:
-                {
-                    SelectedPeriodOfHabit = PeriodsOfHabit.First( p => p.Type == PeriodTypeOfHabit.Month );
-                    break;
-                }
-            case 365:
-                {
-                    SelectedPeriodOfHabit = PeriodsOfHabit.First( p => p.Type == PeriodTypeOfHabit.Year );
-                    break;
-                }
-        }
+        SelectedPeriodOfHabit = GetPeriodForFrequency( Habit.Frequency! );
 
         FrequencyInfo = new HabitFrequencyInfo
         {
@@ -360,11 +344,17 @@ public partial class EditHabitViewModel : BaseViewModel
 
     public override async Task HandleDisappearingOfPageAsync( object parameter = null )
     {
-        await base.HandleDisappearingOfPageAsync( parameter );
+        EditedReminder = new EditedUserHabitReminder();
+        EditedGoal = new UserGoal();
+        Habit = new UserHabit();
+        RecommendedHabits = new ObservableCollectionEx<RecommendedHabit>();
 
-        //delay to not show user clearing
-        await Task.Delay(1000);
-        ClearViewModelData();
+#if ANDROID
+        UserGoals = new ObservableCollectionEx<UserGoal>();
+        AllUserAreasOfLife = new ObservableCollectionEx<UserAreaOfLife>();
+#endif
+
+        return Task.CompletedTask;
     }
 
     private void NameOfHabitOnPropertyChanging( object? sender, System.ComponentModel.PropertyChangingEventArgs e )
@@ -393,7 +383,8 @@ public partial class EditHabitViewModel : BaseViewModel
     {
         var selectedDaysIndexes = new List<int>();
 
-        for (int i = 0; i < IsDayChecked.Count; i++)
+        int dayCount = Math.Min( IsDayChecked.Count, 7 );
+        for (int i = 0; i < dayCount; i++)
         {
             if (IsDayChecked[i])
             {
@@ -406,48 +397,6 @@ public partial class EditHabitViewModel : BaseViewModel
 
     public void ResetDaysOfWeek()
     {
-        IsDayChecked.Clear();
-        IsDayChecked.Add( true ); // Monday
-        IsDayChecked.Add( true ); // Tuesday
-        IsDayChecked.Add( true ); // Wednesday
-        IsDayChecked.Add( true ); // Thursday
-        IsDayChecked.Add( true ); // Friday
-        IsDayChecked.Add( true ); // Saturday
-        IsDayChecked.Add( true ); // Sunday
-    }
-    private void CheckHabitProgressRestriction( )
-    {
-        if (Habit.IsNew() || Habit.Progresses == null)
-        {
-            CanSelectMindType = true;
-            return;
-        }
-        bool hasExistingProgress = Habit.Progresses.Any( p => p.Value != -1 && p.Value != 0);
-        CanSelectMindType = !hasExistingProgress;
-    }
-
-    public void ChangeTypeOfHabitInfo(TypeOfHabit type)
-    {
-        if (type == TypeOfHabit.Principled)
-        {
-            TypeOfHabitInfo = LocStrings.PrincipleInfo;
-        }
-        else if(type == TypeOfHabit.Flexible)
-        {
-            TypeOfHabitInfo = LocStrings.FlexibleInfo;
-        }
-    }
-
-    private void ClearViewModelData()
-    {
-        EditedReminder = new EditedUserHabitReminder();
-        EditedGoal = new UserGoal();
-        Habit = new UserHabit();
-        RecommendedHabits = new ObservableCollectionEx<RecommendedHabit>();
-        
-#if ANDROID
-        UserGoals = new ObservableCollectionEx<UserGoal>();
-        AllUserAreasOfLife = new ObservableCollectionEx<UserAreaOfLife>();
-#endif
+        IsDayChecked = CreateDefaultDayChecks();
     }
 }

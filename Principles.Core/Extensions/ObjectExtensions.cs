@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace Principles.Core.Extensions;
 
@@ -14,14 +15,14 @@ public static class ObjectExtensions
             throw new ArgumentNullException("Target and source must not be null");
         }
 
-        var visited = new HashSet<(object, object)>();
-        var excludedProperties = new HashSet<string>(exceptProps ?? Array.Empty<string>());
+        var visited = new HashSet<ObjectPair>( ObjectPairComparer.Instance );
+        var excludedProperties = new HashSet<string>( exceptProps ?? Array.Empty<string>() );
         MergeInternal(target, source, visited, excludedProperties);
     }
 
-    private static void MergeInternal(object target, object source, HashSet<(object, object)> visited, HashSet<string> excludedProperties)
+    private static void MergeInternal(object target, object source, HashSet<ObjectPair> visited, HashSet<string> excludedProperties)
     {
-        if (!visited.Add((target, source)))
+        if (!visited.Add(new ObjectPair( target, source )))
         {
             return;
         }
@@ -72,7 +73,7 @@ public static class ObjectExtensions
                 else
                 {
                     object? targetValue = targetProp.GetValue(target);
-                    object merged = MergeEnumerables(targetValue, sourceValue, targetPropType);
+                    object? merged = MergeEnumerables(targetValue, sourceValue, targetPropType, visited);
                     targetProp.SetValue(target, merged);
                 }
             }
@@ -92,15 +93,17 @@ public static class ObjectExtensions
                     }
                 }
 
-                if (targetValue is not null)
+                if (targetValue == null)
                 {
-                    MergeInternal(targetValue, sourceValue, visited, excludedProperties);
+                    continue;
                 }
+
+                MergeInternal(targetValue, sourceValue, visited, excludedProperties);
             }
         }
     }
 
-    private static object MergeEnumerables(object targetValue, object? sourceValue, Type targetType)
+    private static object? MergeEnumerables(object? targetValue, object? sourceValue, Type targetType, HashSet<ObjectPair> visited)
     {
         if (sourceValue == null)
         {
@@ -152,7 +155,7 @@ public static class ObjectExtensions
                     !IsSimpleType(sourceItem.GetType()) &&
                     targetItem.GetType() == sourceItem.GetType())
                 {
-                    MergeInternal(targetItem, sourceItem, new HashSet<(object, object)>(), new HashSet<string>());
+                    MergeInternal(targetItem, sourceItem, visited, new HashSet<string>());
                 }
                 else if (sourceItem != null)
                 {
@@ -179,5 +182,25 @@ public static class ObjectExtensions
                type == typeof(DateTime) ||
                type == typeof(Guid) ||
                type == typeof(TimeSpan);
+    }
+
+    private readonly record struct ObjectPair(object Target, object Source);
+
+    private sealed class ObjectPairComparer : IEqualityComparer<ObjectPair>
+    {
+        public static ObjectPairComparer Instance { get; } = new();
+
+        public bool Equals(ObjectPair x, ObjectPair y)
+        {
+            return ReferenceEquals(x.Target, y.Target) && ReferenceEquals(x.Source, y.Source);
+        }
+
+        public int GetHashCode(ObjectPair obj)
+        {
+            return HashCode.Combine(
+                RuntimeHelpers.GetHashCode(obj.Target),
+                RuntimeHelpers.GetHashCode(obj.Source)
+            );
+        }
     }
 }

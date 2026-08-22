@@ -6,11 +6,13 @@ namespace Principles.Core.Services;
 public class LoginService : BaseRemoteService, ILoginService
 {
     private readonly IConfiguration m_configuration;
+    private readonly IUserService m_userService;
 
     public LoginService( IServiceProvider serviceProvider )
         : base( serviceProvider )
     {
         m_configuration = serviceProvider.GetRequiredService<IConfiguration>();
+        m_userService = serviceProvider.GetRequiredService<IUserService>();
     }
 
     public async Task LoginAsync( string email, string password )
@@ -26,6 +28,7 @@ public class LoginService : BaseRemoteService, ILoginService
             request
         ).DefaultConfigureAwait();
 
+        await m_userService.ClearLocalDataAsync().ConfigureAwait( false );
         await SettingsService.SetAuthAccessTokenAsync( loginResponse.Token ).DefaultConfigureAwait();
     }
 }

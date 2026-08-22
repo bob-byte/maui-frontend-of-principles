@@ -1,4 +1,4 @@
-﻿
+
 using Serilog.Events;
 using Serilog;
 
@@ -28,7 +28,9 @@ public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
     {
+        SQLitePCL.Batteries_V2.Init();
         MauiAppBuilder builder = MauiApp.CreateBuilder();
+        SetupSerilog();
 
         SetupSerilog();
     
@@ -120,7 +122,8 @@ public static class MauiProgram
             builder.Configuration.AddConfiguration( configuration );
             builder.Services.AddSingleton<IConfiguration>( configuration );
         }
-        
+        AllowMultiLineTruncation();
+
 #if IOS
         //hide Done button above keyboard for Editor control
         EditorHandler.Mapper.AppendToMapping("NoAccessoryView", (handler, view) =>
@@ -144,9 +147,10 @@ public static class MauiProgram
         services.AddSingleton<ILaunchUriHelper, LaunchUriHelper>();
         services.AddSingleton<IReminderService, ReminderService>();
         services.AddSingleton<ITipService, TipService>();
-        services.AddSingleton<IAdService, AdService>();
-        services.AddSingleton<IAppOpenTrackerService, AppOpenTrackerService>();
-        services.AddSingleton<IServiceOfTask, ServiceOfTask>();
+        services.AddSingleton<INetworkService, NetworkService>();
+        services.AddSingleton<ISyncStateNotifier, SyncStateNotifier>();
+        services.AddSingleton<IDatabasePathProvider, DatabasePathProvider>();
+        services.AddSingleton<IDatabaseKeyProvider, DatabaseKeyProvider>();
 
         return services;
     }
@@ -162,6 +166,8 @@ public static class MauiProgram
         services.AddSingleton<ProfileViewModel>();
         services.AddSingleton<ForgetPasswordViewModel>();
         services.AddSingleton<StartupViewModel>();
+        services.AddSingleton<SyncGateViewModel>();
+        services.AddSingleton<MultipleActionPopupViewModel>();
         services.AddSingleton<ChangePasswordViewModel>();
         services.AddSingleton<HabitDetailViewModel>();
         services.AddSingleton<AppBenefitsViewModel>();
@@ -181,6 +187,7 @@ public static class MauiProgram
         services.AddTransient<ProfileView>();
         services.AddTransient<ForgetPasswordView>();
         services.AddTransient<StartupView>();
+        services.AddTransient<SyncGateView>();
         services.AddTransient<HabitDetailView>();
         services.AddTransient<ChangePasswordView>();
         services.AddTransient<AppBenefitsView>();
@@ -216,7 +223,7 @@ public static class MauiProgram
     {
         IDeviceInfo deviceInfo = DeviceInfo.Current;
         IAppInfo appInfo = AppInfo.Current;
-        
+
         string? stackTrace = null;
         if (logEvent.Exception is not null)
         {
@@ -236,4 +243,34 @@ public static class MauiProgram
         return result;
     }
 #endif
+    private static void AllowMultiLineTruncation()
+    {
+        static void UpdateMaxLines( ILabelHandler handler, ILabel label )
+        {
+#if ANDROID
+            AppCompatTextView textView = handler.PlatformView;
+
+            if (label is Label controlsLabel
+                && textView.Ellipsize == Android.Text.TextUtils.TruncateAt.End
+                && controlsLabel.MaxLines != -1)
+            {
+                textView.SetMaxLines( controlsLabel.MaxLines );
+            }
+#elif IOS
+            MauiLabel textView = handler.PlatformView;
+            if( label is Label controlsLabel
+                && textView.LineBreakMode == UILineBreakMode.TailTruncation
+                && controlsLabel.MaxLines != -1 )
+            {
+              textView.Lines = controlsLabel.MaxLines;
+            }
+#endif
+        }
+
+        LabelHandler.Mapper.AppendToMapping(
+           nameof( Label.LineBreakMode ), UpdateMaxLines );
+
+        LabelHandler.Mapper.AppendToMapping(
+          nameof( Label.MaxLines ), UpdateMaxLines );
+    }
 }

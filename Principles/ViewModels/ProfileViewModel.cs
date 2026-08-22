@@ -1,14 +1,14 @@
-﻿namespace Principles.ViewModels;
+namespace Principles.ViewModels;
 
 public partial class ProfileViewModel : BaseViewModel
 {
     private readonly IReminderService m_reminderService;
-    
+
     public ProfileViewModel( IServiceProvider serviceProvider )
         : base( serviceProvider )
     {
         ReferenceMessenger.Register<UserLoggedOutMessage>( this, ( sender, msg ) => DefaultHandleLogout( msg ) );
-        
+
         m_reminderService = serviceProvider.GetRequiredService<IReminderService>();
     }
 
@@ -17,22 +17,11 @@ public partial class ProfileViewModel : BaseViewModel
     {
         newValue ??= string.Empty;
 
-        bool isSuccess = false;
-        await UiBusyFor( async () =>
-        {
-            string url = $"{UrlBuilder.UserName}";
-            await RequestProvider.PutAsync( url, newValue, SettingsService.AuthAccessToken );
-            isSuccess = true;
-        } );
-        
-        if (isSuccess)
-        {
-            UserName.Value = newValue;
+        await UiBusyFor( async () => await UserService.SaveUserNameAsync( newValue ) );
+        UserName.Value = newValue;
 
-            NotifyUserInfoChanged();
-            
-            await TipService.ShowToastAsync( LocStrings.YourNameSuccessfullySaved ).DefaultConfigureAwait();
-        }
+        NotifyUserInfoChanged();
+        await TipService.ShowToastAsync( LocStrings.YourNameSuccessfullySaved ).DefaultConfigureAwait();
     }
 
     private bool CanSaveUserName(string? newValue)
@@ -49,59 +38,36 @@ public partial class ProfileViewModel : BaseViewModel
     [RelayCommand]
     private async Task SaveMainSloganAsync(string newValue)
     {
-        bool isSuccess = false;
-        await UiBusyFor( async () =>
-        {
-            string url = $"{UrlBuilder.UserMainSlogan}";
-            await RequestProvider.PutAsync( url, newValue, SettingsService.AuthAccessToken );
-            isSuccess = true;
-        } );
+        await UiBusyFor( async () => await UserService.SaveMainSloganAsync( newValue ) );
 
-        if (isSuccess)
-        {
-            MainSlogan = newValue;
-            CachingService.SetForever( CacheKeys.USER_MAIN_SLOGAN, MainSlogan );
+        MainSlogan = newValue;
+        NotifyUserInfoChanged();
 
-            NotifyUserInfoChanged();
-
-            await TipService.ShowToastAsync( LocStrings.YourMainSloganSuccessfullySaved ).DefaultConfigureAwait();
-        }
+        await TipService.ShowToastAsync( LocStrings.YourMainSloganSuccessfullySaved ).DefaultConfigureAwait();
     }
 
     [RelayCommand]
     private async Task SaveMissionAsync( string newValue )
     {
-        bool isSuccess = false;
-        await UiBusyFor( async () =>
+        string? oldMission = Mission is null ? null : (string)Mission!.Clone();
+
+        await UiBusyFor( async () => await UserService.SaveMissionAsync( newValue ) );
+
+        Mission = newValue;
+
+        if (!string.IsNullOrWhiteSpace( oldMission ))
         {
-            string url = $"{UrlBuilder.UserMission}";
-            await RequestProvider.PutAsync( url, newValue, SettingsService.AuthAccessToken );
-            isSuccess = true;
-        } );
+            IList<NotificationRequest> notifications = await m_reminderService.GetPendingLocallyAsync();
 
-        if (isSuccess)
-        {
-            string? oldMission = Mission is null ? null : (string)Mission!.Clone();
-
-            Mission = newValue;
-            CachingService.SetForever( CacheKeys.USER_MISSION, Mission );
-
-            if (!string.IsNullOrWhiteSpace( oldMission ))
+            foreach (NotificationRequest notification in notifications.Where( n => n.Title == oldMission ))
             {
-                IList<NotificationRequest> notifications =
-                    await LocalNotificationCenter.Current.GetPendingNotificationList();
-
-                foreach (NotificationRequest? notification in notifications.Where( n => n.Title == oldMission ))
-                {
-                    notification.Title = newValue;
-                    await m_reminderService.SaveLocallyAsync( notification );
-                }
+                notification.Title = newValue;
+                await m_reminderService.SaveLocallyAsync( notification );
             }
-
-            NotifyUserInfoChanged();
-
-            await TipService.ShowToastAsync( LocStrings.YourMissionSuccessfullySaved ).DefaultConfigureAwait();
         }
+
+        NotifyUserInfoChanged();
+        await TipService.ShowToastAsync( LocStrings.YourMissionSuccessfullySaved ).DefaultConfigureAwait();
     }
 
     private void NotifyUserInfoChanged()
@@ -111,7 +77,8 @@ public partial class ProfileViewModel : BaseViewModel
             Gender = Gender,
             Name = UserName.Value!,
             MainSlogan = MainSlogan!,
-            Mission = Mission!
+            Mission = Mission!,
+            Email = Email
         } );
         ReferenceMessenger.Send( msg );
     }
@@ -139,6 +106,7 @@ public partial class ProfileViewModel : BaseViewModel
             visualOptions: SnackbarHelper.DefaultOptions()
         );
     }
+
 
     [RelayCommand]
     private Task ShowSnackbarForMission( VisualElement visualElement )

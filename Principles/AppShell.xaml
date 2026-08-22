@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Shell x:Class="Principles.AppShell"
        xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -19,6 +19,10 @@
     <MenuItem Text="Overdue" CommandParameter="Overdue" Clicked="OnMenuFilterClicked" />
     <MenuItem Text="Someday" CommandParameter="Someday" Clicked="OnMenuFilterClicked" />
     <MenuItem Text="Completed" CommandParameter="Completed" Clicked="OnMenuFilterClicked" />
+
+    <FlyoutItem Route="syncgate">
+        <ShellContent ContentTemplate="{DataTemplate local:SyncGateView}" />
+    </FlyoutItem>
 
     <TabBar Route="main">
         <ShellContent x:Name="SC_Helper"

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,6 +35,8 @@ public class UrlBuilder : IUrlBuilder
     private string? m_habitArchiveStatus;
     private string? m_archive;
     private string? m_progresses;
+    private string? m_syncBootstrap;
+    private string? m_syncPing;
 
     private string? m_tasks;
 
@@ -60,6 +62,7 @@ public class UrlBuilder : IUrlBuilder
             m_baseUrl ??= "https://localhost:6001/";
 #elif LOCALDEBUG
             m_baseUrl ??= "https://10.0.2.2:6001/";
+
 #else
             m_baseUrl ??= "https://principles-server.ckwavh.easypanel.host/";
 #endif
@@ -135,6 +138,24 @@ public class UrlBuilder : IUrlBuilder
         {
             m_progresses ??= Combine( BaseApiUrl, "habits", "progresses" );
             return m_progresses;
+        }
+    }
+
+    public string SyncBootstrap
+    {
+        get
+        {
+            m_syncBootstrap ??= Combine( BaseApiUrl, "sync", "bootstrap" );
+            return m_syncBootstrap;
+        }
+    }
+
+    public string SyncPing
+    {
+        get
+        {
+            m_syncPing ??= Combine( BaseApiUrl, "sync", "ping" );
+            return m_syncPing;
         }
     }
 

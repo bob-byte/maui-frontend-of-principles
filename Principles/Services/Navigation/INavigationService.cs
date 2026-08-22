@@ -1,4 +1,5 @@
-﻿using Principles.ViewModels;
+using Principles.Core.Models;
+using Principles.ViewModels;
 
 namespace Principles.Services
 {
@@ -12,10 +13,10 @@ namespace Principles.Services
         Task NavigateToAsync<TViewModel>( IDictionary<string, object> routeParameters ) where TViewModel : BaseViewModel;
         Task NavigateToAsync<TViewModel>( bool isAbsoluteRoute ) where TViewModel : BaseViewModel;
         Task NavigateToAsync<TViewModel>( bool isAbsoluteRoute, long? id ) where TViewModel : BaseViewModel;
-        Task NavigateToAsync<TViewModel>(bool isAbsoluteRoute, IDictionary<string, object> routeParameters) where TViewModel : BaseViewModel;
+        Task NavigateToAsync<TViewModel>( bool isAbsoluteRoute, IDictionary<string, object> routeParameters ) where TViewModel : BaseViewModel;
 
         Task GoBackAsync();
         Task GoBackAsync(IDictionary<string, object> routeParameters);
-        Task GoToInitialViewAsync();
+        Task GoToInitialViewAsync( SyncTrigger loggedInTrigger = SyncTrigger.Startup );
     }
 }

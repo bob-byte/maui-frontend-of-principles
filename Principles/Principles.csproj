@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>net10.0-android;net10.0-ios</TargetFrameworks>
@@ -133,13 +133,19 @@
 		<PackageReference Include="Xamarin.AndroidX.Lifecycle.Common" Version="2.9.2.1" />
 		<PackageReference Include="Xamarin.AndroidX.Lifecycle.Runtime" Version="2.9.2.1" />
 		<PackageReference Include="Xamarin.AndroidX.Lifecycle.Service" Version="2.9.2.1" />
+		<PackageReference Include="Xamarin.AndroidX.Fragment.Ktx" Version="1.8.6.2" />
+		<PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData.Core" Version="2.8.7.4" />
+		<PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData.Core.Ktx" Version="2.8.7.4" />
+		<PackageReference Include="Xamarin.AndroidX.Lifecycle.Process" Version="2.8.7.4" />
+		<PackageReference Include="Xamarin.AndroidX.Lifecycle.Runtime.Ktx" Version="2.8.7.4" />
+		<PackageReference Include="Xamarin.AndroidX.Lifecycle.ViewModel" Version="2.8.7.4" />
+		<PackageReference Include="Xamarin.AndroidX.Lifecycle.ViewModel.Ktx" Version="2.8.7.4" />
+		<PackageReference Include="Xamarin.AndroidX.Lifecycle.ViewModelSavedState" Version="2.8.7.4" />
 	</ItemGroup>
 
 	<ItemGroup Condition="$(TargetFramework.Contains('-android'))">
         <PackageReference Include="Oscore.Maui.Android.InAppUpdates" Version="1.2.0" />
     </ItemGroup>
-
-	
 	<ItemGroup>
 		<Compile Update="App.xaml.cs">
 			<DependentUpon>App.xaml</DependentUpon>
@@ -149,6 +155,9 @@
 		</Compile>
 		<Compile Update="Views\StartupView.xaml.cs">
 			<DependentUpon>StartupView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\SyncGateView.xaml.cs">
+			<DependentUpon>SyncGateView.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\ForgetPasswordView.xaml.cs">
 			<DependentUpon>ForgetPasswordView.xaml</DependentUpon>
@@ -217,6 +226,9 @@
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\StartupView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\SyncGateView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\ForgetPasswordView.xaml">

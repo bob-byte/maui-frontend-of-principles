@@ -5,9 +5,9 @@ namespace Principles.Core.Models;
 
 public class EditedUserHabitReminder
 {
-    public string Title { get; set; }
-    public string Description { get; set; }
-    public DateTime Time { get; set; }
-    public bool IsEnabled { get; set; }
-    public IList<WeekDay> DaysOfWeek { get; set; }
+    public string Title { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+    public DateTime Time { get; set; } = DateTime.Today.AddHours( 8 );
+    public bool IsEnabled { get; set; } = true;
+    public IList<WeekDay> DaysOfWeek { get; set; } = new List<WeekDay>();
 }

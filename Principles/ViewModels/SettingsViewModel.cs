@@ -7,10 +7,10 @@ public partial class SettingsViewModel : BaseViewModel
     public SettingsViewModel( IServiceProvider serviceProvider)
         : base(serviceProvider)
     {
-        AccountService = serviceProvider.GetRequiredService<IAccountService>();
+        UserService = serviceProvider.GetRequiredService<IUserService>();
     }
 
-    public IAccountService AccountService { get; }
+    public IUserService UserService { get; }
 
     [RelayCommand]
     public Task ShowUserAgreementAsync()
@@ -25,7 +25,7 @@ public partial class SettingsViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    public Task ShowTelegramChannelAsync() 
+    public Task ShowTelegramChannelAsync()
     {
         return BrowserHelper.OpenUrl( "https://t.me/principles_app" );
     }
@@ -70,7 +70,7 @@ public partial class SettingsViewModel : BaseViewModel
         {
             await UiBusyFor( async () =>
             {
-                await AccountService.DeleteAccountAsync();
+                await UserService.DeleteAccountAsync();
 
                 await base.LogoutAsync().DefaultConfigureAwait();
             } );
@@ -93,11 +93,5 @@ public partial class SettingsViewModel : BaseViewModel
     private Task ShowChangePasswordAsync()
     {
         return Navigation.NavigateToAsync<ChangePasswordViewModel>();
-    }
-
-    [RelayCommand]
-    public Task ShowAppBenefitsAsync()
-    {
-        return Navigation.NavigateToAsync<AppBenefitsViewModel>();
     }
 }

@@ -1,0 +1,9 @@
+﻿CREATE TABLE IF NOT EXISTS WeekDay (
+    LocalId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    Id INTEGER NULL,
+    LastModified TEXT NULL,
+    Type INTEGER NOT NULL,
+    UserNotificationRequestId INTEGER NOT NULL,
+    UserHabitReminderLocalId INTEGER NOT NULL,
+        FOREIGN KEY (UserHabitReminderLocalId) REFERENCES UserHabitReminder (LocalId) ON DELETE CASCADE ON UPDATE CASCADE
+);

@@ -1,4 +1,4 @@
-﻿
+
 namespace Principles.Services;
 
 public class SettingsService : ISettingsService
@@ -9,7 +9,9 @@ public class SettingsService : ISettingsService
 #else
         "access_token";
 #endif
-    
+    private const string LAST_SUCCESSFUL_SYNC_AT_KEY = "last_successful_sync_at";
+    private const string LAST_FAILED_SYNC_AT_KEY = "last_failed_sync_at";
+
     public bool IsDebug
     {
         get
@@ -26,6 +28,18 @@ public class SettingsService : ISettingsService
 
     public string? AuthAccessToken { get; private set; }
 
+    public DateTime? LastSuccessfulSyncAt
+    {
+        get => GetStoredDateTime( LAST_SUCCESSFUL_SYNC_AT_KEY );
+        set => SetStoredDateTime( LAST_SUCCESSFUL_SYNC_AT_KEY, value );
+    }
+
+    public DateTime? LastFailedSyncAt
+    {
+        get => GetStoredDateTime( LAST_FAILED_SYNC_AT_KEY );
+        set => SetStoredDateTime( LAST_FAILED_SYNC_AT_KEY, value );
+    }
+
     public async Task<string> GetAuthAccessTokenAsync()
     {
         string? token = await SecureStorage.GetAsync( key: ACCESS_TOKEN_KEY ).DefaultConfigureAwait();
@@ -38,6 +52,8 @@ public class SettingsService : ISettingsService
     {
         await SecureStorage.SetAsync( ACCESS_TOKEN_KEY, value );
         AuthAccessToken = value;
+        LastSuccessfulSyncAt = null;
+        LastFailedSyncAt = null;
     }
 
     public double NormalPageWidth
@@ -51,7 +67,28 @@ public class SettingsService : ISettingsService
         get => Preferences.Get( key: "normal_page_height", defaultValue: 0.0 );
         set => Preferences.Set( key: "normal_page_height", value );
     }
-    public string? CurrentCulture { get; set; }
+    public string CurrentCulture { get; set; }
 
-    public bool IsAdsEnabled => !IsDebug;
+    private static DateTime? GetStoredDateTime( string key )
+    {
+        string? storedValue = Preferences.Get( key, null );
+        if (string.IsNullOrWhiteSpace( storedValue ) ||
+            !DateTime.TryParse( storedValue, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out DateTime parsedValue ))
+        {
+            return null;
+        }
+
+        return parsedValue;
+    }
+
+    private static void SetStoredDateTime( string key, DateTime? value )
+    {
+        if (value is null)
+        {
+            Preferences.Remove( key );
+            return;
+        }
+
+        Preferences.Set( key, value.Value.ToString( "O", CultureInfo.InvariantCulture ) );
+    }
 }

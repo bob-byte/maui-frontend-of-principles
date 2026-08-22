@@ -1,7 +1,12 @@
-﻿using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls;
 using Plugin.LocalNotification;
 
+using Principles.Core.Models;
 using Principles.Exceptions;
+
+using System.Net.Mime;
+using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Principles.ViewModels;
 
@@ -14,7 +19,7 @@ public partial class LoginViewModel : BaseViewModel
         m_password = new ValidatableObject<string>();
         LoginService = serviceProvider.GetRequiredService<ILoginService>();
         ReminderService = serviceProvider.GetRequiredService<IReminderService>();
-        
+
         AddValidations();
         ReferenceMessenger.Register<NewCultureMessage>( this, ( sender, msg ) =>
         {
@@ -46,7 +51,8 @@ public partial class LoginViewModel : BaseViewModel
 
     [ObservableProperty]
     private string m_timerMessage;
-    private bool IsEmailAndPasswordValid => 
+
+    private bool IsEmailAndPasswordValid =>
         Email.IsValid && Password.IsValid;
 
     public ILoginService LoginService { get; }
@@ -66,10 +72,10 @@ public partial class LoginViewModel : BaseViewModel
                 {
                     await LoginService.LoginAsync( Email.Value, Password.Value );
                 }
-                catch(ExtendedHttpRequestException ex)
+                catch (ExtendedHttpRequestException ex)
                 {
                     await SettingsService.SetAuthAccessTokenAsync( string.Empty );
-                    
+
                     if (ex.Message == "InvalidEmailOrPassword")
                     {
                         FailedAttempts++;
@@ -91,8 +97,8 @@ public partial class LoginViewModel : BaseViewModel
                     await SettingsService.SetAuthAccessTokenAsync( string.Empty );
                     throw;
                 }
-                
-                await Navigation.GoToInitialViewAsync();
+
+                await Navigation.GoToInitialViewAsync( SyncTrigger.AuthCompleted );
 
                 Email = new ValidatableObject<string>();
                 Password = new ValidatableObject<string>();
@@ -115,7 +121,7 @@ public partial class LoginViewModel : BaseViewModel
         int lockoutDuration = 30;
         DateTime lockoutStartTime = DateTime.Now;
 
-        Application.Current!.Dispatcher.StartTimer( 
+        Application.Current!.Dispatcher.StartTimer(
             interval: TimeSpan.FromSeconds( 1 ),
             callback: () =>
             {
@@ -130,10 +136,9 @@ public partial class LoginViewModel : BaseViewModel
                     IsLoginEnable = true;
                     IsTimerVisible = false;
                     TimerMessage = string.Empty;
-                    
-                    //allow user to login one more time
+
                     FailedAttempts--;
-                    
+
                     if (LoginCommand is IAsyncRelayCommand asyncRelayCommand)
                     {
                         asyncRelayCommand.NotifyCanExecuteChanged();
@@ -148,7 +153,7 @@ public partial class LoginViewModel : BaseViewModel
                 }
 
                 return continueTimer;
-            } 
+            }
         );
     }
 
@@ -194,9 +199,9 @@ public partial class LoginViewModel : BaseViewModel
 
     private void AddValidations()
     {
-        Email.Validations.Add( new IsNotNullOrWhiteSpaceRule{ ValidationMessage = LocStrings.RequiredErrorText } );
-        Email.Validations.Add( new EmailRule{ ValidationMessage = LocStrings.EmailMustHaveCorrectValue } );
+        Email.Validations.Add( new IsNotNullOrWhiteSpaceRule { ValidationMessage = LocStrings.RequiredErrorText } );
+        Email.Validations.Add( new EmailRule { ValidationMessage = LocStrings.EmailMustHaveCorrectValue } );
 
-        Password.Validations.Add( new IsNotNullOrWhiteSpaceRule{ ValidationMessage = LocStrings.RequiredErrorText } );
+        Password.Validations.Add( new IsNotNullOrWhiteSpaceRule { ValidationMessage = LocStrings.RequiredErrorText } );
     }
 }

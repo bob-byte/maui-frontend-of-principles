@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<v:ContentPageBase x:Class="Principles.Views.SyncGateView"
+                   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                   xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+                   xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+                   xmlns:v="clr-namespace:Principles.Views"
+                   xmlns:vm="clr-namespace:Principles.ViewModels"
+                   x:DataType="vm:SyncGateViewModel"
+                   BackgroundColor="{StaticResource LightPrimary}"
+                   ios:Page.UseSafeArea="True"
+                   Shell.FlyoutBehavior="Disabled"
+                   Shell.NavBarIsVisible="False"
+                   Shell.TabBarIsVisible="False">
+    <Grid Padding="24"
+          RowDefinitions="*,Auto,*">
+        <VerticalStackLayout Grid.Row="1"
+                             Spacing="10"
+                             HorizontalOptions="Center"
+                             VerticalOptions="Center">
+            <skia:SKLottieView Source="fire_loading.json"
+                               HeightRequest="210"
+                               HorizontalOptions="Center"
+                               IsAnimationEnabled="True"
+                               RepeatCount="-1"
+                               WidthRequest="210" />
+            <Label Text="{Binding LocManager[LoadingContent]}"
+                   FontAttributes="Bold"
+                   FontFamily="MonaSansMedium"
+                   FontSize="20"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   LineBreakMode="WordWrap"
+                   MaxLines="2"
+                   TextColor="White">
+                <Label.Shadow>
+                    <Shadow Brush="{StaticResource SecondaryDark}"
+                            Opacity="0.35"
+                            Radius="6"
+                            Offset="0,2" />
+                </Label.Shadow>
+            </Label>
+        </VerticalStackLayout>
+    </Grid>
+</v:ContentPageBase>

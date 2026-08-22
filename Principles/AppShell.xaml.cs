@@ -2,17 +2,12 @@ namespace Principles;
 
 public partial class AppShell : Shell
 {
-    private readonly INavigationService m_navigationService;
-    private readonly ISettingsService m_settingsService;
     public WeakReferenceMessenger ReferenceMessenger { get; }
-    public LocalizationResourceManager LocManager
-        => LocalizationResourceManager.Instance;
+    public LocalizationResourceManager LocManager => LocalizationResourceManager.Instance;
 
-    public AppShell( IServiceProvider serviceProvider )
+    public AppShell()
     {
         BindingContext = this;
-        m_navigationService = serviceProvider.GetRequiredService<INavigationService>();
-        m_settingsService = serviceProvider.GetRequiredService<ISettingsService>();
         InitRouting();
         InitializeComponent();
         ReferenceMessenger = WeakReferenceMessenger.Default;
@@ -22,63 +17,34 @@ public partial class AppShell : Shell
         } );
     }
 
-    protected async override void OnHandlerChanged()
+    protected override void OnHandlerChanged()
     {
         base.OnHandlerChanged();
 
         if (Handler is not null)
         {
-            await InitializeAppAsync();
+            InitializeApp();
         }
     }
 
-    private async Task InitializeAppAsync()
+    private void InitializeApp() 
     {
-        await m_settingsService.GetAuthAccessTokenAsync();
+        ISettingsService settingsService = ServiceLocator.Current!.GetRequiredService<ISettingsService>();
+        INavigationService navigationService = ServiceLocator.Current!.GetRequiredService<INavigationService>();
 
-        bool isLoggedIn = !string.IsNullOrWhiteSpace( m_settingsService.AuthAccessToken );
+        //we don't await execution because otherwise helper view will be shown for 1 second
+        settingsService.GetAuthAccessTokenAsync().GetAwaiter().GetResult();
+
+        bool isLoggedIn = !string.IsNullOrWhiteSpace( settingsService.AuthAccessToken );
         if (isLoggedIn)
         {
-            await m_navigationService.NavigateToMainAsync<ProgressOfHabitsViewModel>();
+            navigationService.NavigateToMainAsync<ProgressOfHabitsViewModel>();
         }
         else
         {
-            await m_navigationService.NavigateToAsync<StartupViewModel>( isAbsoluteRoute: true );
-            await m_navigationService.NavigateToAsync<AppBenefitsViewModel>();
-        }
-
-#if IOS
-        bool shouldShowPopup = await UpdatePopupViewModel.ShouldShowUpdatePopup();
-
-        if (shouldShowPopup)
-        {
-            IDialogService dialogService = ServiceLocator.Current!.GetRequiredService<IDialogService>();
-            await dialogService.ShowPopupAsync<UpdatePopupViewModel>();
-        }
-#endif
-
-        if (VersionTracking.IsFirstLaunchEver)
-        {
-            try
-            {
-                string token = await m_settingsService.GetAuthAccessTokenAsync();
-                if (!string.IsNullOrWhiteSpace( token ))
-                {
-                    IReminderService reminderService = ServiceLocator.Current!.GetRequiredService<IReminderService>();
-                    await reminderService.TryToRecoverAllUserRemindersAsync();
-                }
-            }
-            catch (Exception ex)
-            {
-                ILoggingService loggingService = ServiceLocator.Current!.GetRequiredService<ILoggingService>();
-                loggingService.LogError( ex, ex.Message );
-            }
-        }
-
-        if (m_settingsService.IsAdsEnabled)
-        {
-            IAdService adService = ServiceLocator.Current!.GetRequiredService<IAdService>();
-            await adService.GetAccessToTrackAsync();
+            navigationService
+                .NavigateToAsync<StartupViewModel>( isAbsoluteRoute: true )
+                .ContinueWith( _ => navigationService.NavigateToAsync<AppBenefitsViewModel>() );
         }
     }
 

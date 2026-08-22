@@ -8,24 +8,32 @@ using System.Threading.Tasks;
 
 namespace Principles.Core.Models;
 
-public partial class FrequencyOfHabit : ObservableObject, ICloneable
+[Table( "FrequencyOfHabit" )]
+public partial class FrequencyOfHabit : ObservableObject, ICloneable, IEntity
 {
     public const double MAX_VALUE = 1.0;
-    
+
     [ObservableProperty]
     private FrequencyType m_type = FrequencyType.EveryDay;
 
     [ObservableProperty]
     private int m_repeats = 1;
-    
+
     [ObservableProperty]
     private int m_intervalLengthInDays = 1;
-    
+
     public long Id { get; set; }
-    
+
+    [PrimaryKey, AutoIncrement]
+    public long LocalId { get; set; }
+
+    public DateTime LastModified { get; set; }
+
+    [Ignore]
     public double Value =>
         (double)Repeats / IntervalLengthInDays;
-    
+
+    [Ignore]
     public IntervalType IntervalType
     {
         get

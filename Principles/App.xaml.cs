@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Maui.Extensions;
+using CommunityToolkit.Maui.Views;
+
+using Principles.Core.Services.AiKey;
 
 using Application = Microsoft.Maui.Controls.Application;
 
@@ -8,26 +10,31 @@ public partial class App : Application
 {
     private readonly ISettingsService m_settingsService;
     private readonly ILoggingService m_loggingService;
+    private readonly ISyncOrchestrator m_syncOrchestrator;
+    private readonly IReminderService m_reminderService;
     private readonly IAdService m_adService;
     private readonly IAppOpenTrackerService m_appOpenTracker;
-    
+
     public App( IServiceProvider serviceProvider )
     {
+        m_serviceProvider = serviceProvider;
+
         IServiceLocator serviceLocator = serviceProvider.GetRequiredService<IServiceLocator>();
         ServiceLocator.GetCurrentLocator = () => serviceLocator;
 
         AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-        
+
         m_settingsService = serviceProvider.GetRequiredService<ISettingsService>();
         m_loggingService = serviceProvider.GetRequiredService<ILoggingService>();
+        m_syncOrchestrator = serviceProvider.GetRequiredService<ISyncOrchestrator>();
+        m_reminderService = serviceProvider.GetRequiredService<IReminderService>();
         m_adService = serviceProvider.GetRequiredService<IAdService>();
         m_appOpenTracker = serviceProvider.GetRequiredService<IAppOpenTrackerService>();
 
         UserAppTheme = AppTheme.Light;
 
         string? savedLanguageCode = Preferences.Get( "AppLanguage", null );
-        
-        if (string.IsNullOrWhiteSpace( savedLanguageCode )) 
+        if (string.IsNullOrWhiteSpace( savedLanguageCode ))
         {
             savedLanguageCode = CultureInfo.CurrentUICulture.Name;
             Preferences.Set( "AppLanguage", savedLanguageCode );
@@ -37,13 +44,13 @@ public partial class App : Application
 
         LocalizationResourceManager.Initialize( m_settingsService );
         LocalizationResourceManager.Instance.SetCulture( currentCulture );
-        
+
         InitializeComponent();
     }
 
     protected override Window CreateWindow( IActivationState? activationState )
     {
-        return new Window( new AppShell( ServiceLocator.Current!.ServiceProvider ) );
+        return new Window( new AppShell() );
     }
 
     protected async override void OnStart()
@@ -51,21 +58,47 @@ public partial class App : Application
         base.OnStart();
 
         m_appOpenTracker.TrackAppOpen();
+
+        await m_reminderService.ClearDeliveredLocallyAsync();
         
         LocalNotificationCenter.Current.ClearAll();
+
+        if (VersionTracking.IsFirstLaunchEver || VersionTracking.IsFirstLaunchForCurrentBuild || VersionTracking.IsFirstLaunchForCurrentVersion) 
+        {
+            await SecureStorage.SetAsync( CacheKeys.API_KEY, string.Empty );
+        }
         
         m_loggingService.LogInfo( "App starting..." );
+        
+        if (VersionTracking.IsFirstLaunchEver)
+        {
+            try
+            {
+                string token = await m_settingsService.GetAuthAccessTokenAsync();
+                if (!string.IsNullOrWhiteSpace( token ))
+                {
+                    IReminderService reminderService = ServiceLocator.Current!.GetRequiredService<IReminderService>();
+                    await reminderService.TryToRecoverAllUserRemindersAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                m_loggingService.LogError( ex, ex.Message );
+            }
+        }
+        
+        bool shouldShowPopup = await m_updatePopupViewModel.ShouldShowPopup();
+        
+        if (shouldShowPopup)
+        {
+            m_updatePopup ??= new UpdatePopup( m_updatePopupViewModel );
+            Windows[0].Page!.ShowPopup( m_updatePopup );
+        }
     }
 
     protected override async void OnResume()
     {
         base.OnResume();
-        
-        m_appOpenTracker.TrackAppOpen();
-        
-        m_adService.LoadInterstitialAd();
-        
-        m_loggingService.LogInfo( "App resuming..." );
         
         LocalNotificationCenter.Current.ClearAll();
         
@@ -74,14 +107,27 @@ public partial class App : Application
             await SecureStorage.SetAsync( CacheKeys.API_KEY, string.Empty );
         }
         
-        WeakReferenceMessenger.Default.Send( new TryAddNewDayInHabitListMessage() );
+        m_loggingService.LogInfo( "App resuming..." );
+        
+        m_updatePopupViewModel.ReferenceMessenger.Send( new TryAddNewDayInHabitListMessage() );
+
+        bool shouldShowPopup = (m_updatePopup is null || !m_updatePopup.IsShown) && ( await m_updatePopupViewModel.ShouldShowPopup());
+        
+        if (shouldShowPopup)
+        {
+            m_updatePopup = new UpdatePopup( m_updatePopupViewModel );
+            Windows[0].Page!.ShowPopup( m_updatePopup );
+        }
     }
 
-    protected override void OnSleep()
+    private async Task HandleAuthenticationFailureAsync()
     {
-        m_adService.CleanupAds();
-        
-        base.OnSleep();
+        IUserService userService = m_serviceProvider.GetRequiredService<IUserService>();
+        INavigationService navigationService = m_serviceProvider.GetRequiredService<INavigationService>();
+
+        await m_settingsService.SetAuthAccessTokenAsync( string.Empty );
+        await userService.ClearLocalDataAsync();
+        await MainThread.InvokeOnMainThreadAsync( () => navigationService.GoToInitialViewAsync() );
     }
 
     private void CurrentDomain_UnhandledException( object sender, UnhandledExceptionEventArgs e )
@@ -101,7 +147,6 @@ public partial class App : Application
             loggingService.LogFatal( logRecord );
         }
 
-        // wait for Serilog to send new logs to the server
         Thread.Sleep( millisecondsTimeout: 2000 );
     }
 }

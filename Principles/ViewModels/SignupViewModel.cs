@@ -1,12 +1,15 @@
-﻿
+using Principles.Core.Models;
+
 namespace Principles.ViewModels;
 
 public partial class SignupViewModel : BaseViewModel
 {
     [ObservableProperty]
     private ValidatableObject<string> m_name;
+
     [ObservableProperty]
     private ValidatableObject<string> m_email;
+
     [ObservableProperty]
     private ValidatableObject<string> m_password;
 
@@ -45,9 +48,7 @@ public partial class SignupViewModel : BaseViewModel
     }
 
     public ISignupService SignupService { get; }
-
     public ILoginService LoginService { get; }
-
     public string LocSigningUp { get; set; }
 
     public override Task InitializePageAsync( IDictionary<string, object> query )
@@ -78,7 +79,7 @@ public partial class SignupViewModel : BaseViewModel
             {
                 await SignupService.SignupAsync( Name.Value, Email.Value, Password.Value, Gender, MainSlogan, Mission );
                 await LoginService.LoginAsync( Email.Value, Password.Value );
-                await Navigation.GoToInitialViewAsync();
+                await Navigation.GoToInitialViewAsync( SyncTrigger.AuthCompleted );
 
                 Name = new ValidatableObject<string>();
                 Email = new ValidatableObject<string>();
@@ -130,7 +131,7 @@ public partial class SignupViewModel : BaseViewModel
 
     private void AddValidators()
     {
-        Name.Validations.Add(item: new IsNotNullOrWhiteSpaceRule { ValidationMessage = LocStrings.RequiredErrorText });
+        Name.Validations.Add( item: new IsNotNullOrWhiteSpaceRule { ValidationMessage = LocStrings.RequiredErrorText } );
         Password.Validations.Add( new IsNotNullOrWhiteSpaceRule { ValidationMessage = LocStrings.RequiredErrorText } );
         Password.Validations.Add( new NewPasswordRule() );
         Email.Validations.Add( new IsNotNullOrWhiteSpaceRule { ValidationMessage = LocStrings.RequiredErrorText } );

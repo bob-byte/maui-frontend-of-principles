@@ -1,22 +1,16 @@
-﻿using Microsoft.Extensions.Configuration;
-
+using Principles.Core.Models;
 using Principles.ViewModels;
-using Principles.Views;
 
 using System.Globalization;
-using System.Reflection;
-using System.Web;
 
 namespace Principles.Core.Services;
 
 public class MauiNavigationService : INavigationService
 {
-    private readonly IConfiguration m_config;
     private readonly ISettingsService m_settingsService;
 
-    public MauiNavigationService(IConfiguration config, IUrlBuilder urlBuilder, ISettingsService settingsService)
+    public MauiNavigationService( IUrlBuilder urlBuilder, ISettingsService settingsService )
     {
-        m_config = config;
         UrlBuilder = urlBuilder;
         m_settingsService = settingsService;
     }
@@ -25,21 +19,26 @@ public class MauiNavigationService : INavigationService
 
     public IUrlBuilder UrlBuilder { get; }
 
-    public async Task GoToInitialViewAsync()
+    public async Task GoToInitialViewAsync( SyncTrigger loggedInTrigger = SyncTrigger.Startup )
     {
-        if (IsLoggedIn)
+        string authToken = m_settingsService.AuthAccessToken ?? await m_settingsService.GetAuthAccessTokenAsync();
+        if (string.IsNullOrWhiteSpace( authToken ))
         {
-            await NavigateToMainAsync<ProgressOfHabitsViewModel>();
+            await NavigateToAsync<StartupViewModel>( isAbsoluteRoute: true );
+            return;
         }
-        else
+
+        Dictionary<string, object> routeParameters = new()
         {
-            await NavigateToAsync<StartupViewModel>(isAbsoluteRoute: true);
-        }
+            [nameof( SyncTrigger )] = loggedInTrigger
+        };
+
+        await NavigateToAsync<SyncGateViewModel>( isAbsoluteRoute: true, routeParameters );
     }
 
     public async Task NavigateToMainAsync<TViewModel>() where TViewModel : BaseViewModel
     {
-        await InternalNavigateToAsync(typeof(TViewModel), routeParameters: null, isMainRoute: true, isAbsoluteRoute: false);
+        await InternalNavigateToAsync( typeof( TViewModel ), routeParameters: null, isMainRoute: true, isAbsoluteRoute: false );
     }
 
     public Task NavigateToAsync<TViewModel>() where TViewModel : BaseViewModel
@@ -49,7 +48,7 @@ public class MauiNavigationService : INavigationService
 
     public async Task NavigateToAsync<TViewModel>( bool isAbsoluteRoute ) where TViewModel : BaseViewModel
     {
-        await InternalNavigateToAsync(typeof(TViewModel), routeParameters: null, isMainRoute: false, isAbsoluteRoute );
+        await InternalNavigateToAsync( typeof( TViewModel ), routeParameters: null, isMainRoute: false, isAbsoluteRoute );
     }
 
     public Task NavigateToAsync<TViewModel>( IDictionary<string, object> routeParameters ) where TViewModel : BaseViewModel
@@ -69,11 +68,13 @@ public class MauiNavigationService : INavigationService
 
     public Task NavigateToAsync<TViewModel>( bool isAbsoluteRoute, long? id ) where TViewModel : BaseViewModel
     {
-        Dictionary<string, object> parameters = null;
-        if( id != null )
+        Dictionary<string, object>? parameters = null;
+        if (id is not null)
         {
-            parameters = new();
-            parameters.Add( key: "Id", value: id );
+            parameters = new Dictionary<string, object>
+            {
+                ["Id"] = id.Value
+            };
         }
 
         return InternalNavigateToAsync( typeof( TViewModel ), parameters, isMainRoute: false, isAbsoluteRoute );
@@ -81,37 +82,23 @@ public class MauiNavigationService : INavigationService
 
     public Task GoBackAsync()
     {
-        return Shell.Current.GoToAsync(state: "..", animate: true);
+        return Shell.Current.GoToAsync( state: "..", animate: true );
     }
 
-    public Task GoBackAsync(IDictionary<string, object> routeParameters)
+    private static Task InternalNavigateToAsync( Type viewModelType, IDictionary<string, object>? routeParameters, bool isMainRoute, bool isAbsoluteRoute )
     {
-        return Shell.Current.GoToAsync(state: "..", animate: true, routeParameters);
-    }
+        string route = viewModelType.Name
+            .Replace( oldValue: "ViewModel", newValue: "" )
+            .ToLower( CultureInfo.GetCultureInfo( name: "en" ) );
 
-    private static Task InternalNavigateToAsync( Type viewModelType, IDictionary<string, object> routeParameters, bool isMainRoute, bool isAbsoluteRoute )
-    {
-        string route = viewModelType.Name.
-            Replace( oldValue: "ViewModel", newValue: "" ).
-            ToLower( CultureInfo.GetCultureInfo( name: "en" ) );
-
-        string absolutePrefix;
-        if (isMainRoute)
-        {
-            absolutePrefix = "//main/";
-        }
-        else
-        {
-            absolutePrefix = isAbsoluteRoute ? "///" : "";
-        }
+        string absolutePrefix = isMainRoute ? "//main/" : isAbsoluteRoute ? "///" : "";
         route = $"{absolutePrefix}{route}";
 
         ShellNavigationState shellNavigation = new( route );
-
         bool doAnimation = true;
-        Task navigateTask = routeParameters?.Count >= 1 ?
-            Shell.Current.GoToAsync( shellNavigation, doAnimation, routeParameters ) : 
-            Shell.Current.GoToAsync( shellNavigation, doAnimation );
-        return navigateTask;
+
+        return routeParameters?.Count >= 1
+            ? Shell.Current.GoToAsync( shellNavigation, doAnimation, routeParameters )
+            : Shell.Current.GoToAsync( shellNavigation, doAnimation );
     }
 }

@@ -1,9 +1,5 @@
 using Principles.Exceptions;
-
-using Plugin.LocalNotification;
-
 using System.Net;
-using System.Net.Sockets;
 
 namespace Principles.ViewModels;
 
@@ -32,7 +28,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     private Gender m_gender;
 
     [ObservableProperty]
-    private CachedValidatableObject m_userName;
+    private ValidatableObject<string> m_userName;
 
     [ObservableProperty]
     private bool m_isInitialized;
@@ -45,7 +41,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     public BaseViewModel( IServiceProvider serviceProvider )
     {
         CachingService = serviceProvider.GetRequiredService<ICachingService>();
-        m_userName = new CachedValidatableObject( CacheKeys.USER_NAME, CachingService );
+        m_userName = new ValidatableObject<string>();
 
         Navigation = serviceProvider.GetRequiredService<INavigationService>();
         RequestProvider = serviceProvider.GetRequiredService<IRequestProvider>();
@@ -55,7 +51,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         ServiceOfHabit = serviceProvider.GetRequiredService<IServiceOfHabit>();
         AreaOfLifeService = serviceProvider.GetRequiredService<IAreaOfLifeService>();
         TipService = serviceProvider.GetRequiredService<ITipService>();
-        AdService = serviceProvider.GetRequiredService<IAdService>();
+        UserService = serviceProvider.GetRequiredService<IUserService>();
 
         ReferenceMessenger = WeakReferenceMessenger.Default;
 
@@ -65,6 +61,18 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
 
         AppName = LocStrings.Principles;
         LocSave = LocStrings.Save;
+
+        InitializeAsyncCommand = new AsyncRelayCommand( async () =>
+        {
+            await UiBusyFor( async () =>
+            {
+                await InitializeAsync();
+
+                IsInitialized = true;
+            } );
+        } );
+
+        OnDisappearingCommand = new AsyncRelayCommand( async () => await OnDisappearingAsync() );
 
         if (GetType() != typeof( ProfileViewModel ))
         {
@@ -130,6 +138,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     public ISettingsService SettingsService { get; }
     public ICachingService CachingService { get; }
     public ITipService TipService { get; }
+    public IUserService UserService { get; }
 
     public bool IsiOS => DeviceInfo.Platform == DevicePlatform.iOS;
     public bool IsAndroid => DeviceInfo.Platform == DevicePlatform.Android;
@@ -152,34 +161,11 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         UserIcon = null;
     }
 
-    partial void OnMissionChanged( string? value )
-    {
-        if (string.IsNullOrWhiteSpace( value ))
-        {
-            CachingService.Remove( CacheKeys.USER_MISSION );
-        }
-        else
-        {
-            CachingService.SetForever( CacheKeys.USER_MISSION, value );
-        }
-    }
+    partial void OnMissionChanged( string? value ) { }
 
-    partial void OnMainSloganChanged( string? value )
-    {
-        if (string.IsNullOrWhiteSpace( value ))
-        {
-            CachingService.Remove( CacheKeys.USER_MAIN_SLOGAN );
-        }
-        else
-        {
-            CachingService.SetForever( CacheKeys.USER_MAIN_SLOGAN, value );
-        }
-    }
+    partial void OnMainSloganChanged( string? value ) { }
 
-    partial void OnGenderChanged( Gender value )
-    {
-        CachingService.SetForever( CacheKeys.USER_GENDER, value.ToString() );
-    }
+    partial void OnGenderChanged( Gender value ) { }
 
     public virtual async void ApplyQueryAttributes( IDictionary<string, object> query )
     {
@@ -224,48 +210,21 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     {
         if (IsLoggedIn)
         {
-            Email = CachingService.GetStoredValue( CacheKeys.USER_EMAIL );
-
-            UserInfo userInfo;
-
-            //we use Email to check whether user info is stored, because it (email) was recently added
-            if (string.IsNullOrEmpty( Email ))
+            User currentUser = await UserService.GetCurrentUserAsync();
+            UserInfo userInfo = new()
             {
-                string url = $"{UrlBuilder.Profile}";
-                userInfo = await RequestProvider.GetAsync<UserInfo>( url, SettingsService.AuthAccessToken );
-                UserName.Value = userInfo.Name;
-                MainSlogan = userInfo.MainSlogan;
-                Mission = userInfo.Mission;
-                Email = userInfo.Email;
-                Gender = userInfo.Gender;
+                Name = currentUser.Name ?? string.Empty,
+                MainSlogan = currentUser.MainSlogan,
+                Mission = currentUser.Mission,
+                Email = currentUser.Email,
+                Gender = currentUser.Gender
+            };
 
-                //Gender.Man is default value, so OnGenderChanged won't be called is Gender = Gender.Man
-                if (Gender == Gender.Man)
-                {
-                    CachingService.SetForever( CacheKeys.USER_GENDER, Gender.ToString() );
-                }
-
-                CachingService.SetForever( CacheKeys.USER_EMAIL, Email );
-            }
-            else
-            {
-                userInfo = new UserInfo();
-                userInfo.Email = Email;
-
-                UserName.Value = CachingService.GetStoredValue( CacheKeys.USER_NAME );
-                userInfo.Name = UserName.Value;
-
-                MainSlogan = CachingService.GetStoredValue( CacheKeys.USER_MAIN_SLOGAN );
-                userInfo.MainSlogan = MainSlogan;
-
-                Mission = CachingService.GetStoredValue( CacheKeys.USER_MISSION );
-                userInfo.Mission = Mission;
-
-                //if gender is not parsed then it will set zero value
-                _ = Enum.TryParse( CachingService.GetStoredValue( CacheKeys.USER_GENDER ), out Gender gender );
-                Gender = gender;
-                userInfo.Gender = Gender;
-            }
+            UserName.Value = userInfo.Name;
+            MainSlogan = userInfo.MainSlogan;
+            Mission = userInfo.Mission;
+            Email = userInfo.Email;
+            Gender = userInfo.Gender;
 
             AddValidators();
 
@@ -278,6 +237,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
 
     private void AddValidators()
     {
+        UserName.Validations.Clear();
         UserName.Validations.Add( new IsNotNullOrWhiteSpaceRule { ValidationMessage = LocStrings.RequiredErrorText } );
     }
 
@@ -317,7 +277,13 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         bool showPopupWithRetry = true;
 
         string errorMsg;
-        if (SettingsService.IsDebug)
+        if (ex is HabitSaveValidationException validationException)
+        {
+            showPopupWithRetry = false;
+            errorMsg = validationException.Message;
+            await DialogService.ShowErrorAsync( errorMsg );
+        }
+        else if (SettingsService.IsDebug)
         {
             errorMsg = ex.ToString();
             LoggingService.LogError( ex, ex.Message );
@@ -388,7 +354,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
             {
                 errorMsg = LocStrings.OperationTimeoutMessage;
             }
-            else if (ex is HttpRequestException or AggregateException or WebException)
+            else if (ConnectivityExceptionClassifier.IsConnectivityFailure( ex ))
             {
                 errorMsg = LocStrings.NoInternetConnection;
             }
@@ -411,12 +377,11 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
 
     protected async Task LogoutAsync()
     {
-        await SettingsService.SetAuthAccessTokenAsync( string.Empty );
+        await SettingsService.SetAuthAccessTokenAsync(string.Empty);
+        await UserService.ClearLocalDataAsync();
 
-        if (LocalNotificationCenter.Current.IsSupported)
-        {
-            LocalNotificationCenter.Current.CancelAll();
-        }
+        IReminderService reminderService = ServiceProvider.GetRequiredService<IReminderService>();
+        await reminderService.CancelAllLocallyAsync();
 
         if (UserName != null)
         {
@@ -427,8 +392,6 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
         Mission = string.Empty;
         Gender = Gender.Man;
         UserIcon = null;
-
-        CachingService.Remove( CacheKeys.USER_EMAIL );
 
         ReferenceMessenger.Send( new UserLoggedOutMessage() );
 

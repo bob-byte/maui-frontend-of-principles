@@ -20,9 +20,8 @@ public partial class ChangePasswordViewModel : BaseViewModel
 
     public override async Task InitializePageAsync( IDictionary<string, object> query )
     {
-        await base.InitializePageAsync(query);
-        
-        Email = CachingService.GetStoredValue( CacheKeys.USER_EMAIL );
+        await base.InitializeAsync(parameter);
+        await InitUserInfoAsync();
 
         NewPassword = new ValidatableObject<string>();
         NewPassword.Validations.Add( new IsNotNullOrWhiteSpaceRule() );
@@ -46,17 +45,19 @@ public partial class ChangePasswordViewModel : BaseViewModel
             {
                 m_validConfirmationCode = await ChangePasswordService.GeneratedCodeAsync( Email );
 
-                Dictionary<string, object> parameters = new()
-                    {
-                        { "NewPassword", NewPassword.Value },
-                        { "ConfirmationCode", m_validConfirmationCode },
-                        { "Email", Email }
-                    };
-                await DialogService.ShowPopupAsync<ConfirmEmailPopupViewModel>( parameters );
+                if (currentPage is not null)
+                {
+                    ConfirmEmailPopupViewModel confirmEmailPopupViewModel = ServiceProvider.GetRequiredService<ConfirmEmailPopupViewModel>();
 
-                NewPassword = new ValidatableObject<string>();
-                NewPassword.Validations.Add( new IsNotNullOrWhiteSpaceRule() );
-                NewPassword.Validations.Add( new NewPasswordRule() );
+                    confirmEmailPopupViewModel.SetData( NewPassword.Value, m_validConfirmationCode, Email );
+                    ConfirmEmailPopup confirmEmailPopup = new( confirmEmailPopupViewModel );
+
+                    currentPage.ShowPopup( confirmEmailPopup );
+
+                    NewPassword = new ValidatableObject<string>();
+                    NewPassword.Validations.Add( new IsNotNullOrWhiteSpaceRule() );
+                    NewPassword.Validations.Add( new NewPasswordRule() );
+                }
             } );
         }
     }

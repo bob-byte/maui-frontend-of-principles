@@ -1,3 +1,4 @@
+using Principles.Core.Models;
 
 using Principles.Exceptions;
 
@@ -17,6 +18,34 @@ public partial class StartupViewModel : BaseViewModel
         m_googleAuthService = serviceProvider.GetRequiredService<IGoogleAuthService>();
         m_reminderService = serviceProvider.GetRequiredService<IReminderService>();
         m_appleAuthService = serviceProvider.GetRequiredService<IAppleAuthService>();
+        ReferenceMessenger.Register<NewCultureMessage>( this, ( sender, msg ) =>
+        {
+            UpdateAppFeatures();
+        } );
+
+        AppFeatures = InitializeAppFeatures();
+    }
+
+    private ObservableCollectionEx<AppFeature> InitializeAppFeatures()
+    {
+        return new ObservableCollectionEx<AppFeature>
+        {
+            new() { Title = LocStrings.TransformAreasOfLifeTitle, Description = LocStrings.TransformAreasOfLifeDescription },
+            new() { Title = LocStrings.ChatWithHelperTitle, Description = LocStrings.ChatWithHelperDescription },
+            new() { Title = LocStrings.GroupHabitsByGoalsTitle, Description = LocStrings.GroupHabitsByGoalsDescription },
+            new() { Title = LocStrings.GetRecommendationsByAITitle, Description = LocStrings.GetRecommendationsByAIDescription },
+            new() { Title = LocStrings.BecomeTruePersonalityTitle, Description = LocStrings.BecomeTruePersonalityDescription }
+        };
+    }
+
+    private void UpdateAppFeatures()
+    {
+        AppFeatures.Clear();
+        ObservableCollectionEx<AppFeature> updatedFeatures = InitializeAppFeatures();
+        foreach (AppFeature feature in updatedFeatures)
+        {
+            AppFeatures.Add( feature );
+        }
     }
 
     [RelayCommand]
@@ -33,23 +62,18 @@ public partial class StartupViewModel : BaseViewModel
         }
 
         await ExecuteWithRetryAsync( m_reminderService.TryToRecoverAllUserRemindersAsync );
-        
+
         try
         {
-            await GoToInitialViewAsync();
+            await Navigation.GoToInitialViewAsync( SyncTrigger.AuthCompleted );
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             LoggingService.LogError( ex, ex.Message );
         }
     }
 
-    private async Task GoToInitialViewAsync()
-    {
-        await Navigation.GoToInitialViewAsync();
-    }
-
-    private async Task HandleExceptionWhenGoogleAuthAsync(Exception ex)
+    private async Task HandleExceptionWhenGoogleAuthAsync( Exception ex )
     {
         string? errorMsg = null;
 
@@ -57,13 +81,7 @@ public partial class StartupViewModel : BaseViewModel
         {
             errorMsg = LocStrings.OperationTimeoutMessage;
         }
-        else if (ex is ExtendedHttpRequestException extendedHttpRequestException)
-        {
-            errorMsg = extendedHttpRequestException.HttpCode is HttpStatusCode.ServiceUnavailable or HttpStatusCode.NotFound
-                ? LocStrings.ServerTechnicalWorkIsInProgress
-                : LocStrings.NoInternetConnection;
-        }
-        else if (ex is HttpRequestException or AggregateException or WebException)
+        else if (ConnectivityExceptionClassifier.IsConnectivityFailure( ex ))
         {
             errorMsg = LocStrings.NoInternetConnection;
         }
@@ -72,14 +90,10 @@ public partial class StartupViewModel : BaseViewModel
             errorMsg = LocStrings.SomethingWentWrong;
             LoggingService.LogError( ex, ex.Message );
         }
-        
-        bool doShowAlert = !string.IsNullOrWhiteSpace( errorMsg );
-        if (doShowAlert)
+
+        if (!string.IsNullOrWhiteSpace( errorMsg ))
         {
-            await MainThread.InvokeOnMainThreadAsync( async () =>
-            {
-                await DialogService.ShowErrorAsync( errorMsg! );
-            } );
+            await DialogService.ShowErrorAsync( errorMsg );
         }
     }
 
@@ -100,9 +114,9 @@ public partial class StartupViewModel : BaseViewModel
 
         try
         {
-            await GoToInitialViewAsync();
+            await Navigation.GoToInitialViewAsync( SyncTrigger.AuthCompleted );
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             LoggingService.LogError( ex, ex.Message );
         }
@@ -111,50 +125,30 @@ public partial class StartupViewModel : BaseViewModel
     private async Task HandleExceptionWhenAppleAuthAsync( Exception ex )
     {
         bool isCancelledByUser = ex.Message.Contains( "1001" );
-        if (!isCancelledByUser)
+        if (isCancelledByUser)
         {
-            string? errorMsg = null;
+            return;
+        }
 
-            bool isAppleAuthUnavailableOnDevice = ex.Message.Contains( "1000" );
+        string? errorMsg = null;
 
-            if (isAppleAuthUnavailableOnDevice)
-            {
-                //don't show any message if apple auth is not supported on device, because it will be shown by iOS
-                errorMsg = null;
-            }
-            else if (ex is NotSupportedException)
-            {
-                errorMsg = LocStrings.AppleAuthUnavailableOnDevice;
-            }
-            else if (ex is TimeoutException || ex.InnerException is TimeoutException)
-            {
-                errorMsg = LocStrings.OperationTimeoutMessage;
-            }
-            else if (ex is ExtendedHttpRequestException extendedHttpRequestException)
-            {
-                errorMsg = extendedHttpRequestException.HttpCode is HttpStatusCode.ServiceUnavailable or HttpStatusCode.NotFound
-                    ? LocStrings.ServerTechnicalWorkIsInProgress
-                    : LocStrings.NoInternetConnection;
-            }
-            else if (ex is HttpRequestException or AggregateException or WebException)
-            {
-                errorMsg = LocStrings.NoInternetConnection;
-            }
-            else if (ex is not TaskCanceledException)
-            {
-                errorMsg = LocStrings.SomethingWentWrong;
-                LoggingService.LogError( ex, ex.Message );
-            }
-            
-                
-            bool doShowAlert = !string.IsNullOrWhiteSpace( errorMsg );
-            if (doShowAlert)
-            {
-                await MainThread.InvokeOnMainThreadAsync( async () =>
-                {
-                    await DialogService.ShowErrorAsync( errorMsg! );
-                } );
-            }
+        if (ex is TimeoutException || ex.InnerException is TimeoutException)
+        {
+            errorMsg = LocStrings.OperationTimeoutMessage;
+        }
+        else if (ConnectivityExceptionClassifier.IsConnectivityFailure( ex ))
+        {
+            errorMsg = LocStrings.NoInternetConnection;
+        }
+        else if (ex is not TaskCanceledException)
+        {
+            errorMsg = LocStrings.SomethingWentWrong;
+            LoggingService.LogError( ex, ex.Message );
+        }
+
+        if (!string.IsNullOrWhiteSpace( errorMsg ))
+        {
+            await DialogService.ShowErrorAsync( errorMsg );
         }
     }
 
