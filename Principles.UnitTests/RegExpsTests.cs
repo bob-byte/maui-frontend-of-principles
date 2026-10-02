@@ -1,4 +1,4 @@
-﻿namespace SET.Tests.Unit;
+﻿namespace Principles.UnitTests;
 
 // All the code in this file is included in all platforms.
 public class RegExpsTests
