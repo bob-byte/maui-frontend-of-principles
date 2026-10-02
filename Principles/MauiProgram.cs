@@ -2,6 +2,8 @@
 using Serilog.Events;
 using Serilog;
 
+using DotNetEnv;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Maui.Handlers;
 
@@ -106,21 +108,26 @@ public static class MauiProgram
 
         //TODO: replace appsettings.json and implementation of the config to Principles.Core project
 
+        LoadEmbeddedEnv( assembly );
+        ApplySecretEnvAliases();
+
 #if LOCALDEBUG
         using Stream? stream = assembly.GetManifestResourceStream( $"{assembly.GetName().Name}.appsettings.Development.json" );
 #else
         using Stream? stream = assembly.GetManifestResourceStream( $"{assembly.GetName().Name}.appsettings.json" );
 #endif
 
+        ConfigurationBuilder configurationBuilder = new();
         if (stream is not null)
         {
-            IConfigurationRoot configuration = new ConfigurationBuilder()
-                .AddJsonStream( stream )
-                .Build();
-
-            builder.Configuration.AddConfiguration( configuration );
-            builder.Services.AddSingleton<IConfiguration>( configuration );
+            configurationBuilder.AddJsonStream( stream );
         }
+
+        configurationBuilder.AddEnvironmentVariables();
+
+        IConfigurationRoot configuration = configurationBuilder.Build();
+        builder.Configuration.AddConfiguration( configuration );
+        builder.Services.AddSingleton<IConfiguration>( configuration );
         AllowMultiLineTruncation();
 
 #if IOS
@@ -135,6 +142,40 @@ public static class MauiProgram
 #endif
 
         return builder.Build();
+    }
+
+    private static void LoadEmbeddedEnv( Assembly assembly )
+    {
+        using Stream? envStream = assembly.GetManifestResourceStream( $"{assembly.GetName().Name}.env" );
+        if (envStream is null)
+        {
+            return;
+        }
+
+        using StreamReader reader = new( envStream );
+        Env.LoadContents( reader.ReadToEnd() );
+    }
+
+    /// <summary>
+    /// Maps UPPER_CASE .env names onto the nested configuration keys used by existing services.
+    /// </summary>
+    private static void ApplySecretEnvAliases()
+    {
+        AliasEnv( "ENCRYPTION_FIRST_KEY", "EncryptionSettings__FirstKey" );
+        AliasEnv( "ENCRYPTION_SECOND_KEY", "EncryptionSettings__SecondKey" );
+        AliasEnv( "API_KEY_ENCRYPTION_FIRST_KEY", "ApiKeyEncryptionSettings__FirstKey" );
+        AliasEnv( "API_KEY_ENCRYPTION_SECOND_KEY", "ApiKeyEncryptionSettings__SecondKey" );
+        AliasEnv( "GOOGLE_ANDROID_CLIENT_ID", "Google__ClientIds__Android" );
+        AliasEnv( "GOOGLE_IOS_CLIENT_ID", "Google__ClientIds__IOS" );
+    }
+
+    private static void AliasEnv( string sourceName, string configurationEnvName )
+    {
+        string? value = Environment.GetEnvironmentVariable( sourceName );
+        if (!string.IsNullOrEmpty( value ))
+        {
+            Environment.SetEnvironmentVariable( configurationEnvName, value );
+        }
     }
 
     public static IServiceCollection RegisterMauiServices( this IServiceCollection services )
