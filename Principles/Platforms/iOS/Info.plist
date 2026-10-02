@@ -68,9 +68,9 @@
 		<string>Default</string>
 	</array>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>The app should not request your location. Write to app@principles.top if you encounter a request for your location.</string>
+	<string>The app should not request your location. Write to batsbohdan@gmail.com if you encounter a request for your location.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>The app should not request your location. Write to app@principles.top if you encounter a request for your location.</string>
+	<string>The app should not request your location. Write to batsbohdan@gmail.com if you encounter a request for your location.</string>
 	<key>NSUserAuthenticationAppleID</key>
 	<string>Required</string>
 	<key>LSApplicationQueriesSchemes</key>
