@@ -164,6 +164,7 @@ public partial class TasksViewModel : BaseViewModel
         if (result != null)
         {
             _allTasks.Add(result);
+            _taskService.UpsertStoredTask(result);
             ApplyFilterAndCalculateProgress(); 
             PrepareNewTask(); 
         }
@@ -184,6 +185,7 @@ public partial class TasksViewModel : BaseViewModel
             {
                 _allTasks[index] = EditingTask;
             }
+            _taskService.UpsertStoredTask(EditingTask);
 
             ApplyFilterAndCalculateProgress();
             EditingTask = null;
@@ -208,6 +210,7 @@ public partial class TasksViewModel : BaseViewModel
             {
                 _allTasks.Remove(taskToRemove);
             }
+            _taskService.RemoveStoredTask(EditingTask.Id);
 
             ApplyFilterAndCalculateProgress();
             EditingTask = null;
@@ -233,6 +236,7 @@ public partial class TasksViewModel : BaseViewModel
 
         var index = _allTasks.FindIndex(t => t.Id == task.Id);
         if (index != -1) _allTasks[index].IsCompleted = isCompleted;
+        _taskService.UpsertStoredTask(task);
         
         ApplyFilterAndCalculateProgress();
     }

@@ -33,18 +33,51 @@ public class ServiceOfTask : BaseRemoteService, IServiceOfTask
     {
         try
         {
-            return await RequestProvider.GetAsync<List<TaskItem>>(
+            List<TaskItem> tasks = await RequestProvider.GetAsync<List<TaskItem>>(
                 $"{_urlBuilder.Tasks}/all",
                 SettingsService.AuthAccessToken).DefaultConfigureAwait();
+            ReplaceStoredTasks( tasks );
+            return tasks;
         }
         catch (ExtendedHttpRequestException ex) when (ex.HttpCode == System.Net.HttpStatusCode.NotFound)
         {
-            return new List<TaskItem>(); 
+            ReplaceStoredTasks( Array.Empty<TaskItem>() );
+            return new List<TaskItem>();
         }
         catch (Exception ex)
         {
             Console.WriteLine($"[API] Сталася помилка: {ex.Message}");
             return new List<TaskItem>();
+        }
+    }
+
+    public void ReplaceStoredTasks( IEnumerable<TaskItem> tasks )
+    {
+        StoredUserTasks.Reload( tasks ?? Enumerable.Empty<TaskItem>() );
+    }
+
+    public void UpsertStoredTask( TaskItem task )
+    {
+        ArgumentNullException.ThrowIfNull( task );
+
+        for (int index = 0; index < StoredUserTasks.Count; index++)
+        {
+            if (task.Id != 0 && StoredUserTasks[index].Id == task.Id)
+            {
+                StoredUserTasks[index] = task;
+                return;
+            }
+        }
+
+        StoredUserTasks.Add( task );
+    }
+
+    public void RemoveStoredTask( long taskId )
+    {
+        TaskItem? existing = StoredUserTasks.FirstOrDefault( t => t.Id == taskId );
+        if (existing is not null)
+        {
+            StoredUserTasks.Remove( existing );
         }
     }
 
