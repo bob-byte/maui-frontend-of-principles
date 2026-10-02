@@ -4,7 +4,7 @@ Native .NET MAUI client for the Principles habit/goal app.
 
 Official install page (Android, iOS): [principles.top](https://principles.top)
 
-A Flutter rewrite lives in a sibling repo; this MAUI app remains the shipping Android/iOS client (`com.set.principles`).
+A Flutter rewrite lives in [a sibling repo](https://github.com/bob-byte/flutter-frontend-of-principles).
 
 ## Core loop
 
