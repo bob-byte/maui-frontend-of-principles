@@ -7,6 +7,10 @@ alwaysApply: true
 
 Native .NET MAUI client for the Principles habit/goal app (install: https://principles.top). Package id `com.set.principles`. A Flutter rewrite lives in a sibling repo; this app remains a shipping Android/iOS client. Backend is .NET WebAPI (separate repo).
 
+## Git
+
+- Host is **GitHub only** (`origin`). Do not fetch, push, or set defaults on Bitbucket or other remotes.
+
 ## Core loop
 
 1. Define a **goal**
