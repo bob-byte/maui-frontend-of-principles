@@ -1,0 +1,27 @@
+---
+description: Principles MAUI product — goals, habits, tasks, and AI Helper
+alwaysApply: true
+---
+
+# Principles (MAUI)
+
+Native .NET MAUI client for the Principles habit/goal app (install: https://principles.top). Package id `com.set.principles`. A Flutter rewrite lives in a sibling repo; this app remains a shipping Android/iOS client. Backend is .NET WebAPI (separate repo).
+
+## Core loop
+
+1. Define a **goal**
+2. Attach **habits** that automate progress (optionally via AI recommendations)
+3. Complete habits; inspect detail (progress, streaks, stability)
+4. Use **Tasks** for one-off work and to keep today's habits visible
+5. Use **AI Helper** for support — not the primary recommendation entry point
+6. Settings / profile (slogan, mission) feed AI habit recommendations
+
+## Shell UX
+
+- Tab order: Helper · Progress · **Tasks** · Profile
+- Settings, Edit Habit, Habit Detail, auth screens are pushed routes (not tabs)
+- Pre-login: App Benefits carousel
+- Post-login: SyncGate bootstrap, then main tabs
+- Daily habits report reminder and local notifications for tasks/habits
+- AdMob interstitial ads (Android / iOS); Android in-app updates
+- Goals may include optional **Notes**; do not wipe synced notes when the editor only changes the name

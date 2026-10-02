@@ -1,0 +1,15 @@
+---
+description: .NET MAUI 10, Core net10.0 class library, packages, and build
+alwaysApply: true
+---
+
+# Stack
+
+- .NET SDK pinned in `global.json` (`10.0.101`, roll-forward `latestMajor`)
+- App: .NET MAUI 10 — `net10.0-android` / `net10.0-ios` (`Principles/Principles.csproj`)
+- Core: `net10.0` class library (`Principles.Core/Principles.Core.csproj`)
+- CommunityToolkit.Maui / Mvvm, DIPS.Mobile.UI, DevExpress.Maui, Serilog
+- Local notifications: `Plugin.LocalNotification` (app project only)
+- Ads: `Plugin.AdMob`; charts: LiveCharts / SkiaSharp
+- Backend: separate .NET WebAPI repo (see `run-backend-and-frontend.ps1`)
+- Prefer `dotnet build` with `-p:TargetFramework=net10.0-android` for fast verify; full multi-target when shipping

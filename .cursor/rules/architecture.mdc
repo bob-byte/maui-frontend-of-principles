@@ -1,0 +1,27 @@
+---
+description: MAUI MVVM layout, Core class library vs platform services, sync
+alwaysApply: true
+---
+
+# Architecture
+
+## Layout
+
+- Solution: `Principles.App.sln`
+- `Principles/` — MAUI UI (Views, ViewModels, Shell, platform code) and MAUI-bound service implementations
+- `Principles.Core/` — plain `net10.0` class library: models, sync, SQLite, remotes, interfaces
+- `Principles.UnitTests/` — unit tests against Core
+- Entry / DI: `MauiProgram` → `RegisterAppCore` → `RegisterMauiServices` → `RegisterViewModels` → `RegisterViews`
+
+## Core vs platform
+
+- **Core must stay MAUI-free** (no `UseMaui`, no `Microsoft.Maui.*`, no `Plugin.LocalNotification`).
+- Platform impls live under `Principles/Services/` (Preferences, SecureStorage, FileSystem path/key, Apple/Google auth, Network, Tip, Dialog, Reminder, Ads).
+- Abstractions in Core: e.g. `IPreferencesService`, `ISecureStorageService`, `ISettingsService`, `IDatabasePathProvider`, `IDatabaseKeyProvider`, `IReminderService`, `IAppleAuthService`, `IGoogleAuthService`.
+
+## Data
+
+- Encrypted SQLite (`sqlite-net-sqlcipher`) + sync queue to WebAPI
+- SQL migrations: `Principles.Core/Migrations/` (embedded resources), applied by `DatabaseMigrator`
+- Goals ↔ habits via goal id/name on habits; Progress tab is the habits/goals surface
+- `StoredUserTasks` is kept in sync for AI Helper context; load via `GetAllTasksAsync` when empty
