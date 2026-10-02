@@ -13,7 +13,7 @@ public class CachedValidatableObject : ObservableObject, IValidity
     private bool m_isValid;
     private string? m_value;
     private readonly string m_cacheKey;
-    private readonly ICachingService m_cachingService;
+    private readonly IPreferencesService m_preferencesService;
 
     public List<IValidationRule<string?>> Validations { get; } = new();
 
@@ -39,11 +39,11 @@ public class CachedValidatableObject : ObservableObject, IValidity
                 string? cachedValue = value?.ToString();
                 if (string.IsNullOrEmpty( cachedValue ))
                 {
-                    m_cachingService.Remove( m_cacheKey );
+                    m_preferencesService.Remove( m_cacheKey );
                 }
                 else
                 {
-                    m_cachingService.SetForever( m_cacheKey, cachedValue );
+                    m_preferencesService.SetForever( m_cacheKey, cachedValue );
                 }
 
                 SetProperty( ref m_value, value );
@@ -51,13 +51,13 @@ public class CachedValidatableObject : ObservableObject, IValidity
         }
     }
 
-    public CachedValidatableObject(string cacheKey, ICachingService cachingService)
+    public CachedValidatableObject(string cacheKey, IPreferencesService preferencesService)
     {
         m_isValid = true;
         m_errors = Enumerable.Empty<string>();
         m_cacheKey = cacheKey;
-        m_cachingService = cachingService;
-        m_value = m_cachingService.GetStoredValue( m_cacheKey );
+        m_preferencesService = preferencesService;
+        m_value = m_preferencesService.GetStoredValue( m_cacheKey );
     }
 
     public bool Validate()

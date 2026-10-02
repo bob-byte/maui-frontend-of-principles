@@ -1,7 +1,6 @@
 namespace Principles.Services;
 
-//TODO: use Redis DB to store data
-public class CachingService : ICachingService
+public class PreferencesService : IPreferencesService
 {
     public string GetStoredValue( string key )
     {
@@ -18,7 +17,7 @@ public class CachingService : ICachingService
     {
         Preferences.Set( key, value );
     }
-    
+
     public void SetForever( string key, bool value )
     {
         Preferences.Set( key, value );

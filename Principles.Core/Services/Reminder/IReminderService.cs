@@ -1,6 +1,3 @@
-
-using Plugin.LocalNotification;
-
 namespace Principles.Core.Services;
 
 public interface IReminderService
@@ -9,9 +6,8 @@ public interface IReminderService
     Task CancelLocallyAsync( int id );
     Task CancelAllLocallyAsync();
     Task ClearDeliveredLocallyAsync();
-    Task<IList<NotificationRequest>> GetPendingLocallyAsync();
     Task SaveLocallyAsync( int id, string title, string description, DateTime notifyTime, ReminderRepeat repeatType );
-    Task SaveLocallyAsync( NotificationRequest notification );
+    Task RenamePendingNotificationTitlesAsync( string oldTitle, string newTitle );
     Task TryToRecoverAllUserRemindersAsync();
     Task<Reminder> HabitsReportReminderAsync();
     Task<SaveHabitsReportReminderResponse> SaveHabitsReportReminderAsync( Reminder reminder );

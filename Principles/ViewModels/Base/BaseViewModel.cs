@@ -40,7 +40,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
 
     public BaseViewModel( IServiceProvider serviceProvider )
     {
-        CachingService = serviceProvider.GetRequiredService<ICachingService>();
+        PreferencesService = serviceProvider.GetRequiredService<IPreferencesService>();
         m_userName = new ValidatableObject<string>();
 
         Navigation = serviceProvider.GetRequiredService<INavigationService>();
@@ -136,7 +136,7 @@ public abstract partial class BaseViewModel : ObservableObject, IViewModelBase
     public IDialogService DialogService { get; }
     public ILoggingService LoggingService { get; }
     public ISettingsService SettingsService { get; }
-    public ICachingService CachingService { get; }
+    public IPreferencesService PreferencesService { get; }
     public ITipService TipService { get; }
     public IUserService UserService { get; }
 

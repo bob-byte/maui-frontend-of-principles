@@ -1,6 +1,6 @@
-﻿namespace Principles.Core.Services;
+namespace Principles.Core.Services;
 
-public interface ICachingService
+public interface IPreferencesService
 {
     void SetForever( string key, string value );
     void SetForever( string key, bool value );

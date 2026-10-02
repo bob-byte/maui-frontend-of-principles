@@ -139,20 +139,21 @@ public static class MauiProgram
 
     public static IServiceCollection RegisterMauiServices( this IServiceCollection services )
     {
-        services.AddSingleton<ICachingService, CachingService>();
+        services.AddSingleton<IPreferencesService, PreferencesService>();
+        services.AddSingleton<ISecureStorageService, MauiSecureStorageService>();
         services.AddSingleton<ISettingsService, SettingsService>();
+        services.AddSingleton<IDatabasePathProvider, DatabasePathProvider>();
+        services.AddSingleton<IDatabaseKeyProvider, DatabaseKeyProvider>();
+        services.AddSingleton<IAppOpenTrackerService, AppOpenTrackerService>();
+        services.AddSingleton<IGoogleAuthService, GoogleAuthService>();
+        services.AddSingleton<IAppleAuthService, AppleAuthService>();
         services.AddSingleton<INavigationService, MauiNavigationService>();
         services.AddSingleton<IDialogService, DialogService>();
         services.AddSingleton<ILaunchUriHelper, LaunchUriHelper>();
         services.AddSingleton<IReminderService, ReminderService>();
         services.AddSingleton<ITipService, TipService>();
         services.AddSingleton<INetworkService, NetworkService>();
-        services.AddSingleton<ISyncStateNotifier, SyncStateNotifier>();
-        services.AddSingleton<IDatabasePathProvider, DatabasePathProvider>();
-        services.AddSingleton<IDatabaseKeyProvider, DatabaseKeyProvider>();
         services.AddSingleton<IAdService, AdService>();
-        services.AddSingleton<IAppOpenTrackerService, AppOpenTrackerService>();
-        services.AddSingleton<IServiceOfTask, ServiceOfTask>();
 
         return services;
     }

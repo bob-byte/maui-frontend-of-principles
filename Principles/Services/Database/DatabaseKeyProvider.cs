@@ -1,5 +1,3 @@
-﻿using System;
-
 namespace Principles.Services;
 
 public class DatabaseKeyProvider : IDatabaseKeyProvider

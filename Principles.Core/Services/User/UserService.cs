@@ -1,5 +1,3 @@
-using Plugin.LocalNotification;
-
 namespace Principles.Core.Services;
 
 public class UserService : BaseEntityService<User>, IUserService
@@ -9,11 +7,13 @@ public class UserService : BaseEntityService<User>, IUserService
     private static readonly OperationKind SaveMissionOperation = OperationKind.Custom( "SaveMission" );
 
     private readonly INetworkService m_networkService;
+    private readonly IReminderService m_reminderService;
 
     public UserService( IServiceProvider serviceProvider ) : base( serviceProvider )
     {
         RemoteApi = serviceProvider.GetRequiredService<IUserRemoteApi>();
         m_networkService = serviceProvider.GetRequiredService<INetworkService>();
+        m_reminderService = serviceProvider.GetRequiredService<IReminderService>();
     }
 
     private IUserRemoteApi RemoteApi { get; }
@@ -105,10 +105,7 @@ public class UserService : BaseEntityService<User>, IUserService
 
         try
         {
-            if (LocalNotificationCenter.Current.IsSupported)
-            {
-                LocalNotificationCenter.Current.CancelAll();
-            }
+            await m_reminderService.CancelAllLocallyAsync().ConfigureAwait( false );
         }
         catch (Exception ex)
         {

@@ -1,5 +1,7 @@
 using Principles.Core.Services.AiKey;
 
+using Microsoft.Extensions.DependencyInjection.Extensions;
+
 using System.Net.Http.Headers;
 using System.Net.Mime;
 
@@ -9,6 +11,11 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection RegisterAppCore( this IServiceCollection services )
     {
+        // Platform-backed services (Preferences, SecureStorage, FileSystem, auth UI) are registered
+        // from the MAUI app via RegisterMauiServices / TryAdd so unit tests can stub them first.
+        services.TryAddSingleton<ISyncStateNotifier, SyncStateNotifier>();
+        services.TryAddSingleton<IServiceOfTask, ServiceOfTask>();
+
         services.AddSingleton<ILoggingService, LoggingService>();
 
 #if LOCALDEBUG
@@ -54,15 +61,12 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IChangePasswordService, ChangePasswordService>();
         services.AddSingleton<ISignupService, SignupService>();
         services.AddSingleton<IGoalService, GoalService>();
-        services.AddSingleton<IGoogleAuthService, GoogleAuthService>();
-        services.AddSingleton<IAppleAuthService, AppleAuthService>();
         services.AddSingleton<IApiKeyService, ApiKeyService>();
         services.AddSingleton<ISyncService, SyncService>();
         services.AddSingleton<ISyncReachabilityService, SyncReachabilityService>();
         services.AddSingleton<ISyncOrchestrator, SyncOrchestrator>();
         services.AddSingleton<ISyncSnapshotRemoteApi, SyncSnapshotRemoteApi>();
         services.AddSingleton<ISyncSnapshotMergeService, SyncSnapshotMergeService>();
-        services.AddSingleton<ISyncStateNotifier, NullSyncStateNotifier>();
         services.AddSingleton<ISyncRetryConfig, DefaultSyncRetryConfig>();
         services.AddSingleton<ISyncQueueService, SyncQueueService>();
         services.AddSingleton<IDatabaseConnectionProvider, DatabaseConnectionProvider>();

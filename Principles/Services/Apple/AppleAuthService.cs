@@ -1,6 +1,6 @@
 using System.Security.Authentication;
 
-namespace Principles.Core.Services;
+namespace Principles.Services;
 
 public class AppleAuthService : IAppleAuthService
 {

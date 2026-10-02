@@ -1,4 +1,8 @@
-namespace Principles.Services;
+using CommunityToolkit.Mvvm.Messaging;
+
+using Principles.Core.Messages;
+
+namespace Principles.Core.Services;
 
 public class SyncStateNotifier : ISyncStateNotifier
 {

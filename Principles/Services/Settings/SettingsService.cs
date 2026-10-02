@@ -1,4 +1,3 @@
-
 namespace Principles.Services;
 
 public class SettingsService : ISettingsService
@@ -69,6 +68,7 @@ public class SettingsService : ISettingsService
         get => Preferences.Get( key: "normal_page_height", defaultValue: 0.0 );
         set => Preferences.Set( key: "normal_page_height", value );
     }
+
     public string CurrentCulture { get; set; }
 
     private static DateTime? GetStoredDateTime( string key )

@@ -1,7 +1,9 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Principles.Core.Services;
+using Microsoft.Extensions.Configuration;
+
+namespace Principles.Services;
 
 public class GoogleAuthService : IGoogleAuthService
 {

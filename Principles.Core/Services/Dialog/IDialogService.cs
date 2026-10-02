@@ -1,4 +1,4 @@
-﻿namespace Principles.Services;
+﻿namespace Principles.Core.Services;
 
 public interface IDialogService
 {

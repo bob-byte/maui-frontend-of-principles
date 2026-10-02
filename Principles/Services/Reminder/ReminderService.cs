@@ -243,6 +243,22 @@ public class ReminderService : BaseRemoteService, IReminderService
         );
     }
 
+    public async Task RenamePendingNotificationTitlesAsync( string oldTitle, string newTitle )
+    {
+        if (string.IsNullOrWhiteSpace( oldTitle ) || string.IsNullOrWhiteSpace( newTitle ) ||
+            string.Equals( oldTitle, newTitle, StringComparison.Ordinal ))
+        {
+            return;
+        }
+
+        IList<NotificationRequest> notifications = await GetPendingLocallyAsync().ConfigureAwait( false );
+        foreach (NotificationRequest notification in notifications.Where( n => n.Title == oldTitle ))
+        {
+            notification.Title = newTitle;
+            await SaveLocallyAsync( notification ).ConfigureAwait( false );
+        }
+    }
+
     public Task<IList<NotificationRequest>> GetPendingLocallyAsync()
     {
         return ExecuteNotificationOperationAsync<IList<NotificationRequest>>(

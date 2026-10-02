@@ -1,7 +1,6 @@
-﻿
 using Microsoft.Maui.ApplicationModel;
 
-namespace Principles.Core;
+namespace Principles.Services;
 
 public class LaunchUriBuilder
 {

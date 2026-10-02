@@ -21,6 +21,7 @@ global using Principles.Core.Extensions;
 global using Principles.Core.Helpers;
 global using Principles.Helpers;
 global using Principles.Messages;
+global using Principles.Core.Messages;
 global using Principles.Resources.AppStrings;
 global using System.ComponentModel;
 global using System;

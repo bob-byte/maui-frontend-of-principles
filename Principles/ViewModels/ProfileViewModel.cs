@@ -57,13 +57,7 @@ public partial class ProfileViewModel : BaseViewModel
 
         if (!string.IsNullOrWhiteSpace( oldMission ))
         {
-            IList<NotificationRequest> notifications = await m_reminderService.GetPendingLocallyAsync();
-
-            foreach (NotificationRequest notification in notifications.Where( n => n.Title == oldMission ))
-            {
-                notification.Title = newValue;
-                await m_reminderService.SaveLocallyAsync( notification );
-            }
+            await m_reminderService.RenamePendingNotificationTitlesAsync( oldMission, newValue );
         }
 
         NotifyUserInfoChanged();
