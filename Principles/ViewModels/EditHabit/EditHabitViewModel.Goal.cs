@@ -1,8 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Principles.ViewModels;
 public partial class EditHabitViewModel
@@ -15,10 +11,24 @@ public partial class EditHabitViewModel
         await UiBusyFor( async () =>
         {
             string? oldGoalName = null;
+            string? oldGoalNotes = null;
             UserGoal? foundGoalInCollection = UserGoals!.FirstOrDefault( g => g.Equals( EditedGoal ) || g.LocalId == EditedGoal.LocalId );
             if (foundGoalInCollection != null)
             {
                 oldGoalName = foundGoalInCollection.Name;
+                oldGoalNotes = foundGoalInCollection.Notes;
+            }
+
+            // Keep Notes from SQLite when the editor only binds Name (avoids wiping Flutter/synced notes).
+            if (EditedGoal.LocalId != 0)
+            {
+                UserGoal? persisted = await GoalService.GetGoalByLocalIdAsync( EditedGoal.LocalId );
+                if (persisted is not null &&
+                    string.IsNullOrWhiteSpace( EditedGoal.Notes ) &&
+                    !string.IsNullOrWhiteSpace( persisted.Notes ))
+                {
+                    EditedGoal.Notes = persisted.Notes;
+                }
             }
 
             await GoalService.SaveGoalAsync( EditedGoal );
@@ -27,33 +37,38 @@ public partial class EditHabitViewModel
             {
                 UserGoals!.Add( EditedGoal );
             }
-            else
+            else if (foundGoalInCollection != null)
             {
-                if (foundGoalInCollection != null && oldGoalName != EditedGoal.Name)
+                bool nameChanged = oldGoalName != EditedGoal.Name;
+                bool notesChanged = !string.Equals( oldGoalNotes, EditedGoal.Notes, StringComparison.Ordinal );
+
+                foundGoalInCollection.Name = EditedGoal.Name;
+                foundGoalInCollection.Notes = EditedGoal.Notes;
+                foundGoalInCollection.LastModified = EditedGoal.LastModified;
+                foundGoalInCollection.Id = EditedGoal.Id;
+
+                if (nameChanged || notesChanged)
                 {
-                    foundGoalInCollection.Name = EditedGoal.Name;
                     ReferenceMessenger.Send( new ChangedGoalMessage( EditedGoal ) );
+                }
 
-                    if (Habit.Goal is not null && (Habit.Goal.Equals( EditedGoal ) || Habit.Goal.LocalId == EditedGoal.LocalId))
+                if (Habit.Goal is not null && (Habit.Goal.Equals( EditedGoal ) || Habit.Goal.LocalId == EditedGoal.LocalId))
+                {
+                    Habit.Goal.Name = EditedGoal.Name;
+                    Habit.Goal.Notes = EditedGoal.Notes;
+                    Habit.Goal.LastModified = EditedGoal.LastModified;
+                    Habit.Goal.Id = EditedGoal.Id;
+                }
+
+                if (nameChanged && !string.IsNullOrWhiteSpace( oldGoalName ))
+                {
+                    await ReminderService.RenamePendingNotificationTitlesAsync( oldGoalName, EditedGoal.Name! );
+
+                    if (Habit.Reminders is not null)
                     {
-                        Habit.Goal.Name = EditedGoal.Name;
-                    }
-
-                    IList<NotificationRequest> notifications = await ReminderService.GetPendingLocallyAsync();
-                    if (!string.IsNullOrWhiteSpace( oldGoalName ))
-                    {
-                        if (Habit.Reminders is not null)
+                        foreach (UserHabitReminder reminder in Habit.Reminders.Where( r => r.Title == oldGoalName ))
                         {
-                            foreach (UserHabitReminder reminder in Habit.Reminders.Where( r => r.Title == oldGoalName ))
-                            {
-                                reminder.Title = EditedGoal.Name!;
-                            }
-                        }
-
-                        foreach (NotificationRequest notification in notifications.Where( n => n.Title == oldGoalName ))
-                        {
-                            notification.Title = EditedGoal.Name!;
-                            await ReminderService.SaveLocallyAsync( notification );
+                            reminder.Title = EditedGoal.Name!;
                         }
                     }
                 }
@@ -103,28 +118,37 @@ public partial class EditHabitViewModel
     }
 
     [RelayCommand]
-    public void OnGoalNameTapped( UserGoal goal )
+    public async Task OnGoalNameTapped( UserGoal goal )
     {
-        if (goal != null)
+        if (goal is null)
         {
-            EditedGoal = new UserGoal
-            {
-                LocalId = goal.LocalId,
-                Id = goal.Id,
-                Name = goal.Name
-            };
-            Habit.Goal = goal;
+            return;
         }
+
+        EditedGoal = await CopyGoalForEditorAsync( goal );
+        Habit.Goal = goal;
     }
 
     [RelayCommand]
-    private void OpenUpdateGoalPopup( UserGoal goal )
+    private async Task OpenUpdateGoalPopup( UserGoal goal )
     {
-        EditedGoal = new UserGoal
+        EditedGoal = await CopyGoalForEditorAsync( goal );
+    }
+
+    private async Task<UserGoal> CopyGoalForEditorAsync( UserGoal goal )
+    {
+        UserGoal? fresh = goal.LocalId != 0
+            ? await GoalService.GetGoalByLocalIdAsync( goal.LocalId )
+            : null;
+
+        UserGoal source = fresh ?? goal;
+        return new UserGoal
         {
-            LocalId = goal.LocalId,
-            Id = goal.Id,
-            Name = goal.Name
+            LocalId = source.LocalId,
+            Id = source.Id,
+            Name = source.Name,
+            Notes = source.Notes,
+            LastModified = source.LastModified
         };
     }
 
@@ -132,7 +156,7 @@ public partial class EditHabitViewModel
     private async Task ReloadGoalsAsync()
     {
         UserGoals = new ObservableCollectionEx<UserGoal>();
-        IEnumerable<UserGoal> goals = await GoalService.UserGoalsAsync();
+        IEnumerable<UserGoal> goals = await GoalService.UserGoalsAsync( forceReload: true );
 
         //sometimes goals are not displayed without reloading
         UserGoals.Reload( goals );

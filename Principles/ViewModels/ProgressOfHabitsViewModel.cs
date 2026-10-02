@@ -83,6 +83,8 @@ public partial class ProgressOfHabitsViewModel : BaseViewModel
             foreach (UserHabit habit in UserHabits.Where( h => h.Goal is not null && h.Goal.Equals( editedGoal ) ))
             {
                 habit.Goal!.Name = editedGoal.Name;
+                habit.Goal.Notes = editedGoal.Notes;
+                habit.Goal.LastModified = editedGoal.LastModified;
             }
         } );
 

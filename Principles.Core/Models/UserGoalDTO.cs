@@ -1,4 +1,4 @@
-﻿namespace Principles.Core.Models;
+namespace Principles.Core.Models;
 [Table( "UserGoal" )]
 public partial class UserGoal : ObservableObject, ICloneable, IEntity
 {
@@ -9,6 +9,9 @@ public partial class UserGoal : ObservableObject, ICloneable, IEntity
 
     [ObservableProperty]
     private string? m_name;
+
+    [ObservableProperty]
+    private string? m_notes;
 
     public override bool Equals( object? obj )
     {

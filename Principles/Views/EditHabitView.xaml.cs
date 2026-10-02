@@ -615,7 +615,7 @@ public partial class EditHabitView : ContentPageBase
         }
     }
 
-    private void OnGoalNameTapped( object sender, HandledEventArgs e )
+    private async void OnGoalNameTapped( object sender, HandledEventArgs e )
     {
         var multilineEdit = sender as MultilineEdit;
         if (multilineEdit is not null)
@@ -623,7 +623,7 @@ public partial class EditHabitView : ContentPageBase
             GoalsBottomSheet.State = BottomSheetState.Hidden;
 
             var goal = multilineEdit.BindingContext as UserGoal;
-            ViewModel.OnGoalNameTapped( goal! );
+            await ViewModel.OnGoalNameTapped( goal! );
 
             m_doExecuteReloadOfRecommendedHabits = true;
         }

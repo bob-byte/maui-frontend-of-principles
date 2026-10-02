@@ -13,9 +13,9 @@ public class GoalService : BaseEntityService<UserGoal>, IGoalService
 
     public ObservableCollectionEx<UserGoal>? StoredGoals { get; set; }
 
-    public async Task<ObservableCollectionEx<UserGoal>> UserGoalsAsync()
+    public async Task<ObservableCollectionEx<UserGoal>> UserGoalsAsync( bool forceReload = false )
     {
-        if (StoredGoals?.Any() == true)
+        if (!forceReload && StoredGoals?.Any() == true)
         {
             return StoredGoals;
         }
@@ -30,8 +30,27 @@ public class GoalService : BaseEntityService<UserGoal>, IGoalService
             }
         }
 
-        StoredGoals = new ObservableCollectionEx<UserGoal>( goals.OrderBy( g => g.Name ) );
+        goals = goals.OrderBy( g => g.Name ).ToList();
+        if (StoredGoals is not null)
+        {
+            StoredGoals.Reload( goals );
+        }
+        else
+        {
+            StoredGoals = new ObservableCollectionEx<UserGoal>( goals );
+        }
+
         return StoredGoals;
+    }
+
+    public async Task<UserGoal?> GetGoalByLocalIdAsync( long localId )
+    {
+        if (localId == 0)
+        {
+            return null;
+        }
+
+        return await Database.GetByIdAsync<UserGoal>( localId ).ConfigureAwait( false );
     }
 
     public async Task SaveGoalAsync( UserGoal goal )

@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 
 namespace Principles.Core.Services;
 
@@ -66,10 +66,26 @@ public class DatabaseMigrator : IDatabaseMigrator
 
         foreach (string statement in statements)
         {
-            if (!string.IsNullOrWhiteSpace( statement ))
+            if (string.IsNullOrWhiteSpace( statement ))
+            {
+                continue;
+            }
+
+            try
             {
                 sqlConnection.Execute( statement );
             }
+            catch (SQLiteException ex) when (IsIgnorableSchemaMigrationError( ex ))
+            {
+                // Migrations re-run on every launch; duplicate columns/tables are expected.
+            }
         }
+    }
+
+    private static bool IsIgnorableSchemaMigrationError( SQLiteException ex )
+    {
+        string message = ex.Message;
+        return message.Contains( "duplicate column", StringComparison.OrdinalIgnoreCase )
+               || message.Contains( "already exists", StringComparison.OrdinalIgnoreCase );
     }
 }
