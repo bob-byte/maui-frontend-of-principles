@@ -106,23 +106,10 @@ public static class MauiProgram
 
         var assembly = Assembly.GetExecutingAssembly();
 
-        //TODO: replace appsettings.json and implementation of the config to Principles.Core project
-
         LoadEmbeddedEnv( assembly );
         ApplySecretEnvAliases();
 
-#if LOCALDEBUG
-        using Stream? stream = assembly.GetManifestResourceStream( $"{assembly.GetName().Name}.appsettings.Development.json" );
-#else
-        using Stream? stream = assembly.GetManifestResourceStream( $"{assembly.GetName().Name}.appsettings.json" );
-#endif
-
         ConfigurationBuilder configurationBuilder = new();
-        if (stream is not null)
-        {
-            configurationBuilder.AddJsonStream( stream );
-        }
-
         configurationBuilder.AddEnvironmentVariables();
 
         IConfigurationRoot configuration = configurationBuilder.Build();
