@@ -10,7 +10,7 @@ alwaysApply: true
 - Solution: `Principles.App.sln`
 - `Principles/` — MAUI UI (Views, ViewModels, Shell, platform code) and MAUI-bound service implementations
 - `Principles.Core/` — plain `net10.0` class library: models, sync, SQLite, remotes, interfaces
-- `Principles.UnitTests/` — unit tests against Core
+- `Principles.UnitTests/` — xUnit tests against Core (`Constants/`, `Models/`, `Extensions/`, `Services/`); use `ServiceOfHabitFactory` + NSubstitute for logic that needs `ServiceOfHabit` without SQLCipher
 - Entry / DI: `MauiProgram` → `RegisterAppCore` → `RegisterMauiServices` → `RegisterViewModels` → `RegisterViews`
 
 ## Core vs platform

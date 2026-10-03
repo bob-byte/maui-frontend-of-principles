@@ -5,11 +5,12 @@ alwaysApply: true
 
 # Principles (MAUI)
 
-Native .NET MAUI client for the Principles habit/goal app (install: https://principles.top). Package id `com.set.principles`. A Flutter rewrite lives in a sibling repo; this app remains a shipping Android/iOS client. Backend is .NET WebAPI (separate repo).
+Native .NET MAUI client for the Principles habit/goal app (install: https://principles.top). Package id `com.set.principles`. **Production store builds are Flutter** (`flutter-frontend-of-principles`); this MAUI app is the previous Android/iOS client kept for reference and API/behavior parity. Backend is .NET WebAPI (separate repo).
 
 ## Git
 
 - Host is **GitHub only** (`origin`). Do not fetch, push, or set defaults on Bitbucket or other remotes.
+- **Never commit** (or amend, stash-and-drop, or push) unless the user explicitly asks in the current request. Leave finished work uncommitted and say it is ready to commit.
 
 ## Core loop
 
