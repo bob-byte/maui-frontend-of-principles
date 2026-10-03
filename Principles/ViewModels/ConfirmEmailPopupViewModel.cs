@@ -7,11 +7,9 @@ public partial class ConfirmEmailPopupViewModel : BaseViewModel
 
     private string m_email;
     private string m_password;
-    
-    public int ValidConfirmationCode { get; private set; }
 
     private IChangePasswordService ChangePasswordService { get; }
-    
+
     public ConfirmEmailPopupViewModel( IServiceProvider serviceProvider )
         : base( serviceProvider )
     {
@@ -25,10 +23,6 @@ public partial class ConfirmEmailPopupViewModel : BaseViewModel
         {
             m_password = newPassword;
         }
-        if (query.TryGetValue( "ConfirmationCode", out object? confirmationCodeObj ) && confirmationCodeObj is int confirmationCode)
-        {
-            ValidConfirmationCode = confirmationCode;
-        }
         if (query.TryGetValue( "Email", out object? emailObj ) && emailObj is string email)
         {
             m_email = email;
@@ -38,37 +32,35 @@ public partial class ConfirmEmailPopupViewModel : BaseViewModel
     [RelayCommand]
     private async Task ConfirmPasswordChangeAsync()
     {
-        _ = int.TryParse( ConfirmationCodeByUser, out int setCodeByUser );
-
-        if (setCodeByUser == ValidConfirmationCode)
-        {
-            ConfirmationCodeByUser = string.Empty;
-
-            bool isSuccessfullyChangedPassword = false;
-
-            await UiBusyFor(async () =>
-            {
-                await ChangePasswordService.ChangePasswordAsync( m_email, m_password );
-                isSuccessfullyChangedPassword = true;
-            });
-
-            if (isSuccessfullyChangedPassword)
-            {
-                await DialogService.ClosePopupAsync();
-
-                await DialogService.ShowAlertAsync(
-                    LocStrings.YourPasswordSuccessfullyChanged,
-                    LocStrings.Success,
-                    LocStrings.OK
-                );
-
-                await Navigation.GoToInitialViewAsync();
-            }
-        }
-        else
+        if (!int.TryParse( ConfirmationCodeByUser, out int setCodeByUser )
+            || setCodeByUser is < 100000 or > 999999)
         {
             await DialogService.ClosePopupAsync();
             await DialogService.ShowErrorAsync( LocStrings.WrongConfirmationCode );
+            return;
+        }
+
+        ConfirmationCodeByUser = string.Empty;
+
+        bool isSuccessfullyChangedPassword = false;
+
+        await UiBusyFor( async () =>
+        {
+            await ChangePasswordService.ChangePasswordAsync( m_email, m_password, setCodeByUser );
+            isSuccessfullyChangedPassword = true;
+        } );
+
+        if (isSuccessfullyChangedPassword)
+        {
+            await DialogService.ClosePopupAsync();
+
+            await DialogService.ShowAlertAsync(
+                LocStrings.YourPasswordSuccessfullyChanged,
+                LocStrings.Success,
+                LocStrings.OK
+            );
+
+            await Navigation.GoToInitialViewAsync();
         }
     }
 }

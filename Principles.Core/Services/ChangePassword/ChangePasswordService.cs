@@ -2,14 +2,6 @@
 
 using Principles.Core.Helpers;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Json;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Principles.Core.Services;
 
 public class ChangePasswordService : BaseRemoteService, IChangePasswordService
@@ -22,16 +14,17 @@ public class ChangePasswordService : BaseRemoteService, IChangePasswordService
         m_configuration = serviceProvider.GetRequiredService<IConfiguration>();
     }
 
-    public Task ChangePasswordAsync( string email, string newPassword )
+    public Task ChangePasswordAsync( string email, string newPassword, int code )
     {
         string firstKey = m_configuration["EncryptionSettings:FirstKey"]!;
         string secondKey = m_configuration["EncryptionSettings:SecondKey"]!;
 
         string hashedPassword = PasswordChanger.EncryptNewPassword( newPassword, firstKey, secondKey );
-        ChangePasswordRequest request = new ()
+        ChangePasswordRequest request = new()
         {
             Email = email,
-            NewPassword = hashedPassword
+            NewPassword = hashedPassword,
+            Code = code,
         };
 
         return RequestProvider.PutAsync(
@@ -40,10 +33,9 @@ public class ChangePasswordService : BaseRemoteService, IChangePasswordService
         );
     }
 
-    public async Task<int> GeneratedCodeAsync( string emailWhereSendCode )
+    public Task SendCodeAsync( string emailWhereSendCode )
     {
         string url = $"{UrlBuilder.CodeGeneration}/?emailWhereSendCode={emailWhereSendCode}";
-        GenerateCodeResponse response = await RequestProvider.GetAsync<GenerateCodeResponse>( url ).DefaultConfigureAwait();
-        return response.Code;
+        return RequestProvider.GetAsync<object>( url );
     }
 }

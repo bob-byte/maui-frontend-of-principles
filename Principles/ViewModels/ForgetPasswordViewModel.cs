@@ -1,8 +1,4 @@
-﻿
-using CommunityToolkit.Maui.Extensions;
-using CommunityToolkit.Maui.Views;
-
-namespace Principles.ViewModels;
+﻿namespace Principles.ViewModels;
 
 public partial class ForgetPasswordViewModel : BaseViewModel
 {
@@ -18,16 +14,11 @@ public partial class ForgetPasswordViewModel : BaseViewModel
     [ObservableProperty]
     private string m_confirmationCodeByUser;
 
-    private int m_validConfirmationCode;
-
-    private ConfirmEmailPopupViewModel m_confirmEmailPopupViewModel;
-    private ConfirmEmailPopup m_confirmEmailPopup;
     public ForgetPasswordViewModel( IServiceProvider serviceProvider )
         : base( serviceProvider )
     {
         ChangePasswordService = serviceProvider.GetRequiredService<IChangePasswordService>();
         LoginService = serviceProvider.GetRequiredService<ILoginService>();
-        m_confirmEmailPopupViewModel = new ConfirmEmailPopupViewModel( serviceProvider );
     }
 
     public IChangePasswordService ChangePasswordService { get; }
@@ -58,18 +49,17 @@ public partial class ForgetPasswordViewModel : BaseViewModel
         ValidateEmail();
         ValidateNewPassword();
 
-        if(Email.IsValid && NewPassword.IsValid)
+        if (Email.IsValid && NewPassword.IsValid)
         {
             await UiBusyFor( async () =>
             {
-                m_validConfirmationCode = await ChangePasswordService.GeneratedCodeAsync( Email.Value );
+                await ChangePasswordService.SendCodeAsync( Email.Value );
 
                 Dictionary<string, object> parameters = new()
-                    {
-                        { "NewPassword", NewPassword.Value },
-                        { "ConfirmationCode", m_validConfirmationCode },
-                        { "Email", Email }
-                    };
+                {
+                    { "NewPassword", NewPassword.Value },
+                    { "Email", Email.Value },
+                };
                 await DialogService.ShowPopupAsync<ConfirmEmailPopupViewModel>( parameters );
             } );
         }

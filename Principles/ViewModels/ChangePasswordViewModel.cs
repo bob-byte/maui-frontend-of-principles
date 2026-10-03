@@ -1,14 +1,9 @@
-﻿using CommunityToolkit.Maui.Extensions;
-using CommunityToolkit.Maui.Views;
-
-namespace Principles.ViewModels;
+﻿namespace Principles.ViewModels;
 
 public partial class ChangePasswordViewModel : BaseViewModel
 {
     [ObservableProperty]
     private ValidatableObject<string> m_newPassword;
-
-    private int m_validConfirmationCode;
 
     private IChangePasswordService ChangePasswordService { get; }
 
@@ -43,7 +38,7 @@ public partial class ChangePasswordViewModel : BaseViewModel
         {
             await UiBusyFor( async () =>
             {
-                m_validConfirmationCode = await ChangePasswordService.GeneratedCodeAsync( Email );
+                await ChangePasswordService.SendCodeAsync( Email );
                 Page? currentPage = Shell.Current?.CurrentPage;
 
                 if (currentPage is not null)
@@ -51,7 +46,6 @@ public partial class ChangePasswordViewModel : BaseViewModel
                     Dictionary<string, object> popupParameters = new()
                     {
                         ["NewPassword"] = NewPassword.Value,
-                        ["ConfirmationCode"] = m_validConfirmationCode,
                         ["Email"] = Email
                     };
                     await DialogService.ShowPopupAsync<ConfirmEmailPopupViewModel>( popupParameters );
