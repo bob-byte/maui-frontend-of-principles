@@ -159,7 +159,6 @@ public class HabitRemoteApi : RemoteApiService<UserHabit>, IHabitRemoteApi
             Id = habit.Id,
             Name = habit.Name,
             Type = habit.Type,
-            AreasOfLife = habit.AreasOfLife?.Where( a => a.Id != 0 ).ToList(),
             Description = habit.Description,
             Goal = habit.Goal,
             Status = habit.Status,
