@@ -210,7 +210,7 @@ project.lock.json
 .idea/
 
 # Visual Studio Code
-.vscode/
+# .vscode/ is shared: Android and iOS run configs.
 
 # Output folder used by Webpack or other FE stuff
 **/node_modules/*

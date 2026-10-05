@@ -1,0 +1,81 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Start Android Emulator",
+            "type": "shell",
+            "command": "\"${workspaceFolder}/.vscode/start-android-emulator.sh\"",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "reveal": "silent"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Start iOS Simulator",
+            "type": "shell",
+            "command": "\"${workspaceFolder}/.vscode/start-ios-simulator.sh\"",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "reveal": "silent"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Run Principles (Android)",
+            "type": "shell",
+            "command": "\"${workspaceFolder}/.vscode/run-android.sh\" Debug",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated"
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "Run Principles (Android) LocalDebug",
+            "type": "shell",
+            "command": "\"${workspaceFolder}/.vscode/run-android.sh\" LocalDebug",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated"
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "Run Principles (iOS)",
+            "type": "shell",
+            "command": "\"${workspaceFolder}/.vscode/run-ios.sh\" Debug",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated"
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "Run Principles (iOS) LocalDebug",
+            "type": "shell",
+            "command": "\"${workspaceFolder}/.vscode/run-ios.sh\" LocalDebug",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated"
+            },
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}
