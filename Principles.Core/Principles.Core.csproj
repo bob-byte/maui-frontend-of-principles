@@ -18,7 +18,8 @@
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="10.0.1" />
 		<PackageReference Include="sqlite-net-sqlcipher" Version="1.9.172" />
-		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.11" />
+		<!-- Override sqlite-net-sqlcipher's 2.1.2: that build has no iossimulator-arm64 slice. -->
+		<PackageReference Include="SQLitePCLRaw.bundle_e_sqlcipher" Version="2.1.11" />
 		<PackageReference Include="Serilog" Version="3.1.1" />
 		<PackageReference Include="Azure.AI.OpenAI" Version="2.1.0" />
 	</ItemGroup>
